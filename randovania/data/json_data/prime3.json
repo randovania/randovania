@@ -752,6 +752,11 @@
                 "short_name": "Event61"
             },
             {
+                "index": 62,
+                "long_name": "Turbine Chamber Disable Barrier",
+                "short_name": "Event62"
+            },
+            {
                 "index": 70,
                 "long_name": "Main Docking Access Phazon Vines",
                 "short_name": "Event70"
@@ -22375,7 +22380,7 @@
                     "name": "Transit Tube B",
                     "in_dark_aether": false,
                     "asset_id": 17121574684390295437,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22426,7 +22431,7 @@
                     "name": "Transit Tube A",
                     "in_dark_aether": false,
                     "asset_id": 15869626092358203793,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23373,7 +23378,7 @@
                     "name": "Turbine Access",
                     "in_dark_aether": false,
                     "asset_id": 16872292803832969215,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23424,7 +23429,7 @@
                     "name": "Turbine Chamber",
                     "in_dark_aether": false,
                     "asset_id": 8211108078275787776,
-                    "default_node_index": null,
+                    "default_node_index": 3,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23442,9 +23447,78 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Bottom Floor": {
+                                "Bottom of Turbine": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Screw Attack (Space Jump)"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Enter Hypermode"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -23479,9 +23553,55 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Bottom Floor": {
-                                    "type": "and",
-                                    "data": []
+                                "Bottom of Turbine": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Enter Hypermode"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -23500,14 +23620,196 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Event - Berserker Lord": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Top Level": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 9,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Bottom of Turbine",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Maintenance Shaft TR": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Enter Hypermode"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Door to Broken Lift (Bottom)": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Enter Hypermode"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Top Level": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 11,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Berserker Lord",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 9,
+                            "connections": {
+                                "Top Level": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Bomb Part 1",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 88,
+                            "connections": {
+                                "Top Level": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Top Level",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
                                 "Door to Turbine Access": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 9,
+                                                "type": 0,
+                                                "index": 32,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23523,6 +23825,15 @@
                                         }
                                     ]
                                 },
+                                "Door to Broken Lift (Top)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 62,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Event - Berserker Lord": {
                                     "type": "and",
                                     "data": []
@@ -23534,7 +23845,7 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 33,
+                                                "index": 32,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23543,7 +23854,43 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 44,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Ship Grapple (Command Visor and Ship Grapple)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 9,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Disable Barrier": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 88,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23553,42 +23900,12 @@
                             }
                         },
                         {
-                            "name": "Bottom Floor",
+                            "name": "Event - Disable Barrier",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
-                                "Door to Maintenance Shaft TR": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Door to Broken Lift (Bottom)": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Berserker Lord",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 9,
-                            "connections": {
-                                "Door to Broken Lift (Top)": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Bomb Part 1",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 88,
-                            "connections": {
-                                "Door to Broken Lift (Top)": {
+                                "Door to Turbine Access": {
                                     "type": "and",
                                     "data": []
                                 }
