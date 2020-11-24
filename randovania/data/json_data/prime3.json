@@ -5112,6 +5112,47 @@
                                         {
                                             "type": "template",
                                             "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -21546,7 +21587,7 @@
                     "name": "Concourse Access A",
                     "in_dark_aether": false,
                     "asset_id": 8693205715557281915,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -21565,8 +21606,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Skytram East": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21586,8 +21632,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Concourse": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -21676,9 +21727,18 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "1st Floor": {
+                                "2nd Floor": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Basement": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 80,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21817,31 +21877,6 @@
                             }
                         },
                         {
-                            "name": "1st Floor",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Door to Concourse Access A": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "2nd Floor": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Basement": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 80,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
                             "name": "2nd Floor",
                             "heal": false,
                             "coordinates": null,
@@ -21869,6 +21904,10 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Door to Concourse Access A": {
+                                    "type": "and",
+                                    "data": []
                                 },
                                 "Door to Concourse Access B": {
                                     "type": "or",
@@ -21952,10 +21991,6 @@
                                             ]
                                         }
                                     ]
-                                },
-                                "1st Floor": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -21969,11 +22004,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Door to Maintenance Shaft CC": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "1st Floor": {
+                                "Door to Concourse Access A": {
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
@@ -21981,6 +22012,10 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Door to Maintenance Shaft CC": {
+                                    "type": "and",
+                                    "data": []
                                 },
                                 "Event - Basement Elevator": {
                                     "type": "resource",
@@ -22038,7 +22073,7 @@
                     "name": "Maintenance Shaft CC",
                     "in_dark_aether": false,
                     "asset_id": 13843289676906838650,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22058,7 +22093,26 @@
                             "connections": {
                                 "Door to Concourse": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22079,7 +22133,26 @@
                             "connections": {
                                 "Door to Zipline Station Delta": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -22089,7 +22162,7 @@
                     "name": "Piston Hall",
                     "in_dark_aether": false,
                     "asset_id": 8621618277057489308,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22140,7 +22213,7 @@
                     "name": "Concourse Access B",
                     "in_dark_aether": false,
                     "asset_id": 2885109498150538605,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22429,7 +22502,7 @@
                     "name": "Research Pod Lift",
                     "in_dark_aether": false,
                     "asset_id": 10215168138186768572,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22508,6 +22581,29 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Seeker Elevator": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22551,7 +22647,7 @@
                     "name": "Save Station C",
                     "in_dark_aether": false,
                     "asset_id": 11329003787389696749,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23116,7 +23212,7 @@
                     "name": "Concourse Ventilation",
                     "in_dark_aether": false,
                     "asset_id": 8316677848927658449,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23145,7 +23241,26 @@
                                 },
                                 "Event - SA Floors": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -23202,6 +23317,24 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -23228,7 +23361,7 @@
                             "node_type": "event",
                             "event_index": 82,
                             "connections": {
-                                "Door to Concourse": {
+                                "Door to Maintenance Shaft OB": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -23560,7 +23693,7 @@
                     "name": "Maintenance Shaft TR",
                     "in_dark_aether": false,
                     "asset_id": 13655572749071457883,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23611,7 +23744,7 @@
                     "name": "Gearworks",
                     "in_dark_aether": false,
                     "asset_id": 6708692299270885612,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23716,7 +23849,7 @@
                     "name": "Maintenance Shaft OB",
                     "in_dark_aether": false,
                     "asset_id": 14035871129371894746,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23795,7 +23928,7 @@
                     "name": "Observatory Lift",
                     "in_dark_aether": false,
                     "asset_id": 17446010042417855180,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23849,8 +23982,13 @@
                                     }
                                 },
                                 "Event - Fix Elevator": {
-                                    "type": "template",
-                                    "data": "Melt Objects (Plasma or Nova)"
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -24136,7 +24274,7 @@
                     "name": "Skybridge Athene",
                     "in_dark_aether": false,
                     "asset_id": 6980760045410434875,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24187,7 +24325,7 @@
                     "name": "Landing Access",
                     "in_dark_aether": false,
                     "asset_id": 8187685317574681178,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24258,7 +24396,35 @@
                             "connections": {
                                 "Samus Ship": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -24642,7 +24808,7 @@
                     "name": "Save Station B",
                     "in_dark_aether": false,
                     "asset_id": 1028106178435366911,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
