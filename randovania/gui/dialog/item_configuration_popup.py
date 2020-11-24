@@ -4,7 +4,9 @@ from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.major_item_state import MajorItemState
@@ -16,7 +18,8 @@ _INVALID_MODELS = {
 
 class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
 
-    def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState):
+    def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState,
+                 resources_database: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -54,11 +57,10 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
                 break
 
         if item.ammo_index:
-            resources_database = default_database.default_prime2_resource_database()
             self.provided_ammo_label.setText(
                 "<html><head/><body><p>Provided Ammo</p><p>({})</p></body></html>".format(
                     " and ".join(
-                        resources_database.get_by_type_and_index(ResourceType.ITEM, ammo_index).long_name
+                        resources_database.get_item(ammo_index).long_name
                         for ammo_index in item.ammo_index
                     )
                 )
