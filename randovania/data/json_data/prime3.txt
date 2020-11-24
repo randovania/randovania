@@ -841,7 +841,9 @@ Asset id: 5398996635579069682
 > Door to Docking Bay 5; Heals? False; Spawn Point
   * Normal Door to Docking Bay 5/Door to Hangar A Access
   > Door to Repair Bay
-      Grapple Swing or Use Screw Attack (Space Jump)
+      Any of the following:
+          Grapple Swing or Use Screw Attack (Space Jump)
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Door to Repair Bay; Heals? False
   * Normal Door to Repair Bay/Door to Hangar A Access
@@ -3944,12 +3946,12 @@ Asset id: 8693205715557281915
 > Door to Concourse; Heals? False
   * Normal Door to Concourse/Door to Concourse Access A
   > Door to Skytram East
-      Trivial
+      Morph Ball
 
-> Door to Skytram East; Heals? False
+> Door to Skytram East; Heals? False; Spawn Point
   * Normal Door to Skytram East/Door to Concourse Access A
   > Door to Concourse
-      Trivial
+      Morph Ball
 
 ----------------
 Concourse
@@ -3966,11 +3968,13 @@ Asset id: 1701256524990864906
 
 > Door to Concourse Access A; Heals? False; Spawn Point
   * Normal Door to Concourse Access A/Door to Concourse
-  > 1st Floor
+  > 2nd Floor
       Trivial
+  > Basement
+      After Concourse Basement Elevator
 
 > Door to Concourse Access B; Heals? False
-  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse Access B/Door to Concourse
+  * Ice Missile Blast Shield to Concourse Access B/Door to Concourse
   > Pickup (Missile Expansion)
       Morph Ball
   > 2nd Floor
@@ -3990,17 +3994,11 @@ Asset id: 1701256524990864906
   > Door to Concourse Access B
       Morph Ball
 
-> 1st Floor; Heals? False
-  > Door to Concourse Access A
-      Trivial
-  > 2nd Floor
-      Trivial
-  > Basement
-      After Concourse Basement Elevator
-
 > 2nd Floor; Heals? False
   > Door to Concourse Ventilation
       Charge Beam or Missile ≥ 2
+  > Door to Concourse Access A
+      Trivial
   > Door to Concourse Access B
       Any of the following:
           After Concourse Top Elevator
@@ -4009,16 +4007,14 @@ Asset id: 1701256524990864906
               Any of the following:
                   Boost Ball
                   Morph Ball Bombs and Screw Attack
-  > 1st Floor
-      Trivial
 
 > Basement; Heals? False
   > Door to Piston Hall
       Trivial
+  > Door to Concourse Access A
+      After Concourse Basement Elevator
   > Door to Maintenance Shaft CC
       Trivial
-  > 1st Floor
-      After Concourse Basement Elevator
   > Event - Basement Elevator
       Plasma Beam
 
@@ -4043,17 +4039,17 @@ Asset id: 13843289676906838650
 > Door to Zipline Station Delta; Heals? False
   * Normal Door to Zipline Station Delta/Door to Maintenance Shaft CC
   > Door to Concourse
-      Trivial
+      Space Jump Boots and Morph Ball
 
-> Door to Concourse; Heals? False
+> Door to Concourse; Heals? False; Spawn Point
   * Plasma Door to Concourse/Door to Maintenance Shaft CC
   > Door to Zipline Station Delta
-      Trivial
+      Space Jump Boots and Morph Ball
 
 ----------------
 Piston Hall
 Asset id: 8621618277057489308
-> Door to Turbine Access; Heals? False
+> Door to Turbine Access; Heals? False; Spawn Point
   * Normal Door to Turbine Access/Door to Piston Hall
   > Door to Concourse
       Use Screw Attack (Space Jump)
@@ -4067,11 +4063,11 @@ Asset id: 8621618277057489308
 Concourse Access B
 Asset id: 2885109498150538605
 > Door to Concourse; Heals? False
-  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse/Door to Concourse Access B
+  * Ice Missile Blast Shield to Concourse/Door to Concourse Access B
   > Door to Zipline Station Delta
       Trivial
 
-> Door to Zipline Station Delta; Heals? False
+> Door to Zipline Station Delta; Heals? False; Spawn Point
   * Normal Door to Zipline Station Delta/Door to Concourse Access B
   > Door to Concourse
       Trivial
@@ -4152,8 +4148,10 @@ Asset id: 10215168138186768572
   * Normal Door to Transit Tube B/Door to Research Pod Lift
   > Door to Xenoresearch A Lift
       After Research Pod Lift Seeker Door
+  > Event - Seeker Elevator
+      Missile ≥ 5 and Seeker Missile
 
-> Door to Transit Tube A; Heals? False
+> Door to Transit Tube A; Heals? False; Spawn Point
   * Normal Door to Transit Tube A/Door to Research Pod Lift
   > Door to Xenoresearch A Lift
       Trivial
@@ -4171,7 +4169,7 @@ Asset id: 11329003787389696749
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   > Door to Transit Tube A
       Trivial
 
@@ -4277,19 +4275,19 @@ Asset id: 17636479515754825573
 ----------------
 Concourse Ventilation
 Asset id: 8316677848927658449
-> Door to Concourse; Heals? False
+> Door to Concourse; Heals? False; Spawn Point
   * Normal Door to Concourse/Door to Concourse Ventilation
   > Door to Maintenance Shaft OB
       After Concourse Ventilation Floors
   > Event - SA Floors
-      Trivial
+      Morph Ball Bombs and Morph Ball
 
 > Door to Maintenance Shaft OB; Heals? False
   * Normal Door to Maintenance Shaft OB/Door to Concourse Ventilation
   > Door to Concourse
       After Concourse Ventilation Floors and Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
-      Boost Ball and Spider Ball
+      Morph Ball Bombs and Morph Ball and Boost Ball and Spider Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 71; Major Location? False
@@ -4298,7 +4296,7 @@ Asset id: 8316677848927658449
 
 > Event - SA Floors; Heals? False
   * Event Concourse Ventilation Floors
-  > Door to Concourse
+  > Door to Maintenance Shaft OB
       Trivial
 
 ----------------
@@ -4381,7 +4379,7 @@ Asset id: 16286467201365456700
 ----------------
 Maintenance Shaft TR
 Asset id: 13655572749071457883
-> Door to Turbine Chamber; Heals? False
+> Door to Turbine Chamber; Heals? False; Spawn Point
   * Normal Door to Turbine Chamber/Door to Maintenance Shaft TR
   > Door to Skybridge Athene
       Use Screw Attack (Space Jump)
@@ -4394,7 +4392,7 @@ Asset id: 13655572749071457883
 ----------------
 Gearworks
 Asset id: 6708692299270885612
-> Door to Observatory Lift; Heals? False
+> Door to Observatory Lift; Heals? False; Spawn Point
   * Normal Door to Observatory Lift/Door to Gearworks
   > Door to Broken Lift
       Use Screw Attack (Space Jump)
@@ -4423,7 +4421,7 @@ Asset id: 14035871129371894746
   > Door to Concourse Ventilation
       Grapple Swing or Use Screw Attack (Space Jump)
 
-> Door to Concourse Ventilation; Heals? False
+> Door to Concourse Ventilation; Heals? False; Spawn Point
   * Normal Door to Concourse Ventilation/Door to Maintenance Shaft OB
   > Door to Chozo Observatory
       Grapple Swing or Use Screw Attack (Space Jump)
@@ -4436,12 +4434,12 @@ Asset id: 17446010042417855180
   > Door to Chozo Observatory
       After Observatory Lift Fix Elevator
 
-> Door to Chozo Observatory; Heals? False
+> Door to Chozo Observatory; Heals? False; Spawn Point
   * Normal Door to Chozo Observatory/Door to Observatory Lift
   > Door to Gearworks
       After Observatory Lift Fix Elevator
   > Event - Fix Elevator
-      Melt Objects (Plasma or Nova)
+      Plasma Beam
 
 > Event - Fix Elevator; Heals? False
   * Event Observatory Lift Fix Elevator
@@ -4503,7 +4501,7 @@ Asset id: 6980760045410434875
   > Door to Maintenance Shaft TR
       Trivial
 
-> Door to Maintenance Shaft TR; Heals? False
+> Door to Maintenance Shaft TR; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft TR/Door to Skybridge Athene
   > Door to Landing Access
       Trivial
@@ -4516,7 +4514,7 @@ Asset id: 8187685317574681178
   > Door to SkyTown Federation Landing Site
       Use Screw Attack (Space Jump)
 
-> Door to SkyTown Federation Landing Site; Heals? False
+> Door to SkyTown Federation Landing Site; Heals? False; Spawn Point
   * Normal Door to SkyTown Federation Landing Site/Door to Landing Access
   > Door to Skybridge Athene
       Use Screw Attack (Space Jump)
@@ -4527,7 +4525,7 @@ Asset id: 18200553231954089224
 > Door to Landing Access; Heals? False
   * Normal Door to Landing Access/Door to SkyTown Federation Landing Site
   > Samus Ship
-      Trivial
+      Morph Ball Bombs and Command Visor and Morph Ball
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73; Major Location? True
@@ -4603,7 +4601,7 @@ Asset id: 1028106178435366911
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   > Door to Botanica
       Trivial
 
