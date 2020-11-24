@@ -5,6 +5,7 @@ from typing import Optional
 import aiofiles
 import slugify
 
+from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
 CURRENT_PRESET_VERSION = 6
@@ -232,6 +233,16 @@ class VersionedPreset:
             return self._preset.name
         else:
             return self.data["name"]
+
+    @property
+    def game(self) -> RandovaniaGame:
+        if self.data is None:
+            return self._preset.layout_configuration.game
+
+        if self.data["schema_version"] < 6:
+            return RandovaniaGame.PRIME2
+
+        return RandovaniaGame(self.data["layout_configuration"]["game"])
 
     def __eq__(self, other):
         if isinstance(other, VersionedPreset):
