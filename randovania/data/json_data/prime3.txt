@@ -4102,7 +4102,7 @@ Asset id: 13160313838438792806
 ----------------
 Transit Tube B
 Asset id: 17121574684390295437
-> Door to Research Pod Lift; Heals? False
+> Door to Research Pod Lift; Heals? False; Spawn Point
   * Normal Door to Research Pod Lift/Door to Transit Tube B
   > Door to Zipline Station Delta
       Trivial
@@ -4120,7 +4120,7 @@ Asset id: 15869626092358203793
   > Door to Save Station C
       Trivial
 
-> Door to Zipline Station Delta; Heals? False
+> Door to Zipline Station Delta; Heals? False; Spawn Point
   * Normal Door to Zipline Station Delta/Door to Transit Tube A
   > Door to Save Station C
       Trivial
@@ -4307,7 +4307,7 @@ Asset id: 16872292803832969215
   > Door to Turbine Chamber
       Trivial
 
-> Door to Turbine Chamber; Heals? False
+> Door to Turbine Chamber; Heals? False; Spawn Point
   * Normal Door to Turbine Chamber/Door to Turbine Access
   > Door to Piston Hall
       Trivial
@@ -4317,40 +4317,74 @@ Turbine Chamber
 Asset id: 8211108078275787776
 > Door to Maintenance Shaft TR; Heals? False
   * Normal Door to Maintenance Shaft TR/Door to Turbine Chamber
-  > Bottom Floor
-      Trivial
+  > Bottom of Turbine
+      All of the following:
+          Any of the following:
+              Charge Beam or Missile ≥ 2
+              All of the following:
+                  Knowledge (Beginner)
+                  Enter Hypermode or Use Screw Attack (Space Jump)
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Turbine Access; Heals? False
   * Normal Door to Turbine Access/Door to Turbine Chamber
 
 > Door to Broken Lift (Bottom); Heals? False
   * Normal Door to Broken Lift/Door to Turbine Chamber (Bottom)
-  > Bottom Floor
-      Trivial
+  > Bottom of Turbine
+      Any of the following:
+          Charge Beam or Missile ≥ 2
+          All of the following:
+              Knowledge (Beginner)
+              Enter Hypermode or Use Screw Attack (Space Jump)
 
-> Door to Broken Lift (Top); Heals? False
+> Door to Broken Lift (Top); Heals? False; Spawn Point
   * Normal Door to Broken Lift/Door to Turbine Chamber (Top)
-  > Door to Turbine Access
-      After Berserker Lord (Elysia) and After Turbine Chamber Bomb Part 1
   > Event - Berserker Lord
       Trivial
-  > Event - Bomb Part 1
-      Boost Ball and Ship Grapple
+  > Top Level
+      After Berserker Lord (Elysia)
 
-> Bottom Floor; Heals? False
+> Bottom of Turbine; Heals? False
   > Door to Maintenance Shaft TR
-      Trivial
+      Any of the following:
+          Charge Beam or Missile ≥ 2
+          All of the following:
+              Knowledge (Beginner)
+              Enter Hypermode or Use Screw Attack (Space Jump)
   > Door to Broken Lift (Bottom)
-      Trivial
+      Any of the following:
+          Charge Beam or Missile ≥ 2
+          All of the following:
+              Knowledge (Beginner)
+              Enter Hypermode or Use Screw Attack (Space Jump)
+  > Top Level
+      Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate) and Use Screw Attack (Space Jump)
 
 > Event - Berserker Lord; Heals? False
   * Event Berserker Lord (Elysia)
-  > Door to Broken Lift (Top)
+  > Top Level
       Trivial
 
 > Event - Bomb Part 1; Heals? False
   * Event Turbine Chamber Bomb Part 1
+  > Top Level
+      Trivial
+
+> Top Level; Heals? False
+  > Door to Turbine Access
+      Morph Ball and After Turbine Chamber Bomb Part 1
   > Door to Broken Lift (Top)
+      After Turbine Chamber Disable Barrier
+  > Event - Berserker Lord
+      Trivial
+  > Event - Bomb Part 1
+      Morph Ball and Boost Ball and After Berserker Lord (Elysia) and Use Ship Grapple (Command Visor and Ship Grapple)
+  > Event - Disable Barrier
+      Morph Ball and After Turbine Chamber Bomb Part 1
+
+> Event - Disable Barrier; Heals? False
+  > Door to Turbine Access
       Trivial
 
 ----------------
