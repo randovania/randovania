@@ -9,8 +9,9 @@ from pathlib import Path
 from statistics import stdev
 from typing import Dict, Tuple, Optional
 
-from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description.default_database import game_description_for
 from randovania.game_description.node import PickupNode, LogbookNode
+from randovania.games.game import RandovaniaGame
 
 
 def read_json(path: Path) -> dict:
@@ -97,7 +98,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     item_hints = collections.defaultdict(item_creator)
     location_hints = collections.defaultdict(item_creator)
 
-    game_description = default_prime2_game_description()
+    game_description = game_description_for(RandovaniaGame.PRIME2)
     world_list = game_description.world_list
     index_to_location = {
         node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),

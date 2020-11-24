@@ -13,7 +13,6 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world_list import WorldList
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.game_patches_window import GamePatchesWindow
@@ -22,7 +21,7 @@ from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.main_rules import MainRulesWindow
+from randovania.gui.preset_settings.item_pool_tab import MainRulesWindow
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
@@ -75,7 +74,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._main_rules = MainRulesWindow(editor)
         self._game_patches = GamePatchesWindow(editor)
 
-        self.game_enum = RandovaniaGame.PRIME2
+        self.game_enum = editor.layout_configuration.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
