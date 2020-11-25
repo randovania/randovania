@@ -8,7 +8,6 @@ from PySide2.QtWidgets import QComboBox, QLabel, QDialog, QGroupBox, QVBoxLayout
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -498,7 +497,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
         self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
 
-        game_description = default_prime2_game_description()
+        game_description = self.game_description
         world_to_group = {}
         self._location_pool_for_node = {}
 
