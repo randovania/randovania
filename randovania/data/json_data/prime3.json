@@ -1186,6 +1186,18 @@
                 "long_name": "Open Gates/Barriers from Behind",
                 "short_name": "OpenBarriers",
                 "description": "Some gates or barriers can be opened from reverse with certain techniques or items."
+            },
+            {
+                "index": 14,
+                "long_name": "Screw Attack at Z-Axis",
+                "short_name": "SAnoSJ",
+                "description": "Using Screw Attack without Space Jump does not work as intended unless the Screw Attack is intiated specific rooms where Samus's position in the Z-Axis is 0.<br /><a href='https://wiki.metroidprime.run/wiki/Screw_Attack'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 15,
+                "long_name": "Fall Respawn Skip",
+                "short_name": "FRS",
+                "description": "By performing a Boost Spring Space Jump through a door frame on some rooms in Elysia, the terminal fall trigger can be skipped and place Samus Out of Bounds.<br /><a href='https://wiki.metroidprime.run/wiki/Fall_Respawn_Skip'>Check the wiki for more details.</a>"
             }
         ],
         "damage": [
@@ -21733,8 +21745,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "2nd Floor": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Basement": {
                                     "type": "resource",
@@ -21965,33 +21996,38 @@
                                                                 {
                                                                     "type": "resource",
                                                                     "data": {
-                                                                        "type": 0,
-                                                                        "index": 10,
-                                                                        "amount": 1,
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 2,
                                                                         "negate": false
                                                                     }
                                                                 }
                                                             ]
                                                         },
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 33,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 5,
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -22186,8 +22222,101 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Concourse": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 16,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 5,
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 16,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 14,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Lower Ledge (Turbine Access Side)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -22207,8 +22336,90 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Turbine Access": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 33,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Lower Ledge (Turbine Access Side)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Turbine Access": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -22269,7 +22480,7 @@
                     "name": "Zipline Station Delta",
                     "in_dark_aether": false,
                     "asset_id": 13160313838438792806,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22290,6 +22501,65 @@
                                 "Door to Transit Tube A": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Out of Bounds": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 15,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 12,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22320,6 +22590,65 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Out of Bounds": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 15,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 12,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22338,9 +22667,64 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Maintenance Shaft CC": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                "Out of Bounds": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 15,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 12,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22369,6 +22753,81 @@
                                     }
                                 },
                                 "Door to Transit Tube A": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Out of Bounds": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 15,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 12,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Out of Bounds",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Concourse Access B": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Door to Transit Tube B": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22694,7 +23153,7 @@
                     "name": "Xenoresearch A Lift",
                     "in_dark_aether": false,
                     "asset_id": 9772683067190669679,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22769,6 +23228,24 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (No Space Jump)"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -22796,7 +23273,7 @@
                     "name": "Xenoresearch A",
                     "in_dark_aether": false,
                     "asset_id": 1041714618950868912,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22837,6 +23314,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         },
@@ -22846,29 +23332,6 @@
                                                 "type": 1,
                                                 "index": 90,
                                                 "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "Event - Seeker Gate": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 6,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 4,
-                                                "amount": 5,
                                                 "negate": false
                                             }
                                         }
@@ -22892,41 +23355,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Xenoresearch A Lift": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "and",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 1,
-                                                        "index": 93,
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 90,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 90,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Seeker Gate": {
                                     "type": "and",
@@ -22960,7 +23395,7 @@
                             "node_type": "event",
                             "event_index": 90,
                             "connections": {
-                                "Door to Xenoresearch A Lift": {
+                                "Door to Xenoresearch B Lift": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22972,7 +23407,7 @@
                     "name": "Xenoresearch B Lift",
                     "in_dark_aether": false,
                     "asset_id": 4184180050467657910,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23023,7 +23458,7 @@
                     "name": "Xenoresearch B",
                     "in_dark_aether": false,
                     "asset_id": 17636479515754825573,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23041,14 +23476,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Event - Seeker Gate": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 6,
+                                                "index": 32,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23057,16 +23492,21 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 4,
-                                                "amount": 5,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                },
-                                "Central Hallways": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -23078,28 +23518,9 @@
                             "pickup_index": 69,
                             "major_location": true,
                             "connections": {
-                                "Central Hallways": {
+                                "Power Outage Room": {
                                     "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 4,
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 6,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "data": []
                                 }
                             }
                         },
@@ -23111,28 +23532,9 @@
                             "pickup_index": 70,
                             "major_location": false,
                             "connections": {
-                                "Pickup (Seeker Missile)": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 3,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 4,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                "Event - Xenoresearch Power Outage": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -23143,27 +23545,27 @@
                             "node_type": "event",
                             "event_index": 93,
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Power Outage Room": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Event - Seeker Gate",
+                            "name": "Event - Seeker Gates",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 91,
                             "connections": {
-                                "Door to Xenoresearch B Lift": {
+                                "Power Outage Room": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Central Hallways",
+                            "name": "Power Outage Room",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
@@ -23177,23 +23579,14 @@
                                         "negate": false
                                     }
                                 },
-                                "Event - Xenoresearch Power Outage": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Event - Seeker Gate": {
-                                    "type": "and",
+                                "Pickup (Seeker Missile)": {
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 6,
+                                                "index": 4,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23202,8 +23595,49 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Event - Seeker Gates": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
                                                 "index": 4,
                                                 "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -23762,6 +24196,15 @@
                                             "data": {
                                                 "type": 2,
                                                 "index": 11,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 10,
                                                 "amount": 2,
                                                 "negate": false
                                             }
