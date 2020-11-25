@@ -11,6 +11,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
@@ -38,6 +39,12 @@ def _update_options_when_true(options: Options, field_name: str, new_value, chec
     if checked:
         with options:
             setattr(options, field_name, new_value)
+
+
+def dark_world_flags(world: World):
+    yield False
+    if world.dark_name is not None:
+        yield True
 
 
 def _update_options_by_value(options: Options, combo: QComboBox, new_index: int):
@@ -150,13 +157,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._during_batch_check_update = True
         for world in self.game_description.world_list.worlds:
-            for is_dark_world in [False, True]:
+            for is_dark_world in dark_world_flags(world):
                 all_areas = True
                 no_areas = True
                 areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
                 correct_name = world.correct_name(is_dark_world)
+                if correct_name not in self._starting_location_for_world:
+                    continue
+
                 for area in areas:
-                    if area.valid_starting_location:
+                    if area.area_asset_id is self._starting_location_for_area:
                         is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
                         if is_checked:
                             no_areas = False
@@ -411,8 +421,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._starting_location_for_world = {}
         self._starting_location_for_area = {}
 
-        for row, world in enumerate(game_description.world_list.worlds):
-            for column, is_dark_world in enumerate([False, True]):
+        worlds = [
+            world
+            for world in game_description.world_list.worlds
+            if any(area.valid_starting_location and area.default_node_index is not None
+                   for area in world.areas)
+        ]
+        worlds.sort(key=lambda it: it.name)
+
+        for row, world in enumerate(worlds):
+            for column, is_dark_world in enumerate(dark_world_flags(world)):
                 group_box = QGroupBox(self.starting_locations_contents)
                 world_check = QtWidgets.QCheckBox(group_box)
                 world_check.setText(world.correct_name(is_dark_world))
@@ -435,9 +453,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 self.starting_locations_layout.addWidget(group_box, row, column)
                 self._starting_location_for_world[world.correct_name(is_dark_world)] = world_check
 
-        for world in game_description.world_list.worlds:
+        for world in worlds:
             for area in sorted(world.areas, key=lambda a: a.name):
-                if not area.valid_starting_location:
+                if not area.valid_starting_location or area.default_node_index is None:
                     continue
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
