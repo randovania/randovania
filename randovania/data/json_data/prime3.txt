@@ -3969,7 +3969,7 @@ Asset id: 1701256524990864906
 > Door to Concourse Access A; Heals? False; Spawn Point
   * Normal Door to Concourse Access A/Door to Concourse
   > 2nd Floor
-      Trivial
+      Charge Beam or Missile ≥ 2
   > Basement
       After Concourse Basement Elevator
 
@@ -4003,10 +4003,10 @@ Asset id: 1701256524990864906
       Any of the following:
           After Concourse Top Elevator
           All of the following:
-              Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Advanced)
+              Space Jump Boots and Morph Ball
               Any of the following:
-                  Boost Ball
-                  Morph Ball Bombs and Screw Attack
+                  Screw Attack and Bomb/Spring Space Jump (Intermediate)
+                  Boost Ball and Bomb/Spring Space Jump (Advanced)
 
 > Basement; Heals? False
   > Door to Piston Hall
@@ -4052,12 +4052,30 @@ Asset id: 8621618277057489308
 > Door to Turbine Access; Heals? False; Spawn Point
   * Normal Door to Turbine Access/Door to Piston Hall
   > Door to Concourse
-      Use Screw Attack (Space Jump)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Screw Attack
+                      Boost Ball and Bomb/Spring Space Jump (Intermediate)
+              Screw Attack and Screw Attack at Z-Axis (Advanced)
+  > Lower Ledge (Turbine Access Side)
+      Trivial
 
 > Door to Concourse; Heals? False
   * Normal Door to Concourse/Door to Piston Hall
   > Door to Turbine Access
-      Use Screw Attack (Space Jump)
+      All of the following:
+          Space Jump Boots and Morph Ball
+          Any of the following:
+              Screw Attack
+              Boost Ball and Bomb/Spring Space Jump (Intermediate)
+
+> Lower Ledge (Turbine Access Side); Heals? False
+  > Door to Turbine Access
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Concourse Access B
@@ -4075,10 +4093,12 @@ Asset id: 2885109498150538605
 ----------------
 Zipline Station Delta
 Asset id: 13160313838438792806
-> Door to Maintenance Shaft CC; Heals? False
+> Door to Maintenance Shaft CC; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft CC/Door to Zipline Station Delta
   > Door to Transit Tube A
       Use Screw Attack (Space Jump)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
 
 > Door to Concourse Access B; Heals? False
   * Normal Door to Concourse Access B/Door to Zipline Station Delta
@@ -4086,17 +4106,27 @@ Asset id: 13160313838438792806
       Trivial
   > Door to Transit Tube B
       Grapple Swing
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
 
 > Door to Transit Tube A; Heals? False
   * Normal Door to Transit Tube A/Door to Zipline Station Delta
-  > Door to Maintenance Shaft CC
-      Use Screw Attack (Space Jump)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
 
 > Door to Transit Tube B; Heals? False
   * Normal Door to Transit Tube B/Door to Zipline Station Delta
   > Door to Concourse Access B
       Grapple Swing
   > Door to Transit Tube A
+      Trivial
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
+
+> Out of Bounds; Heals? False
+  > Door to Concourse Access B
+      Trivial
+  > Door to Transit Tube B
       Trivial
 
 ----------------
@@ -4176,7 +4206,7 @@ Asset id: 11329003787389696749
 ----------------
 Xenoresearch A Lift
 Asset id: 9772683067190669679
-> Door to Research Pod Lift; Heals? False
+> Door to Research Pod Lift; Heals? False; Spawn Point
   * Normal Door to Research Pod Lift/Door to Xenoresearch A Lift
   > Door to Xenoresearch A
       Trivial
@@ -4188,7 +4218,9 @@ Asset id: 9772683067190669679
   > Pickup (Energy Tank)
       All of the following:
           After Xenoresearch Power Outage
-          Charge Beam or Missile
+          Any of the following:
+              Charge Beam or Missile
+              Knowledge (Beginner) and Use Screw Attack (No Space Jump)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 68; Major Location? False
@@ -4198,27 +4230,23 @@ Asset id: 9772683067190669679
 ----------------
 Xenoresearch A
 Asset id: 1041714618950868912
-> Door to Xenoresearch A Lift; Heals? False
+> Door to Xenoresearch A Lift; Heals? False; Spawn Point
   * Normal Door to Xenoresearch A Lift/Door to Xenoresearch A
   > Door to Xenoresearch B Lift
       Any of the following:
           After Xenoresearch A Seeker Gate
-          Boost Ball and Before Xenoresearch Power Outage
-  > Event - Seeker Gate
-      Missile ≥ 5 and Seeker Missile
+          Morph Ball and Boost Ball and Before Xenoresearch Power Outage
 
 > Door to Xenoresearch B Lift; Heals? False
   * Normal Door to Xenoresearch B Lift/Door to Xenoresearch A
   > Door to Xenoresearch A Lift
-      Any of the following:
-          After Xenoresearch A Seeker Gate
-          Boost Ball and Before Xenoresearch Power Outage
+      After Xenoresearch A Seeker Gate
   > Event - Seeker Gate
       Missile ≥ 5 and Seeker Missile
 
 > Event - Seeker Gate; Heals? False
   * Event Xenoresearch A Seeker Gate
-  > Door to Xenoresearch A Lift
+  > Door to Xenoresearch B Lift
       Trivial
 
 ----------------
@@ -4229,7 +4257,7 @@ Asset id: 4184180050467657910
   > Door to Xenoresearch A
       Trivial
 
-> Door to Xenoresearch A; Heals? False
+> Door to Xenoresearch A; Heals? False; Spawn Point
   * Normal Door to Xenoresearch A/Door to Xenoresearch B Lift
   > Door to Xenoresearch B
       Trivial
@@ -4237,39 +4265,39 @@ Asset id: 4184180050467657910
 ----------------
 Xenoresearch B
 Asset id: 17636479515754825573
-> Door to Xenoresearch B Lift; Heals? False
+> Door to Xenoresearch B Lift; Heals? False; Spawn Point
   * Normal Door to Xenoresearch B Lift/Door to Xenoresearch B
-  > Event - Seeker Gate
-      Missile ≥ 5 and Seeker Missile
-  > Central Hallways
-      Trivial
+  > Pickup (Energy Cell)
+      Grapple Lasso and Morph Ball Bombs and Morph Ball
 
 > Pickup (Seeker Missile); Heals? False
   * Pickup 69; Major Location? True
-  > Central Hallways
-      Missile ≥ 5 and Seeker Missile
+  > Power Outage Room
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 70; Major Location? False
-  > Pickup (Seeker Missile)
-      Charge Beam or Missile
+  > Event - Xenoresearch Power Outage
+      Trivial
 
 > Event - Xenoresearch Power Outage; Heals? False
   * Event Xenoresearch Power Outage
-  > Pickup (Energy Cell)
+  > Power Outage Room
       Trivial
 
-> Event - Seeker Gate; Heals? False
+> Event - Seeker Gates; Heals? False
   * Event Xenoresearch B Seeker Gate
-  > Door to Xenoresearch B Lift
+  > Power Outage Room
       Trivial
 
-> Central Hallways; Heals? False
+> Power Outage Room; Heals? False
   > Door to Xenoresearch B Lift
       After Xenoresearch B Seeker Gate
-  > Event - Xenoresearch Power Outage
-      Grapple Lasso
-  > Event - Seeker Gate
+  > Pickup (Seeker Missile)
+      Any of the following:
+          Charge Beam or Missile
+          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Event - Seeker Gates
       Missile ≥ 5 and Seeker Missile
 
 ----------------
@@ -4359,7 +4387,7 @@ Asset id: 8211108078275787776
               Knowledge (Beginner)
               Enter Hypermode or Use Screw Attack (Space Jump)
   > Top Level
-      Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate) and Use Screw Attack (Space Jump)
+      Bomb/Spring Space Jump (Intermediate) and Standable Terrain (Intermediate) and Terminal Fall Abuse (Intermediate) and Use Screw Attack (Space Jump)
 
 > Event - Berserker Lord; Heals? False
   * Event Berserker Lord (Elysia)
