@@ -67,7 +67,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._register_random_starting_events()
         self._create_progressive_widgets(item_database)
         self._create_split_ammo_widgets(item_database)
-        self._create_categories_boxes(size_policy)
+        self._create_categories_boxes(item_database, size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
@@ -256,14 +256,18 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         for widget in self._split_ammo_widgets:
             self.item_alternative_layout.addWidget(widget)
 
-    def _create_categories_boxes(self, size_policy):
+    def _create_categories_boxes(self, item_database: ItemDatabase, size_policy):
         self._boxes_for_category = {}
 
-        current_row = 0
-        for major_item_category in iterate_enum(ItemCategory):
-            if not major_item_category.is_major_category and major_item_category != ItemCategory.ENERGY_TANK:
-                continue
+        categories = set()
+        for major_item in item_database.major_items.values():
+            if not major_item.required:
+                categories.add(major_item.item_category)
 
+        all_categories = list(iterate_enum(ItemCategory))
+
+        current_row = 0
+        for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_button = QToolButton(self.major_items_box)
             category_button.setGeometry(QRect(20, 30, 24, 21))
             category_button.setText("+")
@@ -316,7 +320,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         """
         major_items_configuration = self._editor.major_items_configuration
 
-        popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item])
+        popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item],
+                                       default_database.resource_database_for(self.game))
         result = popup.exec_()
 
         if result == QDialog.Accepted:
