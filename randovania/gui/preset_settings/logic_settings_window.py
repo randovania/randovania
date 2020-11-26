@@ -517,6 +517,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
         self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
 
+        vertical_layouts = [
+            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
+            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
+        ]
+        for layout in vertical_layouts:
+            self.excluded_locations_area_layout.addLayout(layout)
+
         world_list = self.game_description.world_list
         self._location_pool_for_node = {}
 
@@ -536,14 +543,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                             node_name = node.name
                         node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
 
-        for world_name in sorted(nodes_by_world.keys()):
+        for i, world_name in enumerate(sorted(nodes_by_world.keys())):
             group_box = QGroupBox(self.excluded_locations_area_contents)
             group_box.setTitle(world_name)
             vertical_layout = QVBoxLayout(group_box)
             vertical_layout.setContentsMargins(8, 4, 8, 4)
             vertical_layout.setSpacing(2)
             group_box.vertical_layout = vertical_layout
-            self.excluded_locations_area_layout.addWidget(group_box)
+            vertical_layouts[i % len(vertical_layouts)].addWidget(group_box)
 
             for node in sorted(nodes_by_world[world_name], key=node_names.get):
                 check = QtWidgets.QCheckBox(group_box)
@@ -552,6 +559,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 check.stateChanged.connect(functools.partial(self._on_check_location, check))
                 group_box.vertical_layout.addWidget(check)
                 self._location_pool_for_node[node] = check
+
+        for layout in vertical_layouts:
+            layout.addSpacerItem(
+                QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:
