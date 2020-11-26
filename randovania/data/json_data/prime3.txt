@@ -857,14 +857,10 @@ Asset id: 10896162079835248148
   * Normal Door to Hangar A Access/Door to Repair Bay
   > Door to Stairwell
       Any of the following:
-          Charge Beam or Missile
+          Charge Beam or Missile or Enter Hypermode or Use Screw Attack (Space Jump)
           All of the following:
-              Knowledge (Beginner)
-              Any of the following:
-                  HyperModeTank or Use Screw Attack (Space Jump)
-                  All of the following:
-                      Morph Ball
-                      Morph Ball Bombs or Boost Ball
+              Morph Ball
+              Morph Ball Bombs or Boost Ball
   > Door to Security Station
       Space Jump Boots
 
@@ -1319,7 +1315,7 @@ Asset id: 8468936149308094087
 > Door to Grand Court; Heals? False
   * Normal Door to Grand Court/Door to Grand Court Path
   > Event - Phazon Vines
-      HyperModeTank and Open Gates/Barriers from Behind (Beginner)
+      Open Gates/Barriers from Behind (Beginner) and Enter Hypermode
   > Front of Phazon Vines
       After Grand Court Path Phazon Vines
 
@@ -1345,7 +1341,7 @@ Asset id: 8468936149308094087
               Space Jump Boots
               Slope Jump (Intermediate) and Use Screw Attack (No Space Jump)
   > Event - Phazon Vines
-      HyperModeTank
+      Enter Hypermode
 
 ----------------
 Reliquary I
@@ -2707,7 +2703,7 @@ Asset id: 4196997332781103286
           After Hangar Bay Ship Upgrade or After Corrupted Pool Phazon Vines
           Grapple Swing or Use Screw Attack (Space Jump)
   > Event - Phazon Vines
-      HyperModeTank
+      Enter Hypermode
 
 > Door to Gel Processing Site; Heals? False
   * Normal Door to Gel Processing Site/Door to Corrupted Pool
@@ -3030,7 +3026,7 @@ Asset id: 17976174099400013428
   > Event - Ice Floor
       Any of the following:
           Plasma Beam
-          Charge Beam and HyperModeTank and HyperModeBeam and Knowledge (Beginner)
+          Charge Beam and Knowledge (Beginner) and Enter Hypermode
 
 > Door to Hall of Remembrance (Lower); Heals? False
   * Normal Door to Hall of Remembrance/Door to Imperial Crypt (Lower)
@@ -3081,7 +3077,7 @@ Asset id: 10980580650394598183
   > Event - Ice Floors
       Any of the following:
           Plasma Beam
-          Charge Beam and HyperModeTank and HyperModeBeam and Knowledge (Beginner)
+          Charge Beam and Knowledge (Beginner) and Enter Hypermode
 
 > Event - Ice Floors; Heals? False
   * Event Imperial Caverns Ice Floors
@@ -5953,7 +5949,11 @@ Asset id: 1516173575710242674
   * Normal Door to Mine Lift/Door to Phazon Quarry
   > Door to Transit Station 4-B
 Leads to Command Center
-      After Phazon Quarry Drill Halfpipe
+      Any of the following:
+          After Phazon Quarry Drill Halfpipe
+          All of the following:
+              Movement (Beginner)
+              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Drill Shaft 2; Heals? False
   * Nova Door to Drill Shaft 2/Door to Phazon Quarry
@@ -5964,15 +5964,21 @@ Leads to Command Center
       Trivial
 
 > Door to Transit Station 4-B
-Leads to Command Center; Heals? False
+Leads to Command Center; Heals? False; Spawn Point
   * Normal Door to Transit Station 4-B
 Leads to Command Center/Door to Phazon Quarry
   > Door to Mine Lift
-      Boost Ball and After Phazon Quarry Drill Halfpipe
+      All of the following:
+          After Phazon Quarry Drill Halfpipe
+          Any of the following:
+              Morph Ball and Boost Ball
+              After Phazon Quarry Drill Wall and Movement (Beginner) and Use Screw Attack (Space Jump)
   > Door to Drill Shaft 2
-      After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
+      Space Jump Boots and After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
   > Pickup (Missile Expansion)
-      After Phazon Quarry Drill Wall
+      All of the following:
+          After Phazon Quarry Drill Wall
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
   > Event - Drill Halfpipe
       Trivial
   > Event - Drill Wall
@@ -5985,6 +5991,9 @@ Leads to Command Center/Door to Phazon Quarry
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 94; Major Location? False
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
 
 > Event - Drill Halfpipe; Heals? False
   * Event Phazon Quarry Drill Halfpipe
@@ -6009,9 +6018,9 @@ Asset id: 7923701740032492696
 > Door to Phazon Quarry; Heals? False
   * Nova Door to Phazon Quarry/Door to Drill Shaft 2
   > Door to Main Cavern
-      After Drill Shaft 2 Destroy Drill
+      Space Jump Boots and After Drill Shaft 2 Destroy Drill
 
-> Door to Main Cavern; Heals? False
+> Door to Main Cavern; Heals? False; Spawn Point
   * Normal Door to Main Cavern/Door to Drill Shaft 2
   > Door to Phazon Quarry
       After Drill Shaft 2 Destroy Drill
@@ -6026,12 +6035,16 @@ Asset id: 7923701740032492696
 ----------------
 Mine Lift
 Asset id: 2328629671991442460
-> Door to Phazon Quarry; Heals? False
+> Door to Phazon Quarry; Heals? False; Spawn Point
   * Normal Door to Phazon Quarry/Door to Mine Lift
   > Door to Phazon Harvesting
       After Mine Lift Open Floors
   > Event - Open Shaft
-      Grapple Lasso and Suit Type ≥ 4 and Boost Ball and Spider Ball
+      All of the following:
+          Grapple Lasso and Morph Ball and Boost Ball and Spider Ball
+          Any of the following:
+              Suit Type ≥ 4
+              Movement (Intermediate) and Normal Damage ≥ 100
 
 > Door to Phazon Harvesting; Heals? False
   * Normal Door to Phazon Harvesting/Door to Mine Lift
@@ -6046,23 +6059,29 @@ Asset id: 2328629671991442460
 ----------------
 Phazon Harvesting
 Asset id: 17076000080045116679
-> Door to Mine Lift; Heals? False
+> Door to Mine Lift; Heals? False; Spawn Point
   * Normal Door to Mine Lift/Door to Phazon Harvesting
   > Door to Drill Shaft 1
-      Suit Type ≥ 4
+      Any of the following:
+          Space Jump Boots and Suit Type ≥ 4
+          Movement (Intermediate) and Normal Damage ≥ 200 and Use Screw Attack (Space Jump)
 
 > Door to Drill Shaft 1; Heals? False
   * Normal Door to Drill Shaft 1/Door to Phazon Harvesting
   > Door to Mine Lift
-      Suit Type ≥ 4
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              Suit Type ≥ 4
+              Movement (Intermediate) and Normal Damage ≥ 75
 
 ----------------
 Drill Shaft 1
 Asset id: 15941114407882664050
-> Door to Phazon Harvesting; Heals? False
+> Door to Phazon Harvesting; Heals? False; Spawn Point
   * Normal Door to Phazon Harvesting/Door to Drill Shaft 1
   > Door to Main Cavern
-      Trivial
+      Space Jump Boots
 
 > Door to Main Cavern; Heals? False
   * Normal Door to Main Cavern/Door to Drill Shaft 1
@@ -6075,7 +6094,13 @@ Asset id: 65874966404189819
 > Door to Phazon Mine Entry; Heals? False
   * Normal Door to Phazon Mine Entry/Door to Landing Site Charlie
   > Event - Clean Landing Site
-      Plasma Beam
+      All of the following:
+          Plasma Beam
+          Any of the following:
+              Charge Beam or Missile or Enter Hypermode
+              All of the following:
+                  Morph Ball
+                  Morph Ball Bombs or Screw Attack or Boost Ball
   > Samus Ship
       After Landing Site Charlie Cleanup
 
@@ -6092,7 +6117,7 @@ Asset id: 65874966404189819
 ----------------
 Main Cavern
 Asset id: 3558406334082684652
-> Door to Drill Shaft 1; Heals? False
+> Door to Drill Shaft 1; Heals? False; Spawn Point
   * Normal Door to Drill Shaft 1/Door to Main Cavern
   > Door to Phazon Mine Entry
       Trivial
@@ -6133,7 +6158,7 @@ Leads to Command Center/Door to Save Station
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   > Door to Transit Station 4-B
 Leads to Command Center
       Trivial
@@ -6146,12 +6171,14 @@ Asset id: 6948986767748104139
   > Door to Main Cavern
       Trivial
 
-> Door to Main Cavern; Heals? False
+> Door to Main Cavern; Heals? False; Spawn Point
   * Nova Door to Main Cavern/Door to Phazon Mine Entry
   > Door to Landing Site Charlie
       Trivial
   > Pickup (Missile Expansion)
-      Shoot Phazite (X-Ray and Nova)
+      All of the following:
+          Nova Beam
+          X-Ray Visor or Invisible Objects (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 96; Major Location? False
