@@ -1,5 +1,7 @@
+import collections
 import dataclasses
 import functools
+import re
 from typing import Dict, Optional
 
 from PySide2 import QtCore, QtWidgets
@@ -166,7 +168,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                     continue
 
                 for area in areas:
-                    if area.area_asset_id is self._starting_location_for_area:
+                    if area.area_asset_id in self._starting_location_for_area:
                         is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
                         if is_checked:
                             no_areas = False
@@ -515,33 +517,41 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
         self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
 
-        game_description = self.game_description
-        world_to_group = {}
+        world_list = self.game_description.world_list
         self._location_pool_for_node = {}
 
-        for world in game_description.world_list.worlds:
-            for is_dark_world in [False, True]:
-                group_box = QGroupBox(self.excluded_locations_area_contents)
-                group_box.setTitle(world.correct_name(is_dark_world))
-                vertical_layout = QVBoxLayout(group_box)
-                vertical_layout.setContentsMargins(8, 4, 8, 4)
-                vertical_layout.setSpacing(2)
-                group_box.vertical_layout = vertical_layout
+        nodes_by_world = collections.defaultdict(list)
+        node_names = {}
+        pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
 
-                world_to_group[world.correct_name(is_dark_world)] = group_box
-                self.excluded_locations_area_layout.addWidget(group_box)
+        for world in world_list.worlds:
+            for is_dark_world in dark_world_flags(world):
+                for node in world.all_nodes:
+                    if isinstance(node, PickupNode):
+                        nodes_by_world[world.correct_name(is_dark_world)].append(node)
+                        match = pickup_match.match(node.name)
+                        if match is not None:
+                            node_name = match.group(1)
+                        else:
+                            node_name = node.name
+                        node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
 
-        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
-            if not isinstance(node, PickupNode):
-                continue
+        for world_name in sorted(nodes_by_world.keys()):
+            group_box = QGroupBox(self.excluded_locations_area_contents)
+            group_box.setTitle(world_name)
+            vertical_layout = QVBoxLayout(group_box)
+            vertical_layout.setContentsMargins(8, 4, 8, 4)
+            vertical_layout.setSpacing(2)
+            group_box.vertical_layout = vertical_layout
+            self.excluded_locations_area_layout.addWidget(group_box)
 
-            group_box = world_to_group[world.correct_name(area.in_dark_aether)]
-            check = QtWidgets.QCheckBox(group_box)
-            check.setText(game_description.world_list.node_name(node))
-            check.node = node
-            check.stateChanged.connect(functools.partial(self._on_check_location, check))
-            group_box.vertical_layout.addWidget(check)
-            self._location_pool_for_node[node] = check
+            for node in sorted(nodes_by_world[world_name], key=node_names.get):
+                check = QtWidgets.QCheckBox(group_box)
+                check.setText(node_names[node])
+                check.node = node
+                check.stateChanged.connect(functools.partial(self._on_check_location, check))
+                group_box.vertical_layout.addWidget(check)
+                self._location_pool_for_node[node] = check
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:
