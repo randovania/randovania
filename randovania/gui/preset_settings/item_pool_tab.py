@@ -5,7 +5,7 @@ from functools import partial
 from typing import Dict, Tuple, List, Optional
 
 from PySide2.QtCore import QRect, Qt
-from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
+from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
     QHBoxLayout, QCheckBox
 
 from randovania.game_description import default_database
@@ -18,7 +18,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
-from randovania.gui.generated.main_rules_ui import Ui_MainRules
+from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
+from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.interface_common.enum_lib import iterate_enum
@@ -41,7 +42,7 @@ def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
     toggle_button.setText("-" if box.isVisible() else "+")
 
 
-class MainRulesWindow(QMainWindow, Ui_MainRules):
+class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _boxes_for_category: Dict[
         ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
 
@@ -71,6 +72,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
+
+    @property
+    def uses_patches_tab(self) -> bool:
+        return False
 
     def on_preset_changed(self, preset: Preset):
         # Item alternatives

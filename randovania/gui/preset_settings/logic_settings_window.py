@@ -2,7 +2,7 @@ import collections
 import dataclasses
 import functools
 import re
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
@@ -15,15 +15,17 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
-from randovania.gui.game_patches_window import GamePatchesWindow
+from randovania.gui.game_patches_window import PresetEchoesPatches
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.item_pool_tab import MainRulesWindow
+from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
@@ -63,6 +65,7 @@ _BEAMS = {
 
 
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
+    _extra_tabs: List[PresetTab]
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
@@ -79,17 +82,28 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._editor = editor
         self._window_manager = window_manager
-        self._main_rules = MainRulesWindow(editor)
-        self._game_patches = GamePatchesWindow(editor)
+        self._main_rules = PresetItemPool(editor)
+        self._extra_tabs = []
 
         self.game_enum = editor.layout_configuration.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
-        # Update with Options
-        self.logic_tab_widget.addTab(self._main_rules.centralWidget, "Item Pool")
-        self.patches_tab_widget.addTab(self._game_patches.centralWidget, "Other")
+        self._extra_tabs.append(PresetItemPool(editor))
+
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self._extra_tabs.append(PresetEchoesPatches(editor))
+
+        elif self.game_enum == RandovaniaGame.PRIME3:
+            pass
+
+        for extra_tab in self._extra_tabs:
+            if extra_tab.uses_patches_tab:
+                tab = self.patches_tab_widget
+            else:
+                tab = self.logic_tab_widget
+            tab.addTab(extra_tab, extra_tab.tab_title)
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
@@ -115,8 +129,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     # Options
     def on_preset_changed(self, preset: Preset):
-        self._main_rules.on_preset_changed(preset)
-        self._game_patches.on_preset_changed(preset)
+        for extra_tab in self._extra_tabs:
+            extra_tab.on_preset_changed(preset)
 
         # Variables
         layout_config = preset.layout_configuration
