@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QMainWindow, QComboBox
+from PySide2.QtWidgets import QComboBox
 
 from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
