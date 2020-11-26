@@ -5357,15 +5357,15 @@ Asset id: 4408585131827753141
 ----------------
 Security Air Lock
 Asset id: 5682718801820042955
-> Door to Lift Hub; Heals? False
+> Door to Lift Hub; Heals? False; Spawn Point
   * Normal Door to Lift Hub/Door to Security Air Lock
   > Door to Defense Access
-      After Security Air Lock Gate
+      Morph Ball and After Security Air Lock Gate
 
 > Door to Defense Access; Heals? False
   * Normal Door to Defense Access/Door to Security Air Lock
   > Door to Lift Hub
-      After Security Air Lock Gate
+      Morph Ball and After Security Air Lock Gate
   > Pickup (Missile Expansion)
       Trivial
   > Event - Gate
@@ -5387,23 +5387,34 @@ Asset id: 1808913861159744919
 > Morph Ball Door to Command Station; Heals? False
   * Morph Ball Door to Command Station/Morph Ball Door to Command Vault
   > Room Center
-      Trivial
+      Morph Ball
 
 > Morph Ball Door to Defense Access; Heals? False
-  * Morph Ball Door to Defense Access/Door to Command Vault
+  * Morph Ball Door to Defense Access/Morph Ball Door to Command Vault
+  > Room Center
+      Morph Ball and After Command Vault Tunnel Open
 
 > Pickup (X-Ray Visor); Heals? False
   * Pickup 87; Major Location? True
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   > Morph Ball Door to Command Station
-      Spider Ball
+      Morph Ball and Spider Ball
   > Morph Ball Door to Defense Access
-      X-Ray Visor
+      Morph Ball and After Command Vault Tunnel Open
   > Pickup (X-Ray Visor)
-      Missile ≥ 5 and Seeker Missile
+      Any of the following:
+          Missile ≥ 5 and Seeker Missile
+          Charge Beam and Knowledge (Intermediate) and Enter Hypermode
+  > Event - Tunnel Open
+      X-Ray Visor
+
+> Event - Tunnel Open; Heals? False
+  * Event Command Vault Tunnel Open
+  > Room Center
+      Trivial
 
 ----------------
 Command Courtyard
@@ -5413,31 +5424,33 @@ Asset id: 18221971457754325372
   > Door to Lift Hub
       After Command Courtyard Grapple Voltage Barrier
 
-> Door to Lift Hub; Heals? False
+> Door to Lift Hub; Heals? False; Spawn Point
   * Plasma Door to Lift Hub/Door to Command Courtyard
   > Door to Courtyard Passage
       After Command Courtyard Grapple Voltage Barrier
   > Morph Ball Door to Flux Control
-      After Command Courtyard Fans
-  > Pickup (Energy Cell)
-      Trivial
+      Morph Ball and After Command Courtyard Fans
   > Event - Grapple Voltage Barrier
-      Grapple Voltage and Suit Type ≥ 4
+      All of the following:
+          Use Grapple Voltage (Lasso and Voltage)
+          Any of the following:
+              Suit Type ≥ 4
+              Movement (Intermediate) and Normal Damage ≥ 50
+  > Upper Level
+      Space Jump Boots and Morph Ball
 
 > Morph Ball Door to Flux Control; Heals? False
-  * Morph Ball Door to Flux Control/Door to Command Courtyard
+  * Morph Ball Door to Flux Control/Morph Ball Door to Command Courtyard
   > Door to Lift Hub
-      After Command Courtyard Fans
+      Morph Ball and After Command Courtyard Fans
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 88; Major Location? False
-  > Pickup (Energy Cell)
+  > Upper Level
       Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 89; Major Location? False
-  > Pickup (Missile Expansion)
-      Trivial
   > Event - Fans
       Trivial
 
@@ -5448,7 +5461,19 @@ Asset id: 18221971457754325372
 
 > Event - Fans; Heals? False
   * Event Command Courtyard Fans
+  > Upper Level
+      Trivial
+
+> Upper Level; Heals? False
+  > Door to Courtyard Passage
+      All of the following:
+          Bomb/Spring Space Jump (Advanced) and Use Screw Attack (Space Jump)
+          Suit Type ≥ 4 or Normal Damage ≥ 100
   > Door to Lift Hub
+      Trivial
+  > Pickup (Missile Expansion)
+      Morph Ball
+  > Pickup (Energy Cell)
       Trivial
 
 ----------------
@@ -5459,30 +5484,32 @@ Asset id: 13589229454537797972
   > Door to Defense Access (Base)
       After Command Station Phazon Blob
 
-> Morph Ball Door to Flux Control; Heals? False
-  * Morph Ball Door to Flux Control/Door to Command Station
+> Morph Ball Door to Flux Control; Heals? False; Spawn Point
+  * Morph Ball Door to Flux Control/Morph Ball Door to Command Station
   > Morph Ball Door to Command Vault
       Trivial
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
 
 > Door to Defense Access (Base); Heals? False
   * Nova Door to Defense Access/Door to Command Station (Base)
   > Door to Transit Station 2-A
       After Command Station Phazon Blob
   > Pickup (Missile Expansion)
-      After Command Station Morph Ball Barrier
+      Morph Ball and After Command Station Morph Ball Barrier
   > Event - Morph Ball Barrier
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
   > Event - Phazon Blob
-      HyperModeTank and Hyper Grapple
+      Hyper Grapple and Enter Hypermode and Use Grapple Voltage (Lasso and Voltage)
   > Event - Disable Defense
-      Morph Ball Bombs and Shoot Phazite (X-Ray and Nova)
+      All of the following:
+          Morph Ball Bombs and Morph Ball and Shoot Phazite (X-Ray and Nova)
+          Space Jump Boots or Bomb/Spring Space Jump (Hypermode)
 
 > Morph Ball Door to Command Vault; Heals? False
   * Morph Ball Door to Command Vault/Morph Ball Door to Command Station
   > Morph Ball Door to Flux Control
-      Trivial
+      Morph Ball
 
 > Door to Defense Access (Balcony); Heals? False
   * Normal Door to Defense Access/Door to Command Station (Balcony)
@@ -5636,22 +5663,32 @@ Asset id: 13825059228540765135
 ----------------
 Flux Control
 Asset id: 5194668821114474017
-> Door to Command Courtyard; Heals? False
-  * Normal Door to Command Courtyard/Morph Ball Door to Flux Control
-  > Door to Command Station
-      Trivial
-
-> Door to Command Station; Heals? False
-  * Normal Door to Command Station/Morph Ball Door to Flux Control
+> Morph Ball Door to Command Courtyard; Heals? False; Spawn Point
+  * Morph Ball Door to Command Courtyard/Morph Ball Door to Flux Control
   > Pickup (Missile Expansion)
-      Grapple Lasso and Spider Ball
+      Space Jump Boots and Morph Ball and Spider Ball and Bomb/Spring Space Jump (Intermediate) and Instant Morph (Intermediate)
+  > Lower Level
+      Morph Ball
+
+> Morph Ball Door to Command Station; Heals? False
+  * Morph Ball Door to Command Station/Morph Ball Door to Flux Control
+  > Lower Level
+      Morph Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 91; Major Location? False
-  > Door to Command Courtyard
-      Spider Ball
-  > Door to Command Station
-      Trivial
+  > Morph Ball Door to Command Courtyard
+      Morph Ball and Spider Ball
+  > Lower Level
+      Morph Ball
+
+> Lower Level; Heals? False
+  > Morph Ball Door to Command Courtyard
+      Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
+  > Morph Ball Door to Command Station
+      Grapple Lasso and Morph Ball
+  > Pickup (Missile Expansion)
+      Morph Ball Bombs and Morph Ball and Spider Ball
 
 ----------------
 Transit Tunnel P70
@@ -5672,26 +5709,28 @@ Asset id: 9997664456677642630
 > Door to Transit Tunnel P70; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel P70/Door to Transit Station Leviathan
   > Event - Pirate Commander
-      Trivial
+      Space Jump Boots
   > Samus Ship
-      Suit Type ≥ 4 and After Pirate Commander
+      After Transit Station Leviathan Door
 
 > Event - Pirate Commander; Heals? False
   * Event Pirate Commander
-  > Door to Transit Tunnel P70
-      Trivial
+  > Event - Destroy Door
+      Space Jump Boots and Use Ship Missile (Command Visor and Ship Missile)
 
 > Event - Destroy Door; Heals? False
   * Event Transit Station Leviathan Door
   > Samus Ship
-      Trivial
+      Any of the following:
+          Suit Type ≥ 4
+          Movement (Beginner) and Normal Damage ≥ 10
 
 > Samus Ship; Heals? True
-  * Player Ship (Unlocked by After Pirate Commander)
+  * Player Ship (Unlocked by After Transit Station Leviathan Door)
   > Door to Transit Tunnel P70
-      Suit Type ≥ 4
-  > Event - Destroy Door
-      Ship Missile
+      Any of the following:
+          Suit Type ≥ 4
+          Movement (Beginner) and Normal Damage ≥ 10
 
 ----------------
 Leviathan
@@ -5709,7 +5748,7 @@ Asset id: 5604040344596242484
 ----------------
 Lift Hub
 Asset id: 2807909054514352708
-> Door to Lift Hub Access; Heals? False
+> Door to Lift Hub Access; Heals? False; Spawn Point
   * Normal Door to Lift Hub Access/Door to Lift Hub
   > Elevator
       Trivial
@@ -5724,9 +5763,25 @@ Leads to Research Facility; Heals? False
   * Normal Door to Transit Station 3-B
 Leads to Research Facility/Door to Lift Hub
   > Elevator
-      Suit Type ≥ 4 and After Lift Hub Morph Ball Bomb Gate
+      All of the following:
+          Morph Ball Bombs and Morph Ball
+          Any of the following:
+              Suit Type ≥ 4
+              All of the following:
+                  Movement (Expert)
+                  Any of the following:
+                      Normal Damage ≥ 1100
+                      Boost Ball and Normal Damage ≥ 900
   > Event - Morph Ball Bomb Gate
-      Morph Ball Bombs and Suit Type ≥ 4
+      All of the following:
+          Morph Ball Bombs and Morph Ball
+          Any of the following:
+              Suit Type ≥ 4
+              All of the following:
+                  Movement (Expert)
+                  Any of the following:
+                      Normal Damage ≥ 1100
+                      Boost Ball and Normal Damage ≥ 900
 
 > Door to Security Air Lock; Heals? False
   * Normal Door to Security Air Lock/Door to Lift Hub
@@ -5745,11 +5800,27 @@ Leads to Research Facility/Door to Lift Hub
       Trivial
   > Door to Transit Station 3-B
 Leads to Research Facility
-      Suit Type ≥ 4 and After Lift Hub Morph Ball Bomb Gate
+      All of the following:
+          Morph Ball Bombs and Morph Ball
+          Any of the following:
+              All of the following:
+                  After Lift Hub Morph Ball Bomb Gate
+                  Any of the following:
+                      Suit Type ≥ 4
+                      All of the following:
+                          Movement (Expert)
+                          Any of the following:
+                              Normal Damage ≥ 1100
+                              Boost Ball and Normal Damage ≥ 900
+              All of the following:
+                  Space Jump Boots and Bomb/Spring Space Jump (Expert)
+                  Suit Type ≥ 4 or Normal Damage ≥ 500
   > Door to Security Air Lock
       Trivial
   > Pickup (Missile Expansion)
-      Grapple Voltage
+      All of the following:
+          Use Grapple Voltage (Lasso and Voltage)
+          Charge Beam or Missile
   > Event - Pirate Homeworld Map
       X-Ray Visor
 
@@ -5761,7 +5832,7 @@ Leads to Research Facility
 > Event - Morph Ball Bomb Gate; Heals? False
   * Event Lift Hub Morph Ball Bomb Gate
   > Elevator
-      Suit Type ≥ 4
+      Trivial
 
 ----------------
 Courtyard Passage
@@ -5771,7 +5842,7 @@ Asset id: 5574135827721005616
   > Door to Command Courtyard
       Trivial
 
-> Door to Command Courtyard; Heals? False
+> Door to Command Courtyard; Heals? False; Spawn Point
   * Normal Door to Command Courtyard/Door to Courtyard Passage
   > Door to Skyway Access
       Trivial
@@ -5779,7 +5850,7 @@ Asset id: 5574135827721005616
 ----------------
 Skyway Access
 Asset id: 8444926274755356434
-> Door to Courtyard Passage; Heals? False
+> Door to Courtyard Passage; Heals? False; Spawn Point
   * Normal Door to Courtyard Passage/Door to Skyway Access
   > Door to Defense Access
       Suit Type ≥ 4
@@ -5789,7 +5860,7 @@ Asset id: 8444926274755356434
       After Command Station Disable Defense
 
 > Door to Defense Access; Heals? False
-  * Morph Ball Door to Defense Access/Door to Skyway Access
+  * Morph Ball Door to Defense Access/Morph Ball Door from Skyway Access
 
 > Door to Transit Station 1104; Heals? False
   * Normal Door to Transit Station 1104/Door to Skyway Access
@@ -5836,10 +5907,10 @@ Leads to Command Center
 ----------------
 Defense Access
 Asset id: 3288365355139345163
-> Door to Command Vault; Heals? False
+> Morph Ball Door to Command Vault; Heals? False; Spawn Point
   * Morph Ball Door to Command Vault/Morph Ball Door to Defense Access
   > Hall Center
-      Trivial
+      Morph Ball
 
 > Door to Command Station (Base); Heals? False
   * Nova Door to Command Station/Door to Defense Access (Base)
@@ -5862,31 +5933,31 @@ Leads to Mining Site; Heals? False
 Leads to Mining Site/Door to Defense Access
   > Hall Center
       After Defense Access Voltage Barrier
-  > Event - Voltage Barrier
-      Grapple Voltage
+  > Front of Spider Tracks
+      Trivial
 
-> Door to Skyway Access; Heals? False
+> Morph Ball Door from Skyway Access; Heals? False
   * Morph Ball Door to Skyway Access/Door to Defense Access
-  > Door to Transit Station 4-A
-Leads to Mining Site
-      Spider Ball
-  > Event - Voltage Barrier
-      Grapple Voltage
+  > Front of Spider Tracks
+      Trivial
 
 > Hall Center; Heals? False
+  > Morph Ball Door to Command Vault
+      Morph Ball and Boost Ball and Movement (Expert)
   > Door to Command Station (Base)
       After Defense Access Phazite Wall
   > Door to Command Station (Balcony)
       After Defense Access X-Ray Terminal
   > Door to Security Air Lock
       Trivial
-  > Door to Transit Station 4-A
-Leads to Mining Site
-      Spider Ball and After Defense Access Voltage Barrier
   > Event - Phazite Wall
-      Shoot Phazite (X-Ray and Nova)
+      All of the following:
+          Nova Beam
+          X-Ray Visor or Invisible Objects (Beginner)
   > Event - X-Ray Terminal
       X-Ray Visor
+  > Front of Spider Tracks
+      After Defense Access Voltage Barrier
 
 > Event - Phazite Wall; Heals? False
   * Event Defense Access Phazite Wall
@@ -5900,13 +5971,28 @@ Leads to Mining Site
 
 > Event - Voltage Barrier; Heals? False
   * Event Defense Access Voltage Barrier
-  > Hall Center
+  > Front of Spider Tracks
       Trivial
+
+> Front of Spider Tracks; Heals? False
+  > Door to Transit Station 4-A
+Leads to Mining Site
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bombs and Spider Ball
+              All of the following:
+                  After Defense Access Voltage Barrier and Single Room Out of Bounds (Expert)
+                  Morph Ball Bombs or Boost Ball
+  > Hall Center
+      After Defense Access Voltage Barrier
+  > Event - Voltage Barrier
+      Use Grapple Voltage (Lasso and Voltage)
 
 ----------------
 Lift Hub Access
 Asset id: 16310261264317403600
-> Door to Landing Site Bravo; Heals? False
+> Door to Landing Site Bravo; Heals? False; Spawn Point
   * Normal Door to Landing Site Bravo/Door to Lift Hub Access
   > Door to Lift Hub
       Trivial
