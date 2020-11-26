@@ -3141,7 +3141,7 @@ Asset id: 4133901881028310574
   > Pickup (Missile Expansion)
       After Ghor and Melt Objects (Plasma or Nova)
   > Pickup (Plasma Beam)
-      After Ghor
+      Morph Ball and After Ghor
   > Samus Ship (Catch.)
       Trivial
   > Event - Ghor
@@ -3149,7 +3149,7 @@ Asset id: 4133901881028310574
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 51; Major Location? False
-  > Samus Ship (Catch.)
+  > Door to Main Docking Access
       Trivial
 
 > Pickup (Plasma Beam); Heals? False
@@ -3160,7 +3160,7 @@ Asset id: 4133901881028310574
 > Samus Ship (Catch.); Heals? True; Spawn Point
   * Player Ship (Unlocked by Trivial)
   > Door to Main Docking Access
-      Before Aurora Chamber Skytown Vaccine or Melt Objects (Plasma or Nova)
+      Plasma Beam or Before Aurora Chamber Skytown Vaccine
 
 > Event - Ghor; Heals? False
   * Event Ghor
@@ -3170,45 +3170,55 @@ Asset id: 4133901881028310574
 ----------------
 Zipline Station Alpha
 Asset id: 201801993056581673
-> Door to Main Docking Access; Heals? False
+> Door to Main Docking Access; Heals? False; Spawn Point
   * Normal Door to Main Docking Access/Door to Zipline Station Alpha
   > Door to Arrival Station
-      Grapple Swing
+      Any of the following:
+          Grapple Swing
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Hypermode) and Single Room Out of Bounds (Hypermode) and Fall Respawn Skip (Hypermode)
 
 > Door to Arrival Station; Heals? False
   * Normal Door to Arrival Station/Door to Zipline Station Alpha
   > Door to Main Docking Access
-      Grapple Swing
+      Any of the following:
+          Grapple Swing
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Hypermode) and Single Room Out of Bounds (Hypermode) and Fall Respawn Skip (Hypermode)
 
 ----------------
 Arrival Station
 Asset id: 14742980547553882067
-> Door to Zipline Station Alpha; Heals? False
+> Door to Zipline Station Alpha; Heals? False; Spawn Point
   * Normal Door to Zipline Station Alpha/Door to Arrival Station
-  > Door to Hub Access
-      Trivial
+  > Ledge
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Hub Access; Heals? False
   * Normal Door to Hub Access/Door to Arrival Station
-  > Door to Zipline Station Alpha
-      Trivial
-  > Pickup (Energy Tank)
-      Boost Ball
+  > Ledge
+      Space Jump Boots or Terminal Fall Abuse (Beginner) or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 53; Major Location? False
+  > Ledge
+      Trivial
+
+> Ledge; Heals? False
+  > Door to Zipline Station Alpha
+      Trivial
   > Door to Hub Access
       Trivial
+  > Pickup (Energy Tank)
+      Space Jump Boots and Morph Ball and Boost Ball
 
 ----------------
 Barracks Access
 Asset id: 4910606911885883821
-> Door to Transit Hub; Heals? False
+> Door to Transit Hub; Heals? False; Spawn Point
   * Normal Door to Transit Hub/Door to Barracks Access
   > Door to Steambot Barracks
       Trivial
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
 
 > Door to Steambot Barracks; Heals? False
   * Normal Door to Steambot Barracks/Door to Barracks Access
@@ -3228,7 +3238,7 @@ Asset id: 11556115933702107376
   > Door to Arrival Station
       Trivial
 
-> Door to Arrival Station; Heals? False
+> Door to Arrival Station; Heals? False; Spawn Point
   * Normal Door to Arrival Station/Door to Hub Access
   > Door to Transit Hub
       Trivial
@@ -3239,18 +3249,24 @@ Asset id: 11193898588728046860
 > Door to Zipline Station Bravo; Heals? False
   * Normal Door to Zipline Station Bravo/Door to Barracks Lift
   > Door to Steambot Barracks
-      Trivial
-  > Door to Hoverplat Docking Site
-      Trivial
+      After Barracks Lift Activated
 
-> Door to Steambot Barracks; Heals? False
+> Door to Steambot Barracks; Heals? False; Spawn Point
   * Normal Door to Steambot Barracks/Door to Barracks Lift
   > Door to Zipline Station Bravo
+      After Barracks Lift Activated
+  > Door to Hoverplat Docking Site
+      Trivial
+  > Event - Lift Activated
       Trivial
 
 > Door to Hoverplat Docking Site; Heals? False
   * Normal Door to Hoverplat Docking Site/Door to Barracks Lift
-  > Door to Zipline Station Bravo
+  > Door to Steambot Barracks
+      Trivial
+
+> Event - Lift Activated; Heals? False
+  > Door to Steambot Barracks
       Trivial
 
 ----------------
@@ -3258,18 +3274,32 @@ Aurora Lift
 Asset id: 9894117388493814037
 > Door to Aurora Chamber; Heals? False
   * Normal Door to Aurora Chamber/Door to Aurora Lift
-  > Door to Save Station A
-      Trivial
   > Door to Zipline Station Bravo
-      Trivial
+      After Aurora Lift Activated
+  > Event - Aurora Chamber Reloaded
+      After Aurora Lift Activated and After Aurora Chamber Skytown Vaccine
 
 > Door to Save Station A; Heals? False
   * Ice Missile Blast Shield to Save Station A/Door to Aurora Lift
-  > Door to Aurora Chamber
+  > Door to Zipline Station Bravo
       Trivial
 
-> Door to Zipline Station Bravo; Heals? False
+> Door to Zipline Station Bravo; Heals? False; Spawn Point
   * Normal Door to Zipline Station Bravo/Door to Aurora Lift
+  > Door to Aurora Chamber
+      After Aurora Lift Activated
+  > Door to Save Station A
+      Trivial
+  > Event - Lift Activated
+      Trivial
+
+> Event - Lift Activated; Heals? False
+  * Event Aurora Lift Activated
+  > Door to Zipline Station Bravo
+      Trivial
+
+> Event - Aurora Chamber Reloaded; Heals? False
+  * Event Aurora Chamber Skytown Reloaded After Vaccine
   > Door to Aurora Chamber
       Trivial
 
@@ -3281,12 +3311,12 @@ Asset id: 3066396911819856814
   > Door to Aurora Lift
       Trivial
 
-> Door to Aurora Lift; Heals? False
+> Door to Aurora Lift; Heals? False; Spawn Point
   * Normal Door to Aurora Lift/Door to Aurora Chamber
   > Door to Maintenance Shaft AU
       Trivial
   > Inside Aurora Chamber
-      Boost Ball
+      Morph Ball and Boost Ball
 
 > Inside Aurora Chamber; Heals? False
   > Door to Aurora Lift
@@ -3294,7 +3324,7 @@ Asset id: 3066396911819856814
   > Event - Aurora Vaccine
       Trivial
   > Event - Aurora Circuits
-      Plasma Beam and After Ghor and After Aurora Chamber Skytown Vaccine
+      Plasma Beam and After Aurora Chamber Skytown Reloaded After Vaccine and After Aurora Chamber Skytown Vaccine
 
 > Event - Aurora Vaccine; Heals? False
   * Event Aurora Chamber Skytown Vaccine
@@ -3309,45 +3339,57 @@ Asset id: 3066396911819856814
 ----------------
 Hoverplat Docking Site
 Asset id: 10164050604229640228
-> Door to Barracks Lift; Heals? False
+> Door to Barracks Lift; Heals? False; Spawn Point
   * Normal Door to Barracks Lift/Door to Hoverplat Docking Site
-  > Room Center
+  > Center Platform
       Use Screw Attack (Space Jump)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
 
 > Door to Junction; Heals? False
   * Normal Door to Junction/Door to Hoverplat Docking Site
-  > Room Center
+  > Center Platform
       Use Screw Attack (Space Jump)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced) and Fall Respawn Skip (Advanced)
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 55; Major Location? False
-  > Room Center
+  > Center Platform
       Trivial
 
-> Room Center; Heals? False
+> Center Platform; Heals? False
   > Door to Barracks Lift
       Use Screw Attack (Space Jump)
   > Door to Junction
       Use Screw Attack (Space Jump)
   > Pickup (Ship Missile Expansion)
-      Boost Ball and Spider Ball
+      Morph Ball and Boost Ball and Spider Ball
+
+> Out of Bounds; Heals? False
+  > Door to Barracks Lift
+      Trivial
+  > Door to Junction
+      Trivial
+  > Center Platform
+      Trivial
 
 ----------------
 Skybridge Hera
 Asset id: 10733512082794532665
-> Door to Junction; Heals? False
+> Door to Junction; Heals? False; Spawn Point
   * Normal Door to Junction/Door to Skybridge Hera
   > Door to Maintenance Shaft GP
-      Boost Ball and After Defense Drone
+      Morph Ball and Boost Ball and After Defense Drone and After Skybridge Hera Destroy Bridge
   > Pillar Platform
       Grapple Lasso
 
 > Door to Maintenance Shaft GP; Heals? False
   * Normal Door to Maintenance Shaft GP/Door to Skybridge Hera
   > Door to Junction
-      Boost Ball and After Defense Drone
+      Morph Ball and Boost Ball and After Defense Drone
   > Pillar Platform
-      Use Screw Attack (Space Jump)
+      After Skybridge Hera Destroy Bridge and Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 56; Major Location? False
@@ -3360,7 +3402,7 @@ Asset id: 10733512082794532665
   > Door to Maintenance Shaft GP
       Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
   > Event - Destroy Bridge
       Trivial
 
@@ -3374,54 +3416,72 @@ Zipline Station Charlie
 Asset id: 17641492364836789457
 > Door to Powerworks Access; Heals? False
   * Normal Door to Powerworks Access/Door to Zipline Station Charlie
-  > Pickup (Energy Tank)
-      Boost Ball and Spider Ball and Use Screw Attack (Space Jump)
+  > Floating Platform (Powerworks Access)
+      Use Screw Attack (Space Jump)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Expert) and Single Room Out of Bounds (Expert) and Fall Respawn Skip (Expert)
 
-> Door to Junction; Heals? False
+> Door to Junction; Heals? False; Spawn Point
   * Normal Door to Junction/Door to Spire Dock
   > Floating Platform (Junction)
       Use Screw Attack (Space Jump)
   > Event - Zipline
-      Grapple Swing and Grapple Voltage
+      Grapple Swing and Use Grapple Voltage (Lasso and Voltage)
+  > Out of Bounds
+      Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Expert) and Single Room Out of Bounds (Expert) and Fall Respawn Skip (Expert)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 57; Major Location? False
   > Floating Platform (Powerworks Access)
-      Boost Ball and Spider Ball
+      Trivial
 
 > Floating Platform (Junction); Heals? False
   > Door to Junction
       Use Screw Attack (Space Jump)
   > Floating Platform (Powerworks Access)
-      Boost Ball and Spider Ball
+      Morph Ball and Boost Ball and Spider Ball
+  > Out of Bounds
+      Morph Ball and Boost Ball and Spider Ball and Single Room Out of Bounds (Intermediate)
 
 > Floating Platform (Powerworks Access); Heals? False
   > Door to Powerworks Access
       Use Screw Attack (Space Jump)
   > Pickup (Energy Tank)
-      Boost Ball and Spider Ball
+      Morph Ball Bombs and Morph Ball and Boost Ball and Spider Ball
   > Floating Platform (Junction)
       Boost Ball and Spider Ball
+  > Out of Bounds
+      Morph Ball and Boost Ball and Spider Ball and Single Room Out of Bounds (Intermediate)
 
 > Event - Zipline; Heals? False
   * Event Zipline Station Charlie Zipline
   > Floating Platform (Powerworks Access)
       Trivial
 
+> Out of Bounds; Heals? False
+  > Door to Powerworks Access
+      Trivial
+  > Door to Junction
+      Trivial
+  > Floating Platform (Junction)
+      Trivial
+  > Floating Platform (Powerworks Access)
+      Trivial
+
 ----------------
 Powerworks Access
 Asset id: 17854052165197892560
-> Door to Zipline Station Charlie; Heals? False
+> Door to Zipline Station Charlie; Heals? False; Spawn Point
   * Normal Door to Zipline Station Charlie/Door to Powerworks Access
   > Door to Powerworks
-      After Powerworks Access Barrier
+      Morph Ball and After Powerworks Access Barrier
   > Event - Barrier
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
 
 > Door to Powerworks; Heals? False
   * Normal Door to Powerworks/Door to Powerworks Access
   > Door to Zipline Station Charlie
-      After Powerworks Access Barrier
+      Morph Ball and After Powerworks Access Barrier
 
 > Event - Barrier; Heals? False
   * Event Powerworks Access Barrier
@@ -3431,15 +3491,15 @@ Asset id: 17854052165197892560
 ----------------
 Maintenance Shaft GP
 Asset id: 15917923329011025717
-> Door to Skybridge Hera; Heals? False
+> Door to Skybridge Hera; Heals? False; Spawn Point
   * Normal Door to Skybridge Hera/Door to Maintenance Shaft GP
   > Door to Construction Bay
-      Trivial
+      Space Jump Boots
 
 > Door to Construction Bay; Heals? False
   * Normal Door to Construction Bay/Door to Maintenance Shaft GP
   > Door to Skybridge Hera
-      Trivial
+      Space Jump Boots
 
 ----------------
 Ballista Lift
@@ -3447,11 +3507,18 @@ Asset id: 17014153014158531645
 > Door to Ballista Storage; Heals? False
   * Normal Door to Ballista Storage/Door to Ballista Lift
   > Door to Construction Bay
-      Trivial
+      After Ballista Lift Activated
 
-> Door to Construction Bay; Heals? False
+> Door to Construction Bay; Heals? False; Spawn Point
   * Normal Door to Construction Bay/Door to Ballista Lift
   > Door to Ballista Storage
+      After Ballista Lift Activated
+  > Event - Lift Activated
+      Trivial
+
+> Event - Lift Activated; Heals? False
+  * Event Ballista Lift Activated
+  > Door to Construction Bay
       Trivial
 
 ----------------
@@ -3460,14 +3527,16 @@ Asset id: 17487489647732344867
 > Door to Skytram West; Heals? False
   * Normal Door to Skytram West/Door to Security Tube
   > Door to Security Station
-      After Security Tube Phazon Vines
+      All of the following:
+          Morph Ball
+          After Security Tube Phazon Vines or Movement (Intermediate)
 
-> Door to Security Station; Heals? False
+> Door to Security Station; Heals? False; Spawn Point
   * Normal Door to Security Station/Door to Security Tube
   > Door to Skytram West
-      After Security Tube Phazon Vines
+      Morph Ball and After Security Tube Phazon Vines
   > Event - Phazon Vines
-      HyperModeTank and Hyper Ball
+      Morph Ball and Hyper Ball and Enter Hypermode
 
 > Event - Phazon Vines; Heals? False
   * Event Security Tube Phazon Vines
@@ -3478,7 +3547,7 @@ Asset id: 17487489647732344867
 Junction
 Asset id: 2692588651293388340
 > Door to Skybridge Hera; Heals? False
-  * Normal Door to Skybridge Hera/Door to Junction
+  * Ice Missile Blast Shield to Skybridge Hera/Door to Junction
   > Circle Room
       Trivial
 
@@ -3487,13 +3556,13 @@ Asset id: 2692588651293388340
   > Circle Room
       Trivial
 
-> Door to Spire Dock; Heals? False
-  * Ice Missile Blast Shield to Spire Dock/Door to Junction
+> Door to Spire Dock; Heals? False; Spawn Point
+  * Normal Door to Spire Dock/Door to Junction
   > Circle Room
       Trivial
 
 > Door to Spire Dock; Heals? False
-  * Missile Blast Shield to Spire Dock/Door to Junction
+  * Normal Door to Spire Dock/Door to Junction
   > Circle Room
       Trivial
 
@@ -3518,29 +3587,49 @@ Asset id: 3381520513235092752
 > Door to Security Station; Heals? False
   * Normal Door to Security Station/Door to Spire Dock
   > Samus Ship
+      After Landing Site A Unlocked
+  > Event - Landing Site Unlocked
+      Morph Ball Bombs and Morph Ball and After Aurora Chamber Skytown Circuits
+
+> Samus Ship; Heals? True; Spawn Point
+  * Player Ship (Unlocked by After Landing Site A Unlocked)
+  > Door to Security Station
       Trivial
 
-> Samus Ship; Heals? True
+> Event - Landing Site Unlocked; Heals? False
+  * Event Landing Site A Unlocked
   > Door to Security Station
       Trivial
 
 ----------------
 Maintenance Shaft AU
 Asset id: 722564631842201436
-> Door to Aurora Chamber; Heals? False
+> Door to Aurora Chamber; Heals? False; Spawn Point
   * Normal Door to Aurora Chamber/Door to Maintenance Shaft AU
+  > Ledge
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+
+> Door to Spire Dock; Heals? False
+  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
+  > Ledge
+      Space Jump Boots
+
+> Door to Spire Dock; Heals? False
+  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
+  > Ledge
+      Space Jump Boots
+
+> Event - Aurora Chamber Reloaded; Heals? False
+  > Ledge
+      Trivial
+
+> Ledge; Heals? False
+  > Door to Aurora Chamber
+      Trivial
   > Door to Spire Dock
       Trivial
-
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
-  > Door to Aurora Chamber
-      Trivial
-
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
-  > Door to Aurora Chamber
-      Trivial
+  > Event - Aurora Chamber Reloaded
+      After Aurora Chamber Skytown Vaccine
 
 ----------------
 Construction Bay
@@ -3552,10 +3641,16 @@ Asset id: 2667502259855056433
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
 
-> Door to Maintenance Shaft GP; Heals? False
+> Door to Maintenance Shaft GP; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft GP/Door to Construction Bay
   > Door to Ballista Lift
-      Grapple Swing or Grapple Voltage or Use Screw Attack (Space Jump)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              Morph Ball Bombs and Morph Ball
+              Any of the following:
+                  Use Grapple Voltage (Lasso and Voltage)
+                  Grapple Swing and Space Jump Boots
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 58; Major Location? False
@@ -3568,18 +3663,20 @@ Asset id: 5767114369935179109
 > Door to Zipline Station Alpha; Heals? False
   * Normal Door to Zipline Station Alpha/Door to Main Docking Access
   > Door to Main Docking Bay
-      All of the following:
-          After Main Docking Access Phazon Vines
-          Grapple Swing or Use Screw Attack (Space Jump)
+      Any of the following:
+          Grapple Swing and After Main Docking Access Phazon Vines
+          All of the following:
+              Use Screw Attack (Space Jump)
+              After Main Docking Access Phazon Vines or Terminal Fall Abuse (Beginner)
 
-> Door to Main Docking Bay; Heals? False
+> Door to Main Docking Bay; Heals? False; Spawn Point
   * Normal Door to Main Docking Bay/Door to Main Docking Access
   > Door to Zipline Station Alpha
       All of the following:
           After Main Docking Access Phazon Vines
           Grapple Swing or Use Screw Attack (Space Jump)
   > Event - Phazon Vines
-      HyperModeTank and Hyper Ball
+      Morph Ball and Hyper Ball and Enter Hypermode
 
 > Event - Phazon Vines; Heals? False
   * Event Main Docking Access Phazon Vines
@@ -3594,7 +3691,7 @@ Asset id: 8195940946934839837
   > Spire Side
       Melt Objects (Plasma or Nova)
 
-> Door to Spire Dock; Heals? False
+> Door to Spire Dock; Heals? False; Spawn Point
   * Normal Door to Spire Dock/Door to Security Station
   > Spire Side
       Trivial
@@ -3607,11 +3704,11 @@ Asset id: 8195940946934839837
 > Door to Landing Site A; Heals? False
   * Normal Door to Landing Site A/Door to Security Station
   > Door to Escape Pod Bay Access
-      Trivial
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
   > Pickup (Ship Missile Expansion)
-      Melt Objects (Plasma or Nova)
+      Plasma Beam and Morph Ball
   > Spire Side
-      Trivial
+      Morph Ball
 
 > Door to Escape Pod Bay Access; Heals? False
   * Normal Door to Escape Pod Bay Access/Door to Security Station
@@ -3625,11 +3722,13 @@ Asset id: 8195940946934839837
 
 > Spire Side; Heals? False
   > Door to Security Tube
-      Melt Objects (Plasma or Nova) and Use Screw Attack (Space Jump)
+      Plasma Beam and Use Screw Attack (Space Jump)
+  > Door to Spire Dock
+      Trivial
   > Door to Spire Dock
       Trivial
   > Door to Landing Site A
-      Trivial
+      Morph Ball
 
 ----------------
 Steambot Barracks
@@ -3639,12 +3738,12 @@ Asset id: 12622074872595627812
   > Bottom Floor
       After Steambot Barracks Gate
 
-> Door to Barracks Access; Heals? False
+> Door to Barracks Access; Heals? False; Spawn Point
   * Normal Door to Barracks Access/Door to Steambot Barracks
   > Pickup (Missile Expansion)
-      Spider Ball
+      Morph Ball Bombs and Morph Ball and Spider Ball
   > Bottom Floor
-      Trivial
+      Morph Ball Bombs and Morph Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 60; Major Location? False
@@ -3665,7 +3764,7 @@ Asset id: 12622074872595627812
   > Door to Barracks Lift
       After Steambot Barracks Gate
   > Door to Barracks Access
-      Boost Ball and After Steamlord (Steambot Barracks)
+      Morph Ball and Boost Ball and After Steamlord (Steambot Barracks)
   > Pickup (Energy Tank)
       After Steamlord (Steambot Barracks)
   > Event - Steamlord
@@ -3681,22 +3780,20 @@ Asset id: 12622074872595627812
 ----------------
 Ballista Storage
 Asset id: 9955656508473190866
-> Door to Ballista Lift; Heals? False
+> Door to Ballista Lift; Heals? False; Spawn Point
   * Normal Door to Ballista Lift/Door to Ballista Storage
-  > Event - Defense Drone
-      Grapple Lasso
-  > Event - Steamlord
-      Grapple Voltage and After Defense Drone
+  > Bottom Floor
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 62; Major Location? False
-  > Door to Ballista Lift
-      Boost Ball
+  > Bottom Floor
+      Trivial
 
 > Pickup (Boost Ball); Heals? False
   * Pickup 63; Major Location? True
-  > Door to Ballista Lift
-      Boost Ball
+  > Bottom Floor
+      Trivial
 
 > Event - Defense Drone; Heals? False
   * Event Defense Drone
@@ -3705,33 +3802,51 @@ Asset id: 9955656508473190866
 
 > Event - Steamlord; Heals? False
   * Event Steamlord (Ballista Storage)
+  > Bottom Floor
+      Trivial
+
+> Bottom Floor; Heals? False
+  > Door to Ballista Lift
+      After Defense Drone
   > Pickup (Energy Cell)
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
+  > Event - Defense Drone
+      Any of the following:
+          Grapple Lasso
+          Knowledge (Beginner) and Shoot Phazite (X-Ray and Nova)
+  > Event - Steamlord
+      After Defense Drone
 
 ----------------
 Powerworks
 Asset id: 265878788849725085
-> Door to Powerworks Access; Heals? False
+> Door to Powerworks Access; Heals? False; Spawn Point
   * Normal Door to Powerworks Access/Door to Powerworks
   > Pickup (Spider Ball)
-      Missile ≥ 4 and Seeker Missile and Grapple Lasso
+      All of the following:
+          Missile ≥ 4 and Seeker Missile and Grapple Lasso and Morph Ball
+          Space Jump Boots or Standable Terrain (Beginner) or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Pickup (Spider Ball); Heals? False
   * Pickup 64; Major Location? True
-  > Door to Powerworks Access
-      Boost Ball and Spider Ball
-  > Pickup (Missile Expansion)
-      Boost Ball and Spider Ball
+  > Back Area
+      Morph Ball and Spider Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 65; Major Location? False
+  > Back Area
+      Trivial
+
+> Back Area; Heals? False
   > Door to Powerworks Access
-      Boost Ball and Spider Ball
+      Morph Ball and Boost Ball and Spider Ball
+  > Pickup (Missile Expansion)
+      Morph Ball and Boost Ball and Spider Ball
 
 ----------------
 Spire Dock
 Asset id: 3166066018495772067
-> Door to Maintenance Shaft AU; Heals? False
+> Door to Maintenance Shaft AU; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft AU/Door to Spire Dock
   > Door to Security Station
       Trivial
@@ -3766,17 +3881,15 @@ Asset id: 7293006450314500398
 ----------------
 Spire
 Asset id: 6637485379588009329
-> Door to Podworks; Heals? False
-  * Normal Door to Podworks/Door to Spire
-  > Door to Spire Dock
-      Trivial
-
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Spire
-  > Door to Podworks
-      Trivial
+> Morph Ball Door to Podworks; Heals? False
+  * Morph Ball Door to Podworks/Morph Ball Door to Spire
   > Door to Escape Pod Bay
-      Trivial
+      Morph Ball and After Podworks Repair
+
+> Door to Spire Dock; Heals? False; Spawn Point
+  * Normal Door to Spire Dock/Door to Spire
+  > Morph Ball Door to Podworks
+      Morph Ball
 
 > Door to Escape Pod Bay; Heals? False
   * Normal Door to Escape Pod Bay/Door to Spire
@@ -3815,14 +3928,14 @@ Asset id: 2782037876215597956
 ----------------
 Podworks
 Asset id: 6342289143695945848
-> Door to Spire; Heals? False
-  * Normal Door to Spire/Door to Podworks
-  > Podworks Repair
-      Plasma Beam and Grapple Lasso
+> Morph Ball Door to Spire; Heals? False; Spawn Point
+  * Morph Ball Door to Spire/Morph Ball Door to Podworks
+  > Event - Podworks Repair
+      Plasma Beam and Grapple Lasso and Morph Ball
 
-> Podworks Repair; Heals? False
+> Event - Podworks Repair; Heals? False
   * Event Podworks Repair
-  > Door to Spire
+  > Morph Ball Door to Spire
       Trivial
 
 ----------------
@@ -3841,15 +3954,15 @@ Asset id: 1051771406754533733
 ----------------
 Transit Hub
 Asset id: 13389753286679728417
-> Door to Hub Access; Heals? False
+> Door to Hub Access; Heals? False; Spawn Point
   * Normal Door to Hub Access/Door to Transit Hub
   > Bomb Part Platform
-      Trivial
+      Morph Ball
 
 > Door to Barracks Access; Heals? False
   * Normal Door to Barracks Access/Door to Transit Hub
   > Door to Hub Access
-      Boost Ball
+      Morph Ball and Boost Ball
   > Bomb Part Platform
       Grapple Swing
 
@@ -3865,15 +3978,17 @@ Asset id: 13389753286679728417
 
 > Bomb Part Platform; Heals? False
   > Door to Hub Access
-      Trivial
+      Morph Ball
   > Door to Barracks Access
       Grapple Swing
   > Door to Zipline Station Bravo
-      Melt Objects (Plasma or Nova)
+      Plasma Beam and Morph Ball
   > Pickup (Missile Expansion)
-      Trivial
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Movement (Intermediate)
   > Event - Bomb Part 3
-      Missile ≥ 5 and Seeker Missile and Ship Grapple and After Concourse Bomb Part 2
+      Missile ≥ 5 and Seeker Missile and After Concourse Bomb Part 2 and Use Ship Grapple (Command Visor and Ship Grapple)
 
 > Event - Bomb Part 3; Heals? False
   * Event Transit Hub Bomb Part 3
@@ -3883,17 +3998,21 @@ Asset id: 13389753286679728417
 ----------------
 Zipline Station Bravo
 Asset id: 10719110688968561272
-> Door to Barracks Lift; Heals? False
+> Door to Barracks Lift; Heals? False; Spawn Point
   * Normal Door to Barracks Lift/Door to Zipline Station Bravo
   > Door to Aurora Lift
-      Grapple Swing
+      Any of the following:
+          Grapple Swing
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Expert) and Single Room Out of Bounds (Expert) and Fall Respawn Skip (Expert)
   > Door to Transit Hub
-      Missile ≥ 4 and Seeker Missile
+      Missile ≥ 4 and Seeker Missile and Morph Ball
 
 > Door to Aurora Lift; Heals? False
   * Normal Door to Aurora Lift/Door to Zipline Station Bravo
   > Door to Barracks Lift
-      Grapple Swing
+      Any of the following:
+          Grapple Swing
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Expert) and Single Room Out of Bounds (Expert) and Fall Respawn Skip (Expert)
 
 > Door to Transit Hub; Heals? False
   * Normal Door to Transit Hub/Door to Zipline Station Bravo
@@ -3903,7 +4022,7 @@ Asset id: 10719110688968561272
 ----------------
 Escape Pod Bay Access
 Asset id: 10147956754909178375
-> Door to Escape Pod Bay; Heals? False
+> Door to Escape Pod Bay; Heals? False; Spawn Point
   * Normal Door to Escape Pod Bay/Door to Escape Pod Bay Access
   > Door to Security Station
       Trivial
@@ -4387,7 +4506,9 @@ Asset id: 8211108078275787776
               Knowledge (Beginner)
               Enter Hypermode or Use Screw Attack (Space Jump)
   > Top Level
-      Bomb/Spring Space Jump (Intermediate) and Standable Terrain (Intermediate) and Terminal Fall Abuse (Intermediate) and Use Screw Attack (Space Jump)
+      All of the following:
+          Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Intermediate) and Standable Terrain (Intermediate) and Terminal Fall Abuse (Intermediate)
+          Screw Attack or Before Turbine Chamber Bomb Part 1
 
 > Event - Berserker Lord; Heals? False
   * Event Berserker Lord (Elysia)
@@ -4458,15 +4579,17 @@ Asset id: 6708692299270885612
   * Normal Door to Observatory Lift/Door to Gearworks
   > Door to Broken Lift
       Use Screw Attack (Space Jump)
-  > Pickup (Missile Expansion)
-      After SkyTown Federation Landing Site Item and Use Screw Attack (Space Jump)
 
 > Door to Broken Lift; Heals? False
   * Normal Door to Broken Lift/Door to Gearworks
   > Door to Observatory Lift
       Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
-      After SkyTown Federation Landing Site Item and Use Screw Attack (Space Jump)
+      All of the following:
+          Space Jump Boots and Morph Ball and After SkyTown Federation Landing Site Item
+          Any of the following:
+              Screw Attack
+              Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 72; Major Location? False
