@@ -3143,9 +3143,7 @@ Asset id: 4133901881028310574
 > Door to Main Docking Access; Heals? False
   * Normal Door to Main Docking Access/Door to Main Docking Bay
   > Pickup (Missile Expansion)
-      After Ghor and Melt Objects (Plasma or Nova)
-  > Pickup (Plasma Beam)
-      Morph Ball and After Ghor
+      Plasma Beam and Morph Ball and After Ghor
   > Samus Ship (Catch.)
       Trivial
   > Event - Ghor
@@ -3693,7 +3691,7 @@ Asset id: 8195940946934839837
 > Door to Security Tube; Heals? False
   * Normal Door to Security Tube/Door to Security Station
   > Spire Side
-      Melt Objects (Plasma or Nova)
+      Plasma Beam
 
 > Door to Spire Dock; Heals? False; Spawn Point
   * Normal Door to Spire Dock/Door to Security Station
@@ -3727,8 +3725,6 @@ Asset id: 8195940946934839837
 > Spire Side; Heals? False
   > Door to Security Tube
       Plasma Beam and Use Screw Attack (Space Jump)
-  > Door to Spire Dock
-      Trivial
   > Door to Spire Dock
       Trivial
   > Door to Landing Site A
@@ -4856,18 +4852,26 @@ Asset id: 13146584938063573409
 > Door to Transit Station 1-A; Heals? False
   * Normal Door to Transit Station 1-A/Door to Landing Site Alpha
   > Samus Ship
-      After Landing Site Alpha Barrier
+      All of the following:
+          After Landing Site Alpha Barrier
+          Any of the following:
+              Space Jump Boots
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
   > Event - Barrier
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by Trivial)
   > Door to Scrapvault Lift
       Trivial
   > Door to Transit Station 1-A
-      After Landing Site Alpha Barrier
+      All of the following:
+          After Landing Site Alpha Barrier
+          Any of the following:
+              Space Jump Boots or Terminal Fall Abuse (Beginner)
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
   > Event - Barrier
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
 
 > Event - Barrier; Heals? False
   * Event Landing Site Alpha Barrier
@@ -4877,20 +4881,35 @@ Asset id: 13146584938063573409
 ----------------
 Scrapvault Lift
 Asset id: 13906902545873588315
-> Door to Landing Site Alpha; Heals? False
+> Door to Landing Site Alpha; Heals? False; Spawn Point
   * Normal Door to Landing Site Alpha/Door to Scrapvault Lift
   > Door to Scrapvault
-      Trivial
+      After Scrapvault Lift Gate Opened
+  > Event - Gate Opened
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bombs
+              All of the following:
+                  Knowledge (Beginner)
+                  Any of the following:
+                      Missile
+                      No Nova Beam and Charge Beam
 
 > Door to Scrapvault; Heals? False
   * Normal Door to Scrapvault/Door to Scrapvault Lift
   > Door to Landing Site Alpha
-      Trivial
+      After Scrapvault Lift Gate Opened
+
+> Event - Gate Opened; Heals? False
+  * Event Scrapvault Lift Gate Opened
+  > Door to Scrapvault
+      Morph Ball
 
 ----------------
 Craneyard
 Asset id: 7063455547734255887
-> Door to Airshaft; Heals? False
+> Door to Airshaft; Heals? False; Spawn Point
   * Normal Door to Airshaft/Door to Craneyard
   > Indoor Room
       Trivial
@@ -4912,13 +4931,11 @@ Asset id: 7063455547734255887
 
 > Spinner Room; Heals? False
   > Pickup (Missile Expansion)
-      Boost Ball
+      Morph Ball Bombs and Morph Ball and Boost Ball
   > Pickup (Hazard Shield)
-      Boost Ball and Spider Ball
+      Morph Ball Bombs and Morph Ball and Boost Ball and Spider Ball and After Gandrayda
 
 > Outdoor; Heals? False
-  > Indoor Room
-      Suit Type ≥ 4
   > Event - Broken Windows
       Suit Type ≥ 4
 
@@ -4928,14 +4945,16 @@ Asset id: 7063455547734255887
   > Door to Proving Grounds Lift
       Trivial
   > Spinner Room
-      Spider Ball
+      Morph Ball and Spider Ball
   > Outdoor
-      After Craneyard Windows Broken
+      Suit Type ≥ 4 and After Craneyard Windows Broken
 
 > Event - Broken Windows; Heals? False
   * Event Craneyard Windows Broken
   > Outdoor
-      Trivial
+      All of the following:
+          Suit Type ≥ 4
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Creche Transit
@@ -4943,16 +4962,24 @@ Asset id: 1760181228684086770
 > Door to Metroid Creche; Heals? False
   * Normal Door to Metroid Creche/Door to Creche Transit
   > Door to Metroid Processing
-      Suit Type ≥ 4 and After Creche Transit Hyper Missile Wall
+      All of the following:
+          After Creche Transit Hyper Missile Wall
+          Any of the following:
+              Suit Type ≥ 4
+              Movement (Advanced) and Normal Damage ≥ 150
+  > Event - Hyper Missile Wall
+      Missile ≥ 2 and Hyper Missile and Open Gates/Barriers from Behind (Beginner) and Enter Hypermode
 
-> Door to Metroid Processing; Heals? False
+> Door to Metroid Processing; Heals? False; Spawn Point
   * Normal Door to Metroid Processing/Door to Creche Transit
   > Door to Metroid Creche
-      Suit Type ≥ 4 and After Creche Transit Hyper Missile Wall
+      Space Jump Boots and Suit Type ≥ 4 and After Creche Transit Hyper Missile Wall
   > Pickup (Missile Expansion)
-      Boost Ball
+      All of the following:
+          Morph Ball and Boost Ball
+          Morph Ball Bombs or Knowledge (Beginner)
   > Event - Hyper Missile Wall
-      Missile and Suit Type ≥ 4 and HyperModeTank and Hyper Missile
+      Missile ≥ 2 and Space Jump Boots and Suit Type ≥ 4 and Hyper Missile and Enter Hypermode
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 77; Major Location? False
@@ -4969,23 +4996,19 @@ Proving Grounds
 Asset id: 3594029436312475339
 > Door to Transit Station 1-B; Heals? False
   * Normal Door to Transit Station 1-B/Door to Proving Grounds
-  > Door to Proving Grounds Lift
-      After Proving Grounds Bottom Barrier
   > Event - Barrier
-      Grapple Voltage
+      After Gandrayda and Use Grapple Voltage (Lasso and Voltage)
+  > Room Center
+      Before Gandrayda or After Proving Grounds Barrier Removed
 
-> Door to Proving Grounds Lift; Heals? False
-  * Normal Door to Proving Grounds Lift/Door to Proving Grounds
-  > Door to Transit Station 1-B
-      After Proving Grounds Bottom Barrier
-  > Event - Gandrayda
-      Grapple Lasso and X-Ray Visor
-  > Event - Barrier
-      Grapple Voltage and After Gandrayda
+> Elevator to Proving Grounds Lift; Heals? False
+  * Normal Door to Proving Grounds Lift/Elevator to Proving Grounds
+  > Room Center
+      Trivial
 
 > Pickup (Grapple Voltage); Heals? False
   * Pickup 78; Major Location? True
-  > Door to Proving Grounds Lift
+  > Room Center
       Trivial
 
 > Event - Gandrayda; Heals? False
@@ -4994,21 +5017,36 @@ Asset id: 3594029436312475339
       Trivial
 
 > Event - Barrier; Heals? False
-  * Event Proving Grounds Bottom Barrier
-  > Door to Proving Grounds Lift
+  * Event Proving Grounds Barrier Removed
+  > Room Center
       Trivial
+
+> Room Center; Heals? False; Spawn Point
+  > Door to Transit Station 1-B
+      After Gandrayda and Use Grapple Voltage (Lasso and Voltage)
+  > Elevator to Proving Grounds Lift
+      After Proving Grounds Barrier Removed
+  > Event - Gandrayda
+      Any of the following:
+          Grapple Lasso and X-Ray Visor
+          Movement (Beginner) and Enter Hypermode
+  > Event - Barrier
+      Use Grapple Voltage (Lasso and Voltage)
 
 ----------------
 Metroid Processing
 Asset id: 16389095850931092901
-> Door to Processing Access; Heals? False
+> Door to Processing Access; Heals? False; Spawn Point
   * Normal Door to Processing Access/Door to Metroid Processing
   > Pickup (Missile Expansion)
       After Metroid Processing Disable Barrier
   > Top Floor
-      Any of the following:
-          After Metroid Processing Ball Lift
-          Boost Ball and Spider Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Ancient Courtyard Halfpipe Wall
+              Boost Ball and Spider Ball
+              Space Jump Boots and Bomb/Spring Space Jump (Beginner)
   > Basement
       X-Ray Visor
 
@@ -5046,7 +5084,7 @@ Asset id: 16389095850931092901
   > Pickup (Energy Cell)
       Trivial
   > Event - Ball Lift
-      Melt Objects (Plasma or Nova)
+      Plasma Beam
 
 > Event - Metroid Barrier; Heals? False
   * Event Metroid Processing Disable Barrier
@@ -5061,10 +5099,14 @@ Asset id: 16389095850931092901
 ----------------
 Airshaft
 Asset id: 8007962190215742654
-> Door to Metroid Processing; Heals? False
+> Door to Metroid Processing; Heals? False; Spawn Point
   * Plasma Door to Metroid Processing/Door to Airshaft
   > Door to Craneyard
-      Missile ≥ 4 and Seeker Missile and Use Screw Attack (Space Jump)
+      All of the following:
+          Missile ≥ 4 and Seeker Missile
+          Any of the following:
+              Use Screw Attack (Space Jump)
+              Morph Ball Bombs and Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Expert)
 
 > Door to Craneyard; Heals? False
   * Normal Door to Craneyard/Door to Airshaft
@@ -5074,12 +5116,14 @@ Asset id: 8007962190215742654
 ----------------
 Processing Access
 Asset id: 11685491285383767107
-> Door to Scrapvault; Heals? False
+> Door to Scrapvault; Heals? False; Spawn Point
   * Plasma Door to Scrapvault/Door to Processing Access
   > Door to Metroid Processing
       Trivial
   > Pickup (Ship Missile Expansion)
-      Missile and Shoot Phazite (X-Ray and Nova) and Use Screw Attack (Space Jump)
+      All of the following:
+          Nova Beam and Missile ≥ 3 and Use Screw Attack (Space Jump)
+          X-Ray Visor or Invisible Objects (Beginner)
 
 > Door to Metroid Processing; Heals? False
   * Normal Door to Metroid Processing/Door to Processing Access
@@ -5094,13 +5138,13 @@ Asset id: 11685491285383767107
 ----------------
 Proving Grounds Lift
 Asset id: 17474188290326019383
-> Door to Craneyard; Heals? False
+> Door to Craneyard; Heals? False; Spawn Point
   * Normal Door to Craneyard/Door to Proving Grounds Lift
-  > Door to Proving Grounds
+  > Elevator to Proving Grounds
       Trivial
 
-> Door to Proving Grounds; Heals? False
-  * Normal Door to Proving Grounds/Door to Proving Grounds Lift
+> Elevator to Proving Grounds; Heals? False
+  * Normal Door to Proving Grounds/Elevator to Proving Grounds Lift
   > Door to Craneyard
       Trivial
 
@@ -5133,7 +5177,7 @@ Asset id: 2640383633522526
 ----------------
 Scrapvault
 Asset id: 11846340785047609812
-> Door to Scrapvault Lift; Heals? False
+> Door to Scrapvault Lift; Heals? False; Spawn Point
   * Normal Door to Scrapvault Lift/Door to Scrapvault
   > Room Center
       Trivial
@@ -5143,18 +5187,22 @@ Asset id: 11846340785047609812
   > Room Center
       After Scrapvault Wall
 
-> Morph Ball Door to Scrapworks (Entry); Heals? False
-  * Normal Door to Scrapworks/Morph Ball Door to Scrapvault (Entry)
+> Morph Ball Door to Scrapworks; Heals? False
+  * Normal Door to Scrapworks/Morph Ball Door from Scrapvault
 
 > Morph Ball Door to Scrapworks (X-Ray Terminal); Heals? False
   * Normal Door to Scrapworks/Morph Ball Door to Scrapvault (X-Ray Terminal)
   > Event - Open Gate
-      X-Ray Visor or Melt Objects (Plasma or Nova)
+      Plasma Beam and X-Ray Visor and Morph Ball
 
-> Morph Ball Door to Scrapworks (Exit); Heals? False
-  * Normal Door to Scrapworks/Morph Ball Door to Scrapvault (Exit)
+> Morph Ball Door from Scrapworks; Heals? False
+  * Normal Door to Scrapworks/Morph Ball Door to Scrapvault
   > Room Center
-      Trivial
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bombs
+              Boost Ball and Knowledge (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 82; Major Location? False
@@ -5165,89 +5213,95 @@ Asset id: 11846340785047609812
   > Door to Scrapvault Lift
       Trivial
   > Door to Processing Access
-      After Scrapvault Wall
-  > Morph Ball Door to Scrapworks (Entry)
-      Trivial
+      Space Jump Boots and After Scrapvault Wall
+  > Morph Ball Door to Scrapworks
+      Space Jump Boots and Morph Ball
   > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Space Jump Boots and Movement (Intermediate)
 
 > Event - Open Gate; Heals? False
   * Event Scrapvault Wall
   > Morph Ball Door to Scrapworks (X-Ray Terminal)
-      Trivial
+      Morph Ball
 
 ----------------
 Metroid Creche
 Asset id: 17400901133416718911
-> Door to Creche Transit; Heals? False
+> Door to Creche Transit; Heals? False; Spawn Point
   * Normal Door to Creche Transit/Door to Metroid Creche
-  > Bottom Floor
-      Trivial
+  > Door to Transit Station 3-A
+Leads to Command Center
+      Morph Ball Bombs and Boost Ball and After Metroid Hatcher (Pirate Homeworld) and Use Screw Attack (Space Jump)
+  > Pickup (Energy Tank)
+      Morph Ball and Boost Ball and Spider Ball and After Metroid Hatcher (Pirate Homeworld)
+  > Event - Metroid Hatcher
+      All of the following:
+          Morph Ball Bombs and Morph Ball and Boost Ball
+          Any of the following:
+              Grapple Lasso
+              All of the following:
+                  Nova Beam
+                  X-Ray Visor or Invisible Objects (Intermediate)
 
 > Door to Transit Station 3-A
 Leads to Command Center; Heals? False
   * Normal Door to Transit Station 3-A
 Leads to Command Center/Door to Metroid Creche
-  > Bottom Floor
+  > Door to Creche Transit
       Trivial
+  > Pickup (Energy Tank)
+      Boost Ball and Spider Ball and Movement (Advanced) and Use Screw Attack (Space Jump)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 83; Major Location? False
-  > Bottom Floor
+  > Door to Creche Transit
       Trivial
 
 > Event - Metroid Hatcher; Heals? False
   * Event Metroid Hatcher (Pirate Homeworld)
-  > Bottom Floor
-      Trivial
-
-> Bottom Floor; Heals? False
   > Door to Creche Transit
       Trivial
-  > Door to Transit Station 3-A
-Leads to Command Center
-      Boost Ball and After Metroid Hatcher (Pirate Homeworld) and Use Screw Attack (Space Jump)
-  > Pickup (Energy Tank)
-      Boost Ball and Spider Ball and After Metroid Hatcher (Pirate Homeworld)
-  > Event - Metroid Hatcher
-      All of the following:
-          Boost Ball
-          Grapple Lasso or Shoot Phazite (X-Ray and Nova)
 
 ----------------
 Scrapworks
 Asset id: 15178552083233342671
 > Morph Ball Door to Scrapvault (X-Ray Terminal); Heals? False
   * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (X-Ray Terminal)
-  > Morph Ball Door to Scrapvault (Exit)
-      Boost Ball
+  > Morph Ball Door to Scrapvault
+      Morph Ball Bombs and Morph Ball and Boost Ball
 
-> Morph Ball Door to Scrapvault (Entry); Heals? False
-  * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (Entry)
+> Morph Ball Door from Scrapvault; Heals? False
+  * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks
   > Morph Ball Door to Scrapvault (X-Ray Terminal)
-      Trivial
-  > Morph Ball Door to Scrapvault (Exit)
-      Spider Ball
+      Morph Ball Bombs and Morph Ball
+  > Morph Ball Door to Scrapvault
+      Morph Ball Bombs and Morph Ball and Spider Ball
   > Pickup (Energy Tank)
-      Trivial
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Movement (Intermediate)
 
-> Morph Ball Door to Scrapvault (Exit); Heals? False
-  * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (Exit)
+> Morph Ball Door to Scrapvault; Heals? False
+  * Morph Ball Door to Scrapvault/Morph Ball Door from Scrapworks
   > Morph Ball Door to Scrapvault (X-Ray Terminal)
-      Boost Ball
-  > Morph Ball Door to Scrapvault (Entry)
-      Boost Ball
+      Morph Ball Bombs and Morph Ball and Boost Ball
+  > Morph Ball Door from Scrapvault
+      Morph Ball and Boost Ball
   > Pickup (Ship Missile Expansion)
-      Boost Ball and Spider Ball
+      All of the following:
+          Morph Ball and Boost Ball
+          Spider Ball or Movement (Intermediate)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 84; Major Location? False
-  > Morph Ball Door to Scrapvault (Entry)
+  > Morph Ball Door from Scrapvault
       Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 85; Major Location? False
-  > Morph Ball Door to Scrapvault (Exit)
+  > Morph Ball Door to Scrapvault
       Trivial
 
 ----------------
@@ -5284,7 +5338,7 @@ Leads to Command Center/Door to Save Station
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   > Door to Transit Station 3-A
 Leads to Command Center
       Trivial
@@ -6293,12 +6347,16 @@ Asset id: 11291149967944563303
 > Door to Cavern Beta Access; Heals? False; Spawn Point
   * Normal Door to Cavern Beta Access/Door to Cavern Beta
   > Door to Drop Shaft
-      Missile and Space Jump Boots and Hyper Missile
+      All of the following:
+          Missile and Hyper Missile
+          Any of the following:
+              Use Screw Attack (Space Jump)
+              Space Jump Boots and Movement (Beginner)
 
 > Door to Drop Shaft; Heals? False
   * Normal Door to Drop Shaft/Door to Cavern Beta
   > Door to Cavern Beta Access
-      Missile and Space Jump Boots and Hyper Missile
+      Missile and Hyper Missile and Use Screw Attack (Space Jump)
 
 ----------------
 Sanctum (Aurora Unit 313)
