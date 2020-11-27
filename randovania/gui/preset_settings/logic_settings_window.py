@@ -1,38 +1,41 @@
+import collections
 import dataclasses
 import functools
-from typing import Dict, Optional
+import re
+from typing import Dict, Optional, List
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QComboBox, QLabel, QDialog, QGroupBox, QVBoxLayout, QSpinBox
+from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
-from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.main_rules import MainRulesWindow
+from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
+from randovania.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
+from randovania.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
+from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
+from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
+from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.beam_configuration import BeamAmmoConfiguration
-from randovania.layout.hint_configuration import SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode, LayoutDamageStrictness
+from randovania.layout.layout_configuration import LayoutElevators, LayoutDamageStrictness
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
@@ -42,20 +45,19 @@ def _update_options_when_true(options: Options, field_name: str, new_value, chec
             setattr(options, field_name, new_value)
 
 
+def dark_world_flags(world: World):
+    yield False
+    if world.dark_name is not None:
+        yield True
+
+
 def _update_options_by_value(options: Options, combo: QComboBox, new_index: int):
     with options:
         setattr(options, combo.options_field_name, combo.currentData())
 
 
-_BEAMS = {
-    "power": "Power Beam",
-    "dark": "Dark Beam",
-    "light": "Light Beam",
-    "annihilator": "Annihilator Beam",
-}
-
-
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
+    _extra_tabs: List[PresetTab]
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
@@ -72,44 +74,51 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._editor = editor
         self._window_manager = window_manager
-        self._main_rules = MainRulesWindow(editor)
-        self._game_patches = GamePatchesWindow(editor)
+        self._extra_tabs = []
 
-        self.game_enum = RandovaniaGame.PRIME2
+        self.game_enum = editor.layout_configuration.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
-        # Update with Options
-        self.logic_tab_widget.addTab(self._main_rules.centralWidget, "Item Pool")
-        self.patches_tab_widget.addTab(self._game_patches.centralWidget, "Other")
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self._extra_tabs.append(PresetEchoesGoal(editor))
+            self._extra_tabs.append(PresetEchoesHints(editor))
+            self._extra_tabs.append(PresetEchoesTranslators(editor))
+            self._extra_tabs.append(PresetEchoesBeamConfiguration(editor))
+            self._extra_tabs.append(PresetEchoesPatches(editor))
+
+        elif self.game_enum == RandovaniaGame.PRIME3:
+            pass
+
+        self._extra_tabs.append(PresetItemPool(editor))
+
+        for extra_tab in self._extra_tabs:
+            if extra_tab.uses_patches_tab:
+                tab = self.patches_tab_widget
+            else:
+                tab = self.logic_tab_widget
+            tab.addTab(extra_tab, extra_tab.tab_title)
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
         self.setup_damage_elements()
         self.setup_elevator_elements()
-        self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
         self.setup_location_pool_elements()
-        self.setup_translators_elements()
-        self.setup_hint_elements()
-        self.setup_beam_configuration_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
     # Options
     def on_preset_changed(self, preset: Preset):
-        self._main_rules.on_preset_changed(preset)
-        self._game_patches.on_preset_changed(preset)
+        for extra_tab in self._extra_tabs:
+            extra_tab.on_preset_changed(preset)
 
         # Variables
         layout_config = preset.layout_configuration
@@ -130,48 +139,17 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
-        self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
-        self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
-        self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
-        self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
+            self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
+            self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
+            self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
         # Elevator
         set_combo_with_value(self.elevators_combo, layout_config.elevators)
 
-        # Sky Temple Keys
-        keys = layout_config.sky_temple_keys
-        if isinstance(keys.value, int):
-            self.skytemple_slider.setValue(keys.value)
-            data = int
-        else:
-            data = keys
-        set_combo_with_value(self.skytemple_combo, data)
-
         # Starting Area
-        starting_locations = layout_config.starting_location.locations
-
-        self._during_batch_check_update = True
-        for world in self.game_description.world_list.worlds:
-            for is_dark_world in [False, True]:
-                all_areas = True
-                no_areas = True
-                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
-                correct_name = world.correct_name(is_dark_world)
-                for area in areas:
-                    if area.valid_starting_location:
-                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
-                        if is_checked:
-                            no_areas = False
-                        else:
-                            all_areas = False
-                        self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
-                if all_areas:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.Checked)
-                elif no_areas:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.Unchecked)
-                else:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
-        self._during_batch_check_update = False
+        self.on_preset_changed_starting_area(preset)
 
         # Location Pool
         available_locations = layout_config.available_locations
@@ -182,17 +160,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             check.setChecked(node.pickup_index not in available_locations.excluded_indices)
             check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
         self._during_batch_check_update = False
-
-        # Translator Gates
-        translator_configuration = preset.layout_configuration.translator_configuration
-        for gate, combo in self._combo_for_gate.items():
-            set_combo_with_value(combo, translator_configuration.translator_requirement[gate])
-
-        # Hints
-        set_combo_with_value(self.hint_sky_temple_key_combo, preset.layout_configuration.hints.sky_temple_keys)
-
-        # Beam Configuration
-        self.on_preset_changed_beam_configuration(preset)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
@@ -343,10 +310,15 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
-        self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
-        self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
-        self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
-        self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
+
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
+            self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
+            self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
+            self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
+        else:
+            self.dark_aether_box.setVisible(False)
+            self.safe_zone_box.setVisible(False)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -381,30 +353,12 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                                                                            self._editor,
                                                                            self.elevators_combo))
 
-    # Sky Temple Key
-    def setup_sky_temple_elements(self):
-        self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
-        self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
-        self.skytemple_combo.setItemData(2, int)
-
-        self.skytemple_combo.options_field_name = "layout_configuration_sky_temple_keys"
-        self.skytemple_combo.currentIndexChanged.connect(self._on_sky_temple_key_combo_changed)
-        self.skytemple_slider.valueChanged.connect(self._on_sky_temple_key_combo_slider_changed)
-
-    def _on_sky_temple_key_combo_changed(self):
-        combo_enum = self.skytemple_combo.currentData()
-        with self._editor:
-            if combo_enum is int:
-                self.skytemple_slider.setEnabled(True)
-                self._editor.layout_configuration_sky_temple_keys = LayoutSkyTempleKeyMode(
-                    self.skytemple_slider.value())
-            else:
-                self.skytemple_slider.setEnabled(False)
-                self._editor.layout_configuration_sky_temple_keys = combo_enum
-
-    def _on_sky_temple_key_combo_slider_changed(self):
-        self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
-        self._on_sky_temple_key_combo_changed()
+        if self.game_enum == RandovaniaGame.PRIME3:
+            self.patches_tab_widget.setTabText(self.patches_tab_widget.indexOf(self.elevator_tab),
+                                               "Teleporters")
+            self.elevators_description_label.setText(
+                self.elevators_description_label.text().replace("elevator", "teleporter")
+            )
 
     # Starting Area
     def setup_starting_area_elements(self):
@@ -413,8 +367,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._starting_location_for_world = {}
         self._starting_location_for_area = {}
 
-        for row, world in enumerate(game_description.world_list.worlds):
-            for column, is_dark_world in enumerate([False, True]):
+        worlds = [
+            world
+            for world in game_description.world_list.worlds
+            if any(area.valid_starting_location and area.default_node_index is not None
+                   for area in world.areas)
+        ]
+        worlds.sort(key=lambda it: it.name)
+
+        for row, world in enumerate(worlds):
+            for column, is_dark_world in enumerate(dark_world_flags(world)):
                 group_box = QGroupBox(self.starting_locations_contents)
                 world_check = QtWidgets.QCheckBox(group_box)
                 world_check.setText(world.correct_name(is_dark_world))
@@ -437,9 +399,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 self.starting_locations_layout.addWidget(group_box, row, column)
                 self._starting_location_for_world[world.correct_name(is_dark_world)] = world_check
 
-        for world in game_description.world_list.worlds:
+        for world in worlds:
             for area in sorted(world.areas, key=lambda a: a.name):
-                if not area.valid_starting_location:
+                if not area.valid_starting_location or area.default_node_index is None:
                     continue
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
@@ -493,39 +455,87 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 StartingLocation.with_elements(save_stations, self.game_enum)
             )
 
+    def on_preset_changed_starting_area(self, preset: Preset):
+        starting_locations = preset.layout_configuration.starting_location.locations
+
+        self._during_batch_check_update = True
+        for world in self.game_description.world_list.worlds:
+            for is_dark_world in dark_world_flags(world):
+                all_areas = True
+                no_areas = True
+                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
+                correct_name = world.correct_name(is_dark_world)
+                if correct_name not in self._starting_location_for_world:
+                    continue
+
+                for area in areas:
+                    if area.area_asset_id in self._starting_location_for_area:
+                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
+                        if is_checked:
+                            no_areas = False
+                        else:
+                            all_areas = False
+                        self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+                if all_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Checked)
+                elif no_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Unchecked)
+                else:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
+        self._during_batch_check_update = False
+
     # Location Pool
     def setup_location_pool_elements(self):
         self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
         self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
         self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
 
-        game_description = default_prime2_game_description()
-        world_to_group = {}
+        vertical_layouts = [
+            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
+            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
+        ]
+        for layout in vertical_layouts:
+            self.excluded_locations_area_layout.addLayout(layout)
+
+        world_list = self.game_description.world_list
         self._location_pool_for_node = {}
 
-        for world in game_description.world_list.worlds:
-            for is_dark_world in [False, True]:
-                group_box = QGroupBox(self.excluded_locations_area_contents)
-                group_box.setTitle(world.correct_name(is_dark_world))
-                vertical_layout = QVBoxLayout(group_box)
-                vertical_layout.setContentsMargins(8, 4, 8, 4)
-                vertical_layout.setSpacing(2)
-                group_box.vertical_layout = vertical_layout
+        nodes_by_world = collections.defaultdict(list)
+        node_names = {}
+        pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
 
-                world_to_group[world.correct_name(is_dark_world)] = group_box
-                self.excluded_locations_area_layout.addWidget(group_box)
+        for world in world_list.worlds:
+            for is_dark_world in dark_world_flags(world):
+                for node in world.all_nodes:
+                    if isinstance(node, PickupNode):
+                        nodes_by_world[world.correct_name(is_dark_world)].append(node)
+                        match = pickup_match.match(node.name)
+                        if match is not None:
+                            node_name = match.group(1)
+                        else:
+                            node_name = node.name
+                        node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
 
-        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
-            if not isinstance(node, PickupNode):
-                continue
+        for i, world_name in enumerate(sorted(nodes_by_world.keys())):
+            group_box = QGroupBox(self.excluded_locations_area_contents)
+            group_box.setTitle(world_name)
+            vertical_layout = QVBoxLayout(group_box)
+            vertical_layout.setContentsMargins(8, 4, 8, 4)
+            vertical_layout.setSpacing(2)
+            group_box.vertical_layout = vertical_layout
+            vertical_layouts[i % len(vertical_layouts)].addWidget(group_box)
 
-            group_box = world_to_group[world.correct_name(area.in_dark_aether)]
-            check = QtWidgets.QCheckBox(group_box)
-            check.setText(game_description.world_list.node_name(node))
-            check.node = node
-            check.stateChanged.connect(functools.partial(self._on_check_location, check))
-            group_box.vertical_layout.addWidget(check)
-            self._location_pool_for_node[node] = check
+            for node in sorted(nodes_by_world[world_name], key=node_names.get):
+                check = QtWidgets.QCheckBox(group_box)
+                check.setText(node_names[node])
+                check.node = node
+                check.stateChanged.connect(functools.partial(self._on_check_location, check))
+                group_box.vertical_layout.addWidget(check)
+                self._location_pool_for_node[node] = check
+
+        for layout in vertical_layouts:
+            layout.addSpacerItem(
+                QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:
@@ -538,188 +548,3 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(check.node.pickup_index,
                                                                                  not check.isChecked())
-
-    # Translator Gates
-    def setup_translators_elements(self):
-        randomizer_data = default_data.decode_randomizer_data()
-
-        self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
-        self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
-        self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
-
-        self._combo_for_gate = {}
-
-        for i, gate in enumerate(randomizer_data["TranslatorLocationData"]):
-            label = QLabel(self.translators_scroll_contents)
-            label.setText(gate["Name"])
-            self.translators_layout.addWidget(label, 3 + i, 0, 1, 1)
-
-            combo = QComboBox(self.translators_scroll_contents)
-            combo.gate = TranslatorGate(gate["Index"])
-            for item in iterate_enum(LayoutTranslatorRequirement):
-                combo.addItem(item.long_name, item)
-            combo.currentIndexChanged.connect(functools.partial(self._on_gate_combo_box_changed, combo))
-
-            self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
-            self._combo_for_gate[combo.gate] = combo
-
-    def _on_randomize_all_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "translator_configuration",
-                options.layout_configuration.translator_configuration.with_full_random())
-
-    def _on_vanilla_actual_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "translator_configuration",
-                options.layout_configuration.translator_configuration.with_vanilla_actual())
-
-    def _on_vanilla_colors_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "translator_configuration",
-                options.layout_configuration.translator_configuration.with_vanilla_colors())
-
-    def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "translator_configuration",
-                options.layout_configuration.translator_configuration.replace_requirement_for_gate(
-                    combo.gate, combo.currentData()))
-
-    # Hints
-    def setup_hint_elements(self):
-        for i, stk_hint_mode in enumerate(SkyTempleKeyHintMode):
-            self.hint_sky_temple_key_combo.setItemData(i, stk_hint_mode)
-
-        self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
-
-    def _on_stk_combo_changed(self, new_index: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "hints",
-                dataclasses.replace(options.layout_configuration.hints,
-                                    sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
-
-    # Beam Configuration
-    def setup_beam_configuration_elements(self):
-
-        def _add_header(text: str, col: int):
-            label = QLabel(self.beam_configuration_group)
-            label.setText(text)
-            self.beam_configuration_layout.addWidget(label, 0, col)
-
-        _add_header("Ammo A", 1)
-        _add_header("Ammo B", 2)
-        _add_header("Uncharged", 3)
-        _add_header("Charged", 4)
-        _add_header("Combo", 5)
-        _add_header("Missiles for Combo", 6)
-
-        self._beam_ammo_a = {}
-        self._beam_ammo_b = {}
-        self._beam_uncharged = {}
-        self._beam_charged = {}
-        self._beam_combo = {}
-        self._beam_missile = {}
-
-        def _create_ammo_combo():
-            combo = QComboBox(self.beam_configuration_group)
-            combo.addItem("None", -1)
-            combo.addItem("Power Bomb", 43)
-            combo.addItem("Missile", 44)
-            combo.addItem("Dark Ammo", 45)
-            combo.addItem("Light Ammo", 46)
-            return combo
-
-        row = 1
-        for beam, beam_name in _BEAMS.items():
-            label = QLabel(self.beam_configuration_group)
-            label.setText(beam_name)
-            self.beam_configuration_layout.addWidget(label, row, 0)
-
-            ammo_a = _create_ammo_combo()
-            ammo_a.currentIndexChanged.connect(functools.partial(
-                self._on_ammo_type_combo_changed, beam, ammo_a, False))
-            self._beam_ammo_a[beam] = ammo_a
-            self.beam_configuration_layout.addWidget(ammo_a, row, 1)
-
-            ammo_b = _create_ammo_combo()
-            ammo_b.currentIndexChanged.connect(functools.partial(
-                self._on_ammo_type_combo_changed, beam, ammo_b, True))
-            self._beam_ammo_b[beam] = ammo_b
-            self.beam_configuration_layout.addWidget(ammo_b, row, 2)
-
-            spin_box = QSpinBox(self.beam_configuration_group)
-            spin_box.setSuffix(" ammo")
-            spin_box.setMaximum(250)
-            spin_box.valueChanged.connect(functools.partial(
-                self._on_ammo_cost_spin_changed, beam, "uncharged_cost"
-            ))
-            self._beam_uncharged[beam] = spin_box
-            self.beam_configuration_layout.addWidget(spin_box, row, 3)
-
-            spin_box = QSpinBox(self.beam_configuration_group)
-            spin_box.setSuffix(" ammo")
-            spin_box.setMaximum(250)
-            spin_box.valueChanged.connect(functools.partial(
-                self._on_ammo_cost_spin_changed, beam, "charged_cost"
-            ))
-            self._beam_charged[beam] = spin_box
-            self.beam_configuration_layout.addWidget(spin_box, row, 4)
-
-            spin_box = QSpinBox(self.beam_configuration_group)
-            spin_box.setSuffix(" ammo")
-            spin_box.setMaximum(250)
-            spin_box.valueChanged.connect(functools.partial(
-                self._on_ammo_cost_spin_changed, beam, "combo_ammo_cost"
-            ))
-            self._beam_combo[beam] = spin_box
-            self.beam_configuration_layout.addWidget(spin_box, row, 5)
-
-            spin_box = QSpinBox(self.beam_configuration_group)
-            spin_box.setSuffix(" missile")
-            spin_box.setMaximum(250)
-            spin_box.setMinimum(1)
-            spin_box.valueChanged.connect(functools.partial(
-                self._on_ammo_cost_spin_changed, beam, "combo_missile_cost"
-            ))
-            self._beam_missile[beam] = spin_box
-            self.beam_configuration_layout.addWidget(spin_box, row, 6)
-
-            row += 1
-
-    def _on_ammo_type_combo_changed(self, beam: str, combo: QComboBox, is_ammo_b: bool, _):
-        with self._editor as editor:
-            beam_configuration = editor.layout_configuration.beam_configuration
-            old_config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
-            if is_ammo_b:
-                new_config = dataclasses.replace(old_config, ammo_b=combo.currentData())
-            else:
-                new_config = dataclasses.replace(old_config, ammo_a=combo.currentData())
-
-            editor.set_layout_configuration_field("beam_configuration",
-                                                  dataclasses.replace(beam_configuration, **{beam: new_config}))
-
-    def _on_ammo_cost_spin_changed(self, beam: str, field_name: str, value: int):
-        with self._editor as editor:
-            beam_configuration = editor.layout_configuration.beam_configuration
-            new_config = dataclasses.replace(getattr(beam_configuration, beam),
-                                             **{field_name: value})
-            editor.set_layout_configuration_field("beam_configuration",
-                                                  dataclasses.replace(beam_configuration, **{beam: new_config}))
-
-    def on_preset_changed_beam_configuration(self, preset: Preset):
-        beam_configuration = preset.layout_configuration.beam_configuration
-
-        for beam in _BEAMS:
-            config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
-
-            self._beam_ammo_a[beam].setCurrentIndex(self._beam_ammo_a[beam].findData(config.ammo_a))
-            self._beam_ammo_b[beam].setCurrentIndex(self._beam_ammo_b[beam].findData(config.ammo_b))
-            self._beam_ammo_b[beam].setEnabled(config.ammo_a != -1)
-            self._beam_uncharged[beam].setValue(config.uncharged_cost)
-            self._beam_charged[beam].setValue(config.charged_cost)
-            self._beam_combo[beam].setValue(config.combo_ammo_cost)
-            self._beam_missile[beam].setValue(config.combo_missile_cost)
