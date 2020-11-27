@@ -225,7 +225,7 @@ def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
         yield array.index(element), len(array)
     else:
         if element not in array:
-            raise ValueError("given element is not in array")
+            raise ValueError(f"given element {element} is not in array of {len(array)}")
 
 
 def _is_sorted(array: List[T]) -> bool:
