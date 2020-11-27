@@ -2,7 +2,7 @@ import collections
 import copy
 import dataclasses
 from enum import Enum
-from typing import List, Dict, Iterator, Tuple, Optional
+from typing import List, Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackValue, BitPackDecoder
@@ -20,7 +20,6 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     ADVANCED = "advanced"
     EXPERT = "expert"
     HYPERMODE = "hypermode"
-    MINIMAL_LOGIC = "minimal-logic"
 
     @classmethod
     def default(cls) -> "LayoutTrickLevel":
@@ -47,7 +46,6 @@ _PRETTY_TRICK_LEVEL_NAME = {
     LayoutTrickLevel.ADVANCED: "Advanced",
     LayoutTrickLevel.EXPERT: "Expert",
     LayoutTrickLevel.HYPERMODE: "Hypermode",
-    LayoutTrickLevel.MINIMAL_LOGIC: "Minimal Logic",
 }
 
 
@@ -64,25 +62,25 @@ class TrickLevelConfiguration(BitPackValue):
 
     def __post_init__(self):
         for trick, level in self.specific_levels.items():
-            if not isinstance(level, LayoutTrickLevel):
-                raise ValueError(f"Invalid level `{level}` for trick {trick}, expected a LayoutTrickLevel")
+            if not isinstance(level, LayoutTrickLevel) or level == LayoutTrickLevel.NO_TRICKS:
+                raise ValueError(f"Invalid level `{level}` for trick {trick}, "
+                                 f"expected a LayoutTrickLevel that isn't NO_TRICKS")
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         game_data = default_data.read_json_then_binary(self.game)[1]
 
         yield from bitpacking.encode_bool(self.minimal_logic)
+        if self.minimal_logic:
+            return
 
         encodable_levels = list(LayoutTrickLevel)
         encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
-        encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
 
         for trick in sorted(_all_tricks(game_data)):
-            level = self.level_for_trick(trick)
-            if level in encodable_levels:
-                yield from bitpacking.encode_bool(True)
-                yield from bitpacking.pack_array_element(level, encodable_levels)
-            else:
-                yield from bitpacking.encode_bool(False)
+            has_trick = self.has_specific_level_for_trick(trick)
+            yield from bitpacking.encode_bool(has_trick)
+            if has_trick:
+                yield from bitpacking.pack_array_element(self.level_for_trick(trick), encodable_levels)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
@@ -90,15 +88,15 @@ class TrickLevelConfiguration(BitPackValue):
         game_data = default_data.read_json_then_binary(game)[1]
 
         minimal_logic = bitpacking.decode_bool(decoder)
-
-        encodable_levels = list(LayoutTrickLevel)
-        encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
-        encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
-
         specific_levels = {}
-        for trick in sorted(_all_tricks(game_data)):
-            if bitpacking.decode_bool(decoder):
-                specific_levels[trick.short_name] = decoder.decode_element(encodable_levels)
+
+        if not minimal_logic:
+            encodable_levels = list(LayoutTrickLevel)
+            encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
+
+            for trick in sorted(_all_tricks(game_data)):
+                if bitpacking.decode_bool(decoder):
+                    specific_levels[trick.short_name] = decoder.decode_element(encodable_levels)
 
         return cls(minimal_logic, specific_levels, game)
 
@@ -141,6 +139,7 @@ class TrickLevelConfiguration(BitPackValue):
             specific_levels={
                 trick: LayoutTrickLevel(level)
                 for trick, level in value["specific_levels"].items()
+                if level != LayoutTrickLevel.NO_TRICKS.value
             },
             game=game,
         )
@@ -151,18 +150,17 @@ class TrickLevelConfiguration(BitPackValue):
     def level_for_trick(self, trick: TrickResourceInfo) -> LayoutTrickLevel:
         return self.specific_levels.get(trick.short_name, LayoutTrickLevel.NO_TRICKS)
 
-    def set_level_for_trick(self, trick: TrickResourceInfo,
-                            value: Optional[LayoutTrickLevel],
-                            ) -> "TrickLevelConfiguration":
+    def set_level_for_trick(self, trick: TrickResourceInfo, value: LayoutTrickLevel) -> "TrickLevelConfiguration":
         """
         Creates a new TrickLevelConfiguration with the given trick with a changed level
         :param trick:
         :param value:
         :return:
         """
+        assert value is not None
         new_levels = copy.copy(self.specific_levels)
 
-        if value is not None:
+        if value != LayoutTrickLevel.NO_TRICKS:
             new_levels[trick.short_name] = value
         elif trick.index in new_levels:
             del new_levels[trick.short_name]

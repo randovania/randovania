@@ -9,7 +9,7 @@ from randovania.layout.trick_level import TrickLevelConfiguration
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00', "json": {"minimal_logic": False, "specific_levels": {}}},
-        {"encoded": b'\x80\x00', "json": {"minimal_logic": True, "specific_levels": {}}},
+        {"encoded": b'\x80', "json": {"minimal_logic": True, "specific_levels": {}}},
         {"encoded": b'X\x00\x00', "json": {"minimal_logic": False, "specific_levels": {"Dash": "expert"}}},
         {"encoded": b'f3\x00\x00', "json": {"minimal_logic": False, "specific_levels": {
             i: "hypermode"
