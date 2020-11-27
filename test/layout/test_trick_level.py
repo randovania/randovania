@@ -3,7 +3,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
-from randovania.layout.trick_level import TrickLevelConfiguration
+from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
 
 
 @pytest.fixture(
@@ -67,3 +67,16 @@ def test_encode_no_tricks_are_removed():
         decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2), })
 
     assert decoded.specific_levels == {}
+
+
+def test_set_level_for_trick_remove(echoes_resource_database):
+    trick = echoes_resource_database.trick[0]
+    config = TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2)
+
+    assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
+
+    config = config.set_level_for_trick(trick, LayoutTrickLevel.ADVANCED)
+    assert config.level_for_trick(trick) == LayoutTrickLevel.ADVANCED
+
+    config = config.set_level_for_trick(trick, LayoutTrickLevel.DISABLED)
+    assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
