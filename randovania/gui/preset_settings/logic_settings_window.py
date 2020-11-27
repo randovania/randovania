@@ -23,6 +23,7 @@ from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
+from randovania.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
 from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
@@ -73,7 +74,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._editor = editor
         self._window_manager = window_manager
-        self._main_rules = PresetItemPool(editor)
         self._extra_tabs = []
 
         self.game_enum = editor.layout_configuration.game
@@ -84,6 +84,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._extra_tabs.append(PresetItemPool(editor))
 
         if self.game_enum == RandovaniaGame.PRIME2:
+            self._extra_tabs.append(PresetEchoesGoal(editor))
             self._extra_tabs.append(PresetEchoesTranslators(editor))
             self._extra_tabs.append(PresetEchoesBeamConfiguration(editor))
             self._extra_tabs.append(PresetEchoesPatches(editor))
@@ -102,7 +103,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.setup_trick_level_elements()
         self.setup_damage_elements()
         self.setup_elevator_elements()
-        self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
         self.setup_location_pool_elements()
         self.setup_hint_elements()
@@ -110,7 +110,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
@@ -149,15 +148,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Elevator
         set_combo_with_value(self.elevators_combo, layout_config.elevators)
-
-        # Sky Temple Keys
-        keys = layout_config.sky_temple_keys
-        if isinstance(keys.value, int):
-            self.skytemple_slider.setValue(keys.value)
-            data = int
-        else:
-            data = keys
-        set_combo_with_value(self.skytemple_combo, data)
 
         # Starting Area
         self.on_preset_changed_starting_area(preset)
@@ -373,31 +363,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self.elevators_description_label.setText(
                 self.elevators_description_label.text().replace("elevator", "teleporter")
             )
-
-    # Sky Temple Key
-    def setup_sky_temple_elements(self):
-        self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
-        self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
-        self.skytemple_combo.setItemData(2, int)
-
-        self.skytemple_combo.options_field_name = "layout_configuration_sky_temple_keys"
-        self.skytemple_combo.currentIndexChanged.connect(self._on_sky_temple_key_combo_changed)
-        self.skytemple_slider.valueChanged.connect(self._on_sky_temple_key_combo_slider_changed)
-
-    def _on_sky_temple_key_combo_changed(self):
-        combo_enum = self.skytemple_combo.currentData()
-        with self._editor:
-            if combo_enum is int:
-                self.skytemple_slider.setEnabled(True)
-                self._editor.layout_configuration_sky_temple_keys = LayoutSkyTempleKeyMode(
-                    self.skytemple_slider.value())
-            else:
-                self.skytemple_slider.setEnabled(False)
-                self._editor.layout_configuration_sky_temple_keys = combo_enum
-
-    def _on_sky_temple_key_combo_slider_changed(self):
-        self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
-        self._on_sky_temple_key_combo_changed()
 
     # Starting Area
     def setup_starting_area_elements(self):
