@@ -14,7 +14,7 @@ from randovania.interface_common.enum_lib import iterate_enum
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
-    NO_TRICKS = "no-tricks"
+    DISABLED = "disabled"
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -23,7 +23,7 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 
     @classmethod
     def default(cls) -> "LayoutTrickLevel":
-        return cls.NO_TRICKS
+        return cls.DISABLED
 
     @classmethod
     def from_number(cls, number: int) -> "LayoutTrickLevel":
@@ -40,7 +40,7 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 
 _TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)
 _PRETTY_TRICK_LEVEL_NAME = {
-    LayoutTrickLevel.NO_TRICKS: "No Tricks",
+    LayoutTrickLevel.DISABLED: "Disabled",
     LayoutTrickLevel.BEGINNER: "Beginner",
     LayoutTrickLevel.INTERMEDIATE: "Intermediate",
     LayoutTrickLevel.ADVANCED: "Advanced",
@@ -62,7 +62,7 @@ class TrickLevelConfiguration(BitPackValue):
 
     def __post_init__(self):
         for trick, level in self.specific_levels.items():
-            if not isinstance(level, LayoutTrickLevel) or level == LayoutTrickLevel.NO_TRICKS:
+            if not isinstance(level, LayoutTrickLevel) or level == LayoutTrickLevel.DISABLED:
                 raise ValueError(f"Invalid level `{level}` for trick {trick}, "
                                  f"expected a LayoutTrickLevel that isn't NO_TRICKS")
 
@@ -74,7 +74,7 @@ class TrickLevelConfiguration(BitPackValue):
             return
 
         encodable_levels = list(LayoutTrickLevel)
-        encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
+        encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
         for trick in sorted(_all_tricks(game_data)):
             has_trick = self.has_specific_level_for_trick(trick)
@@ -92,7 +92,7 @@ class TrickLevelConfiguration(BitPackValue):
 
         if not minimal_logic:
             encodable_levels = list(LayoutTrickLevel)
-            encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
+            encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
             for trick in sorted(_all_tricks(game_data)):
                 if bitpacking.decode_bool(decoder):
@@ -139,7 +139,7 @@ class TrickLevelConfiguration(BitPackValue):
             specific_levels={
                 trick: LayoutTrickLevel(level)
                 for trick, level in value["specific_levels"].items()
-                if level != LayoutTrickLevel.NO_TRICKS.value
+                if level != LayoutTrickLevel.DISABLED.value
             },
             game=game,
         )
@@ -148,7 +148,7 @@ class TrickLevelConfiguration(BitPackValue):
         return trick.short_name in self.specific_levels
 
     def level_for_trick(self, trick: TrickResourceInfo) -> LayoutTrickLevel:
-        return self.specific_levels.get(trick.short_name, LayoutTrickLevel.NO_TRICKS)
+        return self.specific_levels.get(trick.short_name, LayoutTrickLevel.DISABLED)
 
     def set_level_for_trick(self, trick: TrickResourceInfo, value: LayoutTrickLevel) -> "TrickLevelConfiguration":
         """
@@ -160,7 +160,7 @@ class TrickLevelConfiguration(BitPackValue):
         assert value is not None
         new_levels = copy.copy(self.specific_levels)
 
-        if value != LayoutTrickLevel.NO_TRICKS:
+        if value != LayoutTrickLevel.DISABLED:
             new_levels[trick.short_name] = value
         elif trick.index in new_levels:
             del new_levels[trick.short_name]
