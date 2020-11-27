@@ -141,10 +141,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
-        self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
-        self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
-        self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
-        self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
+            self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
+            self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
+            self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
         # Elevator
         set_combo_with_value(self.elevators_combo, layout_config.elevators)
@@ -323,10 +324,15 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
-        self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
-        self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
-        self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
-        self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
+
+        if self.game_enum == RandovaniaGame.PRIME2:
+            self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
+            self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
+            self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
+            self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
+        else:
+            self.dark_aether_box.setVisible(False)
+            self.safe_zone_box.setVisible(False)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -360,6 +366,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
                                                                            self._editor,
                                                                            self.elevators_combo))
+
+        if self.game_enum == RandovaniaGame.PRIME3:
+            self.patches_tab_widget.setTabText(self.patches_tab_widget.indexOf(self.elevator_tab),
+                                               "Teleporters")
+            self.elevators_description_label.setText(
+                self.elevators_description_label.text().replace("elevator", "teleporter")
+            )
 
     # Sky Temple Key
     def setup_sky_temple_elements(self):
