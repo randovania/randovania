@@ -159,33 +159,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         set_combo_with_value(self.skytemple_combo, data)
 
         # Starting Area
-        starting_locations = layout_config.starting_location.locations
-
-        self._during_batch_check_update = True
-        for world in self.game_description.world_list.worlds:
-            for is_dark_world in dark_world_flags(world):
-                all_areas = True
-                no_areas = True
-                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
-                correct_name = world.correct_name(is_dark_world)
-                if correct_name not in self._starting_location_for_world:
-                    continue
-
-                for area in areas:
-                    if area.area_asset_id in self._starting_location_for_area:
-                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
-                        if is_checked:
-                            no_areas = False
-                        else:
-                            all_areas = False
-                        self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
-                if all_areas:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.Checked)
-                elif no_areas:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.Unchecked)
-                else:
-                    self._starting_location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
-        self._during_batch_check_update = False
+        self.on_preset_changed_starting_area(preset)
 
         # Location Pool
         available_locations = layout_config.available_locations
@@ -506,6 +480,35 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 "starting_location",
                 StartingLocation.with_elements(save_stations, self.game_enum)
             )
+
+    def on_preset_changed_starting_area(self, preset: Preset):
+        starting_locations = preset.layout_configuration.starting_location.locations
+
+        self._during_batch_check_update = True
+        for world in self.game_description.world_list.worlds:
+            for is_dark_world in dark_world_flags(world):
+                all_areas = True
+                no_areas = True
+                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
+                correct_name = world.correct_name(is_dark_world)
+                if correct_name not in self._starting_location_for_world:
+                    continue
+
+                for area in areas:
+                    if area.area_asset_id in self._starting_location_for_area:
+                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
+                        if is_checked:
+                            no_areas = False
+                        else:
+                            all_areas = False
+                        self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+                if all_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Checked)
+                elif no_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Unchecked)
+                else:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
+        self._during_batch_check_update = False
 
     # Location Pool
     def setup_location_pool_elements(self):
