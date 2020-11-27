@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Dict
 
 import aiofiles
 import slugify
@@ -179,6 +179,11 @@ def _migrate_v5(preset: dict) -> dict:
     for item in default_items_state.keys():
         if item not in major_items:
             major_items[item] = default_items_state[item]
+
+    specific_levels: Dict[str, str] = preset["layout_configuration"]["trick_level"]["specific_levels"]
+    tricks_to_remove = [trick_name for trick_name, level in specific_levels.items() if level == "no-tricks"]
+    for trick in tricks_to_remove:
+        specific_levels.pop(trick)
 
     return preset
 
