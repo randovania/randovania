@@ -15,7 +15,7 @@ from randovania.game_description import data_reader
 from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
-from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
+from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog

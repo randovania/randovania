@@ -1421,6 +1421,29 @@
                         }
                     }
                 ]
+            },
+            "Enter Hypermode": {
+                "type": "and",
+                "data": [
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 20,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 35,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    }
+                ]
             }
         }
     },
@@ -1600,7 +1623,7 @@
     "worlds": [
         {
             "name": "G.F.S. Olympus",
-            "dark_name": "!01a_GFShip_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 4010992506757754735,
             "areas": [
                 {
@@ -2833,7 +2856,7 @@
         },
         {
             "name": "Norion",
-            "dark_name": "!01b_GFPlanet_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 8050447300094575427,
             "areas": [
                 {
@@ -4836,7 +4859,7 @@
         },
         {
             "name": "G.F.S. Valhalla",
-            "dark_name": "!01c_Abandoned_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 13921744762140409337,
             "areas": [
                 {
@@ -6892,7 +6915,7 @@
         },
         {
             "name": "Bryyo - Reptilicus",
-            "dark_name": "!03a_Bryyo_Reptilicus_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 11458735609143269013,
             "areas": [
                 {
@@ -13914,7 +13937,7 @@
         },
         {
             "name": "Bryyo - Fire",
-            "dark_name": "!03b_Bryyo_Fire_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 11216541621678862008,
             "areas": [
                 {
@@ -16834,7 +16857,7 @@
         },
         {
             "name": "Bryyo - Ice",
-            "dark_name": "!03c_Bryyo_Ice_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 12742502173584078952,
             "areas": [
                 {
@@ -17594,7 +17617,7 @@
         },
         {
             "name": "Bryyo - Seed",
-            "dark_name": "!03d_Bryyo_Seed_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 14806081023590793725,
             "areas": [
                 {
@@ -17767,41 +17790,28 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 35,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 36,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
                                         }
                                     ]
                                 }
                             }
                         },
                         {
-                            "name": "Dock to !!00_seed_outofseed_dead_bryyo",
+                            "name": "Teleporter to Bryyo Cliffside",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.0,
                                 "y": 85.0,
                                 "z": 75.0
                             },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 7103053089518937857,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "node_type": "teleporter",
+                            "destination_world_asset_id": 11458735609143269013,
+                            "destination_area_asset_id": 2349002151496990705,
+                            "teleporter_instance_id": null,
+                            "scan_asset_id": null,
+                            "keep_name_when_vanilla": true,
+                            "editable": false,
                             "connections": {}
                         },
                         {
@@ -17812,7 +17822,7 @@
                             "pickup_index": 98,
                             "major_location": true,
                             "connections": {
-                                "Dock to !!00_seed_outofseed_dead_bryyo": {
+                                "Teleporter to Bryyo Cliffside": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -17860,37 +17870,12 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "!!00_seed_outofseed_dead_bryyo",
-                    "in_dark_aether": false,
-                    "asset_id": 7103053089518937857,
-                    "default_node_index": null,
-                    "valid_starting_location": true,
-                    "nodes": [
-                        {
-                            "name": "Door to Bryyo Leviathan Core",
-                            "heal": false,
-                            "coordinates": {
-                                "x": 0.0,
-                                "y": -129.27066040039062,
-                                "z": 2.4999939005583656
-                            },
-                            "node_type": "dock",
-                            "dock_index": 0,
-                            "connected_area_asset_id": 9708827741160794862,
-                            "connected_dock_index": 1,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        }
-                    ]
                 }
             ]
         },
         {
             "name": "SkyTown, Elysia - Main",
-            "dark_name": "!04a_Skytown_Main_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 14087060452406742136,
             "areas": [
                 {
@@ -21329,7 +21314,7 @@
         },
         {
             "name": "SkyTown, Elysia - Pod",
-            "dark_name": "!04b_Skytown_Pod_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 16208562975376944299,
             "areas": [
                 {
@@ -24120,7 +24105,7 @@
         },
         {
             "name": "SkyTown, Elysia - Seed",
-            "dark_name": "!04c_Skytown_Seed_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 10717625015048596485,
             "areas": [
                 {
@@ -24205,7 +24190,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Door to Landing Site C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Door to Landing Site C",
@@ -24281,30 +24271,26 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Helios": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 35,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
                                 }
                             }
                         },
                         {
-                            "name": "Dock to !!00_seed_outofseed_dead_skytown",
+                            "name": "Teleporter to Elysia",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.0,
-                                "y": -96.4098129272461,
-                                "z": -4.0531158447265625e-06
+                                "y": -96.41,
+                                "z": -0.0
                             },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 16922267283524287233,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "node_type": "teleporter",
+                            "destination_world_asset_id": 14087060452406742136,
+                            "destination_area_asset_id": 4133901881028310574,
+                            "teleporter_instance_id": null,
+                            "scan_asset_id": null,
+                            "keep_name_when_vanilla": true,
+                            "editable": false,
                             "connections": {}
                         },
                         {
@@ -24315,7 +24301,7 @@
                             "pickup_index": 97,
                             "major_location": true,
                             "connections": {
-                                "Dock to !!00_seed_outofseed_dead_skytown": {
+                                "Teleporter to Elysia": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -24354,37 +24340,12 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "!!00_seed_outofseed_dead_skytown",
-                    "in_dark_aether": false,
-                    "asset_id": 16922267283524287233,
-                    "default_node_index": null,
-                    "valid_starting_location": true,
-                    "nodes": [
-                        {
-                            "name": "Door to Elysian Leviathan Core",
-                            "heal": false,
-                            "coordinates": {
-                                "x": -5.0,
-                                "y": 142.2276611328125,
-                                "z": 5.9604644775390625e-06
-                            },
-                            "node_type": "dock",
-                            "dock_index": 0,
-                            "connected_area_asset_id": 17766988414710659705,
-                            "connected_dock_index": 1,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        }
-                    ]
                 }
             ]
         },
         {
             "name": "Pirate Homeworld - Research",
-            "dark_name": "!05a_Pirate_Research_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 1184305208322576857,
             "areas": [
                 {
@@ -26253,7 +26214,7 @@
         },
         {
             "name": "Pirate Homeworld - Command",
-            "dark_name": "!05b_Pirate_Command_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 4037904934597342930,
             "areas": [
                 {
@@ -28608,7 +28569,7 @@
         },
         {
             "name": "Pirate Homeworld - Mines",
-            "dark_name": "!05c_Pirate_Mines_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 15932695450594384879,
             "areas": [
                 {
@@ -29538,7 +29499,7 @@
         },
         {
             "name": "Pirate Homeworld - Seed",
-            "dark_name": "!05d_Pirate_Seed_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 16039522250714156185,
             "areas": [
                 {
@@ -29688,13 +29649,8 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 35,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
                                         },
                                         {
                                             "type": "template",
@@ -29705,19 +29661,20 @@
                             }
                         },
                         {
-                            "name": "Dock to !!00_seed_outofseed_dead_pirate",
+                            "name": "Teleporter to Pirate Homeworld",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.0,
-                                "y": 124.49210357666016,
-                                "z": 5.0067901611328125e-06
+                                "y": 124.49,
+                                "z": 0.0
                             },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 14660132150748303050,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "node_type": "teleporter",
+                            "destination_world_asset_id": 4037904934597342930,
+                            "destination_area_asset_id": 4408585131827753141,
+                            "teleporter_instance_id": null,
+                            "scan_asset_id": null,
+                            "keep_name_when_vanilla": true,
+                            "editable": false,
                             "connections": {}
                         },
                         {
@@ -29728,14 +29685,23 @@
                             "pickup_index": 99,
                             "major_location": true,
                             "connections": {
-                                "Door to Core Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 39,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Teleporter to Pirate Homeworld": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 39,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -29753,37 +29719,12 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "!!00_seed_outofseed_dead_pirate",
-                    "in_dark_aether": false,
-                    "asset_id": 14660132150748303050,
-                    "default_node_index": null,
-                    "valid_starting_location": true,
-                    "nodes": [
-                        {
-                            "name": "Door to Pirate Homeworld Leviathan Core",
-                            "heal": false,
-                            "coordinates": {
-                                "x": 0.0,
-                                "y": 52.11869812011719,
-                                "z": 2.500001953674314
-                            },
-                            "node_type": "dock",
-                            "dock_index": 0,
-                            "connected_area_asset_id": 4585599704880367469,
-                            "connected_dock_index": 1,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        }
-                    ]
                 }
             ]
         },
         {
             "name": "Phaaze",
-            "dark_name": "!06_Phaaze_Master.MLVL.rsmeta",
+            "dark_name": null,
             "asset_id": 5406397194789083955,
             "areas": [
                 {

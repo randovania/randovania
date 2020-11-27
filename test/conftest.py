@@ -10,6 +10,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -51,12 +52,12 @@ def default_layout_configuration(preset_manager) -> LayoutConfiguration:
 
 @pytest.fixture()
 def echoes_resource_database() -> ResourceDatabase:
-    return default_database.default_prime2_resource_database()
+    return default_database.resource_database_for(RandovaniaGame.PRIME2)
 
 
 @pytest.fixture()
 def echoes_item_database() -> ItemDatabase:
-    return default_database.default_prime2_item_database()
+    return default_database.item_database_for_game(RandovaniaGame.PRIME2)
 
 
 @pytest.fixture()
