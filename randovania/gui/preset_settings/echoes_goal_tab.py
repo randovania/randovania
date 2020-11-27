@@ -1,3 +1,5 @@
+from PySide2 import QtCore
+
 from randovania.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab

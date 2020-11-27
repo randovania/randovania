@@ -24,6 +24,7 @@ from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
 from randovania.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
+from randovania.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
 from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
@@ -32,8 +33,7 @@ from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.hint_configuration import SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode, LayoutDamageStrictness
+from randovania.layout.layout_configuration import LayoutElevators, LayoutDamageStrictness
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel
@@ -81,16 +81,17 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
-        self._extra_tabs.append(PresetItemPool(editor))
-
         if self.game_enum == RandovaniaGame.PRIME2:
             self._extra_tabs.append(PresetEchoesGoal(editor))
+            self._extra_tabs.append(PresetEchoesHints(editor))
             self._extra_tabs.append(PresetEchoesTranslators(editor))
             self._extra_tabs.append(PresetEchoesBeamConfiguration(editor))
             self._extra_tabs.append(PresetEchoesPatches(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME3:
             pass
+
+        self._extra_tabs.append(PresetItemPool(editor))
 
         for extra_tab in self._extra_tabs:
             if extra_tab.uses_patches_tab:
@@ -105,13 +106,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.setup_elevator_elements()
         self.setup_starting_area_elements()
         self.setup_location_pool_elements()
-        self.setup_hint_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
@@ -161,9 +160,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             check.setChecked(node.pickup_index not in available_locations.excluded_indices)
             check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
         self._during_batch_check_update = False
-
-        # Hints
-        set_combo_with_value(self.hint_sky_temple_key_combo, preset.layout_configuration.hints.sky_temple_keys)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
@@ -552,17 +548,3 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(check.node.pickup_index,
                                                                                  not check.isChecked())
-
-    # Hints
-    def setup_hint_elements(self):
-        for i, stk_hint_mode in enumerate(SkyTempleKeyHintMode):
-            self.hint_sky_temple_key_combo.setItemData(i, stk_hint_mode)
-
-        self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
-
-    def _on_stk_combo_changed(self, new_index: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "hints",
-                dataclasses.replace(options.layout_configuration.hints,
-                                    sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
