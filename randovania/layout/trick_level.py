@@ -162,7 +162,7 @@ class TrickLevelConfiguration(BitPackValue):
 
         if value != LayoutTrickLevel.DISABLED:
             new_levels[trick.short_name] = value
-        elif trick.index in new_levels:
+        elif trick.short_name in new_levels:
             del new_levels[trick.short_name]
 
         return dataclasses.replace(self, specific_levels=new_levels)
