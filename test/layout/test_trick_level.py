@@ -52,7 +52,7 @@ def test_encode(configuration_with_data):
 
 
 def test_encode_no_tricks_are_removed():
-    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "no-tricks"}},
+    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "disabled"}},
                                                   game=RandovaniaGame.PRIME2)
 
     encoded = bitpacking._pack_encode_results([

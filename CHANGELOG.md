@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Multiworld session history now auto-scrolls to the bottom
 
+-   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
+
 -   Added: A very basic visualization of the map to the tracker.
 
 -   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.

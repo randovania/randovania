@@ -239,7 +239,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             used_difficulties = difficulties_for_trick(self.game_description, trick)
             for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
-                if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in used_difficulties:
+                if trick_level == LayoutTrickLevel.DISABLED or trick_level in used_difficulties:
                     difficulty_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
                     difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
                     difficulty_label.setText(trick_level.long_name)
