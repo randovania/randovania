@@ -12,13 +12,13 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 
 
-@functools.lru_cache()
-def default_prime2_resource_database() -> ResourceDatabase:
-    return read_resource_database(default_data.decode_default_prime2()["resource_database"])
-
-
 def default_prime2_game_description() -> GameDescription:
     return game_description_for(RandovaniaGame.PRIME2)
+
+
+@functools.lru_cache()
+def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
+    return read_resource_database(default_data.read_json_then_binary(game)[1]["resource_database"])
 
 
 def game_description_for(game: RandovaniaGame) -> GameDescription:

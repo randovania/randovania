@@ -1,12 +1,13 @@
-from PySide2.QtWidgets import QMainWindow, QComboBox
+from PySide2.QtWidgets import QComboBox
 
-from randovania.gui.generated.game_patches_window_ui import Ui_GamePatchesWindow
+from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
+from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.preset import Preset
 
 
-class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
+class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
     _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
@@ -35,6 +36,10 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
                                                                                "pickup_model_style"))
         self.pickup_data_source_combo.currentIndexChanged.connect(self._persist_enum(self.pickup_data_source_combo,
                                                                                      "pickup_model_data_source"))
+
+    @property
+    def uses_patches_tab(self) -> bool:
+        return True
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):

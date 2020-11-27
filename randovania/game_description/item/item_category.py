@@ -13,6 +13,8 @@ class ItemCategory(BitPackEnum, Enum):
     MISSILE = "missile"
     CHARGE_COMBO = "charge_combo"
     TRANSLATOR = "translator"
+    PRIME3_GRAPPLE = "grapple"
+    HYPERMODE = "hypermode"
     ENERGY_TANK = "energy_tank"
     TEMPLE_KEY = "temple_key"
     SKY_TEMPLE_KEY = "sky_temple_key"
@@ -60,6 +62,8 @@ MAJOR_ITEM_CATEGORIES = {
     ItemCategory.MISSILE,
     ItemCategory.CHARGE_COMBO,
     ItemCategory.TRANSLATOR,
+    ItemCategory.PRIME3_GRAPPLE,
+    ItemCategory.HYPERMODE,
 }
 
 TEMPLE_KEY_CATEGORIES = {
@@ -75,6 +79,8 @@ LONG_NAMES = {
     ItemCategory.MISSILE: "Missile",
     ItemCategory.CHARGE_COMBO: "Charge Combos",
     ItemCategory.TRANSLATOR: "Translators",
+    ItemCategory.PRIME3_GRAPPLE: "Grapple",
+    ItemCategory.HYPERMODE: "Hypermode",
     ItemCategory.ENERGY_TANK: "Energy Tanks",
 }
 
@@ -87,6 +93,8 @@ HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
     ItemCategory.MISSILE: ("a ", "missile system"),
     ItemCategory.CHARGE_COMBO: ("a ", "charge combo"),
     ItemCategory.TRANSLATOR: ("a ", "translator"),
+    ItemCategory.PRIME3_GRAPPLE: ("a ", "grapple system"),
+    ItemCategory.HYPERMODE: ("a ", "hypermode system"),
     ItemCategory.ENERGY_TANK: ("an ", "Energy Tank"),
     ItemCategory.TEMPLE_KEY: ("a ", "red Temple Key"),
     ItemCategory.SKY_TEMPLE_KEY: ("a ", "Sky Temple Key"),

@@ -2,26 +2,31 @@ import collections
 import dataclasses
 import functools
 from functools import partial
-from typing import Dict, Tuple, List, Iterable, Optional
+from typing import Dict, Tuple, List, Optional
 
 from PySide2.QtCore import QRect, Qt
-from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
-    QHBoxLayout, QWidget, QCheckBox
+from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
+    QHBoxLayout, QCheckBox
 
-from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
+from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.game import RandovaniaGame
+from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
-from randovania.gui.generated.main_rules_ui import Ui_MainRules
+from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
+from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
+from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
-from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -38,32 +43,14 @@ def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
     toggle_button.setText("-" if box.isVisible() else "+")
 
 
-def _update_ammo_visibility(elements: AmmoPickupWidgets, is_visible: bool):
-    elements[2].setVisible(is_visible)
-    elements[3].setVisible(is_visible)
-    if elements[2].text() == "-":
-        elements[4].setVisible(is_visible)
-
-
-def _update_elements_for_progressive_item(elements: Dict[MajorItem, Iterable[QWidget]],
-                                          non_progressive_items: Iterable[MajorItem],
-                                          progressive_item: MajorItem,
-                                          is_progressive: bool,
-                                          ):
-    for item in non_progressive_items:
-        for element in elements[item]:
-            element.setVisible(not is_progressive)
-
-    for element in elements[progressive_item]:
-        element.setVisible(is_progressive)
-
-
-class MainRulesWindow(QMainWindow, Ui_MainRules):
+class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _boxes_for_category: Dict[
         ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
 
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
+    _progressive_widgets: List[ProgressiveItemWidget]
+    _split_ammo_widgets: List[SplitAmmoWidget]
 
     def __init__(self, editor: PresetEditor):
         super().__init__()
@@ -74,52 +61,36 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.gridLayout.setAlignment(Qt.AlignTop)
 
         # Relevant Items
-        item_database = default_prime2_item_database()
+        self.game = editor.layout_configuration.game
+        item_database = default_database.item_database_for_game(self.game)
 
-        self._dark_suit = item_database.major_items["Dark Suit"]
-        self._light_suit = item_database.major_items["Light Suit"]
-        self._progressive_suit = item_database.major_items["Progressive Suit"]
-        self._grapple_beam = item_database.major_items["Grapple Beam"]
-        self._screw_attack = item_database.major_items["Screw Attack"]
-        self._progressive_grapple = item_database.major_items["Progressive Grapple"]
         self._energy_tank_item = item_database.major_items["Energy Tank"]
-        self._dark_ammo_item = item_database.ammo["Dark Ammo Expansion"]
-        self._light_ammo_item = item_database.ammo["Light Ammo Expansion"]
-        self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
-        self._register_alternatives_events()
         self._register_random_starting_events()
-        self._create_categories_boxes(size_policy)
+        self._create_progressive_widgets(item_database)
+        self._create_split_ammo_widgets(item_database)
+        self._create_categories_boxes(item_database, size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
+
+    @property
+    def uses_patches_tab(self) -> bool:
+        return False
 
     def on_preset_changed(self, preset: Preset):
         # Item alternatives
         layout = preset.layout_configuration
         major_configuration = layout.major_items_configuration
 
-        self.progressive_suit_check.setChecked(major_configuration.progressive_suit)
-        self.progressive_grapple_check.setChecked(major_configuration.progressive_grapple)
-        self.split_ammo_check.setChecked(layout.split_beam_ammo)
+        for progressive_widget in self._progressive_widgets:
+            progressive_widget.on_preset_changed(
+                preset,
+                self._boxes_for_category[progressive_widget.progressive_item.item_category][2],
+            )
 
-        _update_elements_for_progressive_item(
-            self._boxes_for_category[ItemCategory.SUIT][2],
-            [self._dark_suit, self._light_suit],
-            self._progressive_suit,
-            major_configuration.progressive_suit
-        )
-
-        _update_elements_for_progressive_item(
-            self._boxes_for_category[ItemCategory.MOVEMENT][2],
-            [self._grapple_beam, self._screw_attack],
-            self._progressive_grapple,
-            major_configuration.progressive_grapple
-        )
-
-        _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
-        for item in [self._dark_ammo_item, self._light_ammo_item]:
-            _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
+        for split_ammo in self._split_ammo_widgets:
+            split_ammo.on_preset_changed(preset, self._ammo_pickup_widgets)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -140,7 +111,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 spinbox.setValue(maximum)
 
         previous_pickup_for_item = {}
-        resource_database = default_prime2_resource_database()
+        game = default_database.game_description_for(self.game)
+        resource_database = game.resource_database
 
         item_for_index: Dict[int, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
@@ -201,28 +173,12 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
 
         # Item pool count
+        pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
         self.item_pool_count_label.setText(
-            "Items in pool: {}/119".format(
-                sum(state.num_shuffled_pickups for state in major_configuration.items_state.values())
-                + sum(state.pickup_count for state in ammo_configuration.items_state.values())
-                + 9  # Dark Agon, Dark Torvus, and Ing Hive keys
-                + layout.sky_temple_keys.num_keys
-            )
+            "Items in pool: {}/{}".format(len(pool_pickup), game.world_list.num_pickup_nodes)
         )
 
     # Item Alternatives
-
-    def _register_alternatives_events(self):
-        self.progressive_suit_check.stateChanged.connect(
-            self._persist_bool_major_configuration_field("progressive_suit"))
-        self.progressive_suit_check.clicked.connect(self._change_progressive_suit)
-
-        self.progressive_grapple_check.stateChanged.connect(
-            self._persist_bool_major_configuration_field("progressive_grapple"))
-        self.progressive_grapple_check.clicked.connect(self._change_progressive_grapple)
-
-        self.split_ammo_check.stateChanged.connect(self._persist_bool_layout_field("split_beam_ammo"))
-        self.split_ammo_check.clicked.connect(self._change_split_ammo)
 
     def _persist_bool_layout_field(self, field_name: str):
         def bound(value: int):
@@ -238,73 +194,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 options.major_items_configuration = dataclasses.replace(options.major_items_configuration, **kwargs)
 
         return bound
-
-    def _change_progressive_suit(self, has_progressive: bool):
-        with self._editor as options:
-            major_configuration = options.major_items_configuration
-
-            if has_progressive:
-                dark_suit_state = MajorItemState()
-                light_suit_state = MajorItemState()
-                progressive_suit_state = MajorItemState(num_shuffled_pickups=2)
-            else:
-                dark_suit_state = MajorItemState(num_shuffled_pickups=1)
-                light_suit_state = MajorItemState(num_shuffled_pickups=1)
-                progressive_suit_state = MajorItemState()
-
-            major_configuration = major_configuration.replace_states({
-                self._dark_suit: dark_suit_state,
-                self._light_suit: light_suit_state,
-                self._progressive_suit: progressive_suit_state,
-            })
-
-            options.major_items_configuration = major_configuration
-
-    def _change_progressive_grapple(self, has_progressive: bool):
-        with self._editor as options:
-            major_configuration = options.major_items_configuration
-
-            if has_progressive:
-                grapple_state = MajorItemState()
-                screw_state = MajorItemState()
-                progressive_state = MajorItemState(num_shuffled_pickups=2)
-            else:
-                grapple_state = MajorItemState(num_shuffled_pickups=1)
-                screw_state = MajorItemState(num_shuffled_pickups=1)
-                progressive_state = MajorItemState()
-
-            major_configuration = major_configuration.replace_states({
-                self._grapple_beam: grapple_state,
-                self._screw_attack: screw_state,
-                self._progressive_grapple: progressive_state,
-            })
-
-            options.major_items_configuration = major_configuration
-
-    def _change_split_ammo(self, has_split: bool):
-        with self._editor as options:
-            ammo_configuration = options.ammo_configuration
-
-            current_total = sum(
-                ammo_configuration.items_state[ammo].pickup_count
-                for ammo in (self._dark_ammo_item, self._light_ammo_item, self._beam_ammo_item)
-            )
-            if has_split:
-                dark_ammo_state = AmmoState(pickup_count=current_total // 2)
-                light_ammo_state = AmmoState(pickup_count=current_total // 2)
-                beam_ammo_state = AmmoState()
-            else:
-                dark_ammo_state = AmmoState()
-                light_ammo_state = AmmoState()
-                beam_ammo_state = AmmoState(pickup_count=current_total)
-
-            ammo_configuration = ammo_configuration.replace_states({
-                self._dark_ammo_item: dark_ammo_state,
-                self._light_ammo_item: light_ammo_state,
-                self._beam_ammo_item: beam_ammo_state,
-            })
-
-            options.ammo_configuration = ammo_configuration
 
     # Random Starting
 
@@ -323,15 +212,65 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                                                                     maximum_random_starting_items=value)
 
     # Major Items
+    def _create_progressive_widgets(self, item_database: ItemDatabase):
+        self._progressive_widgets = []
 
-    def _create_categories_boxes(self, size_policy):
+        if self.game == RandovaniaGame.PRIME2:
+            suit = ProgressiveItemWidget(
+                self.item_alternative_box, self._editor,
+                progressive_item=item_database.major_items["Progressive Suit"],
+                non_progressive_items=[
+                    item_database.major_items["Dark Suit"],
+                    item_database.major_items["Light Suit"]
+                ],
+            )
+            suit.setText("Use progressive Dark Suit → Light Suit")
+            self._progressive_widgets.append(suit)
+
+            grapple = ProgressiveItemWidget(
+                self.item_alternative_box, self._editor,
+                progressive_item=item_database.major_items["Progressive Grapple"],
+                non_progressive_items=[
+                    item_database.major_items["Grapple Beam"],
+                    item_database.major_items["Screw Attack"]
+                ],
+            )
+            grapple.setText("Use progressive Grapple Beam → Screw Attack")
+            self._progressive_widgets.append(grapple)
+
+        for widget in self._progressive_widgets:
+            self.item_alternative_layout.addWidget(widget)
+
+    def _create_split_ammo_widgets(self, item_database: ItemDatabase):
+        self._split_ammo_widgets = []
+
+        if self.game == RandovaniaGame.PRIME2:
+            beam_ammo = SplitAmmoWidget(
+                self.item_alternative_box, self._editor,
+                unified_ammo=item_database.ammo["Beam Ammo Expansion"],
+                split_ammo=[
+                    item_database.ammo["Dark Ammo Expansion"],
+                    item_database.ammo["Light Ammo Expansion"],
+                ],
+            )
+            beam_ammo.setText("Split Beam Ammo Expansions")
+            self._split_ammo_widgets.append(beam_ammo)
+
+        for widget in self._split_ammo_widgets:
+            self.item_alternative_layout.addWidget(widget)
+
+    def _create_categories_boxes(self, item_database: ItemDatabase, size_policy):
         self._boxes_for_category = {}
 
-        current_row = 0
-        for major_item_category in iterate_enum(ItemCategory):
-            if not major_item_category.is_major_category and major_item_category != ItemCategory.ENERGY_TANK:
-                continue
+        categories = set()
+        for major_item in item_database.major_items.values():
+            if not major_item.required:
+                categories.add(major_item.item_category)
 
+        all_categories = list(iterate_enum(ItemCategory))
+
+        current_row = 0
+        for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_button = QToolButton(self.major_items_box)
             category_button.setGeometry(QRect(20, 30, 24, 21))
             category_button.setText("+")
@@ -384,7 +323,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         """
         major_items_configuration = self._editor.major_items_configuration
 
-        popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item])
+        popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item],
+                                       default_database.resource_database_for(self.game))
         result = popup.exec_()
 
         if result == QDialog.Accepted:
@@ -446,7 +386,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._ammo_maximum_spinboxes = collections.defaultdict(list)
         self._ammo_pickup_widgets = {}
 
-        resource_database = default_prime2_resource_database()
+        resource_database = default_database.resource_database_for(self.game)
 
         for ammo in item_database.ammo.values():
             title_layout = QHBoxLayout()

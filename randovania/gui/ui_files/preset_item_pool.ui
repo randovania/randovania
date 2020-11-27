@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainRules</class>
- <widget class="QMainWindow" name="MainRules">
+ <class>PresetItemPool</class>
+ <widget class="QMainWindow" name="PresetItemPool">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Randovania</string>
+   <string>Item Pool</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="maximumSize">
@@ -89,38 +89,7 @@
           <property name="title">
            <string>Item Alternatives</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QCheckBox" name="progressive_suit_check">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Instead of there being a Dark Suit and a Light Suit pickups, there will instead be two Progressive Suit pickups.&lt;/p&gt;&lt;p&gt;Picking the first one gives you Dark Suit, while the second one gives Light Suit. This ensures you always get Dark Suit before.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="text">
-              <string>Use progressive Dark Suit → Light Suit</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="progressive_grapple_check">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This groups Grapple Beam and Screw Attack into a progressive item pair: the first one always gives Grapple Beam, with the second one always being Screw Attack.&lt;/p&gt;&lt;p&gt;Warning: the model for this item pair will always be Grapple Beam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="text">
-              <string>Use progressive Grapple Beam → Screw Attack</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="split_ammo_check">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Splits the Beam Ammo Expansion pickups into two different pickups: Light Ammo Expansion and Dark Ammo Expansion.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="text">
-              <string>Split Beam Ammo Expansions</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QVBoxLayout" name="item_alternative_layout"/>
          </widget>
         </item>
         <item row="3" column="0" colspan="2">
