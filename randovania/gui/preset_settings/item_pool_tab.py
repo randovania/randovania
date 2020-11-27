@@ -16,6 +16,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
+from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
@@ -110,7 +111,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 spinbox.setValue(maximum)
 
         previous_pickup_for_item = {}
-        resource_database = default_database.resource_database_for(self.game)
+        game = default_database.game_description_for(self.game)
+        resource_database = game.resource_database
 
         item_for_index: Dict[int, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
@@ -171,13 +173,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
 
         # Item pool count
+        pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
         self.item_pool_count_label.setText(
-            "Items in pool: {}/119".format(
-                sum(state.num_shuffled_pickups for state in major_configuration.items_state.values())
-                + sum(state.pickup_count for state in ammo_configuration.items_state.values())
-                + 9  # Dark Agon, Dark Torvus, and Ing Hive keys
-                + layout.sky_temple_keys.num_keys
-            )
+            "Items in pool: {}/{}".format(len(pool_pickup), game.world_list.num_pickup_nodes)
         )
 
     # Item Alternatives
