@@ -141,7 +141,7 @@ def _async_create_description(permalink: Permalink,
     :param status_update:
     :return:
     """
-    rng = Random(permalink.as_str)
+    rng = Random(permalink.as_bytes)
 
     presets = {
         i: permalink.get_preset(i)
