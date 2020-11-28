@@ -111,7 +111,7 @@ jobs:
         uses: codecov/codecov-action@v1
 
       - name: Upload executable to Bintray
-        if: ${{ matrix.executable && startsWith(github.ref, 'refs/heads/') }}
+        if: ${{ matrix.executable && startsWith(github.ref, 'refs/heads/') && matrix.os == 'windows-latest' }}
         run: python tools/upload_release_to_bintray.py
         env:
           BINTRAY_USER: henriquegemignani
@@ -131,7 +131,7 @@ jobs:
       - name: Publish distribution 📦 to PyPI
         if: ${{ !matrix.executable && startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest' }}
         run: |
-          python -m pip install -r requirements-twine.txt
+          python -m pip install twine
           python -m twine upload dist/*
         env:
           TWINE_USERNAME: __token__

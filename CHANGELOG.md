@@ -10,7 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Multiworld session history now auto-scrolls to the bottom
 
+-   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
+
 -   Added: A very basic visualization of the map to the tracker.
+
+-   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.
+
+-   Removed: Intermediate path for reaching item from Security Station B door without Screw Attack since it was broken and impossible.
+    
+-   Changed: Renamed "Before Pickup" to "Next to Pickup" for more clarity
 
 
 ## [2.0.2] - 2020-11-21

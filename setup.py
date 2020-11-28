@@ -32,6 +32,7 @@ setup(
     name='randovania',
     use_scm_version={
         "version_scheme": version_scheme,
+        "local_scheme": "no-local-version",
         "write_to": "randovania/version.py",
     },
     author='Henrique Gemignani',
@@ -63,7 +64,7 @@ setup(
     ],
     python_requires=">=3.7",
     setup_requires=[
-        "setuptools_scm",
+        "setuptools_scm>=3.5.0",
         "pyqt-distutils",
     ],
     install_requires=[

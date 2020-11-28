@@ -3,13 +3,13 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
-from randovania.layout.trick_level import TrickLevelConfiguration
+from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
 
 
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00', "json": {"minimal_logic": False, "specific_levels": {}}},
-        {"encoded": b'\x80\x00', "json": {"minimal_logic": True, "specific_levels": {}}},
+        {"encoded": b'\x80', "json": {"minimal_logic": True, "specific_levels": {}}},
         {"encoded": b'X\x00\x00', "json": {"minimal_logic": False, "specific_levels": {"Dash": "expert"}}},
         {"encoded": b'f3\x00\x00', "json": {"minimal_logic": False, "specific_levels": {
             i: "hypermode"
@@ -52,7 +52,7 @@ def test_encode(configuration_with_data):
 
 
 def test_encode_no_tricks_are_removed():
-    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "no-tricks"}},
+    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "disabled"}},
                                                   game=RandovaniaGame.PRIME2)
 
     encoded = bitpacking._pack_encode_results([
@@ -67,3 +67,16 @@ def test_encode_no_tricks_are_removed():
         decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2), })
 
     assert decoded.specific_levels == {}
+
+
+def test_set_level_for_trick_remove(echoes_resource_database):
+    trick = echoes_resource_database.trick[0]
+    config = TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2)
+
+    assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
+
+    config = config.set_level_for_trick(trick, LayoutTrickLevel.ADVANCED)
+    assert config.level_for_trick(trick) == LayoutTrickLevel.ADVANCED
+
+    config = config.set_level_for_trick(trick, LayoutTrickLevel.DISABLED)
+    assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
