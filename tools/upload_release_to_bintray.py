@@ -22,12 +22,12 @@ async def main():
     print("\nLooking for a valid file...")
     zip_file = None
     for f in release_files:
-        if f.name.endswith(".zip") or f.name.endswith(".tar.gz"):
+        if f.name.endswith(".zip") or f.name.endswith(".tar.gz") or f.name.endswith(".7z"):
             zip_file = f
             print(f"Upload release at {zip_file}")
             break
         else:
-            print(f"* {f.name} is not a .zip or .tar.gz")
+            print(f"* {f.name} is not a .zip or .tar.gz or .7z")
 
     if zip_file is None:
         raise RuntimeError(f"No valid release file found.")

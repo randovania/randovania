@@ -22,8 +22,7 @@ async def post_to_discord():
             message += "\n"
 
     download_base = "https://bintray.com/randovania/randovania/download_file?file_path="
-    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.zip")
-    macos_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-macos.tar.gz")
+    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.7z")
 
     webhook_data = {
         "embeds": [{
@@ -35,11 +34,6 @@ async def post_to_discord():
                 {
                     "name": "Windows",
                     "value": f"[Download]({windows_download_url})",
-                    "inline": True
-                },
-                {
-                    "name": "macOS",
-                    "value": f"[Download]({macos_download_url})",
                     "inline": True
                 },
             ],

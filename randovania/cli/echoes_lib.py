@@ -18,7 +18,7 @@ def add_layout_configuration_arguments(parser: ArgumentParser):
         "--trick-level",
         type=str,
         choices=[layout.value for layout in LayoutTrickLevel],
-        default=LayoutTrickLevel.NO_TRICKS.value,
+        default=LayoutTrickLevel.DISABLED.value,
         help="The level of tricks to use.")
     parser.add_argument(
         "--sky-temple-keys",
