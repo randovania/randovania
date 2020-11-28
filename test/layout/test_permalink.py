@@ -188,5 +188,5 @@ def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
     # Assert
     assert str1 == "Lg=="
     assert str1 == str2
-    assert str2 == object.__getattribute__(link, "__cached_as_str")
+    assert object.__getattribute__(link, "__cached_as_bytes") is not None
     mock_bit_pack_encode.assert_called_once_with(link, {})
