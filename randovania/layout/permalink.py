@@ -1,8 +1,9 @@
 import base64
 import binascii
 import json
+import operator
 from dataclasses import dataclass
-from typing import Iterator, Tuple, Dict
+from typing import Iterator, Tuple, Dict, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
@@ -18,6 +19,25 @@ _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
 
 def _dictionary_byte_hash(data: dict) -> int:
     return single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
+
+
+def rotate_bytes(data: Iterable[int], rotation: int, per_byte_adjustment: int,
+                 inverse: bool = False) -> Iterator[int]:
+    """
+    Rotates the elements in data, in a reversible operation.
+    :param data: The byte values to rotate. Should be ints in the [0, 255] range.
+    :param rotation: By how much each item should be rotated, mod 256.
+    :param per_byte_adjustment: Increment the rotation by this after each byte, mod 256.
+    :param inverse: If True, it performs the inverse operation.
+    :return:
+    """
+    if inverse:
+        op = operator.sub
+    else:
+        op = operator.add
+    for b in data:
+        yield op(b, rotation) % 256
+        rotation = (rotation + per_byte_adjustment) % 256
 
 
 def _encode_preset(preset: Preset, manager: PresetManager):
@@ -86,7 +106,7 @@ class Permalink(BitPackValue):
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
-        object.__setattr__(self, "__cached_as_str", None)
+        object.__setattr__(self, "__cached_as_bytes", None)
 
     @classmethod
     def current_version(cls) -> int:
@@ -143,21 +163,52 @@ class Permalink(BitPackValue):
                              "support only permalink of version {}.".format(version, cls.current_version()))
 
     @classmethod
-    def validate_version(cls, decoder: BitPackDecoder):
-        version = decoder.peek(_PERMALINK_MAX_VERSION)[0]
+    def validate_version(cls, b: bytes):
+        version = BitPackDecoder(b).peek(_PERMALINK_MAX_VERSION)[0]
         cls._raise_if_different_version(version)
+        
+    @property
+    def as_bytes(self) -> bytes:
+        cached_result = object.__getattribute__(self, "__cached_as_bytes")
+        if cached_result is not None:
+            return cached_result
+        
+        encoded = bitpacking.pack_value(self)
+        # Add extra bytes so the base64 encoding never uses == at the end
+        encoded += b"\x00" * (3 - (len(encoded) + 1) % 3)
+
+        # Rotate bytes, so the slightest change causes a cascading effect.
+        # But skip the first byte so the version check can be done early in decoding.
+        byte_hash = single_byte_hash(encoded)
+        new_bytes = [encoded[0]]
+        new_bytes.extend(rotate_bytes(encoded[1:], byte_hash, byte_hash, inverse=False))
+
+        # Append the hash, so the rotation can be reversed and the checksum verified
+        new_bytes.append(byte_hash)
+
+        result = bytes(new_bytes)
+        object.__setattr__(self, "__cached_as_bytes", result)
+        return result
+
+    @classmethod
+    def from_bytes(cls, b: bytes) -> "Permalink":
+        Permalink.validate_version(b)
+
+        byte_hash = b[-1]
+        new_bytes = [b[0]]
+        new_bytes.extend(rotate_bytes(b[1:-1], byte_hash, byte_hash, inverse=True))
+
+        decoded = bytes(new_bytes)
+        if single_byte_hash(decoded) != byte_hash:
+            raise ValueError("Incorrect checksum")
+
+        decoder = BitPackDecoder(decoded)
+        return Permalink.bit_pack_unpack(decoder, {})
 
     @property
     def as_str(self) -> str:
-        cached_result = object.__getattribute__(self, "__cached_as_str")
-        if cached_result is not None:
-            return cached_result
         try:
-            b = bitpacking.pack_value(self)
-            b += bytes([single_byte_hash(b)])
-            result = base64.b64encode(b).decode("utf-8")
-            object.__setattr__(self, "__cached_as_str", result)
-            return result
+            return base64.b64encode(self.as_bytes).decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
@@ -168,14 +219,7 @@ class Permalink(BitPackValue):
             if len(b) < 2:
                 raise ValueError("Data too small")
 
-            decoder = BitPackDecoder(b)
-            Permalink.validate_version(decoder)
-
-            checksum = single_byte_hash(b[:-1])
-            if checksum != b[-1]:
-                raise ValueError("Incorrect checksum")
-
-            return Permalink.bit_pack_unpack(decoder, {})
+            return cls.from_bytes(b)
 
         except binascii.Error as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
