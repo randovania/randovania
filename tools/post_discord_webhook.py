@@ -22,7 +22,7 @@ async def post_to_discord():
             message += "\n"
 
     download_base = "https://bintray.com/randovania/randovania/download_file?file_path="
-    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.zip")
+    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.7z")
 
     webhook_data = {
         "embeds": [{
