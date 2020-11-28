@@ -26,7 +26,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.clicked.connect(self.change_progressive)
 
     def on_preset_changed(self, preset: Preset, elements: Dict[MajorItem, Iterable[QtWidgets.QWidget]]):
-        major_configuration = preset.layout_configuration.major_items_configuration
+        major_configuration = preset.configuration.major_items_configuration
 
         has_progressive = _state_has_item(major_configuration.items_state[self.progressive_item])
         has_non_progressive = any(_state_has_item(major_configuration.items_state[item])

@@ -122,14 +122,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             extra_tab.on_preset_changed(preset)
 
         # Variables
-        layout_config = preset.layout_configuration
+        layout_config = preset.configuration
         patcher_config = preset.patcher_configuration
 
         # Title
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
 
         # Trick Level
-        trick_level_configuration = preset.layout_configuration.trick_level_configuration
+        trick_level_configuration = preset.configuration.trick_level_configuration
         self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
 
         for trick, slider in self._slider_for_trick.items():
@@ -457,7 +457,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             )
 
     def on_preset_changed_starting_area(self, preset: Preset):
-        starting_locations = preset.layout_configuration.starting_location.locations
+        starting_locations = preset.configuration.starting_location.locations
 
         self._during_batch_check_update = True
         for world in self.game_description.world_list.worlds:

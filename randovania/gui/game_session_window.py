@@ -990,7 +990,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                        options.cosmetic_patches.as_json)
         shareable_hash = self._game_session.seed_hash
 
-        configuration = self._game_session.presets[membership.row].get_preset().layout_configuration
+        configuration = self._game_session.presets[membership.row].get_preset().configuration
         game = data_reader.decode_data(configuration.game_data)
         game_specific = base_patches_factory.create_game_specific(configuration, game)
 

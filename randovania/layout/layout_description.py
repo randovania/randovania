@@ -70,7 +70,7 @@ class LayoutDescription:
             permalink=permalink,
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
-                    index: preset.layout_configuration
+                    index: preset.configuration
                     for index, preset in permalink.presets.items()
                 }),
             item_order=json_dict["item_order"],
@@ -88,7 +88,7 @@ class LayoutDescription:
             cached_result = game_patches_serializer.serialize(
                 self.all_patches,
                 {
-                    index: preset.layout_configuration.game_data
+                    index: preset.configuration.game_data
                     for index, preset in self.permalink.presets.items()
                 })
             object.__setattr__(self, "__cached_serialized_patches", cached_result)

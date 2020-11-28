@@ -3,7 +3,7 @@ from typing import Optional, Callable
 
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -19,7 +19,7 @@ class PresetEditor:
     _name: str
     _base_preset_name: str
     _patcher_configuration: PatcherConfiguration
-    _layout_configuration: LayoutConfiguration
+    _layout_configuration: EchoesConfiguration
 
     def __init__(self, initial_preset: Preset):
         if initial_preset.base_preset_name is None:
@@ -29,7 +29,7 @@ class PresetEditor:
             self._name = initial_preset.name
             self._base_preset_name = initial_preset.base_preset_name
         self._patcher_configuration = initial_preset.patcher_configuration
-        self._layout_configuration = initial_preset.layout_configuration
+        self._layout_configuration = initial_preset.configuration
 
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
@@ -60,7 +60,7 @@ class PresetEditor:
             description="A preset that was customized.",
             base_preset_name=self._base_preset_name,
             patcher_configuration=self.patcher_configuration,
-            layout_configuration=self.layout_configuration,
+            configuration=self.layout_configuration,
         )
 
     # Access to Direct fields
@@ -77,7 +77,7 @@ class PresetEditor:
         return self._patcher_configuration
 
     @property
-    def layout_configuration(self) -> LayoutConfiguration:
+    def layout_configuration(self) -> EchoesConfiguration:
         return self._layout_configuration
 
     # Access to fields inside PatcherConfiguration

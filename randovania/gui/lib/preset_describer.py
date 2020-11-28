@@ -2,7 +2,7 @@ from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader
 from randovania.game_description.item.major_item import MajorItem
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -127,10 +127,10 @@ def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
     patcher = preset.patcher_configuration
-    configuration = preset.layout_configuration
+    configuration = preset.configuration
     major_items = configuration.major_items_configuration
 
-    game_description = data_reader.decode_data(preset.layout_configuration.game_data)
+    game_description = data_reader.decode_data(preset.configuration.game_data)
 
     format_params = {}
 

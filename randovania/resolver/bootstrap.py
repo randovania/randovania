@@ -6,7 +6,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
@@ -134,7 +134,7 @@ def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentRe
     }
 
 
-def misc_resources_for_configuration(configuration: LayoutConfiguration,
+def misc_resources_for_configuration(configuration: EchoesConfiguration,
                                      resource_database: ResourceDatabase) -> CurrentResources:
     enabled_resources = {
         # Allow Vanilla X
@@ -150,7 +150,7 @@ def misc_resources_for_configuration(configuration: LayoutConfiguration,
     }
 
 
-def logic_bootstrap(configuration: LayoutConfiguration,
+def logic_bootstrap(configuration: EchoesConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
                     ) -> Tuple[GameDescription, State]:

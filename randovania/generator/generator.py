@@ -17,7 +17,7 @@ from randovania.generator.filler.filler_library import filter_unassigned_pickup_
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
@@ -69,7 +69,7 @@ def generate_description(permalink: Permalink,
 
         if validate_after_generation and permalink.player_count == 1:
             resolve_params = {
-                "configuration": permalink.presets[0].layout_configuration,
+                "configuration": permalink.presets[0].configuration,
                 "patches": result.all_patches[0],
                 "status_update": status_update,
             }
@@ -164,7 +164,7 @@ def _async_create_description(permalink: Permalink,
     )
 
 
-def create_player_pool(rng: Random, configuration: LayoutConfiguration, player_index: int) -> PlayerPool:
+def create_player_pool(rng: Random, configuration: EchoesConfiguration, player_index: int) -> PlayerPool:
     game = data_reader.decode_data(configuration.game_data)
 
     base_patches = dataclasses.replace(base_patches_factory.create_base_patches(configuration, rng, game),
@@ -201,7 +201,7 @@ def _create_pools_and_fill(rng: Random,
 
     for player_index, player_preset in presets.items():
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools[player_index] = create_player_pool(rng, player_preset.layout_configuration, player_index)
+        player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index)
 
     for player_pool in player_pools.values():
         _validate_item_pool_size(player_pool.pickups, player_pool.game)
