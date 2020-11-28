@@ -19,7 +19,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.interface_common.enum_lib import iterate_enum
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
@@ -51,7 +51,7 @@ _KEYBEARERS_HINTS = {
 }
 
 
-def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
+def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguration,
                                         rng: Random,
                                         patches: GamePatches) -> GamePatches:
     """
@@ -98,7 +98,7 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
     return dataclasses.replace(patches, elevator_connection=elevator_connection)
 
 
-def gate_assignment_for_configuration(configuration: LayoutConfiguration,
+def gate_assignment_for_configuration(configuration: EchoesConfiguration,
                                       resource_database: ResourceDatabase,
                                       rng: Random,
                                       ) -> GateAssignment:
@@ -129,7 +129,7 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
     return result
 
 
-def starting_location_for_configuration(configuration: LayoutConfiguration,
+def starting_location_for_configuration(configuration: EchoesConfiguration,
                                         game: GameDescription,
                                         rng: Random,
                                         ) -> AreaLocation:
@@ -209,7 +209,7 @@ def add_default_hints_to_patches(rng: Random,
     return patches
 
 
-def create_game_specific(configuration: LayoutConfiguration, game: GameDescription) -> EchoesGameSpecific:
+def create_game_specific(configuration: EchoesConfiguration, game: GameDescription) -> EchoesGameSpecific:
     if configuration.game == RandovaniaGame.PRIME2:
         return EchoesGameSpecific(
             energy_per_tank=configuration.energy_per_tank,
@@ -220,7 +220,7 @@ def create_game_specific(configuration: LayoutConfiguration, game: GameDescripti
         return game.game_specific
 
 
-def create_base_patches(configuration: LayoutConfiguration,
+def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
                         ) -> GamePatches:

@@ -22,7 +22,7 @@ from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
@@ -564,7 +564,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def additional_starting_items(layout_configuration: LayoutConfiguration,
+def additional_starting_items(layout_configuration: EchoesConfiguration,
                               resource_database: ResourceDatabase,
                               starting_items: CurrentResources) -> List[str]:
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
@@ -576,7 +576,7 @@ def additional_starting_items(layout_configuration: LayoutConfiguration,
     ]
 
 
-def _create_starting_popup(layout_configuration: LayoutConfiguration,
+def _create_starting_popup(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
                            starting_items: CurrentResources) -> list:
     extra_items = additional_starting_items(layout_configuration, resource_database, starting_items)
@@ -614,7 +614,7 @@ def create_patcher_file(description: LayoutDescription,
     """
     preset = description.permalink.get_preset(players_config.player_index)
     patcher_config = preset.patcher_configuration
-    layout = preset.layout_configuration
+    layout = preset.configuration
     patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.seed_number)
 

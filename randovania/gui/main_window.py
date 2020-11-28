@@ -36,7 +36,7 @@ from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.network_client.network_client import ConnectionState
@@ -419,9 +419,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.Accepted:
             preset = self._preset_manager.preset_for_name(dialog.textValue())
-            self.open_map_tracker(preset.get_preset().layout_configuration)
+            self.open_map_tracker(preset.get_preset().configuration)
 
-    def open_map_tracker(self, configuration: LayoutConfiguration):
+    def open_map_tracker(self, configuration: EchoesConfiguration):
         try:
             self._map_tracker = TrackerWindow(self._options.tracker_files_path, configuration)
         except InvalidLayoutForTracker as e:

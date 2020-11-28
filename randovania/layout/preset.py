@@ -4,7 +4,7 @@ from typing import Optional, List, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 
 
@@ -18,7 +18,7 @@ class Preset(BitPackValue):
     description: str
     base_preset_name: Optional[str]
     patcher_configuration: PatcherConfiguration
-    layout_configuration: LayoutConfiguration
+    configuration: EchoesConfiguration
 
     @property
     def as_json(self) -> dict:
@@ -27,7 +27,7 @@ class Preset(BitPackValue):
             "description": self.description,
             "base_preset_name": self.base_preset_name,
             "patcher_configuration": self.patcher_configuration.as_json,
-            "layout_configuration": self.layout_configuration.as_json,
+            "configuration": self.configuration.as_json,
         }
 
     @classmethod
@@ -37,15 +37,15 @@ class Preset(BitPackValue):
             description=value["description"],
             base_preset_name=value["base_preset_name"],
             patcher_configuration=PatcherConfiguration.from_json_dict(value["patcher_configuration"]),
-            layout_configuration=LayoutConfiguration.from_json_dict(value["layout_configuration"]),
+            configuration=EchoesConfiguration.from_json_dict(value["configuration"]),
         )
 
     def dangerous_settings(self) -> List[str]:
-        return self.layout_configuration.dangerous_settings()
+        return self.configuration.dangerous_settings()
 
     def is_same_configuration(self, other: "Preset") -> bool:
         return (self.patcher_configuration == other.patcher_configuration
-                and self.layout_configuration == other.layout_configuration)
+                and self.configuration == other.configuration)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         from randovania.interface_common.preset_manager import PresetManager
@@ -56,7 +56,7 @@ class Preset(BitPackValue):
         if is_custom_preset:
             reference_versioned = manager.included_preset_with_name(self.base_preset_name)
             if reference_versioned is None:
-                reference_versioned = manager.default_preset_for_game(self.layout_configuration.game)
+                reference_versioned = manager.default_preset_for_game(self.configuration.game)
             reference = reference_versioned.get_preset()
         else:
             reference = self
@@ -67,8 +67,8 @@ class Preset(BitPackValue):
         yield from bitpacking.pack_array_element(reference, included_presets)
         if is_custom_preset:
             yield from self.patcher_configuration.bit_pack_encode({"reference": reference.patcher_configuration})
-            yield from self.layout_configuration.bit_pack_encode({"reference": reference.layout_configuration})
-        yield _dictionary_byte_hash(self.layout_configuration.game_data), 256
+            yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
+        yield _dictionary_byte_hash(self.configuration.game_data), 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Preset":
@@ -82,20 +82,20 @@ class Preset(BitPackValue):
         if is_custom_preset:
             patcher_configuration = PatcherConfiguration.bit_pack_unpack(
                 decoder, {"reference": reference.patcher_configuration})
-            layout_configuration = LayoutConfiguration.bit_pack_unpack(
-                decoder, {"reference": reference.layout_configuration})
+            game_configuration = EchoesConfiguration.bit_pack_unpack(
+                decoder, {"reference": reference.configuration})
             preset = Preset(
                 name="{} Custom".format(reference.name),
                 description="A customized preset.",
                 base_preset_name=reference.name,
                 patcher_configuration=patcher_configuration,
-                layout_configuration=layout_configuration,
+                configuration=game_configuration,
             )
         else:
             preset = reference
 
         included_data_hash = decoder.decode_single(256)
-        expected_data_hash = _dictionary_byte_hash(preset.layout_configuration.game_data)
+        expected_data_hash = _dictionary_byte_hash(preset.configuration.game_data)
         if included_data_hash != expected_data_hash:
             raise ValueError("Given permalink is for a Randovania database with hash '{}', "
                              "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))

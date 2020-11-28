@@ -80,7 +80,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def on_preset_changed(self, preset: Preset):
         # Item alternatives
-        layout = preset.layout_configuration
+        layout = preset.configuration
         major_configuration = layout.major_items_configuration
 
         for progressive_widget in self._progressive_widgets:

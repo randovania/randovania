@@ -179,4 +179,4 @@ async def test_on_menu_action_map_tracker(default_main_window, mocker):
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    default_main_window.open_map_tracker.assert_called_once_with(preset.get_preset().layout_configuration)
+    default_main_window.open_map_tracker.assert_called_once_with(preset.get_preset().configuration)

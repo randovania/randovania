@@ -75,6 +75,6 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
                     combo.gate, combo.currentData()))
 
     def on_preset_changed(self, preset: Preset):
-        translator_configuration = preset.layout_configuration.translator_configuration
+        translator_configuration = preset.configuration.translator_configuration
         for gate, combo in self._combo_for_gate.items():
             set_combo_with_value(combo, translator_configuration.translator_requirement[gate])

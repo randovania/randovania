@@ -7,7 +7,7 @@ from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.generator.item_pool.energy_cells import add_energy_cells
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
@@ -16,7 +16,7 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     add_resources_into_another(base_results.initial_resources, extension.initial_resources)
 
 
-def calculate_pool_results(layout_configuration: LayoutConfiguration,
+def calculate_pool_results(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
                            ) -> PoolResults:
     """

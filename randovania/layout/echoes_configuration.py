@@ -56,7 +56,7 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class LayoutConfiguration(BitPackDataClass):
+class EchoesConfiguration(BitPackDataClass):
     game: RandovaniaGame
     trick_level_configuration: TrickLevelConfiguration
     damage_strictness: LayoutDamageStrictness
@@ -106,10 +106,10 @@ class LayoutConfiguration(BitPackDataClass):
         }
 
     @classmethod
-    def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
+    def from_json_dict(cls, json_dict: dict) -> "EchoesConfiguration":
         game = RandovaniaGame(json_dict["game"])
         item_database = default_database.item_database_for_game(game)
-        return LayoutConfiguration(
+        return EchoesConfiguration(
             game=game,
             trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"], game),
             damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),

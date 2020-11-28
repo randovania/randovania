@@ -27,7 +27,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         self.clicked.connect(self.change_split)
 
     def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, Tuple[QtWidgets.QWidget, ...]]):
-        ammo_configuration = preset.layout_configuration.ammo_configuration
+        ammo_configuration = preset.configuration.ammo_configuration
 
         has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0
         has_split = any(ammo_configuration.items_state[item].pickup_count > 0

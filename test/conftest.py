@@ -13,7 +13,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
 
 
@@ -46,8 +46,8 @@ def default_preset(preset_manager) -> Preset:
 
 
 @pytest.fixture()
-def default_layout_configuration(preset_manager) -> LayoutConfiguration:
-    return preset_manager.default_preset.get_preset().layout_configuration
+def default_layout_configuration(preset_manager) -> EchoesConfiguration:
+    return preset_manager.default_preset.get_preset().configuration
 
 
 @pytest.fixture()

@@ -10,7 +10,7 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.beam_configuration import BeamConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -94,7 +94,7 @@ def test_decode(layout_config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = LayoutConfiguration.bit_pack_unpack(decoder, {})
+    result = EchoesConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

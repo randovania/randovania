@@ -67,13 +67,13 @@ class Permalink(BitPackValue):
 
         previous_unique_presets = []
         for preset in self.presets.values():
-            yield from bitpacking.encode_bool(preset in previous_unique_presets)
-            if preset in previous_unique_presets:
+            already_encoded_preset = preset in previous_unique_presets
+            yield from bitpacking.encode_bool(already_encoded_preset)
+            if already_encoded_preset:
                 yield from bitpacking.pack_array_element(preset, previous_unique_presets)
-                continue
-
-            previous_unique_presets.append(preset)
-            yield from preset.bit_pack_encode({"manager": manager})
+            else:
+                previous_unique_presets.append(preset)
+                yield from preset.bit_pack_encode({"manager": manager})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Permalink":
@@ -90,11 +90,10 @@ class Permalink(BitPackValue):
         for index in range(player_count):
             in_previous_presets = bitpacking.decode_bool(decoder)
             if in_previous_presets:
-                presets[index] = decoder.decode_element(previous_unique_presets)
-                continue
-
-            preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
-            previous_unique_presets.append(preset)
+                preset = decoder.decode_element(previous_unique_presets)
+            else:
+                preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
+                previous_unique_presets.append(preset)
             presets[index] = preset
 
         return Permalink(seed_number, spoiler, presets)

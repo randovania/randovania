@@ -160,7 +160,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         has_spoiler = layout.permalink.spoiler
         options = self._options
 
-        if layout.permalink.get_preset(self.current_player_index).layout_configuration.game == RandovaniaGame.PRIME3:
+        if layout.permalink.get_preset(self.current_player_index).configuration.game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
         if not options.is_alert_displayed(InfoAlert.FAQ):
@@ -225,7 +225,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
-        self._window_manager.open_map_tracker(current_preset.layout_configuration)
+        self._window_manager.open_map_tracker(current_preset.configuration)
 
     # Layout Visualization
     def _create_pickup_spoilers(self, game_description: GameDescription):
@@ -348,11 +348,11 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 pickup.pickup.name
                 for pickup in patches.pickup_assignment.values()
             }
-            game_description = data_reader.decode_data(preset.layout_configuration.game_data)
+            game_description = data_reader.decode_data(preset.configuration.game_data)
             self._create_pickup_spoilers(game_description)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
-            extra_items = patcher_file.additional_starting_items(preset.layout_configuration,
+            extra_items = patcher_file.additional_starting_items(preset.configuration,
                                                                  game_description.resource_database,
                                                                  patches.starting_items)
 

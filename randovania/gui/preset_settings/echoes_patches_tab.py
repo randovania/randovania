@@ -59,7 +59,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         patcher_config = preset.patcher_configuration
         self.warp_to_start_check.setChecked(patcher_config.warp_to_start)
         self.include_menu_mod_check.setChecked(patcher_config.menu_mod)
-        self.skip_final_bosses_check.setChecked(preset.layout_configuration.skip_final_bosses)
+        self.skip_final_bosses_check.setChecked(preset.configuration.skip_final_bosses)
 
         self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(patcher_config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(
