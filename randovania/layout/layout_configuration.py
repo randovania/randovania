@@ -5,7 +5,6 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
-from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration

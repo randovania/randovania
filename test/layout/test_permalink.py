@@ -6,10 +6,9 @@ import pytest
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
-@patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
+@patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
 def test_encode(mock_dictionary_byte_hash: MagicMock, default_preset):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
@@ -93,7 +92,7 @@ def test_decode_old_version(permalink: str, version: int):
                               "support only permalink of version {}.".format(version, Permalink.current_version()))
 
 
-@patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
+@patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
 def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database
