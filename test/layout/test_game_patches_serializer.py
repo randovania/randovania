@@ -204,6 +204,7 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
         default_preset,
+        base_preset_name=default_preset.name,
         layout_configuration=dataclasses.replace(
             default_preset.layout_configuration,
             trick_level_configuration=TrickLevelConfiguration(

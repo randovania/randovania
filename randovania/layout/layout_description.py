@@ -101,7 +101,7 @@ class LayoutDescription:
             "schema_version": CURRENT_DESCRIPTION_SCHEMA_VERSION,
             "info": {
                 "version": self.version,
-                "permalink": self.permalink.as_str,
+                "permalink": self.permalink.as_base64_str,
                 "seed": self.permalink.seed_number,
                 "presets": [
                     VersionedPreset.with_preset(preset).as_json

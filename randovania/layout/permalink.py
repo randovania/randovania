@@ -112,7 +112,7 @@ class Permalink(BitPackValue):
     def current_version(cls) -> int:
         # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
         # for previous Randovania versions
-        return 11
+        return 12
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield self.current_version(), _PERMALINK_MAX_VERSION
@@ -206,16 +206,16 @@ class Permalink(BitPackValue):
         return Permalink.bit_pack_unpack(decoder, {})
 
     @property
-    def as_str(self) -> str:
+    def as_base64_str(self) -> str:
         try:
-            return base64.b64encode(self.as_bytes).decode("utf-8")
+            return base64.b64encode(self.as_bytes, altchars=b'-_').decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
     @classmethod
     def from_str(cls, param: str) -> "Permalink":
         try:
-            b = base64.b64decode(param.encode("utf-8"), validate=True)
+            b = base64.b64decode(param.encode("utf-8"), altchars=b'-_', validate=True)
             if len(b) < 2:
                 raise ValueError("Data too small")
 
