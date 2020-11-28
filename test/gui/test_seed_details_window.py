@@ -39,7 +39,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     options = MagicMock()
     description = MagicMock()
     description.permalink.player_count = 1
-    description.permalink.as_str = "<permalink>"
+    description.permalink.as_base64_str = "<permalink>"
     description.permalink.spoiler = False
 
     window = SeedDetailsWindow(None, options)
