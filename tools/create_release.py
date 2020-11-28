@@ -23,6 +23,10 @@ _NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/r
 zip_folder = "randovania-{}".format(VERSION)
 
 
+def is_production():
+    return os.getenv("PRODUCTION", "false") == "true"
+
+
 def open_zip(platform_name: str) -> zipfile.ZipFile:
     return zipfile.ZipFile(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-{platform_name}.zip"),
                            "w", compression=zipfile.ZIP_DEFLATED)
@@ -81,7 +85,7 @@ async def main():
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
 
-    if os.getenv("PRODUCTION", "false") == "true":
+    if is_production():
         server_suffix = "randovania"
     else:
         server_suffix = "randovania-staging"
@@ -106,12 +110,17 @@ async def main():
 
 
 def create_windows_zip(package_folder):
-    with open_zip("windows") as release_zip:
-        for f in package_folder.glob("**/*"):
-            print("Adding", f)
-            release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
+    if is_production():
+        with open_zip("windows") as release_zip:
+            for f in package_folder.glob("**/*"):
+                print("Adding", f)
+                release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
 
-        add_readme_to_zip(release_zip)
+            add_readme_to_zip(release_zip)
+    else:
+        zip_file = os.fspath(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-windows.7z"))
+        subprocess.run(["7z", "a", "-mx=7", "-myx=7", zip_file, os.fspath(package_folder)], check=True)
+        subprocess.run(["7z", "rn", zip_file, os.fspath(package_folder), zip_folder], check=True)
 
 
 def create_macos_zip(folder_to_pack: Path):
