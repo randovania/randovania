@@ -30,22 +30,20 @@ def _encode_preset(preset: Preset, manager: PresetManager):
     # Is this a custom preset?
     is_custom_preset = preset.base_preset_name is not None
     if is_custom_preset:
-        reference_versioned = manager.preset_for_name(preset.base_preset_name)
+        reference_versioned = manager.included_preset_with_name(preset.base_preset_name)
         if reference_versioned is None:
-            reference_versioned = manager.default_preset
-        reference_preset = reference_versioned.get_preset()
+            reference_versioned = manager.default_preset_for_game(preset.layout_configuration.game)
+        reference = reference_versioned.get_preset()
     else:
-        reference_preset = preset
+        reference = preset
 
     included_presets = [versioned.get_preset() for versioned in manager.included_presets]
 
     yield from bitpacking.encode_bool(is_custom_preset)
-    yield from bitpacking.pack_array_element(reference_preset, included_presets)
+    yield from bitpacking.pack_array_element(reference, included_presets)
     if is_custom_preset:
-        yield from preset.patcher_configuration.bit_pack_encode(
-            {"reference": reference_preset.patcher_configuration})
-        yield from preset.layout_configuration.bit_pack_encode(
-            {"reference": reference_preset.layout_configuration})
+        yield from preset.patcher_configuration.bit_pack_encode({"reference": reference.patcher_configuration})
+        yield from preset.layout_configuration.bit_pack_encode({"reference": reference.layout_configuration})
     yield _dictionary_byte_hash(preset.layout_configuration.game_data), 256
 
 
@@ -53,22 +51,22 @@ def _decode_preset(decoder: BitPackDecoder, manager: PresetManager) -> Preset:
     included_presets = [versioned.get_preset() for versioned in manager.included_presets]
 
     is_custom_preset = bitpacking.decode_bool(decoder)
-    reference_preset = decoder.decode_element(included_presets)
+    reference = decoder.decode_element(included_presets)
     if is_custom_preset:
         patcher_configuration = PatcherConfiguration.bit_pack_unpack(
-            decoder, {"reference": reference_preset.patcher_configuration})
+            decoder, {"reference": reference.patcher_configuration})
         layout_configuration = LayoutConfiguration.bit_pack_unpack(
-            decoder, {"reference": reference_preset.layout_configuration})
+            decoder, {"reference": reference.layout_configuration})
         preset = Preset(
-            name="{} Custom".format(reference_preset.name),
+            name="{} Custom".format(reference.name),
             description="A customized preset.",
-            base_preset_name=reference_preset.name,
+            base_preset_name=reference.name,
             patcher_configuration=patcher_configuration,
             layout_configuration=layout_configuration,
         )
-
     else:
-        preset = reference_preset
+        preset = reference
+
     included_data_hash = decoder.decode_single(256)
     expected_data_hash = _dictionary_byte_hash(preset.layout_configuration.game_data)
     if included_data_hash != expected_data_hash:
