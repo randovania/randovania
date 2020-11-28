@@ -11,7 +11,7 @@ class GenerationFailure(Exception):
     def __str__(self) -> str:
         return "{} occurred for permalink {}".format(
             super().__str__(),
-            self.permalink.as_str
+            self.permalink.as_base64_str
         )
 
     def __reduce__(self):

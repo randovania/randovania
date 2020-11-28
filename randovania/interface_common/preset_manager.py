@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import List, Optional, Iterator, Dict
 
 import randovania
+from randovania.games.game import RandovaniaGame
 from randovania.layout.preset_migration import VersionedPreset
 
 
@@ -38,13 +39,19 @@ class PresetManager:
         all_files = self._data_dir.glob(f"*.{VersionedPreset.file_extension()}")
         user_presets = await asyncio.gather(*[VersionedPreset.from_file(f) for f in all_files])
         for preset in user_presets:
-            if preset.name in self.custom_presets or self._included_preset_with_name(preset.name) is not None:
+            if preset.name in self.custom_presets or self.included_preset_with_name(preset.name) is not None:
                 continue
             self.custom_presets[preset.name] = preset
 
     @property
     def default_preset(self) -> VersionedPreset:
         return self.included_presets[0]
+
+    def default_preset_for_game(self, game: RandovaniaGame) -> VersionedPreset:
+        for preset in self.included_presets:
+            if preset.game == game:
+                return preset
+        raise ValueError(f"{game} has no included preset")
 
     @property
     def all_presets(self) -> Iterator[VersionedPreset]:
@@ -57,7 +64,7 @@ class PresetManager:
         :param: new_preset
         :return True, if there wasn't any preset with that name
         """
-        if self._included_preset_with_name(new_preset.name) is not None:
+        if self.included_preset_with_name(new_preset.name) is not None:
             raise ValueError("A default preset with name '{}' already exists.".format(new_preset.name))
 
         existed_before = new_preset.name in self.custom_presets
@@ -71,7 +78,7 @@ class PresetManager:
         del self.custom_presets[preset.name]
         os.remove(self._file_name_for_preset(preset))
 
-    def _included_preset_with_name(self, preset_name: str) -> Optional[VersionedPreset]:
+    def included_preset_with_name(self, preset_name: str) -> Optional[VersionedPreset]:
         for preset in self.included_presets:
             if preset.name == preset_name:
                 return preset
@@ -79,7 +86,7 @@ class PresetManager:
         return None
 
     def preset_for_name(self, preset_name: str) -> Optional[VersionedPreset]:
-        preset = self._included_preset_with_name(preset_name)
+        preset = self.included_preset_with_name(preset_name)
         if preset is not None:
             return preset
         return self.custom_presets.get(preset_name)
