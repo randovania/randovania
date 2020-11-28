@@ -231,7 +231,7 @@ class BitPackDataClass(BitPackValue):
             if should_decode:
                 field_meta = dict(**field.metadata)
                 field_meta["reference"] = reference_item
-                item = bit_pack_value.bit_pack_unpack(decoder, field.metadata)
+                item = bit_pack_value.bit_pack_unpack(decoder, field_meta)
 
             args[field.name] = item
 

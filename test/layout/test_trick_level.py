@@ -80,3 +80,22 @@ def test_set_level_for_trick_remove(echoes_resource_database):
 
     config = config.set_level_for_trick(trick, LayoutTrickLevel.DISABLED)
     assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
+
+
+def test_pretty_description_minimal_logic():
+    config = TrickLevelConfiguration(True, {}, RandovaniaGame.PRIME2)
+    assert config.pretty_description == "Minimal Logic"
+
+
+@pytest.mark.parametrize(["levels", "expected"], [
+    ({}, "All at Disabled"),
+    ({i: LayoutTrickLevel.HYPERMODE for i in ["Dash", "BombJump", "Movement", "BSJ"]},
+     "20 at Disabled, 4 at Hypermode"),
+    ({"Dash": LayoutTrickLevel.HYPERMODE, "BombJump": LayoutTrickLevel.HYPERMODE,
+      "AirUnderwater": LayoutTrickLevel.ADVANCED},
+     "21 at Disabled, 1 at Advanced, 2 at Hypermode"),
+])
+def test_pretty_description_tricks_echoes(levels, expected):
+    config = TrickLevelConfiguration(False, levels, RandovaniaGame.PRIME2)
+    assert config.pretty_description == expected
+

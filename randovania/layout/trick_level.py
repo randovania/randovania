@@ -103,15 +103,16 @@ class TrickLevelConfiguration(BitPackValue):
     @property
     def pretty_description(self) -> str:
         if self.minimal_logic:
-            return LayoutTrickLevel.MINIMAL_LOGIC.long_name
+            return "Minimal Logic"
 
+        trick_list = _all_tricks(default_data.read_json_then_binary(self.game)[1])
         difficulties = collections.defaultdict(int)
-        for trick in _all_tricks(default_data.read_json_then_binary(self.game)[1]):
+        for trick in trick_list:
             difficulties[self.level_for_trick(trick)] += 1
 
         if len(difficulties) == 1:
             for level in difficulties.keys():
-                return level.long_name
+                return f"All at {level.long_name}"
 
         descriptions = [
             f"{difficulties[level]} at {level.long_name}"
@@ -123,8 +124,8 @@ class TrickLevelConfiguration(BitPackValue):
     @property
     def as_json(self) -> dict:
         specific_levels = {
-            str(trick): level.value
-            for trick, level in self.specific_levels.items()
+            trick_short_name: level.value
+            for trick_short_name, level in self.specific_levels.items()
         }
 
         return {
@@ -137,8 +138,8 @@ class TrickLevelConfiguration(BitPackValue):
         return cls(
             minimal_logic=value["minimal_logic"],
             specific_levels={
-                trick: LayoutTrickLevel(level)
-                for trick, level in value["specific_levels"].items()
+                trick_short_name: LayoutTrickLevel(level)
+                for trick_short_name, level in value["specific_levels"].items()
                 if level != LayoutTrickLevel.DISABLED.value
             },
             game=game,
