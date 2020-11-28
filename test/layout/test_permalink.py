@@ -3,7 +3,8 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 

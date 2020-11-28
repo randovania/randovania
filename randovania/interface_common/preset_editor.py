@@ -3,8 +3,9 @@ from typing import Optional, Callable
 
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode, LayoutDamageStrictness
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.elevators import LayoutElevators
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset

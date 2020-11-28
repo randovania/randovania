@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from randovania.gui import tracker_window
-from randovania.layout.layout_configuration import LayoutElevators
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 

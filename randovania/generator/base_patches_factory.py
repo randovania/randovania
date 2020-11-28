@@ -19,7 +19,8 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.interface_common.enum_lib import iterate_enum
-from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 

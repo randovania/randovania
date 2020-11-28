@@ -10,32 +10,13 @@ from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration, RandomizationMode
 from randovania.layout.beam_configuration import BeamConfiguration
+from randovania.layout.damage_strictness import LayoutDamageStrictness
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import TrickLevelConfiguration
-
-
-class LayoutDamageStrictness(BitPackEnum, Enum):
-    STRICT = 1.0
-    MEDIUM = 1.5
-    LENIENT = 2.0
-
-    @classmethod
-    def default(cls):
-        return cls.MEDIUM
-
-    @property
-    def long_name(self) -> str:
-        if self == LayoutDamageStrictness.STRICT:
-            return "Strict"
-        elif self == LayoutDamageStrictness.MEDIUM:
-            return "Medium"
-        elif self == LayoutDamageStrictness.LENIENT:
-            return "Lenient"
-        else:
-            return "Custom"
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -64,18 +45,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
             return 3
         else:
             return self.value
-
-
-class LayoutElevators(BitPackEnum, Enum):
-    VANILLA = "vanilla"
-    TWO_WAY_RANDOMIZED = "randomized"
-    TWO_WAY_UNCHECKED = "two-way-unchecked"
-    ONE_WAY_ELEVATOR = "one-way-elevator"
-    ONE_WAY_ANYTHING = "one-way-anything"
-
-    @classmethod
-    def default(cls) -> "LayoutElevators":
-        return cls.VANILLA
 
 
 @dataclasses.dataclass(frozen=True)

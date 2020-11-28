@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.layout_configuration import LayoutElevators
+from randovania.layout.elevators import LayoutElevators
 from randovania.resolver import bootstrap
 
 
