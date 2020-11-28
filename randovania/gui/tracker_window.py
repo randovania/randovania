@@ -31,7 +31,8 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
 from randovania.layout import translator_configuration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic

@@ -6,7 +6,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
 from randovania.resolver.state import State

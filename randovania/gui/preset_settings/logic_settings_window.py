@@ -33,7 +33,8 @@ from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutDamageStrictness
+from randovania.layout.elevators import LayoutElevators
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel

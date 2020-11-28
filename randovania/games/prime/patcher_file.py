@@ -22,7 +22,8 @@ from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 
