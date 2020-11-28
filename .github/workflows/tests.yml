@@ -131,7 +131,7 @@ jobs:
       - name: Publish distribution 📦 to PyPI
         if: ${{ !matrix.executable && startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest' }}
         run: |
-          python -m pip install -r requirements-twine.txt
+          python -m pip install twine
           python -m twine upload dist/*
         env:
           TWINE_USERNAME: __token__
