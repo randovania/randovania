@@ -8,8 +8,6 @@ from typing import Iterator, Tuple, Dict, Iterable
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 _PERMALINK_MAX_VERSION = 16
@@ -38,61 +36,6 @@ def rotate_bytes(data: Iterable[int], rotation: int, per_byte_adjustment: int,
     for b in data:
         yield op(b, rotation) % 256
         rotation = (rotation + per_byte_adjustment) % 256
-
-
-def _encode_preset(preset: Preset, manager: PresetManager):
-    """
-
-    :param preset:
-    :param manager:
-    :return:
-    """
-    # Is this a custom preset?
-    is_custom_preset = preset.base_preset_name is not None
-    if is_custom_preset:
-        reference_versioned = manager.included_preset_with_name(preset.base_preset_name)
-        if reference_versioned is None:
-            reference_versioned = manager.default_preset_for_game(preset.layout_configuration.game)
-        reference = reference_versioned.get_preset()
-    else:
-        reference = preset
-
-    included_presets = [versioned.get_preset() for versioned in manager.included_presets]
-
-    yield from bitpacking.encode_bool(is_custom_preset)
-    yield from bitpacking.pack_array_element(reference, included_presets)
-    if is_custom_preset:
-        yield from preset.patcher_configuration.bit_pack_encode({"reference": reference.patcher_configuration})
-        yield from preset.layout_configuration.bit_pack_encode({"reference": reference.layout_configuration})
-    yield _dictionary_byte_hash(preset.layout_configuration.game_data), 256
-
-
-def _decode_preset(decoder: BitPackDecoder, manager: PresetManager) -> Preset:
-    included_presets = [versioned.get_preset() for versioned in manager.included_presets]
-
-    is_custom_preset = bitpacking.decode_bool(decoder)
-    reference = decoder.decode_element(included_presets)
-    if is_custom_preset:
-        patcher_configuration = PatcherConfiguration.bit_pack_unpack(
-            decoder, {"reference": reference.patcher_configuration})
-        layout_configuration = LayoutConfiguration.bit_pack_unpack(
-            decoder, {"reference": reference.layout_configuration})
-        preset = Preset(
-            name="{} Custom".format(reference.name),
-            description="A customized preset.",
-            base_preset_name=reference.name,
-            patcher_configuration=patcher_configuration,
-            layout_configuration=layout_configuration,
-        )
-    else:
-        preset = reference
-
-    included_data_hash = decoder.decode_single(256)
-    expected_data_hash = _dictionary_byte_hash(preset.layout_configuration.game_data)
-    if included_data_hash != expected_data_hash:
-        raise ValueError("Given permalink is for a Randovania database with hash '{}', "
-                         "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
-    return preset
 
 
 @dataclass(frozen=True)
@@ -130,7 +73,7 @@ class Permalink(BitPackValue):
                 continue
 
             previous_unique_presets.append(preset)
-            yield from _encode_preset(preset, manager)
+            yield from preset.bit_pack_encode({"manager": manager})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Permalink":
@@ -150,7 +93,7 @@ class Permalink(BitPackValue):
                 presets[index] = decoder.decode_element(previous_unique_presets)
                 continue
 
-            preset = _decode_preset(decoder, manager)
+            preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
             previous_unique_presets.append(preset)
             presets[index] = preset
 
@@ -166,13 +109,13 @@ class Permalink(BitPackValue):
     def validate_version(cls, b: bytes):
         version = BitPackDecoder(b).peek(_PERMALINK_MAX_VERSION)[0]
         cls._raise_if_different_version(version)
-        
+
     @property
     def as_bytes(self) -> bytes:
         cached_result = object.__getattribute__(self, "__cached_as_bytes")
         if cached_result is not None:
             return cached_result
-        
+
         encoded = bitpacking.pack_value(self)
         # Add extra bytes so the base64 encoding never uses == at the end
         encoded += b"\x00" * (3 - (len(encoded) + 1) % 3)
