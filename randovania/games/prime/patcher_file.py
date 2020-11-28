@@ -615,7 +615,7 @@ def create_patcher_file(description: LayoutDescription,
     patcher_config = preset.patcher_configuration
     layout = preset.layout_configuration
     patches = description.all_patches[players_config.player_index]
-    rng = Random(description.permalink.as_str)
+    rng = Random(description.permalink.seed_number)
 
     game = data_reader.decode_data(layout.game_data)
     pickup_count = game.world_list.num_pickup_nodes
@@ -704,6 +704,6 @@ def create_patcher_file(description: LayoutDescription,
 
 
 def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
-    result["permalink"] = description.permalink.as_str
+    result["permalink"] = "-permalink-"
     result["seed_hash"] = f"- {description.shareable_word_hash} ({description.shareable_hash})"
     result["randovania_version"] = randovania.VERSION

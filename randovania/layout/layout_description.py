@@ -11,7 +11,6 @@ from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 
 
@@ -19,6 +18,20 @@ from randovania.layout.preset_migration import VersionedPreset
 def _shareable_hash_words():
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
         return json.load(hash_words_file)
+
+
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 1
+
+
+def migrate_description(json_dict: dict) -> dict:
+    if "schema_version" not in json_dict:
+        raise ValueError(f"missing schema_version")
+
+    version = json_dict["schema_version"]
+    if version > CURRENT_DESCRIPTION_SCHEMA_VERSION:
+        raise ValueError(f"Version {version} is newer than latest supported {CURRENT_DESCRIPTION_SCHEMA_VERSION}")
+
+    return json_dict
 
 
 @dataclass(frozen=True)
@@ -36,14 +49,8 @@ class LayoutDescription:
         return "rdvgame"
 
     @classmethod
-    def schema_version(cls) -> int:
-        return 1
-
-    @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
-        version = json_dict.get("schema_version")
-        if version != cls.schema_version():
-            raise RuntimeError("Unsupported log file version '{}'. Expected {}.".format(version, cls.schema_version()))
+        json_dict = migrate_description(json_dict)
 
         has_spoiler = "game_modifications" in json_dict
         if not has_spoiler:
@@ -91,7 +98,7 @@ class LayoutDescription:
     @property
     def as_json(self) -> dict:
         result = {
-            "schema_version": self.schema_version(),
+            "schema_version": CURRENT_DESCRIPTION_SCHEMA_VERSION,
             "info": {
                 "version": self.version,
                 "permalink": self.permalink.as_str,
