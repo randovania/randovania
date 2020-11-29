@@ -1,2 +1,2 @@
 set FLASK_DEBUG=1
-venv\Scripts\python -m randovania multiworld server
+venv\Scripts\python -m randovania --configuration tools/dev-server-configuration.json multiworld server
