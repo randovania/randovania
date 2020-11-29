@@ -4,20 +4,12 @@ from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.available_locations import AvailableLocationsConfiguration, RandomizationMode
+from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.beam_configuration import BeamConfiguration
-from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
-from randovania.layout.trick_level import TrickLevelConfiguration
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -57,17 +49,7 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class EchoesConfiguration(BitPackDataClass, JsonDataclass):
-    game: RandovaniaGame
-    trick_level: TrickLevelConfiguration
-    starting_location: StartingLocation
-    available_locations: AvailableLocationsConfiguration
-    major_items_configuration: MajorItemsConfiguration
-    ammo_configuration: AmmoConfiguration
-    damage_strictness: LayoutDamageStrictness
-    pickup_model_style: PickupModelStyle
-    pickup_model_data_source: PickupModelDataSource
-
+class EchoesConfiguration(BaseConfiguration):
     elevators: LayoutElevators
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
@@ -81,38 +63,12 @@ class EchoesConfiguration(BitPackDataClass, JsonDataclass):
     varia_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
 
-    @property
-    def game_data(self) -> dict:
-        return default_data.read_json_then_binary(self.game)[1]
-
     @classmethod
-    def from_json(cls, json_dict: dict) -> "EchoesConfiguration":
-        game = RandovaniaGame(json_dict["game"])
-        item_database = default_database.item_database_for_game(game)
-
-        kwargs = {}
-        for field in dataclasses.fields(cls):
-            arg = json_dict[field.name]
-            if issubclass(field.type, Enum):
-                arg = field.type(arg)
-            elif hasattr(field.type, "from_json"):
-                extra_args = []
-                if field.name in ("trick_level", "starting_location"):
-                    extra_args.append(game)
-                if field.name in ("major_items_configuration", "ammo_configuration"):
-                    extra_args.append(item_database)
-                arg = field.type.from_json(arg, *extra_args)
-
-            kwargs[field.name] = arg
-
-        return EchoesConfiguration(**kwargs)
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.PRIME2
 
     def dangerous_settings(self) -> List[str]:
-        result = []
-        for field in dataclasses.fields(self):
-            f = getattr(self, field.name)
-            if hasattr(f, "dangerous_settings"):
-                result.extend(f.dangerous_settings())
+        result = super().dangerous_settings()
 
         if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
             result.append("One-way anywhere elevators")

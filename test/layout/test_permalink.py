@@ -61,6 +61,7 @@ def test_round_trip(spoiler: bool,
         name="{} Custom".format(default_preset.name),
         description="A customized preset.",
         base_preset_name=default_preset.name,
+        game=default_preset.game,
         configuration=dataclasses.replace(default_preset.configuration, **layout),
     )
 

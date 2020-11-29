@@ -189,6 +189,7 @@ def _migrate_v5(preset: dict) -> dict:
     for trick in tricks_to_remove:
         specific_levels.pop(trick)
 
+    preset["game"] = preset["layout_configuration"].pop("game")
     preset["configuration"] = preset.pop("layout_configuration")
     preset["configuration"].update(preset.pop("patcher_configuration"))
 
@@ -254,7 +255,7 @@ class VersionedPreset:
         if self.data["schema_version"] < 6:
             return RandovaniaGame.PRIME2
 
-        return RandovaniaGame(self.data["layout_configuration"]["game"])
+        return RandovaniaGame(self.data["game"])
 
     def __eq__(self, other):
         if isinstance(other, VersionedPreset):
