@@ -21,6 +21,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -355,12 +356,11 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
-    game = data["game"]
-    game_name = data["game_name"]
+    game = RandovaniaGame(data["game"])
 
     resource_database = read_resource_database(data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
-    if game == 2:
+    if game == RandovaniaGame.PRIME2:
         game_specific = read_game_specific(data["game_specific"], resource_database)
     else:
         game_specific = None
@@ -374,7 +374,6 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
 
     return world_reader, GameDescription(
         game=game,
-        game_name=game_name,
         resource_database=resource_database,
         game_specific=game_specific,
         dock_weakness_database=dock_weakness_database,
