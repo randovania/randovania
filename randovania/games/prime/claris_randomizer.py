@@ -4,6 +4,10 @@ import platform
 import re
 import shutil
 from asyncio import StreamWriter, StreamReader
+try:
+    from asyncio.exceptions import IncompleteReadError
+except ImportError:
+    from asyncio.streams import IncompleteReadError
 from pathlib import Path
 from typing import Callable, List, Union, Optional
 
@@ -46,7 +50,7 @@ async def _read_data(stream: StreamReader, read_callback: Callable[[str], None])
     while True:
         try:
             line = await stream.readuntil(b"\r")
-        except asyncio.streams.IncompleteReadError as incomplete:
+        except IncompleteReadError as incomplete:
             line = incomplete.partial
         if line:
             try:
