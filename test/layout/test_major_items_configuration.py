@@ -15,8 +15,6 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
     with get_data_path().joinpath("item_database", game.value, "default_state", "major-items.json").open() as open_file:
         default_data = json.load(open_file)
 
-    default_data["progressive_suit"] = True
-    default_data["progressive_grapple"] = True
     default_data["minimum_random_starting_items"] = 0
     default_data["maximum_random_starting_items"] = 0
 
@@ -33,8 +31,8 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xc0\x00\x00', "replace": {}},
-        {"encoded": b'\xc1B@\x00', "replace": {
+        {"encoded": b'\x00\x00', "replace": {}},
+        {"encoded": b'\x05\t\x00\x00', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
@@ -53,7 +51,7 @@ def _prime2_data(request):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xc0\x00\x00', "replace": {}},
+        {"encoded": b'\x00\x00', "replace": {}},
     ],
     name="prime3_data")
 def _prime3_data(request):

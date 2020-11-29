@@ -60,33 +60,26 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 class EchoesConfiguration(BitPackDataClass, JsonDataclass):
     game: RandovaniaGame
     trick_level: TrickLevelConfiguration
-    damage_strictness: LayoutDamageStrictness
-    sky_temple_keys: LayoutSkyTempleKeyMode
-    elevators: LayoutElevators
     starting_location: StartingLocation
     available_locations: AvailableLocationsConfiguration
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
+    damage_strictness: LayoutDamageStrictness
+    pickup_model_style: PickupModelStyle
+    pickup_model_data_source: PickupModelDataSource
+
+    elevators: LayoutElevators
+    sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration
     beam_configuration: BeamConfiguration
     skip_final_bosses: bool
-    energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0,
-                                                         "if_different": 100.0, "precision": 1.0})
+    energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0, "precision": 1.0})
     safe_zone: LayoutSafeZone
     menu_mod: bool
     warp_to_start: bool
     varia_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
-    pickup_model_style: PickupModelStyle
-    pickup_model_data_source: PickupModelDataSource
-
-    # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
-    split_beam_ammo: bool = True
-
-    @property
-    def randomization_mode(self) -> RandomizationMode:
-        return self.available_locations.randomization_mode
 
     @property
     def game_data(self) -> dict:
