@@ -117,23 +117,23 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
 
     def _on_ammo_type_combo_changed(self, beam: str, combo: QComboBox, is_ammo_b: bool, _):
         with self._editor as editor:
-            beam_configuration = editor.layout_configuration.beam_configuration
+            beam_configuration = editor.configuration.beam_configuration
             old_config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
             if is_ammo_b:
                 new_config = dataclasses.replace(old_config, ammo_b=combo.currentData())
             else:
                 new_config = dataclasses.replace(old_config, ammo_a=combo.currentData())
 
-            editor.set_layout_configuration_field("beam_configuration",
-                                                  dataclasses.replace(beam_configuration, **{beam: new_config}))
+            editor.set_configuration_field("beam_configuration",
+                                           dataclasses.replace(beam_configuration, **{beam: new_config}))
 
     def _on_ammo_cost_spin_changed(self, beam: str, field_name: str, value: int):
         with self._editor as editor:
-            beam_configuration = editor.layout_configuration.beam_configuration
+            beam_configuration = editor.configuration.beam_configuration
             new_config = dataclasses.replace(getattr(beam_configuration, beam),
                                              **{field_name: value})
-            editor.set_layout_configuration_field("beam_configuration",
-                                                  dataclasses.replace(beam_configuration, **{beam: new_config}))
+            editor.set_configuration_field("beam_configuration",
+                                           dataclasses.replace(beam_configuration, **{beam: new_config}))
 
     def on_preset_changed(self, preset: Preset):
         beam_configuration = preset.configuration.beam_configuration

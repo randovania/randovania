@@ -32,14 +32,14 @@ def test_edit_skip_final_bosses(editor: PresetEditor,
                                 default_layout_configuration,
                                 skip_final_bosses):
     # Setup
-    editor._layout_configuration = dataclasses.replace(default_layout_configuration,
-                                                       **initial_layout_configuration_params)
+    editor._configuration = dataclasses.replace(default_layout_configuration,
+                                                **initial_layout_configuration_params)
     editor._nested_autosave_level = 1
 
     # Run
     initial_layout_configuration_params["skip_final_bosses"] = skip_final_bosses
-    editor.set_layout_configuration_field("skip_final_bosses", skip_final_bosses)
+    editor.set_configuration_field("skip_final_bosses", skip_final_bosses)
 
     # Assert
-    assert editor.layout_configuration == dataclasses.replace(default_layout_configuration,
-                                                              **initial_layout_configuration_params)
+    assert editor.configuration == dataclasses.replace(default_layout_configuration,
+                                                       **initial_layout_configuration_params)

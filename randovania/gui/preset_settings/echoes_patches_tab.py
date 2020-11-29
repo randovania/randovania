@@ -51,7 +51,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
     def _persist_enum(self, combo: QComboBox, attribute_name: str):
         def persist(index: int):
             with self._editor as options:
-                options.set_layout_configuration_field(attribute_name, combo.itemData(index))
+                options.set_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
