@@ -25926,13 +25926,27 @@
                                             "data": "Use Ship Grapple (Command Visor and Ship Grapple)"
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 9,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 4,
+                                                        "index": 0,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 9,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
