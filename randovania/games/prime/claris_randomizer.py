@@ -3,8 +3,11 @@ import json
 import platform
 import re
 import shutil
-import sys
 from asyncio import StreamWriter, StreamReader
+try:
+    from asyncio.exceptions import IncompleteReadError
+except ImportError:
+    from asyncio.streams import IncompleteReadError
 from pathlib import Path
 from typing import Callable, List, Union, Optional
 
@@ -45,17 +48,10 @@ async def _write_data(stream: StreamWriter, data: str):
 
 async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]):
     while True:
-        # 3.7 uses a different exception name than 3.8
-        if sys.version_info[1] > 7:
-            try:
-                line = await stream.readuntil(b"\r")
-            except asyncio.exceptions.IncompleteReadError as incomplete:
-                line = incomplete.partial
-        else:
-            try:
-                line = await stream.readuntil(b"\r")
-            except asyncio.streams.IncompleteReadError as incomplete:
-                line = incomplete.partial
+        try:
+            line = await stream.readuntil(b"\r")
+        except IncompleteReadError as incomplete:
+            line = incomplete.partial
         if line:
             try:
                 decoded = line.decode()
