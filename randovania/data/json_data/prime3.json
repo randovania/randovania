@@ -1145,6 +1145,16 @@
                 "index": 143,
                 "long_name": "Aurora Chamber Skytown Initiate Bomb Sequence",
                 "short_name": "Event143"
+            },
+            {
+                "index": 144,
+                "long_name": "Transit Station 0203 Fight Barrier",
+                "short_name": "Event144"
+            },
+            {
+                "index": 145,
+                "long_name": "Transit Station P68 Reloaded After Entry",
+                "short_name": "Event145"
             }
         ],
         "tricks": [
@@ -1243,6 +1253,12 @@
                 "long_name": "Fall Respawn Skip",
                 "short_name": "FRS",
                 "description": "By performing a Boost Spring Space Jump through a door frame on some rooms in Elysia, the terminal fall trigger can be skipped and place Samus Out of Bounds.<br /><a href='https://wiki.metroidprime.run/wiki/Fall_Respawn_Skip'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 16,
+                "long_name": "Acid Rain/Fuel Gel without Hazard Shield",
+                "short_name": "NoHazard",
+                "description": "This trick covers traversal through Acid Rain and Fuel Gel without having Hazard Shield, with Energy Tanks being the replacement."
             }
         ],
         "damage": [
@@ -9647,7 +9663,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 1,
                                                                 "negate": false
                                                             }
@@ -9677,27 +9693,8 @@
                                     ]
                                 },
                                 "Event - Pickup Golem Head": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 13,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 44,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Use Ship Grapple (Command Visor and Ship Grapple)"
                                 }
                             }
                         },
@@ -9747,7 +9744,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 2,
-                                                        "index": 4,
+                                                        "index": 16,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -30821,7 +30818,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 2,
                                                                 "negate": false
                                                             }
@@ -30995,13 +30992,27 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 1,
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 16,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 100,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -31326,7 +31337,7 @@
                     "name": "Transit Station 1104",
                     "in_dark_aether": false,
                     "asset_id": 9401189381177175830,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31371,22 +31382,31 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 0203": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 110,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 110,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Event - Grapple Voltage Wall": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 9,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
                                 }
                             }
                         },
@@ -31409,7 +31429,7 @@
                     "name": "Transit Station 0203",
                     "in_dark_aether": false,
                     "asset_id": 11029728296836027873,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31428,8 +31448,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 1104": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 144,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -31450,6 +31475,74 @@
                             "connections": {
                                 "Door to Transit Tunnel P68": {
                                     "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 144,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Barrier Removed": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Barrier Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 144,
+                            "connections": {
+                                "Door to Transit Station 1104": {
+                                    "type": "and",
                                     "data": []
                                 }
                             }
@@ -31460,7 +31553,7 @@
                     "name": "Transit Station 0204",
                     "in_dark_aether": false,
                     "asset_id": 16448375801676354754,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31500,8 +31593,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Tunnel P68": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -31511,7 +31609,7 @@
                     "name": "Transit Station 0205",
                     "in_dark_aether": false,
                     "asset_id": 4381182303934744164,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31551,8 +31649,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Tunnel P69": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -31562,7 +31665,7 @@
                     "name": "Transit Tunnel P68",
                     "in_dark_aether": false,
                     "asset_id": 16543666292419631320,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31581,6 +31684,15 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 0203": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 145,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Transit Station 0203 Barrier Removed": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -31602,6 +31714,32 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 0204": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Transit Station 0203 Barrier Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Transit Station 0204": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -31613,7 +31751,7 @@
                     "name": "Transit Tunnel P69",
                     "in_dark_aether": false,
                     "asset_id": 11121647730682962559,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -31632,8 +31770,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 0204": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -31653,8 +31796,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station 0205": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -32089,7 +32246,7 @@
                     "name": "Transit Tunnel P70",
                     "in_dark_aether": false,
                     "asset_id": 14037080802062413664,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -32108,8 +32265,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Transit Station Leviathan": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -32130,7 +32301,35 @@
                             "connections": {
                                 "Door to Transit Station 0205": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -32159,13 +32358,41 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Pirate Commander": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "Samus Ship": {
                                     "type": "resource",
@@ -32189,17 +32416,45 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
                                             "type": "template",
                                             "data": "Use Ship Missile (Command Visor and Ship Missile)"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 32,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -32225,27 +32480,13 @@
                                             }
                                         },
                                         {
-                                            "type": "and",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 1,
-                                                        "amount": 10,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -32267,35 +32508,35 @@
                             },
                             "connections": {
                                 "Door to Transit Tunnel P70": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
+                                                "type": 1,
+                                                "index": 13,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 1,
+                                                        "type": 0,
+                                                        "index": 17,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 3,
-                                                        "index": 1,
-                                                        "amount": 10,
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -32456,7 +32697,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 4,
                                                                 "negate": false
                                                             }
@@ -32544,7 +32785,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 4,
                                                                 "negate": false
                                                             }
@@ -32698,7 +32939,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": 2,
-                                                                                "index": 4,
+                                                                                "index": 16,
                                                                                 "amount": 4,
                                                                                 "negate": false
                                                                             }
@@ -32780,13 +33021,27 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 3,
-                                                                        "index": 1,
-                                                                        "amount": 500,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 16,
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 3,
+                                                                                "index": 1,
+                                                                                "amount": 500,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             ]
                                                         }
@@ -32945,26 +33200,31 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Morph Ball Door to Defense Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 17,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
-                                },
-                                "Door to Transit Station 1104": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
+                                                "index": 32,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 108,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Door to Transit Station 1104": {
+                                    "type": "and",
+                                    "data": [
                                         {
                                             "type": "resource",
                                             "data": {
@@ -32973,6 +33233,29 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 17,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -32984,6 +33267,89 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Open Tunnel": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 17,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 500,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 300,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 150,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -33019,13 +33385,41 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Courtyard Passage": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 17,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 109,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 17,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -33035,6 +33429,19 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 109,
+                            "connections": {
+                                "Door to Courtyard Passage": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Open Tunnel",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 108,
                             "connections": {
                                 "Door to Courtyard Passage": {
                                     "type": "and",

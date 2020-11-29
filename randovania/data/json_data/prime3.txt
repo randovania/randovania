@@ -1625,9 +1625,9 @@ Asset id: 7492844587871276588
           Space Jump Boots and After Fuel Gel Pool Golem Head
           Any of the following:
               Suit Type ≥ 4
-              Movement (Beginner) and Normal Damage ≥ 40
+              Acid Rain/Fuel Gel without Hazard Shield (Beginner) and Normal Damage ≥ 40
   > Event - Pickup Golem Head
-      Command Visor and Ship Grapple
+      Use Ship Grapple (Command Visor and Ship Grapple)
 
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 30; Major Location? False
@@ -1639,7 +1639,7 @@ Asset id: 7492844587871276588
   > Door to Hidden Court Hall
       Any of the following:
           Suit Type ≥ 4
-          Movement (Beginner) and Normal Damage ≥ 40
+          Acid Rain/Fuel Gel without Hazard Shield (Beginner) and Normal Damage ≥ 40
 
 > Event - Pickup Golem Head; Heals? False
   * Event Fuel Gel Pool Golem Head
@@ -5463,7 +5463,7 @@ Asset id: 18221971457754325372
           Use Grapple Voltage (Lasso and Voltage)
           Any of the following:
               Suit Type ≥ 4
-              Movement (Intermediate) and Normal Damage ≥ 50
+              Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 50
   > Upper Level
       Space Jump Boots and Morph Ball
 
@@ -5496,7 +5496,9 @@ Asset id: 18221971457754325372
   > Door to Courtyard Passage
       All of the following:
           Bomb/Spring Space Jump (Advanced) and Use Screw Attack (Space Jump)
-          Suit Type ≥ 4 or Normal Damage ≥ 100
+          Any of the following:
+              Suit Type ≥ 4
+              Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 100
   > Door to Lift Hub
       Trivial
   > Pickup (Missile Expansion)
@@ -5572,12 +5574,12 @@ Asset id: 9401189381177175830
   > Door to Skyway Access
       After Transit Station 1104 Voltage Barrier
 
-> Door to Skyway Access; Heals? False
+> Door to Skyway Access; Heals? False; Spawn Point
   * Normal Door to Skyway Access/Door to Transit Station 1104
   > Door to Transit Station 0203
-      After Transit Station 1104 Voltage Barrier
+      Space Jump Boots and After Transit Station 1104 Voltage Barrier
   > Event - Grapple Voltage Wall
-      Grapple Voltage
+      Use Grapple Voltage (Lasso and Voltage)
 
 > Event - Grapple Voltage Wall; Heals? False
   * Event Transit Station 1104 Voltage Barrier
@@ -5590,17 +5592,26 @@ Asset id: 11029728296836027873
 > Door to Transit Tunnel P68; Heals? False
   * Normal Door to Transit Tunnel P68/Door to Transit Station 0203
   > Door to Transit Station 1104
-      Trivial
+      After Transit Station 0203 Fight Barrier
 
-> Door to Transit Station 1104; Heals? False
+> Door to Transit Station 1104; Heals? False; Spawn Point
   * Normal Door to Transit Station 1104/Door to Transit Station 0203
   > Door to Transit Tunnel P68
+      All of the following:
+          Space Jump Boots and Morph Ball and After Transit Station 0203 Fight Barrier
+          Screw Attack or Bomb/Spring Space Jump (Beginner)
+  > Event - Barrier Removed
+      Trivial
+
+> Event - Barrier Removed; Heals? False
+  * Event Transit Station 0203 Fight Barrier
+  > Door to Transit Station 1104
       Trivial
 
 ----------------
 Transit Station 0204
 Asset id: 16448375801676354754
-> Door to Transit Tunnel P68; Heals? False
+> Door to Transit Tunnel P68; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel P68/Door to Transit Station 0204
   > Door to Transit Tunnel P69
       Trivial
@@ -5608,12 +5619,12 @@ Asset id: 16448375801676354754
 > Door to Transit Tunnel P69; Heals? False
   * Normal Door to Transit Tunnel P69/Door to Transit Station 0204
   > Door to Transit Tunnel P68
-      Trivial
+      After Omega Ridey
 
 ----------------
 Transit Station 0205
 Asset id: 4381182303934744164
-> Door to Transit Tunnel P69; Heals? False
+> Door to Transit Tunnel P69; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel P69/Door to Transit Station 0205
   > Door to Transit Tunnel P70
       Trivial
@@ -5621,7 +5632,7 @@ Asset id: 4381182303934744164
 > Door to Transit Tunnel P70; Heals? False
   * Normal Door to Transit Tunnel P70/Door to Transit Station 0205
   > Door to Transit Tunnel P69
-      Trivial
+      After Omega Ridey
 
 ----------------
 Transit Tunnel P68
@@ -5629,10 +5640,16 @@ Asset id: 16543666292419631320
 > Door to Transit Station 0204; Heals? False
   * Normal Door to Transit Station 0204/Door to Transit Tunnel P68
   > Door to Transit Station 0203
+      After Transit Station P68 Reloaded After Entry
+  > Event - Transit Station 0203 Barrier Removed
       Trivial
 
-> Door to Transit Station 0203; Heals? False
+> Door to Transit Station 0203; Heals? False; Spawn Point
   * Normal Door to Transit Station 0203/Door to Transit Tunnel P68
+  > Door to Transit Station 0204
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+
+> Event - Transit Station 0203 Barrier Removed; Heals? False
   > Door to Transit Station 0204
       Trivial
 
@@ -5642,12 +5659,12 @@ Asset id: 11121647730682962559
 > Door to Transit Station 0205; Heals? False
   * Normal Door to Transit Station 0205/Door to Transit Tunnel P69
   > Door to Transit Station 0204
-      Trivial
+      After Omega Ridey
 
-> Door to Transit Station 0204; Heals? False
+> Door to Transit Station 0204; Heals? False; Spawn Point
   * Normal Door to Transit Station 0204/Door to Transit Tunnel P69
   > Door to Transit Station 0205
-      Trivial
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Transit Station 2-A
@@ -5721,15 +5738,17 @@ Asset id: 5194668821114474017
 ----------------
 Transit Tunnel P70
 Asset id: 14037080802062413664
-> Door to Transit Station 0205; Heals? False
+> Door to Transit Station 0205; Heals? False; Spawn Point
   * Normal Door to Transit Station 0205/Door to Transit Tunnel P70
   > Door to Transit Station Leviathan
-      Trivial
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Transit Station Leviathan; Heals? False
   * Normal Door to Transit Station Leviathan/Door to Transit Tunnel P70
   > Door to Transit Station 0205
-      Trivial
+      All of the following:
+          After Omega Ridey
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Transit Station Leviathan
@@ -5737,28 +5756,32 @@ Asset id: 9997664456677642630
 > Door to Transit Tunnel P70; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel P70/Door to Transit Station Leviathan
   > Event - Pirate Commander
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Bomb/Spring Space Jump (Intermediate)
   > Samus Ship
       After Transit Station Leviathan Door
 
 > Event - Pirate Commander; Heals? False
   * Event Pirate Commander
   > Event - Destroy Door
-      Space Jump Boots and Use Ship Missile (Command Visor and Ship Missile)
+      All of the following:
+          Use Ship Missile (Command Visor and Ship Missile)
+          Any of the following:
+              Space Jump Boots
+              Morph Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Event - Destroy Door; Heals? False
   * Event Transit Station Leviathan Door
   > Samus Ship
-      Any of the following:
-          Suit Type ≥ 4
-          Movement (Beginner) and Normal Damage ≥ 10
+      Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Beginner)
 
 > Samus Ship; Heals? True
   * Player Ship (Unlocked by After Transit Station Leviathan Door)
   > Door to Transit Tunnel P70
-      Any of the following:
-          Suit Type ≥ 4
-          Movement (Beginner) and Normal Damage ≥ 10
+      All of the following:
+          After Omega Ridey
+          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Beginner)
 
 ----------------
 Leviathan
@@ -5796,7 +5819,7 @@ Leads to Research Facility/Door to Lift Hub
           Any of the following:
               Suit Type ≥ 4
               All of the following:
-                  Movement (Expert)
+                  Acid Rain/Fuel Gel without Hazard Shield (Expert)
                   Any of the following:
                       Normal Damage ≥ 1100
                       Boost Ball and Normal Damage ≥ 900
@@ -5806,7 +5829,7 @@ Leads to Research Facility/Door to Lift Hub
           Any of the following:
               Suit Type ≥ 4
               All of the following:
-                  Movement (Expert)
+                  Acid Rain/Fuel Gel without Hazard Shield (Expert)
                   Any of the following:
                       Normal Damage ≥ 1100
                       Boost Ball and Normal Damage ≥ 900
@@ -5836,13 +5859,15 @@ Leads to Research Facility
                   Any of the following:
                       Suit Type ≥ 4
                       All of the following:
-                          Movement (Expert)
+                          Acid Rain/Fuel Gel without Hazard Shield (Expert)
                           Any of the following:
                               Normal Damage ≥ 1100
                               Boost Ball and Normal Damage ≥ 900
               All of the following:
                   Space Jump Boots and Bomb/Spring Space Jump (Expert)
-                  Suit Type ≥ 4 or Normal Damage ≥ 500
+                  Any of the following:
+                      Suit Type ≥ 4
+                      Acid Rain/Fuel Gel without Hazard Shield (Expert) and Normal Damage ≥ 500
   > Door to Security Air Lock
       Trivial
   > Pickup (Missile Expansion)
@@ -5881,11 +5906,19 @@ Asset id: 8444926274755356434
 > Door to Courtyard Passage; Heals? False; Spawn Point
   * Normal Door to Courtyard Passage/Door to Skyway Access
   > Morph Ball Door to Defense Access
-      Suit Type ≥ 4
+      Morph Ball and After Skyway Access Tunnel
   > Door to Transit Station 1104
-      Suit Type ≥ 4 and After Skyway Access Wall
+      All of the following:
+          After Skyway Access Wall
+          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Intermediate)
   > Event - Open Wall
       After Command Station Disable Defense
+  > Event - Open Tunnel
+      Any of the following:
+          Suit Type ≥ 4
+          Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 500
+          Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 300
+          Acid Rain/Fuel Gel without Hazard Shield (Expert) and Normal Damage ≥ 150
 
 > Morph Ball Door to Defense Access; Heals? False
   * Morph Ball Door to Defense Access/Morph Ball Door from Skyway Access
@@ -5893,10 +5926,17 @@ Asset id: 8444926274755356434
 > Door to Transit Station 1104; Heals? False
   * Normal Door to Transit Station 1104/Door to Skyway Access
   > Door to Courtyard Passage
-      Suit Type ≥ 4
+      All of the following:
+          After Skyway Access Wall
+          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Intermediate)
 
 > Event - Open Wall; Heals? False
   * Event Skyway Access Wall
+  > Door to Courtyard Passage
+      Trivial
+
+> Event - Open Tunnel; Heals? False
+  * Event Skyway Access Tunnel
   > Door to Courtyard Passage
       Trivial
 
