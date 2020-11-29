@@ -77,7 +77,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._window_manager = window_manager
         self._extra_tabs = []
 
-        self.game_enum = editor.layout_configuration.game
+        self.game_enum = editor.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
@@ -261,9 +261,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def _on_slide_trick_slider(self, trick: TrickResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._editor as options:
-                options.set_layout_configuration_field(
-                    "trick_level_configuration",
-                    options.layout_configuration.trick_level.set_level_for_trick(
+                options.set_configuration_field(
+                    "trick_level",
+                    options.configuration.trick_level.set_level_for_trick(
                         trick,
                         LayoutTrickLevel.from_number(value)
                     )
@@ -271,9 +271,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _on_trick_level_minimal_logic_check(self, state: int):
         with self._editor as options:
-            options.set_layout_configuration_field(
-                "trick_level_configuration",
-                dataclasses.replace(options.layout_configuration.trick_level,
+            options.set_configuration_field(
+                "trick_level",
+                dataclasses.replace(options.configuration.trick_level,
                                     minimal_logic=bool(state))
             )
 
@@ -288,7 +288,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._window_manager,
             self.game_description,
             trick,
-            self._editor.layout_configuration.trick_level.level_for_trick(trick),
+            self._editor.configuration.trick_level.level_for_trick(trick),
         ))
 
     # Damage strictness
@@ -305,7 +305,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         def _persist_float(attribute_name: str):
             def persist(value: float):
                 with self._editor as options:
-                    options.set_layout_configuration_field(attribute_name, value)
+                    options.set_configuration_field(attribute_name, value)
 
             return persist
 
@@ -322,23 +322,23 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
-            editor.set_layout_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
+            editor.set_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
 
     def _persist_safe_zone_regen(self):
         with self._editor as editor:
             safe_zone = dataclasses.replace(
-                editor.layout_configuration.safe_zone,
+                editor.configuration.safe_zone,
                 heal_per_second=self.safe_zone_regen_spin.value()
             )
-            editor.set_layout_configuration_field("safe_zone", safe_zone)
+            editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_safe_zone_logic_heal(self):
         with self._editor as editor:
             safe_zone = dataclasses.replace(
-                editor.layout_configuration.safe_zone,
+                editor.configuration.safe_zone,
                 fully_heal=self.safe_zone_logic_heal_check.isChecked()
             )
-            editor.set_layout_configuration_field("safe_zone", safe_zone)
+            editor.set_configuration_field("safe_zone", safe_zone)
 
     # Elevator
     def setup_elevator_elements(self):
@@ -418,10 +418,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         if self._during_batch_check_update:
             return
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
-                editor.layout_configuration.starting_location.ensure_has_location(check.area_location,
-                                                                                  check.isChecked())
+                editor.configuration.starting_location.ensure_has_location(check.area_location,
+                                                                           check.isChecked())
             )
 
     def _on_check_starting_world(self, check, _):
@@ -432,14 +432,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         world_areas = [world_list.area_to_area_location(area)
                        for area in world.areas if check.is_dark_world == area.in_dark_aether]
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
-                editor.layout_configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
+                editor.configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
             )
 
     def _starting_location_on_select_ship(self):
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
                 StartingLocation.with_elements([self.game_description.starting_location], self.game_enum)
             )
@@ -450,7 +450,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                          for node in world_list.all_nodes if node.name == "Save Station"]
 
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
                 StartingLocation.with_elements(save_stations, self.game_enum)
             )
