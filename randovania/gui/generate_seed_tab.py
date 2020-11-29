@@ -64,10 +64,6 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
         self.window.create_choose_game_combo.setVisible(self._window_manager.is_preview_mode)
         self.window.create_choose_game_label.setVisible(self._window_manager.is_preview_mode)
-
-        for preset in self._window_manager.preset_manager.all_presets:
-            self._create_button_for_preset(preset)
-
         self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
 
         # Menu
@@ -183,11 +179,14 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
     def select_game(self, game: RandovaniaGame):
         combo_index = self.window.create_choose_game_combo.findData(game)
         self.window.create_choose_game_combo.setCurrentIndex(combo_index)
-        self._on_select_game()
+        self._update_create_preset_combo(game)
 
     def _on_select_game(self):
         game = self.window.create_choose_game_combo.currentData()
+        self._update_create_preset_combo(game)
+        self._on_select_preset()
 
+    def _update_create_preset_combo(self, game: RandovaniaGame):
         self.window.create_preset_combo.clear()
         for preset in self._window_manager.preset_manager.all_presets:
             if preset.game == game:
