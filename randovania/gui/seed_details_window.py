@@ -116,7 +116,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
     # Operations
     def _copy_permalink(self):
-        QApplication.clipboard().setText(self.layout_description.permalink.as_str)
+        QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
         default_name = "Echoes Randomizer - {}.{}".format(self.layout_description.shareable_word_hash,
@@ -325,7 +325,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         current_player = self.current_player_index
         preset = description.permalink.get_preset(current_player)
 
-        self.permalink_edit.setText(description.permalink.as_str)
+        self.permalink_edit.setText(description.permalink.as_base64_str)
         title_text = """
         <p>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
