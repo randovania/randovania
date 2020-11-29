@@ -61,6 +61,8 @@ _CORRUPTION_TEMPLATE_STRINGS = {
         "Random Starting Items: {random_starting_items}",
     ],
     "Items": [
+        "Progressive Missile: {progressive_missile}",
+        "Progressive Beam: {progressive_beam}",
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
     ],
@@ -80,10 +82,20 @@ _CORRUPTION_TEMPLATE_STRINGS = {
     ],
 }
 _EXPECTED_ITEMS = {
-    "Scan Visor",
-    "Morph Ball",
-    "Power Beam",
-    "Charge Beam",
+    RandovaniaGame.PRIME2: {
+        "Scan Visor",
+        "Morph Ball",
+        "Power Beam",
+        "Charge Beam",
+    },
+    RandovaniaGame.PRIME3: {
+        "Scan Visor",
+        "Morph Ball",
+        "Morph Ball Bombs",
+        "Power Beam",
+        "Charge Beam",
+        "Space Jump Boots",
+    },
 }
 _CUSTOM_ITEMS = {
     "Cannon Ball",
@@ -92,22 +104,31 @@ _CUSTOM_ITEMS = {
 PresetDescription = Tuple[str, List[str]]
 
 
-def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> str:
+def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
+    for item, state in configuration.items_state.items():
+        if item.name == item_name:
+            return state.num_shuffled_pickups > 0
+    return False
+
+
+def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem, MajorItemState]) -> str:
+    expected_items = _EXPECTED_ITEMS[game]
     starting_items = []
+
     for major_item, item_state in items_state.items():
         if major_item.required:
             continue
 
         count = item_state.num_included_in_starting_items
         if count > 0:
-            if major_item.name in _EXPECTED_ITEMS:
+            if major_item.name in expected_items:
                 continue
             if count > 1:
                 starting_items.append(f"{count} {major_item.name}")
             else:
                 starting_items.append(major_item.name)
 
-        elif major_item.name in _EXPECTED_ITEMS:
+        elif major_item.name in expected_items:
             starting_items.append(f"No {major_item.name}")
 
     if starting_items:
@@ -117,22 +138,35 @@ def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> s
         return "Vanilla"
 
 
-def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
+def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfiguration) -> str:
     item_pool = []
 
-    unexpected_items = _EXPECTED_ITEMS | _CUSTOM_ITEMS
-    # FIXME!
-    # if configuration.progressive_grapple:
-    #     unexpected_items.add("Grapple Beam")
-    #     unexpected_items.add("Screw Attack")
-    # else:
-    #     unexpected_items.add("Progressive Grapple")
-    #
-    # if configuration.progressive_suit:
-    #     unexpected_items.add("Dark Suit")
-    #     unexpected_items.add("Light Suit")
-    # else:
-    #     unexpected_items.add("Progressive Suit")
+    unexpected_items = _EXPECTED_ITEMS[game] | _CUSTOM_ITEMS
+    if game == RandovaniaGame.PRIME2:
+        if has_shuffled_item(configuration, "Progressive Grapple"):
+            unexpected_items.add("Grapple Beam")
+            unexpected_items.add("Screw Attack")
+        else:
+            unexpected_items.add("Progressive Grapple")
+
+        if has_shuffled_item(configuration, "Progressive Suit"):
+            unexpected_items.add("Dark Suit")
+            unexpected_items.add("Light Suit")
+        else:
+            unexpected_items.add("Progressive Suit")
+
+    elif game == RandovaniaGame.PRIME3:
+        if has_shuffled_item(configuration, "Progressive Beam"):
+            unexpected_items.add("Plasma Beam")
+            unexpected_items.add("Nova Beam")
+        else:
+            unexpected_items.add("Progressive Beam")
+
+        if has_shuffled_item(configuration, "Progressive Missile"):
+            unexpected_items.add("Ice Missile")
+            unexpected_items.add("Seeker Missile")
+        else:
+            unexpected_items.add("Progressive Missile")
 
     for major_item, item_state in configuration.items_state.items():
         if major_item.required:
@@ -160,13 +194,14 @@ def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
 
 def _format_params_base(configuration: BaseConfiguration) -> dict:
     game_description = default_database.game_description_for(configuration.game)
+    major_items = configuration.major_items_configuration
 
-    # Item Placement
     format_params = {}
 
+    # Item Placement
     random_starting_items = "{} to {}".format(
-        configuration.major_items_configuration.minimum_random_starting_items,
-        configuration.major_items_configuration.maximum_random_starting_items,
+        major_items.minimum_random_starting_items,
+        major_items.maximum_random_starting_items,
     )
     if random_starting_items == "0 to 0":
         random_starting_items = "None"
@@ -176,8 +211,8 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
     format_params["random_starting_items"] = random_starting_items
 
     # Items
-    format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
-    format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
+    format_params["starting_items"] = _calculate_starting_items(configuration.game, major_items.items_state)
+    format_params["item_pool"] = _calculate_item_pool(configuration.game, major_items)
 
     # Difficulty
     format_params["damage_strictness"] = configuration.damage_strictness.long_name
@@ -202,12 +237,10 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
     format_params = {}
 
     # Items
-    progressive_suit = major_items.items_state[item_database.major_items["Progressive Suit"]]
-    progressive_grapple = major_items.items_state[item_database.major_items["Progressive Grapple"]]
     unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
 
-    format_params["progressive_suit"] = _bool_to_str(progressive_suit.num_shuffled_pickups > 0)
-    format_params["progressive_grapple"] = _bool_to_str(progressive_grapple.num_shuffled_pickups > 0)
+    format_params["progressive_suit"] = _bool_to_str(has_shuffled_item(major_items, "Progressive Suit"))
+    format_params["progressive_grapple"] = _bool_to_str(has_shuffled_item(major_items, "Progressive Grapple"))
     format_params["split_beam_ammo"] = _bool_to_str(unified_ammo.pickup_count == 0)
 
     # Difficulty
@@ -267,9 +300,13 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
 
 
 def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
+    major_items = configuration.major_items_configuration
+
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
                      "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
-                     "elevators": configuration.elevators.value}
+                     "elevators": configuration.elevators.value,
+                     "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
+                     "progressive_beam": _bool_to_str(has_shuffled_item(major_items, "Progressive Beam"))}
 
     missile_launcher_required = True
     ship_launcher_required = True

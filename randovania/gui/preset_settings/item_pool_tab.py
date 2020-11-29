@@ -215,30 +215,36 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
+        all_progressive = []
+
         if self.game == RandovaniaGame.PRIME2:
-            suit = ProgressiveItemWidget(
-                self.item_alternative_box, self._editor,
-                progressive_item=item_database.major_items["Progressive Suit"],
-                non_progressive_items=[
-                    item_database.major_items["Dark Suit"],
-                    item_database.major_items["Light Suit"]
-                ],
-            )
-            suit.setText("Use progressive Dark Suit → Light Suit")
-            self._progressive_widgets.append(suit)
+            all_progressive.append((
+                "Progressive Suit",
+                ("Dark Suit", "Light Suit"),
+            ))
+            all_progressive.append((
+                "Progressive Grapple",
+                ("Grapple Beam", "Screw Attack"),
+            ))
+        elif self.game == RandovaniaGame.PRIME3:
+            all_progressive.append((
+                "Progressive Missile",
+                ("Ice Missile", "Seeker Missile"),
+            ))
+            all_progressive.append((
+                "Progressive Beam",
+                ("Plasma Beam", "Nova Beam"),
+            ))
 
-            grapple = ProgressiveItemWidget(
+        for (progressive_item, non_progressive_items) in all_progressive:
+            widget = ProgressiveItemWidget(
                 self.item_alternative_box, self._editor,
-                progressive_item=item_database.major_items["Progressive Grapple"],
-                non_progressive_items=[
-                    item_database.major_items["Grapple Beam"],
-                    item_database.major_items["Screw Attack"]
-                ],
+                progressive_item=item_database.major_items[progressive_item],
+                non_progressive_items=[item_database.major_items[it]
+                                       for it in non_progressive_items],
             )
-            grapple.setText("Use progressive Grapple Beam → Screw Attack")
-            self._progressive_widgets.append(grapple)
-
-        for widget in self._progressive_widgets:
+            widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
+            self._progressive_widgets.append(widget)
             self.item_alternative_layout.addWidget(widget)
 
     def _create_split_ammo_widgets(self, item_database: ItemDatabase):

@@ -1,11 +1,15 @@
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
-from randovania.interface_common.preset_editor import PresetEditor
+import pytest
 from PySide2.QtCore import Qt
 
+from randovania.games.game import RandovaniaGame
+from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
+from randovania.interface_common.preset_editor import PresetEditor
 
-def test_on_preset_changed(skip_qtbot, default_preset):
+
+@pytest.mark.parametrize("game", [RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])
+def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
-    editor = PresetEditor(default_preset)
+    editor = PresetEditor(preset_manager.default_preset_for_game(game).get_preset())
     window = LogicSettingsWindow(None, editor)
 
     # Run
