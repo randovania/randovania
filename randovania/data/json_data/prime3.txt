@@ -938,7 +938,9 @@ Asset id: 6410596230384865511
               Space Jump Boots
               Any of the following:
                   After Metroid Hatcher (Valhalla)
-                  Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  All of the following:
+                      Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                      Morph Ball Bombs or Boost Ball
           Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
   > Event - Metroid Hatcher
       All of the following:
@@ -3322,7 +3324,9 @@ Asset id: 3066396911819856814
   > Event - Aurora Vaccine
       Trivial
   > Event - Aurora Circuits
-      Plasma Beam and After Aurora Chamber Skytown Reloaded After Vaccine and After Aurora Chamber Skytown Vaccine
+      Plasma Beam and After Aurora Chamber Skytown Reloaded After Vaccine
+  > Event - Initiate Bomb Sequence
+      After Spire Prep Bomb
 
 > Event - Aurora Vaccine; Heals? False
   * Event Aurora Chamber Skytown Vaccine
@@ -3331,6 +3335,11 @@ Asset id: 3066396911819856814
 
 > Event - Aurora Circuits; Heals? False
   * Event Aurora Chamber Skytown Circuits
+  > Inside Aurora Chamber
+      Trivial
+
+> Event - Initiate Bomb Sequence; Heals? False
+  * Event Aurora Chamber Skytown Initiate Bomb Sequence
   > Inside Aurora Chamber
       Trivial
 
@@ -3420,7 +3429,7 @@ Asset id: 17641492364836789457
       Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Expert) and Single Room Out of Bounds (Expert) and Fall Respawn Skip (Expert)
 
 > Door to Junction; Heals? False; Spawn Point
-  * Normal Door to Junction/Door to Spire Dock
+  * Normal Door to Junction/Door to Spire Dock (Pre-Bomb)
   > Floating Platform (Junction)
       Use Screw Attack (Space Jump)
   > Event - Zipline
@@ -3554,13 +3563,13 @@ Asset id: 2692588651293388340
   > Circle Room
       Trivial
 
-> Door to Spire Dock; Heals? False; Spawn Point
-  * Normal Door to Spire Dock/Door to Junction
+> Door to Spire Dock (Post-Bomb); Heals? False
+  * Normal Door to Spire Dock (Post-Bomb)/Door to Junction
   > Circle Room
       Trivial
 
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Junction
+> Door to Spire Dock (Pre-Bomb); Heals? False
+  * Normal Door to Spire Dock (Pre-Bomb)/Door to Junction
   > Circle Room
       Trivial
 
@@ -3569,13 +3578,15 @@ Asset id: 2692588651293388340
   > Circle Room
       Trivial
 
-> Circle Room; Heals? False
+> Circle Room; Heals? False; Spawn Point
   > Door to Skybridge Hera
       Trivial
   > Door to Hoverplat Docking Site
       Trivial
-  > Door to Spire Dock
-      Trivial
+  > Door to Spire Dock (Post-Bomb)
+      After Spire Bomb Leviathan Shield
+  > Door to Spire Dock (Pre-Bomb)
+      Before Spire Bomb Leviathan Shield
   > Door to Zipline Station Charlie
       Trivial
 
@@ -3583,7 +3594,7 @@ Asset id: 2692588651293388340
 Landing Site A
 Asset id: 3381520513235092752
 > Door to Security Station; Heals? False
-  * Normal Door to Security Station/Door to Spire Dock
+  * Normal Door to Security Station/Door to Spire Dock (Pre-Bomb)
   > Samus Ship
       After Landing Site A Unlocked
   > Event - Landing Site Unlocked
@@ -3607,13 +3618,13 @@ Asset id: 722564631842201436
   > Ledge
       Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
+> Door to Spire Dock (Post-Bomb); Heals? False
+  * Normal Door to Spire Dock (Post-Bomb)/Door to Maintenance Shaft AU
   > Ledge
       Space Jump Boots
 
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Maintenance Shaft AU
+> Door to Spire Dock (Pre-Bomb); Heals? False
+  * Normal Door to Spire Dock (Pre-Bomb)/Door to Maintenance Shaft AU
   > Ledge
       Space Jump Boots
 
@@ -3624,8 +3635,10 @@ Asset id: 722564631842201436
 > Ledge; Heals? False
   > Door to Aurora Chamber
       Trivial
-  > Door to Spire Dock
-      Trivial
+  > Door to Spire Dock (Post-Bomb)
+      After Spire Bomb Leviathan Shield
+  > Door to Spire Dock (Pre-Bomb)
+      Before Spire Bomb Leviathan Shield
   > Event - Aurora Chamber Reloaded
       After Aurora Chamber Skytown Vaccine
 
@@ -3689,13 +3702,13 @@ Asset id: 8195940946934839837
   > Spire Side
       Plasma Beam
 
-> Door to Spire Dock; Heals? False; Spawn Point
-  * Normal Door to Spire Dock/Door to Security Station
+> Door to Spire Dock (Post-Bomb); Heals? False
+  * Normal Door to Spire Dock (Post-Bomb)/Door to Security Station
   > Spire Side
       Trivial
 
-> Door to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Door to Security Station
+> Door to Spire Dock (Pre-Bomb); Heals? False
+  * Normal Door to Spire Dock (Pre-Bomb)/Door to Security Station
   > Spire Side
       Trivial
 
@@ -3718,11 +3731,13 @@ Asset id: 8195940946934839837
   > Spire Side
       Trivial
 
-> Spire Side; Heals? False
+> Spire Side; Heals? False; Spawn Point
   > Door to Security Tube
       Plasma Beam and Use Screw Attack (Space Jump)
-  > Door to Spire Dock
-      Trivial
+  > Door to Spire Dock (Post-Bomb)
+      After Spire Bomb Leviathan Shield
+  > Door to Spire Dock (Pre-Bomb)
+      Before Spire Bomb Leviathan Shield
   > Door to Landing Site A
       Morph Ball
 
@@ -3840,28 +3855,20 @@ Asset id: 265878788849725085
       Morph Ball and Boost Ball and Spider Ball
 
 ----------------
-Spire Dock
+Spire Dock (Post-Bomb)
 Asset id: 3166066018495772067
 > Door to Maintenance Shaft AU; Heals? False; Spawn Point
-  * Normal Door to Maintenance Shaft AU/Door to Spire Dock
-  > Door to Security Station
-      Trivial
-  > Door to Junction
-      Trivial
+  * Normal Door to Maintenance Shaft AU/Door to Spire Dock (Post-Bomb)
 
 > Door to Security Station; Heals? False
-  * Normal Door to Security Station/Door to Spire Dock
-  > Door to Maintenance Shaft AU
-      Trivial
+  * Normal Door to Security Station/Door to Spire Dock (Post-Bomb)
   > Door to Junction
-      Trivial
+      Morph Ball
 
 > Door to Junction; Heals? False
-  * Normal Door to Junction/Door to Spire Dock
-  > Door to Maintenance Shaft AU
-      Trivial
+  * Normal Door to Junction/Door to Spire Dock (Post-Bomb)
   > Door to Security Station
-      Trivial
+      Morph Ball
 
 ----------------
 Escape Pod Bay
@@ -3869,8 +3876,8 @@ Asset id: 7293006450314500398
 > Door to Escape Pod Bay Access; Heals? False
   * Normal Door to Escape Pod Bay Access/Door to Escape Pod Bay
 
-> Door to Spire; Heals? False
-  * Normal Door to Spire/Door to Escape Pod Bay
+> Dock to Spire; Heals? False
+  * Normal Door to Spire/Dock to Escape Pod Bay
   > Door to Escape Pod Bay Access
       Trivial
 
@@ -3879,47 +3886,68 @@ Spire
 Asset id: 6637485379588009329
 > Morph Ball Door to Podworks; Heals? False
   * Morph Ball Door to Podworks/Morph Ball Door to Spire
-  > Door to Escape Pod Bay
-      Morph Ball and After Podworks Repair
-
-> Door to Spire Dock; Heals? False; Spawn Point
-  * Normal Door to Spire Dock/Door to Spire
-  > Morph Ball Door to Podworks
+  > Room Center
       Morph Ball
 
-> Door to Escape Pod Bay; Heals? False
-  * Normal Door to Escape Pod Bay/Door to Spire
+> Dock to Spire Dock (Pre-Bomb); Heals? False; Spawn Point
+  * Normal Door to Spire Dock (Pre-Bomb)/Dock to Spire
+  > Room Center
+      Trivial
+
+> Dock to Escape Pod Bay; Heals? False
+  * Normal Door to Escape Pod Bay/Dock to Spire
+
+> Event - Destroy Leviathan Shield; Heals? False
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Morph Ball Door to Podworks
+      Morph Ball
+  > Dock to Spire Dock (Pre-Bomb)
+      Trivial
+  > Dock to Escape Pod Bay
+      After Spire Bomb Leviathan Shield
+  > Event - Destroy Leviathan Shield
+      After Podworks Repair
 
 ----------------
-Spire Dock
+Spire Dock (Pre-Bomb)
 Asset id: 2782037876215597956
-> Door to Maintenance Shaft AU; Heals? False
-  * Normal Door to Maintenance Shaft AU/Door to Spire Dock
+> Door to Maintenance Shaft AU; Heals? False; Spawn Point
+  * Normal Door to Maintenance Shaft AU/Door to Spire Dock (Post-Bomb)
   > Center
-      Grapple Swing
+      Morph Ball
 
 > Door to Security Station; Heals? False
-  * Normal Door to Security Station/Door to Spire Dock
+  * Normal Door to Security Station/Door to Spire Dock (Post-Bomb)
   > Center
       Grapple Swing
 
 > Door to Junction; Heals? False
-  * Normal Door to Junction/Door to Spire Dock
+  * Normal Door to Junction/Door to Spire Dock (Post-Bomb)
   > Center
       Grapple Swing
 
-> Door to Spire; Heals? False
-  * Normal Door to Spire/Door to Spire Dock
+> Dock to Spire; Heals? False
+  * Normal Door to Spire/Dock to Spire Dock (Pre-Bomb)
 
 > Center; Heals? False
   > Door to Maintenance Shaft AU
-      Grapple Swing
+      Morph Ball
   > Door to Security Station
       Grapple Swing
   > Door to Junction
       Grapple Swing
-  > Door to Spire
-      After Spire Prep Bomb
+  > Dock to Spire
+      After Aurora Chamber Skytown Initiate Bomb Sequence
+  > Event - Bomb Prepared
+      After Transit Hub Bomb Part 3 and After Concourse Bomb Part 2 and After Turbine Chamber Bomb Part 1
+
+> Event - Bomb Prepared; Heals? False
+  * Event Spire Prep Bomb
+  > Center
+      Trivial
 
 ----------------
 Podworks
@@ -5852,14 +5880,14 @@ Skyway Access
 Asset id: 8444926274755356434
 > Door to Courtyard Passage; Heals? False; Spawn Point
   * Normal Door to Courtyard Passage/Door to Skyway Access
-  > Door to Defense Access
+  > Morph Ball Door to Defense Access
       Suit Type ≥ 4
   > Door to Transit Station 1104
       Suit Type ≥ 4 and After Skyway Access Wall
   > Event - Open Wall
       After Command Station Disable Defense
 
-> Door to Defense Access; Heals? False
+> Morph Ball Door to Defense Access; Heals? False
   * Morph Ball Door to Defense Access/Morph Ball Door from Skyway Access
 
 > Door to Transit Station 1104; Heals? False
@@ -5937,7 +5965,7 @@ Leads to Mining Site/Door to Defense Access
       Trivial
 
 > Morph Ball Door from Skyway Access; Heals? False
-  * Morph Ball Door to Skyway Access/Door to Defense Access
+  * Morph Ball Door to Skyway Access/Morph Ball Door to Defense Access
   > Front of Spider Tracks
       Trivial
 
