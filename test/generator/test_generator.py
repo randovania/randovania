@@ -33,7 +33,7 @@ def test_create_patches(mock_random: MagicMock,
     result = generator._async_create_description(permalink, status_update, 0)
 
     # Assert
-    mock_random.assert_called_once_with(permalink.as_str)
+    mock_random.assert_called_once_with(permalink.as_bytes)
     mock_create_player_pool.assert_has_calls([
         call(rng, presets[i].layout_configuration, i)
         for i in range(num_players)

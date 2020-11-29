@@ -1,9 +1,11 @@
-from typing import Tuple
+import dataclasses
+from typing import Tuple, Iterator
 from unittest.mock import MagicMock, call
 
 import pytest
 
 from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackDecoder
 
 
 @pytest.mark.parametrize("value", [
@@ -196,3 +198,41 @@ def test_array_elements_round_trip(element, array):
     decoded_element = decoder.decode_element(array)
 
     assert element == decoded_element
+
+
+class BitPackValueUsingReference(bitpacking.BitPackValue):
+    value: int
+
+    def __init__(self, x):
+        self.value = x
+
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        reference: BitPackValueUsingReference = metadata["reference"]
+        yield self.value - reference.value, 128
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+        reference: BitPackValueUsingReference = metadata["reference"]
+        value = decoder.decode_single(128) + reference.value
+        return BitPackValueUsingReference(value)
+
+    def __eq__(self, other):
+        return self.value == other.value
+
+
+@dataclasses.dataclass(frozen=True)
+class DataclassForTest(bitpacking.BitPackDataClass):
+    uses_reference: BitPackValueUsingReference
+
+
+@pytest.mark.parametrize(["value", "reference"], [
+    (10, 5),
+    (20, 5),
+    (50, 5),
+])
+def test_round_trip_dataclass_for_test(value, reference):
+    data = DataclassForTest(BitPackValueUsingReference(value))
+    ref = DataclassForTest(BitPackValueUsingReference(reference))
+
+    result = bitpacking.round_trip(data, {"reference": ref})
+    assert result == data

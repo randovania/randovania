@@ -20,11 +20,11 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, default_preset):
     )
 
     # Run
-    encoded = link.as_str
+    encoded = link.as_base64_str
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(default_preset.layout_configuration.game_data)
-    assert encoded == "sAAAfRQeAA8="
+    assert encoded == "wDZsH-wsRHo2"
 
 
 @pytest.mark.parametrize("invalid", [
@@ -75,7 +75,7 @@ def test_round_trip(spoiler: bool,
     )
 
     # Run
-    after = Permalink.from_str(link.as_str)
+    after = Permalink.from_str(link.as_base64_str)
 
     # Assert
     assert link == after
@@ -100,7 +100,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "sAAAfRQeAA8="
+    encoded = "wDZsH-wsRHo2"
 
     expected = Permalink(
         seed_number=1000,
@@ -109,8 +109,8 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
     )
 
     # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_str == ""
-    # print(expected.as_str)
+    # assert expected.as_base64_str == ""
+    # print(expected.as_base64_str)
 
     # Run
     link = Permalink.from_str(encoded)
@@ -120,9 +120,9 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    ("sAAAfRUggMw=", 1),
-    ("sAAAfRgBIKBv", 2),
-    ("sAAAfRghIL/gRg==", 10),
+    ("wBUqvGmJ_pMV", 1),
+    ("wFasf3CvJPqwBlxW", 2),
+    ("wAUKjCw6PuIILTIF", 10),
 ])
 @patch("randovania.layout.layout_configuration.LayoutConfiguration.bit_pack_unpack")
 @patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
@@ -152,11 +152,11 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
     mock_layout_unpack.return_value.game_data = {"test": True}
 
     # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_str == ""
-    # print(expected.as_str)
+    # assert expected.as_base64_str == ""
+    # print(expected.as_base64_str)
 
     # Run
-    round_trip = expected.as_str
+    round_trip = expected.as_base64_str
     link = Permalink.from_str(encoded)
 
     # Assert
@@ -182,11 +182,11 @@ def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
     )
 
     # Run
-    str1 = link.as_str
-    str2 = link.as_str
+    str1 = link.as_base64_str
+    str2 = link.as_base64_str
 
     # Assert
-    assert str1 == "Lg=="
+    assert str1 == "AMXF"
     assert str1 == str2
-    assert str2 == object.__getattribute__(link, "__cached_as_str")
+    assert object.__getattribute__(link, "__cached_as_bytes") is not None
     mock_bit_pack_encode.assert_called_once_with(link, {})

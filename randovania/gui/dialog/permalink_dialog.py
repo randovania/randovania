@@ -35,7 +35,7 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
         try:
             # Ignoring return value: we only want to know if it's valid
             new_permalink = self.get_permalink_from_field()
-            if new_permalink.as_str != self.permalink_edit.text():
+            if new_permalink.as_base64_str != self.permalink_edit.text():
                 raise ValueError("Imported permalink is different from text field.")
             self.accept_button.setEnabled(True)
         except ValueError as e:
