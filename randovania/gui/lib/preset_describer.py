@@ -5,7 +5,6 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 _TEMPLATE_STRINGS = {
@@ -126,7 +125,6 @@ def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
-    patcher = preset.patcher_configuration
     configuration = preset.configuration
     major_items = configuration.major_items_configuration
 
@@ -149,7 +147,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     if random_starting_items == "0 to 0":
         random_starting_items = "None"
 
-    format_params["trick_level"] = configuration.trick_level_configuration.pretty_description
+    format_params["trick_level"] = configuration.trick_level.pretty_description
     format_params["randomization_mode"] = configuration.randomization_mode.value
     format_params["random_starting_items"] = random_starting_items
 
@@ -161,9 +159,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
 
     # Difficulty
-    default_patcher = PatcherConfiguration()
-    if patcher.varia_suit_damage == default_patcher.varia_suit_damage and (
-            patcher.dark_suit_damage == default_patcher.dark_suit_damage):
+    if configuration.varia_suit_damage == 6 and configuration.dark_suit_damage == 1.2:
         dark_aether_suit_damage = "Normal"
     else:
         dark_aether_suit_damage = "Custom"
@@ -173,7 +169,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     format_params["dark_aether_suit_damage"] = dark_aether_suit_damage
     format_params["dark_aether_damage_strictness"] = configuration.damage_strictness.long_name
-    format_params["pickup_model"] = patcher.pickup_model_style.value
+    format_params["pickup_model"] = configuration.pickup_model_style.value
 
     # Gameplay
     translator_gates = "Custom"
@@ -210,9 +206,9 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
     format_params["main_pb_required"] = _bool_to_str(main_pb_required)
-    format_params["warp_to_start"] = _bool_to_str(patcher.warp_to_start)
+    format_params["warp_to_start"] = _bool_to_str(configuration.warp_to_start)
     format_params["generic_patches"] = "Some"
-    format_params["menu_mod"] = _bool_to_str(patcher.menu_mod)
+    format_params["menu_mod"] = _bool_to_str(configuration.menu_mod)
     format_params["include_final_bosses"] = _bool_to_str(not configuration.skip_final_bosses)
 
     # Sky Temple Keys

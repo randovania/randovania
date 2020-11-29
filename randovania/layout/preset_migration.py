@@ -186,6 +186,7 @@ def _migrate_v5(preset: dict) -> dict:
         specific_levels.pop(trick)
 
     preset["configuration"] = preset.pop("layout_configuration")
+    preset["configuration"].update(preset.pop("patcher_configuration"))
 
     return preset
 

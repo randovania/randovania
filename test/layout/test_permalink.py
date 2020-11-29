@@ -42,22 +42,18 @@ def test_decode_invalid(invalid: str):
 
 
 @pytest.mark.parametrize("spoiler", [False, True])
-@pytest.mark.parametrize("patcher", [
-    {},
-    {
-        "menu_mod": True,
-        "warp_to_start": False,
-    },
-])
 @pytest.mark.parametrize("layout", [
     {},
     {
         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     },
+    {
+        "menu_mod": True,
+        "warp_to_start": False,
+    },
 ])
 def test_round_trip(spoiler: bool,
-                    patcher: dict,
                     layout: dict,
                     default_preset):
     # Setup
@@ -65,7 +61,6 @@ def test_round_trip(spoiler: bool,
         name="{} Custom".format(default_preset.name),
         description="A customized preset.",
         base_preset_name=default_preset.name,
-        patcher_configuration=dataclasses.replace(default_preset.patcher_configuration, **patcher),
         configuration=dataclasses.replace(default_preset.configuration, **layout),
     )
 

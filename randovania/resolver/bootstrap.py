@@ -168,7 +168,7 @@ def logic_bootstrap(configuration: EchoesConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.trick_level_configuration.minimal_logic:
+    if configuration.trick_level.minimal_logic:
         major_items_config = configuration.major_items_configuration
         _add_minimal_logic_initial_resources(starting_state.resources,
                                              game.resource_database,
@@ -176,7 +176,7 @@ def logic_bootstrap(configuration: EchoesConfiguration,
                                              major_items_config.progressive_suit,
                                              )
 
-    static_resources = trick_resources_for_configuration(configuration.trick_level_configuration,
+    static_resources = trick_resources_for_configuration(configuration.trick_level,
                                                          game.resource_database)
     static_resources.update(version_resources_for_game(game.resource_database))
     static_resources.update(misc_resources_for_configuration(configuration, game.resource_database))

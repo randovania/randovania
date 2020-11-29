@@ -164,9 +164,9 @@ def test_reach_size_from_start_echoes(echoes_game_description, default_layout_co
 
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
-        trick_level_configuration=TrickLevelConfiguration(minimal_logic=minimal_logic,
-                                                          specific_levels=specific_levels if not minimal_logic else {},
-                                                          game=default_layout_configuration.game),
+        trick_level=TrickLevelConfiguration(minimal_logic=minimal_logic,
+                                            specific_levels=specific_levels if not minimal_logic else {},
+                                            game=default_layout_configuration.game),
     )
     player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
 

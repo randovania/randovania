@@ -25,7 +25,7 @@ from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKey
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -613,12 +613,11 @@ def create_patcher_file(description: LayoutDescription,
     :return:
     """
     preset = description.permalink.get_preset(players_config.player_index)
-    patcher_config = preset.patcher_configuration
-    layout = preset.configuration
+    configuration = preset.configuration
     patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.seed_number)
 
-    game = data_reader.decode_data(layout.game_data)
+    game = data_reader.decode_data(configuration.game_data)
     pickup_count = game.world_list.num_pickup_nodes
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
@@ -626,13 +625,13 @@ def create_patcher_file(description: LayoutDescription,
     result = {}
     _add_header_data_to_result(description, result)
 
-    result["menu_mod"] = patcher_config.menu_mod
+    result["menu_mod"] = configuration.menu_mod
     result["user_preferences"] = cosmetic_patches.user_preferences.as_json
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
-    result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
+    result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
 
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:
@@ -648,8 +647,8 @@ def create_patcher_file(description: LayoutDescription,
     result["pickups"] = _create_pickup_list(patches,
                                             useless_target, pickup_count,
                                             rng,
-                                            patcher_config.pickup_model_style,
-                                            patcher_config.pickup_model_data_source,
+                                            configuration.pickup_model_style,
+                                            configuration.pickup_model_data_source,
                                             creator=creator,
                                             )
 
@@ -660,20 +659,20 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(layout.hints, game, description.all_patches, players_config, rng)
+    result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches, players_config, rng)
 
     # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
-        "warp_to_start": patcher_config.warp_to_start,
+        "warp_to_start": configuration.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": patcher_config.varia_suit_damage,
-        "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
+        "dark_world_varia_suit_damage": configuration.varia_suit_damage,
+        "dark_world_dark_suit_damage": configuration.dark_suit_damage,
     }
 
     result["logbook_patches"] = [
@@ -699,7 +698,7 @@ def create_patcher_file(description: LayoutDescription,
         {"asset_id": 327, "connections": [46, 275], },
     ]
 
-    _apply_translator_gate_patches(result["specific_patches"], layout.elevators)
+    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators)
 
     return result
 

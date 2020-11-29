@@ -122,14 +122,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             extra_tab.on_preset_changed(preset)
 
         # Variables
-        layout_config = preset.configuration
-        patcher_config = preset.patcher_configuration
+        config = preset.configuration
 
         # Title
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
 
         # Trick Level
-        trick_level_configuration = preset.configuration.trick_level_configuration
+        trick_level_configuration = preset.configuration.trick_level
         self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
 
         for trick, slider in self._slider_for_trick.items():
@@ -138,22 +137,22 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             slider.setEnabled(not trick_level_configuration.minimal_logic)
 
         # Damage
-        set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
-        self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
+        set_combo_with_value(self.damage_strictness_combo, config.damage_strictness)
+        self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
         if self.game_enum == RandovaniaGame.PRIME2:
-            self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
-            self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
-            self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
-            self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
+            self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
+            self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
+            self.varia_suit_spin_box.setValue(config.varia_suit_damage)
+            self.dark_suit_spin_box.setValue(config.dark_suit_damage)
 
         # Elevator
-        set_combo_with_value(self.elevators_combo, layout_config.elevators)
+        set_combo_with_value(self.elevators_combo, config.elevators)
 
         # Starting Area
         self.on_preset_changed_starting_area(preset)
 
         # Location Pool
-        available_locations = layout_config.available_locations
+        available_locations = config.available_locations
         set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
 
         self._during_batch_check_update = True
@@ -264,7 +263,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             with self._editor as options:
                 options.set_layout_configuration_field(
                     "trick_level_configuration",
-                    options.layout_configuration.trick_level_configuration.set_level_for_trick(
+                    options.layout_configuration.trick_level.set_level_for_trick(
                         trick,
                         LayoutTrickLevel.from_number(value)
                     )
@@ -274,7 +273,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as options:
             options.set_layout_configuration_field(
                 "trick_level_configuration",
-                dataclasses.replace(options.layout_configuration.trick_level_configuration,
+                dataclasses.replace(options.layout_configuration.trick_level,
                                     minimal_logic=bool(state))
             )
 
@@ -289,7 +288,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._window_manager,
             self.game_description,
             trick,
-            self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
+            self._editor.layout_configuration.trick_level.level_for_trick(trick),
         ))
 
     # Damage strictness
@@ -306,7 +305,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         def _persist_float(attribute_name: str):
             def persist(value: float):
                 with self._editor as options:
-                    options.set_patcher_configuration_field(attribute_name, value)
+                    options.set_layout_configuration_field(attribute_name, value)
 
             return persist
 

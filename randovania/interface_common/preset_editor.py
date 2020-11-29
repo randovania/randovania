@@ -3,11 +3,10 @@ from typing import Optional, Callable
 
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.elevators import LayoutElevators
-from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 
@@ -18,7 +17,6 @@ class PresetEditor:
 
     _name: str
     _base_preset_name: str
-    _patcher_configuration: PatcherConfiguration
     _layout_configuration: EchoesConfiguration
 
     def __init__(self, initial_preset: Preset):
@@ -28,7 +26,6 @@ class PresetEditor:
         else:
             self._name = initial_preset.name
             self._base_preset_name = initial_preset.base_preset_name
-        self._patcher_configuration = initial_preset.patcher_configuration
         self._layout_configuration = initial_preset.configuration
 
     def _set_field(self, field_name: str, value):
@@ -59,7 +56,6 @@ class PresetEditor:
             name=self.name,
             description="A preset that was customized.",
             base_preset_name=self._base_preset_name,
-            patcher_configuration=self.patcher_configuration,
             configuration=self.layout_configuration,
         )
 
@@ -73,51 +69,42 @@ class PresetEditor:
         self._set_field("name", value)
 
     @property
-    def patcher_configuration(self) -> PatcherConfiguration:
-        return self._patcher_configuration
-
-    @property
     def layout_configuration(self) -> EchoesConfiguration:
         return self._layout_configuration
 
     # Access to fields inside PatcherConfiguration
     @property
     def include_menu_mod(self) -> bool:
-        return self.patcher_configuration.menu_mod
+        return self.layout_configuration.menu_mod
 
     @include_menu_mod.setter
     def include_menu_mod(self, value: bool):
-        self.set_patcher_configuration_field("menu_mod", value)
+        self.set_layout_configuration_field("menu_mod", value)
 
     @property
     def warp_to_start(self) -> bool:
-        return self.patcher_configuration.warp_to_start
+        return self.layout_configuration.warp_to_start
 
     @warp_to_start.setter
     def warp_to_start(self, value: bool):
-        self.set_patcher_configuration_field("warp_to_start", value)
+        self.set_layout_configuration_field("warp_to_start", value)
 
     @property
     def pickup_model_style(self):
-        return self.patcher_configuration.pickup_model_style
+        return self.layout_configuration.pickup_model_style
 
     @pickup_model_style.setter
     def pickup_model_style(self, value):
-        self.set_patcher_configuration_field("pickup_model_style", value)
+        self.set_layout_configuration_field("pickup_model_style", value)
 
     @property
     def pickup_model_data_source(self):
-        return self.patcher_configuration.pickup_model_data_source
+        return self.layout_configuration.pickup_model_data_source
 
     @pickup_model_data_source.setter
     def pickup_model_data_source(self, value):
-        self.set_patcher_configuration_field("pickup_model_data_source", value)
+        self.set_layout_configuration_field("pickup_model_data_source", value)
 
-    def set_patcher_configuration_field(self, field_name: str, value):
-        self._edit_field("patcher_configuration",
-                         dataclasses.replace(self.patcher_configuration, **{field_name: value}))
-
-    # Access to fields inside LayoutConfiguration
     @property
     def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
         return self.layout_configuration.sky_temple_keys

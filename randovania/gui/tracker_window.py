@@ -50,7 +50,7 @@ def _load_previous_state(persistence_path: Path,
     previous_layout_path = persistence_path.joinpath("layout_configuration.json")
     try:
         with previous_layout_path.open() as previous_layout_file:
-            previous_layout = EchoesConfiguration.from_json_dict(json.load(previous_layout_file))
+            previous_layout = EchoesConfiguration.from_json(json.load(previous_layout_file))
     except (FileNotFoundError, TypeError, KeyError, ValueError, json.JSONDecodeError):
         return None
 
@@ -132,7 +132,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
-            layout_configuration.trick_level_configuration.pretty_description,
+            layout_configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()

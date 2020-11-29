@@ -594,8 +594,8 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
 
     new_preset = preset_manager.default_preset.get_preset()
     new_preset = dataclasses.replace(new_preset,
-                                     patcher_configuration=dataclasses.replace(new_preset.patcher_configuration,
-                                                                               menu_mod=False))
+                                     configuration=dataclasses.replace(new_preset.configuration,
+                                                                       menu_mod=False))
 
     sio = MagicMock()
     sio.get_current_user.return_value = user1

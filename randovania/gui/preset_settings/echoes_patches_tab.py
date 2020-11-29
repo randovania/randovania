@@ -3,7 +3,7 @@ from PySide2.QtWidgets import QComboBox
 from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.preset import Preset
 
 
@@ -51,17 +51,17 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
     def _persist_enum(self, combo: QComboBox, attribute_name: str):
         def persist(index: int):
             with self._editor as options:
-                options.set_patcher_configuration_field(attribute_name, combo.itemData(index))
+                options.set_layout_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
     def on_preset_changed(self, preset: Preset):
-        patcher_config = preset.patcher_configuration
-        self.warp_to_start_check.setChecked(patcher_config.warp_to_start)
-        self.include_menu_mod_check.setChecked(patcher_config.menu_mod)
-        self.skip_final_bosses_check.setChecked(preset.configuration.skip_final_bosses)
+        config = preset.configuration
+        self.warp_to_start_check.setChecked(config.warp_to_start)
+        self.include_menu_mod_check.setChecked(config.menu_mod)
+        self.skip_final_bosses_check.setChecked(config.skip_final_bosses)
 
-        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(patcher_config.pickup_model_style))
+        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(
-            self.pickup_data_source_combo.findData(patcher_config.pickup_model_data_source))
-        self.pickup_data_source_combo.setEnabled(patcher_config.pickup_model_style != PickupModelStyle.ALL_VISIBLE)
+            self.pickup_data_source_combo.findData(config.pickup_model_data_source))
+        self.pickup_data_source_combo.setEnabled(config.pickup_model_style != PickupModelStyle.ALL_VISIBLE)

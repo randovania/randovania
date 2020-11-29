@@ -31,23 +31,23 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'[\x0f\x80',
+        {"encoded": b'[\x0f\xc4\xb0\x07\x80\x80',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'P\x0f\x80',
+        {"encoded": b'P\x0f\xc4\xb0\x07\x80\x80',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'T/\x80',
+        {"encoded": b'T/\xc4\xb0\x07\x80\x80',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'Q/\x80',
+        {"encoded": b'Q/\xc4\xb0\x07\x80\x80',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'A/\x80',
+        {"encoded": b'A/\xc4\xb0\x07\x80\x80',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          "damage_strictness": LayoutDamageStrictness.STRICT,
@@ -74,7 +74,7 @@ def _layout_config_with_data(request, default_layout_configuration):
          patch.multiple(BeamConfiguration, bit_pack_unpack=MagicMock(return_value=beam_configuration)):
         yield request.param["encoded"], dataclasses.replace(
             default_layout_configuration,
-            trick_level_configuration=trick_config,
+            trick_level=trick_config,
             damage_strictness=request.param.get("damage_strictness", LayoutDamageStrictness.MEDIUM),
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],

@@ -207,7 +207,7 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
         base_preset_name=default_preset.name,
         configuration=dataclasses.replace(
             default_preset.configuration,
-            trick_level_configuration=TrickLevelConfiguration(
+            trick_level=TrickLevelConfiguration(
                 minimal_logic=True,
                 specific_levels={},
                 game=RandovaniaGame.PRIME2,
