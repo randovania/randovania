@@ -1,6 +1,7 @@
 import dataclasses
 from typing import Optional, Callable
 
+from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.damage_strictness import LayoutDamageStrictness
@@ -17,6 +18,7 @@ class PresetEditor:
 
     _name: str
     _base_preset_name: str
+    _game: RandovaniaGame
     _layout_configuration: EchoesConfiguration
 
     def __init__(self, initial_preset: Preset):
@@ -26,6 +28,7 @@ class PresetEditor:
         else:
             self._name = initial_preset.name
             self._base_preset_name = initial_preset.base_preset_name
+        self._game = initial_preset.game
         self._layout_configuration = initial_preset.configuration
 
     def _set_field(self, field_name: str, value):
@@ -56,6 +59,7 @@ class PresetEditor:
             name=self.name,
             description="A preset that was customized.",
             base_preset_name=self._base_preset_name,
+            game=self._game,
             configuration=self.layout_configuration,
         )
 
@@ -67,6 +71,10 @@ class PresetEditor:
     @name.setter
     def name(self, value):
         self._set_field("name", value)
+
+    @property
+    def game(self):
+        return self._game
 
     @property
     def layout_configuration(self) -> EchoesConfiguration:

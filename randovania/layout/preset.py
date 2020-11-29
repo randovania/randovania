@@ -1,9 +1,11 @@
 import dataclasses
 import json
-from typing import Optional, List, Iterator, Tuple
+from typing import Optional, List, Iterator, Tuple, Union
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.games.game import RandovaniaGame
+from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
 
@@ -11,12 +13,19 @@ def _dictionary_byte_hash(data: dict) -> int:
     return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
 
 
+_game_to_config = {
+    RandovaniaGame.PRIME2: EchoesConfiguration,
+    RandovaniaGame.PRIME3: CorruptionConfiguration,
+}
+
+
 @dataclasses.dataclass(frozen=True)
 class Preset(BitPackValue):
     name: str
     description: str
     base_preset_name: Optional[str]
-    configuration: EchoesConfiguration
+    game: RandovaniaGame
+    configuration: Union[EchoesConfiguration, CorruptionConfiguration]
 
     @property
     def as_json(self) -> dict:
@@ -24,16 +33,19 @@ class Preset(BitPackValue):
             "name": self.name,
             "description": self.description,
             "base_preset_name": self.base_preset_name,
+            "game": self.game.value,
             "configuration": self.configuration.as_json,
         }
 
     @classmethod
     def from_json_dict(cls, value) -> "Preset":
+        game = RandovaniaGame(value["game"])
         return Preset(
             name=value["name"],
             description=value["description"],
             base_preset_name=value["base_preset_name"],
-            configuration=EchoesConfiguration.from_json(value["configuration"]),
+            game=game,
+            configuration=_game_to_config[game].from_json(value["configuration"]),
         )
 
     def dangerous_settings(self) -> List[str]:
@@ -51,7 +63,7 @@ class Preset(BitPackValue):
         if is_custom_preset:
             reference_versioned = manager.included_preset_with_name(self.base_preset_name)
             if reference_versioned is None:
-                reference_versioned = manager.default_preset_for_game(self.configuration.game)
+                reference_versioned = manager.default_preset_for_game(self.game)
             reference = reference_versioned.get_preset()
         else:
             reference = self
@@ -80,6 +92,7 @@ class Preset(BitPackValue):
                 name="{} Custom".format(reference.name),
                 description="A customized preset.",
                 base_preset_name=reference.name,
+                game=reference.game,
                 configuration=game_configuration,
             )
         else:

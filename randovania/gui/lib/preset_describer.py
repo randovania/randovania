@@ -1,14 +1,24 @@
 from typing import List, Iterable, Tuple, Dict
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.base_configuration import BaseConfiguration
+from randovania.layout.corruption_configuration import CorruptionConfiguration
+from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset import Preset
 
-_TEMPLATE_STRINGS = {
+
+def _bool_to_str(b: bool) -> str:
+    if b:
+        return "Yes"
+    else:
+        return "No"
+
+
+_ECHOES_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
         "Randomization Mode: {randomization_mode}",
@@ -25,7 +35,6 @@ _TEMPLATE_STRINGS = {
         "Starting Location: {starting_location}",
         "Translator Gates: {translator_gates}",
         "Elevators: {elevators}",
-        # "Hints: {hints}",
     ],
     "Game Changes": [
         "Missiles needs Launcher: {missile_launcher_required}",
@@ -33,18 +42,41 @@ _TEMPLATE_STRINGS = {
         "Warp to Start: {warp_to_start}",
         "Final bosses included? {include_final_bosses}",
         "Menu Mod included? {menu_mod}",
-        # "Quality of Life Improvements: {generic_patches}",
     ],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
         "Safe Zone: {safe_zone}",
         "Dark Aether Suit Damage: {dark_aether_suit_damage}",
-        "Dark Aether Damage Strictness: {dark_aether_damage_strictness}",
+        "Damage Strictness: {damage_strictness}",
         "Pickup Model: {pickup_model}",
     ],
     "Sky Temple Keys": [
         "Target: {target}",
-        # "Location: {location}",
+    ],
+}
+_CORRUPTION_TEMPLATE_STRINGS = {
+    "Item Placement": [
+        "Trick Level: {trick_level}",
+        "Randomization Mode: {randomization_mode}",
+        "Random Starting Items: {random_starting_items}",
+    ],
+    "Items": [
+        "Starting Items: {starting_items}",
+        "Item Pool: {item_pool}",
+    ],
+    "Gameplay": [
+        "Starting Location: {starting_location}",
+        "Elevators: {elevators}",
+    ],
+    "Game Changes": [
+        "Missiles needs Launcher: {missile_launcher_required}",
+        "Ship Missile needs Launcher: {ship_launcher_required}",
+        "Final bosses included? {include_final_bosses}",
+    ],
+    "Difficulty": [
+        "Energy Tank: {energy_tank}",
+        "Damage Strictness: {damage_strictness}",
+        "Pickup Model: {pickup_model}",
     ],
 }
 _EXPECTED_ITEMS = {
@@ -126,26 +158,15 @@ def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
         return "Default"
 
 
-def describe(preset: Preset) -> Iterable[PresetDescription]:
-    configuration = preset.configuration
-    major_items = configuration.major_items_configuration
-
-    game_description = data_reader.decode_data(preset.configuration.game_data)
-    item_database = default_database.item_database_for_game(configuration.game)
-
-    format_params = {}
-
-    def _bool_to_str(b: bool) -> str:
-        if b:
-            return "Yes"
-        else:
-            return "No"
+def _format_params_base(configuration: BaseConfiguration) -> dict:
+    game_description = default_database.game_description_for(configuration.game)
 
     # Item Placement
+    format_params = {}
 
     random_starting_items = "{} to {}".format(
-        major_items.minimum_random_starting_items,
-        major_items.maximum_random_starting_items,
+        configuration.major_items_configuration.minimum_random_starting_items,
+        configuration.major_items_configuration.maximum_random_starting_items,
     )
     if random_starting_items == "0 to 0":
         random_starting_items = "None"
@@ -155,21 +176,39 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["random_starting_items"] = random_starting_items
 
     # Items
-    if configuration.game == RandovaniaGame.PRIME2:
-        progressive_suit = major_items.items_state[item_database.major_items["Progressive Suit"]]
-        progressive_grapple = major_items.items_state[item_database.major_items["Progressive Grapple"]]
-        unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
-
-        format_params["progressive_suit"] = _bool_to_str(progressive_suit.num_shuffled_pickups > 0)
-        format_params["progressive_grapple"] = _bool_to_str(progressive_grapple.num_shuffled_pickups > 0)
-        format_params["split_beam_ammo"] = _bool_to_str(unified_ammo.pickup_count == 0)
-    else:
-        format_params["progressive_suit"] = "No"
-        format_params["progressive_grapple"] = "No"
-        format_params["split_beam_ammo"] = "No"
-
     format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
     format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
+
+    # Difficulty
+    format_params["damage_strictness"] = configuration.damage_strictness.long_name
+    format_params["pickup_model"] = configuration.pickup_model_style.value
+
+    # Gameplay
+    starting_locations = configuration.starting_location.locations
+
+    if len(starting_locations) == 1:
+        area = game_description.world_list.area_by_area_location(next(iter(starting_locations)))
+        format_params["starting_location"] = game_description.world_list.area_name(area)
+    else:
+        format_params["starting_location"] = "{} locations".format(len(starting_locations))
+
+    return format_params
+
+
+def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
+    major_items = configuration.major_items_configuration
+    item_database = default_database.item_database_for_game(configuration.game)
+
+    format_params = {}
+
+    # Items
+    progressive_suit = major_items.items_state[item_database.major_items["Progressive Suit"]]
+    progressive_grapple = major_items.items_state[item_database.major_items["Progressive Grapple"]]
+    unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
+
+    format_params["progressive_suit"] = _bool_to_str(progressive_suit.num_shuffled_pickups > 0)
+    format_params["progressive_grapple"] = _bool_to_str(progressive_grapple.num_shuffled_pickups > 0)
+    format_params["split_beam_ammo"] = _bool_to_str(unified_ammo.pickup_count == 0)
 
     # Difficulty
     if configuration.varia_suit_damage == 6 and configuration.dark_suit_damage == 1.2:
@@ -179,10 +218,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     format_params["energy_tank"] = f"{configuration.energy_per_tank} energy"
     format_params["safe_zone"] = f"{configuration.safe_zone.heal_per_second} energy/s"
-
     format_params["dark_aether_suit_damage"] = dark_aether_suit_damage
-    format_params["dark_aether_damage_strictness"] = configuration.damage_strictness.long_name
-    format_params["pickup_model"] = configuration.pickup_model_style.value
 
     # Gameplay
     translator_gates = "Custom"
@@ -195,14 +231,6 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
         if translator_config == configuration.translator_configuration:
             translator_gates = name
             break
-
-    starting_locations = configuration.starting_location.locations
-
-    if len(starting_locations) == 1:
-        area = game_description.world_list.area_by_area_location(next(iter(starting_locations)))
-        format_params["starting_location"] = game_description.world_list.area_name(area)
-    else:
-        format_params["starting_location"] = "{} locations".format(len(starting_locations))
 
     format_params["translator_gates"] = translator_gates
     format_params["elevators"] = configuration.elevators.value
@@ -235,7 +263,43 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["target"] = "{0} of {0}".format(configuration.sky_temple_keys.num_keys)
     format_params["location"] = stk_location
 
-    for category, templates in _TEMPLATE_STRINGS.items():
+    return format_params
+
+
+def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
+    format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
+                     "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
+                     "elevators": configuration.elevators.value}
+
+    missile_launcher_required = True
+    ship_launcher_required = True
+    for ammo, state in configuration.ammo_configuration.items_state.items():
+        if ammo.name == "Missile Expansion":
+            missile_launcher_required = state.requires_major_item
+        elif ammo.name == "Ship Missile Expansion":
+            ship_launcher_required = state.requires_major_item
+
+    format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
+    format_params["ship_launcher_required"] = _bool_to_str(ship_launcher_required)
+
+    return format_params
+
+
+def describe(preset: Preset) -> Iterable[PresetDescription]:
+    configuration = preset.configuration
+
+    format_params = _format_params_base(configuration)
+
+    template_strings = None
+    if preset.game == RandovaniaGame.PRIME2:
+        template_strings = _ECHOES_TEMPLATE_STRINGS
+        format_params.update(_echoes_format_params(configuration))
+
+    elif preset.game == RandovaniaGame.PRIME3:
+        template_strings = _CORRUPTION_TEMPLATE_STRINGS
+        format_params.update(_corruption_format_params(configuration))
+
+    for category, templates in template_strings.items():
         yield category, [
             item.format(**format_params)
             for item in templates
