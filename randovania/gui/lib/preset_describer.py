@@ -1,7 +1,8 @@
 from typing import List, Iterable, Tuple, Dict
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.item.major_item import MajorItem
+from randovania.games.game import RandovaniaGame
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -88,17 +89,18 @@ def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
     item_pool = []
 
     unexpected_items = _EXPECTED_ITEMS | _CUSTOM_ITEMS
-    if configuration.progressive_grapple:
-        unexpected_items.add("Grapple Beam")
-        unexpected_items.add("Screw Attack")
-    else:
-        unexpected_items.add("Progressive Grapple")
-
-    if configuration.progressive_suit:
-        unexpected_items.add("Dark Suit")
-        unexpected_items.add("Light Suit")
-    else:
-        unexpected_items.add("Progressive Suit")
+    # FIXME!
+    # if configuration.progressive_grapple:
+    #     unexpected_items.add("Grapple Beam")
+    #     unexpected_items.add("Screw Attack")
+    # else:
+    #     unexpected_items.add("Progressive Grapple")
+    #
+    # if configuration.progressive_suit:
+    #     unexpected_items.add("Dark Suit")
+    #     unexpected_items.add("Light Suit")
+    # else:
+    #     unexpected_items.add("Progressive Suit")
 
     for major_item, item_state in configuration.items_state.items():
         if major_item.required:
@@ -129,6 +131,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     major_items = configuration.major_items_configuration
 
     game_description = data_reader.decode_data(preset.configuration.game_data)
+    item_database = default_database.item_database_for_game(configuration.game)
 
     format_params = {}
 
@@ -148,13 +151,23 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
         random_starting_items = "None"
 
     format_params["trick_level"] = configuration.trick_level.pretty_description
-    format_params["randomization_mode"] = configuration.randomization_mode.value
+    format_params["randomization_mode"] = configuration.available_locations.randomization_mode.value
     format_params["random_starting_items"] = random_starting_items
 
     # Items
-    format_params["progressive_suit"] = _bool_to_str(major_items.progressive_suit)
-    format_params["progressive_grapple"] = _bool_to_str(major_items.progressive_grapple)
-    format_params["split_beam_ammo"] = _bool_to_str(configuration.split_beam_ammo)
+    if configuration.game == RandovaniaGame.PRIME2:
+        progressive_suit = major_items.items_state[item_database.major_items["Progressive Suit"]]
+        progressive_grapple = major_items.items_state[item_database.major_items["Progressive Grapple"]]
+        unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
+
+        format_params["progressive_suit"] = _bool_to_str(progressive_suit.num_shuffled_pickups > 0)
+        format_params["progressive_grapple"] = _bool_to_str(progressive_grapple.num_shuffled_pickups > 0)
+        format_params["split_beam_ammo"] = _bool_to_str(unified_ammo.pickup_count == 0)
+    else:
+        format_params["progressive_suit"] = "No"
+        format_params["progressive_grapple"] = "No"
+        format_params["split_beam_ammo"] = "No"
+
     format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
     format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
 

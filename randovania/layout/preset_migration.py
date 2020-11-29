@@ -180,6 +180,10 @@ def _migrate_v5(preset: dict) -> dict:
         if item not in major_items:
             major_items[item] = default_items_state[item]
 
+    preset["layout_configuration"]["major_items_configuration"].pop("progressive_suit")
+    preset["layout_configuration"]["major_items_configuration"].pop("progressive_grapple")
+    preset["layout_configuration"].pop("split_beam_ammo")
+
     specific_levels: Dict[str, str] = preset["layout_configuration"]["trick_level"]["specific_levels"]
     tricks_to_remove = [trick_name for trick_name, level in specific_levels.items() if level == "no-tricks"]
     for trick in tricks_to_remove:
