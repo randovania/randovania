@@ -24,10 +24,10 @@ from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.layout.layout_configuration import LayoutElevators
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
 def test_add_header_data_to_result():
@@ -779,13 +779,13 @@ def test_create_patcher_file(test_files_dir):
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
-        "warp_to_start": preset.patcher_configuration.warp_to_start,
+        "warp_to_start": preset.configuration.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": preset.patcher_configuration.varia_suit_damage,
-        "dark_world_dark_suit_damage": preset.patcher_configuration.dark_suit_damage,
+        "dark_world_varia_suit_damage": preset.configuration.varia_suit_damage,
+        "dark_world_dark_suit_damage": preset.configuration.dark_suit_damage,
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
         "always_up_great_temple": False,

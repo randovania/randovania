@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.trick_level import LayoutTrickLevel
 
 

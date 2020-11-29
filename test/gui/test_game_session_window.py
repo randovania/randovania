@@ -427,7 +427,7 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     window._game_session.players[window.network_client.current_user.id].is_observer = False
     window._game_session.players[window.network_client.current_user.id].row = 0
     window._game_session.presets = {0: preset_manager.default_preset}
-    layout_configuration = preset_manager.default_preset.get_preset().layout_configuration
+    layout_configuration = preset_manager.default_preset.get_preset().configuration
     window.network_client.session_admin_player = AsyncMock()
 
     def run_in_background_thread(work, *args):

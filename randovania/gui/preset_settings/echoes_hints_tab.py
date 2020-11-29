@@ -30,11 +30,11 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
         return False
 
     def _on_stk_combo_changed(self, new_index: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
+        with self._editor as editor:
+            editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(options.layout_configuration.hints,
+                dataclasses.replace(editor.configuration.hints,
                                     sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
 
     def on_preset_changed(self, preset: Preset):
-        set_combo_with_value(self.hint_sky_temple_key_combo, preset.layout_configuration.hints.sky_temple_keys)
+        set_combo_with_value(self.hint_sky_temple_key_combo, preset.configuration.hints.sky_temple_keys)

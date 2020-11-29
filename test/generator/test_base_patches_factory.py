@@ -14,7 +14,7 @@ from randovania.game_description.resources.resource_database import find_resourc
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
-from randovania.layout.layout_configuration import LayoutElevators
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 

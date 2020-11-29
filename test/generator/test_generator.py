@@ -35,7 +35,7 @@ def test_create_patches(mock_random: MagicMock,
     # Assert
     mock_random.assert_called_once_with(permalink.as_bytes)
     mock_create_player_pool.assert_has_calls([
-        call(rng, presets[i].layout_configuration, i)
+        call(rng, presets[i].configuration, i)
         for i in range(num_players)
     ])
     mock_validate_item_pool_size.assert_has_calls([

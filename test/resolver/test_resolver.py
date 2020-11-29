@@ -10,7 +10,7 @@ def test_resolver_with_log_file(test_files_dir):
     debug.set_level(0)
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
-    configuration = description.permalink.presets[0].layout_configuration
+    configuration = description.permalink.presets[0].configuration
     patches = description.all_patches[0]
 
     # Run

@@ -50,31 +50,31 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         return True
 
     def _on_randomize_all_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
+        with self._editor as editor:
+            editor.set_configuration_field(
                 "translator_configuration",
-                options.layout_configuration.translator_configuration.with_full_random())
+                editor.configuration.translator_configuration.with_full_random())
 
     def _on_vanilla_actual_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
+        with self._editor as editor:
+            editor.set_configuration_field(
                 "translator_configuration",
-                options.layout_configuration.translator_configuration.with_vanilla_actual())
+                editor.configuration.translator_configuration.with_vanilla_actual())
 
     def _on_vanilla_colors_gates_pressed(self):
-        with self._editor as options:
-            options.set_layout_configuration_field(
+        with self._editor as editor:
+            editor.set_configuration_field(
                 "translator_configuration",
-                options.layout_configuration.translator_configuration.with_vanilla_colors())
+                editor.configuration.translator_configuration.with_vanilla_colors())
 
     def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
+        with self._editor as editor:
+            editor.set_configuration_field(
                 "translator_configuration",
-                options.layout_configuration.translator_configuration.replace_requirement_for_gate(
+                editor.configuration.translator_configuration.replace_requirement_for_gate(
                     combo.gate, combo.currentData()))
 
     def on_preset_changed(self, preset: Preset):
-        translator_configuration = preset.layout_configuration.translator_configuration
+        translator_configuration = preset.configuration.translator_configuration
         for gate, combo in self._combo_for_gate.items():
             set_combo_with_value(combo, translator_configuration.translator_requirement[gate])

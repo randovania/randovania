@@ -29,14 +29,14 @@ from randovania.resolver.state import State, add_pickup_to_state
 
 
 def run_bootstrap(preset: Preset):
-    game = data_reader.decode_data(preset.layout_configuration.game_data)
+    game = data_reader.decode_data(preset.configuration.game_data)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
         presets={0: preset},
     )
-    patches = base_patches_factory.create_base_patches(preset.layout_configuration, Random(15000), game)
-    game, state = logic_bootstrap(preset.layout_configuration, game, patches)
+    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game)
+    game, state = logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
 
@@ -77,7 +77,7 @@ def _compare_actions(first_reach: GeneratorReach,
 def test_all_pickups_locations_reachable_with_all_pickups_for_preset(preset_name, preset_manager):
     game, state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
 
-    pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).layout_configuration,
+    pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
     add_resources_into_another(state.resources, pool_results.initial_resources)
     for pickup in pool_results.pickups:
@@ -164,9 +164,9 @@ def test_reach_size_from_start_echoes(echoes_game_description, default_layout_co
 
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
-        trick_level_configuration=TrickLevelConfiguration(minimal_logic=minimal_logic,
-                                                          specific_levels=specific_levels if not minimal_logic else {},
-                                                          game=default_layout_configuration.game),
+        trick_level=TrickLevelConfiguration(minimal_logic=minimal_logic,
+                                            specific_levels=specific_levels if not minimal_logic else {},
+                                            game=default_layout_configuration.game),
     )
     player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
 

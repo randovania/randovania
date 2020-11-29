@@ -10,8 +10,9 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.beam_configuration import BeamConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
-    LayoutElevators, LayoutDamageStrictness
+from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.elevators import LayoutElevators
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -30,23 +31,23 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'[\x0f\x80',
+        {"encoded": b'@X=\xef\x89`\x0f\x00',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'P\x0f\x80',
+        {"encoded": b'@\x00=\xef\x89`\x0f\x00',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'T/\x80',
+        {"encoded": b'@\xa0=\xef\x89`\x0f\x00',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'Q/\x80',
+        {"encoded": b'@\x88=\xef\x89`\x0f\x00',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'A/\x80',
+        {"encoded": b'\x00\x88=\xef\x89`\x0f\x00',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          "damage_strictness": LayoutDamageStrictness.STRICT,
@@ -73,7 +74,7 @@ def _layout_config_with_data(request, default_layout_configuration):
          patch.multiple(BeamConfiguration, bit_pack_unpack=MagicMock(return_value=beam_configuration)):
         yield request.param["encoded"], dataclasses.replace(
             default_layout_configuration,
-            trick_level_configuration=trick_config,
+            trick_level=trick_config,
             damage_strictness=request.param.get("damage_strictness", LayoutDamageStrictness.MEDIUM),
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
@@ -93,7 +94,7 @@ def test_decode(layout_config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = LayoutConfiguration.bit_pack_unpack(decoder, {})
+    result = EchoesConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

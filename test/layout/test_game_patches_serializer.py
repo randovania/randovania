@@ -205,9 +205,9 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
     preset = dataclasses.replace(
         default_preset,
         base_preset_name=default_preset.name,
-        layout_configuration=dataclasses.replace(
-            default_preset.layout_configuration,
-            trick_level_configuration=TrickLevelConfiguration(
+        configuration=dataclasses.replace(
+            default_preset.configuration,
+            trick_level=TrickLevelConfiguration(
                 minimal_logic=True,
                 specific_levels={},
                 game=RandovaniaGame.PRIME2,
@@ -227,7 +227,7 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})
-    decoded = game_patches_serializer.decode(encoded, {0: preset.layout_configuration})
+    decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
 
     # Assert
     assert all_patches == decoded

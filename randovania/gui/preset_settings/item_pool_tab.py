@@ -61,7 +61,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self.gridLayout.setAlignment(Qt.AlignTop)
 
         # Relevant Items
-        self.game = editor.layout_configuration.game
+        self.game = editor.game
         item_database = default_database.item_database_for_game(self.game)
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
@@ -80,7 +80,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def on_preset_changed(self, preset: Preset):
         # Item alternatives
-        layout = preset.layout_configuration
+        layout = preset.configuration
         major_configuration = layout.major_items_configuration
 
         for progressive_widget in self._progressive_widgets:
@@ -183,7 +183,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _persist_bool_layout_field(self, field_name: str):
         def bound(value: int):
             with self._editor as options:
-                options.set_layout_configuration_field(field_name, bool(value))
+                options.set_configuration_field(field_name, bool(value))
 
         return bound
 
