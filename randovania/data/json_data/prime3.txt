@@ -3368,23 +3368,17 @@ Asset id: 11193898588728046860
 > Door to Zipline Station Bravo; Heals? False
   * Normal Door to Zipline Station Bravo/Door to Barracks Lift
   > Door to Steambot Barracks
-      After Barracks Lift Activated
+      Trivial
 
 > Door to Steambot Barracks; Heals? False; Spawn Point
   * Normal Door to Steambot Barracks/Door to Barracks Lift
   > Door to Zipline Station Bravo
-      After Barracks Lift Activated
-  > Door to Hoverplat Docking Site
       Trivial
-  > Event - Lift Activated
+  > Door to Hoverplat Docking Site
       Trivial
 
 > Door to Hoverplat Docking Site; Heals? False
   * Normal Door to Hoverplat Docking Site/Door to Barracks Lift
-  > Door to Steambot Barracks
-      Trivial
-
-> Event - Lift Activated; Heals? False
   > Door to Steambot Barracks
       Trivial
 
@@ -3506,16 +3500,26 @@ Asset id: 10733512082794532665
 > Door to Junction; Heals? False; Spawn Point
   * Normal Door to Junction/Door to Skybridge Hera
   > Door to Maintenance Shaft GP
-      Morph Ball and Boost Ball and After Defense Drone and After Skybridge Hera Destroy Bridge
+      Morph Ball and Boost Ball and After Skybridge Hera Reloaded After Bridge Destroyed
   > Pillar Platform
-      Grapple Lasso
+      Any of the following:
+          Grapple Lasso
+          All of the following:
+              Space Jump Boots and Morph Ball
+              Any of the following:
+                  All of the following:
+                      Screw Attack
+                      Movement (Intermediate) or Bomb/Spring Space Jump (Intermediate)
+                  Morph Ball Bombs and Bomb/Spring Space Jump (Advanced)
 
 > Door to Maintenance Shaft GP; Heals? False
   * Normal Door to Maintenance Shaft GP/Door to Skybridge Hera
   > Door to Junction
-      Morph Ball and Boost Ball and After Defense Drone
+      Morph Ball and Boost Ball and After Skybridge Hera Reloaded After Bridge Destroyed
   > Pillar Platform
       After Skybridge Hera Destroy Bridge and Use Screw Attack (Space Jump)
+  > Event - Destroy Bridge
+      Grapple Lasso and Movement (Intermediate) and Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 56; Major Location? False
@@ -3524,13 +3528,23 @@ Asset id: 10733512082794532665
 
 > Pillar Platform; Heals? False
   > Door to Junction
-      Trivial
+      Any of the following:
+          After Skybridge Hera Reloaded After Bridge Destroyed
+          All of the following:
+              Space Jump Boots and Morph Ball
+              Any of the following:
+                  All of the following:
+                      Screw Attack
+                      Movement (Intermediate) or Bomb/Spring Space Jump (Intermediate)
+                  Morph Ball Bombs and Bomb/Spring Space Jump (Advanced)
   > Door to Maintenance Shaft GP
-      Use Screw Attack (Space Jump)
+      All of the following:
+          Use Screw Attack (Space Jump)
+          After Skybridge Hera Destroy Bridge or Movement (Intermediate)
   > Pickup (Missile Expansion)
       Morph Ball
   > Event - Destroy Bridge
-      Trivial
+      Grapple Lasso
 
 > Event - Destroy Bridge; Heals? False
   * Event Skybridge Hera Destroy Bridge
@@ -3620,12 +3634,21 @@ Asset id: 15917923329011025717
 > Door to Skybridge Hera; Heals? False; Spawn Point
   * Normal Door to Skybridge Hera/Door to Maintenance Shaft GP
   > Door to Construction Bay
-      Space Jump Boots
+      Trivial
 
 > Door to Construction Bay; Heals? False
   * Normal Door to Construction Bay/Door to Maintenance Shaft GP
   > Door to Skybridge Hera
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Bomb/Spring Space Jump (Advanced)
+  > Event - Skybridge Hera Reloaded After Bridge Destroyed
+      Trivial
+
+> Event - Skybridge Hera Reloaded After Bridge Destroyed; Heals? False
+  * Event Skybridge Hera Reloaded After Bridge Destroyed
+  > Door to Construction Bay
+      Trivial
 
 ----------------
 Ballista Lift
@@ -3633,18 +3656,11 @@ Asset id: 17014153014158531645
 > Door to Ballista Storage; Heals? False
   * Normal Door to Ballista Storage/Door to Ballista Lift
   > Door to Construction Bay
-      After Ballista Lift Activated
+      Trivial
 
 > Door to Construction Bay; Heals? False; Spawn Point
   * Normal Door to Construction Bay/Door to Ballista Lift
   > Door to Ballista Storage
-      After Ballista Lift Activated
-  > Event - Lift Activated
-      Trivial
-
-> Event - Lift Activated; Heals? False
-  * Event Ballista Lift Activated
-  > Door to Construction Bay
       Trivial
 
 ----------------
@@ -3673,7 +3689,7 @@ Asset id: 17487489647732344867
 Junction
 Asset id: 2692588651293388340
 > Door to Skybridge Hera; Heals? False
-  * Ice Missile Blast Shield to Skybridge Hera/Door to Junction
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Skybridge Hera/Door to Junction
   > Circle Room
       Trivial
 
@@ -3707,6 +3723,13 @@ Asset id: 2692588651293388340
   > Door to Spire Dock (Pre-Bomb)
       Before Spire Bomb Leviathan Shield
   > Door to Zipline Station Charlie
+      Trivial
+  > Event - Skybridge Hera Reloaded After Bridge
+      After Skybridge Hera Destroy Bridge
+
+> Event - Skybridge Hera Reloaded After Bridge; Heals? False
+  * Event Skybridge Hera Reloaded After Bridge Destroyed
+  > Circle Room
       Trivial
 
 ----------------
@@ -3780,7 +3803,9 @@ Asset id: 2667502259855056433
               Morph Ball Bombs and Morph Ball
               Any of the following:
                   Use Grapple Voltage (Lasso and Voltage)
-                  Grapple Swing and Space Jump Boots
+                  All of the following:
+                      Grapple Swing and Space Jump Boots
+                      Charge Beam or Missile
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 58; Major Location? False
@@ -3937,13 +3962,15 @@ Asset id: 9955656508473190866
 
 > Bottom Floor; Heals? False
   > Door to Ballista Lift
-      After Defense Drone
+      Morph Ball and Boost Ball and After Defense Drone
   > Pickup (Energy Cell)
       Use Grapple Voltage (Lasso and Voltage)
   > Event - Defense Drone
       Any of the following:
           Grapple Lasso
-          Knowledge (Beginner) and Shoot Phazite (X-Ray and Nova)
+          All of the following:
+              Nova Beam and Knowledge (Beginner)
+              X-Ray Visor or Invisible Objects (Intermediate)
   > Event - Steamlord
       After Defense Drone
 
@@ -4084,12 +4111,12 @@ Asset id: 6342289143695945848
 ----------------
 Skytram West
 Asset id: 1051771406754533733
-> Door to Security Tube; Heals? False
+> Door to Security Tube; Heals? False; Spawn Point
   * Normal Door to Security Tube/Door to Skytram West
   > Skytram to East Skytown - Skytram East
       Morph Ball and Boost Ball
 
-> Skytram to East Skytown - Skytram East; Heals? False; Spawn Point
+> Skytram to East Skytown - Skytram East; Heals? False
   * Teleporter to SkyTown, Elysia - Pod - Skytram East
   > Door to Security Tube
       Trivial
@@ -4762,7 +4789,7 @@ Asset id: 17446010042417855180
 > Door to Gearworks; Heals? False
   * Normal Door to Gearworks/Door to Observatory Lift
   > Door to Chozo Observatory
-      After Observatory Lift Fix Elevator
+      Trivial
 
 > Door to Chozo Observatory; Heals? False; Spawn Point
   * Normal Door to Chozo Observatory/Door to Observatory Lift
@@ -4782,13 +4809,11 @@ Asset id: 2455573103578253675
 > Door to Maintenance Shaft OB; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft OB/Door to Chozo Observatory
   > Door to Observatory Lift
-      After Chozo Observatory Elevator
+      Trivial
   > Door to Botanica
       Any of the following:
           Space Jump Boots and After Chozo Observatory Pillar
           Bomb/Spring Space Jump (Beginner) and Use Screw Attack (Space Jump)
-  > Event - Scan Elevator
-      Trivial
   > Event - Raise Pillar
       Plasma Beam and Use Ship Grapple (Command Visor and Ship Grapple)
   > Event - Map Data
@@ -4799,17 +4824,10 @@ Asset id: 2455573103578253675
 > Door to Observatory Lift; Heals? False
   * Normal Door to Observatory Lift/Door to Chozo Observatory
   > Door to Maintenance Shaft OB
-      All of the following:
-          After Chozo Observatory Elevator
-          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Botanica; Heals? False
   * Plasma Door to Botanica/Door to Chozo Observatory
-  > Door to Maintenance Shaft OB
-      Trivial
-
-> Event - Scan Elevator; Heals? False
-  * Event Chozo Observatory Elevator
   > Door to Maintenance Shaft OB
       Trivial
 
