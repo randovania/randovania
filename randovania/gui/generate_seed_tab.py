@@ -8,6 +8,7 @@ from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QMenu, QAction
 from asyncqt import asyncSlot
 
+from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
@@ -58,6 +59,12 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
         self.window.stop_background_process_button.clicked.connect(self.stop_background_process)
 
+        self.window.create_choose_game_combo.addItem("Metroid Prime 2: Echoes", RandovaniaGame.PRIME2)
+        self.window.create_choose_game_combo.addItem("Metroid Prime 3: Corruption", RandovaniaGame.PRIME3)
+
+        self.window.create_choose_game_combo.setVisible(self._window_manager.is_preview_mode)
+        self.window.create_choose_game_label.setVisible(self._window_manager.is_preview_mode)
+
         for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
 
@@ -80,7 +87,8 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self._tool_button_menu.addAction(action_import_preset)
 
         # Signals
-        window.create_customize_button.clicked.connect(self._on_customize_button)
+        window.create_choose_game_combo.activated.connect(self._on_select_game)
+        window.preset_tool_button.clicked.connect(self._on_customize_button)
         window.create_preset_combo.activated.connect(self._on_select_preset)
         window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
         window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
@@ -172,6 +180,19 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
         self._add_new_preset(preset)
 
+    def select_game(self, game: RandovaniaGame):
+        combo_index = self.window.create_choose_game_combo.findData(game)
+        self.window.create_choose_game_combo.setCurrentIndex(combo_index)
+        self._on_select_game()
+
+    def _on_select_game(self):
+        game = self.window.create_choose_game_combo.currentData()
+
+        self.window.create_preset_combo.clear()
+        for preset in self._window_manager.preset_manager.all_presets:
+            if preset.game == game:
+                self._create_button_for_preset(preset)
+
     def _on_select_preset(self):
         preset_data = self._current_preset_data
         try:
@@ -224,9 +245,10 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
     def on_options_changed(self, options: Options):
         if not self._has_preset:
-            preset_name = options.selected_preset_name
-            if preset_name is not None:
-                index = self.window.create_preset_combo.findText(preset_name)
+            selected_preset = self._window_manager.preset_manager.preset_for_name(options.selected_preset_name)
+            if selected_preset is not None:
+                self.select_game(selected_preset.game)
+                index = self.window.create_preset_combo.findText(selected_preset.name)
                 if index != -1:
                     self.window.create_preset_combo.setCurrentIndex(index)
                     try:
