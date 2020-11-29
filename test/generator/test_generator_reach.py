@@ -17,6 +17,7 @@ from randovania.game_description.resources.resource_info import add_resources_in
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory, generator
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
@@ -135,7 +136,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ])
     ])
     game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
-    game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
+    game = GameDescription(RandovaniaGame.PRIME2, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, game_specific, Requirement.impossible(),
                            None, {}, world_list)
 

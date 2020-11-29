@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: A very basic visualization of the map to the tracker.
 
+-   Added: Trick Details can now be used with all 3 games.
+
 -   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.
 
 -   Removed: Intermediate path for reaching item in Main Reactor from Security Station B door without Screw Attack since it was broken and impossible.

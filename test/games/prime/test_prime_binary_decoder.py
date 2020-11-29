@@ -11,8 +11,7 @@ from randovania.games.prime import binary_data
 
 def test_simple_round_trip():
     sample_data = {
-        "game": 2,
-        "game_name": "Metroid Prime 2: Echoes",
+        "game": "prime2",
         "resource_database": {
             "items": [],
             "events": [],
@@ -53,7 +52,7 @@ def test_simple_round_trip():
     b.seek(0)
     decoded = binary_data.decode(b)
 
-    assert sample_data == decoded
+    assert decoded == sample_data
 
 
 def test_complex_encode(test_files_dir):

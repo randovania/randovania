@@ -59,6 +59,7 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         set_default_window_icon(self)
 
         self._window_manager = window_manager
+        self._game_description = game_description
 
         # setup
         self.setWindowTitle(f"Trick Details: {trick.long_name} at {level.long_name}")
@@ -97,4 +98,4 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
         if info:
             world_name, area_name = info.group(1, 2)
-            self._window_manager.open_data_visualizer_at(world_name, area_name)
+            self._window_manager.open_data_visualizer_at(world_name, area_name, game=self._game_description.game)

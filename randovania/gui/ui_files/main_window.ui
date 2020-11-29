@@ -729,8 +729,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>85</width>
-                 <height>2146</height>
+                 <width>98</width>
+                 <height>1838</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="multiworld_scroll_contents_layout">
@@ -834,8 +834,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>84</width>
-                 <height>3820</height>
+                 <width>98</width>
+                 <height>3162</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -891,8 +891,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>88</width>
-                 <height>412</height>
+                 <width>98</width>
+                 <height>370</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -975,8 +975,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>88</width>
-                 <height>370</height>
+                 <width>98</width>
+                 <height>342</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -1035,8 +1035,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>84</width>
-                 <height>629</height>
+                 <width>98</width>
+                 <height>531</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="tracker_scroll_area_layout">
@@ -1126,24 +1126,42 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Open</string>
     </property>
-    <widget class="QMenu" name="menu_trick_details">
+    <widget class="QMenu" name="menu_prime_3">
      <property name="title">
-      <string>Trick Details</string>
+      <string>Metroid Prime 3: Corruption</string>
      </property>
-    </widget>
-    <widget class="QMenu" name="menu_data_visualizer">
-     <property name="title">
-      <string>Data Visualizer</string>
-     </property>
-     <addaction name="menu_action_visualize_prime_1"/>
-     <addaction name="menu_action_visualize_prime_2"/>
-     <addaction name="menu_action_visualize_prime_3"/>
-    </widget>
-    <widget class="QMenu" name="menu_corruption">
-     <property name="title">
-      <string>Corruption</string>
-     </property>
+     <widget class="QMenu" name="menu_prime_3_trick_details">
+      <property name="title">
+       <string>Trick Details</string>
+      </property>
+     </widget>
+     <addaction name="menu_prime_3_trick_details"/>
+     <addaction name="menu_action_prime_3_data_visualizer"/>
      <addaction name="menu_action_layout_editor"/>
+    </widget>
+    <widget class="QMenu" name="menu_prime_2">
+     <property name="title">
+      <string>Metroid Prime 2: Echoes</string>
+     </property>
+     <widget class="QMenu" name="menu_prime_2_trick_details">
+      <property name="title">
+       <string>Trick Details</string>
+      </property>
+     </widget>
+     <addaction name="menu_prime_2_trick_details"/>
+     <addaction name="menu_action_prime_2_data_visualizer"/>
+    </widget>
+    <widget class="QMenu" name="menu_prime_1">
+     <property name="title">
+      <string>Metroid Prime 1</string>
+     </property>
+     <widget class="QMenu" name="menu_prime_1_trick_details">
+      <property name="title">
+       <string>Trick Details</string>
+      </property>
+     </widget>
+     <addaction name="menu_prime_1_trick_details"/>
+     <addaction name="menu_action_prime_1_data_visualizer"/>
     </widget>
     <addaction name="menu_action_previously_generated_games"/>
     <addaction name="separator"/>
@@ -1151,10 +1169,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="menu_action_open_auto_tracker"/>
     <addaction name="menu_action_map_tracker"/>
     <addaction name="separator"/>
-    <addaction name="menu_trick_details"/>
-    <addaction name="menu_data_visualizer"/>
-    <addaction name="separator"/>
-    <addaction name="menu_corruption"/>
+    <addaction name="menu_prime_1"/>
+    <addaction name="menu_prime_2"/>
+    <addaction name="menu_prime_3"/>
    </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
@@ -1306,12 +1323,42 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="menu_action_layout_editor">
    <property name="text">
-    <string>Layout editor</string>
+    <string>Layout Editor</string>
    </property>
   </action>
   <action name="menu_action_map_tracker">
    <property name="text">
     <string>Map Tracker</string>
+   </property>
+  </action>
+  <action name="menu_action_prime_3_data_visualizer">
+   <property name="text">
+    <string>Data Visualizer</string>
+   </property>
+  </action>
+  <action name="actionasdf">
+   <property name="text">
+    <string>asdf</string>
+   </property>
+  </action>
+  <action name="menu_action_prime_2_data_visualizer">
+   <property name="text">
+    <string>Data Visualizer</string>
+   </property>
+  </action>
+  <action name="actionasdf_2">
+   <property name="text">
+    <string>asdf</string>
+   </property>
+  </action>
+  <action name="menu_action_prime_1_data_visualizer">
+   <property name="text">
+    <string>Data Visualizer</string>
+   </property>
+  </action>
+  <action name="actionasdf_3">
+   <property name="text">
+    <string>asdf</string>
    </property>
   </action>
  </widget>
