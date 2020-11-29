@@ -506,15 +506,18 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         for world in world_list.worlds:
             for is_dark_world in dark_world_flags(world):
-                for node in world.all_nodes:
-                    if isinstance(node, PickupNode):
-                        nodes_by_world[world.correct_name(is_dark_world)].append(node)
-                        match = pickup_match.match(node.name)
-                        if match is not None:
-                            node_name = match.group(1)
-                        else:
-                            node_name = node.name
-                        node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
+                for area in world.areas:
+                    if area.in_dark_aether != is_dark_world:
+                        continue
+                    for node in area.nodes:
+                        if isinstance(node, PickupNode):
+                            nodes_by_world[world.correct_name(is_dark_world)].append(node)
+                            match = pickup_match.match(node.name)
+                            if match is not None:
+                                node_name = match.group(1)
+                            else:
+                                node_name = node.name
+                            node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
 
         for i, world_name in enumerate(sorted(nodes_by_world.keys())):
             group_box = QGroupBox(self.excluded_locations_area_contents)
