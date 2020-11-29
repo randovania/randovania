@@ -14,6 +14,7 @@ from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import TrickLevelConfiguration
@@ -56,9 +57,9 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class EchoesConfiguration(BitPackDataClass):
+class EchoesConfiguration(BitPackDataClass, JsonDataclass):
     game: RandovaniaGame
-    trick_level_configuration: TrickLevelConfiguration
+    trick_level: TrickLevelConfiguration
     damage_strictness: LayoutDamageStrictness
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
@@ -73,6 +74,13 @@ class EchoesConfiguration(BitPackDataClass):
     energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0,
                                                          "if_different": 100.0, "precision": 1.0})
     safe_zone: LayoutSafeZone
+    menu_mod: bool
+    warp_to_start: bool
+    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
+    dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
+    pickup_model_style: PickupModelStyle
+    pickup_model_data_source: PickupModelDataSource
+
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
 
@@ -84,50 +92,27 @@ class EchoesConfiguration(BitPackDataClass):
     def game_data(self) -> dict:
         return default_data.read_json_then_binary(self.game)[1]
 
-    @property
-    def as_json(self) -> dict:
-        return {
-            "game": self.game.value,
-            "trick_level": self.trick_level_configuration.as_json,
-            "damage_strictness": self.damage_strictness.value,
-            "sky_temple_keys": self.sky_temple_keys.value,
-            "elevators": self.elevators.value,
-            "starting_location": self.starting_location.as_json,
-            "available_locations": self.available_locations.as_json,
-            "major_items_configuration": self.major_items_configuration.as_json,
-            "ammo_configuration": self.ammo_configuration.as_json,
-            "translator_configuration": self.translator_configuration.as_json,
-            "hints": self.hints.as_json,
-            "beam_configuration": self.beam_configuration.as_json,
-            "skip_final_bosses": self.skip_final_bosses,
-            "energy_per_tank": self.energy_per_tank,
-            "safe_zone": self.safe_zone.as_json,
-            "split_beam_ammo": self.split_beam_ammo,
-        }
-
     @classmethod
-    def from_json_dict(cls, json_dict: dict) -> "EchoesConfiguration":
+    def from_json(cls, json_dict: dict) -> "EchoesConfiguration":
         game = RandovaniaGame(json_dict["game"])
         item_database = default_database.item_database_for_game(game)
-        return EchoesConfiguration(
-            game=game,
-            trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"], game),
-            damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
-            sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
-            elevators=LayoutElevators(json_dict["elevators"]),
-            starting_location=StartingLocation.from_json(json_dict["starting_location"], game),
-            available_locations=AvailableLocationsConfiguration.from_json(json_dict["available_locations"]),
-            major_items_configuration=MajorItemsConfiguration.from_json(json_dict["major_items_configuration"],
-                                                                        item_database),
-            ammo_configuration=AmmoConfiguration.from_json(json_dict["ammo_configuration"], item_database),
-            translator_configuration=TranslatorConfiguration.from_json(json_dict["translator_configuration"]),
-            hints=HintConfiguration.from_json(json_dict["hints"]),
-            beam_configuration=BeamConfiguration.from_json(json_dict["beam_configuration"]),
-            skip_final_bosses=json_dict["skip_final_bosses"],
-            energy_per_tank=json_dict["energy_per_tank"],
-            safe_zone=LayoutSafeZone.from_json(json_dict["safe_zone"]),
-            split_beam_ammo=json_dict["split_beam_ammo"],
-        )
+
+        kwargs = {}
+        for field in dataclasses.fields(cls):
+            arg = json_dict[field.name]
+            if issubclass(field.type, Enum):
+                arg = field.type(arg)
+            elif hasattr(field.type, "from_json"):
+                extra_args = []
+                if field.name in ("trick_level", "starting_location"):
+                    extra_args.append(game)
+                if field.name in ("major_items_configuration", "ammo_configuration"):
+                    extra_args.append(item_database)
+                arg = field.type.from_json(arg, *extra_args)
+
+            kwargs[field.name] = arg
+
+        return EchoesConfiguration(**kwargs)
 
     def dangerous_settings(self) -> List[str]:
         result = []
