@@ -1140,6 +1140,11 @@
                 "index": 142,
                 "long_name": "Command Vault Tunnel Open",
                 "short_name": "Event142"
+            },
+            {
+                "index": 143,
+                "long_name": "Aurora Chamber Skytown Initiate Bomb Sequence",
+                "short_name": "Event143"
             }
         ],
         "tricks": [
@@ -3518,7 +3523,7 @@
                     "in_dark_aether": false,
                     "asset_id": 1937326665165249525,
                     "default_node_index": 2,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Cargo Dock C",
@@ -4698,7 +4703,7 @@
                     "in_dark_aether": false,
                     "asset_id": 8948533108801763587,
                     "default_node_index": 0,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Generator C Access",
@@ -4768,7 +4773,7 @@
                     "in_dark_aether": false,
                     "asset_id": 4520873215787484216,
                     "default_node_index": 1,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Generator C Access",
@@ -4903,7 +4908,7 @@
                     "in_dark_aether": false,
                     "asset_id": 2389417385720268120,
                     "default_node_index": 0,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Dock to Generator C",
@@ -5709,15 +5714,6 @@
                                                                 {
                                                                     "type": "resource",
                                                                     "data": {
-                                                                        "type": 0,
-                                                                        "index": 33,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
                                                                         "type": 2,
                                                                         "index": 5,
                                                                         "amount": 3,
@@ -5732,6 +5728,29 @@
                                                                         "amount": 3,
                                                                         "negate": false
                                                                     }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 10,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             ]
                                                         }
@@ -19072,17 +19091,17 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 72,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
                                         }
                                     ]
+                                },
+                                "Event - Initiate Bomb Sequence": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 77,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -19105,6 +19124,19 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 73,
+                            "connections": {
+                                "Inside Aurora Chamber": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Initiate Bomb Sequence",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 143,
                             "connections": {
                                 "Inside Aurora Chamber": {
                                     "type": "and",
@@ -20396,7 +20428,7 @@
                     "name": "Junction",
                     "in_dark_aether": false,
                     "asset_id": 2692588651293388340,
-                    "default_node_index": 2,
+                    "default_node_index": 5,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -20442,7 +20474,7 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Post-Bomb)",
                             "heal": false,
                             "coordinates": {
                                 "x": 57.85,
@@ -20463,7 +20495,7 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Pre-Bomb)",
                             "heal": false,
                             "coordinates": {
                                 "x": 57.85,
@@ -20518,9 +20550,23 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Door to Spire Dock": {
-                                    "type": "and",
-                                    "data": []
+                                "Door to Spire Dock (Post-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Door to Spire Dock (Pre-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": true
+                                    }
                                 },
                                 "Door to Zipline Station Charlie": {
                                     "type": "and",
@@ -20674,12 +20720,12 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Post-Bomb)",
                             "heal": false,
                             "coordinates": {
-                                "x": -1.0013580322265625e-05,
-                                "y": -57.847286224365234,
-                                "z": 4.499997079372406
+                                "x": -0.0,
+                                "y": -57.85,
+                                "z": 4.5
                             },
                             "node_type": "dock",
                             "dock_index": 1,
@@ -20700,12 +20746,12 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Pre-Bomb)",
                             "heal": false,
                             "coordinates": {
-                                "x": -1.0013580322265625e-05,
-                                "y": -57.847286224365234,
-                                "z": 4.499997079372406
+                                "x": -0.0,
+                                "y": -57.85,
+                                "z": 4.5
                             },
                             "node_type": "dock",
                             "dock_index": 2,
@@ -20747,9 +20793,23 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Door to Spire Dock": {
-                                    "type": "and",
-                                    "data": []
+                                "Door to Spire Dock (Post-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Door to Spire Dock (Pre-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": true
+                                    }
                                 },
                                 "Event - Aurora Chamber Reloaded": {
                                     "type": "resource",
@@ -21072,7 +21132,7 @@
                     "name": "Security Station",
                     "in_dark_aether": false,
                     "asset_id": 8195940946934839837,
-                    "default_node_index": 1,
+                    "default_node_index": 6,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -21102,11 +21162,11 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Post-Bomb)",
                             "heal": false,
                             "coordinates": {
-                                "x": -57.8472900390625,
-                                "y": -1.0013580322265625e-05,
+                                "x": -57.85,
+                                "y": -0.0,
                                 "z": 4.5
                             },
                             "node_type": "dock",
@@ -21123,11 +21183,11 @@
                             }
                         },
                         {
-                            "name": "Door to Spire Dock",
+                            "name": "Door to Spire Dock (Pre-Bomb)",
                             "heal": false,
                             "coordinates": {
-                                "x": -57.8472900390625,
-                                "y": -1.0013580322265625e-05,
+                                "x": -57.85,
+                                "y": -0.0,
                                 "z": 4.5
                             },
                             "node_type": "dock",
@@ -21269,9 +21329,23 @@
                                         }
                                     ]
                                 },
-                                "Door to Spire Dock": {
-                                    "type": "and",
-                                    "data": []
+                                "Door to Spire Dock (Post-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Door to Spire Dock (Pre-Bomb)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": true
+                                    }
                                 },
                                 "Door to Landing Site A": {
                                     "type": "resource",
@@ -21892,11 +21966,11 @@
                     ]
                 },
                 {
-                    "name": "Spire Dock",
+                    "name": "Spire Dock (Post-Bomb)",
                     "in_dark_aether": false,
                     "asset_id": 3166066018495772067,
                     "default_node_index": 0,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Maintenance Shaft AU",
@@ -21912,16 +21986,7 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Door to Security Station": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Door to Junction": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
+                            "connections": {}
                         },
                         {
                             "name": "Door to Security Station",
@@ -21938,13 +22003,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Maintenance Shaft AU": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "Door to Junction": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21963,13 +22029,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Maintenance Shaft AU": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "Door to Security Station": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -21999,12 +22066,12 @@
                             "connections": {}
                         },
                         {
-                            "name": "Door to Spire",
+                            "name": "Dock to Spire",
                             "heal": false,
                             "coordinates": {
-                                "x": 194.72000122070312,
-                                "y": 503.739990234375,
-                                "z": 338.760009765625
+                                "x": 194.72,
+                                "y": 503.74,
+                                "z": 338.76
                             },
                             "node_type": "dock",
                             "dock_index": 1,
@@ -22043,47 +22110,7 @@
                             "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Escape Pod Bay": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 96,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            "name": "Door to Spire Dock",
-                            "heal": false,
-                            "coordinates": {
-                                "x": -274.9374084472656,
-                                "y": -588.2633056640625,
-                                "z": 393.7499694824219
-                            },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 2782037876215597956,
-                            "connected_dock_index": 3,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Morph Ball Door to Podworks": {
+                                "Room Center": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -22095,12 +22122,33 @@
                             }
                         },
                         {
-                            "name": "Door to Escape Pod Bay",
+                            "name": "Dock to Spire Dock (Pre-Bomb)",
                             "heal": false,
                             "coordinates": {
-                                "x": -280.1874084472656,
-                                "y": -583.5133056640625,
-                                "z": 393.7499694824219
+                                "x": -274.94,
+                                "y": -588.26,
+                                "z": 393.75
+                            },
+                            "node_type": "dock",
+                            "dock_index": 1,
+                            "connected_area_asset_id": 2782037876215597956,
+                            "connected_dock_index": 3,
+                            "dock_type": 0,
+                            "dock_weakness_index": 0,
+                            "connections": {
+                                "Room Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Dock to Escape Pod Bay",
+                            "heal": false,
+                            "coordinates": {
+                                "x": -280.19,
+                                "y": -583.51,
+                                "z": 393.75
                             },
                             "node_type": "dock",
                             "dock_index": 2,
@@ -22109,14 +22157,65 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Event - Destroy Leviathan Shield",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Room Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Room Center",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Morph Ball Door to Podworks": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Spire Dock (Pre-Bomb)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Escape Pod Bay": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 78,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Destroy Leviathan Shield": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 96,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
                 {
-                    "name": "Spire Dock",
+                    "name": "Spire Dock (Pre-Bomb)",
                     "in_dark_aether": false,
                     "asset_id": 2782037876215597956,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22138,7 +22237,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
-                                        "index": 8,
+                                        "index": 32,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -22198,12 +22297,12 @@
                             }
                         },
                         {
-                            "name": "Door to Spire",
+                            "name": "Dock to Spire",
                             "heal": false,
                             "coordinates": {
-                                "x": 539.4804077148438,
-                                "y": 68.86701202392578,
-                                "z": 436.3416442871094
+                                "x": 539.48,
+                                "y": 68.87,
+                                "z": 436.34
                             },
                             "node_type": "dock",
                             "dock_index": 3,
@@ -22223,7 +22322,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
-                                        "index": 8,
+                                        "index": 32,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -22246,14 +22345,59 @@
                                         "negate": false
                                     }
                                 },
-                                "Door to Spire": {
+                                "Dock to Spire": {
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
-                                        "index": 77,
+                                        "index": 143,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Bomb Prepared": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 88,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 71,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 79,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Bomb Prepared",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 77,
+                            "connections": {
+                                "Center": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -32800,7 +32944,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Defense Access": {
+                                "Morph Ball Door to Defense Access": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -32844,7 +32988,7 @@
                             }
                         },
                         {
-                            "name": "Door to Defense Access",
+                            "name": "Morph Ball Door to Defense Access",
                             "heal": false,
                             "coordinates": {
                                 "x": 50.0,
