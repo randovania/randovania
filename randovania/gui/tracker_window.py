@@ -31,7 +31,8 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
 from randovania.layout import translator_configuration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
+from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
@@ -44,12 +45,12 @@ class InvalidLayoutForTracker(Exception):
 
 
 def _load_previous_state(persistence_path: Path,
-                         layout_configuration: LayoutConfiguration,
+                         layout_configuration: EchoesConfiguration,
                          ) -> Optional[dict]:
     previous_layout_path = persistence_path.joinpath("layout_configuration.json")
     try:
         with previous_layout_path.open() as previous_layout_file:
-            previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
+            previous_layout = EchoesConfiguration.from_json(json.load(previous_layout_file))
     except (FileNotFoundError, TypeError, KeyError, ValueError, json.JSONDecodeError):
         return None
 
@@ -89,7 +90,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker configuration
     logic: Logic
     game_description: GameDescription
-    layout_configuration: LayoutConfiguration
+    layout_configuration: EchoesConfiguration
     persistence_path: Path
     _initial_state: State
     _elevator_id_to_combo: Dict[int, QtWidgets.QComboBox]
@@ -103,7 +104,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, CustomSpinBox]]
     _during_setup = False
 
-    def __init__(self, persistence_path: Path, layout_configuration: LayoutConfiguration):
+    def __init__(self, persistence_path: Path, layout_configuration: EchoesConfiguration):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -131,7 +132,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
-            layout_configuration.trick_level_configuration.pretty_description,
+            layout_configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()

@@ -5,7 +5,7 @@ from PySide2.QtWidgets import QWidget, QMainWindow
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -20,7 +20,7 @@ class WindowManager(QMainWindow):
     def preset_manager(self) -> PresetManager:
         raise NotImplemented()
 
-    def open_map_tracker(self, configuration: LayoutConfiguration):
+    def open_map_tracker(self, configuration: EchoesConfiguration):
         raise NotImplemented()
 
     def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],

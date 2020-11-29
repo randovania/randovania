@@ -534,7 +534,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
-    game_data = description.permalink.get_preset(player).layout_configuration.game_data
+    game_data = description.permalink.get_preset(player).configuration.game_data
     return data_reader.read_resource_database(game_data["resource_database"])
 
 

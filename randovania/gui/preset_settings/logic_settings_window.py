@@ -33,7 +33,8 @@ from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutDamageStrictness
+from randovania.layout.elevators import LayoutElevators
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel
@@ -76,7 +77,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._window_manager = window_manager
         self._extra_tabs = []
 
-        self.game_enum = editor.layout_configuration.game
+        self.game_enum = editor.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
@@ -121,14 +122,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             extra_tab.on_preset_changed(preset)
 
         # Variables
-        layout_config = preset.layout_configuration
-        patcher_config = preset.patcher_configuration
+        config = preset.configuration
 
         # Title
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
 
         # Trick Level
-        trick_level_configuration = preset.layout_configuration.trick_level_configuration
+        trick_level_configuration = preset.configuration.trick_level
         self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
 
         for trick, slider in self._slider_for_trick.items():
@@ -137,22 +137,22 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             slider.setEnabled(not trick_level_configuration.minimal_logic)
 
         # Damage
-        set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
-        self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
+        set_combo_with_value(self.damage_strictness_combo, config.damage_strictness)
+        self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
         if self.game_enum == RandovaniaGame.PRIME2:
-            self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
-            self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
-            self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
-            self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
+            self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
+            self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
+            self.varia_suit_spin_box.setValue(config.varia_suit_damage)
+            self.dark_suit_spin_box.setValue(config.dark_suit_damage)
 
         # Elevator
-        set_combo_with_value(self.elevators_combo, layout_config.elevators)
+        set_combo_with_value(self.elevators_combo, config.elevators)
 
         # Starting Area
         self.on_preset_changed_starting_area(preset)
 
         # Location Pool
-        available_locations = layout_config.available_locations
+        available_locations = config.available_locations
         set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
 
         self._during_batch_check_update = True
@@ -261,9 +261,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def _on_slide_trick_slider(self, trick: TrickResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._editor as options:
-                options.set_layout_configuration_field(
-                    "trick_level_configuration",
-                    options.layout_configuration.trick_level_configuration.set_level_for_trick(
+                options.set_configuration_field(
+                    "trick_level",
+                    options.configuration.trick_level.set_level_for_trick(
                         trick,
                         LayoutTrickLevel.from_number(value)
                     )
@@ -271,9 +271,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _on_trick_level_minimal_logic_check(self, state: int):
         with self._editor as options:
-            options.set_layout_configuration_field(
-                "trick_level_configuration",
-                dataclasses.replace(options.layout_configuration.trick_level_configuration,
+            options.set_configuration_field(
+                "trick_level",
+                dataclasses.replace(options.configuration.trick_level,
                                     minimal_logic=bool(state))
             )
 
@@ -288,7 +288,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._window_manager,
             self.game_description,
             trick,
-            self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
+            self._editor.configuration.trick_level.level_for_trick(trick),
         ))
 
     # Damage strictness
@@ -305,7 +305,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         def _persist_float(attribute_name: str):
             def persist(value: float):
                 with self._editor as options:
-                    options.set_patcher_configuration_field(attribute_name, value)
+                    options.set_configuration_field(attribute_name, value)
 
             return persist
 
@@ -322,23 +322,23 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
-            editor.set_layout_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
+            editor.set_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
 
     def _persist_safe_zone_regen(self):
         with self._editor as editor:
             safe_zone = dataclasses.replace(
-                editor.layout_configuration.safe_zone,
+                editor.configuration.safe_zone,
                 heal_per_second=self.safe_zone_regen_spin.value()
             )
-            editor.set_layout_configuration_field("safe_zone", safe_zone)
+            editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_safe_zone_logic_heal(self):
         with self._editor as editor:
             safe_zone = dataclasses.replace(
-                editor.layout_configuration.safe_zone,
+                editor.configuration.safe_zone,
                 fully_heal=self.safe_zone_logic_heal_check.isChecked()
             )
-            editor.set_layout_configuration_field("safe_zone", safe_zone)
+            editor.set_configuration_field("safe_zone", safe_zone)
 
     # Elevator
     def setup_elevator_elements(self):
@@ -418,10 +418,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         if self._during_batch_check_update:
             return
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
-                editor.layout_configuration.starting_location.ensure_has_location(check.area_location,
-                                                                                  check.isChecked())
+                editor.configuration.starting_location.ensure_has_location(check.area_location,
+                                                                           check.isChecked())
             )
 
     def _on_check_starting_world(self, check, _):
@@ -432,14 +432,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         world_areas = [world_list.area_to_area_location(area)
                        for area in world.areas if check.is_dark_world == area.in_dark_aether]
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
-                editor.layout_configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
+                editor.configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
             )
 
     def _starting_location_on_select_ship(self):
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
                 StartingLocation.with_elements([self.game_description.starting_location], self.game_enum)
             )
@@ -450,13 +450,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                          for node in world_list.all_nodes if node.name == "Save Station"]
 
         with self._editor as editor:
-            editor.set_layout_configuration_field(
+            editor.set_configuration_field(
                 "starting_location",
                 StartingLocation.with_elements(save_stations, self.game_enum)
             )
 
     def on_preset_changed_starting_area(self, preset: Preset):
-        starting_locations = preset.layout_configuration.starting_location.locations
+        starting_locations = preset.configuration.starting_location.locations
 
         self._during_batch_check_update = True
         for world in self.game_description.world_list.worlds:
@@ -506,15 +506,18 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         for world in world_list.worlds:
             for is_dark_world in dark_world_flags(world):
-                for node in world.all_nodes:
-                    if isinstance(node, PickupNode):
-                        nodes_by_world[world.correct_name(is_dark_world)].append(node)
-                        match = pickup_match.match(node.name)
-                        if match is not None:
-                            node_name = match.group(1)
-                        else:
-                            node_name = node.name
-                        node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
+                for area in world.areas:
+                    if area.in_dark_aether != is_dark_world:
+                        continue
+                    for node in area.nodes:
+                        if isinstance(node, PickupNode):
+                            nodes_by_world[world.correct_name(is_dark_world)].append(node)
+                            match = pickup_match.match(node.name)
+                            if match is not None:
+                                node_name = match.group(1)
+                            else:
+                                node_name = node.name
+                            node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
 
         for i, world_name in enumerate(sorted(nodes_by_world.keys())):
             group_box = QGroupBox(self.excluded_locations_area_contents)

@@ -1,12 +1,14 @@
 import dataclasses
-from typing import Optional, Callable
+from typing import Optional, Callable, Union
 
+from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode, LayoutDamageStrictness
+from randovania.layout.corruption_configuration import CorruptionConfiguration
+from randovania.layout.damage_strictness import LayoutDamageStrictness
+from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 
@@ -17,8 +19,8 @@ class PresetEditor:
 
     _name: str
     _base_preset_name: str
-    _patcher_configuration: PatcherConfiguration
-    _layout_configuration: LayoutConfiguration
+    _game: RandovaniaGame
+    _configuration: Union[EchoesConfiguration, CorruptionConfiguration]
 
     def __init__(self, initial_preset: Preset):
         if initial_preset.base_preset_name is None:
@@ -27,8 +29,8 @@ class PresetEditor:
         else:
             self._name = initial_preset.name
             self._base_preset_name = initial_preset.base_preset_name
-        self._patcher_configuration = initial_preset.patcher_configuration
-        self._layout_configuration = initial_preset.layout_configuration
+        self._game = initial_preset.game
+        self._configuration = initial_preset.configuration
 
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
@@ -58,8 +60,8 @@ class PresetEditor:
             name=self.name,
             description="A preset that was customized.",
             base_preset_name=self._base_preset_name,
-            patcher_configuration=self.patcher_configuration,
-            layout_configuration=self.layout_configuration,
+            game=self._game,
+            configuration=self.configuration,
         )
 
     # Access to Direct fields
@@ -72,111 +74,106 @@ class PresetEditor:
         self._set_field("name", value)
 
     @property
-    def patcher_configuration(self) -> PatcherConfiguration:
-        return self._patcher_configuration
+    def game(self):
+        return self._game
 
     @property
-    def layout_configuration(self) -> LayoutConfiguration:
-        return self._layout_configuration
+    def configuration(self) -> Union[EchoesConfiguration, CorruptionConfiguration]:
+        return self._configuration
 
     # Access to fields inside PatcherConfiguration
     @property
     def include_menu_mod(self) -> bool:
-        return self.patcher_configuration.menu_mod
+        return self.configuration.menu_mod
 
     @include_menu_mod.setter
     def include_menu_mod(self, value: bool):
-        self.set_patcher_configuration_field("menu_mod", value)
+        self.set_configuration_field("menu_mod", value)
 
     @property
     def warp_to_start(self) -> bool:
-        return self.patcher_configuration.warp_to_start
+        return self.configuration.warp_to_start
 
     @warp_to_start.setter
     def warp_to_start(self, value: bool):
-        self.set_patcher_configuration_field("warp_to_start", value)
+        self.set_configuration_field("warp_to_start", value)
 
     @property
     def pickup_model_style(self):
-        return self.patcher_configuration.pickup_model_style
+        return self.configuration.pickup_model_style
 
     @pickup_model_style.setter
     def pickup_model_style(self, value):
-        self.set_patcher_configuration_field("pickup_model_style", value)
+        self.set_configuration_field("pickup_model_style", value)
 
     @property
     def pickup_model_data_source(self):
-        return self.patcher_configuration.pickup_model_data_source
+        return self.configuration.pickup_model_data_source
 
     @pickup_model_data_source.setter
     def pickup_model_data_source(self, value):
-        self.set_patcher_configuration_field("pickup_model_data_source", value)
+        self.set_configuration_field("pickup_model_data_source", value)
 
-    def set_patcher_configuration_field(self, field_name: str, value):
-        self._edit_field("patcher_configuration",
-                         dataclasses.replace(self.patcher_configuration, **{field_name: value}))
-
-    # Access to fields inside LayoutConfiguration
     @property
     def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
-        return self.layout_configuration.sky_temple_keys
+        return self.configuration.sky_temple_keys
 
     @layout_configuration_sky_temple_keys.setter
     def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
-        self.set_layout_configuration_field("sky_temple_keys", value)
+        self.set_configuration_field("sky_temple_keys", value)
 
     @property
     def layout_configuration_damage_strictness(self) -> LayoutDamageStrictness:
-        return self.layout_configuration.damage_strictness
+        return self.configuration.damage_strictness
 
     @layout_configuration_damage_strictness.setter
     def layout_configuration_damage_strictness(self, value: LayoutDamageStrictness):
-        self.set_layout_configuration_field("damage_strictness", value)
+        self.set_configuration_field("damage_strictness", value)
 
     @property
     def layout_configuration_elevators(self) -> LayoutElevators:
-        return self.layout_configuration.elevators
+        return self.configuration.elevators
 
     @layout_configuration_elevators.setter
     def layout_configuration_elevators(self, value: LayoutElevators):
-        self.set_layout_configuration_field("elevators", value)
+        self.set_configuration_field("elevators", value)
 
     @property
     def available_locations(self) -> AvailableLocationsConfiguration:
-        return self.layout_configuration.available_locations
+        return self.configuration.available_locations
 
     @available_locations.setter
     def available_locations(self, value: AvailableLocationsConfiguration):
-        self.set_layout_configuration_field("available_locations", value)
+        self.set_configuration_field("available_locations", value)
 
     @property
     def major_items_configuration(self) -> MajorItemsConfiguration:
-        return self.layout_configuration.major_items_configuration
+        return self.configuration.major_items_configuration
 
     @major_items_configuration.setter
     def major_items_configuration(self, value: MajorItemsConfiguration):
-        self.set_layout_configuration_field("major_items_configuration", value)
+        self.set_configuration_field("major_items_configuration", value)
 
     @property
     def ammo_configuration(self) -> AmmoConfiguration:
-        return self.layout_configuration.ammo_configuration
+        return self.configuration.ammo_configuration
 
     @ammo_configuration.setter
     def ammo_configuration(self, value: AmmoConfiguration):
-        self.set_layout_configuration_field("ammo_configuration", value)
+        self.set_configuration_field("ammo_configuration", value)
 
     @property
     def skip_final_bosses(self) -> bool:
-        return self.layout_configuration.skip_final_bosses
+        return self.configuration.skip_final_bosses
 
     @skip_final_bosses.setter
     def skip_final_bosses(self, value: bool):
-        self.set_layout_configuration_field("skip_final_bosses", value)
+        self.set_configuration_field("skip_final_bosses", value)
 
-    def set_layout_configuration_field(self, field_name: str, value):
+    def set_configuration_field(self, field_name: str, value):
         self._edit_field(
-            "layout_configuration",
-            dataclasses.replace(self.layout_configuration, **{field_name: value})
+            "configuration",
+            dataclasses.replace(self.configuration, **{field_name: value})
         )
 
     ######

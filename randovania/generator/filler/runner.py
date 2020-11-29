@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
 
 T = TypeVar("T")
@@ -289,7 +289,7 @@ def fill_unassigned_hints(patches: GamePatches,
 @dataclasses.dataclass(frozen=True)
 class PlayerPool:
     game: GameDescription
-    configuration: LayoutConfiguration
+    configuration: EchoesConfiguration
     patches: GamePatches
     pickups: List[PickupEntry]
 
