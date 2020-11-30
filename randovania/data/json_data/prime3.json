@@ -18586,13 +18586,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Bryyo Leviathan Core": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        }
+                                    ]
                                 }
                             }
                         },
