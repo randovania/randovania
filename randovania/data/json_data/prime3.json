@@ -1001,11 +1001,6 @@
                 "short_name": "Event116"
             },
             {
-                "index": 117,
-                "long_name": "Craneyard Windows Broken",
-                "short_name": "Event117"
-            },
-            {
                 "index": 118,
                 "long_name": "Proving Grounds Barrier Removed",
                 "short_name": "Event118"
@@ -28835,13 +28830,8 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "or",
@@ -28903,7 +28893,7 @@
                                         }
                                     ]
                                 },
-                                "Event - Broken Windows": {
+                                "Pickup (Hazard Shield)": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -28991,19 +28981,6 @@
                                             }
                                         }
                                     ]
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Broken Windows",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 117,
-                            "connections": {
-                                "Pickup (Hazard Shield)": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         }
