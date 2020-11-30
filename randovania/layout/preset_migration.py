@@ -192,6 +192,7 @@ def _migrate_v5(preset: dict) -> dict:
     preset["game"] = preset["layout_configuration"].pop("game")
     preset["configuration"] = preset.pop("layout_configuration")
     preset["configuration"].update(preset.pop("patcher_configuration"))
+    preset["configuration"]["varia_suit_damage"] = max(preset["configuration"]["varia_suit_damage"], 0.1)
 
     return preset
 

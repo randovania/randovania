@@ -16,6 +16,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -336,11 +337,10 @@ def write_initial_states(initial_states: Dict[str, ResourceGainTuple]) -> dict:
 
 def write_game_description(game: GameDescription) -> dict:
     return {
-        "game": game.game,
-        "game_name": game.game_name,
+        "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
 
-        "game_specific": write_game_specific(game.game_specific) if game.game == 2 else {},
+        "game_specific": write_game_specific(game.game_specific) if game.game == RandovaniaGame.PRIME2 else {},
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement(game.victory_condition),

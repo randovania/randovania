@@ -122,9 +122,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
             lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
-        for action, game in ((self.menu_action_visualize_prime_1, RandovaniaGame.PRIME1),
-                             (self.menu_action_visualize_prime_2, RandovaniaGame.PRIME2),
-                             (self.menu_action_visualize_prime_3, RandovaniaGame.PRIME3)):
+        for action, game in ((self.menu_action_prime_1_data_visualizer, RandovaniaGame.PRIME1),
+                             (self.menu_action_prime_2_data_visualizer, RandovaniaGame.PRIME2),
+                             (self.menu_action_prime_3_data_visualizer, RandovaniaGame.PRIME3)):
             action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
 
         for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.PRIME1),
@@ -143,11 +143,12 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
         self.action_login_window.triggered.connect(self._action_login_window)
 
+        self.menu_prime_1_trick_details.aboutToShow.connect(self._create_trick_details_prime_1)
+        self.menu_prime_2_trick_details.aboutToShow.connect(self._create_trick_details_prime_2)
+        self.menu_prime_3_trick_details.aboutToShow.connect(self._create_trick_details_prime_3)
+
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
-
-        # Needs the GenerateSeedTab
-        self._setup_difficulties_menu()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -463,26 +464,33 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: TrickResourceInfo, level: LayoutTrickLevel):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self,
-            default_database.default_prime2_game_description(),
-            trick,
-            level,
-        ))
+    def _open_trick_details_popup(self, game, trick: TrickResourceInfo, level: LayoutTrickLevel):
+        self._exec_trick_details(TrickDetailsPopup(self, self, game, trick, level))
 
-    def _setup_difficulties_menu(self):
-        game = default_database.default_prime2_game_description()
+    def _create_trick_details_prime_1(self):
+        self.menu_prime_1_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_1)
+        self._setup_difficulties_menu(RandovaniaGame.PRIME1, self.menu_prime_1_trick_details)
+
+    def _create_trick_details_prime_2(self):
+        self.menu_prime_2_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_2)
+        self._setup_difficulties_menu(RandovaniaGame.PRIME2, self.menu_prime_2_trick_details)
+
+    def _create_trick_details_prime_3(self):
+        self.menu_prime_3_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_3)
+        self._setup_difficulties_menu(RandovaniaGame.PRIME3, self.menu_prime_3_trick_details)
+
+    def _setup_difficulties_menu(self, game: RandovaniaGame, menu: QtWidgets.QMenu):
+        game = default_database.game_description_for(game)
         tricks_in_use = used_tricks(game)
 
+        menu.clear()
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
             if trick not in tricks_in_use:
                 continue
 
             trick_menu = QMenu(self)
             trick_menu.setTitle(trick.long_name)
-            self.menu_trick_details.addAction(trick_menu.menuAction())
+            menu.addAction(trick_menu.menuAction())
 
             used_difficulties = difficulties_for_trick(game, trick)
             for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
@@ -491,7 +499,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                     difficulty_action.setText(trick_level.long_name)
                     trick_menu.addAction(difficulty_action)
                     difficulty_action.triggered.connect(
-                        functools.partial(self._open_trick_details_popup, trick, trick_level))
+                        functools.partial(self._open_trick_details_popup, game, trick, trick_level))
 
     # ==========
 
