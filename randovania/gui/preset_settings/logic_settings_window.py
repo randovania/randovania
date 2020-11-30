@@ -33,6 +33,7 @@ from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.preset import Preset
@@ -312,6 +313,15 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
 
         if self.game_enum == RandovaniaGame.PRIME2:
+            config_fields = {
+                field.name: field
+                for field in dataclasses.fields(EchoesConfiguration)
+            }
+            self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
+            self.varia_suit_spin_box.setMaximum(config_fields["varia_suit_damage"].metadata["max"])
+            self.dark_suit_spin_box.setMinimum(config_fields["dark_suit_damage"].metadata["min"])
+            self.dark_suit_spin_box.setMaximum(config_fields["dark_suit_damage"].metadata["max"])
+
             self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
             self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
             self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))

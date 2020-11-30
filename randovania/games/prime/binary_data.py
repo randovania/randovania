@@ -7,6 +7,7 @@ from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, 
     Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b, Pass
 
 from randovania.game_description.node import LoreType
+from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')
 current_format_version = 8
@@ -66,7 +67,6 @@ def decode(binary_io: BinaryIO) -> Dict:
 
     fields = [
         "game",
-        "game_name",
         "resource_database",
         "game_specific",
         "starting_location",
@@ -121,7 +121,6 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
 
     # Resource Info database
     data.pop("game")
-    data.pop("game_name")
     data.pop("resource_database")
     data.pop("game_specific")
     data.pop("dock_weakness_database")
@@ -303,17 +302,18 @@ ConstructWorld = Struct(
     areas=PrefixedArray(VarInt, ConstructArea),
 )
 
+ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
+
 game_specific_map = {
-    1: Struct(),
-    2: ConstructEchoesGameSpecific,
-    3: Struct(),
+    RandovaniaGame.PRIME1.value: Struct(),
+    RandovaniaGame.PRIME2.value: ConstructEchoesGameSpecific,
+    RandovaniaGame.PRIME3.value: Struct(),
 }
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
-    game=Byte,
-    game_name=CString("utf8"),
+    game=ConstructGameEnum,
     resource_database=ConstructResourceDatabase,
     game_specific=Switch(lambda this: this.game, game_specific_map),
     dock_weakness_database=Struct(

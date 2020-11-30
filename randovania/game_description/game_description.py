@@ -13,6 +13,7 @@ from randovania.game_description.resources.damage_resource_info import DamageRes
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[ResourceInfo]:
@@ -29,8 +30,7 @@ def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[R
 
 
 class GameDescription:
-    game: int
-    game_name: str
+    game: RandovaniaGame
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
@@ -44,7 +44,6 @@ class GameDescription:
     def __deepcopy__(self, memodict):
         new_game = GameDescription(
             game=self.game,
-            game_name=self.game_name,
             resource_database=self.resource_database,
             game_specific=self.game_specific,
             dock_weakness_database=self.dock_weakness_database,
@@ -57,8 +56,7 @@ class GameDescription:
         return new_game
 
     def __init__(self,
-                 game: int,
-                 game_name: str,
+                 game: RandovaniaGame,
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
@@ -69,7 +67,6 @@ class GameDescription:
                  world_list: WorldList,
                  ):
         self.game = game
-        self.game_name = game_name
         self.dock_weakness_database = dock_weakness_database
 
         self.resource_database = resource_database
