@@ -60,7 +60,7 @@ class EchoesConfiguration(BaseConfiguration):
     safe_zone: LayoutSafeZone
     menu_mod: bool
     warp_to_start: bool
-    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
+    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 2.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
 
     @classmethod
