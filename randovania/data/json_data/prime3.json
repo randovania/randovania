@@ -4618,61 +4618,6 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Door to Generator A Access",
-                            "heal": false,
-                            "coordinates": {
-                                "x": 107.36351776123047,
-                                "y": 9.5367431640625e-07,
-                                "z": -17.499996185302734
-                            },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 6925347865352032548,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 8,
-                            "major_location": false,
-                            "connections": {
-                                "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Samus Ship",
-                            "heal": true,
-                            "coordinates": null,
-                            "node_type": "player_ship",
-                            "is_unlocked": {
-                                "type": "and",
-                                "data": []
-                            },
-                            "connections": {
-                                "Door to Conduit A": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "Door to Generator A Access": {
                                     "type": "and",
                                     "data": []
@@ -4699,6 +4644,66 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Samus Ship": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Door to Generator A Access",
+                            "heal": false,
+                            "coordinates": {
+                                "x": 107.36351776123047,
+                                "y": 9.5367431640625e-07,
+                                "z": -17.499996185302734
+                            },
+                            "node_type": "dock",
+                            "dock_index": 1,
+                            "connected_area_asset_id": 6925347865352032548,
+                            "connected_dock_index": 0,
+                            "dock_type": 0,
+                            "dock_weakness_index": 0,
+                            "connections": {
+                                "Door to Conduit A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 8,
+                            "major_location": false,
+                            "connections": {
+                                "Door to Generator A Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Samus Ship",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
+                            "connections": {
+                                "Door to Conduit A": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
