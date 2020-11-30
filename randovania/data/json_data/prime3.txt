@@ -32,6 +32,9 @@ Templates
 * Enter Hypermode:
       Energy Tank and HyperModeTank
 
+* Hazard Shield:
+      Suit Type ≥ 4
+
 ====================
 Dock Weaknesses
 
@@ -60,7 +63,7 @@ Dock Weaknesses
   * (8) Permanently Locked; Blast Shield? False
       Impossible
 
-  * (4) Ice Missile Blast Shield (Vulnerable to Missiles); Blast Shield? True
+  * (9) Ice Missile Blast Shield (Vulnerable to Missiles); Blast Shield? True
       All of the following:
           Missile
           Ice Missile or Knowledge (Beginner)
@@ -1442,7 +1445,7 @@ Asset id: 8468936149308094087
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 25; Major Location? False
-  > Event - Phazon Vines
+  > Front of Phazon Vines
       Trivial
 
 > Event - Phazon Vines; Heals? False
@@ -1743,7 +1746,7 @@ Asset id: 7492844587871276588
       All of the following:
           Space Jump Boots and After Fuel Gel Pool Golem Head
           Any of the following:
-              Suit Type ≥ 4
+              Hazard Shield
               Acid Rain/Fuel Gel without Hazard Shield (Beginner) and Normal Damage ≥ 40
   > Event - Pickup Golem Head
       Use Ship Grapple (Command Visor and Ship Grapple)
@@ -1757,7 +1760,7 @@ Asset id: 7492844587871276588
   * Pickup 31; Major Location? False
   > Door to Hidden Court Hall
       Any of the following:
-          Suit Type ≥ 4
+          Hazard Shield
           Acid Rain/Fuel Gel without Hazard Shield (Beginner) and Normal Damage ≥ 40
 
 > Event - Pickup Golem Head; Heals? False
@@ -2360,12 +2363,14 @@ Asset id: 12448241480574438186
       All of the following:
           Plasma Beam and After Hangar Bay Power
           Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
-  > Pickup (Energy Cell)
+  > Event - Power
       All of the following:
           Morph Ball
-          Charge Beam or Missile ≥ 2 or Morph Ball Bombs
-  > Pickup (Ship Missile)
-      Command Visor and After Hangar Bay Ceiling
+          Any of the following:
+              Morph Ball Bombs
+              All of the following:
+                  Knowledge (Beginner)
+                  Charge Beam or Missile ≥ 2
   > Event - Hangar Ceiling
       All of the following:
           Space Jump Boots and Morph Ball
@@ -2375,17 +2380,17 @@ Asset id: 12448241480574438186
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 42; Major Location? False
-  > Event - Power
+  > Door to Ruined Shrine
       Trivial
 
 > Pickup (Ship Missile); Heals? False
   * Pickup 43; Major Location? True
-  > Event - Ship Upgrade
+  > Samus Ship
       Trivial
 
 > Event - Power; Heals? False
   * Event Hangar Bay Power
-  > Door to Ruined Shrine
+  > Pickup (Energy Cell)
       Trivial
 
 > Event - Hangar Ceiling; Heals? False
@@ -2395,12 +2400,14 @@ Asset id: 12448241480574438186
 
 > Event - Ship Upgrade; Heals? False
   * Event Hangar Bay Ship Upgrade
-  > Door to Ruined Shrine
+  > Pickup (Ship Missile)
       Trivial
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by After Hangar Bay Ceiling)
   > Door to Ruined Shrine
+      Trivial
+  > Event - Ship Upgrade
       Trivial
 
 ----------------
@@ -2822,7 +2829,9 @@ Asset id: 4196997332781103286
   > Door to Gel Processing Site
       All of the following:
           After Hangar Bay Ship Upgrade or After Corrupted Pool Phazon Vines
-          Grapple Swing or Use Screw Attack (Space Jump)
+          Any of the following:
+              Grapple Swing or Use Screw Attack (Space Jump)
+              Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
   > Event - Phazon Vines
       Enter Hypermode
 
@@ -2866,7 +2875,7 @@ Asset id: 13296637487518400273
       After Rundas
   > Pickup (Missile Expansion)
       All of the following:
-          Nova Beam and Suit Type ≥ 4 and Morph Ball
+          Nova Beam and Morph Ball and Hazard Shield
           X-Ray Visor or Invisible Objects (Beginner)
   > Event - Rundas
       Grapple Lasso
@@ -3078,14 +3087,16 @@ Asset id: 6915612318130423578
 > Door to Imperial Crypt (Lower); Heals? False
   * Normal Door to Imperial Crypt/Door to Hall of Remembrance (Lower)
   > Door to Tower (Lower)
-      Use Screw Attack (Space Jump)
-  > Pickup (Screw Attack)
+      Before Hall of Remembrance Item or Use Screw Attack (Space Jump)
+  > Event - Hall of Remembrance Item
       Trivial
 
 > Door to Tower (Lower); Heals? False
   * Normal Door to Tower/Door to Hall of Remembrance (Upper)
   > Door to Imperial Crypt (Lower)
-      Use Screw Attack (Space Jump)
+      Before Hall of Remembrance Item or Use Screw Attack (Space Jump)
+  > Event - Hall of Remembrance Item
+      Trivial
 
 > Door to Tower (Upper); Heals? False
   * Normal Door to Tower/Door to Hall of Remembrance (Lower)
@@ -3096,8 +3107,10 @@ Asset id: 6915612318130423578
 
 > Pickup (Screw Attack); Heals? False; Spawn Point
   * Pickup 48; Major Location? True
-  > Event - Hall of Remembrance Item
-      Trivial
+  > Door to Imperial Crypt (Lower)
+      Use Screw Attack (Space Jump)
+  > Door to Tower (Lower)
+      Use Screw Attack (Space Jump)
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 49; Major Location? False
@@ -3123,10 +3136,8 @@ Asset id: 6915612318130423578
 
 > Event - Hall of Remembrance Item; Heals? False
   * Event Hall of Remembrance Item
-  > Door to Imperial Crypt (Lower)
-      Use Screw Attack (Space Jump)
-  > Door to Tower (Lower)
-      Use Screw Attack (Space Jump)
+  > Pickup (Screw Attack)
+      Trivial
 
 ----------------
 Imperial Crypt
@@ -3393,7 +3404,7 @@ Asset id: 9894117388493814037
       After Aurora Lift Activated and After Aurora Chamber Skytown Vaccine
 
 > Door to Save Station A; Heals? False
-  * Ice Missile Blast Shield to Save Station A/Door to Aurora Lift
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Save Station A/Door to Aurora Lift
   > Door to Zipline Station Bravo
       Trivial
 
@@ -4265,7 +4276,7 @@ Asset id: 1701256524990864906
       After Concourse Basement Elevator
 
 > Door to Concourse Access B; Heals? False
-  * Ice Missile Blast Shield to Concourse Access B/Door to Concourse
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse Access B/Door to Concourse
   > Pickup (Missile Expansion)
       Morph Ball
   > 2nd Floor
@@ -4372,7 +4383,7 @@ Asset id: 8621618277057489308
 Concourse Access B
 Asset id: 2885109498150538605
 > Door to Concourse; Heals? False
-  * Ice Missile Blast Shield to Concourse/Door to Concourse Access B
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse/Door to Concourse Access B
   > Door to Zipline Station Delta
       Trivial
 
@@ -4558,8 +4569,8 @@ Xenoresearch B
 Asset id: 17636479515754825573
 > Door to Xenoresearch B Lift; Heals? False; Spawn Point
   * Normal Door to Xenoresearch B Lift/Door to Xenoresearch B
-  > Pickup (Energy Cell)
-      Grapple Lasso and Morph Ball Bombs and Morph Ball
+  > Power Outage Room
+      Morph Ball Bombs and Morph Ball
 
 > Pickup (Seeker Missile); Heals? False
   * Pickup 69; Major Location? True
@@ -4568,12 +4579,12 @@ Asset id: 17636479515754825573
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 70; Major Location? False
-  > Event - Xenoresearch Power Outage
+  > Power Outage Room
       Trivial
 
 > Event - Xenoresearch Power Outage; Heals? False
   * Event Xenoresearch Power Outage
-  > Power Outage Room
+  > Pickup (Energy Cell)
       Trivial
 
 > Event - Seeker Gates; Heals? False
@@ -4588,6 +4599,8 @@ Asset id: 17636479515754825573
       Any of the following:
           Charge Beam or Missile
           Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Event - Xenoresearch Power Outage
+      Grapple Lasso
   > Event - Seeker Gates
       Missile ≥ 5 and Seeker Missile
 
@@ -4714,7 +4727,7 @@ Asset id: 8211108078275787776
 Broken Lift
 Asset id: 16286467201365456700
 > Door to Botanica; Heals? False
-  * Normal Door to Botanica/Door to Broken Lift
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Botanica/Door to Broken Lift
   > Door to Turbine Chamber (Top)
       Trivial
 
@@ -4879,19 +4892,19 @@ Asset id: 18200553231954089224
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73; Major Location? True
-  > Event - Landing Site Item
+  > Samus Ship
       Trivial
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by After SkyTown Federation Landing Site Item)
   > Door to Landing Access
       Trivial
-  > Pickup (Ship Grapple)
+  > Event - Landing Site Item
       Trivial
 
 > Event - Landing Site Item; Heals? False
   * Event SkyTown Federation Landing Site Item
-  > Samus Ship
+  > Pickup (Ship Grapple)
       Trivial
 
 ----------------
@@ -4909,7 +4922,7 @@ Asset id: 8254796686876375149
           Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
 
 > Door to Broken Lift; Heals? False
-  * Ice Missile Blast Shield to Broken Lift/Door to Botanica
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Broken Lift/Door to Botanica
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
   > Middle Level
@@ -5089,18 +5102,16 @@ Asset id: 7063455547734255887
 
 > Pickup (Hazard Shield); Heals? False
   * Pickup 76; Major Location? True
-  > Outdoor
-      Suit Type ≥ 4
+  > Indoor Room
+      All of the following:
+          Hazard Shield
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Spinner Room; Heals? False
   > Pickup (Missile Expansion)
       Morph Ball Bombs and Morph Ball and Boost Ball
   > Pickup (Hazard Shield)
-      Morph Ball Bombs and Morph Ball and Boost Ball and Spider Ball and After Gandrayda
-
-> Outdoor; Heals? False
-  > Event - Broken Windows
-      Suit Type ≥ 4
+      Morph Ball Bombs and Morph Ball and Boost Ball and Spider Ball
 
 > Indoor Room; Heals? False
   > Door to Airshaft
@@ -5108,16 +5119,7 @@ Asset id: 7063455547734255887
   > Door to Proving Grounds Lift
       Trivial
   > Spinner Room
-      Morph Ball and Spider Ball
-  > Outdoor
-      Suit Type ≥ 4 and After Craneyard Windows Broken
-
-> Event - Broken Windows; Heals? False
-  * Event Craneyard Windows Broken
-  > Outdoor
-      All of the following:
-          Suit Type ≥ 4
-          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+      Morph Ball and Spider Ball and After Gandrayda
 
 ----------------
 Creche Transit
@@ -5128,21 +5130,21 @@ Asset id: 1760181228684086770
       All of the following:
           After Creche Transit Hyper Missile Wall
           Any of the following:
-              Suit Type ≥ 4
-              Movement (Advanced) and Normal Damage ≥ 150
+              Hazard Shield
+              Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 150
   > Event - Hyper Missile Wall
       Missile ≥ 2 and Hyper Missile and Open Gates/Barriers from Behind (Beginner) and Enter Hypermode
 
 > Door to Metroid Processing; Heals? False; Spawn Point
   * Normal Door to Metroid Processing/Door to Creche Transit
   > Door to Metroid Creche
-      Space Jump Boots and Suit Type ≥ 4 and After Creche Transit Hyper Missile Wall
+      Space Jump Boots and After Creche Transit Hyper Missile Wall and Hazard Shield
   > Pickup (Missile Expansion)
       All of the following:
           Morph Ball and Boost Ball
           Morph Ball Bombs or Knowledge (Beginner)
   > Event - Hyper Missile Wall
-      Missile ≥ 2 and Space Jump Boots and Suit Type ≥ 4 and Hyper Missile and Enter Hypermode
+      Missile ≥ 2 and Space Jump Boots and Hyper Missile and Enter Hypermode and Hazard Shield
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 77; Major Location? False
@@ -5152,7 +5154,7 @@ Asset id: 1760181228684086770
 > Event - Hyper Missile Wall; Heals? False
   * Event Creche Transit Hyper Missile Wall
   > Door to Metroid Creche
-      Suit Type ≥ 4
+      Hazard Shield
 
 ----------------
 Proving Grounds
@@ -5186,7 +5188,7 @@ Asset id: 3594029436312475339
 
 > Room Center; Heals? False; Spawn Point
   > Door to Transit Station 1-B
-      After Gandrayda and Use Grapple Voltage (Lasso and Voltage)
+      After Proving Grounds Barrier Removed
   > Elevator to Proving Grounds Lift
       After Proving Grounds Barrier Removed
   > Event - Gandrayda
@@ -5230,7 +5232,7 @@ Asset id: 16389095850931092901
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 79; Major Location? False
-  > Event - Metroid Barrier
+  > Basement
       Trivial
 
 > Top Floor; Heals? False
@@ -5244,14 +5246,14 @@ Asset id: 16389095850931092901
 > Basement; Heals? False
   > Door to Processing Access
       Trivial
-  > Pickup (Energy Cell)
+  > Event - Metroid Barrier
       Trivial
   > Event - Ball Lift
       Plasma Beam
 
 > Event - Metroid Barrier; Heals? False
   * Event Metroid Processing Disable Barrier
-  > Basement
+  > Pickup (Energy Cell)
       Trivial
 
 > Event - Ball Lift; Heals? False
@@ -5601,7 +5603,7 @@ Asset id: 18221971457754325372
       All of the following:
           Use Grapple Voltage (Lasso and Voltage)
           Any of the following:
-              Suit Type ≥ 4
+              Hazard Shield
               Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 50
   > Upper Level
       Space Jump Boots and Morph Ball
@@ -5618,7 +5620,7 @@ Asset id: 18221971457754325372
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 89; Major Location? False
-  > Event - Fans
+  > Upper Level
       Trivial
 
 > Event - Grapple Voltage Barrier; Heals? False
@@ -5628,7 +5630,7 @@ Asset id: 18221971457754325372
 
 > Event - Fans; Heals? False
   * Event Command Courtyard Fans
-  > Upper Level
+  > Pickup (Energy Cell)
       Trivial
 
 > Upper Level; Heals? False
@@ -5636,13 +5638,13 @@ Asset id: 18221971457754325372
       All of the following:
           Bomb/Spring Space Jump (Advanced) and Use Screw Attack (Space Jump)
           Any of the following:
-              Suit Type ≥ 4
+              Hazard Shield
               Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 100
   > Door to Lift Hub
       Trivial
   > Pickup (Missile Expansion)
       Morph Ball
-  > Pickup (Energy Cell)
+  > Event - Fans
       Trivial
 
 ----------------
@@ -5913,14 +5915,14 @@ Asset id: 9997664456677642630
 > Event - Destroy Door; Heals? False
   * Event Transit Station Leviathan Door
   > Samus Ship
-      Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Beginner)
+      Acid Rain/Fuel Gel without Hazard Shield (Beginner) or Hazard Shield
 
 > Samus Ship; Heals? True
   * Player Ship (Unlocked by After Transit Station Leviathan Door)
   > Door to Transit Tunnel P70
       All of the following:
           After Omega Ridey
-          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Beginner)
+          Acid Rain/Fuel Gel without Hazard Shield (Beginner) or Hazard Shield
 
 ----------------
 Leviathan
@@ -5956,7 +5958,7 @@ Leads to Research Facility/Door to Lift Hub
       All of the following:
           Morph Ball Bombs and Morph Ball
           Any of the following:
-              Suit Type ≥ 4
+              Hazard Shield
               All of the following:
                   Acid Rain/Fuel Gel without Hazard Shield (Expert)
                   Any of the following:
@@ -5966,7 +5968,7 @@ Leads to Research Facility/Door to Lift Hub
       All of the following:
           Morph Ball Bombs and Morph Ball
           Any of the following:
-              Suit Type ≥ 4
+              Hazard Shield
               All of the following:
                   Acid Rain/Fuel Gel without Hazard Shield (Expert)
                   Any of the following:
@@ -5996,7 +5998,7 @@ Leads to Research Facility
               All of the following:
                   After Lift Hub Morph Ball Bomb Gate
                   Any of the following:
-                      Suit Type ≥ 4
+                      Hazard Shield
                       All of the following:
                           Acid Rain/Fuel Gel without Hazard Shield (Expert)
                           Any of the following:
@@ -6005,7 +6007,7 @@ Leads to Research Facility
               All of the following:
                   Space Jump Boots and Bomb/Spring Space Jump (Expert)
                   Any of the following:
-                      Suit Type ≥ 4
+                      Hazard Shield
                       Acid Rain/Fuel Gel without Hazard Shield (Expert) and Normal Damage ≥ 500
   > Door to Security Air Lock
       Trivial
@@ -6049,12 +6051,12 @@ Asset id: 8444926274755356434
   > Door to Transit Station 1104
       All of the following:
           After Skyway Access Wall
-          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Intermediate)
+          Acid Rain/Fuel Gel without Hazard Shield (Intermediate) or Hazard Shield
   > Event - Open Wall
       After Command Station Disable Defense
   > Event - Open Tunnel
       Any of the following:
-          Suit Type ≥ 4
+          Hazard Shield
           Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 500
           Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 300
           Acid Rain/Fuel Gel without Hazard Shield (Expert) and Normal Damage ≥ 150
@@ -6067,7 +6069,7 @@ Asset id: 8444926274755356434
   > Door to Courtyard Passage
       All of the following:
           After Skyway Access Wall
-          Suit Type ≥ 4 or Acid Rain/Fuel Gel without Hazard Shield (Intermediate)
+          Acid Rain/Fuel Gel without Hazard Shield (Intermediate) or Hazard Shield
 
 > Event - Open Wall; Heals? False
   * Event Skyway Access Wall
@@ -6336,17 +6338,21 @@ Asset id: 2328629671991442460
       All of the following:
           Grapple Lasso and Morph Ball and Boost Ball and Spider Ball
           Any of the following:
-              Suit Type ≥ 4
-              Movement (Intermediate) and Normal Damage ≥ 100
+              Hazard Shield
+              Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 100
 
 > Door to Phazon Harvesting; Heals? False
   * Normal Door to Phazon Harvesting/Door to Mine Lift
   > Door to Phazon Quarry
-      After Mine Lift Open Floors and Use Screw Attack (Space Jump)
+      All of the following:
+          After Mine Lift Open Floors and Use Screw Attack (Space Jump)
+          Any of the following:
+              Hazard Shield
+              Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 300
 
 > Event - Open Shaft; Heals? False
   * Event Mine Lift Open Floors
-  > Door to Phazon Quarry
+  > Door to Phazon Harvesting
       Trivial
 
 ----------------
@@ -6356,8 +6362,8 @@ Asset id: 17076000080045116679
   * Normal Door to Mine Lift/Door to Phazon Harvesting
   > Door to Drill Shaft 1
       Any of the following:
-          Space Jump Boots and Suit Type ≥ 4
-          Movement (Intermediate) and Normal Damage ≥ 200 and Use Screw Attack (Space Jump)
+          Space Jump Boots and Hazard Shield
+          Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 200 and Use Screw Attack (Space Jump)
 
 > Door to Drill Shaft 1; Heals? False
   * Normal Door to Drill Shaft 1/Door to Phazon Harvesting
@@ -6365,8 +6371,8 @@ Asset id: 17076000080045116679
       All of the following:
           Space Jump Boots
           Any of the following:
-              Suit Type ≥ 4
-              Movement (Intermediate) and Normal Damage ≥ 75
+              Hazard Shield
+              Acid Rain/Fuel Gel without Hazard Shield (Intermediate) and Normal Damage ≥ 75
 
 ----------------
 Drill Shaft 1
