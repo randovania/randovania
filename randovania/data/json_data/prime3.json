@@ -1263,6 +1263,12 @@
                 "long_name": "Acid Rain/Fuel Gel without Hazard Shield",
                 "short_name": "NoHazard",
                 "description": "This trick covers traversal through Acid Rain and Fuel Gel without having Hazard Shield, with Energy Tanks being the replacement."
+            },
+            {
+                "index": 17,
+                "long_name": "Combat",
+                "short_name": "Combat",
+                "description": "Mainly used for bosses, requiring either less items or less health to beat a boss."
             }
         ],
         "damage": [
@@ -1540,6 +1546,15 @@
                         }
                     }
                 ]
+            },
+            "Hazard Shield": {
+                "type": "resource",
+                "data": {
+                    "type": 0,
+                    "index": 17,
+                    "amount": 4,
+                    "negate": false
+                }
             }
         }
     },
@@ -1698,7 +1713,7 @@
                 }
             },
             {
-                "index": 4,
+                "index": 9,
                 "name": "Ice Missile Blast Shield (Vulnerable to Missiles)",
                 "is_blast_door": true,
                 "requirement": {
@@ -8432,7 +8447,7 @@
                             "pickup_index": 25,
                             "major_location": false,
                             "connections": {
-                                "Event - Phazon Vines": {
+                                "Front of Phazon Vines": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -10224,13 +10239,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -10305,13 +10315,8 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "and",
@@ -13696,7 +13701,7 @@
                                         }
                                     ]
                                 },
-                                "Pickup (Energy Cell)": {
+                                "Event - Power": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -13715,53 +13720,49 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 4,
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 3,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
                                                         "index": 10,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 4,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 3,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
-                                        }
-                                    ]
-                                },
-                                "Pickup (Ship Missile)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 35,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 13,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
                                         }
                                     ]
                                 },
@@ -13853,7 +13854,7 @@
                             "pickup_index": 42,
                             "major_location": false,
                             "connections": {
-                                "Event - Power": {
+                                "Door to Ruined Shrine": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -13867,7 +13868,7 @@
                             "pickup_index": 43,
                             "major_location": true,
                             "connections": {
-                                "Event - Ship Upgrade": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -13880,7 +13881,7 @@
                             "node_type": "event",
                             "event_index": 34,
                             "connections": {
-                                "Door to Ruined Shrine": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -13906,7 +13907,7 @@
                             "node_type": "event",
                             "event_index": 36,
                             "connections": {
-                                "Door to Ruined Shrine": {
+                                "Pickup (Ship Missile)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -13928,6 +13929,10 @@
                             },
                             "connections": {
                                 "Door to Ruined Shrine": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Ship Upgrade": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -16421,6 +16426,38 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 32,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -16592,13 +16629,8 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "resource",
@@ -17773,10 +17805,24 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Tower (Lower)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 60,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        }
+                                    ]
                                 },
-                                "Pickup (Screw Attack)": {
+                                "Event - Hall of Remembrance Item": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -17798,8 +17844,26 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Imperial Crypt (Lower)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 60,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        }
+                                    ]
+                                },
+                                "Event - Hall of Remembrance Item": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -17836,9 +17900,13 @@
                             "pickup_index": 48,
                             "major_location": true,
                             "connections": {
-                                "Event - Hall of Remembrance Item": {
-                                    "type": "and",
-                                    "data": []
+                                "Door to Imperial Crypt (Lower)": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Door to Tower (Lower)": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
                         },
@@ -17914,13 +17982,9 @@
                             "node_type": "event",
                             "event_index": 60,
                             "connections": {
-                                "Door to Imperial Crypt (Lower)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                "Door to Tower (Lower)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                "Pickup (Screw Attack)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -19418,7 +19482,7 @@
                             "connected_area_asset_id": 17325277017676572028,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Door to Zipline Station Bravo": {
                                     "type": "and",
@@ -21202,7 +21266,7 @@
                             "connected_area_asset_id": 10733512082794532665,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Circle Room": {
                                     "type": "and",
@@ -24262,7 +24326,7 @@
                             "connected_area_asset_id": 2885109498150538605,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
                                     "type": "resource",
@@ -24916,7 +24980,7 @@
                             "connected_area_asset_id": 1701256524990864906,
                             "connected_dock_index": 3,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Door to Zipline Station Delta": {
                                     "type": "and",
@@ -25947,7 +26011,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Power Outage Room": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -25964,15 +26028,6 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 10,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 7,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -26003,7 +26058,7 @@
                             "pickup_index": 70,
                             "major_location": false,
                             "connections": {
-                                "Event - Xenoresearch Power Outage": {
+                                "Power Outage Room": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -26016,7 +26071,7 @@
                             "node_type": "event",
                             "event_index": 93,
                             "connections": {
-                                "Power Outage Room": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -26090,6 +26145,15 @@
                                             ]
                                         }
                                     ]
+                                },
+                                "Event - Xenoresearch Power Outage": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Seeker Gates": {
                                     "type": "and",
@@ -26889,8 +26953,8 @@
                             "name": "Door to Botanica",
                             "heal": false,
                             "coordinates": {
-                                "x": -57.8472785949707,
-                                "y": -5.1975250244140625e-05,
+                                "x": -57.85,
+                                "y": -0.0,
                                 "z": 44.5
                             },
                             "node_type": "dock",
@@ -26898,7 +26962,7 @@
                             "connected_area_asset_id": 8254796686876375149,
                             "connected_dock_index": 1,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Door to Turbine Chamber (Top)": {
                                     "type": "and",
@@ -27710,7 +27774,7 @@
                             "pickup_index": 73,
                             "major_location": true,
                             "connections": {
-                                "Event - Landing Site Item": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -27735,7 +27799,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Ship Grapple)": {
+                                "Event - Landing Site Item": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -27748,7 +27812,7 @@
                             "node_type": "event",
                             "event_index": 97,
                             "connections": {
-                                "Samus Ship": {
+                                "Pickup (Ship Grapple)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -27866,7 +27930,7 @@
                             "connected_area_asset_id": 16286467201365456700,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 9,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
                                     "type": "template",
@@ -28767,14 +28831,37 @@
                             "pickup_index": 76,
                             "major_location": true,
                             "connections": {
-                                "Outdoor": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 17,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
+                                "Indoor Room": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 17,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -28816,9 +28903,27 @@
                                         }
                                     ]
                                 },
-                                "Pickup (Hazard Shield)": {
+                                "Event - Broken Windows": {
                                     "type": "and",
                                     "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
                                         {
                                             "type": "resource",
                                             "data": {
@@ -28836,52 +28941,8 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 11,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 10,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
                                         }
                                     ]
-                                }
-                            }
-                        },
-                        {
-                            "name": "Outdoor",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Event - Broken Windows": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 17,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -28919,26 +28980,12 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
-                                        }
-                                    ]
-                                },
-                                "Outdoor": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 1,
-                                                "index": 117,
+                                                "index": 11,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -28954,37 +29001,9 @@
                             "node_type": "event",
                             "event_index": 117,
                             "connections": {
-                                "Outdoor": {
+                                "Pickup (Hazard Shield)": {
                                     "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    "data": []
                                 }
                             }
                         }
@@ -29028,13 +29047,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -29043,7 +29057,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 3,
                                                                 "negate": false
                                                             }
@@ -29129,13 +29143,8 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "resource",
@@ -29220,13 +29229,8 @@
                                             "data": "Enter Hypermode"
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "resource",
@@ -29263,13 +29267,8 @@
                             "event_index": 134,
                             "connections": {
                                 "Door to Metroid Creche": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 17,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Hazard Shield"
                                 }
                             }
                         }
@@ -29408,22 +29407,13 @@
                             "node_type": "generic",
                             "connections": {
                                 "Door to Transit Station 1-B": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 11,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Use Grapple Voltage (Lasso and Voltage)"
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 118,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Elevator to Proving Grounds Lift": {
                                     "type": "resource",
@@ -29668,7 +29658,7 @@
                             "pickup_index": 79,
                             "major_location": false,
                             "connections": {
-                                "Event - Metroid Barrier": {
+                                "Basement": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -29704,7 +29694,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Energy Cell)": {
+                                "Event - Metroid Barrier": {
                                     "type": "and",
                                     "data": []
                                 },
@@ -29726,7 +29716,7 @@
                             "node_type": "event",
                             "event_index": 115,
                             "connections": {
-                                "Basement": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -31651,13 +31641,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -31773,7 +31758,7 @@
                             "pickup_index": 89,
                             "major_location": false,
                             "connections": {
-                                "Event - Fans": {
+                                "Upper Level": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -31799,7 +31784,7 @@
                             "node_type": "event",
                             "event_index": 133,
                             "connections": {
-                                "Upper Level": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -31831,13 +31816,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -31879,7 +31859,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Pickup (Energy Cell)": {
+                                "Event - Fans": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -33319,13 +33299,8 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "resource",
@@ -33371,13 +33346,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -33530,13 +33500,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -33618,13 +33583,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -33772,13 +33732,8 @@
                                                             "type": "or",
                                                             "data": [
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 17,
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Hazard Shield"
                                                                 },
                                                                 {
                                                                     "type": "and",
@@ -33860,13 +33815,8 @@
                                                             "type": "or",
                                                             "data": [
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 17,
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Hazard Shield"
                                                                 },
                                                                 {
                                                                     "type": "and",
@@ -34086,13 +34036,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -34120,13 +34065,8 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 17,
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Hazard Shield"
                                         },
                                         {
                                             "type": "and",
@@ -34248,13 +34188,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -35472,13 +35407,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -35487,7 +35417,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 2,
                                                                 "negate": false
                                                             }
@@ -35539,6 +35469,38 @@
                                         {
                                             "type": "template",
                                             "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 16,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 300,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -35551,7 +35513,7 @@
                             "node_type": "event",
                             "event_index": 122,
                             "connections": {
-                                "Door to Phazon Quarry": {
+                                "Door to Phazon Harvesting": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -35597,13 +35559,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 }
                                             ]
                                         },
@@ -35618,7 +35575,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 2,
-                                                        "index": 4,
+                                                        "index": 16,
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -35669,13 +35626,8 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 17,
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
                                                     "type": "and",
@@ -35684,7 +35636,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 4,
+                                                                "index": 16,
                                                                 "amount": 2,
                                                                 "negate": false
                                                             }
