@@ -23,6 +23,10 @@ class DockWeakness(NamedTuple):
     def __repr__(self):
         return self.name
 
+    @property
+    def long_name(self):
+        return self.name
+
 
 def _find_dock_weakness_with_id(info_list: List[DockWeakness],
                                 index: int) -> DockWeakness:

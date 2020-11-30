@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Callable, Dict, Tuple
+from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -143,7 +143,24 @@ def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
     ]
 
 
+def check_for_duplicated_index(array: List) -> Iterator[str]:
+    indices_seen = set()
+    for item in array:
+        if item.index in indices_seen:
+            yield f"Duplicated index {item.index} with {item.long_name}"
+        else:
+            indices_seen.add(item.index)
+
+
 def write_resource_database(resource_database: ResourceDatabase):
+    errors = []
+    for array in (resource_database.item, resource_database.event, resource_database.trick, resource_database.damage,
+                  resource_database.version, resource_database.misc):
+        errors.extend(check_for_duplicated_index(array))
+
+    if errors:
+        raise ValueError("Errors in resource database: {}".format("\n".join(errors)))
+
     return {
         "items": write_array(resource_database.item, write_item_resource),
         "events": write_array(resource_database.event, write_simple_resource),
@@ -170,6 +187,13 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
 
 
 def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
+    errors = []
+    for array in (database.door, database.portal, database.morph_ball):
+        errors.extend(check_for_duplicated_index(array))
+
+    if errors:
+        raise ValueError("Errors in dock weaknesses: {}".format("\n".join(errors)))
+
     return {
         "door": [
             write_dock_weakness(weakness)
