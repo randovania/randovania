@@ -147,6 +147,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
         self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self._world_to_node_positions = {}
+        self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
         for world in self.game_description.world_list.worlds:
             self.graph_map_world_combo.addItem(world.name, world)
@@ -372,10 +373,15 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             nodes_in_reach.add(state.node)
         return nodes_in_reach
 
+    def _on_tab_changed(self):
+        if self.map_tab_widget.currentWidget() == self.tab_graph_map:
+            self.on_graph_map_world_combo()
+
     def update_locations_tree_for_reachable_nodes(self):
         state = self.state_for_current_configuration()
         nodes_in_reach = self.current_nodes_in_reach(state)
-        self.update_matplot_widget(nodes_in_reach)
+        if self.map_tab_widget.currentWidget() == self.tab_graph_map:
+            self.update_matplot_widget(nodes_in_reach)
 
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
