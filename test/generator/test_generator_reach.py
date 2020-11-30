@@ -12,10 +12,12 @@ from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory, generator
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
@@ -89,11 +91,16 @@ def test_all_pickups_locations_reachable_with_all_pickups_for_preset(preset_name
     first_reach, second_reach = _create_reaches_and_compare(game, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
-    found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))
     all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
 
+    collected_indices = {
+        resource
+        for resource, quantity in second_reach.state.resources.items()
+        if quantity > 0 and isinstance(resource, PickupIndex)
+    }
+
     pprint.pprint(first_actions)
-    assert sorted(all_pickups, key=lambda it: it.pickup_index) == sorted(found_pickups, key=lambda it: it.pickup_index)
+    assert sorted(it.pickup_index for it in all_pickups) == sorted(collected_indices)
 
 
 @pytest.mark.parametrize("has_translator", [False, True])
@@ -129,7 +136,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ])
     ])
     game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
-    game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
+    game = GameDescription(RandovaniaGame.PRIME2, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, game_specific, Requirement.impossible(),
                            None, {}, world_list)
 

@@ -12,6 +12,7 @@ from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
+from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
@@ -382,6 +383,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     def _create_actions_for_import_menu(self, row: RowWidget):
         for included_preset in self._preset_manager.all_presets:
+            if included_preset.game != RandovaniaGame.PRIME2:
+                continue
             action = QtWidgets.QAction(row.import_menu)
             action.setText(included_preset.name)
             action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))

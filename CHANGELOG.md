@@ -12,7 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
 
+-   Changed: Minimum Varia Suit Dark Aether is now 0.1, as 0 crashes the game. 
+
+-   Changed: Permalinks are now entirely different for different games.
+
 -   Added: A very basic visualization of the map to the tracker.
+
+-   Added: Trick Details can now be used with all 3 games.
 
 -   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.
 

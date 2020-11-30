@@ -14,6 +14,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -160,6 +161,8 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
+    if preset.game != RandovaniaGame.PRIME2:
+        raise InvalidAction("Only Prime 2 presets allowed.")
 
     try:
         with database.db.atomic():
@@ -234,7 +237,10 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
         for permalink_preset, preset_row in zip(permalink.presets.values(), session.presets):
             preset_row = typing.cast(GameSessionPreset, preset_row)
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
-                preset_row.preset = json.dumps(VersionedPreset.with_preset(permalink_preset).as_json)
+                preset = VersionedPreset.with_preset(permalink_preset)
+                if preset.game != RandovaniaGame.PRIME2:
+                    raise InvalidAction("Only Prime 2 presets allowed.")
+                preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
     with database.db.atomic():
