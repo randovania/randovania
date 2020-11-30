@@ -277,6 +277,8 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data["event_index"] = node.resource().index
+        if not node.name.startswith("Event -"):
+            raise ValueError(f"'{node.name}' is an Event Node, but naming doesn't start with 'Event -'")
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
@@ -300,7 +302,10 @@ def write_node(node: Node) -> dict:
         data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
-        raise Exception("Unknown node class: {}".format(node))
+        raise ValueError("Unknown node class: {}".format(node))
+
+    if node.name.startswith("Event -") and data["node_type"] != "event":
+        raise ValueError(f"'{node.name}' is not an Event Node, but naming suggests it is.")
 
     return data
 
@@ -310,16 +315,24 @@ def write_area(area: Area) -> dict:
     :param area:
     :return:
     """
-    nodes = []
+    errors = []
 
+    nodes = []
     for node in area.nodes:
-        data = write_node(node)
-        data["connections"] = {
-            target_node.name: write_requirement(area.connections[node][target_node])
-            for target_node in area.nodes
-            if target_node in area.connections[node]
-        }
-        nodes.append(data)
+        try:
+            data = write_node(node)
+            data["connections"] = {
+                target_node.name: write_requirement(area.connections[node][target_node])
+                for target_node in area.nodes
+                if target_node in area.connections[node]
+            }
+            nodes.append(data)
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("Area {} nodes has the following errors:\n* {}".format(
+            area.name, "\n* ".join(errors)))
 
     return {
         "name": area.name,
@@ -332,22 +345,40 @@ def write_area(area: Area) -> dict:
 
 
 def write_world(world: World) -> dict:
+    errors = []
+    areas = []
+    for area in world.areas:
+        try:
+            areas.append(write_area(area))
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("World {} has the following errors:\n> {}".format(
+            world.name, "\n\n> ".join(errors)))
+
     return {
         "name": world.name,
         "dark_name": world.dark_name,
         "asset_id": world.world_asset_id,
-        "areas": [
-            write_area(area)
-            for area in world.areas
-        ]
+        "areas": areas,
     }
 
 
 def write_world_list(world_list: WorldList) -> list:
-    return [
-        write_world(world)
-        for world in world_list.worlds
-    ]
+    errors = []
+
+    worlds = []
+    for world in world_list.worlds:
+        try:
+            worlds.append(write_world(world))
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("\n\n".join(errors))
+
+    return worlds
 
 
 # Game Description
