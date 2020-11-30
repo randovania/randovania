@@ -2247,7 +2247,7 @@
                     "name": "Aurora Access",
                     "in_dark_aether": false,
                     "asset_id": 17930423943250813827,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -2264,7 +2264,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Door to Aurora Chamber": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Door to Aurora Chamber",
@@ -2280,7 +2285,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Door to Flag Bridge": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -3515,7 +3525,7 @@
                     "name": "Aurora Chamber",
                     "in_dark_aether": false,
                     "asset_id": 14583031681898448395,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3532,15 +3542,20 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Docking Bay 5": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
-                            "name": "Door to Docking Bay 5",
+                            "name": "Dock to Docking Bay 5",
                             "heal": false,
                             "coordinates": {
-                                "x": -28.00822639465332,
-                                "y": -32.39338302612305,
-                                "z": -64.1501235961914
+                                "x": -28.01,
+                                "y": -32.39,
+                                "z": -64.15
                             },
                             "node_type": "dock",
                             "dock_index": 1,
@@ -5493,24 +5508,7 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Lore Scans": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Lore Scans",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Door to Conduit B": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
+                            "connections": {}
                         }
                     ]
                 },
@@ -29438,7 +29436,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 2,
-                                                        "index": 4,
+                                                        "index": 17,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -36942,27 +36940,8 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Dark Samus": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 14,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 9,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
