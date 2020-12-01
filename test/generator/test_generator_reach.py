@@ -1,5 +1,4 @@
 import dataclasses
-import pprint
 from random import Random
 from typing import Tuple, List
 
@@ -14,14 +13,15 @@ from randovania.game_description.node import ResourceNode, GenericNode, Translat
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory, generator
-from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
+from randovania.generator.generator_reach import GeneratorReach, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
-    advance_reach_with_possible_unsafe_resources
+    advance_reach_with_possible_unsafe_resources, collectable_resource_nodes
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
@@ -38,7 +38,7 @@ def run_bootstrap(preset: Preset):
         presets={0: preset},
     )
     patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game)
-    game, state = logic_bootstrap(preset.configuration, game, patches)
+    _, state = logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
 
@@ -72,35 +72,53 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-@pytest.mark.parametrize("preset_name", [
-    "Starter Preset",  # Echoes
-    pytest.param("Corruption Preset", marks=[pytest.mark.xfail]),  # Corruption
+@pytest.mark.parametrize(("preset_name", "ignore_events", "ignore_pickups"), [
+    ("Starter Preset", {91}, set()),  # Echoes
+    ("Corruption Preset", {1, 67, 87, 145, 146, 148}, {0, 1, 2})  # Corruption
 ])
-def test_all_pickups_locations_reachable_with_all_pickups_for_preset(preset_name, preset_manager):
-    game, state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
-
+def test_database_collectable(preset_manager, preset_name, ignore_events, ignore_pickups):
+    game, initial_state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
+    all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
-    add_resources_into_another(state.resources, pool_results.initial_resources)
+    add_resources_into_another(initial_state.resources, pool_results.initial_resources)
     for pickup in pool_results.pickups:
-        add_pickup_to_state(state, pickup)
+        add_pickup_to_state(initial_state, pickup)
     for pickup in pool_results.assignment.values():
-        add_pickup_to_state(state, pickup)
+        add_pickup_to_state(initial_state, pickup)
+    for trick in game.resource_database.trick:
+        initial_state.resources[trick] = LayoutTrickLevel.HYPERMODE.as_number
 
-    state = state.heal()
-    first_reach, second_reach = _create_reaches_and_compare(game, state)
-    first_actions, second_actions = _compare_actions(first_reach, second_reach)
+    expected_events = [event for event in game.resource_database.event if event.index not in ignore_events]
+    expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
-    all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
+    reach = _create_reach_with_unsafe(game, initial_state.heal())
+    while list(collectable_resource_nodes(reach.nodes, reach)):
+        reach.act_on(next(iter(collectable_resource_nodes(reach.nodes, reach))))
+        reach = advance_reach_with_possible_unsafe_resources(reach)
+
+    # print("\nCurrent reach:")
+    # for world in game.world_list.worlds:
+    #     print(f"\n>> {world.name}")
+    #     for node in world.all_nodes:
+    #         print("[{!s:>5}, {!s:>5}, {!s:>5}] {}".format(
+    #             reach.is_reachable_node(node), reach.is_safe_node(node),
+    #             reach.state.resources.get(node.resource(), 0) > 0 if isinstance(node, ResourceNode) else "",
+    #             game.world_list.node_name(node)))
 
     collected_indices = {
         resource
-        for resource, quantity in second_reach.state.resources.items()
+        for resource, quantity in reach.state.resources.items()
         if quantity > 0 and isinstance(resource, PickupIndex)
     }
-
-    pprint.pprint(first_actions)
-    assert sorted(it.pickup_index for it in all_pickups) == sorted(collected_indices)
+    collected_events = {
+        resource
+        for resource, quantity in reach.state.resources.items()
+        if quantity > 0 and resource.resource_type == ResourceType.EVENT
+    }
+    assert list(collectable_resource_nodes(reach.nodes, reach)) == []
+    assert sorted(collected_indices) == expected_pickups
+    assert sorted(collected_events, key=lambda it: it.index) == expected_events
 
 
 @pytest.mark.parametrize("has_translator", [False, True])

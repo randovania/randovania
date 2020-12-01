@@ -13,6 +13,18 @@ class PickupModelStyle(BitPackEnum, Enum):
     def default(cls) -> "PickupModelStyle":
         return cls.ALL_VISIBLE
 
+    @property
+    def long_name(self):
+        return MODEL_TYPE_PRETTY[self]
+
+
+MODEL_TYPE_PRETTY = {
+    PickupModelStyle.ALL_VISIBLE: "All visible",
+    PickupModelStyle.HIDE_MODEL: "Hide model",
+    PickupModelStyle.HIDE_SCAN: "Hide model and scan",
+    PickupModelStyle.HIDE_ALL: "Hide all",
+}
+
 
 class PickupModelDataSource(BitPackEnum, Enum):
     ETM = "etm"
@@ -22,3 +34,14 @@ class PickupModelDataSource(BitPackEnum, Enum):
     @classmethod
     def default(cls) -> "PickupModelDataSource":
         return cls.ETM
+
+    @property
+    def long_name(self):
+        return DATA_SOURCE_PRETTY[self]
+
+
+DATA_SOURCE_PRETTY = {
+    PickupModelDataSource.ETM: "ETM",
+    PickupModelDataSource.RANDOM: "Random",
+    PickupModelDataSource.LOCATION: "Vanilla",
+}
