@@ -107,7 +107,7 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
     for indices in indices_groups:
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
-        for index in uncollected_indices & indices:
+        for index in sorted(uncollected_indices & indices):
             weight_from_seen_count = min(10, seen_counts[index]) ** -2
             result[index] = weight_from_collected_indices * weight_from_seen_count
             # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
@@ -478,7 +478,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
             if pickup_index not in scan_asset_initial_pickups[logbook_asset]
         ]
         if potential_hint_locations:
-            return rng.choice(potential_hint_locations)
+            return rng.choice(sorted(potential_hint_locations))
     return None
 
 
