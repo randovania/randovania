@@ -46,10 +46,8 @@ class FillerConfiguration:
 
 def _filter_not_in_dict(elements: Iterator[X],
                         dictionary: Dict[X, Any],
-                        ) -> Iterator[X]:
-    for index in elements:
-        if index not in dictionary:
-            yield index
+                        ) -> Set[X]:
+    return set(elements) - set(dictionary.keys())
 
 
 class UncollectedState(NamedTuple):
@@ -60,10 +58,8 @@ class UncollectedState(NamedTuple):
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
-            set(_filter_not_in_dict(reach.state.collected_pickup_indices,
-                                    reach.state.patches.pickup_assignment)),
-            set(_filter_not_in_dict(reach.state.collected_scan_assets,
-                                    reach.state.patches.hints)),
+            _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
+            _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
             set(collectable_resource_nodes(reach.connected_nodes, reach))
         )
 
