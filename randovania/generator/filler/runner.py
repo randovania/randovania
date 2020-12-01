@@ -15,6 +15,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
 from randovania.layout.echoes_configuration import EchoesConfiguration
@@ -355,14 +356,17 @@ def run_filler(rng: Random,
     for player_state, patches in filler_result.items():
         game = player_state.game
 
-        # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
-                                                   player_state.scan_asset_initial_pickups)
+        if game.game == RandovaniaGame.PRIME2:
+            # Since we haven't added expansions yet, these hints will always be for items added by the filler.
+            full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
+                                                       player_state.scan_asset_initial_pickups)
 
-        if player_pools[player_state.index].configuration.hints.item_hints:
-            result = add_hints_precision(player_state, full_hints_patches, rng)
+            if player_pools[player_state.index].configuration.hints.item_hints:
+                result = add_hints_precision(player_state, full_hints_patches, rng)
+            else:
+                result = replace_hints_without_precision_with_jokes(full_hints_patches)
         else:
-            result = replace_hints_without_precision_with_jokes(full_hints_patches)
+            result = patches
 
         results[player_state.index] = FillerPlayerResult(
             game=game,
