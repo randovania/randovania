@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Callable, Dict, Tuple
+from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -143,7 +143,24 @@ def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
     ]
 
 
+def check_for_duplicated_index(array: List) -> Iterator[str]:
+    indices_seen = set()
+    for item in array:
+        if item.index in indices_seen:
+            yield f"Duplicated index {item.index} with {item.long_name}"
+        else:
+            indices_seen.add(item.index)
+
+
 def write_resource_database(resource_database: ResourceDatabase):
+    errors = []
+    for array in (resource_database.item, resource_database.event, resource_database.trick, resource_database.damage,
+                  resource_database.version, resource_database.misc):
+        errors.extend(check_for_duplicated_index(array))
+
+    if errors:
+        raise ValueError("Errors in resource database: {}".format("\n".join(errors)))
+
     return {
         "items": write_array(resource_database.item, write_item_resource),
         "events": write_array(resource_database.event, write_simple_resource),
@@ -170,6 +187,13 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
 
 
 def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
+    errors = []
+    for array in (database.door, database.portal, database.morph_ball):
+        errors.extend(check_for_duplicated_index(array))
+
+    if errors:
+        raise ValueError("Errors in dock weaknesses: {}".format("\n".join(errors)))
+
     return {
         "door": [
             write_dock_weakness(weakness)
@@ -253,6 +277,8 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data["event_index"] = node.resource().index
+        if not node.name.startswith("Event -"):
+            raise ValueError(f"'{node.name}' is an Event Node, but naming doesn't start with 'Event -'")
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
@@ -276,7 +302,10 @@ def write_node(node: Node) -> dict:
         data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
-        raise Exception("Unknown node class: {}".format(node))
+        raise ValueError("Unknown node class: {}".format(node))
+
+    if node.name.startswith("Event -") and data["node_type"] != "event":
+        raise ValueError(f"'{node.name}' is not an Event Node, but naming suggests it is.")
 
     return data
 
@@ -286,16 +315,24 @@ def write_area(area: Area) -> dict:
     :param area:
     :return:
     """
-    nodes = []
+    errors = []
 
+    nodes = []
     for node in area.nodes:
-        data = write_node(node)
-        data["connections"] = {
-            target_node.name: write_requirement(area.connections[node][target_node])
-            for target_node in area.nodes
-            if target_node in area.connections[node]
-        }
-        nodes.append(data)
+        try:
+            data = write_node(node)
+            data["connections"] = {
+                target_node.name: write_requirement(area.connections[node][target_node])
+                for target_node in area.nodes
+                if target_node in area.connections[node]
+            }
+            nodes.append(data)
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("Area {} nodes has the following errors:\n* {}".format(
+            area.name, "\n* ".join(errors)))
 
     return {
         "name": area.name,
@@ -308,22 +345,40 @@ def write_area(area: Area) -> dict:
 
 
 def write_world(world: World) -> dict:
+    errors = []
+    areas = []
+    for area in world.areas:
+        try:
+            areas.append(write_area(area))
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("World {} has the following errors:\n> {}".format(
+            world.name, "\n\n> ".join(errors)))
+
     return {
         "name": world.name,
         "dark_name": world.dark_name,
         "asset_id": world.world_asset_id,
-        "areas": [
-            write_area(area)
-            for area in world.areas
-        ]
+        "areas": areas,
     }
 
 
 def write_world_list(world_list: WorldList) -> list:
-    return [
-        write_world(world)
-        for world in world_list.worlds
-    ]
+    errors = []
+
+    worlds = []
+    for world in world_list.worlds:
+        try:
+            worlds.append(write_world(world))
+        except ValueError as e:
+            errors.append(str(e))
+
+    if errors:
+        raise ValueError("\n\n".join(errors))
+
+    return worlds
 
 
 # Game Description

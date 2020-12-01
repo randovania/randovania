@@ -8,6 +8,7 @@ from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
 
 
@@ -216,7 +217,11 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
 
     # Difficulty
     format_params["damage_strictness"] = configuration.damage_strictness.long_name
-    format_params["pickup_model"] = configuration.pickup_model_style.value
+
+    pickup_model = configuration.pickup_model_style.long_name
+    if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
+        pickup_model += f" ({configuration.pickup_model_data_source.long_name})"
+    format_params["pickup_model"] = pickup_model
 
     # Gameplay
     starting_locations = configuration.starting_location.locations
