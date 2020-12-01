@@ -197,11 +197,15 @@ Asset id: 13907983853126891218
 ----------------
 Aurora Access
 Asset id: 17930423943250813827
-> Door to Flag Bridge; Heals? False
+> Door to Flag Bridge; Heals? False; Spawn Point
   * Normal Door to Flag Bridge/Door to Aurora Access
+  > Door to Aurora Chamber
+      Trivial
 
 > Door to Aurora Chamber; Heals? False
   * Normal Door to Aurora Chamber/Door to Aurora Access
+  > Door to Flag Bridge
+      Trivial
 
 ----------------
 Repair Bay Shaft
@@ -462,7 +466,7 @@ Asset id: 5834535855679580949
       Trivial
 
 > Dock to Aurora Chamber; Heals? False
-  * Normal Door to Aurora Chamber/Door to Docking Bay 5
+  * Normal Door to Aurora Chamber/Dock to Docking Bay 5
   > Dock to Gunship
       Trivial
 
@@ -474,10 +478,12 @@ Asset id: 5834535855679580949
 ----------------
 Aurora Chamber
 Asset id: 14583031681898448395
-> Door to Aurora Access; Heals? False
+> Door to Aurora Access; Heals? False; Spawn Point
   * Normal Door to Aurora Access/Door to Aurora Chamber
+  > Dock to Docking Bay 5
+      Trivial
 
-> Door to Docking Bay 5; Heals? False
+> Dock to Docking Bay 5; Heals? False
   * Normal Door to Docking Bay 5/Dock to Aurora Chamber
 
 ====================
@@ -697,27 +703,25 @@ Cargo Dock A
 Asset id: 6692819360230093549
 > Door to Conduit A; Heals? False
   * Normal Door to Conduit A/Door to Cargo Dock A
-  > Samus Ship
+  > Door to Generator A Access
       Trivial
+  > Pickup (Missile Expansion)
+      Morph Ball and Spider Ball
 
 > Door to Generator A Access; Heals? False
   * Normal Door to Generator A Access/Door to Cargo Dock A
-  > Samus Ship
+  > Door to Conduit A
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 8; Major Location? False
-  > Samus Ship
+  > Door to Generator A Access
       Trivial
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by Trivial)
   > Door to Conduit A
       Trivial
-  > Door to Generator A Access
-      Trivial
-  > Pickup (Missile Expansion)
-      Morph Ball and Spider Ball
 
 ----------------
 Conduit C
@@ -783,7 +787,7 @@ Asset id: 12327360187860907075
   > Door to Generator B Access
       After Cargo Dock B Unlocked
   > Samus Ship
-      Command Visor and After Cargo Dock B Unlocked
+      After Cargo Dock B Unlocked
   > Event - Cargo Dock B Unlocked
       Trivial
 
@@ -882,12 +886,6 @@ Data Storage
 Asset id: 17529742819100867999
 > Door to Conduit B; Heals? False; Spawn Point
   * Normal Door to Conduit B/Door to Data Storage
-  > Lore Scans
-      Trivial
-
-> Lore Scans; Heals? False
-  > Door to Conduit B
-      Trivial
 
 ----------------
 Generator Shaft
@@ -920,10 +918,10 @@ Control Tower
 Asset id: 1413887626178850213
 > Door to Tower Elevator; Heals? False; Spawn Point
   * Normal Door to Tower Elevator/Door to Control Tower
-  > Dark Samus Cutscene
+  > Event - Activate Cannon
       Trivial
 
-> Dark Samus Cutscene; Heals? False
+> Event - Activate Cannon; Heals? False
   * Event Norion Defense Cannon
   > Door to Tower Elevator
       Trivial
@@ -2375,8 +2373,12 @@ Asset id: 12448241480574438186
       All of the following:
           Space Jump Boots and Morph Ball
           Grapple Lasso or Screw Attack or Movement (Intermediate)
+  > Event - Ship Upgrade
+      After Hangar Bay Ceiling
   > Samus Ship
-      Command Visor and After Hangar Bay Ceiling
+      All of the following:
+          After Hangar Bay Ceiling
+          Command Visor or After Hangar Bay Ship Upgrade
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 42; Major Location? False
@@ -2408,7 +2410,7 @@ Asset id: 12448241480574438186
   > Door to Ruined Shrine
       Trivial
   > Event - Ship Upgrade
-      Trivial
+      After Hangar Bay Ceiling
 
 ----------------
 Colossus Vista
@@ -2770,6 +2772,8 @@ Asset id: 15732414849243282895
 
 > Door to Gel Processing Site; Heals? False; Spawn Point
   * Ice Missile Blast Shield to Gel Processing Site/Door to Gel Hall
+  > Door to Save Station A
+      Trivial
   > Event - Falling Platform
       Plasma Beam or Charge Beam
   > Falling Platform
@@ -2781,6 +2785,8 @@ Asset id: 15732414849243282895
       Any of the following:
           Use Screw Attack (Space Jump)
           Missile and Ice Missile and Space Jump Boots
+  > Door to Gel Processing Site
+      Space Jump Boots
   > Event - Falling Platform
       Plasma Beam or Charge Beam
   > Falling Platform
@@ -3237,7 +3243,7 @@ Asset id: 2952866055994706679
 > Door to Landing Site Delta; Heals? False; Spawn Point
   * Normal Door to Landing Site Delta/Door to Core Access
   > Door to Bryyo Leviathan Core
-      Charge Beam
+      Charge Beam or Enter Hypermode
 
 > Door to Bryyo Leviathan Core; Heals? False
   * Normal Door to Bryyo Leviathan Core/Door to Core Access
@@ -3735,10 +3741,10 @@ Asset id: 2692588651293388340
       Before Spire Bomb Leviathan Shield
   > Door to Zipline Station Charlie
       Trivial
-  > Event - Skybridge Hera Reloaded After Bridge
+  > Event - Skybridge Hera Reloaded After Bridge Destroyed
       After Skybridge Hera Destroy Bridge
 
-> Event - Skybridge Hera Reloaded After Bridge; Heals? False
+> Event - Skybridge Hera Reloaded After Bridge Destroyed; Heals? False
   * Event Skybridge Hera Reloaded After Bridge Destroyed
   > Circle Room
       Trivial
@@ -3782,6 +3788,7 @@ Asset id: 722564631842201436
       Space Jump Boots
 
 > Event - Aurora Chamber Reloaded; Heals? False
+  * Event Aurora Chamber Skytown Reloaded After Vaccine
   > Ledge
       Trivial
 
@@ -4055,6 +4062,7 @@ Asset id: 6637485379588009329
   * Normal Door to Escape Pod Bay/Dock to Spire
 
 > Event - Destroy Leviathan Shield; Heals? False
+  * Event Spire Bomb Leviathan Shield
   > Room Center
       Trivial
 
@@ -4720,6 +4728,7 @@ Asset id: 8211108078275787776
       Morph Ball and After Turbine Chamber Bomb Part 1
 
 > Event - Disable Barrier; Heals? False
+  * Event Turbine Chamber Disable Barrier
   > Door to Turbine Access
       Trivial
 
@@ -4888,7 +4897,9 @@ Asset id: 18200553231954089224
 > Door to Landing Access; Heals? False
   * Normal Door to Landing Access/Door to SkyTown Federation Landing Site
   > Samus Ship
-      Morph Ball Bombs and Command Visor and Morph Ball
+      After SkyTown Federation Landing Site Item
+  > Event - Landing Site Item
+      Morph Ball Bombs and Morph Ball
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73; Major Location? True
@@ -4898,8 +4909,6 @@ Asset id: 18200553231954089224
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by After SkyTown Federation Landing Site Item)
   > Door to Landing Access
-      Trivial
-  > Event - Landing Site Item
       Trivial
 
 > Event - Landing Site Item; Heals? False
@@ -5194,7 +5203,7 @@ Asset id: 3594029436312475339
   > Event - Gandrayda
       Any of the following:
           Grapple Lasso and X-Ray Visor
-          Movement (Beginner) and Enter Hypermode
+          Combat (Beginner) and Enter Hypermode
   > Event - Barrier
       Use Grapple Voltage (Lasso and Voltage)
 
@@ -5791,6 +5800,7 @@ Asset id: 16543666292419631320
       Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Event - Transit Station 0203 Barrier Removed; Heals? False
+  * Event Transit Station 0203 Fight Barrier
   > Door to Transit Station 0204
       Trivial
 
@@ -6255,7 +6265,9 @@ Leads to Command Center
   > Door to Transit Station 4-B
 Leads to Command Center
       After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
-  > Pickup (Energy Cell)
+  > Event - Balcony Barrier
+      Trivial
+  > Event - Drill Wall (Upper)
       Trivial
 
 > Door to Transit Station 4-B
@@ -6276,12 +6288,12 @@ Leads to Command Center/Door to Phazon Quarry
           Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
   > Event - Drill Halfpipe
       Trivial
-  > Event - Drill Wall
+  > Event - Drill Wall (Lower)
       Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 93; Major Location? False
-  > Event - Balcony Barrier
+  > Door to Drill Shaft 2
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
@@ -6298,13 +6310,18 @@ Leads to Command Center
 
 > Event - Balcony Barrier; Heals? False
   * Event Phazon Quarry Balcony Barrier
-  > Door to Drill Shaft 2
+  > Pickup (Energy Cell)
       Trivial
 
-> Event - Drill Wall; Heals? False
+> Event - Drill Wall (Lower); Heals? False
   * Event Phazon Quarry Drill Wall
   > Door to Transit Station 4-B
 Leads to Command Center
+      Trivial
+
+> Event - Drill Wall (Upper); Heals? False
+  * Event Phazon Quarry Drill Wall
+  > Door to Drill Shaft 2
       Trivial
 
 ----------------
@@ -6646,7 +6663,7 @@ Asset id: 13423174227721576677
 > Dock to Genesis Chamber; Heals? False; Spawn Point
   * Normal Door to Genesis Chamber/Dock to Sanctum (Dark Samus)
   > Event - Dark Samus
-      X-Ray Visor or Invisible Objects (Beginner)
+      Trivial
 
 > Dock to Sanctum (Aurora Unit 313); Heals? False
   * Normal Door to Sanctum (Aurora Unit 313)/Dock to Sanctum (Dark Samus)
