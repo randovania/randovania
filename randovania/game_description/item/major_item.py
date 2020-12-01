@@ -10,7 +10,7 @@ class MajorItem:
     name: str
     item_category: ItemCategory
     broad_category: ItemCategory
-    model_index: int
+    model_index: Optional[int]
     progression: Tuple[int, ...]
     ammo_index: Tuple[int, ...] = tuple()
     converts_indices: Tuple[int, ...] = tuple()
