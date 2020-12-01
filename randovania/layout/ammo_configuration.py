@@ -2,6 +2,7 @@ import copy
 from dataclasses import dataclass
 from typing import Dict, Iterator, Tuple, List
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_database import ItemDatabase
@@ -14,10 +15,10 @@ class AmmoConfiguration(BitPackValue):
     items_state: Dict[Ammo, AmmoState]
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        default = AmmoConfiguration.default()
+        default = metadata["reference"]
 
         for key, value in self.maximum_ammo.items():
-            yield int(value != default.maximum_ammo[key]), 2
+            yield from bitpacking.encode_bool(value != default.maximum_ammo[key])
 
         for key, value in self.maximum_ammo.items():
             if value != default.maximum_ammo[key]:
@@ -37,13 +38,11 @@ class AmmoConfiguration(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        from randovania.game_description import default_database
-        item_database = default_database.default_prime2_item_database()
-        default = cls.default()
+        default = metadata["reference"]
 
         # Maximum Ammo
         has_value = {
-            item_key: bool(decoder.decode_single(2))
+            item_key: bitpacking.decode_bool(decoder)
             for item_key in default.maximum_ammo.keys()
         }
         maximum_ammo = {
@@ -58,11 +57,11 @@ class AmmoConfiguration(BitPackValue):
         }
 
         items_state = {}
-        for index, item in enumerate(item_database.ammo.values()):
+        for index, (item, default_state) in enumerate(default.items_state.items()):
             if index in indices_with_custom:
                 items_state[item] = AmmoState.bit_pack_unpack(decoder, {})
             else:
-                items_state[item] = default.items_state[item]
+                items_state[item] = default_state
 
         return cls(maximum_ammo, items_state)
 
@@ -117,8 +116,3 @@ class AmmoConfiguration(BitPackValue):
             items_state[item] = state
 
         return AmmoConfiguration(copy.copy(self.maximum_ammo), items_state)
-
-    @classmethod
-    def default(cls):
-        from randovania.layout import configuration_factory
-        return configuration_factory.get_default_ammo_configurations()
