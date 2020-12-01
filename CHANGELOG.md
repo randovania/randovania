@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Permalinks are now entirely different for different games.
 
+-   Changed: Preset summary now specifies if hidden model uses ETM or random item.
+
 -   Added: A very basic visualization of the map to the tracker.
 
 -   Added: Trick Details can now be used with all 3 games.
