@@ -74,7 +74,7 @@ def _compare_actions(first_reach: GeneratorReach,
 
 @pytest.mark.parametrize(("preset_name", "ignore_events", "ignore_pickups"), [
     ("Starter Preset", {91}, set()),  # Echoes
-    ("Corruption Preset", set(), {0, 1, 2})  # Corruption
+    ("Corruption Preset", {1, 67, 87, 145, 146, 148}, {0, 1, 2})  # Corruption
 ])
 def test_database_collectable(preset_manager, preset_name, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
@@ -93,6 +93,9 @@ def test_database_collectable(preset_manager, preset_name, ignore_events, ignore
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())
+    while list(collectable_resource_nodes(reach.nodes, reach)):
+        reach.act_on(next(iter(collectable_resource_nodes(reach.nodes, reach))))
+        reach = advance_reach_with_possible_unsafe_resources(reach)
 
     # print("\nCurrent reach:")
     # for world in game.world_list.worlds:
@@ -113,8 +116,8 @@ def test_database_collectable(preset_manager, preset_name, ignore_events, ignore
         for resource, quantity in reach.state.resources.items()
         if quantity > 0 and resource.resource_type == ResourceType.EVENT
     }
-    assert sorted(collected_indices) == expected_pickups
     assert list(collectable_resource_nodes(reach.nodes, reach)) == []
+    assert sorted(collected_indices) == expected_pickups
     assert sorted(collected_events, key=lambda it: it.index) == expected_events
 
 
