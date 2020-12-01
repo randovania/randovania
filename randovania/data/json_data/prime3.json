@@ -771,11 +771,6 @@
                 "short_name": "Event66"
             },
             {
-                "index": 67,
-                "long_name": "Observatory Lift Activated",
-                "short_name": "Event67"
-            },
-            {
                 "index": 68,
                 "long_name": "Landing Site A Unlocked",
                 "short_name": "Event68"
@@ -859,16 +854,6 @@
                 "index": 85,
                 "long_name": "Chozo Observatory Map Data",
                 "short_name": "Event85"
-            },
-            {
-                "index": 86,
-                "long_name": "Observatory Lift Fix Elevator",
-                "short_name": "Event86"
-            },
-            {
-                "index": 87,
-                "long_name": "Gearworks Gears Destroyed",
-                "short_name": "Event87"
             },
             {
                 "index": 88,
@@ -27382,33 +27367,11 @@
                                 "Door to Gearworks": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 1,
-                                        "index": 86,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Event - Fix Elevator": {
-                                    "type": "resource",
-                                    "data": {
                                         "type": 0,
                                         "index": 1,
                                         "amount": 1,
                                         "negate": false
                                     }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Fix Elevator",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 86,
-                            "connections": {
-                                "Door to Chozo Observatory": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         }
@@ -27498,6 +27461,24 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 1,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -27620,7 +27601,7 @@
                             "node_type": "event",
                             "event_index": 84,
                             "connections": {
-                                "Door to Maintenance Shaft OB": {
+                                "Door to Observatory Lift": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -27634,8 +27615,13 @@
                             "event_index": 85,
                             "connections": {
                                 "Door to Maintenance Shaft OB": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -32439,6 +32425,22 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Transit Station P68 Reloaded After Entry": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Transit Station P68 Reloaded After Entry",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Transit Tunnel P69": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
