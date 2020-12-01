@@ -68,7 +68,6 @@ setup(
         "pyqt-distutils",
     ],
     install_requires=[
-        'nod>=1.1',
         'networkx',
         'bitstruct',
         'construct<2.10',
@@ -87,6 +86,7 @@ setup(
             'dolphin-memory-engine>=1.0.2',
             'markdown',
             'matplotlib>=3.3.3',
+            'nod>=1.1',
             'pid>=3.0.0',
             'pypresence',
             'qdarkstyle',
