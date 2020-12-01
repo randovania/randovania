@@ -13806,13 +13806,41 @@
                                     }
                                 },
                                 "Samus Ship": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 36,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 35,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 36,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 13,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -13901,6 +13929,15 @@
                                 "Door to Ruined Shrine": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Event - Ship Upgrade": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 35,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
