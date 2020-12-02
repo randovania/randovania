@@ -86,14 +86,12 @@ class Preset(BitPackValue):
         is_custom_preset = bitpacking.decode_bool(decoder)
         reference = decoder.decode_element(included_presets)
         if is_custom_preset:
-            game_configuration = EchoesConfiguration.bit_pack_unpack(
-                decoder, {"reference": reference.configuration})
             preset = Preset(
                 name="{} Custom".format(reference.name),
                 description="A customized preset.",
                 base_preset_name=reference.name,
                 game=reference.game,
-                configuration=game_configuration,
+                configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
             )
         else:
             preset = reference
