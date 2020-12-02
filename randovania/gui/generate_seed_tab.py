@@ -255,6 +255,8 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                         return
                     except InvalidPreset:
                         pass
+            else:
+                self.select_game(RandovaniaGame.PRIME2)
 
             self.window.create_preset_combo.setCurrentIndex(0)
             self.on_preset_changed(self._window_manager.preset_manager.default_preset.get_preset())
