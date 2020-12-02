@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple, List
+from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -15,50 +15,45 @@ class AmmoConfiguration(BitPackValue):
     items_state: Dict[Ammo, AmmoState]
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        default = metadata["reference"]
+        default: AmmoConfiguration = metadata["reference"]
 
-        for key, value in self.maximum_ammo.items():
-            yield from bitpacking.encode_bool(value != default.maximum_ammo[key])
+        assert list(self.maximum_ammo.keys()) == list(default.maximum_ammo.keys())
+        assert list(self.items_state.keys()) == list(default.items_state.keys())
 
-        for key, value in self.maximum_ammo.items():
-            if value != default.maximum_ammo[key]:
-                yield value, 256
+        for this, reference in zip(self.maximum_ammo.values(), default.maximum_ammo.values()):
+            is_different = this != reference
+            yield from bitpacking.encode_bool(is_different)
+            if is_different:
+                yield this, 256
 
-        result: List[Tuple[int, Ammo, AmmoState]] = []
-        for i, (item, state) in enumerate(self.items_state.items()):
-            if state != default.items_state[item]:
-                result.append((i, item, state))
-
-        yield len(result), len(self.items_state)
-        for index, _, _ in result:
-            yield index, len(self.items_state)
-
-        for index, _, state in result:
-            yield from state.bit_pack_encode({})
+        reference_items = sorted(default.items_state.keys())
+        modified_items = sorted(this_item
+                                for (this_item, this_state), (ref_item, ref_state) in
+                                zip(self.items_state.items(), default.items_state.items())
+                                if this_state != ref_state)
+        yield from bitpacking.pack_sorted_array_elements(modified_items, reference_items)
+        for item in modified_items:
+            yield from self.items_state[item].bit_pack_encode({})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        default = metadata["reference"]
+        default: AmmoConfiguration = metadata["reference"]
 
         # Maximum Ammo
-        has_value = {
-            item_key: bitpacking.decode_bool(decoder)
-            for item_key in default.maximum_ammo.keys()
-        }
-        maximum_ammo = {
-            item_key: decoder.decode_single(256) if has_value[item_key] else default.maximum_ammo[item_key]
-            for item_key, default_value in default.maximum_ammo.items()
-        }
+        maximum_ammo = {}
+        for item_key, default_value in default.maximum_ammo.items():
+            is_different = bitpacking.decode_bool(decoder)
+            if is_different:
+                maximum_ammo[item_key] = decoder.decode_single(256)
+            else:
+                maximum_ammo[item_key] = default_value
 
-        num_items = decoder.decode_single(len(default.items_state))
-        indices_with_custom = {
-            decoder.decode_single(len(default.items_state))
-            for _ in range(num_items)
-        }
+        reference_items = sorted(default.items_state.keys())
+        modified_items = bitpacking.decode_sorted_array_elements(decoder, reference_items)
 
         items_state = {}
-        for index, (item, default_state) in enumerate(default.items_state.items()):
-            if index in indices_with_custom:
+        for item, default_state in default.items_state.items():
+            if item in modified_items:
                 items_state[item] = AmmoState.bit_pack_unpack(decoder, {})
             else:
                 items_state[item] = default_state

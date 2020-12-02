@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2020-12-02
+
+-   Added: A prompt is now shown asking the user to install the Visual C++ Redistributable if loading the Dolphin backend fails.
+
+-   Fixed: Changing ammo configuration breaks everything.
+
+-   Fixed: Patching ISOs should work again.
+
+## [2.1.0] - 2020-12-02
+
 -   Changed: Multiworld session history now auto-scrolls to the bottom
 
 -   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
