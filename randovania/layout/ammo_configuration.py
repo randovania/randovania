@@ -26,14 +26,11 @@ class AmmoConfiguration(BitPackValue):
             if is_different:
                 yield this, 256
 
-        reference_items = sorted(default.items_state.keys())
-        modified_items = sorted(this_item
-                                for (this_item, this_state), (ref_item, ref_state) in
-                                zip(self.items_state.items(), default.items_state.items())
-                                if this_state != ref_state)
-        yield from bitpacking.pack_sorted_array_elements(modified_items, reference_items)
-        for item in modified_items:
-            yield from self.items_state[item].bit_pack_encode({})
+        for this, reference in zip(self.items_state.values(), default.items_state.values()):
+            is_different = this != reference
+            yield from bitpacking.encode_bool(is_different)
+            if is_different:
+                yield from this.bit_pack_encode({})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
@@ -48,12 +45,10 @@ class AmmoConfiguration(BitPackValue):
             else:
                 maximum_ammo[item_key] = default_value
 
-        reference_items = sorted(default.items_state.keys())
-        modified_items = bitpacking.decode_sorted_array_elements(decoder, reference_items)
-
         items_state = {}
         for item, default_state in default.items_state.items():
-            if item in modified_items:
+            is_different = bitpacking.decode_bool(decoder)
+            if is_different:
                 items_state[item] = AmmoState.bit_pack_unpack(decoder, {})
             else:
                 items_state[item] = default_state
