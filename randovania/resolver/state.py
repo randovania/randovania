@@ -147,7 +147,10 @@ class State:
         add_resources_into_another(new_resources, pickup_resources)
         new_patches = self.patches.assign_extra_initial_items(pickup_resources)
 
-        energy_per_tank = self.patches.game_specific.energy_per_tank
+        if self.patches.game_specific is not None:
+            energy_per_tank = self.patches.game_specific.energy_per_tank
+        else:
+            energy_per_tank = 100
 
         return State(
             new_resources,

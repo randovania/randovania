@@ -2,6 +2,7 @@ import hashlib
 from typing import List
 
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import CurrentResources
 
 LAYOUT_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(){}[]<>=,.!#^-+?"
@@ -149,7 +150,7 @@ STARTING_ITEMS_ORDER = [
     "MissileAmount",
     "MissileCapacity",
     "IceMissile",
-    "SeekerMissile",
+    "Seekers",
     "GrappleBeamPull",
     "GrappleBeamSwing",
     "GrappleBeamVoltage",
@@ -211,6 +212,7 @@ def starting_items_for(resources: CurrentResources) -> str:
     capacity_by_short_name = {
         item.short_name: capacity
         for item, capacity in resources.items()
+        if isinstance(item, ItemResourceInfo)
     }
 
     result_values = [
