@@ -174,6 +174,7 @@ STARTING_ITEMS_ORDER = [
     "HyperModeCharge",
     "ShipMissileAmount",
     "ShipMissileCapacity",
+    "ShipGrapple",
 ]
 STARTING_ITEMS_NAME_ALIAS = {
     "EnergyAmount": "Energy",
