@@ -1,4 +1,3 @@
-import copy
 import dataclasses
 import hashlib
 import math
@@ -171,11 +170,11 @@ def _get_bit_pack_value_for_type(value_type):
         raise NotImplementedError("Unsupported bit packing for type {}".format(value_type))
 
 
-def _get_bit_pack_value_for(value):
+def _get_bit_pack_value_for(value, dataclass_type: type):
     if isinstance(value, BitPackValue):
         return value
 
-    return _get_bit_pack_value_for_type(type(value))(value)
+    return _get_bit_pack_value_for_type(dataclass_type)(value)
 
 
 class BitPackDataClass(BitPackValue):
@@ -187,7 +186,7 @@ class BitPackDataClass(BitPackValue):
                 continue
 
             item = getattr(self, field.name)
-            bit_pack_value = _get_bit_pack_value_for(item)
+            bit_pack_value = _get_bit_pack_value_for(item, field.type)
 
             if reference is not None:
                 reference_item = getattr(reference, field.name)
@@ -203,7 +202,8 @@ class BitPackDataClass(BitPackValue):
             should_encode = True
 
             if bit_pack_value.bit_pack_skip_if_equals() and reference_item is not None:
-                encoded_reference = list(_get_bit_pack_value_for(reference_item).bit_pack_encode(field_meta))
+                reference_pack_value = _get_bit_pack_value_for(reference_item, field.type)
+                encoded_reference = list(reference_pack_value.bit_pack_encode(field_meta))
                 should_encode = encoded_item != encoded_reference
                 yield from encode_bool(should_encode)
 
