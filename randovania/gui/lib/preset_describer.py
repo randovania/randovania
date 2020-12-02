@@ -69,7 +69,7 @@ _CORRUPTION_TEMPLATE_STRINGS = {
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
-        "Elevators: {elevators}",
+        "Teleporters: {elevators}",
     ],
     "Game Changes": [
         "Missiles needs Launcher: {missile_launcher_required}",
