@@ -7,7 +7,6 @@ from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_configuration import AmmoConfiguration
 
@@ -15,13 +14,13 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
 @pytest.fixture(
     params=[
         {"game": RandovaniaGame.PRIME2, "encoded": b'\x00', "items_state": {}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'!@', "maximum_ammo": {"45": 20}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'\x02\x0c\x80',
+        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x80', "maximum_ammo": {"45": 20}},
+        {"game": RandovaniaGame.PRIME2, "encoded": b'\x01f@',
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'!B\x0c\x80', "maximum_ammo": {"45": 20},
+        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x81f@', "maximum_ammo": {"45": 20},
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
         {"game": RandovaniaGame.PRIME3, "encoded": b'\x00', "items_state": {}},
-        {"game": RandovaniaGame.PRIME3, "encoded": b'\x8c\x80', "maximum_ammo": {"4": 50}},
+        {"game": RandovaniaGame.PRIME3, "encoded": b'\x99\x00', "maximum_ammo": {"4": 50}},
     ],
     name="config_with_data")
 def _config_with_data(request):
