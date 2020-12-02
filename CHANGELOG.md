@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Patching ISOs should work again.
 
+-   Fixed: Clean installations can select presets again.
+
 ## [2.1.0] - 2020-12-02
 
 -   Changed: Multiworld session history now auto-scrolls to the bottom

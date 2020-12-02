@@ -13,11 +13,11 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
 
 @pytest.fixture(
     params=[
-        {"game": RandovaniaGame.PRIME2, "encoded": b'\x00', "items_state": {}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x80', "maximum_ammo": {"45": 20}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'\x01f@',
+        {"game": RandovaniaGame.PRIME2, "encoded": b'\x00\x00', "items_state": {}},
+        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x80\x00', "maximum_ammo": {"45": 20}},
+        {"game": RandovaniaGame.PRIME2, "encoded": b'\t\x90',
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x81f@', "maximum_ammo": {"45": 20},
+        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x89\x90', "maximum_ammo": {"45": 20},
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
         {"game": RandovaniaGame.PRIME3, "encoded": b'\x00', "items_state": {}},
         {"game": RandovaniaGame.PRIME3, "encoded": b'\x99\x00', "maximum_ammo": {"4": 50}},
