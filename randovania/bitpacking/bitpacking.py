@@ -96,7 +96,7 @@ class BitPackFloat(BitPackValue):
                 return
 
         value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
-        yield int((self.value - metadata["min"]) * (10 ** metadata["precision"])), value_range
+        yield int((self.value - metadata["min"]) * (10 ** metadata["precision"])), int(value_range) + 1
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> float:
@@ -106,7 +106,7 @@ class BitPackFloat(BitPackValue):
                 return metadata["if_different"]
 
         value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
-        decoded = decoder.decode_single(value_range)
+        decoded = decoder.decode_single(int(value_range) + 1)
         return float((decoded / (10 ** metadata["precision"])) + metadata["min"])
 
 
@@ -198,6 +198,8 @@ class BitPackDataClass(BitPackValue):
             field_meta["reference"] = reference_item
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
+            if any((a >= b) for (a, b) in encoded_item):
+                raise ValueError(f"Encoding field {field.name} of {type(self)} generated invalid value.")
             should_encode = True
 
             if bit_pack_value.bit_pack_skip_if_equals() and reference_item is not None:
@@ -374,10 +376,14 @@ def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
     if metadata is None:
         metadata = {}
 
-    return _pack_encode_results([
-        (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode(metadata)
-    ])
+    results = []
+
+    for i, (value_argument, value_format) in enumerate(value.bit_pack_encode(metadata)):
+        if value_argument >= value_format:
+            raise ValueError(f"At {i}, got {value_argument} which is bigger than limit {value_format}")
+        results.append((value_argument, value_format))
+
+    return _pack_encode_results(results)
 
 
 def round_trip(value: T,
