@@ -130,18 +130,20 @@ class TrickLevelConfiguration(BitPackValue):
 
         return {
             "minimal_logic": self.minimal_logic,
-            "specific_levels": specific_levels,
+            "specific_levels": {} if self.minimal_logic else specific_levels,
         }
 
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame):
+        minimal_logic = value["minimal_logic"]
+        specific_levels = {
+            trick_short_name: LayoutTrickLevel(level)
+            for trick_short_name, level in value["specific_levels"].items()
+            if level != LayoutTrickLevel.DISABLED.value
+        }
         return cls(
-            minimal_logic=value["minimal_logic"],
-            specific_levels={
-                trick_short_name: LayoutTrickLevel(level)
-                for trick_short_name, level in value["specific_levels"].items()
-                if level != LayoutTrickLevel.DISABLED.value
-            },
+            minimal_logic=minimal_logic,
+            specific_levels={} if minimal_logic else specific_levels,
             game=game,
         )
 
