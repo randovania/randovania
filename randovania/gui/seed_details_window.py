@@ -9,8 +9,11 @@ from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPus
 from asyncqt import asyncSlot
 
 from randovania.game_description import data_reader, default_database
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -131,14 +134,15 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.PRIME3)
 
-        if len(patches.pickup_assignment) != game.world_list.num_pickup_nodes:
-            raise ValueError(f"Layout has {len(patches.pickup_assignment)} pickups, "
-                             f"expected {game.world_list.num_pickup_nodes}.")
+        item_names = []
+        for index in range(game.world_list.num_pickup_nodes):
+            p_index = PickupIndex(index)
+            if p_index in patches.pickup_assignment:
+                name = patches.pickup_assignment[p_index].pickup.name
+            else:
+                name = "Missile Expansion"
+            item_names.append(name)
 
-        item_names = [
-            patches.pickup_assignment[index].pickup.name
-            for index in sorted(patches.pickup_assignment.keys())
-        ]
         layout_string = gollop_corruption_patcher.layout_string_for_items(item_names)
         starting_location = patches.starting_location
 
