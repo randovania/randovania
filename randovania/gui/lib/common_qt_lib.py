@@ -158,3 +158,17 @@ def get_network_client() -> QtNetworkClient:
 
 def get_game_connection() -> GameConnection:
     return QApplication.instance().game_connection
+
+
+def show_install_visual_cpp_redist():
+    from PySide2 import QtWidgets
+
+    download_url = 'https://aka.ms/vs/16/release/vc_redist.x64.exe'
+    support_url = 'https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads'
+
+    QtWidgets.QMessageBox.critical(
+        None,
+        "Unable to load Dolphin backend",
+        "Please install the latest "
+        f"<a href='{download_url}'>Microsoft Visual C++ Redistributable</a>.<br /><br />"
+        f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.")

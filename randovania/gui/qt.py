@@ -4,15 +4,15 @@ import locale
 import logging.config
 import os
 import sys
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
-import typing
 from PySide2 import QtCore
 from PySide2.QtWidgets import QApplication, QMessageBox
 from asyncqt import asyncClose
 
-from randovania.gui.lib import theme
+from randovania.gui.lib import theme, common_qt_lib
 
 
 def catch_exceptions(t, val, tb):
@@ -85,7 +85,12 @@ def create_backend(debug_game_backend: bool, options):
         backend = DebugBackendWindow()
         backend.show()
     else:
-        from randovania.game_connection.dolphin_backend import DolphinBackend
+        try:
+            from randovania.game_connection.dolphin_backend import DolphinBackend
+        except ImportError:
+            common_qt_lib.show_install_visual_cpp_redist()
+            raise SystemExit(1)
+
         from randovania.game_connection.nintendont_backend import NintendontBackend
         from randovania.game_connection.backend_choice import GameBackendChoice
 
