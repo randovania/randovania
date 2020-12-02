@@ -91,8 +91,8 @@ def generate_description(permalink: Permalink,
 def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription) -> None:
     if len(item_pool) > game.world_list.num_pickup_nodes:
         raise InvalidConfiguration(
-            "Item pool has {0} items, but there's only {1} pickups spots in the game".format(len(item_pool),
-                                                                                             num_pickup_nodes))
+            "Item pool has {0} items, but there's only {1} pickups spots in the game".format(
+                len(item_pool), game.world_list.num_pickup_nodes))
 
 
 def _distribute_remaining_items(rng: Random,
