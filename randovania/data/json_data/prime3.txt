@@ -707,6 +707,10 @@ Asset id: 6692819360230093549
       Trivial
   > Pickup (Missile Expansion)
       Morph Ball and Spider Ball
+  > Samus Ship
+      After Cargo Dock A Visited
+  > Event - Cargo Dock A Visited
+      Trivial
 
 > Door to Generator A Access; Heals? False
   * Normal Door to Generator A Access/Door to Cargo Dock A
@@ -715,11 +719,16 @@ Asset id: 6692819360230093549
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 8; Major Location? False
-  > Door to Generator A Access
+  > Door to Conduit A
       Trivial
 
 > Samus Ship; Heals? True; Spawn Point
-  * Player Ship (Unlocked by Trivial)
+  * Player Ship (Unlocked by After Cargo Dock A Visited)
+  > Door to Conduit A
+      Trivial
+
+> Event - Cargo Dock A Visited; Heals? False
+  * Event Cargo Dock A Visited
   > Door to Conduit A
       Trivial
 
@@ -5140,24 +5149,24 @@ Asset id: 1760181228684086770
 > Door to Metroid Creche; Heals? False
   * Normal Door to Metroid Creche/Door to Creche Transit
   > Door to Metroid Processing
-      All of the following:
-          After Creche Transit Hyper Missile Wall
-          Any of the following:
-              Hazard Shield
-              Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 150
+      Any of the following:
+          All of the following:
+              After Creche Transit Hyper Missile Wall
+              Any of the following:
+                  Hazard Shield
+                  Acid Rain/Fuel Gel without Hazard Shield (Advanced) and Normal Damage ≥ 150
+          Space Jump Boots and Movement (Intermediate) and Hazard Shield
   > Event - Hyper Missile Wall
       Missile ≥ 2 and Hyper Missile and Open Gates/Barriers from Behind (Beginner) and Enter Hypermode
 
 > Door to Metroid Processing; Heals? False; Spawn Point
   * Normal Door to Metroid Processing/Door to Creche Transit
-  > Door to Metroid Creche
-      Space Jump Boots and After Creche Transit Hyper Missile Wall and Hazard Shield
   > Pickup (Missile Expansion)
       All of the following:
           Morph Ball and Boost Ball
           Morph Ball Bombs or Knowledge (Beginner)
-  > Event - Hyper Missile Wall
-      Missile ≥ 2 and Space Jump Boots and Hyper Missile and Enter Hypermode and Hazard Shield
+  > Front of Hyper Missile Wall
+      Space Jump Boots and Hazard Shield
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 77; Major Location? False
@@ -5166,8 +5175,24 @@ Asset id: 1760181228684086770
 
 > Event - Hyper Missile Wall; Heals? False
   * Event Creche Transit Hyper Missile Wall
+  > Front of Hyper Missile Wall
+      Trivial
+
+> Front of Hyper Missile Wall; Heals? False
   > Door to Metroid Creche
+      All of the following:
+          Hazard Shield
+          Any of the following:
+              After Creche Transit Hyper Missile Wall
+              All of the following:
+                  Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Advanced) and Single Room Out of Bounds (Advanced)
+                  Any of the following:
+                      Boost Ball
+                      Morph Ball Bombs and Screw Attack
+  > Door to Metroid Processing
       Hazard Shield
+  > Event - Hyper Missile Wall
+      Missile ≥ 2 and Hyper Missile and Enter Hypermode and Hazard Shield
 
 ----------------
 Proving Grounds
