@@ -21,12 +21,14 @@ def _create_permalink(args) -> Permalink:
 
 def distribute_command_logic(args):
     def status_update(s):
-        pass
+        if args.status_update:
+            print(s)
 
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)
     else:
         permalink = _create_permalink(args)
+        print(f"Permalink: {permalink.as_base64_str}")
 
     if permalink.spoiler:
         debug.set_level(args.debug)
@@ -54,6 +56,7 @@ def add_distribute_command(sub_parsers):
     echoes_lib.add_debug_argument(parser)
     echoes_lib.add_validate_argument(parser)
     parser.add_argument("--no-retry", default=False, action="store_true", help="Disable retries in the generation.")
+    parser.add_argument("--status-update", default=False, action="store_true", help="Print the status updates.")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--permalink", type=str, help="The permalink to use")
