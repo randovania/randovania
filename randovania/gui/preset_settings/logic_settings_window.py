@@ -440,7 +440,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         world_list = self.game_description.world_list
         world = world_list.world_by_asset_id(check.world_asset_id)
         world_areas = [world_list.area_to_area_location(area)
-                       for area in world.areas if check.is_dark_world == area.in_dark_aether]
+                       for area in world.areas if check.is_dark_world == area.in_dark_aether
+                       if area.area_asset_id in self._starting_location_for_area]
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
