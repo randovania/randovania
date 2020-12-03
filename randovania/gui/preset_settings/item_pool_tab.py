@@ -20,6 +20,7 @@ from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
@@ -174,9 +175,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Item pool count
         pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
+        min_starting_items = layout.major_items_configuration.minimum_random_starting_items
+        maximum_size = game.world_list.num_pickup_nodes + min_starting_items
         self.item_pool_count_label.setText(
-            "Items in pool: {}/{}".format(len(pool_pickup), game.world_list.num_pickup_nodes)
+            "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
         )
+        common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, len(pool_pickup) > maximum_size)
 
     # Item Alternatives
 

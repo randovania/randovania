@@ -88,11 +88,13 @@ def generate_description(permalink: Permalink,
     return result
 
 
-def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription) -> None:
-    if len(item_pool) > game.world_list.num_pickup_nodes:
+def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription,
+                             configuration: EchoesConfiguration) -> None:
+    min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
+    if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
-            "Item pool has {0} items, but there's only {1} pickups spots in the game".format(
-                len(item_pool), game.world_list.num_pickup_nodes))
+            "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
+                len(item_pool), game.world_list.num_pickup_nodes, min_starting_items))
 
 
 def _distribute_remaining_items(rng: Random,
@@ -204,7 +206,7 @@ def _create_pools_and_fill(rng: Random,
         player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index)
 
     for player_pool in player_pools.values():
-        _validate_item_pool_size(player_pool.pickups, player_pool.game)
+        _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
 
     return run_filler(rng, player_pools, status_update)
 
