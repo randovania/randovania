@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The Item Pool size now displays a warning if the it's above the maximum.
+
+-   Changed: The minimum random starting items is now considered for checking the pool size.
+
 -   Fixed: Being kicked from an online session would leave the window stuck there forever.
 
 -   Fixed: Bulk selecting areas for starting location no longer includes areas that aren't valid starting locations.
