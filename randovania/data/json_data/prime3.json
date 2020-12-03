@@ -757,7 +757,7 @@
             },
             {
                 "index": 63,
-                "long_name": "Aurora Chamber Skytown Reloaded After Vaccine",
+                "long_name": "Aurora Chamber (Elysia) Reloaded After Vaccine",
                 "short_name": "Event63"
             },
             {
@@ -766,9 +766,19 @@
                 "short_name": "Event64"
             },
             {
+                "index": 65,
+                "long_name": "Hub Access (Norion) Lasso Lock Removed",
+                "short_name": "Event65"
+            },
+            {
                 "index": 66,
                 "long_name": "Skybridge Hera Reloaded After Bridge Destroyed",
                 "short_name": "Event66"
+            },
+            {
+                "index": 67,
+                "long_name": "Cargo Hub Lasso Lock Removed",
+                "short_name": "Event67"
             },
             {
                 "index": 68,
@@ -792,12 +802,12 @@
             },
             {
                 "index": 72,
-                "long_name": "Aurora Chamber Skytown Vaccine",
+                "long_name": "Aurora Chamber (Elysia) Vaccine",
                 "short_name": "Event72"
             },
             {
                 "index": 73,
-                "long_name": "Aurora Chamber Skytown Circuits",
+                "long_name": "Aurora Chamber (Elysia) Circuits",
                 "short_name": "Event73"
             },
             {
@@ -1112,7 +1122,7 @@
             },
             {
                 "index": 143,
-                "long_name": "Aurora Chamber Skytown Initiate Bomb Sequence",
+                "long_name": "Aurora Chamber (Elysia) Initiate Bomb Sequence",
                 "short_name": "Event143"
             },
             {
@@ -3586,6 +3596,10 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Pickup (Grapple Lasso)": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Samus Ship": {
                                     "type": "resource",
                                     "data": {
@@ -3594,6 +3608,42 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Gate Opened": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 38,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -3665,15 +3715,6 @@
                                                                         "amount": 2,
                                                                         "negate": false
                                                                     }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 11,
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
                                                                 }
                                                             ]
                                                         },
@@ -3685,15 +3726,6 @@
                                                                     "data": {
                                                                         "type": 2,
                                                                         "index": 5,
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 11,
                                                                         "amount": 3,
                                                                         "negate": false
                                                                     }
@@ -3716,6 +3748,10 @@
                             "pickup_index": 4,
                             "major_location": true,
                             "connections": {
+                                "Door to Hub Access": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Samus Ship": {
                                     "type": "resource",
                                     "data": {
@@ -3806,15 +3842,6 @@
                                                                         "amount": 2,
                                                                         "negate": false
                                                                     }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 11,
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
                                                                 }
                                                             ]
                                                         },
@@ -3826,15 +3853,6 @@
                                                                     "data": {
                                                                         "type": 2,
                                                                         "index": 5,
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 11,
                                                                         "amount": 3,
                                                                         "negate": false
                                                                     }
@@ -4307,8 +4325,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Cargo Hub": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 65,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Lasso Lock Removed": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -4326,6 +4358,24 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 6,
+                            "connections": {
+                                "Door to Docking Hub Alpha": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 65,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Lasso Lock Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 65,
                             "connections": {
                                 "Door to Docking Hub Alpha": {
                                     "type": "and",
@@ -5137,8 +5187,8 @@
                                 "Door to Maintenance Station": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 7,
+                                        "type": 1,
+                                        "index": 67,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -5211,6 +5261,15 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Lasso Lock Removed": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -5230,8 +5289,13 @@
                             "dock_weakness_index": 6,
                             "connections": {
                                 "Door to Hub Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 67,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -5276,6 +5340,19 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 140,
+                            "connections": {
+                                "Door to Hub Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Lasso Lock Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 67,
                             "connections": {
                                 "Door to Hub Access": {
                                     "type": "and",

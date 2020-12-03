@@ -493,8 +493,12 @@ Docking Hub Alpha
 Asset id: 1594033074927626820
 > Door to Hub Access; Heals? False
   * Normal Door to Hub Access/Door to Docking Hub Alpha
+  > Pickup (Grapple Lasso)
+      Trivial
   > Samus Ship
       After Docking Hub Alpha Gate Unlocked
+  > Event - Gate Opened
+      Morph Ball and Hyper Ball and Open Gates/Barriers from Behind (Beginner) and Enter Hypermode
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 3; Major Location? False
@@ -504,11 +508,13 @@ Asset id: 1594033074927626820
           All of the following:
               Space Jump Boots and Morph Ball
               Any of the following:
-                  Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
-                  Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  Bomb/Spring Space Jump (Advanced)
+                  Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Pickup (Grapple Lasso); Heals? False
   * Pickup 4; Major Location? True
+  > Door to Hub Access
+      Trivial
   > Samus Ship
       After Docking Hub Alpha Gate Unlocked
 
@@ -522,8 +528,8 @@ Asset id: 1594033074927626820
           All of the following:
               Space Jump Boots and Morph Ball
               Any of the following:
-                  Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
-                  Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  Bomb/Spring Space Jump (Advanced)
+                  Boost Ball and Bomb/Spring Space Jump (Intermediate)
   > Pickup (Grapple Lasso)
       After Docking Hub Alpha Gate Unlocked
   > Event - Gate Opened
@@ -625,10 +631,17 @@ Asset id: 2999231136728408916
 > Door to Docking Hub Alpha; Heals? False; Spawn Point
   * Normal Door to Docking Hub Alpha/Door to Hub Access
   > Door to Cargo Hub
-      Trivial
+      After Hub Access (Norion) Lasso Lock Removed
+  > Event - Lasso Lock Removed
+      Grapple Lasso
 
 > Door to Cargo Hub; Heals? False
   * Grapple Lasso Blast Shield to Cargo Hub/Door to Hub Access
+  > Door to Docking Hub Alpha
+      After Hub Access (Norion) Lasso Lock Removed
+
+> Event - Lasso Lock Removed; Heals? False
+  * Event Hub Access (Norion) Lasso Lock Removed
   > Door to Docking Hub Alpha
       Trivial
 
@@ -822,7 +835,7 @@ Asset id: 3044064450317642212
   > Door to Substation West
       Plasma Beam
   > Door to Maintenance Station
-      Grapple Lasso
+      After Cargo Hub Lasso Lock Removed
   > Pickup (Missile Expansion)
       All of the following:
           Grapple Lasso and Morph Ball
@@ -831,11 +844,13 @@ Asset id: 3044064450317642212
               Boost Ball and Knowledge (Beginner)
   > Event - Lasso Rubble Removed
       Grapple Lasso
+  > Event - Lasso Lock Removed
+      Grapple Lasso
 
 > Door to Maintenance Station; Heals? False
   * Grapple Lasso Blast Shield to Maintenance Station/Door to Cargo Hub
   > Door to Hub Access
-      Trivial
+      After Cargo Hub Lasso Lock Removed
 
 > Door to Tower Elevator; Heals? False
   * Permanently Locked to Tower Elevator/Door to Cargo Hub
@@ -849,6 +864,11 @@ Asset id: 3044064450317642212
 
 > Event - Lasso Rubble Removed; Heals? False
   * Event Cargo Hub Grapple Lasso Rubble Removed
+  > Door to Hub Access
+      Trivial
+
+> Event - Lasso Lock Removed; Heals? False
+  * Event Cargo Hub Lasso Lock Removed
   > Door to Hub Access
       Trivial
 
@@ -3299,7 +3319,7 @@ Asset id: 4133901881028310574
   > Samus Ship (Catch.)
       Trivial
   > Event - Ghor
-      After Aurora Chamber Skytown Vaccine
+      After Aurora Chamber (Elysia) Vaccine
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 51; Major Location? False
@@ -3314,7 +3334,7 @@ Asset id: 4133901881028310574
 > Samus Ship (Catch.); Heals? True; Spawn Point
   * Player Ship (Unlocked by Trivial)
   > Door to Main Docking Access
-      Plasma Beam or Before Aurora Chamber Skytown Vaccine
+      Plasma Beam or Before Aurora Chamber (Elysia) Vaccine
 
 > Event - Ghor; Heals? False
   * Event Ghor
@@ -3425,7 +3445,7 @@ Asset id: 9894117388493814037
   > Door to Zipline Station Bravo
       After Aurora Lift Activated
   > Event - Aurora Chamber Reloaded
-      After Aurora Lift Activated and After Aurora Chamber Skytown Vaccine
+      After Aurora Lift Activated and After Aurora Chamber (Elysia) Vaccine
 
 > Door to Save Station A; Heals? False
   * Ice Missile Blast Shield (Vulnerable to Missiles) to Save Station A/Door to Aurora Lift
@@ -3447,7 +3467,7 @@ Asset id: 9894117388493814037
       Trivial
 
 > Event - Aurora Chamber Reloaded; Heals? False
-  * Event Aurora Chamber Skytown Reloaded After Vaccine
+  * Event Aurora Chamber (Elysia) Reloaded After Vaccine
   > Door to Aurora Chamber
       Trivial
 
@@ -3472,22 +3492,22 @@ Asset id: 3066396911819856814
   > Event - Aurora Vaccine
       Trivial
   > Event - Aurora Circuits
-      Plasma Beam and After Aurora Chamber Skytown Reloaded After Vaccine
+      Plasma Beam and After Aurora Chamber (Elysia) Reloaded After Vaccine
   > Event - Initiate Bomb Sequence
       After Spire Prep Bomb
 
 > Event - Aurora Vaccine; Heals? False
-  * Event Aurora Chamber Skytown Vaccine
+  * Event Aurora Chamber (Elysia) Vaccine
   > Inside Aurora Chamber
       Trivial
 
 > Event - Aurora Circuits; Heals? False
-  * Event Aurora Chamber Skytown Circuits
+  * Event Aurora Chamber (Elysia) Circuits
   > Inside Aurora Chamber
       Trivial
 
 > Event - Initiate Bomb Sequence; Heals? False
-  * Event Aurora Chamber Skytown Initiate Bomb Sequence
+  * Event Aurora Chamber (Elysia) Initiate Bomb Sequence
   > Inside Aurora Chamber
       Trivial
 
@@ -3775,7 +3795,7 @@ Asset id: 3381520513235092752
   > Samus Ship
       After Landing Site A Unlocked
   > Event - Landing Site Unlocked
-      Morph Ball Bombs and Morph Ball and After Aurora Chamber Skytown Circuits
+      Morph Ball Bombs and Morph Ball and After Aurora Chamber (Elysia) Circuits
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by After Landing Site A Unlocked)
@@ -3806,7 +3826,7 @@ Asset id: 722564631842201436
       Space Jump Boots
 
 > Event - Aurora Chamber Reloaded; Heals? False
-  * Event Aurora Chamber Skytown Reloaded After Vaccine
+  * Event Aurora Chamber (Elysia) Reloaded After Vaccine
   > Ledge
       Trivial
 
@@ -3818,7 +3838,7 @@ Asset id: 722564631842201436
   > Door to Spire Dock (Pre-Bomb)
       Before Spire Bomb Leviathan Shield
   > Event - Aurora Chamber Reloaded
-      After Aurora Chamber Skytown Vaccine
+      After Aurora Chamber (Elysia) Vaccine
 
 ----------------
 Construction Bay
@@ -4125,7 +4145,7 @@ Asset id: 2782037876215597956
   > Door to Junction
       Grapple Swing
   > Dock to Spire
-      After Aurora Chamber Skytown Initiate Bomb Sequence
+      After Aurora Chamber (Elysia) Initiate Bomb Sequence
   > Event - Bomb Prepared
       After Transit Hub Bomb Part 3 and After Concourse Bomb Part 2 and After Turbine Chamber Bomb Part 1
 
