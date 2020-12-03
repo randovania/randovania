@@ -290,7 +290,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
-        user_response = QMessageBox.Cancel
+        return await self._on_close_event(event)
+
+    async def _on_close_event(self, event: QtGui.QCloseEvent):
+        user_response = QMessageBox.No
 
         is_kicked = self.network_client.current_user.id not in self._game_session.players
         if not is_kicked:
