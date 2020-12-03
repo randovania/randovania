@@ -39,7 +39,7 @@ def test_create_patches(mock_random: MagicMock,
         for i in range(num_players)
     ])
     mock_validate_item_pool_size.assert_has_calls([
-        call(player_pools[i].pickups, player_pools[i].game)
+        call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration)
         for i in range(num_players)
     ])
     mock_run_filler.assert_called_once_with(rng, {i: player_pools[i] for i in range(num_players)}, status_update)
