@@ -3,6 +3,7 @@ import datetime
 
 import pytest
 from PySide2 import QtWidgets
+from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
 
 from randovania.generator import base_patches_factory
@@ -455,3 +456,38 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     mock_pack_iso.assert_called_once_with(output_iso=mock_input_dialog.return_value.output_file,
                                           options=window._options,
                                           progress_update=ANY)
+
+
+@pytest.mark.parametrize("dialog_response", [QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel])
+@pytest.mark.parametrize("is_member", [False, True])
+@pytest.mark.asyncio
+async def test_on_close_event(window: GameSessionWindow, mocker, dialog_response, is_member):
+    # Setup
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock,
+                                  return_value=dialog_response)
+    super_close_event = mocker.patch("PySide2.QtWidgets.QMainWindow.closeEvent")
+    event = MagicMock()
+    window._game_session = MagicMock()
+    window._game_session.players = [window.network_client.current_user.id] if is_member else []
+    window.network_client.leave_game_session = AsyncMock()
+    window.network_client.connection_state.is_disconnected = dialog_response == QMessageBox.Yes
+
+    # Run
+    await window._on_close_event(event)
+
+    if is_member:
+        execute_dialog.assert_awaited_once()
+    else:
+        execute_dialog.assert_not_awaited()
+
+    if is_member and dialog_response == QMessageBox.Cancel:
+        event.ignore.assert_called_once_with()
+        super_close_event.assert_not_called()
+    else:
+        event.ignore.assert_not_called()
+        super_close_event.assert_called_once_with(event)
+
+    if is_member and dialog_response != QMessageBox.Cancel:
+        window.network_client.leave_game_session.assert_awaited_once_with(dialog_response == QMessageBox.Yes)
+    else:
+        window.network_client.leave_game_session.assert_not_awaited()
