@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Fixed: Being kicked from an online session would leave the window stuck there forever.
+
 ## [2.1.1] - 2020-12-02
 
 -   Added: A prompt is now shown asking the user to install the Visual C++ Redistributable if loading the Dolphin backend fails.
