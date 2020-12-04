@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -e .[server] -c requirements.txt
 
 VOLUME ["/data"]
 ENTRYPOINT ["python", "-m", "randovania"]
-CMD ["--configuration", "/data/configuration.json", "multiworld", "server"]
+CMD ["--configuration", "/data/configuration.json", "server", "flask"]
