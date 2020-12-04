@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Bulk selecting areas for starting location no longer includes areas that aren't valid starting locations.
 
+-   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
+
 ## [2.1.1] - 2020-12-02
 
 -   Added: A prompt is now shown asking the user to install the Visual C++ Redistributable if loading the Dolphin backend fails.
