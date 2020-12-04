@@ -93,6 +93,7 @@ setup(
         ],
         "server": [
             "cryptography",
+            "discord.py",
             "eventlet",
             "flask-discord",
             "flask-socketio",
