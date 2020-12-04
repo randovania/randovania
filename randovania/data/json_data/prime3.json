@@ -886,6 +886,11 @@
                 "short_name": "Event91"
             },
             {
+                "index": 92,
+                "long_name": "Generator A Access Lasso Lock Removed",
+                "short_name": "Event92"
+            },
+            {
                 "index": 93,
                 "long_name": "Xenoresearch Power Outage",
                 "short_name": "Event93"
@@ -3918,20 +3923,66 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Generator A": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
+                                                "type": 1,
+                                                "index": 92,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Event - Lasso Lock Removed": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -3942,7 +3993,7 @@
                             "heal": false,
                             "coordinates": {
                                 "x": 34.5,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 2.5
                             },
                             "node_type": "dock",
@@ -3950,25 +4001,52 @@
                             "connected_area_asset_id": 15200271536650763937,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 6,
+                            "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Cargo Dock A": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
+                                                "type": 1,
+                                                "index": 92,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Lasso Lock Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 92,
+                            "connections": {
+                                "Door to Generator A": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
