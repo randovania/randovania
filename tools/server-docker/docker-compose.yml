@@ -22,3 +22,11 @@ services:
     networks:
       - web
     restart: always
+
+  bot:
+    image: "randovania/server:${VERSION}"
+    volumes:
+      - "${DATA_PATH}:/data"
+
+    command: --configuration /data/configuration.json server bot
+    restart: always
