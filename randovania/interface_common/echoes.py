@@ -1,5 +1,6 @@
 import multiprocessing
 from concurrent.futures.process import ProcessPoolExecutor
+from multiprocessing.connection import Connection
 from typing import Callable
 
 from randovania.generator import generator
@@ -8,7 +9,7 @@ from randovania.layout.permalink import Permalink
 from randovania.resolver import debug
 
 
-def _generate_layout_worker(output_pipe,
+def _generate_layout_worker(output_pipe: Connection,
                             permalink: Permalink,
                             validate_after_generation: bool,
                             timeout_during_generation: bool,
