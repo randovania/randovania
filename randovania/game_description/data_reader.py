@@ -214,6 +214,12 @@ class WorldReader:
             "Scan Visor"
         )
 
+    def _get_command_visor(self) -> ItemResourceInfo:
+        return find_resource_info_with_long_name(
+            self.resource_database.item,
+            "Command Visor"
+        )
+
     def read_node(self, data: Dict) -> Node:
         name: str = data["name"]
         self.generic_index += 1
@@ -280,7 +286,8 @@ class WorldReader:
 
             elif node_type == "player_ship":
                 return PlayerShipNode(name, heal, location, self.generic_index,
-                                      read_requirement(data["is_unlocked"], self.resource_database))
+                                      read_requirement(data["is_unlocked"], self.resource_database),
+                                      self._get_command_visor())
 
             else:
                 raise Exception(f"Unknown type: {node_type}")

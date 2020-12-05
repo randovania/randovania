@@ -251,3 +251,8 @@ class LogbookNode(ResourceNode):
 @dataclasses.dataclass(frozen=True)
 class PlayerShipNode(Node):
     is_unlocked: Requirement
+    item_to_summon: ItemResourceInfo
+
+    @property
+    def visor_requirement(self):
+        return ResourceRequirement(self.item_to_summon, 1, False)
