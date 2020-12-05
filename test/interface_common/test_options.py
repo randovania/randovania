@@ -9,7 +9,7 @@ import pytest
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common import update_checker
-from randovania.interface_common.options import Options, DecodeFailedException
+from randovania.interface_common.options import Options, DecodeFailedException, InfoAlert
 
 
 @pytest.fixture(name="option")
@@ -257,3 +257,19 @@ def test_setting_fields_to_self_do_nothing():
 
     # Reset and test they're the same
     assert options._serialize_fields() == initial_serialize
+
+
+def test_mark_alert_as_displayed(tmp_path):
+    opt = Options(tmp_path)
+
+    all_alerts = (InfoAlert.FAQ, InfoAlert.MULTIWORLD_FAQ)
+    for alert in all_alerts:
+        assert not opt.is_alert_displayed(alert)
+        opt.mark_alert_as_displayed(alert)
+        assert opt.is_alert_displayed(alert)
+
+    assert opt.displayed_alerts == set(all_alerts)
+
+    new_opt = Options(tmp_path)
+    new_opt.load_from_disk()
+    assert new_opt.displayed_alerts == set(all_alerts)

@@ -340,8 +340,9 @@ class Options:
         return value in self.displayed_alerts
 
     def mark_alert_as_displayed(self, value: InfoAlert):
-        alerts = self.displayed_alerts
-        if value not in alerts:
+        if value not in self.displayed_alerts:
+            # Create a copy so we don't modify the existing field
+            alerts = set(self.displayed_alerts)
             alerts.add(value)
             with self:
                 self.displayed_alerts = alerts

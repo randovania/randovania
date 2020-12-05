@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Fixed: 
+-   Fixed: Error messages are properly shown if a game fails to generate.
+
+-   Fixed: Alerts are now properly saved as displayed.
 
 ## [2.1.2] - 2020-12-05
 
--   Added: The Item Pool size now displays a warning if the it's above the maximum.
+-   Added: The Item Pool size now displays a warning if it's above the maximum.
 
 -   Changed: The minimum random starting items is now considered for checking the pool size.
 
