@@ -9,6 +9,7 @@ from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QMenu, QAction
 from asyncqt import asyncSlot
 
 from randovania.games.game import RandovaniaGame
+from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
@@ -41,13 +42,12 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
     _tool_button_menu: QMenu
     _action_delete: QAction
 
-    failed_to_generate_signal = Signal(GenerationFailure)
-
     def __init__(self, window: Ui_MainWindow, window_manager: WindowManager, options: Options):
         super().__init__()
 
         self.window = window
         self._window_manager = window_manager
+        self.failure_handler = GenerationFailureHandler(self)
         self._options = options
 
     def setup_ui(self):
@@ -56,7 +56,6 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         # Progress
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
-        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
         self.window.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         self.window.create_choose_game_combo.addItem("Metroid Prime 2: Echoes", RandovaniaGame.PRIME2)
@@ -92,11 +91,6 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self._action_delete.triggered.connect(self._on_delete_preset)
         action_export_preset.triggered.connect(self._on_export_preset)
         action_import_preset.triggered.connect(self._on_import_preset)
-
-    def _show_failed_generation_exception(self, exception: GenerationFailure):
-        QMessageBox.critical(self._window_manager,
-                             "An error occurred while generating a seed",
-                             "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
     @property
     def _current_preset_data(self) -> Optional[VersionedPreset]:
@@ -235,7 +229,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                 self._window_manager.open_game_details(layout)
 
             except GenerationFailure as generate_exception:
-                self.failed_to_generate_signal.emit(generate_exception)
+                self.failure_handler.handle_failure(generate_exception)
                 progress_update("Generation Failure: {}".format(generate_exception), -1)
 
         if self._window_manager.is_preview_mode:
