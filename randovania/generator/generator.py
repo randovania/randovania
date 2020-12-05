@@ -66,6 +66,8 @@ def generate_description(permalink: Permalink,
             result: LayoutDescription = result_async.get(timeout)
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when generating.")
+        except UnableToGenerate as e:
+            raise create_failure(str(e)) from e
 
         if validate_after_generation and permalink.player_count == 1:
             resolve_params = {

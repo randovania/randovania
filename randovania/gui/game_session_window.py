@@ -2,11 +2,12 @@ import asyncio
 import dataclasses
 import functools
 import json
+import logging
 import random
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt, Signal, QTimer
+from PySide2.QtCore import Qt, QTimer
 from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
@@ -16,15 +17,16 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
+from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
+from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
@@ -39,6 +41,8 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
+
+logger = logging.getLogger(__name__)
 
 
 @dataclasses.dataclass()
@@ -162,8 +166,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     _expecting_kick = False
     _already_kicked = False
 
-    failed_to_generate_signal = Signal(GenerationFailure)
-
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
                  preset_manager: PresetManager, window_manager: WindowManager, options: Options):
         super().__init__()
@@ -173,6 +175,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.network_client = network_client
         self.game_connection = game_connection
         self.multiworld_client = MultiworldClient(self.network_client, self.game_connection)
+        self.failure_handler = GenerationFailureHandler(self)
 
         self._preset_manager = preset_manager
         self._window_manager = window_manager
@@ -226,7 +229,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
         self.view_game_details_button.clicked.connect(self.view_game_details)
-        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
         self.game_connection.Updated.connect(self.on_game_connection_updated)
 
         # Game Connection
@@ -322,11 +324,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         finally:
             super().closeEvent(event)
         self.has_closed = True
-
-    def _show_failed_generation_exception(self, exception: GenerationFailure):
-        QMessageBox.critical(self._window_manager,
-                             "An error occurred while generating a seed",
-                             "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
     # Row Functions
 
@@ -846,15 +843,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
-        except GenerationFailure as e:
+        except Exception as e:
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
 
             message = "Error"
             if isinstance(e, GenerationFailure):
                 message = "Generation Failure"
-                self.failed_to_generate_signal.emit(e)
+                self.failure_handler.handle_failure(e)
+            else:
+                logger.exception("Unable to generate")
 
-            self.update_progress(f"{message}: {e} - {type(e)}", -1)
+            self.update_progress(f"{message}: {e}", -1)
 
         finally:
             self._generating_game = False
