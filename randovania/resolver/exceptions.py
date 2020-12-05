@@ -9,7 +9,7 @@ class GenerationFailure(Exception):
         self.permalink = permalink
 
     def __str__(self) -> str:
-        return "{} occurred for permalink {}".format(
+        return "Permalink {1} cannot be generated:\n{0}".format(
             super().__str__(),
             self.permalink.as_base64_str
         )
