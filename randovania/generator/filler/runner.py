@@ -116,7 +116,8 @@ def add_relative_hint(world_list: WorldList,
     }
     if not area_choices:
         return None
-    area = random_lib.select_element_with_weight(area_choices, rng)
+    area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
+                                                             key=lambda a: a[0].area_asset_id)), rng)
 
     if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
         relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
@@ -254,11 +255,12 @@ def fill_unassigned_hints(patches: GamePatches,
                             if isinstance(node, PickupNode)}
 
     # Get an stable order
-    possible_indices = list(sorted(possible_indices))
+    ordered_possible_indices = list(sorted(possible_indices))
+    ordered_potential_hint_locations = list(sorted(potential_hint_locations))
 
     num_logbooks: Dict[PickupIndex, int] = {
         index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
-        for index in possible_indices
+        for index in ordered_possible_indices
     }
     max_seen = max(num_logbooks.values())
     pickup_indices_weight: Dict[PickupIndex, int] = {
@@ -266,11 +268,11 @@ def fill_unassigned_hints(patches: GamePatches,
         for index, num_logbook in num_logbooks.items()
     }
     # Ensure all indices are present with at least weight 0
-    for index in possible_indices:
+    for index in ordered_possible_indices:
         if index not in pickup_indices_weight:
             pickup_indices_weight[index] = 0
 
-    for logbook in sorted(potential_hint_locations,
+    for logbook in sorted(ordered_potential_hint_locations,
                           key=lambda r: len(scan_asset_initial_pickups[r]),
                           reverse=True):
         try:
