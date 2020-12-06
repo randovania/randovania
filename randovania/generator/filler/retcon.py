@@ -46,10 +46,8 @@ class FillerConfiguration:
 
 def _filter_not_in_dict(elements: Iterator[X],
                         dictionary: Dict[X, Any],
-                        ) -> Iterator[X]:
-    for index in elements:
-        if index not in dictionary:
-            yield index
+                        ) -> Set[X]:
+    return set(elements) - set(dictionary.keys())
 
 
 class UncollectedState(NamedTuple):
@@ -60,10 +58,8 @@ class UncollectedState(NamedTuple):
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
-            set(_filter_not_in_dict(reach.state.collected_pickup_indices,
-                                    reach.state.patches.pickup_assignment)),
-            set(_filter_not_in_dict(reach.state.collected_scan_assets,
-                                    reach.state.patches.hints)),
+            _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
+            _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
             set(collectable_resource_nodes(reach.connected_nodes, reach))
         )
 
@@ -107,7 +103,7 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
     for indices in indices_groups:
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
-        for index in uncollected_indices & indices:
+        for index in sorted(uncollected_indices & indices):
             weight_from_seen_count = min(10, seen_counts[index]) ** -2
             result[index] = weight_from_collected_indices * weight_from_seen_count
             # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
@@ -478,7 +474,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
             if pickup_index not in scan_asset_initial_pickups[logbook_asset]
         ]
         if potential_hint_locations:
-            return rng.choice(potential_hint_locations)
+            return rng.choice(sorted(potential_hint_locations))
     return None
 
 
