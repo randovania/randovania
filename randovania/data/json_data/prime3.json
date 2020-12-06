@@ -29074,22 +29074,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "template",
-                                                            "data": "Use Screw Attack (No Space Jump)"
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 4,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -29171,8 +29162,54 @@
                                     ]
                                 },
                                 "Event - Barrier": {
-                                    "type": "template",
-                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 11,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (No Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 4,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
