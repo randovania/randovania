@@ -231,9 +231,9 @@ class GeneratorReach:
 
     @property
     def nodes(self) -> Iterator[Node]:
-        all_nodes = self.game.world_list.all_nodes
-        graph_nodes = [all_nodes[index] for index in self._digraph]
-        return sorted(graph_nodes)
+        for node in self.game.world_list.all_nodes:
+            if node.index in self._digraph:
+                yield node
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
