@@ -1095,24 +1095,31 @@ Asset id: 6410596230384865511
 > Door to Aurora Access; Heals? False; Spawn Point
   * Normal Door to Aurora Access/Door to Aurora Chamber
   > Door to Control Room Access
-      Any of the following:
-          All of the following:
-              Space Jump Boots
-              Any of the following:
-                  After Metroid Hatcher (Valhalla)
-                  All of the following:
-                      Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
-                      Morph Ball Bomb or Boost Ball
-          Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              After Metroid Hatcher (Valhalla)
+              Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  Morph Ball Bomb or Boost Ball
   > Event - Metroid Hatcher
       All of the following:
-          Energy Cells Total ≥ 9
+          Charge Beam or Missile
           Any of the following:
               Grapple Lasso
               All of the following:
                   Nova Beam
                   X-Ray Visor or Invisible Objects (Intermediate)
-          Charge Beam or Missile
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 5 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
 
 > Door to Control Room Access; Heals? False
   * Normal Door to Control Room Access/Door to Aurora Chamber
@@ -1139,10 +1146,26 @@ Asset id: 7569990525320728426
           Space Jump Boots
           Any of the following:
               After Stairwell Ramps
-              Morph Ball and Bomb/Spring Space Jump (Beginner)
-              Slope Jump (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Bomb/Spring Space Jump (Beginner)
+                      Screw Attack and Slope Jump (Beginner)
   > Event - Stairwell Ramps
-      Plasma Beam and Energy Cells Total ≥ 9
+      All of the following:
+          Plasma Beam
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 3 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Auxiliary Lift Elevator and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened
+                      Energy Cells Total ≥ 6 and Before Metroid Hatcher (Valhalla) and Before Port Observation Deck Door Lock
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Metroid Hatcher (Valhalla) or Before Xenoresearch Lab Tunnel Opened
 
 > Event - Stairwell Ramps; Heals? False
   * Event Stairwell Ramps
@@ -1180,11 +1203,39 @@ Xenoresearch Lab
 Asset id: 6078741217337776665
 > Door to Port Observation Deck; Heals? False; Spawn Point
   * Normal Door to Port Observation Deck/Door to Xenoresearch Lab
-  > Morph Ball Door to Ventilation Shaft
-      Missile and Grapple Lasso and Energy Cells Total ≥ 9 and Morph Ball
+  > Inner Area
+      Missile
 
 > Morph Ball Door to Ventilation Shaft; Heals? False
   * Morph Ball Door to Ventilation Shaft/Morph Ball Door to Xenoresearch Lab
+  > Inner Area
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+
+> Event - Tunnel Opened; Heals? False
+  * Event Xenoresearch Lab Tunnel Opened
+  > Inner Area
+      Trivial
+
+> Inner Area; Heals? False
+  > Door to Port Observation Deck
+      Missile and Space Jump Boots
+  > Morph Ball Door to Ventilation Shaft
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+  > Event - Tunnel Opened
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps
+                      All of the following:
+                          Before Metroid Hatcher (Valhalla) or Before Stairwell Ramps
+                          Any of the following:
+                              Energy Cells Total ≥ 7
+                              Energy Cells Total ≥ 6 and Before Port Observation Deck Door Lock
 
 ----------------
 Ventilation Shaft
@@ -1267,7 +1318,11 @@ Asset id: 17479488334200413695
   > Door to Port Observation Deck
       After Auxiliary Lift Elevator
   > Event - Activate Elevator
-      Grapple Lasso and Energy Cells Total ≥ 4
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 4
+              Energy Cells Total ≥ 2 and Before Stairwell Ramps and Enabled Skipping Energy Cells
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 16; Major Location? False
@@ -1341,7 +1396,15 @@ Asset id: 13201618045565515280
   > Door to Auxiliary Lift
       Morph Ball
   > Event - Energy Cell Door Lock
-      Energy Cells Total ≥ 7
+      Any of the following:
+          Energy Cells Total ≥ 7
+          All of the following:
+              Enabled Skipping Energy Cells
+              Any of the following:
+                  Energy Cells Total ≥ 3 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                  All of the following:
+                      Energy Cells Total ≥ 5
+                      Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
   > Event - Seeker Wall
       Missile ≥ 4 and Seeker Missile
 
