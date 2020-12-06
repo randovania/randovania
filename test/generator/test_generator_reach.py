@@ -163,7 +163,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         TranslatorGate(1): scan_visor
     })
     initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
-                          node_a, patches, None, echoes_resource_database)
+                          node_a, patches, None, echoes_resource_database, game.world_list)
 
     # Run
     reach = reach_with_all_safe_resources(game, initial_state)

@@ -41,7 +41,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def filter_collectable(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.state.patches, reach.state.resources):
+        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
             yield resource_node
 
 
@@ -285,9 +285,10 @@ class GeneratorReach:
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
+        all_nodes = self.game.world_list.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources)
+            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes)
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)
@@ -370,7 +371,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.state.patches, reach.state.resources):
+            if action.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
