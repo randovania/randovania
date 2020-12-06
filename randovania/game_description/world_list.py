@@ -181,7 +181,7 @@ class WorldList:
         if isinstance(node, PlayerShipNode):
             for other_node in self.all_nodes:
                 if isinstance(other_node, PlayerShipNode) and other_node != node:
-                    yield other_node, RequirementAnd([other_node.is_unlocked, node.is_unlocked, node.visor_requirement])
+                    yield other_node, other_node.is_unlocked
 
     def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, Requirement]]:
         """

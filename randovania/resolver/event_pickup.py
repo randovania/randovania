@@ -3,7 +3,7 @@ from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import EventNode, PickupNode, ResourceNode
+from randovania.game_description.node import EventNode, PickupNode, ResourceNode, Node
 from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
 
@@ -30,14 +30,15 @@ class EventPickupNode(ResourceNode):
     def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
         return ResourceRequirement(self.pickup_node.pickup_index, 1, False)
 
-    def can_collect(self, patches, current_resources: CurrentResources) -> bool:
-        event_collect = self.event_node.can_collect(patches, current_resources)
-        pickup_collect = self.pickup_node.can_collect(patches, current_resources)
+    def can_collect(self, patches, current_resources: CurrentResources, all_nodes: Tuple[Node, ...]) -> bool:
+        event_collect = self.event_node.can_collect(patches, current_resources, all_nodes)
+        pickup_collect = self.pickup_node.can_collect(patches, current_resources, all_nodes)
         return event_collect or pickup_collect
 
-    def resource_gain_on_collect(self, patches, current_resources: CurrentResources) -> ResourceGain:
-        yield from self.event_node.resource_gain_on_collect(patches, current_resources)
-        yield from self.pickup_node.resource_gain_on_collect(patches, current_resources)
+    def resource_gain_on_collect(self, patches, current_resources: CurrentResources, all_nodes: Tuple[Node, ...]
+                                 ) -> ResourceGain:
+        yield from self.event_node.resource_gain_on_collect(patches, current_resources, all_nodes)
+        yield from self.pickup_node.resource_gain_on_collect(patches, current_resources, all_nodes)
 
 
 def replace_with_event_pickups(game: GameDescription):
