@@ -1095,24 +1095,31 @@ Asset id: 6410596230384865511
 > Door to Aurora Access; Heals? False; Spawn Point
   * Normal Door to Aurora Access/Door to Aurora Chamber
   > Door to Control Room Access
-      Any of the following:
-          All of the following:
-              Space Jump Boots
-              Any of the following:
-                  After Metroid Hatcher (Valhalla)
-                  All of the following:
-                      Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
-                      Morph Ball Bomb or Boost Ball
-          Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              After Metroid Hatcher (Valhalla)
+              Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  Morph Ball Bomb or Boost Ball
   > Event - Metroid Hatcher
       All of the following:
-          Energy Cells Total ≥ 9
+          Charge Beam or Missile
           Any of the following:
               Grapple Lasso
               All of the following:
                   Nova Beam
                   X-Ray Visor or Invisible Objects (Intermediate)
-          Charge Beam or Missile
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 5 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
 
 > Door to Control Room Access; Heals? False
   * Normal Door to Control Room Access/Door to Aurora Chamber
@@ -1139,10 +1146,26 @@ Asset id: 7569990525320728426
           Space Jump Boots
           Any of the following:
               After Stairwell Ramps
-              Morph Ball and Bomb/Spring Space Jump (Beginner)
-              Slope Jump (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Bomb/Spring Space Jump (Beginner)
+                      Screw Attack and Slope Jump (Beginner)
   > Event - Stairwell Ramps
-      Plasma Beam and Energy Cells Total ≥ 9
+      All of the following:
+          Plasma Beam
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 3 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Auxiliary Lift Elevator and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened
+                      Energy Cells Total ≥ 6 and Before Metroid Hatcher (Valhalla) and Before Port Observation Deck Door Lock
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Metroid Hatcher (Valhalla) or Before Xenoresearch Lab Tunnel Opened
 
 > Event - Stairwell Ramps; Heals? False
   * Event Stairwell Ramps
@@ -1180,11 +1203,39 @@ Xenoresearch Lab
 Asset id: 6078741217337776665
 > Door to Port Observation Deck; Heals? False; Spawn Point
   * Normal Door to Port Observation Deck/Door to Xenoresearch Lab
-  > Morph Ball Door to Ventilation Shaft
-      Missile and Grapple Lasso and Energy Cells Total ≥ 9 and Morph Ball
+  > Inner Area
+      Missile
 
 > Morph Ball Door to Ventilation Shaft; Heals? False
   * Morph Ball Door to Ventilation Shaft/Morph Ball Door to Xenoresearch Lab
+  > Inner Area
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+
+> Event - Tunnel Opened; Heals? False
+  * Event Xenoresearch Lab Tunnel Opened
+  > Inner Area
+      Trivial
+
+> Inner Area; Heals? False
+  > Door to Port Observation Deck
+      Missile and Space Jump Boots
+  > Morph Ball Door to Ventilation Shaft
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+  > Event - Tunnel Opened
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps
+                      All of the following:
+                          Before Metroid Hatcher (Valhalla) or Before Stairwell Ramps
+                          Any of the following:
+                              Energy Cells Total ≥ 7
+                              Energy Cells Total ≥ 6 and Before Port Observation Deck Door Lock
 
 ----------------
 Ventilation Shaft
@@ -1267,7 +1318,11 @@ Asset id: 17479488334200413695
   > Door to Port Observation Deck
       After Auxiliary Lift Elevator
   > Event - Activate Elevator
-      Grapple Lasso and Energy Cells Total ≥ 4
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 4
+              Energy Cells Total ≥ 2 and Before Stairwell Ramps and Enabled Skipping Energy Cells
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 16; Major Location? False
@@ -1341,7 +1396,15 @@ Asset id: 13201618045565515280
   > Door to Auxiliary Lift
       Morph Ball
   > Event - Energy Cell Door Lock
-      Energy Cells Total ≥ 7
+      Any of the following:
+          Energy Cells Total ≥ 7
+          All of the following:
+              Enabled Skipping Energy Cells
+              Any of the following:
+                  Energy Cells Total ≥ 3 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                  All of the following:
+                      Energy Cells Total ≥ 5
+                      Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
   > Event - Seeker Wall
       Missile ≥ 4 and Seeker Missile
 
@@ -1604,7 +1667,7 @@ Asset id: 3467893814575167461
 > Door to Crash Site; Heals? False
   * Normal Door to Crash Site/Door to Gateway
   > Event - Green Lock
-      Morph Ball Bomb and Space Jump Boots and Morph Ball and After Gateway Orange Lock and After Gateway Entry Cutscene
+      Morph Ball Bomb and Space Jump Boots and Morph Ball and After Gateway Orange Lock
   > Under Orange Bomb Slot
       Trivial
 
@@ -1632,8 +1695,6 @@ Asset id: 3467893814575167461
                   Space Jump Boots
                   Morph Ball and Bomb/Spring Space Jump (Advanced)
           Movement (Beginner) and Use Screw Attack (No Space Jump)
-  > Event - Entry Cutscene
-      Trivial
 
 > Door to Reliquary II; Heals? False
   * Normal Door to Reliquary II/Door to Gateway
@@ -1643,11 +1704,13 @@ Asset id: 3467893814575167461
           Movement (Beginner) and Use Screw Attack (No Space Jump)
           Morph Ball and Roll Jump (Intermediate)
   > Pickup (Missile Expansion)
-      Plasma Beam and Morph Ball and After Gateway Entry Cutscene
+      Plasma Beam and Morph Ball
   > Behind Gate
       Morph Ball and After Gateway Tunnel Orb
   > Front of Gate
-      Movement (Intermediate) and Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+      Any of the following:
+          Space Jump Boots
+          Movement (Intermediate) and Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 29; Major Location? False
@@ -1685,7 +1748,10 @@ Asset id: 3467893814575167461
 
 > Front of Gate; Heals? False
   > Door to Gateway Hall
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+          Morph Ball and Roll Jump (Intermediate)
   > Door to Reliquary II
       All of the following:
           Space Jump Boots and Morph Ball
@@ -1698,7 +1764,7 @@ Asset id: 3467893814575167461
   > Event - Orange Lock
       Morph Ball Bomb and Space Jump Boots and Morph Ball
   > Event - Green Lock
-      Morph Ball Bomb and Space Jump Boots and Morph Ball and After Gateway Entry Cutscene and Bomb/Spring Space Jump (Intermediate)
+      Morph Ball Bomb and Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Intermediate)
   > Event - Bridge Destroyed
       Grapple Lasso
   > Under Orange Bomb Slot
@@ -1716,11 +1782,6 @@ Asset id: 3467893814575167461
       Grapple Swing or Space Jump Boots or Movement (Intermediate) or Use Screw Attack (Space Jump)
   > Front of Gate
       Space Jump Boots or Before Gateway Bridge Destroyed
-
-> Event - Entry Cutscene; Heals? False
-  * Event Gateway Entry Cutscene
-  > Door to Gateway Hall
-      Trivial
 
 ----------------
 Grand Court
@@ -2069,7 +2130,11 @@ Asset id: 15861154386655212106
   > Door to Overgrown Ruins
       After Ancient Courtyard Halfpipe Wall
   > Pickup (Missile Expansion)
-      Morph Ball and Boost Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Boost Ball
+              Morph Ball Bomb and Bomb/Spring Space Jump (Expert) and Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 36; Major Location? False
@@ -2703,7 +2768,7 @@ Asset id: 4215957264467390882
       All of the following:
           Space Jump Boots and Morph Ball
           Any of the following:
-              Grapple Lasso or Screw Attack
+              Grapple Lasso or Screw Attack or Bomb/Spring Space Jump (Advanced)
               Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Door to Fiery Airdock; Heals? False; Spawn Point
@@ -3841,12 +3906,16 @@ Asset id: 722564631842201436
 > Door to Spire Dock (Post-Bomb); Heals? False
   * Normal Door to Spire Dock (Post-Bomb)/Door to Maintenance Shaft AU
   > Ledge
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Door to Spire Dock (Pre-Bomb); Heals? False
   * Normal Door to Spire Dock (Pre-Bomb)/Door to Maintenance Shaft AU
   > Ledge
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Event - Aurora Chamber Reloaded; Heals? False
   * Event Aurora Chamber (Elysia) Reloaded After Vaccine
@@ -3975,9 +4044,11 @@ Asset id: 12622074872595627812
 > Door to Barracks Access; Heals? False; Spawn Point
   * Normal Door to Barracks Access/Door to Steambot Barracks
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Morph Ball and Spider Ball
+      Morph Ball Bomb and Morph Ball and Spider Ball and After Steambot Barracks Lift Activated
   > Bottom Floor
-      Morph Ball Bomb and Morph Ball
+      Morph Ball Bomb and Morph Ball and After Steambot Barracks Lift Activated
+  > Event - Lift Activated
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 60; Major Location? False
@@ -3991,16 +4062,14 @@ Asset id: 12622074872595627812
 
 > Event - Steamlord; Heals? False
   * Event Steamlord (Steambot Barracks)
-  > Bottom Floor
+  > Pickup (Energy Tank)
       Trivial
 
 > Bottom Floor; Heals? False
   > Door to Barracks Lift
       After Steambot Barracks Gate
   > Door to Barracks Access
-      Morph Ball and Boost Ball and After Steamlord (Steambot Barracks)
-  > Pickup (Energy Tank)
-      After Steamlord (Steambot Barracks)
+      Morph Ball and Boost Ball and After Steamlord (Steambot Barracks) and After Steambot Barracks Lift Activated
   > Event - Steamlord
       Trivial
   > Event - Gate
@@ -4009,6 +4078,11 @@ Asset id: 12622074872595627812
 > Event - Gate; Heals? False
   * Event Steambot Barracks Gate
   > Bottom Floor
+      Trivial
+
+> Event - Lift Activated; Heals? False
+  * Event Steambot Barracks Lift Activated
+  > Door to Barracks Access
       Trivial
 
 ----------------
@@ -4098,7 +4172,7 @@ Asset id: 3166066018495772067
 ----------------
 Escape Pod Bay
 Asset id: 7293006450314500398
-> Door to Escape Pod Bay Access; Heals? False
+> Door to Escape Pod Bay Access; Heals? False; Spawn Point
   * Normal Door to Escape Pod Bay Access/Door to Escape Pod Bay
 
 > Dock to Spire; Heals? False
@@ -5097,9 +5171,7 @@ Asset id: 13146584938063573409
   > Samus Ship
       All of the following:
           After Landing Site Alpha Barrier
-          Any of the following:
-              Space Jump Boots
-              Movement (Beginner) and Use Screw Attack (No Space Jump)
+          Space Jump Boots or Movement (Beginner)
   > Event - Barrier
       Use Grapple Voltage (Lasso and Voltage)
 
@@ -5114,7 +5186,11 @@ Asset id: 13146584938063573409
               Space Jump Boots or Terminal Fall Abuse (Beginner)
               Movement (Beginner) and Use Screw Attack (No Space Jump)
   > Event - Barrier
-      Use Grapple Voltage (Lasso and Voltage)
+      All of the following:
+          Use Grapple Voltage (Lasso and Voltage)
+          Any of the following:
+              Space Jump Boots or Terminal Fall Abuse (Beginner)
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
 
 > Event - Barrier; Heals? False
   * Event Landing Site Alpha Barrier
@@ -6235,8 +6311,6 @@ Asset id: 3288365355139345163
 Leads to Mining Site; Heals? False
   * Normal Door to Transit Station 4-A
 Leads to Mining Site/Door to Defense Access
-  > Hall Center
-      After Defense Access Voltage Barrier
   > Front of Spider Tracks
       Trivial
 
@@ -6339,11 +6413,7 @@ Asset id: 1516173575710242674
   * Normal Door to Mine Lift/Door to Phazon Quarry
   > Door to Transit Station 4-B
 Leads to Command Center
-      Any of the following:
-          After Phazon Quarry Drill Halfpipe
-          All of the following:
-              Movement (Beginner)
-              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+      Trivial
 
 > Door to Drill Shaft 2; Heals? False
   * Nova Door to Drill Shaft 2/Door to Phazon Quarry
