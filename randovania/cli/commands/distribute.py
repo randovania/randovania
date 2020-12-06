@@ -11,11 +11,12 @@ from randovania.resolver import debug
 
 def _create_permalink(args) -> Permalink:
     preset_manager = PresetManager(None)
+    preset = preset_manager.preset_for_name(args.preset_name).get_preset()
 
     return Permalink(
         args.seed_number,
         spoiler=True,
-        presets={0: preset_manager.preset_for_name(args.preset_name).get_preset()},
+        presets={i: preset for i in range(args.player_count)},
     )
 
 
@@ -63,6 +64,8 @@ def add_distribute_command(sub_parsers):
     group.add_argument("--preset-name", type=str, help="The name of the preset to use")
 
     parser.add_argument("--seed-number", type=int, default=0, help="If using a preset, the seed number. Defaults to 0.")
+    parser.add_argument("--player-count", type=int, default=1,
+                        help="If using a preset, the number of players. Defaults to 1.")
 
     parser.add_argument(
         "output_file",
