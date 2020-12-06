@@ -4,6 +4,7 @@ from typing import Tuple
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.node import PlayerShipNode
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
@@ -108,6 +109,9 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
     starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
 
+    if isinstance(starting_node, PlayerShipNode):
+        initial_resources[starting_node.resource()] = 1
+
     initial_game_state = game.initial_states.get("Default")
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
@@ -119,7 +123,8 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
         starting_node,
         patches,
         None,
-        game.resource_database
+        game.resource_database,
+        game.world_list,
     )
 
     # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on

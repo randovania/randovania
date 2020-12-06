@@ -357,6 +357,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return PlayerShipNode(
                 name, heal, location, index,
                 self._unlocked_by_requirement,
+                self._get_command_visor()
             )
 
         else:
@@ -366,6 +367,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         return find_resource_info_with_long_name(
             self.game.resource_database.item,
             "Scan Visor"
+        )
+
+    def _get_command_visor(self):
+        return find_resource_info_with_long_name(
+            self.game.resource_database.item,
+            "Command Visor"
         )
 
     def try_accept(self):

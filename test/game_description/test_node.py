@@ -41,14 +41,14 @@ def test_logbook_node_can_collect(logbook_node,
     # Setup
     has_translator, scan_visor, translator, node = logbook_node
 
-    assert not node.can_collect(empty_patches, {})
-    assert node.can_collect(empty_patches, {scan_visor: 1}) != has_translator
-    assert node.can_collect(empty_patches, {scan_visor: 1, translator: 1})
+    assert not node.can_collect(empty_patches, {}, ())
+    assert node.can_collect(empty_patches, {scan_visor: 1}, ()) != has_translator
+    assert node.can_collect(empty_patches, {scan_visor: 1, translator: 1}, ())
 
     resource = node.resource()
-    assert not node.can_collect(empty_patches, {resource: 1})
-    assert not node.can_collect(empty_patches, {resource: 1, scan_visor: 1})
-    assert not node.can_collect(empty_patches, {resource: 1, scan_visor: 1, translator: 1})
+    assert not node.can_collect(empty_patches, {resource: 1}, ())
+    assert not node.can_collect(empty_patches, {resource: 1, scan_visor: 1}, ())
+    assert not node.can_collect(empty_patches, {resource: 1, scan_visor: 1, translator: 1}, ())
 
 
 def test_logbook_node_resource_gain_on_collect(logbook_node,
@@ -57,7 +57,7 @@ def test_logbook_node_resource_gain_on_collect(logbook_node,
     node = logbook_node[-1]
 
     # Run
-    gain = node.resource_gain_on_collect(empty_patches, {})
+    gain = node.resource_gain_on_collect(empty_patches, {}, ())
 
     # Assert
     assert convert_resource_gain_to_current_resources(gain) == {node.resource(): 1}
