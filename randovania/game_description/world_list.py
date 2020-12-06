@@ -7,7 +7,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements import Requirement, RequirementAnd
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
 

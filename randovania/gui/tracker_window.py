@@ -383,6 +383,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
             self.update_matplot_widget(nodes_in_reach)
 
+        all_nodes = self.game_description.world_list.all_nodes
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
                 area_is_visible = False
@@ -398,7 +399,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources))
+                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources, all_nodes))
                         node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
@@ -692,6 +693,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             row_for_parent[parent_widget] += 1
 
     def state_for_current_configuration(self) -> Optional[State]:
+        all_nodes = self.game_description.world_list.all_nodes
+
         state = self._initial_state.copy()
         if self._actions:
             state.node = self._actions[-1]
@@ -708,7 +711,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources,
+                                                                                 all_nodes),
                                                    state.resources)
 
         return state
