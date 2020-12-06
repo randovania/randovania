@@ -9,6 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
+from randovania.game_description.world_list import WorldList
 
 
 def _energy_tank_difference(new_resources: CurrentResources,
@@ -27,6 +28,7 @@ class State:
     previous_state: Optional["State"]
     path_from_previous_state: Tuple[Node, ...]
     resource_database: ResourceDatabase
+    world_list: WorldList
 
     def __init__(self,
                  resources: CurrentResources,
@@ -35,7 +37,8 @@ class State:
                  node: Node,
                  patches: GamePatches,
                  previous: Optional["State"],
-                 resource_database: ResourceDatabase):
+                 resource_database: ResourceDatabase,
+                 world_list: WorldList):
 
         self.resources = resources
         self.collected_resource_nodes = collected_resource_nodes
@@ -44,6 +47,7 @@ class State:
         self.path_from_previous_state = ()
         self.previous_state = previous
         self.resource_database = resource_database
+        self.world_list = world_list
 
         # We place this last because we need resource_database set
         self.energy = min(energy, self.maximum_energy)
@@ -58,7 +62,8 @@ class State:
                      self.node,
                      self.patches,
                      self.previous_state,
-                     self.resource_database)
+                     self.resource_database,
+                     self.world_list)
 
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
@@ -74,11 +79,11 @@ class State:
 
     def take_damage(self, damage: int) -> "State":
         return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self,
-                     self.resource_database)
+                     self.resource_database, self.world_list)
 
     def heal(self) -> "State":
         return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self,
-                     self.resource_database)
+                     self.resource_database, self.world_list)
 
     def _energy_for(self, resources: CurrentResources) -> int:
         energy_per_tank = self.patches.game_specific.energy_per_tank if self.patches.game_specific is not None else 100
@@ -96,12 +101,13 @@ class State:
         :return:
         """
 
-        if not node.can_collect(self.patches, self.resources):
+        if not node.can_collect(self.patches, self.resources, self.world_list.all_nodes):
             raise ValueError(
                 "Trying to collect an uncollectable node'{}'".format(node))
 
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources),
+        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources,
+                                                                             self.world_list.all_nodes),
                                                new_resources)
 
         energy = new_energy
@@ -109,7 +115,7 @@ class State:
             energy = self._energy_for(new_resources)
 
         return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self,
-                     self.resource_database)
+                     self.resource_database, self.world_list)
 
     def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
         if new_energy is None:
@@ -134,7 +140,8 @@ class State:
             self.node,
             self.patches,
             self,
-            self.resource_database
+            self.resource_database,
+            self.world_list,
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
@@ -160,7 +167,8 @@ class State:
             self.node,
             new_patches,
             self,
-            self.resource_database
+            self.resource_database,
+            self.world_list,
         )
 
 

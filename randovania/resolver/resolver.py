@@ -2,7 +2,7 @@ from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode, ResourceNode, EventNode
+from randovania.game_description.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -50,7 +50,8 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
 
 def _should_check_if_action_is_safe(state: State,
                                     action: ResourceNode,
-                                    dangerous_resources: FrozenSet[ResourceInfo]) -> bool:
+                                    dangerous_resources: FrozenSet[ResourceInfo],
+                                    all_nodes: Tuple[Node, ...]) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
@@ -58,7 +59,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     if any(resource in dangerous_resources
-           for resource in action.resource_gain_on_collect(state.patches, state.resources)):
+           for resource in action.resource_gain_on_collect(state.patches, state.resources, all_nodes)):
         return False
 
     if isinstance(action, EventNode):
@@ -102,7 +103,8 @@ def _inner_advance_depth(state: State,
     status_update("Resolving... {} total resources".format(len(state.resources)))
 
     for action, energy in reach.possible_actions(state):
-        if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
+        if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
+                                           logic.game.world_list.all_nodes):
 
             potential_state = state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
