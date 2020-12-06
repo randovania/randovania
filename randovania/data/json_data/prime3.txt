@@ -3981,9 +3981,11 @@ Asset id: 12622074872595627812
 > Door to Barracks Access; Heals? False; Spawn Point
   * Normal Door to Barracks Access/Door to Steambot Barracks
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Morph Ball and Spider Ball
+      Morph Ball Bomb and Morph Ball and Spider Ball and After Steambot Barracks Lift Activated
   > Bottom Floor
-      Morph Ball Bomb and Morph Ball
+      Morph Ball Bomb and Morph Ball and After Steambot Barracks Lift Activated
+  > Event - Lift Activated
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 60; Major Location? False
@@ -3997,16 +3999,14 @@ Asset id: 12622074872595627812
 
 > Event - Steamlord; Heals? False
   * Event Steamlord (Steambot Barracks)
-  > Bottom Floor
+  > Pickup (Energy Tank)
       Trivial
 
 > Bottom Floor; Heals? False
   > Door to Barracks Lift
       After Steambot Barracks Gate
   > Door to Barracks Access
-      Morph Ball and Boost Ball and After Steamlord (Steambot Barracks)
-  > Pickup (Energy Tank)
-      After Steamlord (Steambot Barracks)
+      Morph Ball and Boost Ball and After Steamlord (Steambot Barracks) and After Steambot Barracks Lift Activated
   > Event - Steamlord
       Trivial
   > Event - Gate
@@ -4015,6 +4015,11 @@ Asset id: 12622074872595627812
 > Event - Gate; Heals? False
   * Event Steambot Barracks Gate
   > Bottom Floor
+      Trivial
+
+> Event - Lift Activated; Heals? False
+  * Event Steambot Barracks Lift Activated
+  > Door to Barracks Access
       Trivial
 
 ----------------
