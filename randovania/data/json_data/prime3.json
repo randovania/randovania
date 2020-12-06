@@ -9618,20 +9618,39 @@
                                     ]
                                 },
                                 "Front of Gate": {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 2,
-                                                "index": 4,
-                                                "amount": 2,
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 4,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -9759,13 +9778,59 @@
                             "node_type": "generic",
                             "connections": {
                                 "Door to Gateway Hall": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 6,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "Door to Reliquary II": {
                                     "type": "and",
