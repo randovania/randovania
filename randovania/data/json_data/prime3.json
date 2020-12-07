@@ -13086,30 +13086,53 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Hangar Bay": {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
-                                            "type": "or",
+                                            "type": "and",
                                             "data": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": [
                                                         {
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 0,
-                                                                "index": 8,
-                                                                "amount": 1,
+                                                                "index": 4,
+                                                                "amount": 4,
                                                                 "negate": false
                                                             }
                                                         },
                                                         {
-                                                            "type": "or",
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "and",
                                                             "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 32,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
                                                                 {
                                                                     "type": "resource",
                                                                     "data": {
@@ -13120,67 +13143,90 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "template",
-                                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
                                                                 }
                                                             ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 15,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
                                                         },
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 32,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 5,
-                                                                "amount": 2,
-                                                                "negate": false
-                                                            }
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 7,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 15,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
                                             ]
                                         },
                                         {
-                                            "type": "or",
+                                            "type": "and",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 4,
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 3,
-                                                        "amount": 1,
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 4,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
