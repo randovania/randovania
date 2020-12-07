@@ -359,6 +359,7 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
 
     return format_params
 
+
 def _prime_format_params(configuration: PrimeConfiguration) -> dict:
     major_items = configuration.major_items_configuration
 
@@ -380,7 +381,6 @@ def _prime_format_params(configuration: PrimeConfiguration) -> dict:
     format_params["main_pb_required"] = _bool_to_str(main_pb_required)
 
     return format_params
-
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
