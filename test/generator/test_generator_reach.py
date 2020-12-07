@@ -73,8 +73,9 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 @pytest.mark.parametrize(("preset_name", "ignore_events", "ignore_pickups"), [
-    ("Starter Preset", {91}, set()),  # Echoes
-    ("Corruption Preset", {1, 146, 147, 148}, {0, 1, 2})  # Corruption
+    #("Starter Preset", {91}, set()),  # Echoes
+    #("Corruption Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
+    ("Prime Preset", set(), set())  # Prime
 ])
 def test_database_collectable(preset_manager, preset_name, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
@@ -82,12 +83,16 @@ def test_database_collectable(preset_manager, preset_name, ignore_events, ignore
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
     add_resources_into_another(initial_state.resources, pool_results.initial_resources)
+    print("Pickups:")
     for pickup in pool_results.pickups:
         add_pickup_to_state(initial_state, pickup)
+        print(pickup)
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)
+        print(pickup)
     for trick in game.resource_database.trick:
         initial_state.resources[trick] = LayoutTrickLevel.HYPERMODE.as_number
+    print("----End of pickups-----")
 
     expected_events = [event for event in game.resource_database.event if event.index not in ignore_events]
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
@@ -97,14 +102,14 @@ def test_database_collectable(preset_manager, preset_name, ignore_events, ignore
         reach.act_on(next(iter(collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
-    # print("\nCurrent reach:")
-    # for world in game.world_list.worlds:
-    #     print(f"\n>> {world.name}")
-    #     for node in world.all_nodes:
-    #         print("[{!s:>5}, {!s:>5}, {!s:>5}] {}".format(
-    #             reach.is_reachable_node(node), reach.is_safe_node(node),
-    #             reach.state.resources.get(node.resource(), 0) > 0 if isinstance(node, ResourceNode) else "",
-    #             game.world_list.node_name(node)))
+    print("\nCurrent reach:")
+    for world in game.world_list.worlds:
+        print(f"\n>> {world.name}")
+        for node in world.all_nodes:
+            print("[{!s:>5}, {!s:>5}, {!s:>5}] {}".format(
+                reach.is_reachable_node(node), reach.is_safe_node(node),
+                reach.state.resources.get(node.resource(), 0) > 0 if isinstance(node, ResourceNode) else "",
+                game.world_list.node_name(node)))
 
     collected_indices = {
         resource
