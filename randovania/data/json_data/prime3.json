@@ -9120,8 +9120,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Gateway": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         },
