@@ -7,6 +7,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime_configuration import PrimeConfiguration
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -14,6 +15,7 @@ def _dictionary_byte_hash(data: dict) -> int:
 
 
 _game_to_config = {
+    RandovaniaGame.PRIME1: PrimeConfiguration,
     RandovaniaGame.PRIME2: EchoesConfiguration,
     RandovaniaGame.PRIME3: CorruptionConfiguration,
 }

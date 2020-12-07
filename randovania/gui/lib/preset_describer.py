@@ -4,6 +4,7 @@ from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base_configuration import BaseConfiguration
+from randovania.layout.prime_configuration import PrimeConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.major_item_state import MajorItemState
@@ -82,7 +83,39 @@ _CORRUPTION_TEMPLATE_STRINGS = {
         "Pickup Model: {pickup_model}",
     ],
 }
+
+_PRIME_TEMPLATE_STRINGS = {
+    "Item Placement": [
+        "Trick Level: {trick_level}",
+        "Randomization Mode: {randomization_mode}",
+        "Random Starting Items: {random_starting_items}",
+    ],
+    "Items": [
+        "Progressive Missile: {progressive_missile}",
+        "Progressive Beam: {progressive_beam}",
+        "Starting Items: {starting_items}",
+        "Item Pool: {item_pool}",
+    ],
+    "Gameplay": [
+        "Starting Location: {starting_location}",
+        "Teleporters: {elevators}",
+    ],
+    "Game Changes": [
+        "Missiles needs Launcher: {missile_launcher_required}",
+        "Power Bomb needs Main: {main_pb_required}",
+        "Final bosses included? {include_final_bosses}",
+    ],
+    "Difficulty": [
+        "Energy Tank: {energy_tank}",
+        "Damage Strictness: {damage_strictness}",
+        "Pickup Model: {pickup_model}",
+    ],
+}
 _EXPECTED_ITEMS = {
+    RandovaniaGame.PRIME1: {
+        "Scan Visor",
+        "Power Beam"
+    },
     RandovaniaGame.PRIME2: {
         "Scan Visor",
         "Morph Ball",
@@ -326,6 +359,29 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
 
     return format_params
 
+def _prime_format_params(configuration: PrimeConfiguration) -> dict:
+    major_items = configuration.major_items_configuration
+
+    format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
+                     "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
+                     "elevators": configuration.elevators.value,
+                     "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
+                     "progressive_beam": _bool_to_str(has_shuffled_item(major_items, "Progressive Beam"))}
+
+    missile_launcher_required = True
+    main_pb_required = True
+    for ammo, state in configuration.ammo_configuration.items_state.items():
+        if ammo.name == "Missile Expansion":
+            missile_launcher_required = state.requires_major_item
+        elif ammo.name == "Power Bomb Expansion":
+            main_pb_required = state.requires_major_item
+
+    format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
+    format_params["main_pb_required"] = _bool_to_str(main_pb_required)
+
+    return format_params
+
+
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
     configuration = preset.configuration
@@ -340,6 +396,11 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     elif preset.game == RandovaniaGame.PRIME3:
         template_strings = _CORRUPTION_TEMPLATE_STRINGS
         format_params.update(_corruption_format_params(configuration))
+
+    elif preset.game == RandovaniaGame.PRIME1:
+        template_strings = _PRIME_TEMPLATE_STRINGS
+        format_params.update(_prime_format_params(configuration))
+
 
     for category, templates in template_strings.items():
         yield category, [
