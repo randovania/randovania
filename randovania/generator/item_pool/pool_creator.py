@@ -5,6 +5,7 @@ from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
 from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.generator.item_pool.energy_cells import add_energy_cells
+from randovania.generator.item_pool.artifacts import add_artifacts
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.layout.echoes_configuration import EchoesConfiguration
@@ -50,5 +51,8 @@ def calculate_pool_results(layout_configuration: EchoesConfiguration,
     elif layout_configuration.game == RandovaniaGame.PRIME3:
         # Adding Energy Cells to pool
         _extend_pool_results(base_results, add_energy_cells(resource_database))
+
+    elif layout_configuration.game == RandovaniaGame.PRIME1:
+        _extend_pool_results(base_results, add_artifacts(resource_database))
 
     return base_results
