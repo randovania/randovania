@@ -73,8 +73,8 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 @pytest.mark.parametrize(("preset_name", "ignore_events", "ignore_pickups"), [
-    #("Starter Preset", {91}, set()),  # Echoes
-    #("Corruption Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
+    ("Starter Preset", {91}, set()),  # Echoes
+    ("Corruption Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
     ("Prime Preset", {33}, set())  # Prime
 ])
 def test_database_collectable(preset_manager, preset_name, ignore_events, ignore_pickups):
