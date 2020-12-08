@@ -503,6 +503,11 @@
                 "short_name": "Event38"
             },
             {
+                "index": 39,
+                "long_name": "Incinerator Drone",
+                "short_name": "Event39"
+            },
+            {
                 "index": 40,
                 "long_name": "Cargo Freight Lift to Deck Gamma Conduits Activated",
                 "short_name": "Event40"
@@ -26146,6 +26151,38 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
+                                "Dock to Great Tree Hall": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": [
@@ -27097,7 +27134,7 @@
                             "dock_index": 3,
                             "connected_area_asset_id": 153979389,
                             "connected_dock_index": 1,
-                            "dock_type": 1,
+                            "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Ruins Entrance": {
@@ -30321,6 +30358,10 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Gathering Hall Access": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "or",
                                     "data": [
@@ -31927,7 +31968,17 @@
                             "connections": {
                                 "Pickup (Morph Ball Bombs)": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 39,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "or",
@@ -31945,17 +31996,49 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 6,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 6,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 7,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 1,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
                                     ]
+                                },
+                                "Event - Incinerator Drone": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -31969,7 +32052,68 @@
                             "connections": {
                                 "Dock to Burn Dome Access": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 39,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 7,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 1,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -31990,17 +32134,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 16,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 6,
+                                                        "type": 1,
+                                                        "index": 39,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -32008,6 +32143,23 @@
                                             ]
                                         }
                                     ]
+                                },
+                                "Event - Incinerator Drone": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Incinerator Drone",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 39,
+                            "connections": {
+                                "Pickup (Morph Ball Bombs)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -33434,7 +33586,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 1,
-                                                        "index": 3,
+                                                        "index": 4,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -33525,7 +33677,7 @@
                             "heal": false,
                             "coordinates": null,
                             "node_type": "event",
-                            "event_index": 3,
+                            "event_index": 4,
                             "connections": {
                                 "Dock to Reflecting Pool Access": {
                                     "type": "and",
