@@ -187,7 +187,8 @@ def read_game_specific(data: Dict, resource_database: ResourceDatabase,
         beam_configurations=tuple(
             read_beam_configuration(beam, resource_database)
             for beam in data["beam_configurations"]
-        )
+        ),
+        dangerous_energy_tank=data["dangerous_energy_tank"],
     )
 
 

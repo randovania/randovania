@@ -6,7 +6,7 @@ from typing import Iterator, Optional, Callable, List, Dict
 import tenacity
 
 from randovania import VERSION
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -163,8 +163,7 @@ def _async_create_description(permalink: Permalink,
 
 
 def create_player_pool(rng: Random, configuration: EchoesConfiguration, player_index: int) -> PlayerPool:
-    game = data_reader.decode_data(configuration.game_data)
-
+    game = default_database.game_description_for(configuration.game)
     base_patches = dataclasses.replace(base_patches_factory.create_base_patches(configuration, rng, game),
                                        player_index=player_index)
 
