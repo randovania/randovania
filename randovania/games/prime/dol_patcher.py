@@ -2,92 +2,13 @@ import dataclasses
 import struct
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO, Optional, Tuple, Iterable
 
+from randovania.dol_patching.assembler import ppc
+from randovania.dol_patching.dol_file import DolFile
+from randovania.dol_patching.dol_version import DolVersion, find_version_for_dol
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
-
-_NUM_TEXT_SECTIONS = 7
-_NUM_DATA_SECTIONS = 11
-_NUM_SECTIONS = _NUM_TEXT_SECTIONS + _NUM_DATA_SECTIONS
-
-
-@dataclasses.dataclass(frozen=True)
-class Section:
-    offset: int
-    base_address: int
-    size: int
-
-
-@dataclasses.dataclass(frozen=True)
-class DolHeader:
-    sections: Tuple[Section, ...]
-    bss_address: int
-    bss_size: int
-    entry_point: int
-
-    @classmethod
-    def from_bytes(cls, data: bytes) -> "DolHeader":
-        struct_format = f">{_NUM_SECTIONS}L"
-        offset_for_section = struct.unpack_from(struct_format, data, 0)
-        base_address_for_section = struct.unpack_from(struct_format, data, 0x48)
-        size_for_section = struct.unpack_from(struct_format, data, 0x90)
-
-        bss_address, bss_size, entry_point = struct.unpack_from(">LLL", data, 0xD8)
-        sections = tuple(Section(offset_for_section[i], base_address_for_section[i], size_for_section[i])
-                         for i in range(_NUM_SECTIONS))
-
-        return cls(sections, bss_address, bss_size, entry_point)
-
-    def offset_for_address(self, address: int) -> Optional[int]:
-        for section in self.sections:
-            relative_to_base = address - section.base_address
-            if 0 <= relative_to_base < section.size:
-                return section.offset + relative_to_base
-        return None
-
-
-class DolFile:
-    dol_file: Optional[BinaryIO] = None
-    editable: bool = False
-
-    def __init__(self, dol_path: Path):
-        with dol_path.open("rb") as f:
-            header_bytes = f.read(0x100)
-
-        self.dol_path = dol_path
-        self.header = DolHeader.from_bytes(header_bytes)
-
-    def set_editable(self, editable: bool):
-        self.editable = editable
-
-    def __enter__(self):
-        if self.editable:
-            f = self.dol_path.open("r+b")
-        else:
-            f = self.dol_path.open("rb")
-        self.dol_file = f.__enter__()
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.dol_file.__exit__(exc_type, exc_type, exc_tb)
-        self.dol_file = None
-
-    def offset_for_address(self, address: int) -> int:
-        offset = self.header.offset_for_address(address)
-        if offset is None:
-            raise ValueError(f"Address 0x{address:x} could not be resolved for dol at {self.dol_file}")
-        return offset
-
-    def read(self, address: int, size: int) -> bytes:
-        offset = self.offset_for_address(address)
-        self.dol_file.seek(offset)
-        return self.dol_file.read(size)
-
-    def write(self, address: int, code_points: Iterable[int]):
-        offset = self.offset_for_address(address)
-        self.dol_file.seek(offset)
-        self.dol_file.write(bytes(code_points))
 
 
 @dataclasses.dataclass(frozen=True)
@@ -122,18 +43,20 @@ class SafeZoneAddresses:
 
 
 @dataclasses.dataclass(frozen=True)
-class PatchesForVersion:
-    game: RandovaniaGame
-    description: str
-    build_string_address: int
-    build_string: bytes
-    sda2_base: int
+class DangerousEnergyTankAddresses:
+    small_number_float: int
+    incr_pickup: int
+
+
+@dataclasses.dataclass(frozen=True)
+class PatchesForVersion(DolVersion):
     game_state_pointer: int
     string_display: StringDisplayPatchAddresses
     health_capacity: HealthCapacityAddresses
     beam_cost_addresses: BeamCostAddresses
     game_options_constructor_address: int
     safe_zone: SafeZoneAddresses
+    dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
 ALL_VERSIONS_PATCHES = [
@@ -168,6 +91,10 @@ ALL_VERSIONS_PATCHES = [
             heal_per_frame_constant=0x8041a4fc,
             increment_health_fmr=0x8000c710,
         ),
+        dangerous_energy_tank=DangerousEnergyTankAddresses(
+            small_number_float=0x8041a4a8,
+            incr_pickup=0x80085760,
+        ),
     ),
     PatchesForVersion(
         game=RandovaniaGame.PRIME2,
@@ -200,6 +127,7 @@ ALL_VERSIONS_PATCHES = [
             heal_per_frame_constant=0x8041b7f4,
             increment_health_fmr=0x8000c754,
         ),
+        dangerous_energy_tank=None,
     ),
 ]
 
@@ -425,25 +353,25 @@ def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ec
 
         # Power Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        0x38, 0x60, *enc(0, 0),  # li r3, <type>
-        0x39, 0x20, *enc(0, 1),  # li r9, <type>
+        *ppc.li(ppc.r3, ammo_types[0][0]),
+        *ppc.li(ppc.r9, ammo_types[0][1]),
         0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
 
         # Dark Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        0x38, 0x60, *enc(1, 0),  # li r3, <type>
-        0x39, 0x20, *enc(1, 1),  # li r9, <type>
+        *ppc.li(ppc.r3, ammo_types[1][0]),
+        *ppc.li(ppc.r9, ammo_types[1][1]),
         0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
 
         # Light Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
-        0x38, 0x60, *enc(2, 0),  # li r3, <type>
-        0x39, 0x20, *enc(2, 1),  # li r9, <type>
+        *ppc.li(ppc.r3, ammo_types[2][0]),
+        *ppc.li(ppc.r9, ammo_types[2][1]),
         0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
 
         # Annihilator Beam
-        0x38, 0x60, *enc(3, 0),  # li r3, <type>
-        0x39, 0x20, *enc(3, 1),  # li r9, <type>
+        *ppc.li(ppc.r3, ammo_types[3][0]),
+        *ppc.li(ppc.r9, ammo_types[3][1]),
 
         # update_out_beam_type
         0x90, 0x7b, 0x00, 0x00,  # stw r0,0x0(r27)              # *outBeamAmmoTypeA = r3
@@ -469,36 +397,50 @@ def _apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
     offset = patch_addresses.heal_per_frame_constant - sda2_base
 
     dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))
-    dol_file.write(patch_addresses.increment_health_fmr, [
-        0xc0, 0x22, *struct.pack(">h", offset),  # lfs f1, <offset>(r2)
-    ])
+    dol_file.write(patch_addresses.increment_health_fmr, ppc.lfs(ppc.f1, offset, ppc.r2))
+
+
+def _apply_reverse_energy_tank_heal_patch(sd2_base: int,
+                                          addresses: DangerousEnergyTankAddresses,
+                                          active: bool,
+                                          dol_file: DolFile,
+                                          ):
+    if active:
+        patch = [
+            *ppc.lfs(ppc.f0, (addresses.small_number_float - sd2_base), ppc.r2),
+            *ppc.stfs(ppc.f0, 0x14, ppc.r30),
+            *ppc.ori(ppc.r0, ppc.r0, 0),
+            *ppc.ori(ppc.r0, ppc.r0, 0),
+        ]
+    else:
+        patch = [
+            *ppc.or_(ppc.r3, ppc.r30, ppc.r30),
+            *ppc.li(ppc.r4, 0x29),  # HealthRefill
+            *ppc.li(ppc.r5, 9999),
+            *ppc.bl(addresses.incr_pickup, instruction_address=addresses.incr_pickup + 0x90 + 4 * 3),
+        ]
+
+    dol_file.write(addresses.incr_pickup + 0x90, patch)
 
 
 def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences):
     dol_file = DolFile(_get_dol_path(game_root))
 
-    version_patches = _read_binary_version(dol_file)
+    version = find_version_for_dol(dol_file, ALL_VERSIONS_PATCHES)
+    if not isinstance(version, PatchesForVersion):
+        return
 
     dol_file.set_editable(True)
     with dol_file:
-        _apply_string_display_patch(version_patches.string_display, dol_file)
-        _apply_game_options_patch(version_patches.game_options_constructor_address,
+        _apply_string_display_patch(version.string_display, dol_file)
+        _apply_game_options_patch(version.game_options_constructor_address,
                                   user_preferences, dol_file)
-        _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_specific, dol_file)
-        _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_specific, dol_file)
-        _apply_safe_zone_heal_patch(version_patches.safe_zone, version_patches.sda2_base, game_specific, dol_file)
+        _apply_energy_tank_capacity_patch(version.health_capacity, game_specific, dol_file)
+        _apply_beam_cost_patch(version.beam_cost_addresses, game_specific, dol_file)
+        _apply_safe_zone_heal_patch(version.safe_zone, version.sda2_base, game_specific, dol_file)
+        _apply_reverse_energy_tank_heal_patch(version.sda2_base, version.dangerous_energy_tank,
+                                              game_specific.dangerous_energy_tank, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:
     return game_root.joinpath("sys/main.dol")
-
-
-def _read_binary_version(dol_file: DolFile) -> PatchesForVersion:
-    dol_file.set_editable(False)
-    with dol_file:
-        for version in ALL_VERSIONS_PATCHES:
-            build_string = dol_file.read(version.build_string_address, len(version.build_string))
-            if build_string == version.build_string:
-                return version
-
-    raise RuntimeError(f"Unsupported game version")

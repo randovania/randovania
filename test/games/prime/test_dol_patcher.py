@@ -1,8 +1,6 @@
 from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY
 
-import pytest
-
 from randovania.games.prime import dol_patcher
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
@@ -13,8 +11,8 @@ from randovania.interface_common.echoes_user_preferences import EchoesUserPrefer
 @patch("randovania.games.prime.dol_patcher._apply_string_display_patch", autospec=True)
 @patch("randovania.games.prime.dol_patcher.DolFile")
 @patch("randovania.games.prime.dol_patcher._get_dol_path", autospec=True)
-@patch("randovania.games.prime.dol_patcher._read_binary_version", autospec=True)
-def test_apply_patches(mock_read_binary_version: MagicMock,
+@patch("randovania.games.prime.dol_patcher.find_version_for_dol", autospec=True)
+def test_apply_patches(mock_find_version_for_dol: MagicMock,
                        mock_get_dol_path: MagicMock,
                        mock_dol_file_constructor: MagicMock,
                        mock_apply_string_display_patch: MagicMock,
@@ -27,14 +25,14 @@ def test_apply_patches(mock_read_binary_version: MagicMock,
     game_patches = MagicMock()
     user_preferences = MagicMock()
     version_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    mock_read_binary_version.return_value = version_patches
+    mock_find_version_for_dol.return_value = version_patches
     dol_file = mock_dol_file_constructor.return_value
 
     # Run
     dol_patcher.apply_patches(game_root, game_patches.game_specific, user_preferences)
 
     # Assert
-    mock_read_binary_version.assert_called_once_with(dol_file)
+    mock_find_version_for_dol.assert_called_once_with(dol_file, dol_patcher.ALL_VERSIONS_PATCHES)
     mock_get_dol_path.assert_called_once_with(game_root)
     mock_dol_file_constructor.assert_called_once_with(mock_get_dol_path.return_value)
     mock_apply_string_display_patch.assert_called_once_with(version_patches.string_display, dol_file)
@@ -54,19 +52,6 @@ def test_apply_patches(mock_read_binary_version: MagicMock,
 
 def test_get_dol_path():
     assert dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
-
-
-@pytest.mark.parametrize("version", dol_patcher.ALL_VERSIONS_PATCHES)
-def test_read_binary_version(version):
-    dol_file = MagicMock()
-    dol_file.read.return_value = version.build_string
-
-    # Run
-    result = dol_patcher._read_binary_version(dol_file)
-
-    # Assert
-    dol_file.set_editable.assert_called_once_with(False)
-    assert result == version
 
 
 def test_apply_string_display_patch():

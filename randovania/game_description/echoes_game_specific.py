@@ -21,3 +21,4 @@ class EchoesGameSpecific:
     energy_per_tank: float
     safe_zone_heal_per_second: float
     beam_configurations: Tuple[EchoesBeamConfiguration, ...]
+    dangerous_energy_tank: bool
