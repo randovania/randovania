@@ -574,6 +574,11 @@
                 "short_name": "Event25"
             },
             {
+                "index": 26,
+                "long_name": "Phazon Quarry Pirate Fight",
+                "short_name": "Event26"
+            },
+            {
                 "index": 27,
                 "long_name": "Grand Court Tunnel Panels",
                 "short_name": "Event27"
@@ -862,6 +867,11 @@
                 "index": 85,
                 "long_name": "Chozo Observatory Map Data",
                 "short_name": "Event85"
+            },
+            {
+                "index": 86,
+                "long_name": "Phazon Harvesting Walkway Destroyed",
+                "short_name": "Event86"
             },
             {
                 "index": 88,
@@ -36901,8 +36911,13 @@
                                     "data": []
                                 },
                                 "Event - Drill Wall (Upper)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -36963,19 +36978,6 @@
                                                     "type": "and",
                                                     "data": [
                                                         {
-                                                            "type": "template",
-                                                            "data": "Use Screw Attack (Space Jump)"
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 4,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 1,
@@ -36983,6 +36985,56 @@
                                                                 "amount": 1,
                                                                 "negate": false
                                                             }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 4,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 16,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 14,
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -37012,13 +37064,41 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 32,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -37055,10 +37135,24 @@
                                     ]
                                 },
                                 "Event - Drill Halfpipe": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Drill Wall (Lower)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Pirate Fight": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -37143,6 +37237,19 @@
                                     "data": []
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Pirate Fight",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 26,
+                            "connections": {
+                                "Door to Transit Station 4-B\nLeads to Command Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -37174,20 +37281,34 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
                                                 "type": 1,
                                                 "index": 124,
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 2,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -37316,27 +37437,13 @@
                                                     "data": "Hazard Shield"
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 16,
-                                                                "amount": 2,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 1,
-                                                                "amount": 100,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -37390,7 +37497,7 @@
                                                             "data": {
                                                                 "type": 2,
                                                                 "index": 16,
-                                                                "amount": 2,
+                                                                "amount": 1,
                                                                 "negate": false
                                                             }
                                                         },
@@ -37399,7 +37506,7 @@
                                                             "data": {
                                                                 "type": 3,
                                                                 "index": 1,
-                                                                "amount": 300,
+                                                                "amount": 50,
                                                                 "negate": false
                                                             }
                                                         }
@@ -37464,8 +37571,45 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Hazard Shield"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 86,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Hazard Shield"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 16,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 250,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -37473,30 +37617,94 @@
                                             "type": "and",
                                             "data": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 86,
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 2,
-                                                        "index": 16,
-                                                        "amount": 2,
+                                                        "index": 4,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 1,
-                                                        "amount": 200,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Hazard Shield"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 16,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 3,
+                                                                                "index": 1,
+                                                                                "amount": 450,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 0,
+                                                                                        "index": 33,
+                                                                                        "amount": 1,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 1,
+                                                                                        "amount": 250,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
                                     ]
+                                },
+                                "Event - Walkway Destroyed": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -37519,15 +37727,6 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
                                             "type": "or",
                                             "data": [
                                                 {
@@ -37535,31 +37734,67 @@
                                                     "data": "Hazard Shield"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "or",
                                                     "data": [
                                                         {
                                                             "type": "resource",
                                                             "data": {
-                                                                "type": 2,
-                                                                "index": 16,
-                                                                "amount": 2,
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
                                                                 "negate": false
                                                             }
                                                         },
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 1,
-                                                                "amount": 75,
-                                                                "negate": false
-                                                            }
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 11,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
                                             ]
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Walkway Destroyed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 86,
+                            "connections": {
+                                "Door to Mine Lift": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -37588,13 +37823,59 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Main Cavern": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 11,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
