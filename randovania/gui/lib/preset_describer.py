@@ -91,14 +91,12 @@ _PRIME_TEMPLATE_STRINGS = {
         "Random Starting Items: {random_starting_items}",
     ],
     "Items": [
-        "Progressive Missile: {progressive_missile}",
-        "Progressive Beam: {progressive_beam}",
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
-        "Teleporters: {elevators}",
+        "Elevators: {elevators}",
     ],
     "Game Changes": [
         "Missiles needs Launcher: {missile_launcher_required}",
@@ -365,9 +363,8 @@ def _prime_format_params(configuration: PrimeConfiguration) -> dict:
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
                      "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
-                     "elevators": configuration.elevators.value,
-                     "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
-                     "progressive_beam": _bool_to_str(has_shuffled_item(major_items, "Progressive Beam"))}
+                     "elevators": configuration.elevators.value
+                     }
 
     missile_launcher_required = True
     main_pb_required = True
