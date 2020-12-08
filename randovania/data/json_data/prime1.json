@@ -876,7 +876,17 @@
     },
     "victory_condition": {
         "type": "or",
-        "data": []
+        "data": [
+          {
+            "type": "resource",
+            "data": {
+              "type": 1,
+              "index": 2,
+              "amount": 1,
+              "negate": false
+            }
+          }
+        ]
     },
     "dock_weakness_database": {
         "door": [
@@ -6162,29 +6172,6 @@
                                 "Dock to Pike Access": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Dock to Research Core Access": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 19,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
                                 }
                             }
                         }
@@ -28344,7 +28331,9 @@
                             "name": "Pickup (Energy Tank)",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "pickup",
+                            "pickup_index": 100,
+                            "major_location": false,
                             "connections": {
                                 "Dock to Training Chamber Access": {
                                     "type": "or",
