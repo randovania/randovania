@@ -1,3 +1,4 @@
+import asyncio
 import time
 from argparse import ArgumentParser
 from pathlib import Path
@@ -9,8 +10,10 @@ from randovania.layout.permalink import Permalink
 from randovania.resolver import debug
 
 
-def _create_permalink(args) -> Permalink:
-    preset_manager = PresetManager(None)
+async def _create_permalink(args) -> Permalink:
+    from randovania.interface_common import persistence
+    preset_manager = PresetManager(persistence.user_data_dir())
+    await preset_manager.load_user_presets()
     preset = preset_manager.preset_for_name(args.preset_name).get_preset()
 
     return Permalink(
@@ -28,7 +31,7 @@ def distribute_command_logic(args):
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)
     else:
-        permalink = _create_permalink(args)
+        permalink = asyncio.run(_create_permalink(args))
         print(f"Permalink: {permalink.as_base64_str}")
 
     if permalink.spoiler:
