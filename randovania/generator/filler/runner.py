@@ -16,7 +16,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.generator.filler.filler_library import should_have_hint
+from randovania.generator.filler.filler_library import should_have_hint, UnableToGenerate
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
@@ -351,7 +351,17 @@ def run_filler(rng: Random,
             ),
         ))
 
-    filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
+    try:
+        filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
+    except UnableToGenerate as e:
+        message = "{}\n\n{}".format(
+            str(e),
+            "\n\n".join(
+                "#### Player {}\n{}".format(player.index + 1, player.current_state_report())
+                for player in player_states
+            ),
+        )
+        raise UnableToGenerate(message) from e
 
     results = {}
 

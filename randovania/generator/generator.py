@@ -22,7 +22,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
-from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
+from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
 from randovania.resolver.state import State
 
 
@@ -50,26 +50,18 @@ def generate_description(permalink: Permalink,
     if status_update is None:
         status_update = id
 
-    create_patches_params = {
-        "permalink": permalink,
-        "status_update": status_update,
-        "attempts": attempts,
-    }
+    try:
+        result = _async_create_description(
+            permalink=permalink,
+            status_update=status_update,
+            attempts=attempts,
+        )
+    except UnableToGenerate as e:
+        raise GenerationFailure("Could not generate a game with the given settings",
+                                permalink=permalink, source=e) from e
 
-    def create_failure(message: str):
-        return GenerationFailure(message, permalink=permalink)
-
-    with multiprocessing.dummy.Pool(1) as dummy_pool:
-        result_async = dummy_pool.apply_async(func=_async_create_description,
-                                              kwds=create_patches_params)
-        try:
-            result: LayoutDescription = result_async.get(timeout)
-        except multiprocessing.TimeoutError:
-            raise create_failure("Timeout reached when generating.")
-        except UnableToGenerate as e:
-            raise create_failure(str(e)) from e
-
-        if validate_after_generation and permalink.player_count == 1:
+    if validate_after_generation and permalink.player_count == 1:
+        with multiprocessing.dummy.Pool(1) as dummy_pool:
             resolve_params = {
                 "configuration": permalink.presets[0].configuration,
                 "patches": result.all_patches[0],
@@ -80,12 +72,14 @@ def generate_description(permalink: Permalink,
 
             try:
                 final_state_by_resolve = final_state_async.get(timeout)
-            except multiprocessing.TimeoutError:
-                raise create_failure("Timeout reached when validating possibility")
+            except multiprocessing.TimeoutError as e:
+                raise GenerationFailure("Timeout reached when validating possibility",
+                                        permalink=permalink, source=e) from e
 
             if final_state_by_resolve is None:
                 # Why is final_state_by_distribution not OK?
-                raise create_failure("Generated seed was considered impossible by the solver")
+                raise GenerationFailure("Generated game was considered impossible by the solver",
+                                        permalink=permalink, source=ImpossibleForSolver())
 
     return result
 
