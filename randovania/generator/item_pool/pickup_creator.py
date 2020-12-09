@@ -7,6 +7,7 @@ from randovania.game_description.resources.pickup_entry import ConditionalResour
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.prime import corruption_items
+from randovania.games.prime import prime_items
 from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_MODEL, DARK_TEMPLE_KEY_NAMES, DARK_TEMPLE_KEY_ITEMS, \
     SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM
 from randovania.layout.major_item_state import MajorItemState
@@ -218,6 +219,24 @@ def create_energy_cell(cell_index: int,
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
         probability_offset=0.25,
+    )
+
+
+def create_artifact(artifact_index: int,
+                    resource_database: ResourceDatabase,
+                    ) -> PickupEntry:
+    return PickupEntry(
+        name=prime_items.ARTIFACT_NAMES[artifact_index],
+        resources=(
+            ConditionalResources(None, None, tuple([
+                (resource_database.get_item(prime_items.ARTIFACT_ITEMS[artifact_index]), 1),
+                (resource_database.item_percentage, 1)
+            ])),
+        ),
+        model_index=prime_items.ARTIFACT_MODEL[artifact_index],
+        item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
+        probability_offset=1,
     )
 
 

@@ -1,0 +1,80 @@
+{
+    "schema_version": 6,
+    "name": "Prime Preset",
+    "description": "Metroid Prime for the Nintendo Gamecube",
+    "base_preset_name": null,
+    "game": "prime1",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {
+            }
+        },
+        "damage_strictness": 1.5,
+        "elevators": "vanilla",
+        "starting_location": [
+            "Tallon Overworld/Landing Site"
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Power Beam": {"num_included_in_starting_items": 1},
+                "Wave Beam": {"num_shuffled_pickups": 1},
+                "Ice Beam": {"num_shuffled_pickups": 1},
+                "Plasma Beam": {"num_shuffled_pickups": 1},
+                "Charge Beam": {"num_shuffled_pickups": 1},
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [5]
+                },
+                "Combat Visor": {"num_included_in_starting_items": 1},
+                "Scan Visor": {"num_included_in_starting_items": 1},
+                "Thermal Visor": {"num_shuffled_pickups": 1},
+                "X-Ray Visor": {"num_shuffled_pickups": 1},
+                "Space Jump Boots": {"num_shuffled_pickups": 1},
+                "Energy Tank": {"num_shuffled_pickups": 14},
+                "Morph Ball": {"num_shuffled_pickups": 1},
+                "Morph Ball Bombs": {"num_shuffled_pickups": 1},
+                "Boost Ball": {"num_shuffled_pickups": 1},
+                "Spider Ball": {"num_shuffled_pickups": 1},
+                "Power Bomb": {"num_shuffled_pickups": 1, "included_ammo": [4]},
+                "Power Suit": {"num_included_in_starting_items": 1},
+                "Varia Suit": {"num_shuffled_pickups": 1},
+                "Gravity Suit": {"num_shuffled_pickups": 1},
+                "Phazon Suit": {"num_shuffled_pickups": 1},
+                "Super Missile": {"num_shuffled_pickups": 1},
+                "Wavebuster": {"num_shuffled_pickups": 1},
+                "Ice Spreader": {"num_shuffled_pickups": 1},
+                "Flamethrower": {"num_shuffled_pickups": 1},
+                "Grapple Beam": {"num_shuffled_pickups": 1}
+            },
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "maximum_ammo": {
+                "4": 250,
+                "7": 8
+            },
+            "items_state": {
+                "Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 49,
+                    "requires_major_item": true
+                },
+                "Power Bomb Expansion": {
+                    "variance": 0,
+                    "pickup_count": 4,
+                    "requires_major_item": true
+                }
+            }
+        },
+        "skip_final_bosses": false,
+        "energy_per_tank": 100.0,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm"
+    }
+}

@@ -27,6 +27,9 @@ def _database() -> ResourceDatabase:
             SimpleResourceInfo(1, "Impossible", "Impossible", ""),
         ],
         requirement_template={},
+        energy_tank_item_index=0,
+        item_percentage_index=0,
+        multiworld_magic_item_index=0
     )
 
 

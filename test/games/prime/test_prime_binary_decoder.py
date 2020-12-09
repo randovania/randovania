@@ -14,6 +14,9 @@ def test_simple_round_trip():
         "game": "prime2",
         "resource_database": {
             "items": [],
+            "energy_tank_item_index": 0,
+            "item_percentage_index": 0,
+            "multiworld_magic_item_index": 0,
             "events": [],
             "tricks": [],
             "damage": [],
@@ -183,6 +186,9 @@ def test_encode_resource_database():
     # Setup
     resource_database = {
         "items": [],
+        "energy_tank_item_index": 0,
+        "item_percentage_index": 0,
+        "multiworld_magic_item_index": 0,
         "events": [],
         "tricks": [],
         "damage": [],
@@ -201,4 +207,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'

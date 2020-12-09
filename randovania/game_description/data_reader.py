@@ -350,6 +350,9 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
         requirement_template={},
+        energy_tank_item_index=data["energy_tank_item_index"],
+        item_percentage_index=data["item_percentage_index"],
+        multiworld_magic_item_index=data["multiworld_magic_item_index"]
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
     return db

@@ -190,6 +190,9 @@ ConstructDockWeakness = Struct(
 
 ConstructResourceDatabase = Struct(
     items=PrefixedArray(VarInt, ConstructItemResourceInfo),
+    energy_tank_item_index=VarInt,
+    item_percentage_index=VarInt,
+    multiworld_magic_item_index=VarInt,
     events=PrefixedArray(VarInt, ConstructResourceInfo),
     tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
     damage=PrefixedArray(VarInt, Struct(
