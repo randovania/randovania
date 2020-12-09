@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Added a detailed report of the generator's state when a game fails to generate.
+
 -   Fixed: Error messages are properly shown if a game fails to generate.
 
 -   Fixed: Alerts are now properly saved as displayed.

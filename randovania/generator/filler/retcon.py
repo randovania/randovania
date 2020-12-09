@@ -3,6 +3,7 @@ import dataclasses
 import itertools
 import math
 import pprint
+import re
 from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
     DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
@@ -257,6 +258,28 @@ class PlayerState:
             (pickup_index, target),
         ])
 
+    def current_state_report(self) -> str:
+        state = UncollectedState.from_reach(self.reach)
+        pickups_by_name_and_quantity = collections.defaultdict(int)
+
+        _KEY_MATCH = re.compile(r"Key (\d+)")
+        for pickup in self.pickups_left:
+            pickups_by_name_and_quantity[_KEY_MATCH.sub("Key", pickup.name)] += 1
+
+        to_progress = {_KEY_MATCH.sub("Key", resource.long_name)
+                       for resource in interesting_resources_for_reach(self.reach)}
+
+        return ("At {0} after {1} actions and {2} pickups, with {3} collected locations.\n\n"
+                "Pickups still available: {4}\n\nResources to progress: {5}").format(
+            self.game.world_list.node_name(self.reach.state.node, with_world=True, distinguish_dark_aether=True),
+            self.num_actions,
+            self.num_assigned_pickups,
+            len(state.indices),
+            ", ".join(name if quantity == 1 else f"{name} x{quantity}"
+                      for name, quantity in sorted(pickups_by_name_and_quantity.items())),
+            ", ".join(sorted(to_progress)),
+        )
+
 
 def _get_next_player(rng: Random, player_states: List[PlayerState]) -> Optional[PlayerState]:
     """
@@ -478,20 +501,23 @@ def _calculate_hint_location_for_action(action: PickupEntry,
     return None
 
 
-def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
-                                   reach: GeneratorReach,
-                                   ) -> Tuple[PickupEntry, ...]:
+def interesting_resources_for_reach(reach: GeneratorReach) -> FrozenSet[ResourceInfo]:
     satisfiable_requirements: FrozenSet[RequirementList] = frozenset(itertools.chain.from_iterable(
         requirements.alternatives
         for requirements in reach.unreachable_nodes_with_requirements().values()
     ))
-    interesting_resources = calculate_interesting_resources(
+    return calculate_interesting_resources(
         satisfiable_requirements,
         reach.state.resources,
         reach.state.energy,
         reach.state.resource_database
     )
 
+
+def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
+                                   reach: GeneratorReach,
+                                   ) -> Tuple[PickupEntry, ...]:
+    interesting_resources = interesting_resources_for_reach(reach)
     progression_pickups = []
 
     for pickup in pickups_left:
