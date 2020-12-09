@@ -5849,17 +5849,17 @@ Command Station
 Asset id: 13589229454537797972
 > Door to Transit Station 2-A; Heals? False
   * Normal Door to Transit Station 2-A/Door to Command Station
-  > Door to Defense Access (Base)
+  > Door to Defense Access (Lower)
       After Command Station Phazon Blob
 
 > Morph Ball Door to Flux Control; Heals? False; Spawn Point
   * Morph Ball Door to Flux Control/Morph Ball Door to Command Station
   > Morph Ball Door to Command Vault
-      Trivial
+      Morph Ball
   > Pickup (Missile Expansion)
       Morph Ball
 
-> Door to Defense Access (Base); Heals? False
+> Door to Defense Access (Lower); Heals? False
   * Nova Door to Defense Access/Door to Command Station (Base)
   > Door to Transit Station 2-A
       After Command Station Phazon Blob
@@ -5879,29 +5879,29 @@ Asset id: 13589229454537797972
   > Morph Ball Door to Flux Control
       Morph Ball
 
-> Door to Defense Access (Balcony); Heals? False
+> Door to Defense Access (Upper); Heals? False
   * Normal Door to Defense Access/Door to Command Station (Balcony)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 90; Major Location? False
   > Morph Ball Door to Flux Control
       Trivial
-  > Door to Defense Access (Base)
+  > Door to Defense Access (Lower)
       After Command Station Morph Ball Barrier
 
 > Event - Morph Ball Barrier; Heals? False
   * Event Command Station Morph Ball Barrier
-  > Door to Defense Access (Base)
+  > Door to Defense Access (Lower)
       Trivial
 
 > Event - Phazon Blob; Heals? False
   * Event Command Station Phazon Blob
-  > Door to Defense Access (Base)
+  > Door to Defense Access (Lower)
       Trivial
 
 > Event - Disable Defense; Heals? False
   * Event Command Station Disable Defense
-  > Door to Defense Access (Base)
+  > Door to Defense Access (Lower)
       Trivial
 
 ----------------
@@ -5909,19 +5909,36 @@ Transit Station 1104
 Asset id: 9401189381177175830
 > Door to Transit Station 0203; Heals? False
   * Normal Door to Transit Station 0203/Door to Transit Station 1104
-  > Door to Skyway Access
-      After Transit Station 1104 Voltage Barrier
+  > Front of Voltage Terminal
+      After Transit Station 1104 Voltage Barrier and After Transit Station 1104 Reloaded After Entry
 
 > Door to Skyway Access; Heals? False; Spawn Point
   * Normal Door to Skyway Access/Door to Transit Station 1104
-  > Door to Transit Station 0203
-      Space Jump Boots and After Transit Station 1104 Voltage Barrier
-  > Event - Grapple Voltage Wall
-      Use Grapple Voltage (Lasso and Voltage)
+  > Front of Voltage Terminal
+      Trivial
 
 > Event - Grapple Voltage Wall; Heals? False
   * Event Transit Station 1104 Voltage Barrier
+  > Front of Voltage Terminal
+      Trivial
+
+> Event - Room Entered; Heals? False
+  * Event Transit Station 1104 Entered
+  > Front of Voltage Terminal
+      Trivial
+
+> Front of Voltage Terminal; Heals? False
+  > Door to Transit Station 0203
+      All of the following:
+          After Transit Station 1104 Voltage Barrier
+          Any of the following:
+              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+              Scan Visor and Slope Jump (Beginner)
   > Door to Skyway Access
+      After Transit Station 1104 Reloaded After Entry
+  > Event - Grapple Voltage Wall
+      Use Grapple Voltage (Lasso and Voltage)
+  > Event - Room Entered
       Trivial
 
 ----------------
@@ -5929,22 +5946,33 @@ Transit Station 0203
 Asset id: 11029728296836027873
 > Door to Transit Tunnel P68; Heals? False
   * Normal Door to Transit Tunnel P68/Door to Transit Station 0203
-  > Door to Transit Station 1104
-      After Transit Station 0203 Fight Barrier
+  > Event - Transit Station 1104 Reloaded
+      After Transit Station 1104 Entered
+  > Room Center
+      After Transit Station 0203 Reloaded After Entry
 
 > Door to Transit Station 1104; Heals? False; Spawn Point
   * Normal Door to Transit Station 1104/Door to Transit Station 0203
-  > Door to Transit Tunnel P68
-      All of the following:
-          Space Jump Boots and Morph Ball and After Transit Station 0203 Fight Barrier
-          Screw Attack or Bomb/Spring Space Jump (Beginner)
-  > Event - Barrier Removed
+  > Event - Room Entered
+      Trivial
+  > Room Center
       Trivial
 
-> Event - Barrier Removed; Heals? False
-  * Event Transit Station 0203 Fight Barrier
-  > Door to Transit Station 1104
+> Event - Transit Station 1104 Reloaded; Heals? False
+  * Event Transit Station 1104 Reloaded After Entry
+  > Door to Transit Tunnel P68
       Trivial
+
+> Event - Room Entered; Heals? False
+  * Event Transit Station 0203 Entered
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Door to Transit Tunnel P68
+      Space Jump Boots or Before Transit Station 0203 Reloaded After Entry
+  > Door to Transit Station 1104
+      After Transit Station 1104 Reloaded After Entry
 
 ----------------
 Transit Station 0204
@@ -5952,17 +5980,19 @@ Asset id: 16448375801676354754
 > Door to Transit Tunnel P68; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel P68/Door to Transit Station 0204
   > Door to Transit Tunnel P69
-      Trivial
+      Any of the following:
+          Combat (Expert) or Enter Hypermode
+          Charge Beam and Grapple Lasso and Normal Damage ≥ 300
 
 > Door to Transit Tunnel P69; Heals? False
   * Normal Door to Transit Tunnel P69/Door to Transit Station 0204
   > Door to Transit Tunnel P68
       After Omega Ridey
-  > Event - Transit Station P68 Reloaded After Entry
-      Trivial
+  > Event - Transit Station P68 Reloaded
+      After Transit Tunnel P68 Entered
 
-> Event - Transit Station P68 Reloaded After Entry; Heals? False
-  * Event Transit Station P68 Reloaded After Entry
+> Event - Transit Station P68 Reloaded; Heals? False
+  * Event Transit Tunnel P68 Reloaded After Entry
   > Door to Transit Tunnel P69
       Trivial
 
@@ -5987,19 +6017,28 @@ Asset id: 16543666292419631320
 > Door to Transit Station 0204; Heals? False
   * Normal Door to Transit Station 0204/Door to Transit Tunnel P68
   > Door to Transit Station 0203
-      After Transit Station P68 Reloaded After Entry
-  > Event - Transit Station 0203 Barrier Removed
+      After Transit Station 0203 Reloaded After Entry
+  > Event - Transit Station 0203 Reloaded
+      After Transit Station 0203 Entered
+  > Event - Room Entered
       Trivial
 
 > Door to Transit Station 0203; Heals? False; Spawn Point
   * Normal Door to Transit Station 0203/Door to Transit Tunnel P68
   > Door to Transit Station 0204
       Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+  > Event - Room Entered
+      Trivial
 
-> Event - Transit Station 0203 Barrier Removed; Heals? False
-  * Event Transit Station 0203 Fight Barrier
+> Event - Transit Station 0203 Reloaded; Heals? False
+  * Event Transit Station 0203 Reloaded After Entry
   > Door to Transit Station 0204
       Trivial
+
+> Event - Room Entered; Heals? False
+  * Event Transit Tunnel P68 Entered
+  > Door to Transit Station 0203
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Transit Tunnel P69
@@ -6012,7 +6051,7 @@ Asset id: 11121647730682962559
 > Door to Transit Station 0204; Heals? False; Spawn Point
   * Normal Door to Transit Station 0204/Door to Transit Tunnel P69
   > Door to Transit Station 0205
-      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+      Space Jump Boots or Standable Terrain (Beginner) or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Transit Station 2-A
@@ -6046,10 +6085,19 @@ Asset id: 13825059228540765135
 > Door to Transit Station 2-B; Heals? False
   * Normal Door to Transit Station 2-B/Door to Leviathan Access Portal
   > Teleporter to Leviathan
+      After Leviathan Access Portal Activated
+  > Event - Portal Activated
       Morph Ball Bomb and Morph Ball and Use Grapple Voltage (Lasso and Voltage)
 
 > Teleporter to Leviathan; Heals? False; Spawn Point
   * Teleporter to Pirate Homeworld - Command - Leviathan
+  > Door to Transit Station 2-B
+      Any of the following:
+          After Leviathan Access Portal Activated
+          Morph Ball and Boost Ball and Movement (Intermediate)
+
+> Event - Portal Activated; Heals? False
+  * Event Leviathan Access Portal Activated
   > Door to Transit Station 2-B
       Trivial
 
@@ -6059,29 +6107,48 @@ Asset id: 5194668821114474017
 > Morph Ball Door to Command Courtyard; Heals? False; Spawn Point
   * Morph Ball Door to Command Courtyard/Morph Ball Door to Flux Control
   > Pickup (Missile Expansion)
-      Space Jump Boots and Morph Ball and Spider Ball and Bomb/Spring Space Jump (Intermediate) and Instant Morph (Intermediate)
+      All of the following:
+          Morph Ball and Spider Ball
+          Any of the following:
+              Space Jump Boots and Bomb/Spring Space Jump (Intermediate) and Instant Morph (Intermediate)
+              Bomb/Spring Space Jump (Advanced) and Instant Morph (Advanced)
   > Lower Level
       Morph Ball
 
 > Morph Ball Door to Command Station; Heals? False
   * Morph Ball Door to Command Station/Morph Ball Door to Flux Control
   > Lower Level
-      Morph Ball
+      Morph Ball and After Flux Control Tunnel Cover
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 91; Major Location? False
   > Morph Ball Door to Command Courtyard
       Morph Ball and Spider Ball
   > Lower Level
-      Morph Ball
+      Morph Ball and Before Flux Control Tunnel Cover
 
 > Lower Level; Heals? False
   > Morph Ball Door to Command Courtyard
-      Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Slope Jump (Beginner) or Bomb/Spring Space Jump (Beginner)
+              Morph Ball Bomb and Bomb/Spring Space Jump (Advanced)
   > Morph Ball Door to Command Station
-      Grapple Lasso and Morph Ball
+      Morph Ball and After Flux Control Tunnel Cover
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Morph Ball and Spider Ball
+      All of the following:
+          Morph Ball Bomb and Morph Ball and Spider Ball
+          Grapple Lasso or Before Flux Control Tunnel Cover
+  > Event - Left Tunnel Opened
+      Grapple Lasso
+
+> Event - Left Tunnel Opened; Heals? False
+  * Event Flux Control Tunnel Cover
+  > Lower Level
+      Trivial
 
 ----------------
 Transit Tunnel P70
@@ -6268,9 +6335,14 @@ Asset id: 8444926274755356434
   > Event - Open Tunnel
       Any of the following:
           Enter Hypermode and Hazard Shield
-          Hazards without Hazard Shield (Intermediate) and Normal Damage ≥ 500
-          Hazards without Hazard Shield (Advanced) and Normal Damage ≥ 300
-          Hazards without Hazard Shield (Expert) and Normal Damage ≥ 150
+          All of the following:
+              Hazards without Hazard Shield (Intermediate)
+              Any of the following:
+                  All of the following:
+                      Combat (Intermediate) and Normal Damage ≥ 500
+                      Enter Hypermode or Shoot Phazite (X-Ray and Nova)
+                  Charge Beam and Combat (Advanced) and Normal Damage ≥ 300
+                  Combat (Expert) and Normal Damage ≥ 200
 
 > Morph Ball Door to Defense Access; Heals? False
   * Morph Ball Door to Defense Access/Morph Ball Door from Skyway Access
@@ -6333,12 +6405,12 @@ Asset id: 3288365355139345163
       Morph Ball
 
 > Door to Command Station (Base); Heals? False
-  * Nova Door to Command Station/Door to Defense Access (Base)
+  * Nova Door to Command Station/Door to Defense Access (Lower)
   > Hall Center
       After Defense Access Phazite Wall
 
 > Door to Command Station (Balcony); Heals? False
-  * Normal Door to Command Station/Door to Defense Access (Balcony)
+  * Normal Door to Command Station/Door to Defense Access (Upper)
   > Hall Center
       After Defense Access X-Ray Terminal
 
