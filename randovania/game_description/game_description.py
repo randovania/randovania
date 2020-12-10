@@ -99,26 +99,6 @@ class GameDescription:
                 _calculate_dangerous_resources_in_db(self.dock_weakness_database))
         return self._dangerous_resources
 
-    @property
-    def long_name(self) -> str:
-        if self.game == RandovaniaGame.PRIME1:
-            return "Metroid Prime"
-        elif self.game == RandovaniaGame.PRIME2:
-            return "Metroid Prime 2: Echoes"
-        elif self.game == RandovaniaGame.PRIME3:
-            return "Metroid Prime 3: Corruption"
-        return "Unknown Game"
-
-    @property
-    def short_name(self) -> str:
-        if self.game == RandovaniaGame.PRIME1:
-            return "Prime"
-        elif self.game == RandovaniaGame.PRIME2:
-            return "Echoes"
-        elif self.game == RandovaniaGame.PRIME3:
-            return "Corruption"
-        return "Unknown"
-
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
     yield database.energy_tank
