@@ -18,6 +18,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint
@@ -267,7 +268,8 @@ class PlayerState:
             pickups_by_name_and_quantity[_KEY_MATCH.sub("Key", pickup.name)] += 1
 
         to_progress = {_KEY_MATCH.sub("Key", resource.long_name)
-                       for resource in interesting_resources_for_reach(self.reach)}
+                       for resource in interesting_resources_for_reach(self.reach)
+                       if resource.resource_type == ResourceType.ITEM}
 
         return ("At {0} after {1} actions and {2} pickups, with {3} collected locations.\n\n"
                 "Pickups still available: {4}\n\nResources to progress: {5}").format(
