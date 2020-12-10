@@ -123,8 +123,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
     def _export_log(self):
         game = self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
-        game_name = default_database.game_description_for(game).short_name
-        default_name = "{} Randomizer - {}.{}".format(game_name,
+        default_name = "{} Randomizer - {}.{}".format(game.short_name,
                                                       self.layout_description.shareable_word_hash,
                                                       self.layout_description.file_extension())
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
@@ -177,8 +176,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = layout.permalink.get_preset(self.current_player_index).configuration.game
-        game_name = default_database.game_description_for(game).short_name
-        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game_name,
+        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
                                                                           layout.shareable_word_hash), has_spoiler)
         result = await async_dialog.execute_dialog(dialog)
 
