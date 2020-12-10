@@ -122,8 +122,10 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
-        default_name = "Echoes Randomizer - {}.{}".format(self.layout_description.shareable_word_hash,
-                                                          self.layout_description.file_extension())
+        game = self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
+        default_name = "{} Randomizer - {}.{}".format(game.short_name,
+                                                      self.layout_description.shareable_word_hash,
+                                                      self.layout_description.file_extension())
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
@@ -173,7 +175,9 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                            "It can be found in the main Randovania window → Help → FAQ")
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
-        dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(layout.shareable_word_hash), has_spoiler)
+        game = layout.permalink.get_preset(self.current_player_index).configuration.game
+        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
+                                                                          layout.shareable_word_hash), has_spoiler)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QDialog.Accepted:

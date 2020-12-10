@@ -58,9 +58,8 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self.progress_update_signal.connect(self.update_progress)
         self.window.stop_background_process_button.clicked.connect(self.stop_background_process)
 
-        self.window.create_choose_game_combo.addItem("Metroid Prime 2: Echoes", RandovaniaGame.PRIME2)
-        self.window.create_choose_game_combo.addItem("Metroid Prime 3: Corruption", RandovaniaGame.PRIME3)
-        self.window.create_choose_game_combo.addItem("Metroid Prime", RandovaniaGame.PRIME1)
+        for game in RandovaniaGame:
+            self.window.create_choose_game_combo.addItem(game.long_name, game)
 
         self.window.create_choose_game_combo.setVisible(self._window_manager.is_preview_mode)
         self.window.create_choose_game_label.setVisible(self._window_manager.is_preview_mode)
