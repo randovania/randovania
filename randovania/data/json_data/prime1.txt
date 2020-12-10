@@ -145,7 +145,7 @@ Asset id: 3672049347
 > Dock to Phazon Infusion Chamber; Heals? False; Spawn Point
   * Other Door to Phazon Infusion Chamber/Dock to Subchamber One
   > Dock to Subchamber Two
-      Charge Beam and Have all Beams
+      Power Beam and Wave Beam and Charge Beam
 
 > Dock to Subchamber Two; Heals? False
   * Other Door to Subchamber Two/Dock to Subchamber One
@@ -156,16 +156,20 @@ Asset id: 122281798
 > Dock to Subchamber One; Heals? False; Spawn Point
   * Other Door to Subchamber One/Dock to Subchamber Two
   > Dock to Subchamber Three
-      Charge Beam and Have all Beams
+      Power Beam and Ice Beam and Wave Beam and Charge Beam
 
 > Dock to Subchamber Three; Heals? False
   * Other Door to Subchamber Three/Dock to Subchamber Two
+  > Dock to Subchamber One
+      Trivial
 
 ----------------
 Subchamber Three
 Asset id: 2050677022
 > Dock to Subchamber Four; Heals? False
   * Other Door to Subchamber Four/Dock to Subchamber Three
+  > Dock to Subchamber Two
+      Trivial
 
 > Dock to Subchamber Two; Heals? False; Spawn Point
   * Other Door to Subchamber Two/Dock to Subchamber Three
@@ -177,6 +181,8 @@ Subchamber Four
 Asset id: 2813067419
 > Dock to Subchamber Five; Heals? False
   * Other Door to Subchamber Five/Dock to Subchamber Four
+  > Dock to Subchamber Three
+      Trivial
 
 > Dock to Subchamber Three; Heals? False; Spawn Point
   * Other Door to Subchamber Three/Dock to Subchamber Four
@@ -189,16 +195,29 @@ Asset id: 2003911832
 > Dock to Subchamber Four; Heals? False; Spawn Point
   * Other Door to Subchamber Four/Dock to Subchamber Five
   > Dock to Metroid Prime Lair
-      Charge Beam and Phazon Suit and Have all Beams
+      Trivial
 
 > Dock to Metroid Prime Lair; Heals? False
   * Other Door to Metroid Prime Lair/Dock to Subchamber Five
+  > Dock to Subchamber Four
+      Trivial
 
 ----------------
 Metroid Prime Lair
 Asset id: 442920021
 > Dock to Subchamber Five; Heals? False; Spawn Point
   * Normal Door to Subchamber Five/Dock to Metroid Prime Lair
+  > Event - Metroid Prime Essence
+      All of the following:
+          Phazon Suit
+          Any of the following:
+              Invisible Objects (Intermediate)
+              Thermal Visor and X-Ray Visor
+
+> Event - Metroid Prime Essence; Heals? False
+  * Event Metroid Prime Essence
+  > Dock to Subchamber Five
+      Trivial
 
 ====================
 Phendrana Drifts

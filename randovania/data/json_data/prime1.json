@@ -519,6 +519,11 @@
                 "index": 42,
                 "long_name": "Biotech Research Area 1 Conduits Activated",
                 "short_name": "Event42"
+            },
+            {
+                "index": 43,
+                "long_name": "Metroid Prime Essence",
+                "short_name": "Event43"
             }
         ],
         "tricks": [
@@ -880,15 +885,15 @@
     "victory_condition": {
         "type": "or",
         "data": [
-          {
-            "type": "resource",
-            "data": {
-              "type": 1,
-              "index": 2,
-              "amount": 1,
-              "negate": false
+            {
+                "type": "resource",
+                "data": {
+                    "type": 1,
+                    "index": 2,
+                    "amount": 1,
+                    "negate": false
+                }
             }
-          }
         ]
     },
     "dock_weakness_database": {
@@ -1516,14 +1521,28 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "template",
-                                            "data": "Have all Beams"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 10,
+                                                "index": 0,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -1576,14 +1595,37 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "template",
-                                            "data": "Have all Beams"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 10,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 0,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -1606,7 +1648,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber One": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -1631,7 +1678,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Two": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Subchamber Two",
@@ -1691,7 +1743,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Three": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Subchamber Three",
@@ -1754,30 +1811,7 @@
                             "connections": {
                                 "Dock to Metroid Prime Lair": {
                                     "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Have all Beams"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 10,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 23,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "data": []
                                 }
                             }
                         },
@@ -1795,7 +1829,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Four": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -1820,7 +1859,72 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Metroid Prime Essence": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 23,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 13,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 9,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Metroid Prime Essence",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 43,
+                            "connections": {
+                                "Dock to Subchamber Five": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 }
