@@ -361,6 +361,7 @@ def run_filler(rng: Random,
                 for player in player_states
             ),
         )
+        debug.debug_print(message)
         raise UnableToGenerate(message) from e
 
     results = {}
