@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Optimized game generation, it now takes roughly 2/3 of the time.
 
+-   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
+
 ## [2.1.2] - 2020-12-05
 
 -   Added: The Item Pool size now displays a warning if it's above the maximum.
@@ -27,8 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Being kicked from an online session would leave the window stuck there forever.
 
 -   Fixed: Bulk selecting areas for starting location no longer includes areas that aren't valid starting locations.
-
--   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
 
 ## [2.1.1] - 2020-12-02
 
