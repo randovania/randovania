@@ -444,9 +444,6 @@
                 "extra": null
             }
         ],
-        "energy_tank_item_index": 20,
-        "item_percentage_index": 47,
-        "multiworld_magic_item_index": 74,
         "events": [
             {
                 "index": 1,
@@ -18461,65 +18458,60 @@
                                                                         "amount": 1,
                                                                         "negate": false
                                                                     }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Screw Attack (Space Jump)"
                                                                 },
                                                                 {
-                                                                    "type": "or",
-                                                                    "data": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": [
-                                                                                {
-                                                                                    "type": "template",
-                                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                                },
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 0,
-                                                                                        "index": 33,
-                                                                                        "amount": 1,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                },
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 2,
-                                                                                        "index": 5,
-                                                                                        "amount": 2,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": [
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 0,
-                                                                                        "index": 32,
-                                                                                        "amount": 1,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                },
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 2,
-                                                                                        "index": 5,
-                                                                                        "amount": 3,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                },
-                                                                                {
-                                                                                    "type": "template",
-                                                                                    "data": "Hazard Shield"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 32,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Hazard Shield"
                                                                 }
                                                             ]
                                                         }
@@ -18858,14 +18850,19 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "template",
-                                            "data": "Hazard Shield"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 2,
+                                                "index": 32,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -18894,13 +18891,64 @@
                                             ]
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 16,
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 1000,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 3,
+                                                                                "index": 1,
+                                                                                "amount": 700,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -19024,15 +19072,6 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         },
@@ -19107,15 +19146,6 @@
                                                         "type": 0,
                                                         "index": 4,
                                                         "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -19813,20 +19843,34 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 3,
                                                 "index": 1,
-                                                "amount": 4,
+                                                "amount": 50,
                                                 "negate": false
                                             }
                                         }
@@ -19855,20 +19899,34 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
+                                                "type": 3,
+                                                "index": 1,
+                                                "amount": 50,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 3,
-                                                "index": 1,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
