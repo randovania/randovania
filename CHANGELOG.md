@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Added a detailed report of the generator's state when a game fails to generate.
 
+-   Fixed: Generator will no longer ignore players that have no locations left. This would likely cause multiworld generation to fail more often.
+
 -   Fixed: Error messages are properly shown if a game fails to generate.
 
 -   Fixed: Alerts are now properly saved as displayed.
