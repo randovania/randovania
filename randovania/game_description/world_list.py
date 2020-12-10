@@ -7,7 +7,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
-from randovania.game_description.requirements import Requirement, RequirementAnd
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
 
@@ -214,6 +214,12 @@ class WorldList:
         """
         for world in self.worlds:
             for area in world.areas:
+                for node in area.nodes:
+                    if isinstance(node, DockNode):
+                        requirement = node.default_dock_weakness.requirement
+                        object.__setattr__(node.default_dock_weakness, "requirement",
+                                           requirement.patch_requirements(static_resources,
+                                                                          damage_multiplier).simplify())
                 for connections in area.connections.values():
                     for target, value in connections.items():
                         connections[target] = value.patch_requirements(static_resources, damage_multiplier).simplify()

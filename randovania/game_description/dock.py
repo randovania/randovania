@@ -13,12 +13,16 @@ class DockType(Enum):
     PORTAL = 3
 
 
-class DockWeakness(NamedTuple):
+@dataclass(frozen=True, order=True)
+class DockWeakness:
     index: int
     name: str
     is_blast_shield: bool
     requirement: Requirement
     dock_type: DockType
+
+    def __hash__(self):
+        return hash((self.index, self.name, self.dock_type))
 
     def __repr__(self):
         return self.name
