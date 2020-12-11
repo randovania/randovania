@@ -13,7 +13,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, default_data
-from randovania.games.prime.dol_patcher import PatchesForVersion
+from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
 @dataclasses.dataclass(frozen=True)
@@ -77,7 +77,7 @@ def _capacity_for(item: ItemResourceInfo,
 
 
 class ConnectionBackend(ConnectionBase):
-    patches: Optional[PatchesForVersion] = None
+    patches: Optional[BasePrimeDolVersion] = None
     _checking_for_collected_index: bool = False
     _games: Dict[RandovaniaGame, GameDescription]
     _inventory: Dict[ItemResourceInfo, InventoryItem]
