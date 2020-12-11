@@ -1,19 +1,8 @@
-import struct
-
-from randovania.dol_patching.dol_file import DolFile
 from randovania.games.prime import echoes_dol_patches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 
-def test_apply_game_options_patch(tmp_path):
-    section_size = 150
-    data = bytearray(b"\x00" * (0x100 + section_size))
-    data[0:4] = struct.pack(">L", 0x100)
-    data[0x48:0x48 + 4] = struct.pack(">L", 0x2000)
-    data[0x90:0x90 + 4] = struct.pack(">L", section_size)
-
-    tmp_path.joinpath("test.dol").write_bytes(data)
-    dol_file = DolFile(tmp_path.joinpath("test.dol"))
+def test_apply_game_options_patch(dol_file):
     user_preferences = EchoesUserPreferences()
     offset = 0x2000
 
@@ -23,7 +12,7 @@ def test_apply_game_options_patch(tmp_path):
         echoes_dol_patches.apply_game_options_patch(offset, user_preferences, dol_file)
 
     # Assert
-    results = tmp_path.joinpath("test.dol").read_bytes()[0x100:]
+    results = dol_file.dol_path.read_bytes()[0x100:]
     assert results == (b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
                        b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x93\xe1\x00\x1c\x7c\x7f\x1b\x78'
                        b'\x38\x61\x00\x08\x38\x00\x00\x01\x90\x1f\x00\x00\x38\x00\x00\x04\x90\x1f\x00\x04'

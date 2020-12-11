@@ -51,9 +51,11 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
                              dol_file: DolFile):
     patch = [
         # Unknown purpose, but keep for safety
-        *stw(r31, 0x1c, r1),
-        *or_(r31, r3, r3),
-        0x38, 0x61, 0x00, 0x08,  # r3 = r1 + 0x8 (addi r3,r1,0x8) For a later function call we don't touch
+        stw(r31, 0x1c, r1),
+        or_(r31, r3, r3),
+
+        # For a later function call we don't touch
+        addi(r3, r1, 0x8),
     ]
 
     for i, preference_name in enumerate(_PREFERENCES_ORDER):
@@ -61,8 +63,8 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
         if isinstance(value, Enum):
             value = value.value
         patch.extend([
-            *li(r0, value),
-            *stw(r0, (0x04 * i), r31),
+            li(r0, value),
+            stw(r0, (0x04 * i), r31),
         ])
 
     flag_values = [
@@ -72,27 +74,23 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     ]
     bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
-        *li(r0, bit_mask),
-        *stb(r0, 0x04 * len(_PREFERENCES_ORDER), r31),
-        *li(r0, 0),
-        *stw(r0, 0x2c, r31),
-        *stw(r0, 0x30, r31),
-        *stw(r0, 0x34, r31),
+        li(r0, bit_mask),
+        stb(r0, 0x04 * len(_PREFERENCES_ORDER), r31),
+        li(r0, 0),
+        stw(r0, 0x2c, r31),
+        stw(r0, 0x30, r31),
+        stw(r0, 0x34, r31),
     ])
 
-    # final_offset = 0x15E9E4
-    # total_bytes_to_patch = final_offset - game_options_offset
-    total_bytes_to_patch = 136
-    bytes_to_fill = total_bytes_to_patch - len(patch)
+    instructions_space = 34
+    instructions_to_fill = instructions_space - len(patch)
 
-    if bytes_to_fill < 0:
-        raise RuntimeError(f"Our patch ({len(patch)}) is bigger than the space we have ({total_bytes_to_patch}).")
+    if instructions_to_fill < 0:
+        raise RuntimeError(f"Our patch ({len(patch)}) is bigger than the space we have ({instructions_space}).")
 
-    if bytes_to_fill % 4 != 0:
-        raise RuntimeError(f"The space left ({bytes_to_fill}) for is not a multiple of 4")
-
-    patch.extend(nop() * (bytes_to_fill // 4))
-    dol_file.write(game_options_constructor_offset + 8 * 4, patch)
+    for i in range(instructions_to_fill):
+        patch.append(nop())
+    dol_file.write_instructions(game_options_constructor_offset + 8 * 4, patch)
 
 
 def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: EchoesGameSpecific,
