@@ -19,6 +19,20 @@ class FloatRegister(Register):
     pass
 
 
+class Instruction:
+    value: int
+
+    def __init__(self, value: int):
+        self.value = value
+
+    def __iter__(self):
+        return iter(_pack(">I", self.value))
+
+    @classmethod
+    def from_array(cls, array):
+        return cls((array[0] << 24) + (array[1] << 16) + (array[2] << 8) + array[3])
+
+
 r0 = GeneralRegister(0)
 r1 = GeneralRegister(1)
 r2 = GeneralRegister(2)
@@ -57,18 +71,18 @@ def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, inp
             + (444 << 1)
             + int(record_bit)
     )
-    return list(_pack(">I", value))
+    return Instruction(value)
 
 
 def ori(output_register: GeneralRegister, input_register: GeneralRegister, constant: int):
     """
     output_register = input_register | constant
     """
-    return [
+    return Instruction.from_array([
         0x60,
         output_register.number << 5 + input_register.number,
         *_pack(">h", constant),
-    ]
+    ])
 
 
 def nop():
@@ -80,11 +94,11 @@ def li(register: GeneralRegister, literal: int):
     register = literal
     """
     top_bytes = 0x3800 + (register.number << 5)
-    return [
+    return Instruction.from_array([
         top_bytes >> 8,
         top_bytes & 0xFF,
         *_pack(">h", literal),
-    ]
+    ])
 
 
 def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegister):
@@ -97,36 +111,39 @@ def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegi
     # top 4 bits of the second byte: output register
     # bottom 4 bits of the second byte: input_register
     # last two bytes: offset
-    return [
+    return Instruction.from_array([
         0xC0,
         output_register.number << 5 + input_register.number,
         *_pack(">h", offset),
-    ]
+    ])
 
 
-def bl(address_or_symbol: int, instruction_address: int):
+def bl(address_or_symbol: int):
     """
     jumps to the given address
     """
-    address = (instruction_address - address_or_symbol) // 4
-    if address < 0:
-        address += 1 << 24
+    def with_inc_address(instruction_address: int):
+        address = (instruction_address - address_or_symbol) // 4
+        if address < 0:
+            address += 1 << 24
 
-    value = (
-            (18 << 26)
-            + (address << 2)
-            + (0 << 1)  # Absolute Address Bit (AA)
-            + (1 << 0)  # Link Bit (LK)
-    )
-    return list(_pack(">I", value))
+        value = (
+                (18 << 26)
+                + (address << 2)
+                + (0 << 1)  # Absolute Address Bit (AA)
+                + (1 << 0)  # Link Bit (LK)
+        )
+        return Instruction(value)
+
+    return with_inc_address
 
 
 def _store(input_register: Register, offset: int, output_register: GeneralRegister, op_code: int):
-    return list(_pack(">I", ((op_code << 26)
-                             + (input_register.number << 21)
-                             + (output_register.number << 16)
-                             + offset
-                             )))
+    return Instruction((op_code << 26)
+                       + (input_register.number << 21)
+                       + (output_register.number << 16)
+                       + offset
+                       )
 
 
 def stb(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
@@ -152,13 +169,19 @@ def stfs(input_register: FloatRegister, offset: int, output_register: GeneralReg
 
 def icbi(ra: int, rb: int):
     value = 0x7C0007AC + (ra << 16) + (rb << 11)
-    return list(_pack(">I", value))
+    return Instruction(value)
 
 
 def isync():
-    return [
-        0x4C,
-        0x00,
-        0x01,
-        0x2C,
-    ]
+    return Instruction(0x4C00012C)
+
+
+def addi(output_register: GeneralRegister, input_register: GeneralRegister, literal: int):
+    """
+    output_register = input_register + literal
+    """
+    return Instruction((14 << 26)
+                       + (output_register.number << 21)
+                       + (input_register.number << 16)
+                       + literal
+                       )

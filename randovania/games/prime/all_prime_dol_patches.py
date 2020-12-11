@@ -1,7 +1,7 @@
 import dataclasses
 import struct
 
-from randovania.dol_patching.assembler import ppc
+from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
@@ -147,17 +147,17 @@ def apply_reverse_energy_tank_heal_patch(sd2_base: int,
                                          ):
     if active:
         patch = [
-            *ppc.lfs(ppc.f0, (addresses.small_number_float - sd2_base), ppc.r2),
-            *ppc.stfs(ppc.f0, 0x14, ppc.r30),
-            *ppc.ori(ppc.r0, ppc.r0, 0),
-            *ppc.ori(ppc.r0, ppc.r0, 0),
+            lfs(f0, (addresses.small_number_float - sd2_base), r2),
+            stfs(f0, 0x14, r30),
+            ori(r0, r0, 0),
+            ori(r0, r0, 0),
         ]
     else:
         patch = [
-            *ppc.or_(ppc.r3, ppc.r30, ppc.r30),
-            *ppc.li(ppc.r4, 0x29),  # HealthRefill
-            *ppc.li(ppc.r5, 9999),
-            *ppc.bl(addresses.incr_pickup, instruction_address=addresses.incr_pickup + 0x90 + 4 * 3),
+            or_(r3, r30, r30),
+            li(r4, 0x29),  # HealthRefill
+            li(r5, 9999),
+            bl(addresses.incr_pickup),
         ]
 
-    dol_file.write(addresses.incr_pickup + 0x90, patch)
+    dol_file.write_instructions(addresses.incr_pickup + 0x90, patch)

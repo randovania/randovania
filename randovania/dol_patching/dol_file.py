@@ -3,6 +3,8 @@ import struct
 from pathlib import Path
 from typing import Tuple, Optional, BinaryIO, Iterable
 
+from randovania.dol_patching.assembler.ppc import Instruction
+
 _NUM_TEXT_SECTIONS = 7
 _NUM_DATA_SECTIONS = 11
 _NUM_SECTIONS = _NUM_TEXT_SECTIONS + _NUM_DATA_SECTIONS
@@ -84,3 +86,11 @@ class DolFile:
         offset = self.offset_for_address(address)
         self.dol_file.seek(offset)
         self.dol_file.write(bytes(code_points))
+
+    def write_instructions(self, address: int, instructions: Iterable[Instruction]):
+        code_points = []
+        for i, instruction in enumerate(instructions):
+            if callable(instruction):
+                instruction = instruction(address + i * 4)
+            code_points.extend(instruction)
+        self.write(address, code_points)
