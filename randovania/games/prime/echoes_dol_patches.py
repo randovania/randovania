@@ -2,7 +2,7 @@ import dataclasses
 import struct
 from enum import Enum
 
-from randovania.dol_patching.assembler import ppc
+from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
@@ -51,9 +51,8 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
                              dol_file: DolFile):
     patch = [
         # Unknown purpose, but keep for safety
-        0x93, 0xe1, 0x00, 0x1c,  # *(r1 + 0x1c) = r31   (stw r31,0x1c(r1))
-
-        0x7c, 0x7f, 0x1b, 0x78,  # r31 = r3 (ori r31,r3,r3)
+        *stw(r31, 0x1c, r1),
+        *or_(r31, r3, r3),
         0x38, 0x61, 0x00, 0x08,  # r3 = r1 + 0x8 (addi r3,r1,0x8) For a later function call we don't touch
     ]
 
@@ -61,10 +60,9 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
         value = getattr(user_preferences, preference_name)
         if isinstance(value, Enum):
             value = value.value
-        encoded_value = struct.pack(">h", value)
         patch.extend([
-            0x38, 0x00, encoded_value[0], encoded_value[1],  # r0 = value (li r0, value)
-            0x90, 0x1f, 0x00, (0x04 * i),  # *(r31 + offset) = r0  (stw r0,offset(r31))
+            *li(r0, value),
+            *stw(r0, (0x04 * i), r31),
         ])
 
     flag_values = [
@@ -74,14 +72,12 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     ]
     bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
-        0x38, 0x00, 0x00, bit_mask,
-        0x98, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
-    ])
-    patch.extend([
-        0x38, 0x00, 0x00, 0x00,  # li r0, value)
-        0x90, 0x1f, 0x00, 0x2c,  # stw r0 ,0x2c (r31)
-        0x90, 0x1f, 0x00, 0x30,  # stw r0 ,0x30 (r31)
-        0x90, 0x1f, 0x00, 0x34,  # stw r0 ,0x34 (r31)
+        *li(r0, bit_mask),
+        *stb(r0, 0x04 * len(_PREFERENCES_ORDER), r31),
+        *li(r0, 0),
+        *stw(r0, 0x2c, r31),
+        *stw(r0, 0x30, r31),
+        *stw(r0, 0x34, r31),
     ])
 
     # final_offset = 0x15E9E4
@@ -95,8 +91,7 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     if bytes_to_fill % 4 != 0:
         raise RuntimeError(f"The space left ({bytes_to_fill}) for is not a multiple of 4")
 
-    # ori r0, r0, 0x0 is a no-op
-    patch.extend([0x60, 0x00, 0x00, 0x00] * (bytes_to_fill // 4))
+    patch.extend(nop() * (bytes_to_fill // 4))
     dol_file.write(game_options_constructor_offset + 8 * 4, patch)
 
 
@@ -141,25 +136,25 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
 
         # Power Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *ppc.li(ppc.r3, ammo_types[0][0]),
-        *ppc.li(ppc.r9, ammo_types[0][1]),
+        *li(r3, ammo_types[0][0]),
+        *li(r9, ammo_types[0][1]),
         0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
 
         # Dark Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *ppc.li(ppc.r3, ammo_types[1][0]),
-        *ppc.li(ppc.r9, ammo_types[1][1]),
+        *li(r3, ammo_types[1][0]),
+        *li(r9, ammo_types[1][1]),
         0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
 
         # Light Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
-        *ppc.li(ppc.r3, ammo_types[2][0]),
-        *ppc.li(ppc.r9, ammo_types[2][1]),
+        *li(r3, ammo_types[2][0]),
+        *li(r9, ammo_types[2][1]),
         0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
 
         # Annihilator Beam
-        *ppc.li(ppc.r3, ammo_types[3][0]),
-        *ppc.li(ppc.r9, ammo_types[3][1]),
+        *li(r3, ammo_types[3][0]),
+        *li(r9, ammo_types[3][1]),
 
         # update_out_beam_type
         0x90, 0x7b, 0x00, 0x00,  # stw r0,0x0(r27)              # *outBeamAmmoTypeA = r3
@@ -185,7 +180,7 @@ def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
     offset = patch_addresses.heal_per_frame_constant - sda2_base
 
     dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))
-    dol_file.write(patch_addresses.increment_health_fmr, ppc.lfs(ppc.f1, offset, ppc.r2))
+    dol_file.write(patch_addresses.increment_health_fmr, lfs(f1, offset, r2))
 
 
 @dataclasses.dataclass(frozen=True)
