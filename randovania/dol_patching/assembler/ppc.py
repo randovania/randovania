@@ -1,61 +1,77 @@
+import dataclasses
 import struct
 
-r0 = 0
-r1 = 1
-r2 = 2
-r3 = 3
-r4 = 4
-r5 = 5
-r6 = 6
-r7 = 7
-r8 = 8
-r9 = 9
-r30 = 30
-r31 = 31
 
-f0 = 0
-f1 = 1
+@dataclasses.dataclass(frozen=True)
+class Register:
+    number: int
 
 
-def lwz(input_register, offset: int, output_register):
+class GeneralRegister(Register):
+    pass
+
+
+class FloatRegister(Register):
+    pass
+
+
+r0 = GeneralRegister(0)
+r1 = GeneralRegister(1)
+r2 = GeneralRegister(2)
+r3 = GeneralRegister(3)
+r4 = GeneralRegister(4)
+r5 = GeneralRegister(5)
+r6 = GeneralRegister(6)
+r7 = GeneralRegister(7)
+r8 = GeneralRegister(8)
+r9 = GeneralRegister(9)
+r30 = GeneralRegister(30)
+r31 = GeneralRegister(31)
+
+f0 = FloatRegister(0)
+f1 = FloatRegister(1)
+
+
+def lwz(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
     """
     *(output_register + offset) = input_register
     """
     pass
 
 
-def or_(output_register, input_register_a, input_register_b, record_bit: bool = False):
+def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister,
+        record_bit: bool = False):
     """
     output_register = input_register_a | input_register_b
     """
     # See https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/assembler/idalangref_or_instruction.html
     value = (
-        (31 << 26)
-        + (input_register_a << 21)
-        + (output_register << 16)
-        + (input_register_b << 11)
-        + (444 << 1)
-        + int(record_bit)
+            (31 << 26)
+            + (input_register_a.number << 21)
+            + (output_register.number << 16)
+            + (input_register_b.number << 11)
+            + (444 << 1)
+            + int(record_bit)
     )
     return list(struct.pack(">I", value))
 
 
-def ori(output_register, input_register, constant):
+def ori(output_register: GeneralRegister, input_register: GeneralRegister, constant: int):
     """
     output_register = input_register | constant
     """
     return [
         0x60,
-        output_register << 5 + input_register,
+        output_register.number << 5 + input_register.number,
         *struct.pack(">h", constant),
     ]
 
 
-def li(register, literal):
+def li(register: GeneralRegister, literal: int):
     """
     register = literal
     """
-    top_bytes = 0x3800 + (register << 5)
+    top_bytes = 0x3800 + (register.number << 5)
     return [
         top_bytes >> 8,
         top_bytes & 0xFF,
@@ -63,7 +79,7 @@ def li(register, literal):
     ]
 
 
-def lfs(output_register, offset: int, input_register):
+def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegister):
     """
     output_register = (float) *(input_register + offset)
 
@@ -75,12 +91,12 @@ def lfs(output_register, offset: int, input_register):
     # last two bytes: offset
     return [
         0xC0,
-        output_register << 5 + input_register,
+        output_register.number << 5 + input_register.number,
         *struct.pack(">h", offset),
     ]
 
 
-def bl(address_or_symbol, instruction_address: int):
+def bl(address_or_symbol: int, instruction_address: int):
     """
     jumps to the given address
     """
@@ -89,15 +105,15 @@ def bl(address_or_symbol, instruction_address: int):
         address += 1 << 24
 
     value = (
-        (18 << 26)
-        + (address << 2)
-        + (0 << 1)  # Absolute Address Bit (AA)
-        + (1 << 0)  # Link Bit (LK)
+            (18 << 26)
+            + (address << 2)
+            + (0 << 1)  # Absolute Address Bit (AA)
+            + (1 << 0)  # Link Bit (LK)
     )
     return list(struct.pack(">I", value))
 
 
-def stfs(input_register, offset: int, output_register):
+def stfs(input_register: GeneralRegister, offset: int, output_register: FloatRegister):
     """
     *(float*)(output_register +offset) = input_register
 
@@ -105,12 +121,12 @@ def stfs(input_register, offset: int, output_register):
     """
     return [
         0xD0,
-        input_register << 5 + output_register,
+        input_register.number << 5 + output_register.number,
         *struct.pack(">h", offset),
     ]
 
 
-def icbi(ra, rb):
+def icbi(ra: int, rb: int):
     value = 0x7C0007AC + (ra << 16) + (rb << 11)
     return list(struct.pack(">I", value))
 
