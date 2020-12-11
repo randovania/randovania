@@ -1,8 +1,12 @@
-import dataclasses
-import struct
+import dataclasses as _dataclasses
+import struct as _struct
 
 
-@dataclasses.dataclass(frozen=True)
+def _pack(*args):
+    return _struct.pack(*args)
+
+
+@_dataclasses.dataclass(frozen=True)
 class Register:
     number: int
 
@@ -53,7 +57,7 @@ def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, inp
             + (444 << 1)
             + int(record_bit)
     )
-    return list(struct.pack(">I", value))
+    return list(_pack(">I", value))
 
 
 def ori(output_register: GeneralRegister, input_register: GeneralRegister, constant: int):
@@ -63,8 +67,12 @@ def ori(output_register: GeneralRegister, input_register: GeneralRegister, const
     return [
         0x60,
         output_register.number << 5 + input_register.number,
-        *struct.pack(">h", constant),
+        *_pack(">h", constant),
     ]
+
+
+def nop():
+    return ori(r0, r0, 0x0)
 
 
 def li(register: GeneralRegister, literal: int):
@@ -75,7 +83,7 @@ def li(register: GeneralRegister, literal: int):
     return [
         top_bytes >> 8,
         top_bytes & 0xFF,
-        *struct.pack(">h", literal),
+        *_pack(">h", literal),
     ]
 
 
@@ -92,7 +100,7 @@ def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegi
     return [
         0xC0,
         output_register.number << 5 + input_register.number,
-        *struct.pack(">h", offset),
+        *_pack(">h", offset),
     ]
 
 
@@ -110,25 +118,41 @@ def bl(address_or_symbol: int, instruction_address: int):
             + (0 << 1)  # Absolute Address Bit (AA)
             + (1 << 0)  # Link Bit (LK)
     )
-    return list(struct.pack(">I", value))
+    return list(_pack(">I", value))
 
 
-def stfs(input_register: GeneralRegister, offset: int, output_register: FloatRegister):
+def _store(input_register: Register, offset: int, output_register: GeneralRegister, op_code: int):
+    return list(_pack(">I", ((op_code << 26)
+                             + (input_register.number << 21)
+                             + (output_register.number << 16)
+                             + offset
+                             )))
+
+
+def stb(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
+    """
+    *(output_register +offset) = input_register
+    """
+    return _store(input_register, offset, output_register, 38)
+
+
+def stw(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
+    """
+    *(output_register +offset) = input_register
+    """
+    return _store(input_register, offset, output_register, 36)
+
+
+def stfs(input_register: FloatRegister, offset: int, output_register: GeneralRegister):
     """
     *(float*)(output_register +offset) = input_register
-
-    input_register is a float register.
     """
-    return [
-        0xD0,
-        input_register.number << 5 + output_register.number,
-        *struct.pack(">h", offset),
-    ]
+    return _store(input_register, offset, output_register, 52)
 
 
 def icbi(ra: int, rb: int):
     value = 0x7C0007AC + (ra << 16) + (rb << 11)
-    return list(struct.pack(">I", value))
+    return list(_pack(">I", value))
 
 
 def isync():
