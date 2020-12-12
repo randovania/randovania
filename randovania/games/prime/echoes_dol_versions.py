@@ -59,7 +59,10 @@ ALL_VERSIONS = [
             base_health_capacity=0x8041bedc,
             energy_tank_capacity=0x8041bed8,
         ),
-        dangerous_energy_tank=None,
+        dangerous_energy_tank=DangerousEnergyTankAddresses(
+            small_number_float=0x8041b7a0,
+            incr_pickup=0x8008589c,
+        ),
         beam_cost_addresses=BeamCostAddresses(
             uncharged_cost=0x803abc28,
             charged_cost=0x803abc38,

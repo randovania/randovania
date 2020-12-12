@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, ANY
 
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import all_prime_dol_patches
 
 
@@ -15,6 +16,7 @@ def test_apply_string_display_patch():
 
 
 def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
+    game = RandovaniaGame.PRIME2
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,
@@ -23,8 +25,8 @@ def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
     # Run
     dol_file.set_editable(True)
     with dol_file:
-        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, False, dol_file)
-        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, True, dol_file)
+        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, False, game, dol_file)
+        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, True, game, dol_file)
 
     # Assert
     results = dol_file.dol_path.read_bytes()[0x100:]
@@ -39,6 +41,7 @@ def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
 
 
 def test_apply_reverse_energy_tank_heal_patch_inactive(dol_file):
+    game = RandovaniaGame.PRIME2
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,
@@ -47,8 +50,8 @@ def test_apply_reverse_energy_tank_heal_patch_inactive(dol_file):
     # Run
     dol_file.set_editable(True)
     with dol_file:
-        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, True, dol_file)
-        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, False, dol_file)
+        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, True, game, dol_file)
+        all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(0x1500, addresses, False, game, dol_file)
 
     # Assert
     results = dol_file.dol_path.read_bytes()[0x100:]

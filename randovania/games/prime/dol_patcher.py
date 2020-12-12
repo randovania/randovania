@@ -23,7 +23,8 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
         all_prime_dol_patches.apply_string_display_patch(version.string_display, dol_file)
         all_prime_dol_patches.apply_energy_tank_capacity_patch(version.health_capacity, game_specific, dol_file)
         all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(version.sda2_base, version.dangerous_energy_tank,
-                                                                   game_specific.dangerous_energy_tank, dol_file)
+                                                                   game_specific.dangerous_energy_tank,
+                                                                   version.game, dol_file)
 
         if isinstance(version, EchoesDolVersion):
             echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
