@@ -126,10 +126,10 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
 
         0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
-        0x90, 0x1d, 0x00, 0x00,  # stw r0,0x0(r29)              # *outBeamAmmoCost = r0
+        *stw(r0, 0x0, r29),                                     # *outBeamAmmoCost = r0
 
-        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
-        0x39, 0x4a, 0x00, 0x01,  # addi r10,r10,0x1             # r10 = r10
+        *lwz(r10, 0x774, r25),                                  # r10 = get current beam
+        *addi(r10, r10, 0x1),                                   # r10 = r10 + 1
         0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
 
         # Power Beam
@@ -155,8 +155,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         *li(r9, ammo_types[3][1]),
 
         # update_out_beam_type
-        0x90, 0x7b, 0x00, 0x00,  # stw r0,0x0(r27)              # *outBeamAmmoTypeA = r3
-        0x91, 0x3c, 0x00, 0x00,  # stw r0,0x0(r28)              # *outBeamAmmoTypeB = r8
+        *stw(r3, 0x0, r27),                                     # *outBeamAmmoTypeA = r3
+        *stw(r9, 0x0, r28),                                     # *outBeamAmmoTypeB = r9
 
         0x42, 0x80, 0x00, 0x18,  # b body_end
         # jump to the code for getting the charged/combo costs and then check if has ammo
