@@ -597,7 +597,7 @@ class _SimplifiedMemo(dict):
 def _simplified_memo_data() -> Dict[str, str]:
     result = _SimplifiedMemo()
     result["Temporary Power Bombs"] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
-    result["Temporary Missile"] = "Missile Expansion acquired, but the Missile Launcher, is required to use it."
+    result["Temporary Missile"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
     return result
 
 
