@@ -5,9 +5,10 @@ import csv
 import json
 import os
 import re
+import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple, Optional, List, Iterable
 
 from randovania.game_description.default_database import game_description_for
 from randovania.game_description.node import PickupNode, LogbookNode
@@ -89,6 +90,18 @@ def first_key(d: dict):
         return key
 
 
+def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Dict[str, int]:
+    order = {
+        item.split(" at ")[0]: i
+        for i, item in enumerate(item_order)
+    }
+    for item in all_items:
+        if item not in order:
+            order[item] = len(item_order)
+
+    return order
+
+
 def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     def item_creator():
         return collections.defaultdict(int)
@@ -97,6 +110,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     locations = collections.defaultdict(item_creator)
     item_hints = collections.defaultdict(item_creator)
     location_hints = collections.defaultdict(item_creator)
+    item_order = collections.defaultdict(list)
 
     game_description = game_description_for(RandovaniaGame.PRIME2)
     world_list = game_description.world_list
@@ -116,13 +130,18 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     seed_count = 0
     pickup_count = None
     for seed in Path(seeds_dir).glob("**/*.json"):
-        for game_modifications in read_json(seed)["game_modifications"]:
+        seed_data = read_json(seed)
+        for game_modifications in seed_data["game_modifications"]:
             accumulate_results(game_modifications,
                                items, locations,
                                item_hints, location_hints,
                                index_to_location, logbook_to_name)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
+
+        for item, order in get_items_order(list(items.keys()), seed_data["item_order"]).items():
+            item_order[item].append(order)
+
         seed_count += 1
 
     if pickup_count is None:
@@ -143,6 +162,20 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         "locations": sort_by_contents(locations),
         "item_hints": sort_by_contents(item_hints),
         "location_hints": sort_by_contents(location_hints),
+        "item_order": {
+            "average": {
+                name: statistics.mean(orders)
+                for name, orders in item_order.items()
+            },
+            "median": {
+                name: int(statistics.median(orders))
+                for name, orders in item_order.items()
+            },
+            "stdev": {
+                name: statistics.stdev(orders)
+                for name, orders in item_order.items()
+            },
+        }
     }
 
     if csv_dir is not None:
