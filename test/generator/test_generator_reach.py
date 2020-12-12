@@ -154,7 +154,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ])
     ])
-    game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
+    game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=(),
+                                       dangerous_energy_tank=False)
     game = GameDescription(RandovaniaGame.PRIME2, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, game_specific, Requirement.impossible(),
                            None, {}, world_list)

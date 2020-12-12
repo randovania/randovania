@@ -221,6 +221,7 @@ ConstructEchoesGameSpecific = Struct(
     energy_per_tank=Float32b,
     safe_zone_heal_per_second=Float32b,
     beam_configurations=PrefixedArray(VarInt, ConstructEchoesBeamConfiguration),
+    dangerous_energy_tank=Flag,
 )
 
 ConstructResourceGain = Struct(
