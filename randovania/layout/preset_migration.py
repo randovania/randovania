@@ -198,7 +198,7 @@ def _migrate_v5(preset: dict) -> dict:
 
 
 def _migrate_v6(preset: dict) -> dict:
-    if preset["game"] == "prime2":
+    if preset["game"] in ("prime2", "prime3"):
         preset["configuration"]["dangerous_energy_tank"] = False
 
     return preset

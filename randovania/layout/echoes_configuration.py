@@ -75,6 +75,6 @@ class EchoesConfiguration(BaseConfiguration):
             result.append("One-way anywhere elevators")
 
         if self.dangerous_energy_tank:
-            result.append("Dangerous Tanks")
+            result.append("1 HP Mode")
 
         return result

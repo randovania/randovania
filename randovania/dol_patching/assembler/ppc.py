@@ -29,8 +29,21 @@ class Instruction:
         return iter(_pack(">I", self.value))
 
     @classmethod
-    def from_array(cls, array):
-        return cls((array[0] << 24) + (array[1] << 16) + (array[2] << 8) + array[3])
+    def compose(cls, data):
+        value = 0
+        bits_left = 32
+        for item, bit_size, signed in data:
+            bits_left -= bit_size
+            if signed:
+                assert -(1 << (bit_size - 1)) <= item < (1 << (bit_size - 1))
+                if item < 0:
+                    item += (1 << bit_size)
+            else:
+                assert 0 <= item < (1 << bit_size)
+            value += item << bits_left
+
+        assert bits_left == 0
+        return cls(value)
 
 
 r0 = GeneralRegister(0)
@@ -60,12 +73,10 @@ def lwz(output_register: GeneralRegister, offset: int, input_register: GeneralRe
     """
     *(output_register + offset) = input_register
     """
-
-    return Instruction((32 << 26)
-                       + (output_register.number << 21)
-                       + (input_register.number << 16)
-                       + offset
-                       )
+    return Instruction.compose(((32, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (offset, 16, True)))
 
 
 def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister,
@@ -74,26 +85,23 @@ def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, inp
     output_register = input_register_a | input_register_b
     """
     # See https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/assembler/idalangref_or_instruction.html
-    value = (
-            (31 << 26)
-            + (input_register_a.number << 21)
-            + (output_register.number << 16)
-            + (input_register_b.number << 11)
-            + (444 << 1)
-            + int(record_bit)
-    )
-    return Instruction(value)
+    return Instruction.compose(((31, 6, False),
+                                (input_register_a.number, 5, False),
+                                (output_register.number, 5, False),
+                                (input_register_b.number, 5, False),
+                                (444, 10, False),
+                                (int(record_bit), 1, False),
+                                ))
 
 
 def ori(output_register: GeneralRegister, input_register: GeneralRegister, constant: int):
     """
     output_register = input_register | constant
     """
-    return Instruction.from_array([
-        0x60,
-        output_register.number << 5 + input_register.number,
-        *_pack(">h", constant),
-    ])
+    return Instruction.compose(((24, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (constant, 16, False)))
 
 
 def nop():
@@ -104,12 +112,7 @@ def li(register: GeneralRegister, literal: int):
     """
     register = literal
     """
-    top_bytes = 0x3800 + (register.number << 5)
-    return Instruction.from_array([
-        top_bytes >> 8,
-        top_bytes & 0xFF,
-        *_pack(">h", literal),
-    ])
+    return addi(register, r0, literal)
 
 
 def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegister):
@@ -118,15 +121,10 @@ def lfs(output_register: FloatRegister, offset: int, input_register: GeneralRegi
 
     output_register is a float register.
     """
-    # first byte: C0
-    # top 4 bits of the second byte: output register
-    # bottom 4 bits of the second byte: input_register
-    # last two bytes: offset
-    return Instruction.from_array([
-        0xC0,
-        output_register.number << 5 + input_register.number,
-        *_pack(">h", offset),
-    ])
+    return Instruction.compose(((48, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (offset, 16, True)))
 
 
 def bl(address_or_symbol: int):
@@ -135,27 +133,20 @@ def bl(address_or_symbol: int):
     """
 
     def with_inc_address(instruction_address: int):
-        address = (instruction_address - address_or_symbol) // 4
-        if address < 0:
-            address += 1 << 24
-
-        value = (
-                (18 << 26)
-                + (address << 2)
-                + (0 << 1)  # Absolute Address Bit (AA)
-                + (1 << 0)  # Link Bit (LK)
-        )
-        return Instruction(value)
+        jump_offset = (address_or_symbol - instruction_address) // 4
+        return Instruction.compose(((18, 6, False),
+                                    (jump_offset, 24, True),
+                                    (0, 1, False),
+                                    (1, 1, False)))
 
     return with_inc_address
 
 
 def _store(input_register: Register, offset: int, output_register: GeneralRegister, op_code: int):
-    return Instruction((op_code << 26)
-                       + (input_register.number << 21)
-                       + (output_register.number << 16)
-                       + offset
-                       )
+    return Instruction.compose(((op_code, 6, False),
+                                (input_register.number, 5, False),
+                                (output_register.number, 5, False),
+                                (offset, 16, True)))
 
 
 def stb(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
@@ -192,8 +183,7 @@ def addi(output_register: GeneralRegister, input_register: GeneralRegister, lite
     """
     output_register = input_register + literal
     """
-    return Instruction((14 << 26)
-                       + (output_register.number << 21)
-                       + (input_register.number << 16)
-                       + literal
-                       )
+    return Instruction.compose(((14, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (literal, 16, True)))
