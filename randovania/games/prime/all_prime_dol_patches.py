@@ -5,6 +5,7 @@ from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.games.game import RandovaniaGame
 
 
 @dataclasses.dataclass(frozen=True)
@@ -143,21 +144,35 @@ def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, g
 def apply_reverse_energy_tank_heal_patch(sd2_base: int,
                                          addresses: DangerousEnergyTankAddresses,
                                          active: bool,
+                                         game: RandovaniaGame,
                                          dol_file: DolFile,
                                          ):
+    if game == RandovaniaGame.PRIME2:
+        health_offset = 0x14
+        refill_item = 0x29
+        patch_offset = 0x90
+
+    elif game == RandovaniaGame.PRIME3:
+        health_offset = 0xc
+        refill_item = 0x12
+        patch_offset = 0x138
+
+    else:
+        raise ValueError(f"Unsupported game: {game}")
+
     if active:
         patch = [
             lfs(f0, (addresses.small_number_float - sd2_base), r2),
-            stfs(f0, 0x14, r30),
+            stfs(f0, health_offset, r30),
             ori(r0, r0, 0),
             ori(r0, r0, 0),
         ]
     else:
         patch = [
             or_(r3, r30, r30),
-            li(r4, 0x29),  # HealthRefill
+            li(r4, refill_item),
             li(r5, 9999),
             bl(addresses.incr_pickup),
         ]
 
-    dol_file.write_instructions(addresses.incr_pickup + 0x90, patch)
+    dol_file.write_instructions(addresses.incr_pickup + patch_offset, patch)
