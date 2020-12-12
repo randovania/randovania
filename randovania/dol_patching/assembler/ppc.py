@@ -43,6 +43,12 @@ r6 = GeneralRegister(6)
 r7 = GeneralRegister(7)
 r8 = GeneralRegister(8)
 r9 = GeneralRegister(9)
+r10 = GeneralRegister(10)
+r25 = GeneralRegister(25)
+r26 = GeneralRegister(26)
+r27 = GeneralRegister(27)
+r28 = GeneralRegister(28)
+r29 = GeneralRegister(29)
 r30 = GeneralRegister(30)
 r31 = GeneralRegister(31)
 
@@ -50,11 +56,16 @@ f0 = FloatRegister(0)
 f1 = FloatRegister(1)
 
 
-def lwz(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
+def lwz(output_register: GeneralRegister, offset: int, input_register: GeneralRegister):
     """
     *(output_register + offset) = input_register
     """
-    pass
+
+    return Instruction((32 << 26)
+                       + (output_register.number << 21)
+                       + (input_register.number << 16)
+                       + offset
+                       )
 
 
 def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister,
@@ -122,6 +133,7 @@ def bl(address_or_symbol: int):
     """
     jumps to the given address
     """
+
     def with_inc_address(instruction_address: int):
         address = (instruction_address - address_or_symbol) // 4
         if address < 0:

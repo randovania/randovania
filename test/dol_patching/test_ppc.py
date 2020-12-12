@@ -15,3 +15,7 @@ def test_addi():
 
 def test_or():
     assert list(ppc.or_(ppc.r31, ppc.r3, ppc.r3)) == []
+
+
+def test_lwz():
+    assert list(ppc.lwz(ppc.r10, 0x774, ppc.r25)) == [0x81, 0x59, 0x07, 0x74]
