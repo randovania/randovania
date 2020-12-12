@@ -96,6 +96,7 @@ def add_relative_hint(world_list: WorldList,
     :return: Might be None, if no hint could be created.
     """
     target_node = node_search.pickup_index_to_node(world_list, target)
+    target_area = world_list.nodes_to_area(target_node)
     distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
 
     def _major_pickups(area: Area) -> Iterator[PickupIndex]:
@@ -111,8 +112,8 @@ def add_relative_hint(world_list: WorldList,
     area_choices = {
         area: 1 / max(distance, 2)
         for area, distance in distances.items()
-        if distance > 0 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
-                             or _not_empty(_major_pickups(area)))
+        if (distance > 0 and area.in_dark_aether == target_area.in_dark_aether
+            and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA or _not_empty(_major_pickups(area))))
     }
     if not area_choices:
         return None
