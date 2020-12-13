@@ -369,6 +369,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 ", ".join(extra_items)
                 if extra_items else "None"
             ))
+            self._update_show_all_button_state()
 
         else:
             pickup_names = {}
