@@ -27175,13 +27175,27 @@
                                                     "data": "Shoot Super Missile"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 6,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -27216,7 +27230,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Missile Expansion)": {
+                                "Pickup (Missile Expansion Half Pipe)": {
                                     "type": "or",
                                     "data": [
                                         {
@@ -27355,17 +27369,96 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Missile Expansion 3)": {
+                                "Pickup (Missile Expansion Grapple Ledge)": {
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 12,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 12,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 6,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 5,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 0,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 12,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -27386,7 +27479,7 @@
                             }
                         },
                         {
-                            "name": "Pickup (Missile Expansion)",
+                            "name": "Pickup (Missile Expansion Half Pipe)",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "pickup",
@@ -27414,7 +27507,7 @@
                             }
                         },
                         {
-                            "name": "Pickup (Missile Expansion 3)",
+                            "name": "Pickup (Missile Expansion Grapple Ledge)",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "pickup",
