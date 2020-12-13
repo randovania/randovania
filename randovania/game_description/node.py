@@ -32,7 +32,7 @@ class Node:
         return self.name < other.name
 
     def __hash__(self):
-        return super().__hash__()
+        return hash((self.index, self.name))
 
     @property
     def is_resource_node(self) -> bool:
@@ -70,6 +70,9 @@ class DockNode(Node):
     dock_index: int
     default_connection: DockConnection
     default_dock_weakness: DockWeakness
+
+    def __hash__(self):
+        return hash((self.index, self.name, self.dock_index))
 
     def __repr__(self):
         return "DockNode({!r}/{} -> {})".format(self.name, self.dock_index, self.default_connection)
