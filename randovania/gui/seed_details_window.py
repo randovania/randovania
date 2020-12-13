@@ -9,10 +9,8 @@ from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPus
 from asyncqt import asyncSlot
 
 from randovania.game_description import data_reader, default_database
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file

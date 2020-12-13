@@ -62,6 +62,7 @@ class EchoesConfiguration(BaseConfiguration):
     warp_to_start: bool
     varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 2.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
+    dangerous_energy_tank: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -72,5 +73,8 @@ class EchoesConfiguration(BaseConfiguration):
 
         if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
             result.append("One-way anywhere elevators")
+
+        if self.dangerous_energy_tank:
+            result.append("1 HP Mode")
 
         return result

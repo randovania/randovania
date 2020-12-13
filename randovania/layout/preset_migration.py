@@ -8,7 +8,7 @@ import slugify
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 6
+CURRENT_PRESET_VERSION = 7
 
 
 class InvalidPreset(Exception):
@@ -197,12 +197,20 @@ def _migrate_v5(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v6(preset: dict) -> dict:
+    if preset["game"] in ("prime2", "prime3"):
+        preset["configuration"]["dangerous_energy_tank"] = False
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
     3: _migrate_v3,
     4: _migrate_v4,
     5: _migrate_v5,
+    6: _migrate_v6,
 }
 
 

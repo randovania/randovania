@@ -292,6 +292,7 @@ class GeneratorReach:
         if new_dangerous_resources:
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
+                # FIXME: don't convert to set!
                 dangerous = requirement.as_set.dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
                     if not requirement.satisfied(new_state.resources, new_state.energy):

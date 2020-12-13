@@ -33,9 +33,9 @@ from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
-from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel
@@ -140,6 +140,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
+        self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
         if self.game_enum == RandovaniaGame.PRIME2:
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
             self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
@@ -311,6 +312,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
+        self.dangerous_tank_check.stateChanged.connect(self._persist_dangerous_tank)
 
         if self.game_enum == RandovaniaGame.PRIME2:
             config_fields = {
@@ -349,6 +351,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 fully_heal=self.safe_zone_logic_heal_check.isChecked()
             )
             editor.set_configuration_field("safe_zone", safe_zone)
+
+    def _persist_dangerous_tank(self):
+        with self._editor as editor:
+            editor.set_configuration_field("dangerous_energy_tank", self.dangerous_tank_check.isChecked())
 
     # Elevator
     def setup_elevator_elements(self):

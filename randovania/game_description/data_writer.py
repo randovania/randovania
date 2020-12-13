@@ -234,7 +234,8 @@ def write_game_specific(game_specific: EchoesGameSpecific) -> dict:
         "beam_configurations": [
             write_echoes_beam_configuration(beam)
             for beam in game_specific.beam_configurations
-        ]
+        ],
+        "dangerous_energy_tank": game_specific.dangerous_energy_tank,
     }
 
 
