@@ -35,7 +35,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         self.game = game
         self.node = node
-        world = game.world_list.nodes_to_world(node)
+        self.world = game.world_list.nodes_to_world(node)
+        world = self.world
 
         self._type_to_tab = {
             GenericNode: self.tab_generic,
@@ -143,7 +144,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_index_spin.setValue(node.dock_index)
 
         # Connection
-        other_area = self.game.world_list.area_by_asset_id(node.default_connection.area_asset_id)
+        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.world_asset_id,
+                                                                             node.default_connection.area_asset_id))
         self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(other_area))
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         self.dock_connection_node_combo.setCurrentIndex(
@@ -161,7 +163,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
-        area = world.area_by_asset_id(node.default_connection.area_asset_id)
+        area = self.game.world_list.area_by_area_location(node.default_connection)
 
         self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
                                                  if node.teleporter_instance_id is not None else "")

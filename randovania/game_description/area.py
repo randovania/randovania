@@ -16,6 +16,9 @@ class Area:
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
 
+    def __post_init__(self):
+        object.__setattr__(self, "__cached_node_with_dock_index", {})
+
     def __repr__(self):
         return "Area[{}]".format(self.name)
 
@@ -23,8 +26,13 @@ class Area:
         return self.area_asset_id
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
-        for node in self.nodes:
+        cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
+        if dock_index in cache:
+            return self.nodes[cache[dock_index]]
+
+        for i, node in enumerate(self.nodes):
             if isinstance(node, DockNode) and node.dock_index == dock_index:
+                cache[dock_index] = i
                 return node
         raise IndexError("No DockNode found with dock_index {} in {}".format(
             dock_index, self.name))
@@ -63,3 +71,8 @@ class Area:
         for node in self.nodes:
             if isinstance(node, PickupNode) and node.major_location:
                 yield node.pickup_index
+
+    def remove_node(self, node: Node):
+        self.nodes.remove(node)
+        cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
+        cache.clear()

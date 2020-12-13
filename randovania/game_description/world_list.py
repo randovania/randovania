@@ -17,6 +17,7 @@ class WorldList:
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
+    _ids_to_area: Dict[AreaLocation, Area]
     _nodes: Tuple[Node, ...]
 
     def __deepcopy__(self, memodict):
@@ -29,7 +30,7 @@ class WorldList:
         self.refresh_node_cache()
 
     def refresh_node_cache(self):
-        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
+        self._nodes_to_area, self._nodes_to_world, self._ids_to_area = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
@@ -46,12 +47,6 @@ class WorldList:
         for world in self.worlds:
             if world.world_asset_id == asset_id:
                 return world
-        raise KeyError("Unknown asset_id: {}".format(asset_id))
-
-    def area_by_asset_id(self, asset_id: int) -> Area:
-        for area in self.all_areas:
-            if area.area_asset_id == asset_id:
-                return area
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
     def world_with_area(self, area: Area) -> World:
@@ -225,17 +220,17 @@ class WorldList:
                         connections[target] = value.patch_requirements(static_resources, damage_multiplier).simplify()
 
     def area_by_area_location(self, location: AreaLocation) -> Area:
-        return self.world_by_asset_id(location.world_asset_id).area_by_asset_id(location.area_asset_id)
+        return self._ids_to_area[location]
 
     def world_by_area_location(self, location: AreaLocation) -> World:
         return self.world_by_asset_id(location.world_asset_id)
 
     def area_to_area_location(self, area: Area) -> AreaLocation:
-        world = next(world for world in self.worlds if area in world.areas)
-        return AreaLocation(
-            world_asset_id=world.world_asset_id,
-            area_asset_id=area.area_asset_id,
-        )
+        for world in self.worlds:
+            result = AreaLocation(world.world_asset_id, area.area_asset_id)
+            if result in self._ids_to_area:
+                return result
+        raise RuntimeError(f"Unknown area: {area}")
 
     def node_to_area_location(self, node: Node) -> AreaLocation:
         return AreaLocation(
@@ -251,9 +246,11 @@ class WorldList:
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     nodes_to_area = {}
     nodes_to_world = {}
+    ids_to_area = {}
 
     for world in worlds:
         for area in world.areas:
+            ids_to_area[AreaLocation(world.world_asset_id, area.area_asset_id)] = area
             for node in area.nodes:
                 if node in nodes_to_area:
                     raise ValueError(
@@ -262,4 +259,4 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-    return nodes_to_area, nodes_to_world
+    return nodes_to_area, nodes_to_world, ids_to_area
