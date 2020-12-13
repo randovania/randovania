@@ -4,13 +4,13 @@ from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.prime_configuration import PrimeConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
+from randovania.layout.prime_configuration import PrimeConfiguration
 
 
 def _bool_to_str(b: bool) -> str:
@@ -47,6 +47,7 @@ _ECHOES_TEMPLATE_STRINGS = {
     ],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
+        "1 HP Mode: {dangerous_energy_tank}",
         "Safe Zone: {safe_zone}",
         "Dark Aether Suit Damage: {dark_aether_suit_damage}",
         "Damage Strictness: {damage_strictness}",
@@ -79,6 +80,7 @@ _CORRUPTION_TEMPLATE_STRINGS = {
     ],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
+        "1 HP Mode: {dangerous_energy_tank}",
         "Damage Strictness: {damage_strictness}",
         "Pickup Model: {pickup_model}",
     ],
@@ -286,6 +288,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
         dark_aether_suit_damage = "Custom"
 
     format_params["energy_tank"] = f"{configuration.energy_per_tank} energy"
+    format_params["dangerous_energy_tank"] = _bool_to_str(configuration.dangerous_energy_tank)
     format_params["safe_zone"] = f"{configuration.safe_zone.heal_per_second} energy/s"
     format_params["dark_aether_suit_damage"] = dark_aether_suit_damage
 
@@ -339,6 +342,7 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     major_items = configuration.major_items_configuration
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
+                     "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
                      "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
                      "elevators": configuration.elevators.value,
                      "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
@@ -397,7 +401,6 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     elif preset.game == RandovaniaGame.PRIME1:
         template_strings = _PRIME_TEMPLATE_STRINGS
         format_params.update(_prime_format_params(configuration))
-
 
     for category, templates in template_strings.items():
         yield category, [

@@ -215,6 +215,7 @@ def create_game_specific(configuration: EchoesConfiguration, game: GameDescripti
             energy_per_tank=configuration.energy_per_tank,
             safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
             beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
+            dangerous_energy_tank=configuration.dangerous_energy_tank,
         )
     else:
         return game.game_specific

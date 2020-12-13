@@ -23,7 +23,8 @@ def _database() -> ResourceDatabase:
 def _patches(empty_patches) -> GamePatches:
     return dataclasses.replace(
         empty_patches,
-        game_specific=EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
+        game_specific=EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=(),
+                                         dangerous_energy_tank=False)
     )
 
 
