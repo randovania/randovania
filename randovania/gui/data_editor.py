@@ -435,7 +435,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         for other_nodes in self.current_area.connections.values():
             other_nodes.pop(current_node, None)
 
-        self.current_area.nodes.remove(current_node)
+        self.current_area.remove_node(current_node)
         self.game_description.world_list.refresh_node_cache()
         self.on_select_area()
 
