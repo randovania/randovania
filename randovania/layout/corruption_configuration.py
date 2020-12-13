@@ -18,6 +18,7 @@ class CorruptionConfiguration(BaseConfiguration):
     elevators: LayoutElevators
     skip_final_bosses: bool
     energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0, "precision": 1.0})
+    dangerous_energy_tank: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -28,5 +29,8 @@ class CorruptionConfiguration(BaseConfiguration):
         
         if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
             result.append("One-way anywhere elevators")
+
+        if self.dangerous_energy_tank:
+            result.append("1 HP Mode")
 
         return result

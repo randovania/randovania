@@ -74,6 +74,7 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
 @pytest.mark.asyncio
 async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    mock_clipboard: MagicMock = mocker.patch("PySide2.QtWidgets.QApplication.clipboard")
 
     window = SeedDetailsWindow(None, MagicMock())
     window.player_index_combo.addItem("Current", 0)
@@ -95,3 +96,4 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
+    mock_clipboard.return_value.setText.assert_called_once()
