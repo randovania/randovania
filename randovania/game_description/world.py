@@ -1,15 +1,20 @@
-from typing import NamedTuple, List, Iterator, Optional
+import dataclasses
+from typing import NamedTuple, List, Iterator, Optional, Dict
 
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 
-class World(NamedTuple):
+@dataclasses.dataclass(frozen=True)
+class World:
     name: str
     dark_name: Optional[str]
     world_asset_id: int
     areas: List[Area]
+
+    def __post_init__(self):
+        object.__setattr__(self, "__cached_area_by_asset_id", {})
 
     def __repr__(self):
         return "World[{}]".format(self.name)
@@ -34,8 +39,13 @@ class World(NamedTuple):
             yield from area.major_pickup_indices
 
     def area_by_asset_id(self, asset_id: int) -> Area:
-        for area in self.areas:
+        cache: Dict[int, int] = object.__getattribute__(self, "__cached_area_by_asset_id")
+        if asset_id in cache:
+            return self.areas[cache[asset_id]]
+
+        for i, area in enumerate(self.areas):
             if area.area_asset_id == asset_id:
+                cache[asset_id] = i
                 return area
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
