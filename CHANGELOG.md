@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Relative hints no longer cross portals.
 
+-   Changed: Decreased the chance of Power Bombs being late in a game.
+
 -   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
 
 ## [2.1.2] - 2020-12-05
