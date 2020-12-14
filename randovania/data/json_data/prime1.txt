@@ -145,7 +145,9 @@ Asset id: 3672049347
 > Dock to Phazon Infusion Chamber; Heals? False; Spawn Point
   * Other Door to Phazon Infusion Chamber/Dock to Subchamber One
   > Dock to Subchamber Two
-      Charge Beam and Have all Beams
+      All of the following:
+          Power Beam and Wave Beam
+          Charge Beam or Combat (Intermediate)
 
 > Dock to Subchamber Two; Heals? False
   * Other Door to Subchamber Two/Dock to Subchamber One
@@ -156,32 +158,44 @@ Asset id: 122281798
 > Dock to Subchamber One; Heals? False; Spawn Point
   * Other Door to Subchamber One/Dock to Subchamber Two
   > Dock to Subchamber Three
-      Charge Beam and Have all Beams
+      All of the following:
+          Power Beam and Ice Beam and Wave Beam
+          Charge Beam or Combat (Intermediate)
 
 > Dock to Subchamber Three; Heals? False
   * Other Door to Subchamber Three/Dock to Subchamber Two
+  > Dock to Subchamber One
+      Trivial
 
 ----------------
 Subchamber Three
 Asset id: 2050677022
 > Dock to Subchamber Four; Heals? False
   * Other Door to Subchamber Four/Dock to Subchamber Three
+  > Dock to Subchamber Two
+      Trivial
 
 > Dock to Subchamber Two; Heals? False; Spawn Point
   * Other Door to Subchamber Two/Dock to Subchamber Three
   > Dock to Subchamber Four
-      Charge Beam and Have all Beams
+      All of the following:
+          Have all Beams
+          Charge Beam or Combat (Intermediate)
 
 ----------------
 Subchamber Four
 Asset id: 2813067419
 > Dock to Subchamber Five; Heals? False
   * Other Door to Subchamber Five/Dock to Subchamber Four
+  > Dock to Subchamber Three
+      Trivial
 
 > Dock to Subchamber Three; Heals? False; Spawn Point
   * Other Door to Subchamber Three/Dock to Subchamber Four
   > Dock to Subchamber Five
-      Charge Beam and Have all Beams
+      All of the following:
+          Have all Beams
+          Charge Beam or Combat (Intermediate)
 
 ----------------
 Subchamber Five
@@ -189,16 +203,30 @@ Asset id: 2003911832
 > Dock to Subchamber Four; Heals? False; Spawn Point
   * Other Door to Subchamber Four/Dock to Subchamber Five
   > Dock to Metroid Prime Lair
-      Charge Beam and Phazon Suit and Have all Beams
+      Trivial
 
 > Dock to Metroid Prime Lair; Heals? False
   * Other Door to Metroid Prime Lair/Dock to Subchamber Five
+  > Dock to Subchamber Four
+      Trivial
 
 ----------------
 Metroid Prime Lair
 Asset id: 442920021
 > Dock to Subchamber Five; Heals? False; Spawn Point
   * Normal Door to Subchamber Five/Dock to Metroid Prime Lair
+  > Event - Metroid Prime Essence
+      All of the following:
+          Phazon Suit
+          Any of the following:
+              Invisible Objects (Intermediate)
+              Thermal Visor and X-Ray Visor
+          Charge Beam or Combat (Intermediate)
+
+> Event - Metroid Prime Essence; Heals? False
+  * Event Metroid Prime Essence
+  > Dock to Subchamber Five
+      Trivial
 
 ====================
 Phendrana Drifts
@@ -4318,8 +4346,10 @@ Asset id: 3587029001
   * Normal Door to Ruined Fountain Access/Dock to Main Plaza
   > Dock to Ruins Entrance
       Trivial
-  > Pickup (Missile Expansion 2)
-      Space Jump Boots and Shoot Super Missile
+  > Pickup (Missile Expansion Tree)
+      All of the following:
+          Shoot Super Missile
+          Space Jump Boots or Movement (Beginner)
 
 > Dock to Ruins Entrance; Heals? False; Spawn Point
   * Normal Door to Ruins Entrance/Dock to Main Plaza
@@ -4329,7 +4359,7 @@ Asset id: 3587029001
       Trivial
   > Dock to Nursery Access
       Trivial
-  > Pickup (Missile Expansion)
+  > Pickup (Missile Expansion Half Pipe)
       Any of the following:
           Morph Ball and Boost Ball
           Space Jump Boots and Slope Jump (Beginner)
@@ -4355,25 +4385,33 @@ Asset id: 3587029001
   * Normal Door to Piston Tunnel/Dock to Main Plaza
   > Dock to Ruins Entrance
       Trivial
-  > Pickup (Missile Expansion 3)
-      Grapple Beam
+  > Pickup (Missile Expansion Grapple Ledge)
+      Any of the following:
+          All of the following:
+              Grapple Beam
+              Space Jump Boots or Movement (Intermediate)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  R Jump (Beginner)
+                  Scan Visor and Combat/Scan Dash (Beginner)
 
 > Pickup (Energy Tank); Heals? True
   * Pickup 3; Major Location? False
   > Dock to Plaza Access
       Trivial
 
-> Pickup (Missile Expansion); Heals? False
+> Pickup (Missile Expansion Half Pipe); Heals? False
   * Pickup 0; Major Location? False
   > Dock to Ruins Entrance
       Trivial
 
-> Pickup (Missile Expansion 2); Heals? False
+> Pickup (Missile Expansion Tree); Heals? False
   * Pickup 1; Major Location? False
   > Dock to Ruins Entrance
       Trivial
 
-> Pickup (Missile Expansion 3); Heals? False
+> Pickup (Missile Expansion Grapple Ledge); Heals? False
   * Pickup 2; Major Location? False
   > Dock to Ruins Entrance
       Trivial
@@ -4463,7 +4501,12 @@ Asset id: 375016937
   > Dock to Ruined Fountain Access
       Trivial
   > Pickup (Missile Expansion)
-      Morph Ball and Spider Ball and After Flaahgra
+      All of the following:
+          Morph Ball and Spider Ball
+          Any of the following:
+              After Flaahgra
+              Space Jump Boots and Standable Terrain (Intermediate)
+              Combat/Scan Dash (Advanced) and Standable Terrain (Expert)
 
 > Pickup (Missile Expansion); Heals? False; Spawn Point
   * Pickup 4; Major Location? False
@@ -4484,12 +4527,14 @@ Asset id: 1014518864
       Any of the following:
           Morph Ball and Boost Ball and Spider Ball
           Space Jump Boots and Standable Terrain (Beginner)
-  > Pickup (Missile Expansion)
+          Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+  > Pickup (Missile Expansion Half Pipe)
       All of the following:
           Morph Ball
           Any of the following:
               Boost Ball
               Space Jump Boots and Standable Terrain (Beginner)
+              Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
   > Pit
       Trivial
 
@@ -4498,22 +4543,24 @@ Asset id: 1014518864
   > Pit
       Trivial
 
-> Pickup (Missile Expansion); Heals? False
+> Pickup (Missile Expansion Half Pipe); Heals? False
   * Pickup 6; Major Location? False
   > Dock to Ruined Shrine Access
       Morph Ball
 
-> Pickup (Missile Expansion 2); Heals? False
+> Pickup (Missile Expansion Bomb Wall); Heals? False
   * Pickup 7; Major Location? False
   > Pit
       Morph Ball
 
 > Pit; Heals? False
   > Dock to Ruined Shrine Access
-      Space Jump Boots or Morph Ball
+      Any of the following:
+          Space Jump Boots or Morph Ball
+          Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate)
   > Pickup (Morph Ball)
       Trivial
-  > Pickup (Missile Expansion 2)
+  > Pickup (Missile Expansion Bomb Wall)
       All of the following:
           Morph Ball
           Any of the following:
@@ -4695,7 +4742,7 @@ Asset id: 413884678
       All of the following:
           Morph Ball Bomb and Morph Ball
           Any of the following:
-              After Unlock Arboretum gate
+              After Unlock Arboretum gate or Bomb Jump (Intermediate)
               Boost Ball and Phase Through Objects (Beginner)
 
 > Dock to Arboretum Access; Heals? False; Spawn Point
@@ -4714,7 +4761,9 @@ Asset id: 413884678
 
 > In front of gate; Heals? False
   > Dock to Sunchamber Lobby
-      Morph Ball Bomb and Morph Ball and After Unlock Arboretum gate
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          After Unlock Arboretum gate or Bomb Jump (Intermediate)
   > Dock to Gathering Hall Access
       Trivial
   > Event - Open gate
@@ -4731,18 +4780,26 @@ Asset id: 1226570426
 > Dock to Training Chamber Access; Heals? False
   * Wave Door to Training Chamber Access/Dock to Magma Pool
   > Dock to Meditation Fountain
-      All of the following:
-          Grapple Beam
-          Gravity Suit or Varia Suit or Phazon Suit
+      Any of the following:
+          Grapple Beam and Heat-Resisting Suit
+          All of the following:
+              Space Jump Boots and Heated Rooms Damage ≥ 100
+              Any of the following:
+                  Standable Terrain (Intermediate) and R Jump (Advanced)
+                  Scan Visor and Combat/Scan Dash (Advanced)
   > Pickup (Power Bomb Expansion)
-      Power Bomb and Morph Ball
+      Power Bomb and Morph Ball and Heated Rooms Damage ≥ 100
 
 > Dock to Meditation Fountain; Heals? False; Spawn Point
   * Normal Door to Meditation Fountain/Dock to Magma Pool
   > Dock to Training Chamber Access
-      All of the following:
-          Grapple Beam
-          Gravity Suit or Varia Suit or Phazon Suit
+      Any of the following:
+          Grapple Beam and Heat-Resisting Suit
+          All of the following:
+              Space Jump Boots and Heated Rooms Damage ≥ 100
+              Any of the following:
+                  Standable Terrain (Intermediate) and R Jump (Advanced)
+                  Scan Visor and Combat/Scan Dash (Advanced)
 
 > Pickup (Power Bomb Expansion); Heals? False
   * Pickup 12; Major Location? False
@@ -4987,7 +5044,9 @@ Asset id: 1206336453
   > Dock to Gathering Hall Access
       Trivial
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Space Jump Boots and Morph Ball
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Space Jump Boots or Bomb Jump (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 18; Major Location? False
@@ -5167,9 +5226,13 @@ Asset id: 1227669322
   * Missile Blast Shield to Watery Hall Access/Dock to Watery Hall
   > Pickup (Missile Expansion)
       All of the following:
-          Space Jump Boots
-          Gravity Suit or Slope Jump (Beginner)
-          After Flaahgra or Poisoned Water Damage ≥ 46
+          After Flaahgra or Poisoned Water Damage ≥ 60
+          Any of the following:
+              Morph Ball Bomb and Morph Ball and Gravity Suit and Bomb Jump (Beginner)
+              No Gravity Suit and Slope Jump (Advanced)
+              All of the following:
+                  Space Jump Boots
+                  Gravity Suit or Slope Jump (Beginner)
   > Event - Open gate
       Scan Visor
   > Behind Gate
@@ -5353,7 +5416,9 @@ Asset id: 774997107
   > Pickup (Energy Tank)
       Morph Ball Bomb and Morph Ball
   > Under Spider Track
-      Morph Ball Bomb and Morph Ball and Spider Ball
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Spider Ball or Standable Terrain (Beginner)
 
 > Dock to Crossway Access West; Heals? False
   * Morph Ball Door to Crossway Access West/Dock to Furnace
@@ -5372,13 +5437,23 @@ Asset id: 774997107
 
 > Under Spider Track; Heals? False
   > Dock to East Furnace Access
-      Space Jump Boots
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
   > Dock to West Furnace Access
       Morph Ball Bomb and Morph Ball
   > Dock to Crossway Access West
       Morph Ball
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Power Bomb and Morph Ball and Boost Ball and Spider Ball
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Power Bomb and Boost Ball and Spider Ball
+              All of the following:
+                  Space Jump Boots and Standable Terrain (Beginner)
+                  Any of the following:
+                      Spider Ball
+                      Slope Jump (Intermediate) and Bomb Jump (Advanced)
 
 ----------------
 East Furnace Access
@@ -5421,17 +5496,26 @@ Asset id: 4216627403
 > Dock to Elder Hall Access; Heals? False; Spawn Point
   * Normal Door to Elder Hall Access/Dock to Hall of the Elders
   > Dock to Reflecting Pool Access
-      All of the following:
-          Space Jump Boots
-          Any of the following:
+      Any of the following:
+          All of the following:
               After Deactivate Hall of the Elders barrier
+              Any of the following:
+                  Space Jump Boots
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+          All of the following:
               Wave Beam and Morph Ball Bomb and Morph Ball and After Activate Hall of the Elders bomb slots
+              Space Jump Boots or Bomb Jump (Intermediate)
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Expert)
   > Dock to Crossway Access South
       Trivial
   > Dock to Elder Chamber
-      Plasma Beam and Morph Ball Bomb and Space Jump Boots and Morph Ball and After Activate Hall of the Elders bomb slots
+      All of the following:
+          Plasma Beam and Morph Ball Bomb and Morph Ball and After Activate Hall of the Elders bomb slots
+          Space Jump Boots or Bomb Jump (Intermediate)
   > Pickup (Energy Tank)
-      Ice Beam and Morph Ball Bomb and Space Jump Boots and Morph Ball and After Activate Hall of the Elders bomb slots
+      All of the following:
+          Ice Beam and Morph Ball Bomb and Morph Ball and After Activate Hall of the Elders bomb slots
+          Space Jump Boots or Bomb Jump (Intermediate)
 
 > Dock to East Furnace Access; Heals? False
   * Ice Door to East Furnace Access/Dock to Hall of the Elders
@@ -5484,14 +5568,20 @@ Asset id: 335540505
   > Dock to Crossway Access South
       Trivial
   > Dock to Elder Hall Access
-      Morph Ball and Boost Ball
+      Any of the following:
+          Morph Ball and Boost Ball
+          Space Jump Boots and R Jump (Beginner)
 
 > Dock to Elder Hall Access; Heals? False
   * Missile Blast Shield to Elder Hall Access/Dock to Crossway
   > Dock to Crossway Access West
       Trivial
   > Pickup (Missile Expansion)
-      Morph Ball Bomb and Morph Ball and Boost Ball and Spider Ball and After Activate Crossway bomb slots
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb and Boost Ball and Spider Ball and After Activate Crossway bomb slots
+              Space Jump Boots and Standable Terrain (Intermediate) and R Jump (Beginner)
   > Event - Activate bomb slots
       Scan Visor and Shoot Super Missile
 
@@ -5573,7 +5663,9 @@ Asset id: 907987628
 > Dock to Reflecting Pool Access; Heals? False; Spawn Point
   * Normal Door to Reflecting Pool Access/Dock to Reflecting Pool
   > Dock to Antechamber
-      Morph Ball and Boost Ball and After Drain Reflecting Pool water
+      Any of the following:
+          Morph Ball and Boost Ball and After Drain Reflecting Pool water
+          Space Jump Boots and Slope Jump (Beginner) and Standable Terrain (Beginner)
   > Event - Drain water
       Morph Ball Bomb and Morph Ball
 
