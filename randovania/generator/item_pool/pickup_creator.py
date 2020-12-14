@@ -236,7 +236,7 @@ def create_artifact(artifact_index: int,
         model_index=prime_items.ARTIFACT_MODEL[artifact_index],
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
-        probability_offset=1,
+        probability_offset=0.25,
     )
 
 
