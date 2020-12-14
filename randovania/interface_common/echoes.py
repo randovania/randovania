@@ -16,6 +16,8 @@ def _generate_layout_worker(output_pipe: Connection,
                             debug_level: int):
     def status_update(message: str):
         output_pipe.send(message)
+        if output_pipe.poll():
+            raise RuntimeError(output_pipe.recv())
 
     debug.set_level(debug_level)
     extra_args = {}
@@ -33,7 +35,7 @@ def generate_layout(permalink: Permalink,
                     validate_after_generation: bool,
                     timeout_during_generation: bool,
                     ) -> LayoutDescription:
-    receiving_pipe, output_pipe = multiprocessing.Pipe(False)
+    receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
     debug_level = debug.debug_level()
     if not permalink.spoiler:
@@ -51,6 +53,10 @@ def generate_layout(permalink: Permalink,
         while not future.done():
             message = receiving_pipe.recv()
             if message is not None:
-                status_update(message)
+                try:
+                    status_update(message)
+                except Exception:
+                    receiving_pipe.send("close")
+                    raise
 
         return future.result()
