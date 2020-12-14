@@ -24,28 +24,24 @@ def server_app_fixture(flask_app, skip_qtbot):
 
 def test_session(server_app):
     server_app.sio = MagicMock()
-    server = server_app.sio.server
 
     with server_app.app.test_request_context():
         flask.request.sid = 1234
         result = server_app.session()
 
     assert result == server_app.sio.server.session.return_value
-    server.manager.eio_sid_from_sid.assert_called_once_with(1234, namespace="/")
-    server.session.assert_called_once_with(server.manager.eio_sid_from_sid.return_value, namespace="/")
+    server_app.sio.server.session.assert_called_once_with(1234, namespace=None)
 
 
 def test_get_session(server_app):
     server_app.sio = MagicMock()
-    server = server_app.sio.server
 
     with server_app.app.test_request_context():
         flask.request.sid = 1234
         result = server_app.get_session()
 
     assert result == server_app.sio.server.get_session.return_value
-    server.manager.eio_sid_from_sid.assert_called_once_with(1234, namespace="/")
-    server.get_session.assert_called_once_with(server.manager.eio_sid_from_sid.return_value, namespace="/")
+    server_app.sio.server.get_session.assert_called_once_with(1234, namespace=None)
 
 
 def test_get_current_user_ok(server_app, clean_database):
