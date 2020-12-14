@@ -15,7 +15,8 @@ def test_setup_app():
 
 
 @patch("requests_oauthlib.OAuth2Session.fetch_token", autospec=True)
-def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_app):
+@pytest.mark.parametrize("existing", [False, True])
+def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_app, existing):
     # Setup
     sio = MagicMock()
     session = {}
@@ -27,6 +28,9 @@ def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_a
     discord_user = sio.discord.fetch_user.return_value
     discord_user.id = 1234
     discord_user.name = "A Name"
+
+    if existing:
+        User.create(discord_id=discord_user.id, name="Someone else")
 
     # Run
     with flask_app.test_request_context():
