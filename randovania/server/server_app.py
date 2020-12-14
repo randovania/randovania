@@ -34,16 +34,10 @@ class ServerApp:
         return self.sio.server
 
     def get_session(self, namespace=None):
-        namespace = namespace or '/'
-        server = self.get_server()
-        sid = server.manager.eio_sid_from_sid(flask.request.sid, namespace=namespace)
-        return server.get_session(sid, namespace=namespace)
+        return self.get_server().get_session(flask.request.sid, namespace=namespace)
 
     def session(self, namespace=None):
-        namespace = namespace or '/'
-        server = self.get_server()
-        sid = server.manager.eio_sid_from_sid(flask.request.sid, namespace=namespace)
-        return server.session(sid, namespace=namespace)
+        return self.get_server().session(flask.request.sid, namespace=namespace)
 
     def get_current_user(self) -> User:
         try:
