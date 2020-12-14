@@ -55,6 +55,9 @@ def login_with_discord(sio: ServerApp, code: str):
 
     user: User = User.get_or_create(discord_id=discord_user.id,
                                     defaults={"name": discord_user.name})[0]
+    if user.name != discord_user.name:
+        user.name = discord_user.name
+        user.save()
 
     with sio.session() as session:
         session["user-id"] = user.id
