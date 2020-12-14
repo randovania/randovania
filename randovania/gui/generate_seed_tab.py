@@ -4,17 +4,16 @@ from functools import partial
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QMenu, QAction
 from asyncqt import asyncSlot
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
