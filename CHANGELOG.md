@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Decreased the chance of Power Bombs being late in a game.
 
+-   Changed: Account name are updated every time you login via Discord. 
+
 -   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
 
 ## [2.1.2] - 2020-12-05
