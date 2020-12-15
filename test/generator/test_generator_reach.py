@@ -37,7 +37,7 @@ def run_bootstrap(preset: Preset):
         spoiler=True,
         presets={0: preset},
     )
-    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game)
+    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False)
     _, state = logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
@@ -195,7 +195,7 @@ def test_reach_size_from_start_echoes(echoes_game_description, default_layout_co
                                             specific_levels=specific_levels if not minimal_logic else {},
                                             game=default_layout_configuration.game),
     )
-    player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
+    player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0, 1)
 
     game, state = logic_bootstrap(layout_configuration, player_pool.game, player_pool.patches)
 

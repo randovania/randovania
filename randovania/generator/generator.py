@@ -162,9 +162,11 @@ def _async_create_description(permalink: Permalink,
     )
 
 
-def create_player_pool(rng: Random, configuration: EchoesConfiguration, player_index: int) -> PlayerPool:
+def create_player_pool(rng: Random, configuration: EchoesConfiguration,
+                       player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game)
-    base_patches = dataclasses.replace(base_patches_factory.create_base_patches(configuration, rng, game),
+    base_patches = dataclasses.replace(base_patches_factory.create_base_patches(configuration, rng, game,
+                                                                                num_players > 1),
                                        player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
@@ -198,7 +200,8 @@ def _create_pools_and_fill(rng: Random,
 
     for player_index, player_preset in presets.items():
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index)
+        player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index,
+                                                        len(presets))
 
     for player_pool in player_pools.values():
         _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
