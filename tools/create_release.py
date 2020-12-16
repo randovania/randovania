@@ -11,6 +11,7 @@ from pathlib import Path
 
 import aiohttp
 import markdown
+import tenacity
 
 from randovania import VERSION
 from randovania.cli import prime_database
@@ -41,6 +42,11 @@ async def get_nintendont_releases(session: aiohttp.ClientSession):
             raise RuntimeError("Unable to get Nintendont releases") from e
 
 
+@tenacity.retry(
+    stop=tenacity.stop_after_attempt(5),
+    retry=tenacity.retry_if_exception_type(aiohttp.ClientConnectorError),
+    wait=tenacity.wait_exponential(multiplier=1, min=4, max=30),
+)
 async def download_nintendont():
     headers = None
     if "GITHUB_TOKEN" in os.environ:
