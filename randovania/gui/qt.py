@@ -4,22 +4,31 @@ import locale
 import logging.config
 import os
 import sys
+import traceback
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
-from PySide2 import QtCore
-from PySide2.QtWidgets import QApplication, QMessageBox
+from PySide2 import QtCore, QtWidgets
 from asyncqt import asyncClose
 
 from randovania.gui.lib import theme, common_qt_lib
 
 
-def catch_exceptions(t, val, tb):
+def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
-        QMessageBox.critical(None,
-                             "An exception was raised",
-                             "An unhandled Exception occurred:\n{}".format(val))
+        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
+                                    "An exception was raised",
+                                    "An unhandled Exception occurred:\n{}".format(val),
+                                    QtWidgets.QMessageBox.Ok)
+        common_qt_lib.set_default_window_icon(box)
+        if val.__traceback__ is not None:
+            box.setDetailedText("".join(traceback.format_tb(val.__traceback__)))
+        box.exec_()
+
+
+def catch_exceptions(t, val, tb):
+    display_exception(val)
     old_hook(t, val, tb)
 
 
@@ -34,7 +43,7 @@ def catch_exceptions_async(loop, context):
         logging.critical(str(context))
 
 
-async def show_main_window(app: QApplication, options, is_preview: bool):
+async def show_main_window(app: QtWidgets.QApplication, options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
 
@@ -47,14 +56,14 @@ async def show_main_window(app: QApplication, options, is_preview: bool):
     await main_window.request_new_data()
 
 
-def show_tracker(app: QApplication):
+def show_tracker(app: QtWidgets.QApplication):
     from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
     app.tracker = AutoTrackerWindow(app.game_connection)
     app.tracker.show()
 
 
-def show_game_details(app: QApplication, options, game: Path):
+def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
     from randovania.gui.seed_details_window import SeedDetailsWindow
 
@@ -155,7 +164,7 @@ def start_logger(data_dir: Path, is_preview: bool):
     })
 
 
-def create_loop(app: QApplication) -> asyncio.AbstractEventLoop:
+def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     os.environ['QT_API'] = "PySide2"
     import asyncqt
     loop: asyncio.AbstractEventLoop = asyncqt.QEventLoop(app)
@@ -166,7 +175,7 @@ def create_loop(app: QApplication) -> asyncio.AbstractEventLoop:
     return loop
 
 
-async def qt_main(app: QApplication, data_dir: Path, args):
+async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection
 
@@ -191,7 +200,7 @@ async def qt_main(app: QApplication, data_dir: Path, args):
 
 def run(args):
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
     data_dir = args.custom_network_storage
     if data_dir is None:
@@ -200,11 +209,16 @@ def run(args):
 
     is_preview = args.preview
     start_logger(data_dir, is_preview)
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
+
+    def main_done(done: asyncio.Task):
+        e: typing.Optional[Exception] = done.exception()
+        if e is not None:
+            display_exception(e)
 
     loop = create_loop(app)
     with loop:
-        loop.create_task(qt_main(app, data_dir, args))
+        loop.create_task(qt_main(app, data_dir, args)).add_done_callback(main_done)
         loop.run_forever()
 
 
