@@ -136,7 +136,8 @@ def test_gate_assignment_for_configuration_all_random(echoes_resource_database):
     }
 
 
-def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
+@pytest.mark.parametrize("is_multiworld", [False, True])
+def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
     # Setup
     rng = MagicMock()
 
@@ -150,7 +151,9 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 
     def _keybearer_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                     HintItemPrecision.BROAD_CATEGORY), PickupIndex(number))
+                                                     HintItemPrecision.OWNER if is_multiworld
+                                                     else HintItemPrecision.BROAD_CATEGORY),
+                    PickupIndex(number))
 
     expected = {
         # Keybearer
@@ -185,15 +188,15 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     }
 
     # Run
-    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list,
-                                                               num_joke=2)
+    result = base_patches_factory.add_echoes_default_hints_to_patches(
+        rng, empty_patches, echoes_game_description.world_list, num_joke=2, is_multiworld=is_multiworld)
 
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
     assert result.hints == expected
 
 
-@patch("randovania.generator.base_patches_factory.add_default_hints_to_patches", autospec=True)
+@patch("randovania.generator.base_patches_factory.add_echoes_default_hints_to_patches", autospec=True)
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
@@ -209,6 +212,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     layout_configuration = MagicMock()
     layout_configuration.game = RandovaniaGame.PRIME2
     mock_replace: MagicMock = mocker.patch("dataclasses.replace")
+    is_multiworld = MagicMock()
 
     patches = ([
         game.create_game_patches.return_value,
@@ -219,7 +223,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     patches.append(patches[-1].assign_starting_location.return_value)
 
     # Run
-    result = base_patches_factory.create_base_patches(layout_configuration, rng, game)
+    result = base_patches_factory.create_base_patches(layout_configuration, rng, game, is_multiworld)
 
     # Assert
     game.create_game_patches.assert_called_once_with()
@@ -235,6 +239,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list, num_joke=2)
+    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list, num_joke=2,
+                                                              is_multiworld=is_multiworld)
 
     assert result is mock_add_default_hints_to_patches.return_value

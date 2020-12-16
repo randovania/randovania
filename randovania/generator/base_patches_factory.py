@@ -146,17 +146,19 @@ def starting_location_for_configuration(configuration: EchoesConfiguration,
     return location
 
 
-def add_default_hints_to_patches(rng: Random,
-                                 patches: GamePatches,
-                                 world_list: WorldList,
-                                 num_joke: int,
-                                 ) -> GamePatches:
+def add_echoes_default_hints_to_patches(rng: Random,
+                                        patches: GamePatches,
+                                        world_list: WorldList,
+                                        num_joke: int,
+                                        is_multiworld: bool,
+                                        ) -> GamePatches:
     """
     Adds hints that are present on all games.
     :param rng:
     :param patches:
     :param world_list:
     :param num_joke
+    :param is_multiworld
     :return:
     """
 
@@ -165,7 +167,8 @@ def add_default_hints_to_patches(rng: Random,
             patches = patches.assign_hint(node.resource(),
                                           Hint(HintType.LOCATION,
                                                PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                             HintItemPrecision.BROAD_CATEGORY),
+                                                             HintItemPrecision.OWNER if is_multiworld
+                                                             else HintItemPrecision.BROAD_CATEGORY),
                                                PickupIndex(node.hint_index)))
 
     all_logbook_assets = [node.resource()
@@ -224,13 +227,9 @@ def create_game_specific(configuration: EchoesConfiguration, game: GameDescripti
 def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
+                        is_multiworld: bool,
                         ) -> GamePatches:
     """
-
-    :param configuration:
-    :param rng:
-    :param game:
-    :return:
     """
     patches = dataclasses.replace(game.create_game_patches(),
                                   game_specific=create_game_specific(configuration, game))
@@ -248,6 +247,7 @@ def create_base_patches(configuration: EchoesConfiguration,
 
     # Hints
     if rng is not None and configuration.game == RandovaniaGame.PRIME2:
-        patches = add_default_hints_to_patches(rng, patches, game.world_list, num_joke=2)
+        patches = add_echoes_default_hints_to_patches(rng, patches, game.world_list,
+                                                      num_joke=2, is_multiworld=is_multiworld)
 
     return patches

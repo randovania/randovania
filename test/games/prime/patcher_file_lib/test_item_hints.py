@@ -49,6 +49,8 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     world_list = WorldList([
         World("World", "Dark World", 5000, [
             Area("Area", False, 10000, 0, True, [logbook_node, pickup_node], {}),
+            Area("Other Area", False, 20000, 0, True, [PickupNode(f"Pickup {i}", True, None, 1, PickupIndex(i), True)
+                                                       for i in range(pickup_index.index)], {}),
         ]),
     ])
 
@@ -58,7 +60,7 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
 def test_create_hints_nothing(empty_patches, players_config):
     # Setup
     asset_id = 1000
-    pickup_index = PickupIndex(50)
+    pickup_index = PickupIndex(0)
 
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
 
@@ -284,7 +286,9 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
     })
 
     hint_name_creator = LocationHintCreator(world_list, None, None)
-    location_formatters = {HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches)}
+    location_formatters = {
+        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config),
+    }
     hint = Hint(
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_INDEX, HintItemPrecision.DETAILED,

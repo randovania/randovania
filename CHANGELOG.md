@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Relative hints no longer cross portals.
 
+-   Changed: In multiworld, keybearer hints now instead tells the player the item is for, instead of a category.
+
 -   Changed: Decreased the chance of Power Bombs being late in a game.
 
 -   Changed: Account name are updated every time you login via Discord. 
