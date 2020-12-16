@@ -270,6 +270,9 @@ async def test_check_dangerous_presets(window, mocker):
     game_session.presets[2].dangerous_settings.return_value = []
 
     window._game_session = game_session
+    window.team_players = [MagicMock(), MagicMock()]
+    window.team_players[0].player.name = "Crazy Person"
+    window.team_players[1].player = None
 
     permalink = MagicMock()
     permalink.presets = {i: preset for i, preset in enumerate(game_session.presets)}
@@ -279,8 +282,8 @@ async def test_check_dangerous_presets(window, mocker):
 
     # Assert
     message = ("The following presets have settings that can cause an impossible game:\n"
-               "\nRow 0 - Preset A: Cake"
-               "\nRow 1 - Preset B: Bomb, Knife"
+               "\nCrazy Person - Preset A: Cake"
+               "\nPlayer 2 - Preset B: Bomb, Knife"
                "\n\nDo you want to continue?")
     mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
                                           QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
