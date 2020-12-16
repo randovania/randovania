@@ -1,3 +1,4 @@
+import collections
 import typing
 from random import Random
 from typing import Dict, Tuple, Optional
@@ -11,19 +12,21 @@ from randovania.game_description.hint import HintType, HintLocationPrecision, Hi
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources import resource_info
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
+from randovania.games.prime.echoes_items import USELESS_PICKUP_MODEL
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_text, TextColor
-# Guidelines for joke hints:
-# 1. They should clearly be jokes, and not real hints or the result of a bug.
-# 2. They shouldn't reference real-world people.
-# 3. They should be understandable by as many people as possible.
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _JOKE_HINTS = [
+    # Guidelines for joke hints:
+    # 1. They should clearly be jokes, and not real hints or the result of a bug.
+    # 2. They shouldn't reference real-world people.
+    # 3. They should be understandable by as many people as possible.
+    #
     "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
     "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
     "Adam has not yet authorized the use of this hint.",
@@ -43,10 +46,10 @@ _DET_AN = [
 ]
 
 _DET_NULL = []
-for i in range(1, 4):
-    _DET_NULL.extend([f"Dark Agon Key {i}", f"Dark Torvus Key {i}", f"Ing Hive Key {i}"])
-for i in range(1, 10):
-    _DET_NULL.append(f"Sky Temple Key {i}")
+_DET_NULL.extend(f"{temple} Key {i}"
+                 for i in range(1, 4)
+                 for temple in ("Dark Agon", "Dark Torvus", "Ing Hive"))
+_DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
 
 class Determiner:
@@ -139,6 +142,10 @@ class RelativeAreaFormatter(RelativeFormatter):
 
 
 class RelativeItemFormatter(RelativeFormatter):
+    def __init__(self, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration):
+        super().__init__(world_list, patches)
+        self.players_config = players_config
+
     def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
         relative = typing.cast(RelativeDataItem, hint.precision.relative)
         index = relative.other_index
@@ -146,7 +153,8 @@ class RelativeItemFormatter(RelativeFormatter):
         other_area = self.world_list.nodes_to_area(self._index_to_node[index])
         other_name = "".join(_calculate_pickup_hint(self.patches.pickup_assignment, self.world_list,
                                                     relative.precision,
-                                                    self.patches.pickup_assignment.get(index)))
+                                                    self.patches.pickup_assignment.get(index),
+                                                    self.players_config))
 
         return self.relative_format(determiner, pickup, hint, other_area, other_name)
 
@@ -155,6 +163,7 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
                            world_list: WorldList,
                            precision: HintItemPrecision,
                            target: Optional[PickupTarget],
+                           players_config: PlayersConfiguration,
                            ) -> Tuple[str, str]:
     """
 
@@ -165,38 +174,49 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
     :return:
     """
     if target is None:
-        item_category = ItemCategory.ETM
-        broad_category = ItemCategory.ETM
-    else:
-        item_category = target.pickup.item_category
-        broad_category = target.pickup.broad_category
+        target = PickupTarget(
+            pickup=PickupEntry(
+                name="Energy Transfer Module",
+                resources=(ConditionalResources(None, None, ()),),
+                model_index=USELESS_PICKUP_MODEL,
+                item_category=ItemCategory.ETM,
+                broad_category=ItemCategory.ETM,
+            ),
+            player=players_config.player_index,
+        )
 
     if precision is HintItemPrecision.GENERAL_CATEGORY:
-        return item_category.general_details
+        return target.pickup.item_category.general_details
 
-    elif precision in (HintItemPrecision.PRECISE_CATEGORY, HintItemPrecision.BROAD_CATEGORY):
-        if precision is HintItemPrecision.PRECISE_CATEGORY:
-            return item_category.hint_details
-        else:
-            return broad_category.hint_details
+    elif precision is HintItemPrecision.PRECISE_CATEGORY:
+        return target.pickup.item_category.hint_details
+
+    elif precision is HintItemPrecision.BROAD_CATEGORY:
+        return target.pickup.broad_category.hint_details
+
+    elif precision is HintItemPrecision.DETAILED:
+        return _calculate_determiner(pickup_assignment, target.pickup, world_list), target.pickup.name
+
+    elif precision is HintItemPrecision.OWNER:
+        return "", f"{players_config.player_names[target.player]}'s item"
 
     else:
-        assert precision is HintItemPrecision.DETAILED
+        raise ValueError(f"Unknown precision: {precision}")
 
-        if target is None:
-            if len(pickup_assignment) == world_list.num_pickup_nodes - 1:
-                determiner = "the "
-            else:
-                determiner = "an "
-            return determiner, "Energy Transfer Module"
+
+def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry, world_list: WorldList) -> str:
+    name_count = collections.defaultdict(int)
+    for i in range(world_list.num_pickup_nodes):
+        index = PickupIndex(i)
+        if index in pickup_assignment:
+            pickup_name = pickup_assignment[index].pickup.name
         else:
-            return _calculate_determiner(pickup_assignment, target.pickup), target.pickup.name
+            pickup_name = "Energy Transfer Module"
+        name_count[pickup_name] += 1
 
-
-def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
     if pickup.name in _DET_NULL:
         determiner = ""
-    elif tuple(pickup_entry.pickup.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
+    elif name_count[pickup.name] == 1:
         determiner = "the "
     elif pickup.name in _DET_AN:
         determiner = "an "
@@ -276,7 +296,8 @@ def create_message_for_hint(hint: Hint,
         determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
                                                          world_list,
                                                          hint.precision.item,
-                                                         patches.pickup_assignment.get(hint.target))
+                                                         patches.pickup_assignment.get(hint.target),
+                                                         players_config)
         return location_formatters[hint.precision.location].format(
             Determiner(determiner),
             color_text(TextColor.ITEM, pickup_name),
@@ -312,7 +333,7 @@ def create_hints(all_patches: Dict[int, GamePatches],
         HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
                                                              hint_name_creator),
         HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches),
-        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches),
+        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config),
     }
 
     hints_for_asset: Dict[int, str] = {}

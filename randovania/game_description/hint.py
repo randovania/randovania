@@ -37,6 +37,9 @@ class HintItemPrecision(Enum):
     # x-related, life-support, or just the precise category
     BROAD_CATEGORY = "broad-category"
 
+    # the name of the player for the target belongs to
+    OWNER = "owner"
+
 
 class HintLocationPrecision(Enum):
     # The exact location

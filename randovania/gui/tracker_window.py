@@ -117,7 +117,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.layout_configuration = layout_configuration
         self.persistence_path = persistence_path
 
-        player_pool = generator.create_player_pool(Random(0), self.layout_configuration, 0)
+        player_pool = generator.create_player_pool(Random(0), self.layout_configuration, 0, 1)
         pool_patches = player_pool.patches
         self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
                                                                      player_pool.game,
