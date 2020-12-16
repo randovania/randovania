@@ -1,4 +1,5 @@
 import datetime
+import logging
 import random
 from functools import partial
 from pathlib import Path
@@ -190,6 +191,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         try:
             self.on_preset_changed(preset_data.get_preset())
         except InvalidPreset as e:
+            logging.exception(f"Invalid preset for {preset_data.name}")
             QMessageBox.warning(
                 self._window_manager,
                 "Incompatible Preset",
@@ -247,7 +249,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                         self.on_preset_changed(self._current_preset_data.get_preset())
                         return
                     except InvalidPreset:
-                        pass
+                        logging.exception(f"Invalid preset for {options.selected_preset_name}")
             else:
                 self.select_game(RandovaniaGame.PRIME2)
 
