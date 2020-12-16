@@ -234,7 +234,6 @@ def convert_to_current_version(preset: dict) -> dict:
 
 class VersionedPreset:
     data: dict
-    _converted = False
     exception: Optional[InvalidPreset] = None
     _preset: Optional[Preset] = None
 
@@ -271,14 +270,17 @@ class VersionedPreset:
             return self.get_preset() == other.get_preset()
         return False
 
+    @property
+    def _converted(self):
+        return self._preset is not None or self.exception is not None
+
     def ensure_converted(self):
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(convert_to_current_version(self.data))
-                self._converted = True
             except (ValueError, KeyError) as e:
                 self.exception = InvalidPreset(e)
-                raise
+                raise self.exception from e
 
     def get_preset(self) -> Preset:
         self.ensure_converted()
@@ -300,7 +302,6 @@ class VersionedPreset:
     @classmethod
     def with_preset(cls, preset: Preset) -> "VersionedPreset":
         result = VersionedPreset(None)
-        result._converted = True
         result._preset = preset
         return result
 
@@ -311,11 +312,12 @@ class VersionedPreset:
 
     @property
     def as_json(self) -> dict:
-        if self._converted:
+        if self._preset is not None:
             preset_json = {
                 "schema_version": CURRENT_PRESET_VERSION,
             }
             preset_json.update(self._preset.as_json)
             return preset_json
         else:
+            assert self.data is not None
             return self.data
