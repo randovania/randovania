@@ -46,16 +46,23 @@ class BaseConfiguration(BitPackDataClass, JsonDataclass):
 
         kwargs = {}
         for field in dataclasses.fields(cls):
-            arg = json_dict[field.name]
-            if issubclass(field.type, Enum):
-                arg = field.type(arg)
-            elif hasattr(field.type, "from_json"):
-                extra_args = []
-                if field.name in ("trick_level", "starting_location"):
-                    extra_args.append(game)
-                if field.name in ("major_items_configuration", "ammo_configuration"):
-                    extra_args.append(item_database)
-                arg = field.type.from_json(arg, *extra_args)
+            try:
+                arg = json_dict[field.name]
+            except KeyError as e:
+                raise KeyError(f"Missing field {e}") from e
+
+            try:
+                if issubclass(field.type, Enum):
+                    arg = field.type(arg)
+                elif hasattr(field.type, "from_json"):
+                    extra_args = []
+                    if field.name in ("trick_level", "starting_location"):
+                        extra_args.append(game)
+                    if field.name in ("major_items_configuration", "ammo_configuration"):
+                        extra_args.append(item_database)
+                    arg = field.type.from_json(arg, *extra_args)
+            except ValueError as e:
+                raise ValueError(f"Error in field {field.name}: {e}") from e
 
             kwargs[field.name] = arg
 
