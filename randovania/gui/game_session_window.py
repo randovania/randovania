@@ -796,8 +796,14 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 all_dangerous_settings[i] = dangerous
 
         if all_dangerous_settings:
+            player_names = {
+                i: widget.player.name
+                for i, widget in enumerate(self.team_players)
+                if widget.player is not None
+            }
+
             warnings = "\n".join(
-                f"Row {i} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
+                f"{player_names.get(i, f'Player {i + 1}')} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
                 for i, dangerous in all_dangerous_settings.items()
             )
             message = ("The following presets have settings that can cause an impossible game:\n"
