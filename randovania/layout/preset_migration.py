@@ -1,3 +1,4 @@
+import copy
 import json
 from pathlib import Path
 from typing import Optional, Dict
@@ -277,7 +278,7 @@ class VersionedPreset:
     def ensure_converted(self):
         if not self._converted:
             try:
-                self._preset = Preset.from_json_dict(convert_to_current_version(self.data))
+                self._preset = Preset.from_json_dict(convert_to_current_version(copy.deepcopy(self.data)))
             except (ValueError, KeyError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
