@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Alerts are now properly saved as displayed.
 
+-   Fixed: Errors in the default preset no longer prevent Randovania from starting. 
+
 -   Changed: Optimized game generation, it now takes roughly 2/3 of the time.
 
 -   Changed: Optimized game validation, it now also takes roughly 2/3 of the time.
