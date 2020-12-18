@@ -12,8 +12,6 @@ from pathlib import Path
 from PySide2 import QtCore, QtWidgets
 from asyncqt import asyncClose
 
-from randovania.gui.lib import theme, common_qt_lib
-
 
 def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
@@ -21,6 +19,7 @@ def display_exception(val: Exception):
                                     "An exception was raised",
                                     "An unhandled Exception occurred:\n{}".format(val),
                                     QtWidgets.QMessageBox.Ok)
+        from randovania.gui.lib import common_qt_lib
         common_qt_lib.set_default_window_icon(box)
         if val.__traceback__ is not None:
             box.setDetailedText("".join(traceback.format_tb(val.__traceback__)))
@@ -113,7 +112,7 @@ def create_backend(debug_game_backend: bool, options):
 
 def _load_options():
     from randovania.interface_common.options import Options
-    from randovania.gui.lib import startup_tools
+    from randovania.gui.lib import startup_tools, theme
 
     options = Options.with_default_data_dir()
     if not startup_tools.load_options_from_disk(options):
@@ -157,10 +156,16 @@ def start_logger(data_dir: Path, is_preview: bool):
                 'encoding': 'utf-8',
             }
         },
+        'loggers': {
+            'socketio.client': {
+                'level': 'DEBUG',
+
+            }
+        },
         'root': {
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'handlers': ['default', 'local_app_data'],
-        }
+        },
     })
 
 

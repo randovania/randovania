@@ -52,6 +52,7 @@ class NetworkClient:
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
     _connect_task: Optional[asyncio.Task] = None
+    _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
     _last_self_update: Any = None
@@ -110,6 +111,8 @@ class NetworkClient:
         if self.sio.connected:
             return
 
+        waiting_for_on_connect = asyncio.get_running_loop().create_future()
+        self._waiting_for_on_connect = waiting_for_on_connect
         try:
             # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
             engineio.asyncio_client.async_signal_handler_set = True
@@ -123,10 +126,9 @@ class NetworkClient:
             self._connect_error = None
             await self.sio.connect(self.configuration["server_address"],
                                    socketio_path=self.configuration["socketio_path"],
+                                   transports=['websocket'],
                                    headers={"X-Randovania-Version": randovania.VERSION})
-            if self._restore_session_task is not None:
-                self.logger.info(f"connect_to_server: waiting for restore session")
-                await asyncio.wait_for(self._restore_session_task, timeout=30)
+            await waiting_for_on_connect
             self.logger.info(f"connect_to_server: connected! -- {self._restore_session_task}")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
@@ -138,6 +140,11 @@ class NetworkClient:
                     message = str(e)
                 await self.on_connect_error(message)
             raise UnableToConnect(self._connect_error)
+
+    def notify_on_connect(self, result):
+        if self._waiting_for_on_connect is not None:
+            self._waiting_for_on_connect.set_result(result)
+            self._waiting_for_on_connect = None
 
     def connect_to_server(self) -> asyncio.Task:
         if self._connect_task is None:
@@ -180,16 +187,22 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
-        self._restore_session_task = asyncio.create_task(self._restore_session())
-        self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
-        await self._restore_session_task
+        try:
+            self._restore_session_task = asyncio.create_task(self._restore_session())
+            self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
+            await self._restore_session_task
+        finally:
+            self.notify_on_connect(True)
 
     async def on_connect_error(self, error_message: str):
-        self._connect_error = error_message
-        self.logger.info(f"on_connect_error: {error_message}")
-        self.connection_state = ConnectionState.Disconnected
-        if self._restore_session_task is not None:
-            self._restore_session_task.cancel()
+        try:
+            self._connect_error = error_message
+            self.logger.info(f"on_connect_error: {error_message}")
+            self.connection_state = ConnectionState.Disconnected
+            if self._restore_session_task is not None:
+                self._restore_session_task.cancel()
+        finally:
+            self.notify_on_connect(False)
 
     async def on_disconnect(self):
         self.logger.info(f"on_disconnect")

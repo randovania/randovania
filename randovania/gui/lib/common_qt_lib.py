@@ -1,3 +1,4 @@
+import typing
 from pathlib import Path
 from typing import Iterator, Optional
 
@@ -6,8 +7,6 @@ from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow,
     QLineEdit
 
 from randovania import get_data_path
-from randovania.game_connection.game_connection import GameConnection
-from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 
@@ -152,12 +151,14 @@ def set_edit_if_different(edit: QLineEdit, new_text: str):
         edit.setText(new_text)
 
 
-def get_network_client() -> QtNetworkClient:
-    return QApplication.instance().network_client
+def get_network_client():
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    return typing.cast(QtNetworkClient, QApplication.instance().network_client)
 
 
-def get_game_connection() -> GameConnection:
-    return QApplication.instance().game_connection
+def get_game_connection():
+    from randovania.game_connection.game_connection import GameConnection
+    return typing.cast(GameConnection, QApplication.instance().game_connection)
 
 
 def show_install_visual_cpp_redist():
