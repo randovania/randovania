@@ -134,8 +134,6 @@ def logout(sio: ServerApp):
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
 
-    _emit_user_session_update(sio)
-
 
 def setup_app(sio: ServerApp):
     sio.on("login_with_discord", login_with_discord)
