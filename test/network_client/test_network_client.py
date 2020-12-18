@@ -66,8 +66,12 @@ async def test_connect_to_server(tmpdir):
     # Setup
     client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000",
                                           "socketio_path": "/path"})
+
+    async def connect(*args, **kwargs):
+        client._waiting_for_on_connect.set_result(True)
+
     client.sio = MagicMock()
-    client.sio.connect = AsyncMock()
+    client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
     # Run
@@ -77,6 +81,7 @@ async def test_connect_to_server(tmpdir):
     assert client.connection_state == ConnectionState.Connecting
     client.sio.connect.assert_awaited_once_with("http://localhost:5000",
                                                 socketio_path="/path",
+                                                transports=["websocket"],
                                                 headers={"X-Randovania-Version": randovania.VERSION})
 
 
