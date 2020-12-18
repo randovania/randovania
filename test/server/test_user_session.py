@@ -128,7 +128,7 @@ def test_logout(flask_app, mocker):
     # Assert
     assert session == {}
     sio.leave_game_session.assert_called_once_with()
-    mock_emit_user_session_update.assert_called_once_with(sio)
+    mock_emit_user_session_update.assert_not_called()
 
 
 def test_restore_user_session_invalid_key(flask_app, fernet):
