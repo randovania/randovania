@@ -59,7 +59,6 @@ class NetworkClient:
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
 
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()

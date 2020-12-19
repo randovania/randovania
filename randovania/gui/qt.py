@@ -157,13 +157,21 @@ def start_logger(data_dir: Path, is_preview: bool):
             }
         },
         'loggers': {
-            'socketio.client': {
+            'randovania.network_client.network_client': {
                 'level': 'DEBUG',
-
-            }
+            },
+            'randovania.game_connection.connection_backend': {
+                'level': 'DEBUG',
+            },
+            'randovania.gui.multiworld_client': {
+                'level': 'DEBUG',
+            },
+            # 'socketio.client': {
+            #     'level': 'DEBUG',
+            # }
         },
         'root': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'handlers': ['default', 'local_app_data'],
         },
     })
