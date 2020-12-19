@@ -95,7 +95,6 @@ class ConnectionBackend(ConnectionBase):
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
 
         self._games = {}
         self._inventory = {}
