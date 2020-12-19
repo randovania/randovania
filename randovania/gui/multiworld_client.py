@@ -65,9 +65,7 @@ class MultiworldClient(QObject):
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):
         super().__init__()
-
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
 
         self.network_client = network_client
         self.game_connection = game_connection
