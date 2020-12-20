@@ -1,7 +1,7 @@
 import asyncio
-import datetime
 import locale
 import logging.config
+import logging.handlers
 import os
 import sys
 import traceback
@@ -11,6 +11,8 @@ from pathlib import Path
 
 from PySide2 import QtCore, QtWidgets
 from asyncqt import asyncClose
+
+logger = logging.getLogger(__name__)
 
 
 def display_exception(val: Exception):
@@ -37,9 +39,9 @@ old_hook = sys.excepthook
 def catch_exceptions_async(loop, context):
     if 'future' in context:
         future: asyncio.Future = context['future']
-        logging.exception(context["message"], exc_info=future.exception())
+        logger.exception(context["message"], exc_info=future.exception())
     else:
-        logging.critical(str(context))
+        logger.critical(str(context))
 
 
 async def show_main_window(app: QtWidgets.QApplication, options, is_preview: bool):
@@ -51,6 +53,8 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     from randovania.gui.main_window import MainWindow
     main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
+
+    logger.info("Displaying main window")
     main_window.show()
     await main_window.request_new_data()
 
@@ -58,7 +62,8 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
 def show_tracker(app: QtWidgets.QApplication):
     from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
-    app.tracker = AutoTrackerWindow(app.game_connection)
+    app.tracker = AutoTrackerWindow(app.game_connection, _load_options())
+    logger.info("Displaying auto tracker")
     app.tracker.show()
 
 
@@ -69,6 +74,7 @@ def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     layout = LayoutDescription.from_file(game)
     details_window = SeedDetailsWindow(None, options)
     details_window.update_layout_description(layout)
+    logger.info("Displaying game details")
     details_window.show()
     app.details_window = details_window
 
@@ -96,6 +102,7 @@ def create_backend(debug_game_backend: bool, options):
         try:
             from randovania.game_connection.dolphin_backend import DolphinBackend
         except ImportError:
+            from randovania.gui.lib import common_qt_lib
             common_qt_lib.show_install_visual_cpp_redist()
             raise SystemExit(1)
 
@@ -132,13 +139,11 @@ def start_logger(data_dir: Path, is_preview: bool):
     log_dir = data_dir.joinpath("logs")
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
             'default': {
-                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+                'format': '[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s',
             }
         },
         'handlers': {
@@ -151,9 +156,10 @@ def start_logger(data_dir: Path, is_preview: bool):
             'local_app_data': {
                 'level': 'DEBUG',
                 'formatter': 'default',
-                'class': 'logging.FileHandler',
-                'filename': log_dir.joinpath(f"{today}.log"),
+                'class': 'logging.handlers.TimedRotatingFileHandler',
+                'filename': log_dir.joinpath(f"logger.log"),
                 'encoding': 'utf-8',
+                'backupCount': 10,
             }
         },
         'loggers': {
@@ -165,6 +171,9 @@ def start_logger(data_dir: Path, is_preview: bool):
             },
             'randovania.gui.multiworld_client': {
                 'level': 'DEBUG',
+            },
+            'randovania.gui.qt': {
+                'level': 'INFO',
             },
             # 'socketio.client': {
             #     'level': 'DEBUG',
@@ -204,6 +213,7 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     async def _on_last_window_closed():
         await app.network_client.disconnect_from_server()
         await app.game_connection.stop()
+        logger.info("Last QT window closed")
 
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
 
