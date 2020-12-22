@@ -78,7 +78,7 @@ class MultiworldClient(QObject):
                 self._pid.create()
             except pid.PidFileError as e:
                 raise BackendInUse(Path(self._pid.filename)) from e
-            self.logger.info(f"Creating pid file at {self._pid.filename}")
+            self.logger.debug(f"Creating pid file at {self._pid.filename}")
 
         self._game = data_reader.decode_data(default_data.decode_default_prime2())
 
@@ -87,7 +87,7 @@ class MultiworldClient(QObject):
         return self._data is not None
 
     async def start(self, persist_path: Path):
-        self.logger.info("start")
+        self.logger.debug("start")
 
         if self._pid is not None and self._pid.fh is None:
             self._pid.create()
@@ -101,7 +101,7 @@ class MultiworldClient(QObject):
         self.start_notify_collect_locations_task()
 
     async def stop(self):
-        self.logger.info("stop")
+        self.logger.debug("stop")
 
         if self._notify_task is not None:
             self._notify_task.cancel()
@@ -149,23 +149,23 @@ class MultiworldClient(QObject):
 
     async def on_location_collected(self, location: int):
         if location in self._data.collected_locations:
-            self.logger.info(f"on_location_collected: {location}, but location was already collected")
+            self.logger.info(f"{location}, but location was already collected")
             return
 
-        self.logger.info(f"on_location_collected: {location}, a new location")
+        self.logger.info(f"{location}, a new location")
         async with self._data as data:
             data.collected_locations.add(location)
 
         self.start_notify_collect_locations_task()
 
     async def refresh_received_pickups(self):
-        self.logger.debug(f"refresh_received_pickups: start")
+        self.logger.debug(f"start")
         async with self._pickups_lock:
             result = await self.network_client.game_session_request_pickups()
 
             self._received_messages = []
             self._received_pickups = []
-            self.logger.info(f"refresh_received_pickups: received {len(result)} items")
+            self.logger.info(f"received {len(result)} items")
 
             for message, data in result:
                 self._received_messages.append(message)
@@ -176,7 +176,7 @@ class MultiworldClient(QObject):
         await self.refresh_received_pickups()
 
         async with self._pickups_lock:
-            self.logger.info(f"on_game_updated: message {self._data.latest_message_displayed} last displayed")
+            self.logger.debug(f"message {self._data.latest_message_displayed} last displayed")
 
             if self._data.latest_message_displayed < len(self._received_messages):
                 async with self._data as data:
