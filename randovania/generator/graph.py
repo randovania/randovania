@@ -1,7 +1,7 @@
 import copy
 from typing import Dict, Iterator, Tuple, Set, Callable
 
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements import Requirement, RequirementSet
 
 
 class BaseGraph:
@@ -11,7 +11,7 @@ class BaseGraph:
     def add_node(self, node: int):
         raise NotImplementedError()
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: Requirement):
+    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet):
         raise NotImplementedError()
 
     def remove_edge(self, previous: int, target: int):
@@ -23,10 +23,10 @@ class BaseGraph:
     def __contains__(self, item: int):
         raise NotImplementedError()
 
-    def edges_data(self) -> Iterator[Tuple[int, int, Requirement]]:
+    def edges_data(self) -> Iterator[Tuple[int, int, RequirementSet]]:
         raise NotImplementedError()
 
-    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, Requirement], float]):
+    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
         raise NotImplementedError()
 
     def single_source_dijkstra_path(self, source: int):
@@ -37,13 +37,13 @@ class BaseGraph:
 
 
 class RandovaniaGraph(BaseGraph):
-    edges: Dict[int, Dict[int, Requirement]]
+    edges: Dict[int, Dict[int, RequirementSet]]
 
     @classmethod
     def new(cls):
         return cls({})
 
-    def __init__(self, edges: Dict[int, Dict[int, Requirement]]):
+    def __init__(self, edges: Dict[int, Dict[int, RequirementSet]]):
         import networkx
         self.networkx = networkx
         self.edges = edges
@@ -60,7 +60,7 @@ class RandovaniaGraph(BaseGraph):
         if node not in self.edges:
             self.edges[node] = {}
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: Requirement):
+    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet):
         self.edges[previous_node][next_node] = requirement
 
     def remove_edge(self, previous: int, target: int):
@@ -77,7 +77,7 @@ class RandovaniaGraph(BaseGraph):
             for target, requirement in data.items():
                 yield source, target, requirement
 
-    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, Requirement], float]):
+    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
         return self.networkx.multi_source_dijkstra(self, sources, weight=weight)
 
     def single_source_dijkstra_path(self, source: int):
