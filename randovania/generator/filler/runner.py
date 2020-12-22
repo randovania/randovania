@@ -72,7 +72,7 @@ def precision_pair_weighted_list() -> List[PrecisionPair]:
 
     hints = []
     for params, quantity in tiers.items():
-        hints.extend([PrecisionPair(*params)] * quantity)
+        hints.extend([PrecisionPair(*params, include_owner=False)] * quantity)
 
     return hints
 
@@ -128,7 +128,7 @@ def add_relative_hint(world_list: WorldList,
     else:
         raise ValueError(f"Invalid relative_type: {relative_type}")
 
-    precision_pair = PrecisionPair(relative_type, target_precision, relative)
+    precision_pair = PrecisionPair(relative_type, target_precision, include_owner=False, relative=relative)
     return Hint(HintType.LOCATION, precision_pair, target)
 
 

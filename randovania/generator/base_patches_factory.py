@@ -167,8 +167,8 @@ def add_echoes_default_hints_to_patches(rng: Random,
             patches = patches.assign_hint(node.resource(),
                                           Hint(HintType.LOCATION,
                                                PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                             HintItemPrecision.OWNER if is_multiworld
-                                                             else HintItemPrecision.BROAD_CATEGORY),
+                                                             HintItemPrecision.BROAD_CATEGORY,
+                                                             include_owner=True),
                                                PickupIndex(node.hint_index)))
 
     all_logbook_assets = [node.resource()
@@ -193,7 +193,8 @@ def add_echoes_default_hints_to_patches(rng: Random,
 
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION,
-                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED),
+                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED,
+                                                                        include_owner=False),
                                                           index))
 
     # Dark Temple hints
