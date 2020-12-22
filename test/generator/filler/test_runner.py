@@ -86,7 +86,7 @@ def test_add_hints_precision(empty_patches, mocker):
     rng = MagicMock()
     hints = [
         Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
-                                              HintItemPrecision.DETAILED), PickupIndex(1)),
+                                              HintItemPrecision.DETAILED, include_owner=False), PickupIndex(1)),
         Hint(HintType.LOCATION, None, PickupIndex(2)),
         Hint(HintType.LOCATION, None, PickupIndex(3)),
     ]
@@ -103,9 +103,11 @@ def test_add_hints_precision(empty_patches, mocker):
     relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
     assert result.hints == {
         LogbookAsset(0): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
-                                                               HintItemPrecision.DETAILED), PickupIndex(1)),
+                                                               HintItemPrecision.DETAILED, include_owner=False),
+                              PickupIndex(1)),
         LogbookAsset(1): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
-                                                               HintItemPrecision.PRECISE_CATEGORY), PickupIndex(2)),
+                                                               HintItemPrecision.PRECISE_CATEGORY, include_owner=False),
+                              PickupIndex(2)),
         LogbookAsset(2): relative_hint_provider.return_value,
     }
 
@@ -161,5 +163,5 @@ def test_add_relative_hint(echoes_game_description, empty_patches, location_prec
                                       max_distance=max_distance)
 
     # Assert
-    pair = PrecisionPair(location_precision, target_precision, data)
+    pair = PrecisionPair(location_precision, target_precision, include_owner=False, relative=data)
     assert result == Hint(HintType.LOCATION, pair, PickupIndex(1))

@@ -54,16 +54,21 @@ _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
 class Determiner:
     s: str
+    supports_title: bool
 
-    def __init__(self, s):
+    def __init__(self, s, supports_title: bool = True):
         self.s = s
+        self.supports_title = supports_title
 
     def __format__(self, format_spec):
         return self.s.__format__(format_spec)
 
     @property
     def title(self):
-        return self.s.title()
+        if self.supports_title:
+            return self.s.title()
+        else:
+            return self.s
 
 
 class LocationFormatter:
@@ -197,8 +202,8 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
     elif precision is HintItemPrecision.DETAILED:
         return _calculate_determiner(pickup_assignment, target.pickup, world_list), target.pickup.name
 
-    elif precision is HintItemPrecision.OWNER:
-        return "", f"{players_config.player_names[target.player]}'s item"
+    elif precision is HintItemPrecision.NOTHING:
+        return "an", "item"
 
     else:
         raise ValueError(f"Unknown precision: {precision}")
@@ -293,13 +298,21 @@ def create_message_for_hint(hint: Hint,
     else:
         assert hint.hint_type == HintType.LOCATION
         patches = all_patches[players_config.player_index]
+        pickup_target = patches.pickup_assignment.get(hint.target)
         determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
                                                          world_list,
                                                          hint.precision.item,
-                                                         patches.pickup_assignment.get(hint.target),
+                                                         pickup_target,
                                                          players_config)
+
+        use_title_formatting = True
+        if hint.precision.include_owner and len(players_config.player_names) > 1:
+            target_player = pickup_target.player if pickup_target is not None else players_config.player_index
+            determiner = f"{players_config.player_names[target_player]}'s "
+            use_title_formatting = False
+
         return location_formatters[hint.precision.location].format(
-            Determiner(determiner),
+            Determiner(determiner, use_title_formatting),
             color_text(TextColor.ITEM, pickup_name),
             hint,
         )

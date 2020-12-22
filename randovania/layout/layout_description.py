@@ -20,7 +20,7 @@ def _shareable_hash_words():
         return json.load(hash_words_file)
 
 
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 1
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 2
 
 
 def migrate_description(json_dict: dict) -> dict:
@@ -31,6 +31,18 @@ def migrate_description(json_dict: dict) -> dict:
     if version > CURRENT_DESCRIPTION_SCHEMA_VERSION:
         raise ValueError(f"Version {version} is newer than latest supported {CURRENT_DESCRIPTION_SCHEMA_VERSION}")
 
+    if version == 1:
+        for game in json_dict["game_modifications"]:
+            for hint in game["hints"].values():
+                if hint.get("precision") is not None:
+                    owner = False
+                    if hint["precision"]["item"] == "owner":
+                        owner = True
+                        hint["precision"]["item"] = "nothing"
+                    hint["precision"]["include_owner"] = owner
+        version += 1
+
+    json_dict["schema_version"] = version
     return json_dict
 
 

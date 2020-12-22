@@ -143,16 +143,18 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
 
     def _light_suit_location_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION,
-                                                     HintItemPrecision.DETAILED), PickupIndex(number))
+                                                     HintItemPrecision.DETAILED, include_owner=False),
+                    PickupIndex(number))
 
     def _guardian_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.GUARDIAN,
-                                                     HintItemPrecision.DETAILED), PickupIndex(number))
+                                                     HintItemPrecision.DETAILED, include_owner=False),
+                    PickupIndex(number))
 
     def _keybearer_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                     HintItemPrecision.OWNER if is_multiworld
-                                                     else HintItemPrecision.BROAD_CATEGORY),
+                                                     HintItemPrecision.BROAD_CATEGORY,
+                                                     include_owner=True),
                     PickupIndex(number))
 
     expected = {

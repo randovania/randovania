@@ -11,6 +11,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
+from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, default_data
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
@@ -83,6 +84,10 @@ class ConnectionBackend(ConnectionBase):
     _inventory: Dict[ItemResourceInfo, InventoryItem]
     _enabled: bool = True
 
+    # Detected Game
+    _world: Optional[World] = None
+    _last_world: Optional[World] = None
+
     # Messages
     message_queue: List[str]
     message_cooldown: float = 0.0
@@ -94,7 +99,7 @@ class ConnectionBackend(ConnectionBase):
 
     def __init__(self):
         super().__init__()
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger(type(self).__name__)
 
         self._games = {}
         self._inventory = {}
@@ -178,6 +183,7 @@ class ConnectionBackend(ConnectionBase):
         return False
 
     async def _update_current_world(self):
+        self._last_world = self._world
         try:
             world_asset_id = await self._perform_single_memory_operations(
                 MemoryOperation(self.patches.game_state_pointer,
@@ -190,6 +196,9 @@ class ConnectionBackend(ConnectionBase):
 
         except (KeyError, RuntimeError):
             self._world = None
+
+        if self._world != self._last_world:
+            self.logger.info(f"Detected world as {self._world.name if self._world else 'None'}")
 
     def _get_player_state_pointer(self) -> int:
         cstate_manager = self.patches.string_display.cstate_manager_global
@@ -211,6 +220,8 @@ class ConnectionBackend(ConnectionBase):
 
     async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         player_state_pointer = self._get_player_state_pointer()
+
+        self.logger.debug("Requesting inventory")
 
         memory_ops = [
             MemoryOperation(
@@ -241,9 +252,9 @@ class ConnectionBackend(ConnectionBase):
                     read_byte_count=8,
                     offset=_powerup_offset(item.index),
                 ))
-                self.logger.debug(f"Setting {item.long_name} to "
-                                  f"{changed_items[item].amount}/{changed_items[item].capacity} "
-                                  f"({memory_ops[-1].write_bytes.hex()})")
+                self.logger.info(f"Setting {item.long_name} to "
+                                 f"{changed_items[item].amount}/{changed_items[item].capacity} "
+                                 f"({memory_ops[-1].write_bytes.hex()})")
 
         # Suit Model
         dark_suit = self.game.resource_database.get_item(13)
@@ -316,13 +327,13 @@ class ConnectionBackend(ConnectionBase):
 
         magic_capacity = magic_inv.capacity
         if magic_inv.amount > 0:
-            self.logger.info(f"_check_for_collected_index: magic item was at {magic_inv.amount}/{magic_capacity}")
+            self.logger.info(f"magic item was at {magic_inv.amount}/{magic_capacity}")
             magic_capacity -= magic_inv.amount
             new_magic_item = InventoryItem(0, magic_inv.capacity - magic_inv.amount)
             await self._emit_location_collected(magic_inv.amount - 1)
 
         if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
-            self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
+            self.logger.info(f"{len(self._pickups_to_give)} pickups to give, "
                              f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}")
 
             if current_inventory is None:
@@ -389,14 +400,14 @@ class ConnectionBackend(ConnectionBase):
                                                                                    read_byte_count=1))
 
         if has_message != b"\x00":
-            self.logger.info("_send_message_from_queue: game already has a pending message")
+            self.logger.info("game already has a pending message")
             return
 
         self.message_cooldown = max(self.message_cooldown - dt, 0.0)
 
         # There's a cooldown for next message!
         if self.message_cooldown > 0:
-            self.logger.debug(f"_send_message_from_queue: current cooldown is {self.message_cooldown}")
+            self.logger.debug(f"current cooldown is {self.message_cooldown}")
             return
 
         message = self.message_queue.pop(0)
@@ -426,8 +437,7 @@ class ConnectionBackend(ConnectionBase):
         ])
         self.message_cooldown = 4
 
-        self.logger.info(f"_send_message_from_queue: sent '{message}' to game. "
-                         f"{len(self.message_queue)} messages left.")
+        self.logger.info(f"sent '{message}' to game. {len(self.message_queue)} messages left.")
 
     async def update_current_inventory(self):
         self._inventory = await self._get_inventory()
