@@ -116,7 +116,9 @@ class NintendontBackend(ConnectionBackend):
 
         try:
             self._socket_error = None
+            self.logger.info(f"Connecting to {self._ip, self._port}.")
             reader, writer = await asyncio.open_connection(self._ip, self._port)
+            self.logger.info(f"Connected.")
 
             # Send API details request
             writer.write(struct.pack(f">BBBB", 1, 0, 0, 1))
@@ -130,7 +132,7 @@ class NintendontBackend(ConnectionBackend):
 
         except OSError as e:
             self._socket = None
-            self.logger.info(f"Unable to connect to {self._ip}:{self._port}: {e}")
+            self.logger.warning(f"Unable to connect to {self._ip}:{self._port}: {e}")
             self._socket_error = e
 
     def _prepare_requests_for(self, ops: List[MemoryOperation]) -> List[RequestBatch]:
@@ -189,7 +191,6 @@ class NintendontBackend(ConnectionBackend):
         try:
             for request in requests:
                 data = request.build_request_data()
-                self.logger.debug(f"Sending {len(data)} bytes to {self._ip, self._port}.")
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
@@ -199,7 +200,7 @@ class NintendontBackend(ConnectionBackend):
                     all_responses.append(b"")
 
         except OSError as e:
-            self.logger.warning(f"Unable to connect to {self._ip}:{self._port}: {e}")
+            self.logger.warning(f"Unable to send {len(requests)} to {self._ip}:{self._port}: {e}")
             self._socket = None
             self._socket_error = e
             raise RuntimeError("Unable to connect") from e
@@ -211,7 +212,6 @@ class NintendontBackend(ConnectionBackend):
             raise RuntimeError("Not connected")
 
         ops_description = '; '.join(str(op) for op in ops)
-        self.logger.debug(f"_perform_memory_operations: {len(ops)} ops for: {ops_description}")
 
         requests = self._prepare_requests_for(ops)
         all_responses = await self._send_requests_to_socket(requests)
