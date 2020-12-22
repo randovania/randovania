@@ -174,13 +174,18 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
 
         # Item pool count
-        pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
-        min_starting_items = layout.major_items_configuration.minimum_random_starting_items
-        maximum_size = game.world_list.num_pickup_nodes + min_starting_items
-        self.item_pool_count_label.setText(
-            "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
-        )
-        common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, len(pool_pickup) > maximum_size)
+        try:
+            pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
+            min_starting_items = layout.major_items_configuration.minimum_random_starting_items
+            maximum_size = game.world_list.num_pickup_nodes + min_starting_items
+            self.item_pool_count_label.setText(
+                "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
+            )
+            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, len(pool_pickup) > maximum_size)
+
+        except InvalidConfiguration as invalid_config:
+            self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
+            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
 
     # Item Alternatives
 
