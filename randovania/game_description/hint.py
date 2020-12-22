@@ -37,8 +37,8 @@ class HintItemPrecision(Enum):
     # x-related, life-support, or just the precise category
     BROAD_CATEGORY = "broad-category"
 
-    # the name of the player for the target belongs to
-    OWNER = "owner"
+    # Say nothing at all about the item
+    NOTHING = "nothing"
 
 
 class HintLocationPrecision(Enum):
@@ -97,6 +97,7 @@ class RelativeDataArea(JsonDataclass, RelativeData):
 class PrecisionPair(JsonDataclass):
     location: HintLocationPrecision
     item: HintItemPrecision
+    include_owner: bool
     relative: Optional[RelativeData] = None
 
 
