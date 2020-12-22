@@ -35,7 +35,8 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
                          "dark_temple": None,
-                         "precision": {"location": "detailed", "item": "detailed", "relative": None},
+                         "precision": {"location": "detailed", "item": "detailed", "relative": None,
+                                       "include_owner": False},
                          "target": 50}]},
     ],
     name="patches_with_data")

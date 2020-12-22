@@ -68,7 +68,8 @@ def test_create_hints_nothing(empty_patches, players_config):
         empty_patches,
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED),
+                                          PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED,
+                                                        include_owner=False),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -160,20 +161,30 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
 
 
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
-    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
+    (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "A", "&push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#FF3333;World&pop;"),
 ])
-def test_create_hints_item_location(empty_patches, players_config, pickup, item, location):
+@pytest.mark.parametrize("owner", [False, True])
+@pytest.mark.parametrize("is_multiworld", [False, True])
+def test_create_hints_item_location(empty_patches, pickup, item, location, owner, is_multiworld):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
+    players_config = PlayersConfiguration(
+        player_index=0,
+        player_names={i: f"Player {i +  1}"
+                      for i in range(int(is_multiworld) + 1)},
+    )
+    location_precision, determiner, item_name = item
+    if owner and is_multiworld:
+        determiner = "Player 1's"
 
     patches = dataclasses.replace(
         empty_patches,
@@ -182,7 +193,7 @@ def test_create_hints_item_location(empty_patches, players_config, pickup, item,
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(location[0], item[0]),
+                                          PrecisionPair(location[0], location_precision, include_owner=owner),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -191,8 +202,9 @@ def test_create_hints_item_location(empty_patches, players_config, pickup, item,
     result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
-    message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
+    message = "{} {} can be found in {}.".format(determiner, item_name, location[1])
     # message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
+    assert result[0]['strings'][0] == message
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
 
@@ -221,7 +233,8 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.GUARDIAN, item[0]),
+                                          PrecisionPair(HintLocationPrecision.GUARDIAN, item[0],
+                                                        include_owner=False),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -254,7 +267,8 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0]),
+                                          PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0],
+                                                        include_owner=False),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -291,8 +305,8 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
     }
     hint = Hint(
         HintType.LOCATION,
-        PrecisionPair(HintLocationPrecision.RELATIVE_TO_INDEX, HintItemPrecision.DETAILED,
-                      RelativeDataItem(distance_precise, PickupIndex(15), reference_precision)),
+        PrecisionPair(HintLocationPrecision.RELATIVE_TO_INDEX, HintItemPrecision.DETAILED, include_owner=False,
+                      relative=RelativeDataItem(distance_precise, PickupIndex(15), reference_precision)),
         PickupIndex(5)
     )
 
@@ -321,10 +335,10 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup, 
     location_formatters = {HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches)}
     hint = Hint(
         HintType.LOCATION,
-        PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED,
-                      RelativeDataArea(distance_precise,
-                                       AreaLocation(1039999561, 3822429534),
-                                       HintRelativeAreaName.NAME)),
+        PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED, include_owner=False,
+                      relative=RelativeDataArea(distance_precise,
+                                                AreaLocation(1039999561, 3822429534),
+                                                HintRelativeAreaName.NAME)),
         PickupIndex(5)
     )
 
