@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
 
+-   Fixed: Properly handle invalid ammo configurations in preset editor. 
+
 ## [2.2.0] - 2020-12-20
 
 -   Added: 1 HP Mode, where all Energy Tanks and Save Stations leave you at 1 HP instead of fully healing.
