@@ -7,9 +7,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import preset_describer
 from randovania.layout.permalink import Permalink
 
-configuration: dict = None
-client = discord.Client()
-
 _PRETTY_GAME_NAME = {
     RandovaniaGame.PRIME1: "Metroid Prime 1",
     RandovaniaGame.PRIME2: "Metroid Prime 2: Echoes",
@@ -38,22 +35,27 @@ async def look_for_permalinks(message: str, channel: discord.TextChannel):
         await channel.send(embed=embed)
 
 
-@client.event
-async def on_message(message: discord.Message):
-    if message.author == client.user:
-        return
+class Bot(discord.Client):
+    def __init__(self, configuration: dict):
+        super().__init__()
+        self.configuration = configuration
 
-    channel: discord.TextChannel = message.channel
-    if configuration["channel_name_filter"] not in channel.name:
-        return
+    async def on_message(self, message: discord.Message):
+        if message.author == self.user:
+            return
 
-    if message.guild.id != configuration["guild"]:
-        return
+        channel: discord.TextChannel = message.channel
+        if self.configuration["channel_name_filter"] not in channel.name:
+            return
 
-    await look_for_permalinks(message.content, channel)
+        if message.guild.id != self.configuration["guild"]:
+            return
+
+        await look_for_permalinks(message.content, channel)
 
 
 def run():
-    global configuration
     configuration = randovania.get_configuration()["discord_bot"]
+
+    client = Bot(configuration)
     client.run(configuration["token"])

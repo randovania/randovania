@@ -7,15 +7,15 @@ from randovania.server import bot
 
 
 @pytest.mark.asyncio
-async def test_on_message_from_bot(monkeypatch, mocker):
+async def test_on_message_from_bot(mocker):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.bot.look_for_permalinks", new_callable=AsyncMock)
-    monkeypatch.setattr(bot, "configuration", None)
+    client = bot.Bot(None)
 
     message = MagicMock()
-    message.author = bot.client.user
+    message.author = client.user
 
     # Run
-    await bot.on_message(message)
+    await client.on_message(message)
 
     # Assert
     mock_look_for.assert_not_awaited()
@@ -28,16 +28,16 @@ async def test_on_message_from_bot(monkeypatch, mocker):
     ("expected_name", 1234, True),
 ])
 @pytest.mark.asyncio
-async def test_on_message_wrong_place(monkeypatch, mocker, name_filter: str, guild: int, expected):
+async def test_on_message_wrong_place(mocker, name_filter: str, guild: int, expected):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.bot.look_for_permalinks", new_callable=AsyncMock)
-    monkeypatch.setattr(bot, "configuration", {"channel_name_filter": name_filter, "guild": guild})
+    client = bot.Bot({"channel_name_filter": name_filter, "guild": guild})
 
     message = MagicMock()
     message.channel.name = "the_expected_name"
     message.guild.id = 1234
 
     # Run
-    await bot.on_message(message)
+    await client.on_message(message)
 
     # Assert
     if expected:
