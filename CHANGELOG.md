@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Method to enter tunnels in Transit Tunnel East/Undertransit One from Catacombs/Dungeon to Training Chamber/Sacrificial Chamber with an Instant Morph (Intermediate and above).
+
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
+
+-   Changed: Dark Alpha Splinter no longer requires Power Beam.
 
 -   Fixed: Properly handle invalid ammo configurations in preset editor. 
 
