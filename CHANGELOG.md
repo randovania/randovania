@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
 
--   Changed: Dark Alpha Splinter no longer requires Power Beam.
+-   Changed: Dark Alpha Splinter no longer strictly requires Power Beam.
 
 -   Fixed: Properly handle invalid ammo configurations in preset editor. 
 
