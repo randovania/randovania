@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Randovania no longer instantly crashes on macOS.
 
+-   Fixed: Logic properly considers the Transport A portal being gone after entering from that side in Random Elevators.
+
 ## [2.2.0] - 2020-12-20
 
 -   Added: 1 HP Mode, where all Energy Tanks and Save Stations leave you at 1 HP instead of fully healing.
