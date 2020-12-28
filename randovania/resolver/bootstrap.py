@@ -170,10 +170,6 @@ def logic_bootstrap(configuration: EchoesConfiguration,
     :param patches:
     :return:
     """
-
-    # global state for easy printing functions
-    debug._gd = game
-
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 

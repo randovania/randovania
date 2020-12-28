@@ -106,9 +106,7 @@ def view_area_command_logic(args):
 
 def load_game_description(args) -> GameDescription:
     data = decode_data_file(args)
-
     gd = data_reader.decode_data(data)
-    debug._gd = gd
     return gd
 
 
