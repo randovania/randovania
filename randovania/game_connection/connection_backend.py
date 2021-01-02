@@ -17,6 +17,10 @@ from randovania.games.prime import dol_patcher, default_data
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
+class MemoryOperationException(Exception):
+    pass
+
+
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
     address: int
@@ -172,7 +176,7 @@ class ConnectionBackend(ConnectionBase):
                 # for read operations
                 operation = MemoryOperation(version.build_string_address, read_byte_count=len(version.build_string))
                 build_string = await self._perform_single_memory_operations(operation)
-            except RuntimeError:
+            except (RuntimeError, MemoryOperationException):
                 return False
 
             if build_string == version.build_string:
@@ -194,7 +198,7 @@ class ConnectionBackend(ConnectionBase):
                 raise KeyError()
             self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
 
-        except (KeyError, RuntimeError):
+        except (KeyError, RuntimeError, MemoryOperationException):
             self._world = None
 
         if self._world != self._last_world:
@@ -446,8 +450,16 @@ class ConnectionBackend(ConnectionBase):
         await self._update_current_world()
         if self._world is not None:
             await self._send_message_from_queue(dt)
-            if self._tracking_inventory:
-                await self.update_current_inventory()
 
-            if self.checking_for_collected_index:
-                await self._check_for_collected_index()
+            try:
+                if self._tracking_inventory:
+                    await self.update_current_inventory()
+
+                if self.checking_for_collected_index:
+                    await self._check_for_collected_index()
+
+            except MemoryOperationException as e:
+                self.logger.warning(f"Unable to perform memory operations: {e}")
+                self._world = None
+                return
+

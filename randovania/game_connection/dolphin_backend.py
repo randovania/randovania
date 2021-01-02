@@ -3,7 +3,7 @@ from typing import List, Optional, Dict
 import dolphin_memory_engine
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
+from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world import World
 
@@ -71,7 +71,7 @@ class DolphinBackend(ConnectionBackend):
                 self._test_still_hooked()
 
         if not self.dolphin.is_hooked():
-            raise RuntimeError("Lost connection do Dolphin")
+            raise MemoryOperationException("Lost connection do Dolphin")
 
         return [
             self._memory_operation(op, pointers)
@@ -90,7 +90,7 @@ class DolphinBackend(ConnectionBackend):
             if len(self.dolphin.read_bytes(0x0, 4)) != 4:
                 raise RuntimeError("Dolphin hook didn't read the correct byte count")
         except RuntimeError as e:
-            self.logger.exception(f"Test read for Dolphin hook didn't work: {e}")
+            self.logger.warning(f"Test read for Dolphin hook didn't work: {e}")
             self.dolphin.un_hook()
 
     async def update(self, dt: float):
