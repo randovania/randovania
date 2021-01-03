@@ -2,7 +2,7 @@ import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
@@ -223,37 +223,39 @@ class NintendontBackend(ConnectionBackend):
 
         return all_responses
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
 
         requests = self._prepare_requests_for(ops)
         all_responses = await self._send_requests_to_socket(requests)
 
-        result = []
+        result = {}
 
         for request, response in zip(requests, all_responses):
             read_index = request.num_validator_bytes
             for i, op in enumerate(request.ops):
                 if op.read_byte_count is None:
-                    result.append(None)
+                    continue
+
+                if _was_invalid_address(response, i):
+                    raise MemoryOperationException("Operation tried to read an invalid address")
+
+                split = response[read_index:read_index + op.read_byte_count]
+                if len(split) != op.read_byte_count:
+                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
                 else:
-                    if _was_invalid_address(response, i):
-                        raise MemoryOperationException("Operation tried to read an invalid address")
+                    assert op not in result
+                    result[op] = split
 
-                    result.append(response[read_index:read_index + op.read_byte_count])
-                    if len(result[-1]) != op.read_byte_count:
-                        raise MemoryOperationException(
-                            f"Received {len(result[-1])} bytes, expected {op.read_byte_count}")
-
-                    read_index += op.read_byte_count
+                read_index += op.read_byte_count
 
         return result
 
     async def update(self, dt: float):
         if not self._enabled:
             return
-        
+
         if not await self._connect():
             return
 
