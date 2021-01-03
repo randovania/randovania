@@ -194,11 +194,10 @@ class ConnectionBackend(ConnectionBase):
                                 offset=4,
                                 read_byte_count=4)
             )
-            if world_asset_id is None:
-                raise KeyError()
+            assert world_asset_id is not None
             self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
 
-        except (KeyError, RuntimeError, MemoryOperationException):
+        except (KeyError, MemoryOperationException):
             self._world = None
 
         if self._world != self._last_world:
