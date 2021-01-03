@@ -5,7 +5,7 @@ import pytest
 from mock import AsyncMock, call
 
 from randovania.game_connection import connection_backend
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
+from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
@@ -19,10 +19,14 @@ def dolphin_backend():
     return backend
 
 
+def add_memory_op_result(backend, result):
+    backend._perform_memory_operations.side_effect = lambda ops: {ops[0]: result}
+
+
 @pytest.mark.asyncio
 async def test_identify_game_ntsc(backend):
     # Setup
-    backend._perform_memory_operations.return_value = [b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"]
+    add_memory_op_result(backend, b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32")
 
     # Run
     assert await backend._identify_game()
@@ -59,7 +63,7 @@ async def test_identify_game_already_known(backend):
 async def test_send_message(backend, message_original, message_encoded, previous_size):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._perform_memory_operations.return_value = [b"\x00"]
+    add_memory_op_result(backend, b"\x00")
     string_ref = backend.patches.string_display.message_receiver_string_ref
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
     backend._last_message_size = previous_size
@@ -88,7 +92,7 @@ async def test_send_message_from_queue_no_messages(backend):
 async def test_send_message_has_pending_message(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._perform_memory_operations.return_value = [b"\x01"]
+    add_memory_op_result(backend, b"\x01")
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
@@ -106,7 +110,7 @@ async def test_send_message_has_pending_message(backend):
 async def test_send_message_on_cooldown(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._perform_memory_operations.return_value = [b"\x00"]
+    add_memory_op_result(backend, b"\x00")
     backend.message_cooldown = 2
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
@@ -126,10 +130,10 @@ async def test_send_message_on_cooldown(backend):
 async def test_get_inventory(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._perform_memory_operations.return_value = [
-        struct.pack(">II", item.index, item.index)
-        for item in backend.game.resource_database.item
-    ]
+    backend._perform_memory_operations.side_effect = lambda ops: {
+        op: struct.pack(">II", item.index, item.index)
+        for op, item in zip(ops, backend.game.resource_database.item)
+    }
 
     # Run
     inventory = await backend._get_inventory()
@@ -294,7 +298,10 @@ async def test_update_inventory_with_change(backend, item):
 async def test_update_current_world_invalid(backend, query_result):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._perform_memory_operations = AsyncMock(return_value=[query_result])
+    if query_result is None:
+        backend._perform_memory_operations.side_effect = MemoryOperationException("Error")
+    else:
+        add_memory_op_result(backend, query_result)
 
     # Run
     await backend._update_current_world()
@@ -308,7 +315,7 @@ async def test_update_current_world_present(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     world = backend.game.world_list.worlds[0]
-    backend._perform_memory_operations = AsyncMock(return_value=[world.world_asset_id.to_bytes(4, "big")])
+    add_memory_op_result(backend, world.world_asset_id.to_bytes(4, "big"))
 
     # Run
     await backend._update_current_world()

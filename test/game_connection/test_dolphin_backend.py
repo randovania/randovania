@@ -99,7 +99,7 @@ async def test_perform_memory_operations(backend: DolphinBackend):
     ])
 
     # Assert
-    assert result == [b"A" * 50, b"B" * 30, b"C" * 10]
+    assert list(result.values()) == [b"A" * 50, b"B" * 30, b"C" * 10]
     backend.dolphin.follow_pointers.assert_called_once_with(0x80001000, [0x0])
     backend.dolphin.read_bytes.assert_has_calls([
         call(0x80003000 + 20, 50),
