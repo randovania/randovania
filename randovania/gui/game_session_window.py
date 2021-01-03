@@ -229,7 +229,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
         self.view_game_details_button.clicked.connect(self.view_game_details)
-        self.game_connection.Updated.connect(self.on_game_connection_updated)
 
         # Game Connection
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.game_connection_label,
@@ -270,6 +269,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
+        self.game_connection.Updated.connect(self.on_game_connection_updated)
 
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, game_connection: GameConnection,
@@ -315,7 +315,18 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         await self.multiworld_client.stop()
-        self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
+        try:
+            self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+        try:
+            self.network_client.ConnectionStateUpdated.disconnect(self.on_server_connection_state_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+        try:
+            self.game_connection.Updated.disconnect(self.on_game_connection_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
 
         try:
             if user_response == QMessageBox.Yes or (not is_kicked and
