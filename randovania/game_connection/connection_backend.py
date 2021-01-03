@@ -17,6 +17,10 @@ from randovania.games.prime import dol_patcher, default_data
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
+class MemoryOperationException(Exception):
+    pass
+
+
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
     address: int
@@ -148,12 +152,12 @@ class ConnectionBackend(ConnectionBase):
             self.patches = None
 
     # Game Backend Stuff
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         raise NotImplementedError()
 
     async def _perform_single_memory_operations(self, op: MemoryOperation) -> Optional[bytes]:
         result = await self._perform_memory_operations([op])
-        return result[0]
+        return result.get(op)
 
     @property
     def game(self) -> GameDescription:
@@ -172,7 +176,7 @@ class ConnectionBackend(ConnectionBase):
                 # for read operations
                 operation = MemoryOperation(version.build_string_address, read_byte_count=len(version.build_string))
                 build_string = await self._perform_single_memory_operations(operation)
-            except RuntimeError:
+            except (RuntimeError, MemoryOperationException):
                 return False
 
             if build_string == version.build_string:
@@ -190,11 +194,10 @@ class ConnectionBackend(ConnectionBase):
                                 offset=4,
                                 read_byte_count=4)
             )
-            if world_asset_id is None:
-                raise KeyError()
+            assert world_asset_id is not None
             self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
 
-        except (KeyError, RuntimeError):
+        except (KeyError, MemoryOperationException):
             self._world = None
 
         if self._world != self._last_world:
@@ -235,8 +238,8 @@ class ConnectionBackend(ConnectionBase):
         ops_result = await self._perform_memory_operations(memory_ops)
 
         inventory = {}
-        for item, memory_result in zip(self.game.resource_database.item, ops_result):
-            inventory[item] = InventoryItem(*struct.unpack(">II", memory_result))
+        for item, memory_op in zip(self.game.resource_database.item, memory_ops):
+            inventory[item] = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
 
         return inventory
 
@@ -280,7 +283,8 @@ class ConnectionBackend(ConnectionBase):
                 MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
                 MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
             ])
-            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fff", b"".join(health_data))
+            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(
+                ">fff", b"".join(health_data.values()))
             new_health = changed_items[energy_tank].amount * energy_tank_capacity + base_health_capacity
             if changed_items[energy_tank] < changed_items[energy_tank]:
                 new_health = min(new_health, current_health)
@@ -293,7 +297,7 @@ class ConnectionBackend(ConnectionBase):
             self.logger.debug(f"Setting health to {new_health}. ({memory_ops[-1].write_bytes.hex()})")
 
         # FIXME: check if the value read is what we expected, and then re-writes if needed
-        result = await self._perform_memory_operations(memory_ops)
+        await self._perform_memory_operations(memory_ops)
         return changed_items
 
     async def _write_item(self, item: ItemResourceInfo, value: InventoryItem):
@@ -446,8 +450,16 @@ class ConnectionBackend(ConnectionBase):
         await self._update_current_world()
         if self._world is not None:
             await self._send_message_from_queue(dt)
-            if self._tracking_inventory:
-                await self.update_current_inventory()
 
-            if self.checking_for_collected_index:
-                await self._check_for_collected_index()
+            try:
+                if self._tracking_inventory:
+                    await self.update_current_inventory()
+
+                if self.checking_for_collected_index:
+                    await self._check_for_collected_index()
+
+            except MemoryOperationException as e:
+                self.logger.warning(f"Unable to perform memory operations: {e}")
+                self._world = None
+                return
+

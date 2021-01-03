@@ -1,5 +1,5 @@
 import struct
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
@@ -88,7 +88,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     async def update(self, dt: float):
         if not self._enabled:
             return
-        
+
         if not await self._identify_game():
             return
 
@@ -172,11 +172,13 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
             self._write_memory(address, op.write_bytes)
         return result
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
-        return [
-            self._memory_operation(op)
-            for op in ops
-        ]
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+        result = {}
+        for op in ops:
+            op_result = self._memory_operation(op)
+            if op_result is not None:
+                result[op] = op_result
+        return result
 
     def _read_message_from_game(self):
         has_message_address = self.patches.string_display.cstate_manager_global + 0x2
