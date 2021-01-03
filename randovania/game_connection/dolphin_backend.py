@@ -13,7 +13,8 @@ MEM1_END = 0x81800000
 
 def _validate_range(address: int, size: int):
     if address < MEM1_START or address + size > MEM1_END:
-        raise RuntimeError(f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range.")
+        raise MemoryOperationException(
+            f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range.")
 
 
 class DolphinBackend(ConnectionBackend):
@@ -38,14 +39,10 @@ class DolphinBackend(ConnectionBackend):
         address = op.address
         if op.offset is not None:
             if address not in pointers:
-                return None
+                raise MemoryOperationException(f"Invalid op: {address} is not in pointers")
             address = pointers[address] + op.offset
 
-        try:
-            _validate_range(address, op.byte_count)
-        except RuntimeError as e:
-            self.logger.exception(f"Invalid operation: {e}")
-            return None
+        _validate_range(address, op.byte_count)
 
         result = None
         if op.read_byte_count is not None:
@@ -56,7 +53,7 @@ class DolphinBackend(ConnectionBackend):
             self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
         return result
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         pointers_to_read = set()
         for op in ops:
             if op.offset is not None:
@@ -73,10 +70,12 @@ class DolphinBackend(ConnectionBackend):
         if not self.dolphin.is_hooked():
             raise MemoryOperationException("Lost connection do Dolphin")
 
-        return [
-            self._memory_operation(op, pointers)
-            for op in ops
-        ]
+        result = {}
+        for op in ops:
+            op_result = self._memory_operation(op, pointers)
+            if op_result is not None:
+                result[op] = op_result
+        return result
 
     def _ensure_hooked(self) -> bool:
         if not self.dolphin.is_hooked():

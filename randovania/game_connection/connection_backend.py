@@ -152,12 +152,12 @@ class ConnectionBackend(ConnectionBase):
             self.patches = None
 
     # Game Backend Stuff
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         raise NotImplementedError()
 
     async def _perform_single_memory_operations(self, op: MemoryOperation) -> Optional[bytes]:
         result = await self._perform_memory_operations([op])
-        return result[0]
+        return result.get(op)
 
     @property
     def game(self) -> GameDescription:
@@ -239,8 +239,8 @@ class ConnectionBackend(ConnectionBase):
         ops_result = await self._perform_memory_operations(memory_ops)
 
         inventory = {}
-        for item, memory_result in zip(self.game.resource_database.item, ops_result):
-            inventory[item] = InventoryItem(*struct.unpack(">II", memory_result))
+        for item, memory_op in zip(self.game.resource_database.item, memory_ops):
+            inventory[item] = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
 
         return inventory
 
@@ -284,7 +284,8 @@ class ConnectionBackend(ConnectionBase):
                 MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
                 MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
             ])
-            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fff", b"".join(health_data))
+            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(
+                ">fff", b"".join(health_data.values()))
             new_health = changed_items[energy_tank].amount * energy_tank_capacity + base_health_capacity
             if changed_items[energy_tank] < changed_items[energy_tank]:
                 new_health = min(new_health, current_health)
@@ -297,7 +298,7 @@ class ConnectionBackend(ConnectionBase):
             self.logger.debug(f"Setting health to {new_health}. ({memory_ops[-1].write_bytes.hex()})")
 
         # FIXME: check if the value read is what we expected, and then re-writes if needed
-        result = await self._perform_memory_operations(memory_ops)
+        await self._perform_memory_operations(memory_ops)
         return changed_items
 
     async def _write_item(self, item: ItemResourceInfo, value: InventoryItem):
