@@ -5,7 +5,7 @@ import pytest
 from mock import AsyncMock, call
 
 from randovania.game_connection import connection_backend
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
+from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
@@ -298,7 +298,10 @@ async def test_update_inventory_with_change(backend, item):
 async def test_update_current_world_invalid(backend, query_result):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    add_memory_op_result(backend, query_result)
+    if query_result is None:
+        backend._perform_memory_operations.side_effect = MemoryOperationException("Error")
+    else:
+        add_memory_op_result(backend, query_result)
 
     # Run
     await backend._update_current_world()
