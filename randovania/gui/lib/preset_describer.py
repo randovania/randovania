@@ -366,6 +366,7 @@ def _prime_format_params(configuration: PrimeConfiguration) -> dict:
     major_items = configuration.major_items_configuration
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
+                     "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
                      "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
                      "elevators": configuration.elevators.value
                      }
