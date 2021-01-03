@@ -1,7 +1,7 @@
 import pytest
 from mock import MagicMock, AsyncMock, call
 
-from randovania.game_connection.connection_backend import MemoryOperation
+from randovania.game_connection.connection_backend import MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.nintendont_backend import NintendontBackend, SocketHolder
 
@@ -13,7 +13,7 @@ def nintendont_backend():
 
 
 @pytest.mark.asyncio
-async def test_perform_memory_operations(backend: NintendontBackend):
+async def test_perform_memory_operations_success(backend: NintendontBackend):
     backend._socket = MagicMock()
     backend._socket.max_input = 120
     backend._socket.max_output = 100
@@ -21,26 +21,52 @@ async def test_perform_memory_operations(backend: NintendontBackend):
     backend._socket.writer.drain = AsyncMock()
     backend._socket.reader.read = AsyncMock(side_effect=[
         b"\x03" + b"A" * 50 + b"B" * 30,
-        b"\x01" + b"C" * 50,
+        b"\x01" + b"C" * 60,
     ])
+    ops = {
+        MemoryOperation(0x1000, read_byte_count=50): b"A" * 50,
+        MemoryOperation(0x1000, offset=10, read_byte_count=30, write_bytes=b"1" * 30): b"B" * 30,
+        MemoryOperation(0x1000, read_byte_count=60): b"C" * 60,
+    }
 
     # Run
-    result = await backend._perform_memory_operations([
-        MemoryOperation(0x1000, read_byte_count=50),
-        MemoryOperation(0x1000, offset=10, read_byte_count=30, write_bytes=b"1" * 30),
-        MemoryOperation(0x1000, read_byte_count=50),
-        MemoryOperation(0x2000, read_byte_count=10),
-        MemoryOperation(0x2000, read_byte_count=10),
-    ])
+    result = await backend._perform_memory_operations(list(ops.keys()))
 
     # Assert
     backend._socket.writer.drain.assert_has_awaits([call(), call()])
     backend._socket.writer.write.assert_has_calls([
         call(b'\x00\x02\x01\x01\x00\x00\x10\x00' + b'\x80\x32' + b'\xd0\x1e\x00\n' + (b"1" * 30)),
-        call(b'\x00\x03\x02\x01\x00\x00\x10\x00\x00\x00\x20\x00' + b'\x80\x32' + b'\x81\x0A' + b'\x81\x0A'),
+        call(b'\x00\x01\x01\x01\x00\x00\x10\x00\x80\x3c'),
     ])
-    assert result == [b"A" * 50, b"B" * 30, b"C" * 50, None, None]
+    assert result == ops
     backend._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
+
+
+@pytest.mark.asyncio
+async def test_perform_memory_operations_invalid(backend: NintendontBackend):
+    backend._socket = MagicMock()
+    backend._socket.max_input = 120
+    backend._socket.max_output = 100
+    backend._socket.max_addresses = 8
+    backend._socket.writer.drain = AsyncMock()
+    backend._socket.reader.read = AsyncMock(side_effect=[
+        b"\x03" + b"A" * 50 + b"B" * 30,
+    ])
+
+    # Run
+    with pytest.raises(MemoryOperationException):
+        await backend._perform_memory_operations([
+            MemoryOperation(0x1000, read_byte_count=50),
+            MemoryOperation(0x2000, read_byte_count=10),
+            MemoryOperation(0x2000, read_byte_count=10),
+        ])
+
+    # Assert
+    backend._socket.writer.drain.assert_has_awaits([call()])
+    backend._socket.writer.write.assert_has_calls([
+        call(b'\x00\x03\x02\x01\x00\x00\x10\x00\x00\x00 \x00\x802\x81\n\x81\n'),
+    ])
+    backend._socket.reader.read.assert_has_awaits([call(1024)])
 
 
 @pytest.mark.asyncio
@@ -68,7 +94,6 @@ async def test_perform_single_giant_memory_operation(backend: NintendontBackend)
     ])
     assert result is None
     backend._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
-
 
 
 @pytest.mark.asyncio

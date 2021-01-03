@@ -172,6 +172,12 @@ def start_logger(data_dir: Path, is_preview: bool):
             'randovania.gui.multiworld_client': {
                 'level': 'DEBUG',
             },
+            'NintendontBackend': {
+                'level': 'DEBUG',
+            },
+            'DolphinBackend': {
+                'level': 'DEBUG',
+            },
             'randovania.gui.qt': {
                 'level': 'INFO',
             },
