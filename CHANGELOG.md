@@ -12,9 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to reach the pickup on the Screw Attack wall in Aerial Training Site with a Roll Jump (Expert and above).
 
+-   Added: Method to reach the pickup in Abandoned Worksite from the tunnel with a Boost Jump (Advanced and above).
+
+-   Added: Method to bypass the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump (Advanced and above).
+
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
 
 -   Changed: Dark Alpha Splinter no longer strictly requires Power Beam.
+
+-   Changed: Crossing Main Gyro Chamber with Screw Attack before stopping the gyro is now Hypermode (from Expert).
+
+-   Changed: Phazon Grounds and Transport to Agon Wastes (Torvus) Seeker Locks without Seekers are now Expert (from Hypermode).
 
 -   Fixed: Properly handle invalid ammo configurations in preset editor. 
 

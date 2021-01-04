@@ -120,6 +120,15 @@ Dock Weaknesses
                   Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
           Missile and Seeker Locks without Seekers (Advanced) and Use Screw Attack (Space Jump)
 
+  * (13) Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles); Blast Shield? True
+      Any of the following:
+          All of the following:
+              Seeker Launcher
+              Any of the following:
+                  Missile ≥ 5
+                  Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
+          Missile ≥ 2 and Seeker Locks without Seekers (Expert) and Use Screw Attack (Space Jump)
+
 > DockType.MORPH_BALL_DOOR
   * (0) Morph Ball Door; Blast Shield? False
       Morph Ball
@@ -1116,13 +1125,15 @@ Asset id: 2909835645
       Any of the following:
           Use Screw Attack (Space Jump)
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
-          Grapple Beam and After Ing Windchamber Puzzle
+          Grapple Beam and After Ing Windchamber Blue Seeker Lock
   > Pickup (Sunburst)
       All of the following:
-          Morph Ball
+          Morph Ball and Space Jump Boots
           Any of the following:
-              Scan Visor and Space Jump Boots and After Ing Windchamber Puzzle and Combat/Scan Dash (Advanced)
-              Morph Ball Bomb and Bomb Space Jump (Advanced) and Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
+              Scan Visor and After Ing Windchamber Blue Seeker Lock and After Ing Windchamber Yellow Seeker Lock and Combat/Scan Dash (Advanced)
+              All of the following:
+                  Morph Ball Bomb and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
+                  Screw Attack or After Ing Windchamber Yellow Seeker Lock
 
 > Portal to Ing Windchamber; Heals? False
   * Dark Portal to Ing Windchamber/Portal to Grand Windchamber
@@ -1135,12 +1146,12 @@ Asset id: 2909835645
       Any of the following:
           Use Screw Attack (Space Jump)
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
-          Grapple Beam and After Ing Windchamber Puzzle
+          Grapple Beam and After Ing Windchamber Blue Seeker Lock
   > Portal to Ing Windchamber
       Trivial
   > Pickup (Sunburst)
       All of the following:
-          Morph Ball and After Ing Windchamber Puzzle
+          Morph Ball and After Ing Windchamber Blue Seeker Lock and After Ing Windchamber Yellow Seeker Lock
           Any of the following:
               Grapple Beam
               All of the following:
@@ -1154,7 +1165,7 @@ Asset id: 2909835645
   > Door to Windchamber Tunnel
       Any of the following:
           Space Jump Boots
-          After Ing Windchamber Puzzle and Standable Terrain (Beginner)
+          After Ing Windchamber Blue Seeker Lock and Standable Terrain (Beginner)
   > Door to Windchamber Gateway
       Trivial
 
@@ -1354,15 +1365,26 @@ Ing Windchamber
 Asset id: 3455003633
 > Portal to Grand Windchamber; Heals? True; Spawn Point
   * Light Portal to Grand Windchamber/Portal to Ing Windchamber
-  > Event - Ing Windchamber Puzzle
+  > Event - Ing Windchamber Blue Seeker Lock
       All of the following:
           Morph Ball and Boost Ball and Seeker Launcher and Missile ≥ 4
           Any of the following:
               Morph Ball Bomb
-              Power Bomb ≥ 8 and Knowledge (Beginner)
+              Power Bomb ≥ 4 and Knowledge (Beginner)
+  > Event - Ing Windchamber Yellow Seeker Lock
+      All of the following:
+          Morph Ball and Boost Ball and Seeker Launcher and Missile ≥ 4
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb ≥ 4 and Knowledge (Beginner)
 
-> Event - Ing Windchamber Puzzle; Heals? True
-  * Event Ing Windchamber Puzzle
+> Event - Ing Windchamber Blue Seeker Lock; Heals? True
+  * Event Ing Windchamber Blue Seeker Lock
+  > Portal to Grand Windchamber
+      Trivial
+
+> Event - Ing Windchamber Yellow Seeker Lock; Heals? True
+  * Event Ing Windchamber Yellow Seeker Lock
   > Portal to Grand Windchamber
       Trivial
 
@@ -1848,11 +1870,15 @@ Asset id: 1683944003
               Dark Visor or Invisible Objects (Intermediate)
           All of the following:
               Movement (Advanced) and Dark World Damage ≥ 120 and Use Screw Attack (No Space Jump)
-              Dark Visor or Invisible Objects (Advanced)
-          Invisible Objects (Hypermode) and Dark World Damage ≥ 200
+              Dark Visor or Invisible Objects (Expert)
+          All of the following:
+              Dark World Damage ≥ 200
+              Any of the following:
+                  Invisible Objects (Hypermode)
+                  Dark Visor and Movement (Expert)
 
 > Door to Reliquary Access; Heals? False; Spawn Point
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode) to Reliquary Access/Door to Phazon Grounds
+  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles) to Reliquary Access/Door to Phazon Grounds
   > Door to Phazon Pit
       Any of the following:
           Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 55
@@ -1869,8 +1895,12 @@ Asset id: 1683944003
               Dark Visor or Invisible Objects (Intermediate)
           All of the following:
               Movement (Advanced) and Dark World Damage ≥ 110 and Use Screw Attack (No Space Jump)
-              Dark Visor or Invisible Objects (Advanced)
-          Invisible Objects (Hypermode) and Dark World Damage ≥ 110
+              Dark Visor or Invisible Objects (Expert)
+          All of the following:
+              Dark World Damage ≥ 110
+              Any of the following:
+                  Invisible Objects (Hypermode)
+                  Dark Visor and Movement (Expert)
 
 ----------------
 Reliquary Access
@@ -5677,8 +5707,10 @@ Asset id: 1423634263
           Any of the following:
               Grapple Beam
               All of the following:
-                  Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
-                  Screw Attack or Standable Terrain (Intermediate)
+                  Space Jump Boots
+                  Any of the following:
+                      Screw Attack or Standable Terrain (Intermediate)
+                      Scan Visor and Combat/Scan Dash (Advanced)
 
 > Tunnel; Heals? False
   > Door to Great Bridge
@@ -5697,6 +5729,7 @@ Asset id: 1423634263
               All of the following:
                   Space Jump Boots
                   Screw Attack or Roll Jump (Intermediate)
+              Boost Ball and Boost Jump (Advanced)
 
 ----------------
 Dark Forgotten Bridge
@@ -5822,7 +5855,7 @@ Asset id: 39024685
           Space Jump Boots
           Any of the following:
               Morph Ball and Morph Ball Bomb and Bomb Space Jump (Expert) and Dark World Damage ≥ 75
-              Space Jump Boots and Movement (Hypermode) and Standable Terrain (Intermediate) and Dark World Damage ≥ 70
+              Movement (Hypermode) and Standable Terrain (Hypermode) and Dark World Damage ≥ 70
   > Portal to Forgotten Bridge
       Any of the following:
           All of the following:
@@ -6618,7 +6651,7 @@ Asset id: 912503189
 Transport to Agon Wastes
 Asset id: 3479543630
 > Door to Torvus Temple; Heals? False
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode) to Torvus Temple/Door to Transport to Agon Wastes
+  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles) to Torvus Temple/Door to Transport to Agon Wastes
   > Elevator to Agon Wastes - Transport to Torvus Bog
       Scan Visor
 
@@ -7405,7 +7438,7 @@ Asset id: 1270197856
       After Training Chamber Statue
   > Room Center
       Trivial
-  > Top of Statue
+  > Front of Bomb Slot
       Any of the following:
           Use Screw Attack (Space Jump)
           All of the following:
@@ -7420,7 +7453,8 @@ Asset id: 1270197856
       Any of the following:
           After Training Chamber Statue
           Morph Ball and Boost Ball and Spider Ball and Movement (Advanced)
-  > Top of Statue
+          Morph Ball Bomb and Bomb Space Jump (Advanced) and Use Screw Attack (Space Jump)
+  > Front of Bomb Slot
       Space Jump Boots and After Training Chamber Statue and Standable Terrain (Beginner)
 
 > Door to Transit Tunnel West; Heals? False
@@ -7437,7 +7471,7 @@ Asset id: 1270197856
 
 > Event - Training Chamber Statue; Heals? False
   * Event Training Chamber Statue
-  > Top of Statue
+  > Front of Bomb Slot
       Trivial
 
 > Room Center; Heals? False
@@ -7477,7 +7511,7 @@ Asset id: 1270197856
                   Air Underwater (Advanced) and Use Screw Attack (Space Jump)
   > Pickup (Missile)
       After Training Chamber Statue
-  > Top of Statue
+  > Front of Bomb Slot
       Any of the following:
           All of the following:
               Morph Ball and Spider Ball
@@ -7494,7 +7528,7 @@ Asset id: 1270197856
                           Morph Ball Bomb and Bomb Jump (Intermediate)
           Space Jump Boots and Gravity Boost and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
 
-> Top of Statue; Heals? False
+> Front of Bomb Slot; Heals? False
   > Door to Transit Tunnel East
       Space Jump Boots or After Training Chamber Statue
   > Door to Fortress Transport Access
@@ -9723,7 +9757,7 @@ Asset id: 1932798548
   > Reactor - Watch Station Side
       Any of the following:
           After Main Gyro Chamber Puzzle 1
-          Movement (Expert) and Use Screw Attack (Space Jump)
+          Movement (Hypermode) and Use Screw Attack (Space Jump)
 
 > Reactor - Watch Station Side; Heals? False
   > Door to Watch Station Access
@@ -9735,7 +9769,7 @@ Asset id: 1932798548
   > Reactor - Save Station Side
       Any of the following:
           After Main Gyro Chamber Puzzle 1
-          Movement (Expert) and Use Screw Attack (Space Jump)
+          Movement (Hypermode) and Use Screw Attack (Space Jump)
 
 > Lore Scan; Heals? False
   * Logbook Luminoth Lore (Cobalt Translator) for f5535cea
