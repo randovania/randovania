@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to bypass the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump (Advanced and above).
 
+-   Added: Methods to reach the pickup in Mining Station B with Space Jump, Screw Attack, and Standable Terrain or after the puzzle with a Bomb Jump (Advanced and above).
+
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
 
 -   Changed: Dark Alpha Splinter no longer strictly requires Power Beam.
