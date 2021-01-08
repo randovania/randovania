@@ -8,7 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Method to climb to the portal Base Access with just Screw Attack (Intermediate and above).
+
+-   Added: Method to reach the pickup in Grand Windchamber with Space Jump, Screw Attack, and a Slope Jump (Intermediate and above).
+
+-   Added: Method to traverse Ventilation Area B from Bionenergy Production without Bombs by Screw Attacking into the tunnel and destorying the barriers with Missiles (Advanced and above).
+
+-   Added: Method to reach the pickup in Path of Roots from Torvus Lagoon without Morph Ball (Beginner and above).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
+
+-   Changed: Defeating Quadraxis with Power Bombs is now Intermediate (from Beginner).
 
 ## [2.3.0] - 2021-01-08
 
