@@ -13,11 +13,11 @@ def auto_tracker_window(skip_qtbot):
     return AutoTrackerWindow(connection, MagicMock())
 
 
-def test_update_tracker_from_hook(window):
+def test_update_tracker_from_hook(window, echoes_resource_database):
     # Setup
     inventory = {
         item: InventoryItem(item.index % 3, item.index % 3)
-        for item in window.game_data.resource_database.item
+        for item in echoes_resource_database.item
     }
 
     # Run
