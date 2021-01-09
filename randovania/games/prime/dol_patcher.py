@@ -31,6 +31,7 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
                                                         user_preferences, dol_file)
             echoes_dol_patches.apply_beam_cost_patch(version.beam_cost_addresses, game_specific, dol_file)
             echoes_dol_patches.apply_safe_zone_heal_patch(version.safe_zone, version.sda2_base, game_specific, dol_file)
+            echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:
