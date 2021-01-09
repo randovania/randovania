@@ -1,7 +1,8 @@
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.all_prime_dol_patches import StringDisplayPatchAddresses, HealthCapacityAddresses, \
     DangerousEnergyTankAddresses
-from randovania.games.prime.echoes_dol_patches import BeamCostAddresses, SafeZoneAddresses, EchoesDolVersion
+from randovania.games.prime.echoes_dol_patches import BeamCostAddresses, SafeZoneAddresses, EchoesDolVersion, \
+    StartingBeamVisorAddresses
 
 ALL_VERSIONS = [
     EchoesDolVersion(
@@ -39,6 +40,13 @@ ALL_VERSIONS = [
             heal_per_frame_constant=0x8041a4fc,
             increment_health_fmr=0x8000c710,
         ),
+        starting_beam_visor=StartingBeamVisorAddresses(
+            player_state_constructor_clean=0x80086008,
+            player_state_constructor_decode=0x80085c20,
+            health_info_constructor=0x801420c8,
+            enter_morph_ball_state=0x80184118,
+            start_transition_to_visor=0x80085314,
+        )
     ),
     EchoesDolVersion(
         game=RandovaniaGame.PRIME2,
@@ -75,5 +83,12 @@ ALL_VERSIONS = [
             heal_per_frame_constant=0x8041b7f4,
             increment_health_fmr=0x8000c754,
         ),
+        starting_beam_visor=StartingBeamVisorAddresses(
+            player_state_constructor_clean=0x80086144,
+            player_state_constructor_decode=0x80085d5c,
+            health_info_constructor=0x80142304,
+            enter_morph_ball_state=0x801843f8,
+            start_transition_to_visor=0x80085450,
+        )
     ),
 ]
