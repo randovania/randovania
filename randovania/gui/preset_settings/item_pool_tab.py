@@ -2,11 +2,11 @@ import collections
 import dataclasses
 import functools
 from functools import partial
-from typing import Dict, Tuple, List, Optional
+from typing import Dict, Tuple, List
 
-from PySide2.QtCore import QRect, Qt
-from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
-    QHBoxLayout, QCheckBox
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QSizePolicy, QDialog, QSpinBox, \
+    QCheckBox
 
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
@@ -14,20 +14,21 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
-from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
+from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
-from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
+from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
-from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -36,17 +37,9 @@ _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("Each expansion will provide exactly {per_expansion}, for a total of {total}."
                                        "\n{from_items} will be provided from major items.")
 
-AmmoPickupWidgets = Tuple[QSpinBox, QLabel, QToolButton, QLabel, QGroupBox, Optional[QCheckBox]]
-
-
-def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
-    box.setVisible(not box.isVisible())
-    toggle_button.setText("-" if box.isVisible() else "+")
-
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
-    _boxes_for_category: Dict[
-        ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
+    _boxes_for_category: Dict[ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, ItemConfigurationWidget]]]
 
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
@@ -64,6 +57,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Relevant Items
         self.game = editor.game
         item_database = default_database.item_database_for_game(self.game)
+        resource_database = default_database.resource_database_for(self.game)
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
@@ -71,7 +65,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_progressive_widgets(item_database)
         self._create_split_ammo_widgets(item_database)
         self._create_categories_boxes(item_database, size_policy)
-        self._create_major_item_boxes(item_database)
+        self._create_major_item_boxes(item_database, resource_database)
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
@@ -97,9 +91,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
         self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
 
+        # Major Items
+        for _, _, elements in self._boxes_for_category.values():
+            for major_item, widget in elements.items():
+                widget.state = major_configuration.items_state[major_item]
+
         # Energy Tank
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
-
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
 
@@ -121,14 +119,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         }
 
         for ammo, state in ammo_configuration.items_state.items():
-            self._ammo_pickup_widgets[ammo][0].setValue(state.pickup_count)
+            widgets = self._ammo_pickup_widgets[ammo]
+            widgets.pickup_spinbox.setValue(state.pickup_count)
 
-            if self._ammo_pickup_widgets[ammo][5] is not None:
-                self._ammo_pickup_widgets[ammo][5].setChecked(state.requires_major_item)
+            if widgets.require_major_item_check is not None:
+                widgets.require_major_item_check.setChecked(state.requires_major_item)
 
             try:
                 if state.pickup_count == 0:
-                    self._ammo_pickup_widgets[ammo][1].setText("No expansions will be created.")
+                    widgets.expected_count.setText("No expansions will be created.")
                     continue
 
                 ammo_per_pickup = items_for_ammo(ammo, state, ammo_provided,
@@ -144,7 +143,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 else:
                     count_text_template = _EXPECTED_COUNT_TEXT_TEMPLATE
 
-                self._ammo_pickup_widgets[ammo][1].setText(
+                widgets.expected_count.setText(
                     count_text_template.format(
                         per_expansion=" and ".join(
                             "{:.3g} {}".format(
@@ -171,7 +170,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 )
 
             except InvalidConfiguration as invalid_config:
-                self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
+                widgets.expected_count.setText(str(invalid_config))
 
         # Item pool count
         try:
@@ -283,70 +282,37 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 categories.add(major_item.item_category)
 
         all_categories = list(iterate_enum(ItemCategory))
-
-        current_row = 0
         for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_button = QToolButton(self.major_items_box)
-            category_button.setGeometry(QRect(20, 30, 24, 21))
-            category_button.setText("+")
-
-            category_label = QLabel(self.major_items_box)
-            category_label.setSizePolicy(size_policy)
-            category_label.setText(major_item_category.long_name)
-
-            category_box = QGroupBox(self.major_items_box)
+            category_box = QGroupBox(self.item_pool_box)
+            category_box.setTitle(major_item_category.long_name)
             category_box.setSizePolicy(size_policy)
             category_box.setObjectName(f"category_box {major_item_category}")
 
             category_layout = QGridLayout(category_box)
             category_layout.setObjectName(f"category_layout {major_item_category}")
 
-            self.major_items_layout.addWidget(category_button, 2 * current_row + 1, 0, 1, 1)
-            self.major_items_layout.addWidget(category_label, 2 * current_row + 1, 1, 1, 1)
-            self.major_items_layout.addWidget(category_box, 2 * current_row + 2, 0, 1, 2)
+            self.item_pool_layout.addWidget(category_box)
             self._boxes_for_category[major_item_category] = category_box, category_layout, {}
 
-            category_button.clicked.connect(partial(_toggle_box_visibility, category_button, category_box))
-            category_box.setVisible(False)
-            current_row += 1
-
-    def _create_major_item_boxes(self, item_database: ItemDatabase):
+    def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):
         for major_item in item_database.major_items.values():
             if major_item.required or major_item.item_category == ItemCategory.ENERGY_TANK:
                 continue
+
             category_box, category_layout, elements = self._boxes_for_category[major_item.item_category]
+            widget = ItemConfigurationWidget(None, major_item, MajorItemState(), resource_database)
+            widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
-            item_button = QToolButton(category_box)
-            item_button.setGeometry(QRect(20, 30, 24, 21))
-            item_button.setText("...")
+            row = category_layout.rowCount()
+            category_layout.addWidget(widget, row, 0, 1, -1)
 
-            item_label = QLabel(category_box)
-            item_label.setText(major_item.name)
+            elements[major_item] = widget
 
-            i = len(elements)
-            category_layout.addWidget(item_button, i, 0)
-            category_layout.addWidget(item_label, i, 1)
-            elements[major_item] = item_button, item_label
-
-            item_button.clicked.connect(partial(self.show_item_popup, major_item))
-
-    def show_item_popup(self, item: MajorItem):
-        """
-        Shows the ItemConfigurationPopup for the given MajorItem
-        :param item:
-        :return:
-        """
-        major_items_configuration = self._editor.major_items_configuration
-
-        popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item],
-                                       default_database.resource_database_for(self.game))
-        result = popup.exec_()
-
-        if result == QDialog.Accepted:
-            with self._editor:
-                self._editor.major_items_configuration = major_items_configuration.replace_state_for_item(
-                    item, popup.state
-                )
+    def _on_major_item_updated(self, item_widget: ItemConfigurationWidget):
+        with self._editor as editor:
+            editor.major_items_configuration = editor.major_items_configuration.replace_state_for_item(
+                item_widget.item, item_widget.state
+            )
 
     # Energy Tank
 
@@ -404,21 +370,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         resource_database = default_database.resource_database_for(self.game)
 
         for ammo in item_database.ammo.values():
-            title_layout = QHBoxLayout()
-            title_layout.setObjectName(f"{ammo.name} Title Horizontal Layout")
-
-            expand_ammo_button = QToolButton(self.ammo_box)
-            expand_ammo_button.setGeometry(QRect(20, 30, 24, 21))
-            expand_ammo_button.setText("+")
-            title_layout.addWidget(expand_ammo_button)
-
-            category_label = QLabel(self.ammo_box)
-            category_label.setSizePolicy(size_policy)
-            category_label.setText(ammo.name + "s")
-            title_layout.addWidget(category_label)
-
-            pickup_box = QGroupBox(self.ammo_box)
+            pickup_box = QGroupBox(self.item_pool_box)
             pickup_box.setSizePolicy(size_policy)
+            pickup_box.setTitle(ammo.name + "s")
             layout = QGridLayout(pickup_box)
             layout.setObjectName(f"{ammo.name} Box Layout")
             current_row = 0
@@ -467,14 +421,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(expected_count, current_row, 0, 1, 2)
             current_row += 1
 
-            self._ammo_pickup_widgets[ammo] = (pickup_spinbox, expected_count, expand_ammo_button,
-                                               category_label, pickup_box, require_major_item_check)
-
-            expand_ammo_button.clicked.connect(partial(_toggle_box_visibility, expand_ammo_button, pickup_box))
-            pickup_box.setVisible(False)
-
-            self.ammo_layout.addLayout(title_layout)
-            self.ammo_layout.addWidget(pickup_box)
+            self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(pickup_spinbox, expected_count,
+                                                                pickup_box, require_major_item_check)
+            self.item_pool_layout.addWidget(pickup_box)
 
     def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
         with self._editor as options:

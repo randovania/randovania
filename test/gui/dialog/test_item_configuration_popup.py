@@ -1,6 +1,6 @@
 from PySide2 import QtCore
 
-from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
+from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.layout.major_item_state import MajorItemState
 
 
@@ -14,7 +14,7 @@ def test_state_no_changes(skip_qtbot, echoes_item_database, echoes_resource_data
     )
 
     # Run
-    popup = ItemConfigurationPopup(None, item, state, echoes_resource_database)
+    popup = ItemConfigurationWidget(None, item, state, echoes_resource_database)
     skip_qtbot.addWidget(popup)
 
     # Assert
@@ -31,7 +31,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_item_database, echoes_resou
     )
 
     # Run
-    popup = ItemConfigurationPopup(None, item, state, echoes_resource_database)
+    popup = ItemConfigurationWidget(None, item, state, echoes_resource_database)
     skip_qtbot.addWidget(popup)
     skip_qtbot.mouseClick(popup.starting_radio, QtCore.Qt.LeftButton)
 
@@ -54,7 +54,7 @@ def test_state_required(skip_qtbot, echoes_item_database, echoes_resource_databa
     )
 
     # Run
-    popup = ItemConfigurationPopup(None, item, state, echoes_resource_database)
+    popup = ItemConfigurationWidget(None, item, state, echoes_resource_database)
     skip_qtbot.addWidget(popup)
 
     # Assert

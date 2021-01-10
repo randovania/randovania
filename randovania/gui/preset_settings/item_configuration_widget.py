@@ -1,5 +1,7 @@
 from typing import Tuple
 
+from PySide2 import QtWidgets
+from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.item.major_item import MajorItem
@@ -9,7 +11,8 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.major_item_state import MajorItemState
 
 
-class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
+class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
+    Changed = Signal()
 
     def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState,
                  resources_database: ResourceDatabase):
@@ -18,14 +21,11 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
         set_default_window_icon(self)
         self._item = item
 
-        # setup
         self.setWindowTitle(f"Item: {item.name}")
-        self.warning_label.hide()
+        self.item_name_label.setText(item.name)
 
         # connect
-        self.button_box.accepted.connect(self.button_box_accepted)
-        self.button_box.rejected.connect(self.button_box_rejected)
-        self.included_box.toggled.connect(self._on_included_box_toggle)
+        self.excluded_radio.toggled.connect(self._on_select_excluded)
         self.vanilla_radio.toggled.connect(self._on_select_vanilla)
         self.starting_radio.toggled.connect(self._on_select_starting)
         self.shuffled_radio.toggled.connect(self._on_select_shuffled)
@@ -51,7 +51,7 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
 
         if item.ammo_index:
             self.provided_ammo_label.setText(
-                "<html><head/><body><p>Provided Ammo</p><p>({})</p></body></html>".format(
+                "<html><head/><body><p>Provided Ammo ({})</p></body></html>".format(
                     " and ".join(
                         resources_database.get_item(ammo_index).long_name
                         for ammo_index in item.ammo_index
@@ -63,19 +63,22 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
             self.provided_ammo_spinbox.hide()
 
         if self._item.required:
-            self.warning_label.setText("This item is necessary for the game to function properly and can't be removed.")
-            self.warning_label.show()
-            self.included_box.setEnabled(False)
+            self.item_name_label.setToolTip(
+                "This item is necessary for the game to function properly and can't be removed.")
+            self.setEnabled(False)
             self.state = self._create_state(num_included_in_starting_items=1)
         else:
             if self._item.warning is not None:
-                self.warning_label.setText(self._item.warning)
-                self.warning_label.show()
+                self.item_name_label.setToolTip(self._item.warning)
             self.state = starting_state
 
     @property
+    def item(self):
+        return self._item
+
+    @property
     def state(self) -> MajorItemState:
-        if self.included_box.isChecked():
+        if not self.excluded_radio.isChecked():
             return MajorItemState(
                 include_copy_in_original_location=self.vanilla_radio.isChecked(),
                 num_shuffled_pickups=self.shuffled_spinbox.value() if self.shuffled_radio.isChecked() else 0,
@@ -112,7 +115,9 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
             self.starting_radio.setChecked(True)
 
         else:
-            self.included_box.setChecked(False)
+            self.excluded_radio.setChecked(True)
+
+        self.Changed.emit()
 
     def button_box_accepted(self):
         self.accept()
@@ -121,6 +126,9 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
         self.reject()
 
     def _on_included_box_toggle(self, enabled: bool):
+        self._update_for_state(self.state)
+
+    def _on_select_excluded(self, value: bool):
         self._update_for_state(self.state)
 
     def _on_select_vanilla(self, value: bool):
