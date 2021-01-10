@@ -4,6 +4,7 @@ import functools
 from functools import partial
 from typing import Dict, Tuple, List
 
+from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QSizePolicy, QDialog, QSpinBox, \
     QCheckBox
@@ -52,7 +53,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         self._editor = editor
         size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.gridLayout.setAlignment(Qt.AlignTop)
+        self.item_pool_layout.setAlignment(Qt.AlignTop)
 
         # Relevant Items
         self.game = editor.game
@@ -62,11 +63,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
         self._register_random_starting_events()
-        self._create_progressive_widgets(item_database)
-        self._create_split_ammo_widgets(item_database)
         self._create_categories_boxes(item_database, size_policy)
+        self._create_progressive_widgets(item_database)
         self._create_major_item_boxes(item_database, resource_database)
         self._create_energy_tank_box()
+        self._create_split_ammo_widgets(item_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
     @property
@@ -244,23 +245,27 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 ("Plasma Beam", "Nova Beam"),
             ))
 
-        for (progressive_item, non_progressive_items) in all_progressive:
+        for (progressive_item_name, non_progressive_items) in all_progressive:
+            progressive_item = item_database.major_items[progressive_item_name]
+            parent, layout, _ = self._boxes_for_category[progressive_item.item_category]
+
             widget = ProgressiveItemWidget(
-                self.item_alternative_box, self._editor,
-                progressive_item=item_database.major_items[progressive_item],
-                non_progressive_items=[item_database.major_items[it]
-                                       for it in non_progressive_items],
+                parent, self._editor,
+                progressive_item=progressive_item,
+                non_progressive_items=[item_database.major_items[it] for it in non_progressive_items],
             )
             widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
             self._progressive_widgets.append(widget)
-            self.item_alternative_layout.addWidget(widget)
+            layout.addWidget(widget)
 
     def _create_split_ammo_widgets(self, item_database: ItemDatabase):
+        parent, layout, _ = self._boxes_for_category[ItemCategory.BEAM]
+
         self._split_ammo_widgets = []
 
         if self.game == RandovaniaGame.PRIME2:
             beam_ammo = SplitAmmoWidget(
-                self.item_alternative_box, self._editor,
+                parent, self._editor,
                 unified_ammo=item_database.ammo["Beam Ammo Expansion"],
                 split_ammo=[
                     item_database.ammo["Dark Ammo Expansion"],
@@ -270,8 +275,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             beam_ammo.setText("Split Beam Ammo Expansions")
             self._split_ammo_widgets.append(beam_ammo)
 
+        if self._split_ammo_widgets:
+            line = QtWidgets.QFrame(parent)
+            line.setFrameShape(QtWidgets.QFrame.HLine)
+            line.setFrameShadow(QtWidgets.QFrame.Sunken)
+            layout.addWidget(line)
+
         for widget in self._split_ammo_widgets:
-            self.item_alternative_layout.addWidget(widget)
+            layout.addWidget(widget)
 
     def _create_categories_boxes(self, item_database: ItemDatabase, size_policy):
         self._boxes_for_category = {}
@@ -283,7 +294,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         all_categories = list(iterate_enum(ItemCategory))
         for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = QGroupBox(self.item_pool_box)
+            category_box = QGroupBox(self.scroll_area_contents)
             category_box.setTitle(major_item_category.long_name)
             category_box.setSizePolicy(size_policy)
             category_box.setObjectName(f"category_box {major_item_category}")
@@ -368,9 +379,16 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._ammo_pickup_widgets = {}
 
         resource_database = default_database.resource_database_for(self.game)
+        broad_to_category = {
+            ItemCategory.BEAM_RELATED: ItemCategory.BEAM,
+            ItemCategory.MORPH_BALL_RELATED: ItemCategory.MORPH_BALL,
+            ItemCategory.MISSILE_RELATED: ItemCategory.MISSILE,
+        }
 
         for ammo in item_database.ammo.values():
-            pickup_box = QGroupBox(self.item_pool_box)
+            category_box, category_layout, _ = self._boxes_for_category[broad_to_category[ammo.broad_category]]
+
+            pickup_box = QGroupBox(category_box)
             pickup_box.setSizePolicy(size_policy)
             pickup_box.setTitle(ammo.name + "s")
             layout = QGridLayout(pickup_box)
@@ -423,7 +441,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(pickup_spinbox, expected_count,
                                                                 pickup_box, require_major_item_check)
-            self.item_pool_layout.addWidget(pickup_box)
+            category_layout.addWidget(pickup_box)
 
     def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
         with self._editor as options:
