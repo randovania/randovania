@@ -1,5 +1,6 @@
 import asyncio
 import os
+import subprocess
 from typing import Union
 
 import pytest
@@ -150,7 +151,9 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
 @pytest.mark.parametrize("is_windows", [False, True])
 def test_on_menu_action_previously_generated_games(default_main_window, mocker, is_windows, monkeypatch):
     mock_start_file = MagicMock()
+    mock_popen = MagicMock()
     monkeypatch.setattr(os, "startfile", mock_start_file, raising=False)
+    monkeypatch.setattr(subprocess, "Popen", mock_popen, raising=False)
     mock_system = mocker.patch("platform.system", return_value="Windows" if is_windows else "Other")
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
 
@@ -158,13 +161,12 @@ def test_on_menu_action_previously_generated_games(default_main_window, mocker, 
     default_main_window._on_menu_action_previously_generated_games()
 
     # Assert
-    mock_system.assert_called_once_with()
     if is_windows:
         mock_start_file.assert_called_once()
         mock_message_box.return_value.show.assert_not_called()
     else:
-        mock_start_file.assert_not_called()
-        mock_message_box.return_value.show.assert_called_once()
+        mock_popen.assert_called_once()
+        mock_message_box.return_value.show.assert_not_called()
 
 
 @pytest.mark.asyncio
