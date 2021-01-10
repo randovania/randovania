@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
+-   Changed: The item pool tab when customizing presets now can edit major items directly. 
+
 -   Changed: Defeating Quadraxis with Power Bombs is now Intermediate (from Beginner).
 
 ## [2.3.0] - 2021-01-08
