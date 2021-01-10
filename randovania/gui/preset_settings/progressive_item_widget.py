@@ -25,7 +25,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_progressive)
 
-    def on_preset_changed(self, preset: Preset, elements: Dict[MajorItem, Iterable[QtWidgets.QWidget]]):
+    def on_preset_changed(self, preset: Preset, elements: Dict[MajorItem, QtWidgets.QWidget]):
         major_configuration = preset.configuration.major_items_configuration
 
         has_progressive = _state_has_item(major_configuration.items_state[self.progressive_item])
@@ -39,11 +39,8 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setCheckState(new_state)
 
         for item in self.non_progressive_items:
-            for element in elements[item]:
-                element.setVisible(has_non_progressive)
-
-        for element in elements[self.progressive_item]:
-            element.setVisible(has_progressive)
+            elements[item].setVisible(has_non_progressive)
+        elements[self.progressive_item].setVisible(has_progressive)
 
     def change_progressive(self, is_progressive: bool):
         with self._editor as editor:
