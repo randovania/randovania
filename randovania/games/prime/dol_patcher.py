@@ -11,7 +11,8 @@ from randovania.interface_common.echoes_user_preferences import EchoesUserPrefer
 ALL_VERSIONS_PATCHES = echoes_dol_versions.ALL_VERSIONS
 
 
-def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences):
+def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences,
+                  default_items: dict):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version = find_version_for_dol(dol_file, ALL_VERSIONS_PATCHES)
@@ -31,7 +32,7 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
                                                         user_preferences, dol_file)
             echoes_dol_patches.apply_beam_cost_patch(version.beam_cost_addresses, game_specific, dol_file)
             echoes_dol_patches.apply_safe_zone_heal_patch(version.safe_zone, version.sda2_base, game_specific, dol_file)
-            echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, dol_file)
+            echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, default_items, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

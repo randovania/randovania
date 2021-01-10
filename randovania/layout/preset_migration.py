@@ -9,7 +9,7 @@ import slugify
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 7
+CURRENT_PRESET_VERSION = 8
 
 
 class InvalidPreset(Exception):
@@ -203,6 +203,16 @@ def _migrate_v6(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v7(preset: dict) -> dict:
+    default_items = {}
+    if preset["game"] == "prime2":
+        default_items["visor"] = "Combat Visor"
+        default_items["beam"] = "Power Beam"
+
+    preset["configuration"]["major_items_configuration"]["default_items"] = default_items
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -210,6 +220,7 @@ _MIGRATIONS = {
     4: _migrate_v4,
     5: _migrate_v5,
     6: _migrate_v6,
+    7: _migrate_v7,
 }
 
 
