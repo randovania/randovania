@@ -627,6 +627,10 @@ def create_patcher_file(description: LayoutDescription,
 
     result["menu_mod"] = configuration.menu_mod
     result["user_preferences"] = cosmetic_patches.user_preferences.as_json
+    result["default_items"] = {
+        "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
+        "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
+    }
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)

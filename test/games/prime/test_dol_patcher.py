@@ -27,9 +27,11 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
         "randovania.games.prime.all_prime_dol_patches.apply_energy_tank_capacity_patch", autospec=True)
     mock_apply_beam_cost_patch: MagicMock = mocker.patch(
         "randovania.games.prime.echoes_dol_patches.apply_beam_cost_patch", autospec=True)
+    mock_apply_starting_visor_patch: MagicMock = mocker.patch(
+        "randovania.games.prime.echoes_dol_patches.apply_starting_visor_patch", autospec=True)
 
     # Run
-    dol_patcher.apply_patches(game_root, game_patches.game_specific, user_preferences)
+    dol_patcher.apply_patches(game_root, game_patches.game_specific, user_preferences, {"foo": "bar"})
 
     # Assert
     mock_find_version_for_dol.assert_called_once_with(dol_file, dol_patcher.ALL_VERSIONS_PATCHES)
@@ -47,6 +49,10 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     mock_apply_beam_cost_patch.assert_called_once_with(
         version_patches.beam_cost_addresses,
         game_patches.game_specific, dol_file
+    )
+    mock_apply_starting_visor_patch.assert_called_once_with(
+        version_patches.starting_beam_visor,
+        {"foo": "bar"}, dol_file,
     )
 
 

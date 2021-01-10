@@ -190,9 +190,12 @@ def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
     dol_file.write(patch_addresses.increment_health_fmr, lfs(f1, offset, r2))
 
 
-def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, dol_file: DolFile):
-    default_visor = 0
-    default_beam = 0
+def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_items: dict, dol_file: DolFile):
+    visor_order = ["Combat Visor", "Echo Visor", "Scan Visor", "Dark Visor"]
+    beam_order = ["Power Beam", "Dark Beam", "Light Beam", "Annihilator Beam"]
+
+    default_visor = visor_order.index(default_items["visor"])
+    default_beam = beam_order.index(default_items["beam"])
 
     # Patch CPlayerState constructor with default values
     dol_file.write_instructions(addresses.player_state_constructor_clean + 0x54, [
