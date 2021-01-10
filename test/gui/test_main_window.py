@@ -148,24 +148,24 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
     default_main_window.open_game_details.assert_called_once_with(mock_generate_layout.return_value)
 
 
-@pytest.mark.parametrize("is_windows", [False, True])
-def test_on_menu_action_previously_generated_games(default_main_window, mocker, is_windows, monkeypatch):
+@pytest.mark.parametrize("os_type", ["Windows", "Darwin", "Linux"])
+def test_on_menu_action_previously_generated_games(default_main_window, mocker, os_type, monkeypatch):
     mock_start_file = MagicMock()
-    mock_popen = MagicMock()
+    mock_subprocess_run = MagicMock()
     monkeypatch.setattr(os, "startfile", mock_start_file, raising=False)
-    monkeypatch.setattr(subprocess, "Popen", mock_popen, raising=False)
-    mock_system = mocker.patch("platform.system", return_value="Windows" if is_windows else "Other")
+    monkeypatch.setattr(subprocess, "run", mock_subprocess_run, raising=False)
+    mocker.patch("platform.system", return_value=os_type)
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
 
     # Run
     default_main_window._on_menu_action_previously_generated_games()
 
     # Assert
-    if is_windows:
+    if os_type == "Windows":
         mock_start_file.assert_called_once()
         mock_message_box.return_value.show.assert_not_called()
     else:
-        mock_popen.assert_called_once()
+        mock_subprocess_run.assert_called_once()
         mock_message_box.return_value.show.assert_not_called()
 
 

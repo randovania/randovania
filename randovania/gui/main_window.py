@@ -544,9 +544,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
             if platform.system() == "Windows":
                 os.startfile(path)
             elif platform.system() == "Darwin":
-                subprocess.Popen(["open"], path)
+                subprocess.run(["open", path])
             else:
-                subprocess.Popen(["xdg-open", path])
+                subprocess.run(["xdg-open", path])
         except OSError:
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
