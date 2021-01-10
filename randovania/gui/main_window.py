@@ -548,6 +548,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             else:
                 subprocess.run(["xdg-open", path])
         except OSError:
+            print("Exception thrown :)")
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
                                         QtWidgets.QMessageBox.Ok, self)

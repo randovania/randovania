@@ -149,7 +149,8 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
 
 
 @pytest.mark.parametrize("os_type", ["Windows", "Darwin", "Linux"])
-def test_on_menu_action_previously_generated_games(default_main_window, mocker, os_type, monkeypatch):
+@pytest.mark.parametrize("throw_exception", [True, False])
+def test_on_menu_action_previously_generated_games(default_main_window, mocker, os_type, throw_exception, monkeypatch):
     mock_start_file = MagicMock()
     mock_subprocess_run = MagicMock()
     monkeypatch.setattr(os, "startfile", mock_start_file, raising=False)
@@ -158,15 +159,26 @@ def test_on_menu_action_previously_generated_games(default_main_window, mocker, 
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
 
     # Run
+    if throw_exception:
+        if os_type == "Windows":
+            mock_start_file.side_effect = OSError()
+        else:
+            mock_subprocess_run.side_effect = OSError()
+
     default_main_window._on_menu_action_previously_generated_games()
 
     # Assert
-    if os_type == "Windows":
-        mock_start_file.assert_called_once()
-        mock_message_box.return_value.show.assert_not_called()
+    if throw_exception:
+        mock_message_box.return_value.show.assert_called_once()
     else:
-        mock_subprocess_run.assert_called_once()
-        mock_message_box.return_value.show.assert_not_called()
+        if os_type == "Windows":
+            mock_start_file.assert_called_once()
+            mock_message_box.return_value.show.assert_not_called()
+        else:
+            mock_subprocess_run.assert_called_once()
+            mock_message_box.return_value.show.assert_not_called()
+
+
 
 
 @pytest.mark.asyncio
