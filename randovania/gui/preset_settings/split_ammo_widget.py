@@ -1,4 +1,4 @@
-from typing import Iterable, Dict, Tuple
+from typing import Iterable, Dict, NamedTuple, Optional
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
@@ -9,11 +9,11 @@ from randovania.layout.ammo_state import AmmoState
 from randovania.layout.preset import Preset
 
 
-def _update_ammo_visibility(elements: Tuple[QtWidgets.QWidget, ...], is_visible: bool):
-    elements[2].setVisible(is_visible)
-    elements[3].setVisible(is_visible)
-    if elements[2].text() == "-":
-        elements[4].setVisible(is_visible)
+class AmmoPickupWidgets(NamedTuple):
+    pickup_spinbox: QtWidgets.QSpinBox
+    expected_count: QtWidgets.QLabel
+    pickup_box: QtWidgets.QGroupBox
+    require_major_item_check: Optional[QtWidgets.QCheckBox]
 
 
 class SplitAmmoWidget(QtWidgets.QCheckBox):
@@ -26,7 +26,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_split)
 
-    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, Tuple[QtWidgets.QWidget, ...]]):
+    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]):
         ammo_configuration = preset.configuration.ammo_configuration
 
         has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0
@@ -39,9 +39,9 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
             new_state = Qt.Checked
         self.setCheckState(new_state)
 
-        _update_ammo_visibility(ammo_pickup_widgets[self.unified_ammo], has_unified)
+        ammo_pickup_widgets[self.unified_ammo].pickup_box.setVisible(has_unified)
         for item in self.split_ammo:
-            _update_ammo_visibility(ammo_pickup_widgets[item], has_split)
+            ammo_pickup_widgets[item].pickup_box.setVisible(has_split)
 
     def change_split(self, has_split: bool):
         with self._editor as editor:
