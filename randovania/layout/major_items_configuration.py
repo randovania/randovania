@@ -4,6 +4,7 @@ from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.major_item_state import MajorItemState
@@ -14,6 +15,7 @@ RANDOM_STARTING_ITEMS_LIMIT = 31
 @dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
     items_state: Dict[MajorItem, MajorItemState]
+    default_items: Dict[ItemCategory, MajorItem]
     minimum_random_starting_items: int
     maximum_random_starting_items: int
 
@@ -23,6 +25,10 @@ class MajorItemsConfiguration(BitPackValue):
             "items_state": {
                 major_item.name: state.as_json
                 for major_item, state in self.items_state.items()
+            },
+            "default_items": {
+                category.value: item.name
+                for category, item in self.default_items.items()
             },
             "minimum_random_starting_items": self.minimum_random_starting_items,
             "maximum_random_starting_items": self.maximum_random_starting_items,
@@ -38,8 +44,16 @@ class MajorItemsConfiguration(BitPackValue):
                 state = MajorItemState()
             items_state[item] = state
 
+        default_items = {}
+        for category, options in item_database.default_items.items():
+            default_items[category] = item_database.major_items[value["default_items"][category.value]]
+            if default_items[category] not in options:
+                raise ValueError(f"Category {category} has {default_items[category]} as default item, "
+                                 f"but that's not a valid option.")
+
         return cls(
             items_state=items_state,
+            default_items=default_items,
             minimum_random_starting_items=value["minimum_random_starting_items"],
             maximum_random_starting_items=value["maximum_random_starting_items"],
         )
@@ -59,6 +73,12 @@ class MajorItemsConfiguration(BitPackValue):
         for index, item, state in result:
             yield from state.bit_pack_encode(item)
 
+        # default_items
+        for category, default in self.default_items.items():
+            all_major = [major for major in reference.items_state.keys() if major.item_category == category]
+            yield from bitpacking.pack_array_element(default, all_major)
+
+        # random starting items
         yield self.minimum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
         yield self.maximum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
 
@@ -80,9 +100,17 @@ class MajorItemsConfiguration(BitPackValue):
             else:
                 items_state[item] = reference.items_state[item]
 
+        # default_items
+        default_items = {}
+        for category in reference.default_items.keys():
+            all_major = [major for major in reference.items_state.keys() if major.item_category == category]
+            default_items[category] = decoder.decode_element(all_major)
+
+        # random starting items
         minimum, maximum = decoder.decode(RANDOM_STARTING_ITEMS_LIMIT, RANDOM_STARTING_ITEMS_LIMIT)
 
         return cls(items_state,
+                   default_items=default_items,
                    minimum_random_starting_items=minimum,
                    maximum_random_starting_items=maximum)
 
@@ -104,6 +132,18 @@ class MajorItemsConfiguration(BitPackValue):
             items_state[item] = state
 
         return dataclasses.replace(self, items_state=items_state)
+
+    def replace_default_item(self, category: ItemCategory, item: MajorItem) -> "MajorItemsConfiguration":
+        """
+        Creates a copy of this MajorItemsConfiguration where the default item for the given category
+        is replaced by the given item.
+        :param category:
+        :param item:
+        :return:
+        """
+        default_items = copy.copy(self.default_items)
+        default_items[category] = item
+        return dataclasses.replace(self, default_items=default_items)
 
     def calculate_provided_ammo(self) -> Dict[int, int]:
         result: Dict[int, int] = {}
