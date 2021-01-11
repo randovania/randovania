@@ -58,8 +58,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Relevant Items
         self.game = editor.game
+        self.game_description = default_database.game_description_for(self.game)
         item_database = default_database.item_database_for_game(self.game)
-        resource_database = default_database.resource_database_for(self.game)
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
@@ -67,7 +67,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_categories_boxes(item_database, size_policy)
         self._create_customizable_default_items(item_database)
         self._create_progressive_widgets(item_database)
-        self._create_major_item_boxes(item_database, resource_database)
+        self._create_major_item_boxes(item_database, self.game_description.resource_database)
         self._create_energy_tank_box()
         self._create_split_ammo_widgets(item_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
@@ -121,8 +121,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 spinbox.setValue(maximum)
 
         previous_pickup_for_item = {}
-        game = default_database.game_description_for(self.game)
-        resource_database = game.resource_database
+        resource_database = self.game_description.resource_database
 
         item_for_index: Dict[int, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
@@ -187,7 +186,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         try:
             pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
             min_starting_items = layout.major_items_configuration.minimum_random_starting_items
-            maximum_size = game.world_list.num_pickup_nodes + min_starting_items
+            maximum_size = self.game_description.world_list.num_pickup_nodes + min_starting_items
             self.item_pool_count_label.setText(
                 "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
             )
