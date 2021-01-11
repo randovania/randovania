@@ -6,7 +6,7 @@ from typing import Dict, Tuple, List
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QSizePolicy, QDialog, QSpinBox, \
+from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QSizePolicy, QSpinBox, \
     QCheckBox
 
 from randovania.game_description import default_database
@@ -41,6 +41,7 @@ _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("Each expansion will provide exactly {per
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _boxes_for_category: Dict[ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, ItemConfigurationWidget]]]
+    _default_items: Dict[ItemCategory, QtWidgets.QComboBox]
 
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
@@ -57,15 +58,16 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Relevant Items
         self.game = editor.game
+        self.game_description = default_database.game_description_for(self.game)
         item_database = default_database.item_database_for_game(self.game)
-        resource_database = default_database.resource_database_for(self.game)
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
         self._register_random_starting_events()
         self._create_categories_boxes(item_database, size_policy)
+        self._create_customizable_default_items(item_database)
         self._create_progressive_widgets(item_database)
-        self._create_major_item_boxes(item_database, resource_database)
+        self._create_major_item_boxes(item_database, self.game_description.resource_database)
         self._create_energy_tank_box()
         self._create_split_ammo_widgets(item_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
@@ -92,6 +94,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
         self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
 
+        # Default Items
+        for category, default_item in major_configuration.default_items.items():
+            combo = self._default_items[category]
+            combo.setCurrentIndex(combo.findData(default_item))
+
+            for item, widget in self._boxes_for_category[category][2].items():
+                widget.setEnabled(default_item != item)
+
         # Major Items
         for _, _, elements in self._boxes_for_category.values():
             for major_item, widget in elements.items():
@@ -111,8 +121,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 spinbox.setValue(maximum)
 
         previous_pickup_for_item = {}
-        game = default_database.game_description_for(self.game)
-        resource_database = game.resource_database
+        resource_database = self.game_description.resource_database
 
         item_for_index: Dict[int, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
@@ -177,7 +186,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         try:
             pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
             min_starting_items = layout.major_items_configuration.minimum_random_starting_items
-            maximum_size = game.world_list.num_pickup_nodes + min_starting_items
+            maximum_size = self.game_description.world_list.num_pickup_nodes + min_starting_items
             self.item_pool_count_label.setText(
                 "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
             )
@@ -279,10 +288,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             line = QtWidgets.QFrame(parent)
             line.setFrameShape(QtWidgets.QFrame.HLine)
             line.setFrameShadow(QtWidgets.QFrame.Sunken)
-            layout.addWidget(line)
+            layout.addWidget(line, layout.rowCount(), 0, 1, -1)
 
         for widget in self._split_ammo_widgets:
-            layout.addWidget(widget)
+            layout.addWidget(widget, layout.rowCount(), 0, 1, -1)
 
     def _create_categories_boxes(self, item_database: ItemDatabase, size_policy):
         self._boxes_for_category = {}
@@ -304,6 +313,32 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             self.item_pool_layout.addWidget(category_box)
             self._boxes_for_category[major_item_category] = category_box, category_layout, {}
+
+    def _create_customizable_default_items(self, item_database: ItemDatabase):
+        self._default_items = {}
+
+        for category, possibilities in item_database.default_items.items():
+            parent, layout, _ = self._boxes_for_category[category]
+
+            label = QtWidgets.QLabel(parent)
+            label.setText(f"Default {category.long_name}")
+            layout.addWidget(label, 0, 0)
+
+            combo = QtWidgets.QComboBox(parent)
+            for item in possibilities:
+                combo.addItem(item.name, item)
+            combo.currentIndexChanged.connect(partial(self._on_default_item_updated, category, combo))
+            layout.addWidget(combo, 0, 1)
+
+            self._default_items[category] = combo
+
+    def _on_default_item_updated(self, category: ItemCategory, combo: QtWidgets.QComboBox, _):
+        with self._editor as editor:
+            new_config = editor.major_items_configuration
+            new_config = new_config.replace_default_item(category, combo.currentData())
+            new_config = new_config.replace_state_for_item(combo.currentData(),
+                                                           MajorItemState(num_included_in_starting_items=1))
+            editor.major_items_configuration = new_config
 
     def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):
         for major_item in item_database.major_items.values():

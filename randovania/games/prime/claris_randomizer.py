@@ -228,6 +228,7 @@ def apply_patcher_file(game_root: Path,
     """
     menu_mod = patcher_data["menu_mod"]
     user_preferences = EchoesUserPreferences.from_json_dict(patcher_data["user_preferences"])
+    default_items = patcher_data["default_items"]
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
@@ -240,7 +241,7 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, game_specific, user_preferences)
+    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items)
 
     if menu_mod:
         _add_menu_mod_to_files(game_root, status_update)

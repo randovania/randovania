@@ -30,6 +30,7 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
         self.starting_radio.toggled.connect(self._on_select_starting)
         self.shuffled_radio.toggled.connect(self._on_select_shuffled)
         self.shuffled_spinbox.valueChanged.connect(self._on_shuffled_value)
+        self.provided_ammo_spinbox.valueChanged.connect(self._on_shuffled_value)
 
         # Update
         self.vanilla_radio.setEnabled(item.original_index is not None)

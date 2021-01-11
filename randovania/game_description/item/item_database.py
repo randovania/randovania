@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, Tuple
 
 from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 
 
@@ -9,6 +10,7 @@ from randovania.game_description.item.major_item import MajorItem
 class ItemDatabase:
     major_items: Dict[str, MajorItem]
     ammo: Dict[str, Ammo]
+    default_items: Dict[ItemCategory, Tuple[MajorItem, ...]]
 
 
 def read_database(major_items_data: Dict,
@@ -22,7 +24,7 @@ def read_database(major_items_data: Dict,
     """
     major_items = {
         name: MajorItem.from_json(name, value)
-        for name, value in major_items_data.items()
+        for name, value in major_items_data["items"].items()
     }
 
     ammo = {
@@ -30,7 +32,12 @@ def read_database(major_items_data: Dict,
         for name, value in ammo_data.items()
     }
 
-    return ItemDatabase(major_items, ammo)
+    default_items = {
+        ItemCategory(category_name): tuple(major_items[item_name] for item_name in value)
+        for category_name, value in major_items_data["default_items"].items()
+    }
+
+    return ItemDatabase(major_items, ammo, default_items)
 
 
 def write_database(database: ItemDatabase,
@@ -50,7 +57,12 @@ def write_database(database: ItemDatabase,
         for name, ammo in database.ammo.items()
     }
 
-    return major_items_data, ammo_data
+    default_data = {
+        category.value: [item.name for item in items]
+        for category, items in database.default_items.items()
+    }
+
+    return {"items": major_items_data, "default_items": default_data}, ammo_data
 
 
 _TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
