@@ -279,6 +279,7 @@ def test_apply_patcher_file(
     patcher_data = {
         "menu_mod": include_menu_mod,
         "user_preferences": EchoesUserPreferences().as_json,
+        "default_items": {"foo": "bar"},
     }
 
     # Run
@@ -297,7 +298,7 @@ def test_apply_patcher_file(
         mock_create_pak_backups.assert_not_called()
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
-    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences())
+    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences(), {"foo": "bar"})
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)

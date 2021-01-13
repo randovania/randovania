@@ -8,13 +8,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The visor and beam you start the game equipped with is now configurable.
+
+-   Added: Method to climb to the portal Base Access with just Screw Attack (Intermediate and above).
+
+-   Added: Method to reach the pickup in Grand Windchamber with Space Jump, Screw Attack, and a Slope Jump (Intermediate and above).
+
+-   Added: Method to traverse Ventilation Area B from Bionenergy Production without Bombs by Screw Attacking into the tunnel and destorying the barriers with Missiles (Advanced and above).
+
+-   Added: Method to reach the pickup in Path of Roots from Torvus Lagoon without Morph Ball (Beginner and above).
+
+-   Changed: Auto tracker internally uses a configuration file for the item positions.
+
+-   Changed: The item pool tab when customizing presets now can edit major items directly. 
+
+-   Changed: Defeating Quadraxis with Power Bombs is now Intermediate (from Beginner).
+
+## [2.3.0] - 2021-01-08
+
 -   Added: Method to enter tunnels in Transit Tunnel East/Undertransit One from Catacombs/Dungeon to Training Chamber/Sacrificial Chamber with an Instant Morph (Intermediate and above).
 
 -   Added: Method to reach the pickup on the Screw Attack wall in Aerial Training Site with a Roll Jump (Expert and above).
 
+-   Added: Method to reach the pickup in Abandoned Worksite from the tunnel with a Boost Jump (Advanced and above).
+
+-   Added: Method to bypass the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump (Advanced and above).
+
+-   Added: Methods to reach the pickup in Mining Station B with Space Jump, Screw Attack, and Standable Terrain or after the puzzle with a Bomb Jump (Advanced and above).
+
 -   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
 
 -   Changed: Dark Alpha Splinter no longer strictly requires Power Beam.
+
+-   Changed: Crossing Main Gyro Chamber with Screw Attack before stopping the gyro is now Hypermode (from Expert).
+
+-   Changed: Phazon Grounds and Transport to Agon Wastes (Torvus) Seeker Locks without Seekers are now Expert (from Hypermode).
 
 -   Fixed: Properly handle invalid ammo configurations in preset editor. 
 

@@ -24,6 +24,15 @@ class SafeZoneAddresses:
     increment_health_fmr: int
 
 
+@dataclasses.dataclass(frozen=True)
+class StartingBeamVisorAddresses:
+    player_state_constructor_clean: int
+    player_state_constructor_decode: int
+    health_info_constructor: int
+    enter_morph_ball_state: int
+    start_transition_to_visor: int
+
+
 _PREFERENCES_ORDER = (
     "sound_mode",
     "screen_brightness",
@@ -126,10 +135,10 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
 
         0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
-        *stw(r0, 0x0, r29),                                     # *outBeamAmmoCost = r0
+        *stw(r0, 0x0, r29),  # *outBeamAmmoCost = r0
 
-        *lwz(r10, 0x774, r25),                                  # r10 = get current beam
-        *addi(r10, r10, 0x1),                                   # r10 = r10 + 1
+        *lwz(r10, 0x774, r25),  # r10 = get current beam
+        *addi(r10, r10, 0x1),  # r10 = r10 + 1
         0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
 
         # Power Beam
@@ -155,8 +164,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         *li(r9, ammo_types[3][1]),
 
         # update_out_beam_type
-        *stw(r3, 0x0, r27),                                     # *outBeamAmmoTypeA = r3
-        *stw(r9, 0x0, r28),                                     # *outBeamAmmoTypeB = r9
+        *stw(r3, 0x0, r27),  # *outBeamAmmoTypeA = r3
+        *stw(r9, 0x0, r28),  # *outBeamAmmoTypeB = r9
 
         0x42, 0x80, 0x00, 0x18,  # b body_end
         # jump to the code for getting the charged/combo costs and then check if has ammo
@@ -181,7 +190,44 @@ def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
     dol_file.write(patch_addresses.increment_health_fmr, lfs(f1, offset, r2))
 
 
+def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_items: dict, dol_file: DolFile):
+    visor_order = ["Combat Visor", "Echo Visor", "Scan Visor", "Dark Visor"]
+    beam_order = ["Power Beam", "Dark Beam", "Light Beam", "Annihilator Beam"]
+
+    default_visor = visor_order.index(default_items["visor"])
+    default_beam = beam_order.index(default_items["beam"])
+
+    # Patch CPlayerState constructor with default values
+    dol_file.write_instructions(addresses.player_state_constructor_clean + 0x54, [
+        bl(addresses.health_info_constructor),
+
+        li(r0, default_beam),
+        stw(r0, 0xc, r30),  # xc_currentBeam
+
+        li(r0, default_visor),
+        stw(r0, 0x30, r30),  # x30_currentVisor
+        stw(r0, 0x34, r30),  # x34_transitioningVisor
+
+        li(r3, 0),
+    ])
+
+    # Patch CPlayerState constructor for loading save files
+    dol_file.write_instructions(addresses.player_state_constructor_decode + 0x5C, [
+        li(r0, default_visor),
+        stw(r0, 0x30, r30),
+        stw(r0, 0x34, r30),
+    ])
+
+    # Patch EnterMorphBallState's unconditional call for StartTransitionToVisor, but only if default visor isn't combat
+    if default_visor == 0:
+        patch = [bl(addresses.start_transition_to_visor)]
+    else:
+        patch = [nop()]
+    dol_file.write_instructions(addresses.enter_morph_ball_state + 0xEC, patch)
+
+
 @dataclasses.dataclass(frozen=True)
 class EchoesDolVersion(BasePrimeDolVersion):
     beam_cost_addresses: BeamCostAddresses
     safe_zone: SafeZoneAddresses
+    starting_beam_visor: StartingBeamVisorAddresses

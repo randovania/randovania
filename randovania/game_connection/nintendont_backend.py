@@ -2,10 +2,10 @@ import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
+from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world import World
 
@@ -85,7 +85,10 @@ class RequestBatch:
 
 
 def _was_invalid_address(response: bytes, i: int) -> bool:
-    return not response[i // 8] & (1 << (i % 8))
+    try:
+        return not response[i // 8] & (1 << (i % 8))
+    except IndexError:
+        raise MemoryOperationException("Server response too short for validator bytes")
 
 
 class NintendontBackend(ConnectionBackend):
@@ -116,24 +119,33 @@ class NintendontBackend(ConnectionBackend):
 
         try:
             self._socket_error = None
-            self.logger.info(f"Connecting to {self._ip, self._port}.")
+            self.logger.info(f"Connecting to {self._ip}:{self._port}.")
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self.logger.info(f"Connected.")
 
             # Send API details request
-            writer.write(struct.pack(f">BBBB", 1, 0, 0, 1))
-            await writer.drain()
+            self.logger.info(f"Connection open, requesting API details.")
 
-            response = await reader.read(1024)
+            writer.write(struct.pack(f">BBBB", 1, 0, 0, 1))
+            await asyncio.wait_for(writer.drain(), timeout=30)
+
+            self.logger.debug(f"Waiting for API details response.")
+            response = await asyncio.wait_for(reader.read(1024), timeout=15)
             api_version, max_input, max_output, max_addresses = struct.unpack_from(">IIII", response, 0)
 
+            self.logger.info(f"Remote replied with API level {api_version}, connection successful.")
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return True
 
-        except OSError as e:
+        except (OSError, asyncio.TimeoutError, struct.error) as e:
             self._socket = None
-            self.logger.warning(f"Unable to connect to {self._ip}:{self._port}: {e}")
+            self.logger.warning(f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}")
             self._socket_error = e
+
+    def _disconnect(self):
+        socket = self._socket
+        self._socket = None
+        if socket is not None:
+            socket.writer.close()
 
     def _prepare_requests_for(self, ops: List[MemoryOperation]) -> List[RequestBatch]:
         requests: List[RequestBatch] = []
@@ -194,45 +206,56 @@ class NintendontBackend(ConnectionBackend):
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
-                    response = await self._socket.reader.read(1024)
+                    response = await asyncio.wait_for(self._socket.reader.read(1024), timeout=15)
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
 
-        except OSError as e:
-            self.logger.warning(f"Unable to send {len(requests)} to {self._ip}:{self._port}: {e}")
-            self._socket = None
-            self._socket_error = e
-            raise RuntimeError("Unable to connect") from e
+        except (OSError, asyncio.TimeoutError) as e:
+            if isinstance(e, asyncio.TimeoutError):
+                self.logger.warning(f"Timeout when reading response from {self._ip}")
+                self._socket_error = MemoryOperationException(f"Timeout when reading response")
+            else:
+                self.logger.warning(f"Unable to send {len(requests)} request to {self._ip}:{self._port}: {e}")
+                self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")
+            self._disconnect()
+            raise self._socket_error from e
 
         return all_responses
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         if self._socket is None:
-            raise RuntimeError("Not connected")
-
-        ops_description = '; '.join(str(op) for op in ops)
+            raise MemoryOperationException("Not connected")
 
         requests = self._prepare_requests_for(ops)
         all_responses = await self._send_requests_to_socket(requests)
 
-        result = []
+        result = {}
 
         for request, response in zip(requests, all_responses):
             read_index = request.num_validator_bytes
             for i, op in enumerate(request.ops):
-                if op.read_byte_count is None or _was_invalid_address(response, i):
-                    result.append(None)
+                if op.read_byte_count is None:
+                    continue
+
+                if _was_invalid_address(response, i):
+                    raise MemoryOperationException("Operation tried to read an invalid address")
+
+                split = response[read_index:read_index + op.read_byte_count]
+                if len(split) != op.read_byte_count:
+                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
                 else:
-                    result.append(response[read_index:read_index + op.read_byte_count])
-                    read_index += op.read_byte_count
+                    assert op not in result
+                    result[op] = split
+
+                read_index += op.read_byte_count
 
         return result
 
     async def update(self, dt: float):
         if not self._enabled:
             return
-        
+
         if not await self._connect():
             return
 

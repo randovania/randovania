@@ -65,12 +65,12 @@
          <height>450</height>
         </rect>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QVBoxLayout" name="item_pool_layout">
         <property name="leftMargin">
          <number>0</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="rightMargin">
          <number>0</number>
@@ -78,94 +78,31 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item row="0" column="0" colspan="2">
-         <widget class="QGroupBox" name="item_alternative_box">
+        <item>
+         <widget class="QLabel" name="item_pool_count_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="title">
-           <string>Item Alternatives</string>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
-          <layout class="QVBoxLayout" name="item_alternative_layout"/>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QGroupBox" name="item_pool_box">
-          <property name="toolTipDuration">
-           <number>-1</number>
+          <property name="toolTip">
+           <string>If there are fewer than 119 items, the rest of the item locations will contain Energy Transfer Modules.</string>
           </property>
-          <property name="title">
-           <string>Item Pool</string>
+          <property name="text">
+           <string>Items in pool: #/119</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="1">
-            <widget class="QGroupBox" name="ammo_box">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="title">
-              <string>Ammo</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <layout class="QVBoxLayout" name="ammo_layout">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetMinimumSize</enum>
-              </property>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QGroupBox" name="major_items_box">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="title">
-              <string>Major Items</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <layout class="QGridLayout" name="major_items_layout">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetMinimumSize</enum>
-              </property>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="item_pool_count_label">
-             <property name="toolTip">
-              <string>If there are fewer than 119 items, the rest of the item locations will contain Energy Transfer Modules.</string>
-             </property>
-             <property name="text">
-              <string>Items in pool: #/119</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
-        <item row="2" column="0" colspan="2">
+        <item>
          <widget class="QGroupBox" name="random_starting_box">
           <property name="title">
            <string>Random Starting Items</string>
@@ -175,23 +112,6 @@
             <widget class="QLabel" name="maximum_starting_label">
              <property name="text">
               <string>Start with at most this many items:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="minimum_starting_label">
-             <property name="text">
-              <string>Start with at least this many items:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="minimum_starting_spinbox">
-             <property name="maximum">
-              <number>30</number>
              </property>
             </widget>
            </item>
@@ -207,6 +127,23 @@
            </item>
            <item row="2" column="1">
             <widget class="QSpinBox" name="maximum_starting_spinbox">
+             <property name="maximum">
+              <number>30</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="minimum_starting_label">
+             <property name="text">
+              <string>Start with at least this many items:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="minimum_starting_spinbox">
              <property name="maximum">
               <number>30</number>
              </property>

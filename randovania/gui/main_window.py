@@ -3,6 +3,7 @@ import functools
 import json
 import os
 import platform
+import subprocess
 from functools import partial
 from typing import Optional, List
 
@@ -539,9 +540,15 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _on_menu_action_previously_generated_games(self):
         path = self._options.data_dir.joinpath("game_history")
-        if platform.system() == "Windows":
-            os.startfile(path)
-        else:
+        try:
+            if platform.system() == "Windows":
+                os.startfile(path)
+            elif platform.system() == "Darwin":
+                subprocess.run(["open", path])
+            else:
+                subprocess.run(["xdg-open", path])
+        except OSError:
+            print("Exception thrown :)")
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
                                         QtWidgets.QMessageBox.Ok, self)

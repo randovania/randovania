@@ -790,3 +790,7 @@ def test_create_patcher_file(test_files_dir):
         "always_up_torvus_temple": True,
         "always_up_great_temple": False,
     }
+    assert result["default_items"] == {
+        "visor": "Combat Visor",
+        "beam": "Power Beam",
+    }
