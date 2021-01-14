@@ -18,11 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to reach the pickup in Path of Roots from Torvus Lagoon without Morph Ball (Beginner and above).
 
+-   Added: Method to enter the tunnel in Underground Tunnel to Torvus Temple from Torvus Grove with an Instant Morph (Advanced and above).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
 -   Changed: The item pool tab when customizing presets now can edit major items directly. 
 
--   Changed: Defeating Quadraxis with Power Bombs is now Intermediate (from Beginner).
+-   Changed: Defeating Quadraxis with Power Bombs is now Advanced (from Beginner).
+
+-   Changed: Bypassing the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump is now Expert (from Advanced).
 
 ## [2.3.0] - 2021-01-08
 
