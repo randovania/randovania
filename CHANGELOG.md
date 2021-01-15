@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to enter the tunnel in Underground Tunnel to Torvus Temple from Torvus Grove with an Instant Morph (Advanced and above).
 
+-   Added: Method to reach the halfpipe pickup in Dark Torvus Arena with Space Jump and a Roll Jump (Expert and above).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
 -   Changed: The item pool tab when customizing presets now can edit major items directly. 
