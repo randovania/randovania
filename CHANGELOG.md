@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to reach the halfpipe pickup in Dark Torvus Arena with Space Jump and a Roll Jump (Expert and above).
 
+-   Added: Method to climb to the upper level in Biostorage Station with Bomb Space Jump (Advanced and above).
+
+-   Added: Method to reach the pickup in Grand Windchamber with a Space Jump, Bomb Space Jump and a Scan Dash (Expert and above).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
 -   Changed: The item pool tab when customizing presets now can edit major items directly. 
@@ -29,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Defeating Quadraxis with Power Bombs is now Advanced (from Beginner).
 
 -   Changed: Bypassing the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump is now Expert (from Advanced).
+
+-   Changed: Escaping Hive Temple without Spider Ball is now Expert (from Hypermode).
+
+-   Changed: Bomb Space Jump in Great Bridge/Venemous Pond to reach Abandonded Worksite/Brooding Ground is now Expert (from Hypermode).
+
+-   Changed: Using Seeker Missiles now requires either Combat Visor or Dark Visor.
 
 ## [2.3.0] - 2021-01-08
 
