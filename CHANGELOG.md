@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to climb to the upper level in Biostorage Station with Bomb Space Jump (Advanced and above).
 
--   Added: Method to reach the pickup in Grand Windchamber with a Space Jump, Bomb Space Jump and a Scan Dash (Expert and above).
+-   Added: Method to reach the pickup in Grand Windchamber with a Space Jump, Bomb Space Jump, and a Scan Dash (Expert and above).
 
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
@@ -36,9 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Escaping Hive Temple without Spider Ball is now Expert (from Hypermode).
 
--   Changed: Bomb Space Jump in Great Bridge/Venemous Pond to reach Abandonded Worksite/Brooding Ground is now Expert (from Hypermode).
+-   Changed: Bomb Space Jump in Great Bridge/Venomous Pond to reach Abandonded Worksite/Brooding Ground is now Expert (from Hypermode).
 
 -   Changed: Using Seeker Missiles now requires either Combat Visor or Dark Visor.
+
+-   Changed: Bomb Slots without Bombs in Sand Processing, Main Gyro Chamber, and Vault are now Advanced (from Expert).
 
 ## [2.3.0] - 2021-01-08
 
