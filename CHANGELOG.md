@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to reach the pickup in Grand Windchamber with a Space Jump, Bomb Space Jump, and a Scan Dash (Expert and above).
 
+-   Added: Method to climb Mining Station B with Space Jump and a Slope Jump (Expert and above).
+
+-   Added: Method to reach the portal in Mining Station B with Space Jump, Scan Visor, and Dashing for Single Room OoB (Expert and above).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
 -   Changed: The item pool tab when customizing presets now can edit major items directly. 
