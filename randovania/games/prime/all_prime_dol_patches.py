@@ -40,10 +40,9 @@ class BasePrimeDolVersion(DolVersion):
     dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
-def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
-    end = patch_addresses.update_hint_state + 24 * 4
-
-    patch = [
+def remote_execution_patch_start(start_address: int):
+    return_code = remote_execution_patch_end()
+    patch_intro = [
         # setup stack
         stwu(r1, -0x2C, r1),
         mfspr(r0, LR),
@@ -52,12 +51,44 @@ def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol
         # return if displayed
         lbz(r4, 0x2, r3),
         cmpwi(r4, 0x0),
-        beq(end),
+        bne((len(return_code) + 1) * 4, relative=True),
+
+        # clean return if flag is not set
+        *return_code,
 
         # set displayed
         li(r6, 0x0),
         stb(r6, 0x2, r3),
+    ]
+    patch_sync = [
+        sync(),
+        icbi(0, 4),
+        isync(),
+    ]
 
+    patch = [
+        *patch_intro,
+        *custom_ppc.load_unsigned_32bit(r4, 0),
+        *patch_sync,
+    ]
+    return [
+        *patch_intro,
+        *custom_ppc.load_unsigned_32bit(r4, start_address + len(patch) * 4),
+        *patch_sync,
+    ]
+
+
+def remote_execution_patch_end():
+    return [
+        lwz(r0, 0x30, r1),
+        mtspr(LR, r0),
+        addi(r1, r1, 0x2C),
+        blr(),
+    ]
+
+
+def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses):
+    return [
         # setup CHUDMemoParms
         lis(r5, 0x4100),  # 8.0f
         li(r6, 0x0),
@@ -78,12 +109,14 @@ def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol
         # r4 = wstring
         addi(r4, r1, 0x10),
         bl(patch_addresses.display_hud_memo),
+    ]
 
-        # cleanup
-        lwz(r0, 0x30, r1),
-        mtspr(LR, r0),
-        addi(r1, r1, 0x2C),
-        blr(),
+
+def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
+    patch = [
+        *remote_execution_patch_start(patch_addresses.update_hint_state),
+        *call_display_hud_patch(patch_addresses),
+        *remote_execution_patch_end(),
     ]
     dol_file.write_instructions(patch_addresses.update_hint_state, patch)
 
