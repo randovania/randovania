@@ -70,18 +70,15 @@ def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol
 
         # setup wstring
         addi(r3, r1, 0x1C),
-        lis(r4, patch_addresses.message_receiver_string_ref >> 16),  # string pointer
-        ori(r4, r4, patch_addresses.message_receiver_string_ref & 0xFFFF),
-        lis(r12, patch_addresses.wstring_constructor >> 16),  # wstring_l constructor
-        ori(r12, r12, patch_addresses.wstring_constructor & 0xFFFF),
-        mtspr(CTR, r12),
+        *custom_ppc.load_unsigned_32bit(r4, patch_addresses.message_receiver_string_ref),
+        *custom_ppc.load_unsigned_32bit(r12, patch_addresses.wstring_constructor),
+        mtctr(r12),
         bctrl(),  # rstl::wstring_l
 
         # r4 = wstring
         addi(r4, r1, 0x10),
-        lis(r12, patch_addresses.display_hud_memo >> 16),  # DisplayHudMemo address
-        ori(r12, r12, patch_addresses.display_hud_memo & 0xFFFF),
-        mtspr(CTR, r12),
+        *custom_ppc.load_unsigned_32bit(r12, patch_addresses.display_hud_memo),
+        mtctr(r12),
         bctrl(),  # CSamusHud::DisplayHudMemo
 
         # cleanup
