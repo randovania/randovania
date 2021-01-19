@@ -34,6 +34,11 @@ _JOKE_HINTS = [
     "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
     "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
     "A really important item can be found at - (transmission ends)",
+    "Did you know that Bigfoot and Santa Claus exist in the Metroid Prime canon?",
+    "I hear. Them. Everywhere. They're coming. Can't sleep. Ever. They'll eat me. Eat.",
+    "Space Pirates, strangely, dislike theft.",
+    "If Metroid Prime 2: Echoes is so good, why isn't there a Metroid Prime 2: Echoes 2?",
+    "Power Bomb Expansions are just space hamburgers.",
 ]
 
 _DET_AN = [
