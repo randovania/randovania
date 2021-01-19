@@ -54,6 +54,10 @@ def test_cmpwi_b():
     assert list(ppc.cmpwi(ppc.r4, -1)) == [0x2c, 0x04, 0xFF, 0xFF]
 
 
+def test_b():
+    assert list(ppc.b(0x80085760)(0x80085760 + 0x9C)) == [0x4b, 0xff, 0xff, 0x64]
+
+
 def test_bl():
     assert list(ppc.bl(0x80085760)(0x80085760 + 0x9C)) == [0x4b, 0xff, 0xff, 0x65]
 
@@ -68,6 +72,10 @@ def test_bne():
 
 def test_blr():
     assert list(ppc.blr()) == [0x4e, 0x80, 0x00, 0x20]
+
+
+def test_bctrl():
+    assert list(ppc.bctrl()) == [0x4E, 0x80, 0x04, 0x21]
 
 
 def test_li():
