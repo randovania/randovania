@@ -41,7 +41,8 @@ class BasePrimeDolVersion(DolVersion):
 
 
 def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
-    end = patch_addresses.update_hint_state + 0x74
+    end = patch_addresses.update_hint_state + 24 * 4
+
     patch = [
         # setup stack
         stwu(r1, -0x2C, r1),
@@ -59,6 +60,7 @@ def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol
 
         # setup CHUDMemoParms
         lis(r5, 0x4100),  # 8.0f
+        li(r6, 0x0),
         li(r7, 0x1),
         li(r9, 0x9),
         stw(r5, 0x10, r1),  # display time (seconds)
@@ -71,15 +73,11 @@ def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol
         # setup wstring
         addi(r3, r1, 0x1C),
         *custom_ppc.load_unsigned_32bit(r4, patch_addresses.message_receiver_string_ref),
-        *custom_ppc.load_unsigned_32bit(r12, patch_addresses.wstring_constructor),
-        mtctr(r12),
-        bctrl(),  # rstl::wstring_l
+        bl(patch_addresses.wstring_constructor),
 
         # r4 = wstring
         addi(r4, r1, 0x10),
-        *custom_ppc.load_unsigned_32bit(r12, patch_addresses.display_hud_memo),
-        mtctr(r12),
-        bctrl(),  # CSamusHud::DisplayHudMemo
+        bl(patch_addresses.display_hud_memo),
 
         # cleanup
         lwz(r0, 0x30, r1),

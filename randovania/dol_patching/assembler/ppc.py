@@ -169,19 +169,29 @@ def cmpwi(input_register: GeneralRegister, literal: int):
                                 (literal, 16, True)))
 
 
-def bl(address_or_symbol: int):
-    """
-    jumps to the given address
-    """
-
+def _jump_to_relative_address(address_or_symbol: int, link: bool):
     def with_inc_address(instruction_address: int):
         jump_offset = (address_or_symbol - instruction_address) // 4
         return Instruction.compose(((18, 6, False),
                                     (jump_offset, 24, True),
                                     (0, 1, False),
-                                    (1, 1, False)))
+                                    (int(link), 1, False)))
 
     return with_inc_address
+
+
+def b(address_or_symbol: int):
+    """
+    jumps to the given address, not setting the link register
+    """
+    return _jump_to_relative_address(address_or_symbol, False)
+
+
+def bl(address_or_symbol: int):
+    """
+    jumps to the given address, setting the link register
+    """
+    return _jump_to_relative_address(address_or_symbol, True)
 
 
 def _conditional_branch(address_or_symbol: int, bo: int, bi: int):
@@ -230,11 +240,25 @@ def bclr(bo, bi, bh):
 
 
 def blr():
+    """Branches to the address set by the link register. Does not set the link register."""
     return bclr(20, 0, 0)
 
 
+def bcctrl(bo, bi, bh):
+    """Branch conditionally. Sets the link register."""
+    lk = 1
+    return Instruction.compose(((19, 6, False),
+                                (bo, 5, False),
+                                (bi, 5, False),
+                                (0, 3, False),
+                                (bh, 2, False),
+                                (528, 10, False),
+                                (lk, 1, False)))
+
+
 def bctrl():
-    return Instruction(0x4E800421)
+    """Branches always. Sets the link register."""
+    return bcctrl(20, 0, 0)
 
 
 def _store(input_register: Register, offset: int, output_register: GeneralRegister, op_code: int):
