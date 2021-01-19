@@ -1,6 +1,7 @@
 import dataclasses
 import struct
 
+from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
@@ -40,94 +41,56 @@ class BasePrimeDolVersion(DolVersion):
 
 
 def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
-    message_receiver_string_ref = struct.pack(">I", patch_addresses.message_receiver_string_ref)
-    address_wstring_constructor = struct.pack(">I", patch_addresses.wstring_constructor)
-    address_display_hud_memo = struct.pack(">I", patch_addresses.display_hud_memo)
+    end = patch_addresses.update_hint_state + 0x74
+    patch = [
+        # setup stack
+        stwu(r1, -0x2C, r1),
+        mfspr(r0, LR),
+        stw(r0, 0x30, r1),
 
-    # setup stack
-    # stwu r1,-0x2C(r1)
-    # mfspr r0,LR
-    # stw r0,0x30(r1)
+        # return if displayed
+        lbz(r4, 0x2, r3),
+        cmpwi(r4, 0x0),
+        beq(end),
 
-    # # return if displayed
-    # lbz r4,0x2(r3)
-    # cmpwi r4,0x0
-    # beq end
+        # set displayed
+        li(r6, 0x0),
+        stb(r6, 0x2, r3),
 
-    # # otherwise set displayed
-    # li r6,0x0
-    # stb r6,0x2(r3)
+        # setup CHUDMemoParms
+        lis(r5, 0x4100),  # 8.0f
+        li(r7, 0x1),
+        li(r9, 0x9),
+        stw(r5, 0x10, r1),  # display time (seconds)
+        stb(r7, 0x14, r1),  # clear memo window
+        stb(r6, 0x15, r1),  # fade out only
+        stb(r6, 0x16, r1),  # hint memo
+        stb(r7, 0x17, r1),  # fade in text
+        stw(r9, 0x18, r1),  # unk
 
-    # # setup CHUDMemoParms
-    # lis r5,0x4100 # 8.0f
-    # li r7,0x1
-    # li r9,0x9
-    # stw r5,0x10(r1) # display time (seconds)
-    # stb r7,0x14(r1) # clear memo window
-    # stb r6,0x15(r1) # fade out only
-    # stb r6,0x16(r1) # hint memo
-    # stb r7,0x17(r1) # fade in text
-    # stw r9,0x18(r1) # unk
+        # setup wstring
+        addi(r3, r1, 0x1C),
+        lis(r4, patch_addresses.message_receiver_string_ref >> 16),  # string pointer
+        ori(r4, r4, patch_addresses.message_receiver_string_ref & 0xFFFF),
+        lis(r12, patch_addresses.wstring_constructor >> 16),  # wstring_l constructor
+        ori(r12, r12, patch_addresses.wstring_constructor & 0xFFFF),
+        mtspr(CTR, r12),
+        bctrl(),  # rstl::wstring_l
 
-    # # setup wstring
-    # addi r3,r1,0x1C
-    # lis r4,0x803a      # string pointer
-    # ori r4,r4,0x6380
-    # lis r12,0x802f     # wstring_l constructor
-    # ori r12,r12,0xf3dc
-    # mtspr CTR,r12
-    # bctrl # rstl::wstring_l
+        # r4 = wstring
+        addi(r4, r1, 0x10),
+        lis(r12, patch_addresses.display_hud_memo >> 16),  # DisplayHudMemo address
+        ori(r12, r12, patch_addresses.display_hud_memo & 0xFFFF),
+        mtspr(CTR, r12),
+        bctrl(),  # CSamusHud::DisplayHudMemo
 
-    # # r3 = wstring
-    # addi r4,r1,0x10
-    # lis r12,0x8006     # DisplayHudMemo address
-    # ori r12,r12,0xb3c8
-    # mtspr CTR,r12
-    # bctrl # CSamusHud::DisplayHudMemo
-
-    # end:
-    # lwz r0,0x30(r1)
-    # mtspr LR,r0
-    # addi r1,r1,0x2C
-    # blr
-
-    message_receiver_patch = [
-        0x94, 0x21, 0xFF, 0xD4,
-        0x7C, 0x08, 0x02, 0xA6,
-        0x90, 0x01, 0x00, 0x30,
-        0x88, 0x83, 0x00, 0x02,
-        0x2C, 0x04, 0x00, 0x00,
-        0x41, 0x82, 0x00, 0x60,
-        0x38, 0xC0, 0x00, 0x00,
-        0x98, 0xC3, 0x00, 0x02,
-        0x3C, 0xA0, 0x41, 0x00,
-        0x38, 0xE0, 0x00, 0x01,
-        0x39, 0x20, 0x00, 0x09,
-        0x90, 0xA1, 0x00, 0x10,
-        0x98, 0xE1, 0x00, 0x14,
-        0x98, 0xC1, 0x00, 0x15,
-        0x98, 0xC1, 0x00, 0x16,
-        0x98, 0xE1, 0x00, 0x17,
-        0x91, 0x21, 0x00, 0x18,
-        0x38, 0x61, 0x00, 0x1C,
-        0x3C, 0x80, message_receiver_string_ref[0], message_receiver_string_ref[1],
-        0x60, 0x84, message_receiver_string_ref[2], message_receiver_string_ref[3],
-        0x3D, 0x80, address_wstring_constructor[0], address_wstring_constructor[1],
-        0x61, 0x8C, address_wstring_constructor[2], address_wstring_constructor[3],
-        0x7D, 0x89, 0x03, 0xA6,
-        0x4E, 0x80, 0x04, 0x21,
-        0x38, 0x81, 0x00, 0x10,
-        0x3D, 0x80, address_display_hud_memo[0], address_display_hud_memo[1],
-        0x61, 0x8C, address_display_hud_memo[2], address_display_hud_memo[3],
-        0x7D, 0x89, 0x03, 0xA6,
-        0x4E, 0x80, 0x04, 0x21,
-        0x80, 0x01, 0x00, 0x30,
-        0x7C, 0x08, 0x03, 0xA6,
-        0x38, 0x21, 0x00, 0x2C,
-        0x4E, 0x80, 0x00, 0x20,
+        # cleanup
+        lwz(r0, 0x30, r1),
+        mtspr(LR, r0),
+        addi(r1, r1, 0x2C),
+        blr(),
     ]
-
-    dol_file.write(patch_addresses.update_hint_state, message_receiver_patch)
+    dol_file.write_instructions(patch_addresses.update_hint_state, patch)
 
 
 def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
