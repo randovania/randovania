@@ -194,7 +194,7 @@ def bl(address_or_symbol: int):
     return _jump_to_relative_address(address_or_symbol, True)
 
 
-def _conditional_branch(address_or_symbol: int, bo: int, bi: int):
+def _conditional_branch(bo: int, bi: int, address_or_symbol: int, relative: bool = False):
     # https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_ext_br_mnem_bofield.html#idalangref_ext_br_mnem_bofield__row-d2e17648
 
     def with_inc_address(instruction_address: int):
@@ -206,25 +206,28 @@ def _conditional_branch(address_or_symbol: int, bo: int, bi: int):
                                     (0, 1, False),
                                     (0, 1, False)))
 
-    return with_inc_address
+    if relative:
+        return with_inc_address(0)
+    else:
+        return with_inc_address
 
 
-def beq(address_or_symbol: int):
+def beq(address_or_symbol: int, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
     bo = 12  # Branch if condition true (BO=12)
     bi = 2  # condition: equals
-    return _conditional_branch(address_or_symbol, bo, bi)
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
-def bne(address_or_symbol: int):
+def bne(address_or_symbol: int, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
     bo = 4  # Branch if condition true (BO=4)
     bi = 2  # condition: equals
-    return _conditional_branch(address_or_symbol, bo, bi)
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
 def bclr(bo, bi, bh):
