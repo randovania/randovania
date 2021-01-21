@@ -82,7 +82,7 @@ def test_create_remote_execution_body(string_display):
 
 def test_remote_execution_patch_start(string_display):
     # Run
-    patch = all_prime_dol_patches.remote_execution_patch_start(string_display.update_hint_state)
+    patch = all_prime_dol_patches.remote_execution_patch_start()
     data = bytes(assembler.assemble_instructions(string_display.update_hint_state, patch))
 
     # Assert
