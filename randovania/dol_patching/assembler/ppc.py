@@ -1,6 +1,6 @@
 import dataclasses as _dataclasses
 import struct as _struct
-from typing import Optional
+from typing import Optional, Callable, Tuple
 
 
 def _pack(*args):
@@ -20,26 +20,46 @@ class FloatRegister(Register):
     pass
 
 
-class Instruction:
-    value: int
+class BaseInstruction:
     label: Optional[str]
 
-    def __init__(self, value: int):
-        self.value = value
+    def __init__(self):
         self.label = None
 
-    def __iter__(self):
+    def with_label(self, label: str) -> "BaseInstruction":
+        self.label = label
+        return self
+
+    def bytes_for(self, address: int):
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        raise NotImplementedError()
+
+    @property
+    def byte_count(self):
+        raise NotImplementedError()
+
+
+class Instruction(BaseInstruction):
+    value: int
+
+    def __init__(self, value: int):
+        super().__init__()
+        self.value = value
+
+    def bytes_for(self, address: int):
         return iter(_pack(">I", self.value))
 
     def __eq__(self, other):
         return isinstance(other, Instruction) and self.value == other.value
 
-    def with_label(self, label: str) -> "Instruction":
-        self.label = label
-        return self
+    @property
+    def byte_count(self):
+        return 4
 
     @classmethod
-    def compose(cls, data):
+    def compose(cls, data: Tuple[Tuple[int, int, bool], ...]):
         value = 0
         bits_left = 32
         for item, bit_size, signed in data:
@@ -54,6 +74,22 @@ class Instruction:
 
         assert bits_left == 0
         return cls(value)
+
+
+class AddressDependantInstruction(BaseInstruction):
+    def __init__(self, factory: Callable[[int], Tuple[Tuple[int, int, bool], ...]]):
+        super().__init__()
+        self.factory = factory
+
+    def bytes_for(self, address: int):
+        yield from Instruction.compose(self.factory(address)).bytes_for(address)
+
+    def __eq__(self, other):
+        return isinstance(other, AddressDependantInstruction) and self.factory == other.factory
+
+    @property
+    def byte_count(self):
+        return 4
 
 
 r0 = GeneralRegister(0)
@@ -174,12 +210,12 @@ def cmpwi(input_register: GeneralRegister, literal: int):
 def _jump_to_relative_address(address_or_symbol: int, link: bool):
     def with_inc_address(instruction_address: int):
         jump_offset = (address_or_symbol - instruction_address) // 4
-        return Instruction.compose(((18, 6, False),
-                                    (jump_offset, 24, True),
-                                    (0, 1, False),
-                                    (int(link), 1, False)))
+        return (((18, 6, False),
+                 (jump_offset, 24, True),
+                 (0, 1, False),
+                 (int(link), 1, False)))
 
-    return with_inc_address
+    return AddressDependantInstruction(with_inc_address)
 
 
 def b(address_or_symbol: int):
@@ -201,17 +237,17 @@ def _conditional_branch(bo: int, bi: int, address_or_symbol: int, relative: bool
 
     def with_inc_address(instruction_address: int):
         jump_offset = (address_or_symbol - instruction_address) // 4
-        return Instruction.compose(((16, 6, False),
-                                    (bo, 5, False),
-                                    (bi, 5, False),
-                                    (jump_offset, 14, True),
-                                    (0, 1, False),
-                                    (0, 1, False)))
+        return (((16, 6, False),
+                 (bo, 5, False),
+                 (bi, 5, False),
+                 (jump_offset, 14, True),
+                 (0, 1, False),
+                 (0, 1, False)))
 
     if relative:
-        return with_inc_address(0)
+        return Instruction.compose(with_inc_address(0))
     else:
-        return with_inc_address
+        return AddressDependantInstruction(with_inc_address)
 
 
 def beq(address_or_symbol: int, relative: bool = False):

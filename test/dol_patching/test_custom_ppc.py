@@ -16,5 +16,5 @@ def test_load_unsigned_32bit_invalid(value):
 def test_load_unsigned_32bit_valid(value, expected):
     codes = []
     for instruction in custom_ppc.load_unsigned_32bit(ppc.r1, value):
-        codes.extend(instruction)
+        codes.extend(instruction.bytes_for(0))
     assert bytes(codes) == expected
