@@ -1,6 +1,6 @@
 import dataclasses
 import struct
-from typing import List, Tuple
+from typing import List
 
 from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import custom_ppc
@@ -70,12 +70,12 @@ def remote_execution_patch_start(start_address: int):
 
     patch = [
         *patch_intro,
-        *custom_ppc.load_unsigned_32bit(r4, 0),
+        custom_ppc.load_unsigned_32bit(r4, 0),
         *patch_sync,
     ]
     return [
         *patch_intro,
-        *custom_ppc.load_unsigned_32bit(r4, start_address + len(patch) * 4),
+        custom_ppc.load_unsigned_32bit(r4, start_address + assembler.byte_count(patch)),
         *patch_sync,
     ]
 
@@ -105,7 +105,7 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses):
 
         # setup wstring
         addi(r3, r1, 0x1C),
-        *custom_ppc.load_unsigned_32bit(r4, patch_addresses.message_receiver_string_ref),
+        custom_ppc.load_unsigned_32bit(r4, patch_addresses.message_receiver_string_ref),
         bl(patch_addresses.wstring_constructor),
 
         # r4 = CHUDMemoParms
@@ -118,13 +118,13 @@ def give_item_patch(patch_addresses: StringDisplayPatchAddresses, item_id: int, 
     add_power_up = 0x800858f0
     incr_pickup = 0x80085760
     return [
-        *custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
+        custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
         lwz(r3, 0x150c, r3),
         li(r4, item_id),
         li(r5, quantity),
         bl(add_power_up),
 
-        *custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
+        custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
         lwz(r3, 0x150c, r3),
         li(r4, item_id),
         li(r5, quantity),
@@ -146,18 +146,20 @@ def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
     Return the address and the bytes for executing the given instructions via remote code execution.
     """
     update_hint_state = patch_addresses.update_hint_state
-    max_instruction_count = 74
+    max_bytes_count = 296
 
     remote_start_instructions = remote_execution_patch_start(update_hint_state)
+    remote_start_byte_count = assembler.byte_count(remote_start_instructions)
+
+    body_address = update_hint_state + remote_start_byte_count
     body_instructions = [*instructions, *remote_execution_patch_end()]
+    body_bytes = bytes(assembler.assemble_instructions(body_address, body_instructions))
 
-    if len(body_instructions) > max_instruction_count - len(remote_start_instructions):
-        raise ValueError(f"Received {len(body_instructions)} instructions, "
-                         f"but limit is {max_instruction_count - len(remote_start_instructions)}.")
+    if len(body_bytes) > max_bytes_count - remote_start_byte_count:
+        raise ValueError(f"Received {len(body_instructions)} instructions with total {len(body_bytes)} bytes, "
+                         f"but limit is {max_bytes_count - remote_start_byte_count}.")
 
-    patch_address = update_hint_state + len(remote_start_instructions) * 4
-    patch_bytes = bytes(assembler.assemble_instructions(patch_address, body_instructions))
-    return patch_address, patch_bytes
+    return body_address, body_bytes
 
 
 def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
