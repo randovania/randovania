@@ -15,44 +15,22 @@ def dolphin_backend():
     return backend
 
 
-@pytest.mark.parametrize("depth", [0, 1, 2, 3, 4])
+@pytest.mark.parametrize("depth", [0, 1, 2, 3])
 @pytest.mark.asyncio
 async def test_update(backend, depth: int):
     # Setup
-    backend._ensure_hooked = MagicMock(return_value=depth == 0)
-    backend._identify_game = AsyncMock(return_value=depth > 1)
-    backend._send_message_from_queue = AsyncMock()
-    backend._update_current_world = AsyncMock()
-    backend._get_inventory = AsyncMock()
-    backend._check_for_collected_index = AsyncMock()
-    backend._world = MagicMock() if depth > 2 else None
-    backend._checking_for_collected_index = depth > 3
-    backend._inventory = None
+    backend._enabled = depth > 0
+    backend._ensure_hooked = MagicMock(return_value=depth < 1)
+    backend._identify_game = AsyncMock(return_value=depth > 2)
+    backend._interact_with_game = AsyncMock()
 
     # Run
     await backend.update(1)
 
     # Assert
-    backend._ensure_hooked.assert_called_once_with()
-    backend._identify_game.assert_has_awaits([call()] if depth > 0 else [])
-    if depth > 1:
-        backend._update_current_world.assert_awaited_once_with()
-    else:
-        backend._update_current_world.assert_not_awaited()
-
-    if depth > 2:
-        backend._send_message_from_queue.assert_awaited_once_with(1)
-        backend._get_inventory.assert_awaited_once_with()
-        assert backend._inventory is backend._get_inventory.return_value
-        if depth > 3:
-            backend._check_for_collected_index.assert_awaited_once_with()
-        else:
-            backend._check_for_collected_index.assert_not_awaited()
-    else:
-        backend._send_message_from_queue.assert_not_awaited()
-        backend._get_inventory.assert_not_awaited()
-        backend._check_for_collected_index.assert_not_awaited()
-        assert backend._inventory is None
+    backend._ensure_hooked.assert_has_calls([call()] if depth > 0 else [])
+    backend._identify_game.assert_has_awaits([call()] if depth > 1 else [])
+    backend._interact_with_game.assert_has_awaits([call(1)] if depth > 2 else [])
 
 
 def test_current_status_disconnected(backend):

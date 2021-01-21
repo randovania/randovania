@@ -201,7 +201,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == [{'message': 'Received A from Other Name', 'pickup': '0oLFk0Du'}]
+    assert result == [{'provider_name': 'Other Name', 'pickup': '6c8P51ON~'}]
 
 
 @patch("flask_socketio.emit", autospec=True)

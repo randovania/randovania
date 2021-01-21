@@ -352,6 +352,25 @@ def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> 
     return value
 
 
+def encode_bytes(b: bytes):
+    yield from encode_int_with_limits(len(b), (8, 32, 128))
+    for item in b:
+        yield item, 256
+
+
+def decode_bytes(decoder: BitPackDecoder) -> bytes:
+    size = decode_int_with_limits(decoder, (8, 32, 128))
+    return bytes(decoder.decode(*([256] * size)))
+
+
+def encode_string(s: str):
+    yield from encode_bytes(s.encode("utf-8"))
+
+
+def decode_string(decoder: BitPackDecoder) -> str:
+    return decode_bytes(decoder).decode("utf-8")
+
+
 def encode_bool(value: bool) -> Iterator[Tuple[int, int]]:
     yield int(value), 2
 

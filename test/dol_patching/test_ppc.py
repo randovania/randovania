@@ -38,6 +38,10 @@ def test_or():
     assert list(ppc.or_(ppc.r31, ppc.r3, ppc.r3).bytes_for(0)) == [124, 127, 27, 120]
 
 
+def test_lmw():
+    assert list(ppc.lmw(ppc.r25, 0x774, ppc.r25).bytes_for(0)) == [187, 57, 7, 116]
+
+
 def test_lwz():
     assert list(ppc.lwz(ppc.r10, 0x774, ppc.r25).bytes_for(0)) == [0x81, 0x59, 0x07, 0x74]
 
@@ -84,6 +88,10 @@ def test_li():
 
 def test_stwu():
     assert list(ppc.stwu(ppc.r1, -0x2C, ppc.r1).bytes_for(0)) == [0x94, 0x21, 0xff, 0xd4]
+
+
+def test_stmw():
+    assert list(ppc.stmw(ppc.r25, -0x2C, ppc.r1).bytes_for(0)) == [191, 33, 255, 212]
 
 
 def test_sync():
