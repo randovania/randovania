@@ -1,6 +1,6 @@
 import dataclasses as _dataclasses
 import struct as _struct
-from typing import Optional
+from typing import Optional, Callable, Tuple
 
 
 def _pack(*args):
@@ -20,26 +20,46 @@ class FloatRegister(Register):
     pass
 
 
-class Instruction:
-    value: int
+class BaseInstruction:
     label: Optional[str]
 
-    def __init__(self, value: int):
-        self.value = value
+    def __init__(self):
         self.label = None
 
-    def __iter__(self):
+    def with_label(self, label: str) -> "BaseInstruction":
+        self.label = label
+        return self
+
+    def bytes_for(self, address: int):
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        raise NotImplementedError()
+
+    @property
+    def byte_count(self):
+        raise NotImplementedError()
+
+
+class Instruction(BaseInstruction):
+    value: int
+
+    def __init__(self, value: int):
+        super().__init__()
+        self.value = value
+
+    def bytes_for(self, address: int):
         return iter(_pack(">I", self.value))
 
     def __eq__(self, other):
         return isinstance(other, Instruction) and self.value == other.value
 
-    def with_label(self, label: str) -> "Instruction":
-        self.label = label
-        return self
+    @property
+    def byte_count(self):
+        return 4
 
     @classmethod
-    def compose(cls, data):
+    def compose(cls, data: Tuple[Tuple[int, int, bool], ...]):
         value = 0
         bits_left = 32
         for item, bit_size, signed in data:
@@ -54,6 +74,22 @@ class Instruction:
 
         assert bits_left == 0
         return cls(value)
+
+
+class AddressDependantInstruction(BaseInstruction):
+    def __init__(self, factory: Callable[[int], Tuple[Tuple[int, int, bool], ...]]):
+        super().__init__()
+        self.factory = factory
+
+    def bytes_for(self, address: int):
+        yield from Instruction.compose(self.factory(address)).bytes_for(address)
+
+    def __eq__(self, other):
+        return isinstance(other, AddressDependantInstruction) and self.factory == other.factory
+
+    @property
+    def byte_count(self):
+        return 4
 
 
 r0 = GeneralRegister(0)
@@ -79,6 +115,8 @@ r31 = GeneralRegister(31)
 
 f0 = FloatRegister(0)
 f1 = FloatRegister(1)
+f2 = FloatRegister(2)
+f3 = FloatRegister(3)
 
 # Special Registers
 LR = 8
@@ -169,52 +207,65 @@ def cmpwi(input_register: GeneralRegister, literal: int):
                                 (literal, 16, True)))
 
 
-def bl(address_or_symbol: int):
-    """
-    jumps to the given address
-    """
-
+def _jump_to_relative_address(address_or_symbol: int, link: bool):
     def with_inc_address(instruction_address: int):
         jump_offset = (address_or_symbol - instruction_address) // 4
-        return Instruction.compose(((18, 6, False),
-                                    (jump_offset, 24, True),
-                                    (0, 1, False),
-                                    (1, 1, False)))
+        return (((18, 6, False),
+                 (jump_offset, 24, True),
+                 (0, 1, False),
+                 (int(link), 1, False)))
 
-    return with_inc_address
+    return AddressDependantInstruction(with_inc_address)
 
 
-def _conditional_branch(address_or_symbol: int, bo: int, bi: int):
+def b(address_or_symbol: int):
+    """
+    jumps to the given address, not setting the link register
+    """
+    return _jump_to_relative_address(address_or_symbol, False)
+
+
+def bl(address_or_symbol: int):
+    """
+    jumps to the given address, setting the link register
+    """
+    return _jump_to_relative_address(address_or_symbol, True)
+
+
+def _conditional_branch(bo: int, bi: int, address_or_symbol: int, relative: bool = False):
     # https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_ext_br_mnem_bofield.html#idalangref_ext_br_mnem_bofield__row-d2e17648
 
     def with_inc_address(instruction_address: int):
         jump_offset = (address_or_symbol - instruction_address) // 4
-        return Instruction.compose(((16, 6, False),
-                                    (bo, 5, False),
-                                    (bi, 5, False),
-                                    (jump_offset, 14, True),
-                                    (0, 1, False),
-                                    (0, 1, False)))
+        return (((16, 6, False),
+                 (bo, 5, False),
+                 (bi, 5, False),
+                 (jump_offset, 14, True),
+                 (0, 1, False),
+                 (0, 1, False)))
 
-    return with_inc_address
+    if relative:
+        return Instruction.compose(with_inc_address(0))
+    else:
+        return AddressDependantInstruction(with_inc_address)
 
 
-def beq(address_or_symbol: int):
+def beq(address_or_symbol: int, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
     bo = 12  # Branch if condition true (BO=12)
     bi = 2  # condition: equals
-    return _conditional_branch(address_or_symbol, bo, bi)
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
-def bne(address_or_symbol: int):
+def bne(address_or_symbol: int, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
     bo = 4  # Branch if condition true (BO=4)
     bi = 2  # condition: equals
-    return _conditional_branch(address_or_symbol, bo, bi)
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
 def bclr(bo, bi, bh):
@@ -230,11 +281,25 @@ def bclr(bo, bi, bh):
 
 
 def blr():
+    """Branches to the address set by the link register. Does not set the link register."""
     return bclr(20, 0, 0)
 
 
+def bcctrl(bo, bi, bh):
+    """Branch conditionally. Sets the link register."""
+    lk = 1
+    return Instruction.compose(((19, 6, False),
+                                (bo, 5, False),
+                                (bi, 5, False),
+                                (0, 3, False),
+                                (bh, 2, False),
+                                (528, 10, False),
+                                (lk, 1, False)))
+
+
 def bctrl():
-    return Instruction(0x4E800421)
+    """Branches always. Sets the link register."""
+    return bcctrl(20, 0, 0)
 
 
 def _store(input_register: Register, offset: int, output_register: GeneralRegister, op_code: int):

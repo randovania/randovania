@@ -135,37 +135,37 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
 
         0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
-        *stw(r0, 0x0, r29),  # *outBeamAmmoCost = r0
+        *stw(r0, 0x0, r29).bytes_for(0),  # *outBeamAmmoCost = r0
 
-        *lwz(r10, 0x774, r25),  # r10 = get current beam
-        *addi(r10, r10, 0x1),  # r10 = r10 + 1
+        *lwz(r10, 0x774, r25).bytes_for(0),  # r10 = get current beam
+        *addi(r10, r10, 0x1).bytes_for(0),  # r10 = r10 + 1
         0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
 
         # Power Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[0][0]),
-        *li(r9, ammo_types[0][1]),
+        *li(r3, ammo_types[0][0]).bytes_for(0),
+        *li(r9, ammo_types[0][1]).bytes_for(0),
         0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
 
         # Dark Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[1][0]),
-        *li(r9, ammo_types[1][1]),
+        *li(r3, ammo_types[1][0]).bytes_for(0),
+        *li(r9, ammo_types[1][1]).bytes_for(0),
         0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
 
         # Light Beam
         0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[2][0]),
-        *li(r9, ammo_types[2][1]),
+        *li(r3, ammo_types[2][0]).bytes_for(0),
+        *li(r9, ammo_types[2][1]).bytes_for(0),
         0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
 
         # Annihilator Beam
-        *li(r3, ammo_types[3][0]),
-        *li(r9, ammo_types[3][1]),
+        *li(r3, ammo_types[3][0]).bytes_for(0),
+        *li(r9, ammo_types[3][1]).bytes_for(0),
 
         # update_out_beam_type
-        *stw(r3, 0x0, r27),  # *outBeamAmmoTypeA = r3
-        *stw(r9, 0x0, r28),  # *outBeamAmmoTypeB = r9
+        *stw(r3, 0x0, r27).bytes_for(0),  # *outBeamAmmoTypeA = r3
+        *stw(r9, 0x0, r28).bytes_for(0),  # *outBeamAmmoTypeB = r9
 
         0x42, 0x80, 0x00, 0x18,  # b body_end
         # jump to the code for getting the charged/combo costs and then check if has ammo

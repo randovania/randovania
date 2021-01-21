@@ -4,6 +4,7 @@ import logging
 import struct
 from typing import Optional, List, Dict
 
+from randovania.dol_patching import assembler
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
 from randovania.game_description import data_reader
@@ -13,7 +14,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher, default_data
+from randovania.games.prime import dol_patcher, default_data, all_prime_dol_patches
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
@@ -431,10 +432,18 @@ class ConnectionBackend(ConnectionBase):
             num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
             encoded_message += b"\x00" * num_to_align
 
+        patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
+            self.patches.string_display,
+            all_prime_dol_patches.call_display_hud_patch(self.patches.string_display),
+        )
+
         await self._perform_memory_operations([
             # The message string
             MemoryOperation(self.patches.string_display.message_receiver_string_ref,
                             write_bytes=encoded_message),
+
+            # Write code
+            MemoryOperation(patch_address, write_bytes=patch_bytes),
 
             # Notify game to display message
             MemoryOperation(has_message_address, write_bytes=b"\x01"),
@@ -462,4 +471,3 @@ class ConnectionBackend(ConnectionBase):
                 self.logger.warning(f"Unable to perform memory operations: {e}")
                 self._world = None
                 return
-
