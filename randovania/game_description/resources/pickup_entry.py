@@ -78,22 +78,27 @@ class PickupEntry:
     def __lt__(self, other):
         return self.name < other.name
 
-    def resource_gain(self, current_resources) -> ResourceGain:
-        last_resource_gain = None
+    def conditional_for_resources(self, current_resources) -> ConditionalResources:
+        last_conditional: Optional[ConditionalResources] = None
 
         for conditional in self.resources:
             if conditional.item is None or current_resources.get(conditional.item, 0) > 0:
-                last_resource_gain = conditional.resources
+                last_conditional = conditional
             else:
                 break
 
-        assert last_resource_gain is not None
-        yield from last_resource_gain
+        assert last_conditional is not None
+        return last_conditional
 
+    def conversion_resource_gain(self, current_resources):
         for conversion in self.convert_resources:
             quantity = current_resources.get(conversion.source, 0)
             yield conversion.source, -quantity
             yield conversion.target, quantity
+
+    def resource_gain(self, current_resources) -> ResourceGain:
+        yield from self.conditional_for_resources(current_resources).resources
+        yield from self.conversion_resource_gain(current_resources)
 
     def __str__(self):
         return "Pickup {}".format(self.name)

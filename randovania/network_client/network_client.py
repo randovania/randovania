@@ -255,7 +255,7 @@ class NetworkClient:
     async def game_session_request_pickups(self) -> List[Tuple[str, bytes]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
         return [
-            (item["message"], base64.b85decode(item["pickup"]))
+            (item["provider_name"], base64.b85decode(item["pickup"]))
             for item in data
             if item is not None
         ]

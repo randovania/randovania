@@ -87,5 +87,5 @@ class DolFile:
         self.dol_file.seek(offset)
         self.dol_file.write(bytes(code_points))
 
-    def write_instructions(self, address: int, instructions: Iterable[assembler.Instruction]):
+    def write_instructions(self, address: int, instructions: Iterable[assembler.BaseInstruction]):
         self.write(address, assembler.assemble_instructions(address, instructions))

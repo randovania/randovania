@@ -187,7 +187,7 @@ def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
     offset = patch_addresses.heal_per_frame_constant - sda2_base
 
     dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))
-    dol_file.write(patch_addresses.increment_health_fmr, lfs(f1, offset, r2))
+    dol_file.write_instructions(patch_addresses.increment_health_fmr, [lfs(f1, offset, r2)])
 
 
 def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_items: dict, dol_file: DolFile):

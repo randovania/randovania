@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import List, Set, Optional, AsyncContextManager
+from typing import List, Set, Optional, AsyncContextManager, Tuple
 
 import pid
 from PySide2.QtCore import QObject
@@ -58,8 +58,7 @@ class Data(AsyncContextManager):
 
 class MultiworldClient(QObject):
     _data: Optional[Data] = None
-    _received_messages: List[str]
-    _received_pickups: List[PickupEntry]
+    _received_pickups: List[Tuple[str, PickupEntry]]
     _notify_task: Optional[asyncio.Task] = None
     _pid: Optional[pid.PidFile] = None
 
@@ -122,7 +121,7 @@ class MultiworldClient(QObject):
 
     def _decode_pickup(self, data: bytes) -> PickupEntry:
         decoder = bitpacking.BitPackDecoder(data)
-        return BitPackPickupEntry.bit_pack_unpack(decoder, "", self._game.resource_database)
+        return BitPackPickupEntry.bit_pack_unpack(decoder, self._game.resource_database)
 
     async def _notify_collect_locations(self):
         while True:
@@ -163,25 +162,15 @@ class MultiworldClient(QObject):
         async with self._pickups_lock:
             result = await self.network_client.game_session_request_pickups()
 
-            self._received_messages = []
-            self._received_pickups = []
             self.logger.info(f"received {len(result)} items")
-
-            for message, data in result:
-                self._received_messages.append(message)
-                self._received_pickups.append(self._decode_pickup(data))
+            self._received_pickups = [
+                (provider_name, self._decode_pickup(data))
+                for provider_name, data in result
+            ]
 
     @asyncSlot()
     async def on_network_game_updated(self):
         await self.refresh_received_pickups()
 
         async with self._pickups_lock:
-            self.logger.debug(f"message {self._data.latest_message_displayed} last displayed")
-
-            if self._data.latest_message_displayed < len(self._received_messages):
-                async with self._data as data:
-                    while data.latest_message_displayed < len(self._received_messages):
-                        self.game_connection.display_message(self._received_messages[data.latest_message_displayed])
-                        data.latest_message_displayed += 1
-
             self.game_connection.set_permanent_pickups(self._received_pickups)

@@ -213,7 +213,6 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     backend = create_backend(args.debug_game_backend, options)
     app.game_connection = GameConnection(backend)
     app.game_connection.tracking_inventory = options.tracking_inventory
-    app.game_connection.displaying_messages = options.displaying_messages
 
     @asyncClose
     async def _on_last_window_closed():

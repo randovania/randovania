@@ -1,3 +1,4 @@
+import logging
 import struct
 from typing import List, Optional, Dict
 
@@ -30,6 +31,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
     def __init__(self):
         super().__init__()
+        self.logger.setLevel(logging.DEBUG)
         self.window = QMainWindow()
         self.setupUi(self.window)
         common_qt_lib.set_default_window_icon(self.window)
@@ -49,14 +51,41 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.collect_location_button.clicked.connect(self._emit_collection)
         self.collect_location_button.setEnabled(False)
 
-        self._expected_patches = dol_patcher.ALL_VERSIONS_PATCHES[1]
-        self._game_memory = bytearray(24 * (2 ** 20))
-        self._write_memory(self._expected_patches.build_string_address,
-                           self._expected_patches.build_string)
+        self._expected_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+        # FIXME: use PAL again
+        self.patches = self._expected_patches
 
-        # CPlayerState
-        self._write_memory(self._expected_patches.string_display.cstate_manager_global + 0x150c,
-                           0xA00000.to_bytes(4, "big"))
+        self._game_memory = bytearray(24 * (2 ** 20))
+        self._game_memory_initialized = False
+        self.patches = None
+
+    async def _ensure_initialized_game_memory(self):
+        if self._game_memory_initialized:
+            return
+        try:
+            self.patches = self._expected_patches
+            world = self.game.world_list.worlds[0]
+
+            await self._perform_memory_operations([
+                # Build String
+                MemoryOperation(self.patches.build_string_address, write_bytes=self._expected_patches.build_string),
+
+                # current CWorld
+                MemoryOperation(self.patches.game_state_pointer, offset=4,
+                                write_bytes=world.world_asset_id.to_bytes(4, "big")),
+
+                # CPlayer VTable
+                MemoryOperation(self.patches.cstate_manager_global + 0x14fc, offset=0,
+                                write_bytes=self.patches.cplayer_vtable.to_bytes(4, "big")),
+
+                # CPlayerState
+                MemoryOperation(self.patches.cstate_manager_global + 0x150c,
+                                write_bytes=0xA00000.to_bytes(4, "big")),
+            ])
+
+            self._game_memory_initialized = True
+        finally:
+            self.patches = None
 
     def _read_memory(self, address: int, count: int):
         address &= ~0x80000000
@@ -68,6 +97,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def _write_memory(self, address: int, data: bytes):
         address &= ~0x80000000
         self._game_memory[address:address + len(data)] = data
+        self.logger.info(f"Wrote {data.hex()} to {hex(address)}")
 
     @property
     def current_status(self) -> GameConnectionStatus:
@@ -86,19 +116,19 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         return "Debug"
 
     async def update(self, dt: float):
+        await self._ensure_initialized_game_memory()
+
         if not self._enabled:
             return
 
         if not await self._identify_game():
             return
 
-        await self._send_message_from_queue(dt)
+        await self._interact_with_game(dt)
         self._read_message_from_game()
+        self._update_inventory_label()
 
-        self._inventory = await self._get_inventory()
-        if self.checking_for_collected_index:
-            await self._check_for_collected_index()
-
+    def _update_inventory_label(self):
         s = "<br />".join(
             f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in self._inventory.items()
         )
@@ -107,16 +137,24 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def show(self):
         self.window.show()
 
-    @asyncSlot()
-    async def _emit_collection(self):
+    def _get_magic_address(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         magic_address = 0xA00000 + _powerup_offset(multiworld_magic_item.index)
-        new_magic_value = self.collect_location_combo.currentData() + 1
+        return magic_address
 
-        magic_amount, magic_capacity = self._read_memory_format(">II", magic_address)
+    def _read_magic(self):
+        return self._read_memory_format(">II", self._get_magic_address())
+
+    def _write_magic(self, magic_amount, magic_capacity):
+        self._write_memory(self._get_magic_address(), struct.pack(">II", magic_amount, magic_capacity))
+
+    @asyncSlot()
+    async def _emit_collection(self):
+        new_magic_value = self.collect_location_combo.currentData() + 1
+        magic_amount, magic_capacity = self._read_magic()
         magic_amount += new_magic_value
         magic_capacity += new_magic_value
-        self._write_memory(magic_address, struct.pack(">II", magic_amount, magic_capacity))
+        self._write_magic(magic_amount, magic_capacity)
 
     @asyncSlot()
     @handle_network_errors
@@ -181,7 +219,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         return result
 
     def _read_message_from_game(self):
-        has_message_address = self.patches.string_display.cstate_manager_global + 0x2
+        has_message_address = self.patches.cstate_manager_global + 0x2
         if self._read_memory(has_message_address, 1) == b"\x00":
             return
 
@@ -191,3 +229,4 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
         self.messages_list.addItem(message)
         self._write_memory(has_message_address, b"\x00")
+        self._write_magic(0, len(self.permanent_pickups))

@@ -2,7 +2,7 @@ import copy
 import dataclasses
 import logging
 import struct
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Tuple
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.backend_choice import GameBackendChoice
@@ -11,7 +11,8 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
+from randovania.game_description.resources.resource_info import CurrentResources, \
+    add_resource_gain_to_current_resources
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, default_data, all_prime_dol_patches
@@ -99,8 +100,7 @@ class ConnectionBackend(ConnectionBase):
     _last_message_size: int = 0
 
     # Multiworld
-    _pickups_to_give: List[PickupEntry]
-    _permanent_pickups: List[PickupEntry]
+    _permanent_pickups: List[Tuple[str, PickupEntry]]
 
     def __init__(self):
         super().__init__()
@@ -109,7 +109,6 @@ class ConnectionBackend(ConnectionBase):
         self._games = {}
         self._inventory = {}
         self.message_queue = []
-        self._pickups_to_give = []
         self._permanent_pickups = []
 
     @property
@@ -143,10 +142,6 @@ class ConnectionBackend(ConnectionBase):
     def tracking_inventory(self, value: bool):
         self._tracking_inventory = value
 
-    @ConnectionBase.displaying_messages.setter
-    def displaying_messages(self, value: bool):
-        self._displaying_messages = value
-
     def set_connection_enabled(self, value: bool):
         self._enabled = value
         if not value:
@@ -177,55 +172,54 @@ class ConnectionBackend(ConnectionBase):
                 # for read operations
                 operation = MemoryOperation(version.build_string_address, read_byte_count=len(version.build_string))
                 build_string = await self._perform_single_memory_operations(operation)
-            except (RuntimeError, MemoryOperationException):
+            except (RuntimeError, MemoryOperationException) as e:
+                self.logger.debug(f"unable to load bytes at {version.build_string_address}: {e}")
                 return False
 
             if build_string == version.build_string:
                 self.patches = version
-                self.logger.info(f"_identify_game: identified game as {version.description}")
+                self.logger.info(f"identified game as {version.description}")
                 return True
 
         return False
 
-    async def _update_current_world(self):
+    async def _fetch_game_status(self):
+        cstate_manager_global = self.patches.cstate_manager_global
         self._last_world = self._world
+
+        player_vtable = None
         try:
-            world_asset_id = await self._perform_single_memory_operations(
-                MemoryOperation(self.patches.game_state_pointer,
-                                offset=4,
-                                read_byte_count=4)
-            )
-            assert world_asset_id is not None
-            self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
+            memory_ops = [
+                MemoryOperation(self.patches.game_state_pointer, offset=4, read_byte_count=4),
+                MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
+                MemoryOperation(cstate_manager_global + 0x14fc, offset=0, read_byte_count=4),
+            ]
+            results = await self._perform_memory_operations(memory_ops)
 
-        except (KeyError, MemoryOperationException):
-            self._world = None
+            world_asset_id = results[memory_ops[0]]
+            pending_op_byte = results[memory_ops[1]]
+            player_vtable_bytes = results[memory_ops[2]]
 
-        if self._world != self._last_world:
-            self.logger.info(f"Detected world as {self._world.name if self._world else 'None'}")
+            self._has_pending_op = pending_op_byte != b"\x00"
+            player_vtable = struct.unpack(">I", player_vtable_bytes)[0]
+            new_world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
 
-    def _get_player_state_pointer(self) -> int:
-        cstate_manager = self.patches.string_display.cstate_manager_global
-        return cstate_manager + 0x150c
+        except (KeyError, MemoryOperationException) as e:
+            self.logger.debug("Failed to update world: %s", e)
+            new_world = None
+
+        if new_world != self._last_world:
+            self.logger.info(
+                f"Detected world as {new_world.name if new_world else 'None'}. "
+                f"Player vtable: {hex(player_vtable)}; Expected vtable: {hex(self.patches.cplayer_vtable)}")
+            if player_vtable == self.patches.cplayer_vtable:
+                self._world = new_world
 
     def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         return self._inventory
 
-    async def _read_item(self, item: ItemResourceInfo) -> InventoryItem:
-        player_state_pointer = self._get_player_state_pointer()
-
-        op_result = await self._perform_single_memory_operations(MemoryOperation(
-            address=player_state_pointer,
-            read_byte_count=8,
-            offset=_powerup_offset(item.index),
-        ))
-
-        return InventoryItem(*struct.unpack(">II", op_result))
-
     async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
-        player_state_pointer = self._get_player_state_pointer()
-
-        self.logger.debug("Requesting inventory")
+        player_state_pointer = self.patches.cstate_manager_global + 0x150c
 
         memory_ops = [
             MemoryOperation(
@@ -244,178 +238,84 @@ class ConnectionBackend(ConnectionBase):
 
         return inventory
 
-    async def _perform_write_inventory(self, changed_items: Dict[ItemResourceInfo, InventoryItem]):
-        player_state_pointer = self._get_player_state_pointer()
-
-        memory_ops = []
-        for item in self.game.resource_database.item:
-            if item in changed_items:
-                memory_ops.append(MemoryOperation(
-                    address=player_state_pointer,
-                    write_bytes=struct.pack(">II", *changed_items[item]),
-                    read_byte_count=8,
-                    offset=_powerup_offset(item.index),
-                ))
-                self.logger.info(f"Setting {item.long_name} to "
-                                 f"{changed_items[item].amount}/{changed_items[item].capacity} "
-                                 f"({memory_ops[-1].write_bytes.hex()})")
-
-        # Suit Model
-        dark_suit = self.game.resource_database.get_item(13)
-        light_suit = self.game.resource_database.get_item(14)
-        if dark_suit in changed_items or light_suit in changed_items:
-            if _capacity_for(light_suit, changed_items, self._inventory) > 0:
-                new_suit = 2
-            elif _capacity_for(dark_suit, changed_items, self._inventory) > 0:
-                new_suit = 1
-            else:
-                new_suit = 0
-            memory_ops.append(MemoryOperation(
-                address=player_state_pointer,
-                write_bytes=struct.pack(">I", new_suit),
-                offset=84,
-            ))
-            self.logger.debug(f"Setting suit to {new_suit}. ({memory_ops[-1].write_bytes.hex()})")
-
-        energy_tank = self.game.resource_database.energy_tank
-        if energy_tank in changed_items:
-            health_data = await self._perform_memory_operations([
-                MemoryOperation(player_state_pointer, read_byte_count=4, offset=20),
-                MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
-                MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
-            ])
-            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(
-                ">fff", b"".join(health_data.values()))
-            new_health = changed_items[energy_tank].amount * energy_tank_capacity + base_health_capacity
-            if changed_items[energy_tank] < changed_items[energy_tank]:
-                new_health = min(new_health, current_health)
-
-            memory_ops.append(MemoryOperation(
-                address=player_state_pointer,
-                write_bytes=struct.pack(">f", new_health),
-                offset=20,
-            ))
-            self.logger.debug(f"Setting health to {new_health}. ({memory_ops[-1].write_bytes.hex()})")
-
-        # FIXME: check if the value read is what we expected, and then re-writes if needed
-        await self._perform_memory_operations(memory_ops)
-        return changed_items
-
-    async def _write_item(self, item: ItemResourceInfo, value: InventoryItem):
-        await self._perform_write_inventory({item: value})
-
-    async def _update_inventory(self, new_inventory: Dict[ItemResourceInfo, InventoryItem]):
-        current_inventory = self.get_current_inventory()
-
-        changed_items = {item: new_inventory[item]
-                         for item in self.game.resource_database.item
-                         if new_inventory[item] != current_inventory[item]}
-        if changed_items:
-            new_inventory.update(await self._perform_write_inventory(changed_items))
-            self._inventory = new_inventory
-
     # Multiworld
-    async def _check_for_collected_index(self):
+    async def _update_magic_item(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
-        item_percentage = self.game.resource_database.item_percentage
+        patches = []
 
-        new_magic_item = None
-        current_inventory = None
-        new_inventory = None
-
-        if self._tracking_inventory:
-            current_inventory = self.get_current_inventory()
-            new_inventory = copy.copy(current_inventory)
-            magic_inv = current_inventory[multiworld_magic_item]
-        else:
-            magic_inv = await self._read_item(multiworld_magic_item)
-
+        magic_inv = self._inventory[multiworld_magic_item]
         magic_capacity = magic_inv.capacity
         if magic_inv.amount > 0:
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_capacity}")
             magic_capacity -= magic_inv.amount
-            new_magic_item = InventoryItem(0, magic_inv.capacity - magic_inv.amount)
             await self._emit_location_collected(magic_inv.amount - 1)
+            patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(self.patches.powerup_functions,
+                                                                                       multiworld_magic_item.index,
+                                                                                       -magic_inv.amount))
 
-        if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
-            self.logger.info(f"{len(self._pickups_to_give)} pickups to give, "
-                             f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}")
+        # Only attempt to give the next item if outside cooldown
+        message = None
+        if self.message_cooldown <= 0 and magic_capacity < len(self._permanent_pickups):
+            item_patches, message = await self._patches_for_pickup(*self._permanent_pickups[magic_capacity])
+            self.logger.info(f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}. "
+                             f"Next pickup: {message}")
 
-            if current_inventory is None:
-                current_inventory = await self._get_inventory()
-                self._inventory = current_inventory
-                new_inventory = copy.copy(current_inventory)
+            patches.extend(item_patches)
+            patches.append(all_prime_dol_patches.increment_item_capacity_patch(self.patches.powerup_functions,
+                                                                               multiworld_magic_item.index))
 
-            inventory_resources: CurrentResources = {
-                item: inv_item.capacity
-                for item, inv_item in current_inventory.items()
-            }
+        if patches:
+            await self._execute_remote_patches(patches, message)
 
-            while self._pickups_to_give:
-                inventory_resources = _add_pickup_to_resources(self._pickups_to_give.pop(), inventory_resources)
+    async def _execute_remote_patches(self, patches: List[List[assembler.BaseInstruction]], message: Optional[str]):
+        memory_operations = []
 
-            for pickup in self._permanent_pickups[magic_capacity:]:
-                inventory_resources = _add_pickup_to_resources(pickup, inventory_resources)
+        if message is not None:
+            self.message_cooldown = 4
+            patches.append(all_prime_dol_patches.call_display_hud_patch(self.patches.string_display))
+            memory_operations.append(self._write_string_to_game_buffer(message))
 
-            for item, new_capacity in inventory_resources.items():
-                if item == item_percentage:
-                    continue
-                old = new_inventory[item]
-                delta = new_capacity - old.capacity
-                new_amount = old.amount
-                if delta > 0:
-                    new_amount += delta
-                new_inventory[item] = InventoryItem(min(new_amount, new_capacity, item.max_capacity),
-                                                    min(new_capacity, item.max_capacity))
+        patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
+            self.patches.string_display,
+            [instruction for patch in patches for instruction in patch],
+        )
+        memory_operations.extend([
+            MemoryOperation(patch_address, write_bytes=patch_bytes),
+            MemoryOperation(self.patches.cstate_manager_global + 0x2, write_bytes=b"\x01"),
+        ])
+        await self._perform_memory_operations(memory_operations)
 
-            new_magic_item = InventoryItem(0, len(self._permanent_pickups))
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry):
+        inventory_resources: CurrentResources = {
+            item: inv_item.capacity
+            for item, inv_item in self._inventory.items()
+        }
+        conditional = pickup.conditional_for_resources(inventory_resources)
+        if conditional.name is not None:
+            item_name = conditional.name
+        else:
+            item_name = pickup.name
 
-        if new_magic_item is not None:
-            if new_inventory is not None:
-                new_inventory[multiworld_magic_item] = new_magic_item
-                await self._update_inventory(new_inventory)
-            else:
-                await self._write_item(multiworld_magic_item, new_magic_item)
+        resources_to_give = {}
+        add_resource_gain_to_current_resources(conditional.resources, inventory_resources)
+        add_resource_gain_to_current_resources(conditional.resources, resources_to_give)
+        add_resource_gain_to_current_resources(pickup.conversion_resource_gain(inventory_resources),
+                                               resources_to_give)
 
-    def send_pickup(self, pickup: PickupEntry):
-        self._pickups_to_give.append(pickup)
+        # Ignore item% for received items
+        resources_to_give.pop(self.game.resource_database.item_percentage, None)
 
-    def set_permanent_pickups(self, pickups: List[PickupEntry]):
+        patches = [
+            all_prime_dol_patches.adjust_item_amount_and_capacity_patch(self.patches.powerup_functions,
+                                                                        item.index, delta)
+            for item, delta in resources_to_give.items()
+        ]
+        return patches, f"Received {item_name} from {provider_name}."
+
+    def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
         self._permanent_pickups = pickups
 
-    # Display Message
-    def display_message(self, message: str):
-        if self._displaying_messages:
-            self.logger.info(f"Queueing message '{message}'. "
-                             f"Queue has {len(self.message_queue)} elements and "
-                             f"current cooldown is {self.message_cooldown}")
-            self.message_queue.append(message)
-        else:
-            self.logger.info(f"Ignoring message '{message}', _displaying_messages is False.")
-
-    async def _send_message_from_queue(self, dt: float):
-        # If there's no messages, don't bother
-        if not self.message_queue:
-            return
-
-        has_message_address = self.patches.string_display.cstate_manager_global + 0x2
-
-        # There's already a message pending, stop
-        has_message = await self._perform_single_memory_operations(MemoryOperation(has_message_address,
-                                                                                   read_byte_count=1))
-
-        if has_message != b"\x00":
-            self.logger.info("game already has a pending message")
-            return
-
-        self.message_cooldown = max(self.message_cooldown - dt, 0.0)
-
-        # There's a cooldown for next message!
-        if self.message_cooldown > 0:
-            self.logger.debug(f"current cooldown is {self.message_cooldown}")
-            return
-
-        message = self.message_queue.pop(0)
+    def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
         encoded_message = message.encode("utf-16_be")[:self.patches.string_display.max_message_size - overhead_size]
 
@@ -432,42 +332,21 @@ class ConnectionBackend(ConnectionBase):
             num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
             encoded_message += b"\x00" * num_to_align
 
-        patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
-            self.patches.string_display,
-            all_prime_dol_patches.call_display_hud_patch(self.patches.string_display),
-        )
-
-        await self._perform_memory_operations([
-            # The message string
-            MemoryOperation(self.patches.string_display.message_receiver_string_ref,
-                            write_bytes=encoded_message),
-
-            # Write code
-            MemoryOperation(patch_address, write_bytes=patch_bytes),
-
-            # Notify game to display message
-            MemoryOperation(has_message_address, write_bytes=b"\x01"),
-        ])
-        self.message_cooldown = 4
-
-        self.logger.info(f"sent '{message}' to game. {len(self.message_queue)} messages left.")
+        return MemoryOperation(self.patches.string_display.message_receiver_string_ref,
+                               write_bytes=encoded_message)
 
     async def update_current_inventory(self):
         self._inventory = await self._get_inventory()
 
     async def _interact_with_game(self, dt):
-        await self._update_current_world()
+        await self._fetch_game_status()
         if self._world is not None:
-            await self._send_message_from_queue(dt)
-
             try:
-                if self._tracking_inventory:
-                    await self.update_current_inventory()
-
-                if self.checking_for_collected_index:
-                    await self._check_for_collected_index()
+                self._inventory = await self._get_inventory()
+                if not self._has_pending_op:
+                    self.message_cooldown = max(self.message_cooldown - dt, 0.0)
+                    await self._update_magic_item()
 
             except MemoryOperationException as e:
                 self.logger.warning(f"Unable to perform memory operations: {e}")
                 self._world = None
-                return
