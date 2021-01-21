@@ -77,6 +77,11 @@ async def test_send_message(backend, message_original, message_encoded, previous
         call([MemoryOperation(has_message_address, read_byte_count=1)]),
         call([
             MemoryOperation(string_ref, write_bytes=message_encoded),
+            MemoryOperation(backend.patches.string_display.update_hint_state + 0x44, write_bytes=(
+                b'\x3c\xa0\x41\x00\x38\xc0\x00\x00\x38\xe0\x00\x01\x39\x20\x00\x09\x90\xa1\x00\x10'
+                b'\x98\xe1\x00\x14\x98\xc1\x00\x15\x98\xc1\x00\x16\x98\xe1\x00\x17\x91\x21\x00\x18'
+                b'\x38\x61\x00\x1c\x3c\x80\x80\x3b\x60\x84\xd1\x18\x48\x2c\x73\x45\x38\x81\x00\x10'
+                b'\x48\x03\x33\x29\x80\x01\x00\x30\x7c\x08\x03\xa6\x38\x21\x00\x2c\x4e\x80\x00\x20')),
             MemoryOperation(has_message_address, write_bytes=b'\x01'),
         ]),
     ])

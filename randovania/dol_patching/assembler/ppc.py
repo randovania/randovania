@@ -79,6 +79,8 @@ r31 = GeneralRegister(31)
 
 f0 = FloatRegister(0)
 f1 = FloatRegister(1)
+f2 = FloatRegister(2)
+f3 = FloatRegister(3)
 
 # Special Registers
 LR = 8
