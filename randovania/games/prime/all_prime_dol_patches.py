@@ -42,9 +42,9 @@ class BasePrimeDolVersion(DolVersion):
     dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
-def remote_execution_patch_start(start_address: int):
+def remote_execution_patch_start():
     return_code = remote_execution_patch_end()
-    patch_intro = [
+    return [
         # setup stack
         stwu(r1, -0x2C, r1),
         mfspr(r0, LR),
@@ -61,22 +61,13 @@ def remote_execution_patch_start(start_address: int):
         # set displayed
         li(r6, 0x0),
         stb(r6, 0x2, r3),
-    ]
-    patch_sync = [
+
+        # fetch the instructions again, since they're being overwritten externally
+        # this clears Dolphin's JIT cache
+        custom_ppc.load_current_address(r4, 5),
         sync(),
         icbi(0, 4),
         isync(),
-    ]
-
-    patch = [
-        *patch_intro,
-        custom_ppc.load_unsigned_32bit(r4, 0),
-        *patch_sync,
-    ]
-    return [
-        *patch_intro,
-        custom_ppc.load_unsigned_32bit(r4, start_address + assembler.byte_count(patch)),
-        *patch_sync,
     ]
 
 
@@ -134,7 +125,7 @@ def give_item_patch(patch_addresses: StringDisplayPatchAddresses, item_id: int, 
 
 def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
     patch = [
-        *remote_execution_patch_start(patch_addresses.update_hint_state),
+        *remote_execution_patch_start(),
         *remote_execution_patch_end(),
     ]
     dol_file.write_instructions(patch_addresses.update_hint_state, patch)
@@ -148,7 +139,7 @@ def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
     update_hint_state = patch_addresses.update_hint_state
     max_bytes_count = 296
 
-    remote_start_instructions = remote_execution_patch_start(update_hint_state)
+    remote_start_instructions = remote_execution_patch_start()
     remote_start_byte_count = assembler.byte_count(remote_start_instructions)
 
     body_address = update_hint_state + remote_start_byte_count
