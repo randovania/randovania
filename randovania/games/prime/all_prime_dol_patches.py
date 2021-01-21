@@ -1,6 +1,8 @@
 import dataclasses
 import struct
+from typing import List, Tuple
 
+from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
@@ -106,19 +108,56 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses):
         *custom_ppc.load_unsigned_32bit(r4, patch_addresses.message_receiver_string_ref),
         bl(patch_addresses.wstring_constructor),
 
-        # r4 = wstring
+        # r4 = CHUDMemoParms
         addi(r4, r1, 0x10),
         bl(patch_addresses.display_hud_memo),
     ]
 
 
-def apply_string_display_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
+def give_item_patch(patch_addresses: StringDisplayPatchAddresses, item_id: int, quantity: int):
+    add_power_up = 0x800858f0
+    incr_pickup = 0x80085760
+    return [
+        *custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
+        lwz(r3, 0x150c, r3),
+        li(r4, item_id),
+        li(r5, quantity),
+        bl(add_power_up),
+
+        *custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
+        lwz(r3, 0x150c, r3),
+        li(r4, item_id),
+        li(r5, quantity),
+        bl(incr_pickup),
+    ]
+
+
+def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
     patch = [
         *remote_execution_patch_start(patch_addresses.update_hint_state),
-        *call_display_hud_patch(patch_addresses),
         *remote_execution_patch_end(),
     ]
     dol_file.write_instructions(patch_addresses.update_hint_state, patch)
+
+
+def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
+                                 instructions: List[Instruction]) -> Tuple[int, bytes]:
+    """
+    Return the address and the bytes for executing the given instructions via remote code execution.
+    """
+    update_hint_state = patch_addresses.update_hint_state
+    max_instruction_count = 74
+
+    remote_start_instructions = remote_execution_patch_start(update_hint_state)
+    body_instructions = [*instructions, *remote_execution_patch_end()]
+
+    if len(body_instructions) > max_instruction_count - len(remote_start_instructions):
+        raise ValueError(f"Received {len(body_instructions)} instructions, "
+                         f"but limit is {max_instruction_count - len(remote_start_instructions)}.")
+
+    patch_address = update_hint_state + len(remote_start_instructions) * 4
+    patch_bytes = bytes(assembler.assemble_instructions(patch_address, body_instructions))
+    return patch_address, patch_bytes
 
 
 def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
