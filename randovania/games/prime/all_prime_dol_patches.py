@@ -157,6 +157,29 @@ def increment_item_capacity_patch(patch_addresses: PowerupFunctionsAddresses, it
     ]
 
 
+def start_rezbit_hack(patch_addresses: StringDisplayPatchAddresses):
+    StartRezbitHack = 0x8022b30c
+    RezbitHackEffectParams = 0x8022d7cc
+
+    return [
+        addi(r3, r1, 0x10),
+        *custom_ppc.load_unsigned_32bit(r4, 0xFFFFFFFF),
+        li(r5, 0x40),
+        li(r6, 0x3f),
+        lfs(f1, -0x7088, r2),  # 3.0f (actually 3.2)
+        lfs(f2, -0x7ddc, r2),  # 1.5f
+        lfs(f3, -0x6f24, r2),  # 2.5f (actually 2.4)
+        li(r7, 0x1),
+        bl(RezbitHackEffectParams),
+
+        # StartRezbitHack
+        ori(r5, r3, 0x0),
+        *custom_ppc.load_unsigned_32bit(r4, patch_addresses.cstate_manager_global),
+        lwz(r3, 0x14fc, r4),
+        bl(StartRezbitHack),
+    ]
+
+
 def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
     patch = [
         *remote_execution_patch_start(),
