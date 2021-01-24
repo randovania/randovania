@@ -7,12 +7,12 @@ from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 import randovania.game_description.pretty_print
 from randovania.game_description import data_reader, data_writer, pretty_print
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import binary_data, default_data
 from randovania.interface_common.enum_lib import iterate_enum
-from randovania.resolver import debug
 
 
 def _get_sorted_list_of_names(input_list: List[Any], prefix: str = "") -> List[str]:
@@ -262,6 +262,23 @@ def list_paths_with_resource_command(sub_parsers):
     parser.set_defaults(func=list_paths_with_resource_logic)
 
 
+def pickups_per_area_command_logic(args):
+    gd = load_game_description(args)
+
+    for world in gd.world_list.worlds:
+        num_pickups = sum(1 for node in world.all_nodes if isinstance(node, PickupNode))
+        print(f"{world.correct_name(False)}: {num_pickups}")
+
+
+def pickups_per_area_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "pickups-per-area",
+        help="Print how many pickups there are in each area",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.set_defaults(func=pickups_per_area_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "database",
@@ -288,6 +305,7 @@ def create_subparsers(sub_parsers):
     export_areas_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
+    pickups_per_area_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:
