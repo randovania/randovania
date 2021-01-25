@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from asyncqt import asyncSlot
@@ -15,7 +15,7 @@ class GameConnection(QObject, ConnectionBase):
     _dt: float = 2.5
     _last_status: Any = None
     backend: ConnectionBackend
-    _permanent_pickups: List[PickupEntry]
+    _permanent_pickups: List[Tuple[str, PickupEntry]]
 
     def __init__(self, backend: ConnectionBackend):
         super().__init__()
@@ -36,7 +36,6 @@ class GameConnection(QObject, ConnectionBase):
         self.backend.checking_for_collected_index = self._location_collected_listener is not None
         self.backend.set_permanent_pickups(self._permanent_pickups)
         self.backend.tracking_inventory = self.tracking_inventory
-        self.backend.displaying_messages = self.displaying_messages
         self._notify_status()
 
     async def start(self):
@@ -67,16 +66,10 @@ class GameConnection(QObject, ConnectionBase):
     def current_status(self) -> GameConnectionStatus:
         return self.backend.current_status
 
-    def display_message(self, message: str):
-        return self.backend.display_message(message)
-
     def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         return self.backend.get_current_inventory()
 
-    def send_pickup(self, pickup: PickupEntry):
-        return self.backend.send_pickup(pickup)
-
-    def set_permanent_pickups(self, pickups: List[PickupEntry]):
+    def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
         self._permanent_pickups = pickups
         return self.backend.set_permanent_pickups(pickups)
 
@@ -84,18 +77,8 @@ class GameConnection(QObject, ConnectionBase):
         super().set_location_collected_listener(listener)
         self.backend.checking_for_collected_index = listener is not None
 
-    async def _emit_location_collected(self, location: int):
-        if self._location_collected_listener is not None:
-            await self._location_collected_listener(location)
-        else:
-            self.display_message("Pickup not sent, Randovania is not connected to a session.")
-
     @ConnectionBase.tracking_inventory.setter
     def tracking_inventory(self, value: bool):
         self._tracking_inventory = value
         self.backend.tracking_inventory = value
 
-    @ConnectionBase.displaying_messages.setter
-    def displaying_messages(self, value: bool):
-        self._displaying_messages = value
-        self.backend.displaying_messages = value

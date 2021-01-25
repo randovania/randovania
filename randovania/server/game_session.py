@@ -582,7 +582,7 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
         else:
             name = row_to_member_name.get(action.provider_row, f"Player {action.provider_row + 1}")
             result.append({
-                "message": f"Received {pickup_target.pickup.name} from {name}",
+                "provider_name": name,
                 "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 

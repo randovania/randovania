@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict
+from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict, Tuple
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -38,22 +38,15 @@ class InventoryItem(NamedTuple):
 class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
     _tracking_inventory: bool = True
-    _displaying_messages: bool = True
 
     @property
     def current_status(self) -> GameConnectionStatus:
         raise NotImplementedError()
 
-    def display_message(self, message: str):
-        raise NotImplementedError()
-
     def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         raise NotImplementedError()
 
-    def send_pickup(self, pickup: PickupEntry):
-        raise NotImplementedError()
-
-    def set_permanent_pickups(self, pickups: List[PickupEntry]):
+    def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
         raise NotImplementedError()
 
     def set_location_collected_listener(self, listener: Optional[Callable[[int], Awaitable[None]]]):
@@ -66,7 +59,3 @@ class ConnectionBase:
     @property
     def tracking_inventory(self) -> bool:
         return self._tracking_inventory
-
-    @property
-    def displaying_messages(self) -> bool:
-        return self._displaying_messages

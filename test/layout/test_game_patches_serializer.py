@@ -195,7 +195,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     # Run
     encoded = bitpacking.pack_value(BitPackPickupEntry(pickup, echoes_resource_database))
     decoder = BitPackDecoder(encoded)
-    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, name, echoes_resource_database)
+    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, echoes_resource_database)
 
     # Assert
     assert pickup == decoded

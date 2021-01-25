@@ -17,7 +17,6 @@ class StringDisplayPatchAddresses:
     message_receiver_string_ref: int
     wstring_constructor: int
     display_hud_memo: int
-    cstate_manager_global: int
     max_message_size: int
 
 
@@ -34,24 +33,41 @@ class DangerousEnergyTankAddresses:
 
 
 @dataclasses.dataclass(frozen=True)
+class PowerupFunctionsAddresses:
+    add_power_up: int
+    incr_pickup: int
+    decr_pickup: int
+
+
+@dataclasses.dataclass(frozen=True)
 class BasePrimeDolVersion(DolVersion):
     game_state_pointer: int
+    cplayer_vtable: int
+    cstate_manager_global: int
     string_display: StringDisplayPatchAddresses
+    powerup_functions: PowerupFunctionsAddresses
     health_capacity: HealthCapacityAddresses
     game_options_constructor_address: int
     dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
-def remote_execution_patch_start():
+_registers_to_save = 2
+_remote_execution_stack_size = 0x30 + (_registers_to_save * 4)
+_remote_execution_max_byte_count = 296
+
+
+def remote_execution_patch_start() -> List[BaseInstruction]:
     return_code = remote_execution_patch_end()
-    return [
+    intro = [
         # setup stack
-        stwu(r1, -0x2C, r1),
+        stwu(r1, -(_remote_execution_stack_size - 4), r1),
         mfspr(r0, LR),
-        stw(r0, 0x30, r1),
+        stw(r0, _remote_execution_stack_size, r1),
+        stmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
+        or_(r31, r3, r3),
 
         # return if displayed
-        lbz(r4, 0x2, r3),
+        lbz(r4, 0x2, r31),
         cmpwi(r4, 0x0),
         bne((len(return_code) + 1) * 4, relative=True),
 
@@ -60,27 +76,41 @@ def remote_execution_patch_start():
 
         # set displayed
         li(r6, 0x0),
-        stb(r6, 0x2, r3),
+        stb(r6, 0x2, r31),
+    ]
+
+    num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(intro)
+    # Our loop end condition depends on this value being a multiple of 32, greater than 0
+    num_bytes_to_invalidate = ((num_bytes_to_invalidate // 32) + 1) * 32
+
+    return [
+        *intro,
 
         # fetch the instructions again, since they're being overwritten externally
         # this clears Dolphin's JIT cache
-        custom_ppc.load_current_address(r4, 5),
+        custom_ppc.load_current_address(r30, 8),
+        li(r4, num_bytes_to_invalidate),
+
+        icbi(4, 30),  # invalidate using r30 + r4
+        cmpwi(r4, 0x0),
+        addi(r4, r4, -32),
+        bne(-3 * 4, relative=True),
         sync(),
-        icbi(0, 4),
         isync(),
     ]
 
 
-def remote_execution_patch_end():
+def remote_execution_patch_end() -> List[BaseInstruction]:
     return [
-        lwz(r0, 0x30, r1),
+        lmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
+        lwz(r0, _remote_execution_stack_size, r1),
         mtspr(LR, r0),
-        addi(r1, r1, 0x2C),
+        addi(r1, r1, _remote_execution_stack_size - 4),
         blr(),
     ]
 
 
-def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses):
+def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List[BaseInstruction]:
     return [
         # setup CHUDMemoParms
         lis(r5, 0x4100),  # 8.0f
@@ -105,21 +135,25 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses):
     ]
 
 
-def give_item_patch(patch_addresses: StringDisplayPatchAddresses, item_id: int, quantity: int):
-    add_power_up = 0x800858f0
-    incr_pickup = 0x80085760
+def adjust_item_amount_and_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int,
+                                          ) -> List[BaseInstruction]:
     return [
-        custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
-        lwz(r3, 0x150c, r3),
-        li(r4, item_id),
-        li(r5, quantity),
-        bl(add_power_up),
+        *increment_item_capacity_patch(patch_addresses, item_id, delta),
 
-        custom_ppc.load_unsigned_32bit(r3, patch_addresses.cstate_manager_global),
-        lwz(r3, 0x150c, r3),
+        lwz(r3, 0x150c, r31),
         li(r4, item_id),
-        li(r5, quantity),
-        bl(incr_pickup),
+        li(r5, abs(delta)),
+        bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
+    ]
+
+
+def increment_item_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int = 1
+                                  ) -> List[BaseInstruction]:
+    return [
+        lwz(r3, 0x150c, r31),
+        li(r4, item_id),
+        li(r5, delta),
+        bl(patch_addresses.add_power_up),
     ]
 
 
@@ -132,23 +166,23 @@ def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, d
 
 
 def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
-                                 instructions: List[Instruction]) -> Tuple[int, bytes]:
+                                 instructions: List[BaseInstruction]) -> Tuple[int, bytes]:
     """
     Return the address and the bytes for executing the given instructions via remote code execution.
     """
     update_hint_state = patch_addresses.update_hint_state
-    max_bytes_count = 296
 
     remote_start_instructions = remote_execution_patch_start()
     remote_start_byte_count = assembler.byte_count(remote_start_instructions)
 
     body_address = update_hint_state + remote_start_byte_count
-    body_instructions = [*instructions, *remote_execution_patch_end()]
+    body_instructions = list(instructions)
+    body_instructions.extend(remote_execution_patch_end())
     body_bytes = bytes(assembler.assemble_instructions(body_address, body_instructions))
 
-    if len(body_bytes) > max_bytes_count - remote_start_byte_count:
+    if len(body_bytes) > _remote_execution_max_byte_count - remote_start_byte_count:
         raise ValueError(f"Received {len(body_instructions)} instructions with total {len(body_bytes)} bytes, "
-                         f"but limit is {max_bytes_count - remote_start_byte_count}.")
+                         f"but limit is {_remote_execution_max_byte_count - remote_start_byte_count}.")
 
     return body_address, body_bytes
 

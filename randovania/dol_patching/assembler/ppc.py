@@ -123,6 +123,13 @@ LR = 8
 CTR = 9
 
 
+def lmw(start_register: GeneralRegister, offset: int, input_register: GeneralRegister):
+    return Instruction.compose(((46, 6, False),
+                                (start_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (offset, 16, True)))
+
+
 def lwz(output_register: GeneralRegister, offset: int, input_register: GeneralRegister):
     """
     *(output_register + offset) = input_register
@@ -332,6 +339,10 @@ def stfs(input_register: FloatRegister, offset: int, output_register: GeneralReg
 
 def stwu(input_register: GeneralRegister, offset: int, output_register: GeneralRegister):
     return _store(input_register, offset, output_register, 37)
+
+
+def stmw(start_register: GeneralRegister, offset: int, output_register: GeneralRegister):
+    return _store(start_register, offset, output_register, 47)
 
 
 def sync():

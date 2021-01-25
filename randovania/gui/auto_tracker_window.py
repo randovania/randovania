@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import logging
 from typing import Dict, List, Union
 
 import PySide2
@@ -11,12 +12,11 @@ from asyncqt import asyncSlot
 from randovania import get_data_path
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.clickable_label import ClickableLabel
@@ -139,3 +139,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     @asyncSlot()
     async def on_force_update_button(self):
         await self.game_connection.backend.update_current_inventory()
+        inventory = self.game_connection.get_current_inventory()
+        print("Inventory:" + "\n".join(
+            f"{item.long_name}: {inv_item.amount}/{inv_item.capacity}"
+            for item, inv_item in sorted(inventory.items(), key=lambda it: it[0].long_name)
+        ))
