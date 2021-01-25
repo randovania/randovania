@@ -30,6 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to reach the portal in Mining Station B with Space Jump, Scan Visor, and Dashing for Single Room OoB (Expert and above).
 
+-   Added: Method to cross Bitter Well to Phazon Site with Wall Boosts (Hypermode).
+
+-   Added: Method to reach the bomb slot in Training Chamber with Gravity Boost and Air Underwater (Advanced and above).
+
+-   Added: Method to open activate the Bomb Slot in Training Chamber with Darkburst or Sonic Boom (Hypermode).
+
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
 -   Changed: The item pool tab when customizing presets now can edit major items directly. 

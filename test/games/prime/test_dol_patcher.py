@@ -20,7 +20,8 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     mock_find_version_for_dol.return_value = version_patches
     dol_file = mock_dol_file_constructor.return_value
 
-    mock_apply_string = mocker.patch("randovania.games.prime.all_prime_dol_patches.apply_string_display_patch", autospec=True)
+    mock_apply_string = mocker.patch(
+        "randovania.games.prime.all_prime_dol_patches.apply_remote_execution_patch", autospec=True)
     mock_apply_game_options: MagicMock = mocker.patch(
         "randovania.games.prime.echoes_dol_patches.apply_game_options_patch", autospec=True)
     mock_apply_capacity: MagicMock = mocker.patch(
