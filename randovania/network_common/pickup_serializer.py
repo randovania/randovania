@@ -31,14 +31,13 @@ class BitPackPickupEntry:
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         items = self.database.item
-        has_name = any(cond.name is not None for cond in self.value.resources)
 
+        yield from bitpacking.encode_string(self.value.name)
         yield self.value.model_index, 255
         yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
         yield from BitPackFloat(self.value.probability_multiplier).bit_pack_encode(_PROBABILITY_MULTIPLIER_META)
         yield from self.value.item_category.bit_pack_encode({})
         yield from self.value.broad_category.bit_pack_encode({})
-        yield from bitpacking.encode_bool(has_name)
         yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
 
         for i, conditional in enumerate(self.value.resources):
@@ -50,8 +49,9 @@ class BitPackPickupEntry:
                 yield from bitpacking.pack_array_element(resource, items)
                 yield quantity, 255
 
-            if has_name:
-                yield from bitpacking.encode_bool(conditional.name == self.value.name)
+            yield from bitpacking.encode_bool(conditional.name is not None)
+            if conditional.name is not None:
+                yield from bitpacking.encode_string(conditional.name)
 
         yield len(self.value.convert_resources), MAXIMUM_PICKUP_CONVERSION + 1
         for conversion in self.value.convert_resources:
@@ -59,13 +59,13 @@ class BitPackPickupEntry:
             yield from bitpacking.pack_array_element(conversion.target, items)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, name: str, database: ResourceDatabase) -> PickupEntry:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
+        name = bitpacking.decode_string(decoder)
         model_index = decoder.decode_single(255)
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         item_category = ItemCategory.bit_pack_unpack(decoder, {})
         broad_category = ItemCategory.bit_pack_unpack(decoder, {})
-        has_name = bitpacking.decode_bool(decoder)
         num_conditional = decoder.decode_single(MAXIMUM_PICKUP_CONDITIONAL_RESOURCES) + 1
 
         conditional_resources = []
@@ -82,11 +82,8 @@ class BitPackPickupEntry:
                 quantity = decoder.decode_single(255)
                 resources.append((resource, quantity))
 
-            if has_name:
-                if bitpacking.decode_bool(decoder):
-                    item_name = name
-                else:
-                    item_name = resources[0][0].long_name
+            if bitpacking.decode_bool(decoder):
+                item_name = bitpacking.decode_string(decoder)
 
             conditional_resources.append(ConditionalResources(
                 name=item_name,

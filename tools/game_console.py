@@ -25,9 +25,6 @@ async def worker(app: QCoreApplication, backend: ConnectionBackend):
             await asyncio.sleep(1)
             print(connection.pretty_current_status)
 
-        connection.display_message("Hello Samus.")
-        connection.display_message("I see you are trying to do a multiworld.")
-        connection.display_message("But are you authorized for that?")
         await asyncio.sleep(20)
 
     except KeyboardInterrupt:
