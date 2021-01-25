@@ -61,7 +61,7 @@ ALL_VERSIONS = [
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",
         sda2_base=0x804223c0,
         game_state_pointer=0x8041A19C,
-        cplayer_vtable=None,
+        cplayer_vtable=0x803b2950,
         cstate_manager_global=0x803dc900,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038194,
@@ -70,7 +70,11 @@ ALL_VERSIONS = [
             display_hud_memo=0x8006b504,
             max_message_size=200,
         ),
-        powerup_functions=None,
+        powerup_functions=PowerupFunctionsAddresses(
+            add_power_up=0x80085a2c,
+            incr_pickup=0x8008589c,
+            decr_pickup=0x80085800,
+        ),
         health_capacity=HealthCapacityAddresses(
             base_health_capacity=0x8041bedc,
             energy_tank_capacity=0x8041bed8,
