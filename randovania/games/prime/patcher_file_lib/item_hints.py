@@ -37,7 +37,6 @@ _JOKE_HINTS = [
     "Did you know that Bigfoot and Santa Claus exist in the Metroid Prime canon?",
     "I hear. Them. Everywhere. They're coming. Can't sleep. Ever. They'll eat me. Eat.",
     "Space Pirates, strangely, dislike theft.",
-    "If Metroid Prime 2: Echoes is so good, why isn't there a Metroid Prime 2: Echoes 2?",
     "Power Bomb Expansions are just space hamburgers.",
 ]
 
