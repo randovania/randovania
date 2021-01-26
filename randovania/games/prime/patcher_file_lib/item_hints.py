@@ -38,6 +38,10 @@ _JOKE_HINTS = [
     "I hear. Them. Everywhere. They're coming. Can't sleep. Ever. They'll eat me. Eat.",
     "Space Pirates, strangely, dislike theft.",
     "Power Bomb Expansions are just space hamburgers.",
+    "While in Morph Ball mode, press &image=SI,0.70,0.68,D523DE3B; to drop Bombs.",
+    "Charge your beam to fire a normal shot when out of ammo.",
+    "Movement in Morph Ball mode is faster than unmorphed, even without Boost Ball.",
+    "While walking, holding L makes you move faster."
 ]
 
 _DET_AN = [
