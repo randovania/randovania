@@ -101,8 +101,9 @@ def test_create_hints_item_joke(empty_patches, players_config, pickup):
     result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
-    message = ("&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!"
-               " Energized Safe Zones don't last forever!&pop;")
+    joke = "While walking, holding L makes you move faster."
+    message = f"&push;&main-color=#45F731;{joke}&pop;"
+    assert result[0]['strings'][0] == message
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
 
