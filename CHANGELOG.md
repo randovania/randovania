@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   **Major** - Changed: In multiworld, items are now delivered at the same time as the message. It should also no longer fail to send with Nintendont.
 
--   Added: Additional joke hints were.
+-   Added: Additional joke hints were added.
 
 -   Added: Method to climb to the portal Base Access with just Screw Attack (Intermediate and above).
 
