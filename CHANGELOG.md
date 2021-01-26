@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Added: The visor and beam you start the game equipped with is now configurable.
+-   **Major** - Added: The visor and beam you start the game equipped with is now configurable.
+
+-   **Major** - Changed: In multiworld, items are now delivered at the same time as the message. It should also no longer fail to send with Nintendont.
+
+-   Added: Additional joke hints were.
 
 -   Added: Method to climb to the portal Base Access with just Screw Attack (Intermediate and above).
 
