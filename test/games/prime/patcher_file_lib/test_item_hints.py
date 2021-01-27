@@ -28,9 +28,7 @@ def _pickup() -> PickupEntry:
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.LIFE_SUPPORT,
-        resources=(
-            ConditionalResources(None, None, ()),
-        ),
+        progression=(),
     )
 
 
@@ -125,8 +123,8 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
     keys = [
         (
             PickupIndex(index),
-            dataclasses.replace(pickup, resources=(
-                ConditionalResources(None, None, ((db.get_item(item), 1),)),
+            dataclasses.replace(pickup, progression=(
+                (db.get_item(item), 1),
             ))
         )
         for index, item in zip(indices, echoes_items.DARK_TEMPLE_KEY_ITEMS[1])

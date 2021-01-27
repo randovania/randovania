@@ -103,15 +103,13 @@ async def test_on_game_updated(client, tmpdir):
 
 
 def test_decode_pickup(client, echoes_resource_database):
-    data = b"\x80*42\x90'0\xb6\xb2\x80d \x00"
+    data = b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\x08@\x0e'
     expected_pickup = PickupEntry(
         name="The Name",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.MOVEMENT,
-        resources=(
-            ConditionalResources(None, None, ()),
-        ),
+        progression=tuple(),
     )
 
     # from randovania.bitpacking import bitpacking

@@ -453,7 +453,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(pickup_spinbox, current_row, 1)
             current_row += 1
 
-            if ammo.temporaries:
+            if ammo.temporary:
                 require_major_item_check = QCheckBox(pickup_box)
                 require_major_item_check.setText("Requires the major item to work?")
                 require_major_item_check.stateChanged.connect(partial(self._on_update_ammo_require_major_item, ammo))

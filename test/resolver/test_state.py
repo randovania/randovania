@@ -7,7 +7,8 @@ from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
+    ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import state
@@ -51,9 +52,9 @@ def test_add_pickup_to_state(database, patches):
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
     p = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
-                        ConditionalResources(None, resource_a, ((resource_b, 1),)),
+                    progression=(
+                        (resource_a, 1),
+                        (resource_b, 1),
                     ))
 
     # Run
@@ -75,15 +76,15 @@ def test_assign_pickup_to_starting_items(patches, database):
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
     p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    resources=(
-                        ConditionalResources(None, None, (
-                            (resource_a, 5),
-                            (database.item_percentage, 1),
-                        )),
+                    progression=(
+                        (resource_a, 5),
                     ),
-                    convert_resources=(
-                        ResourceConversion(resource_b, resource_a),
-                    ))
+                    extra_resources=(
+                        (database.item_percentage, 1),
+                    ),
+                    unlocks_resource=True,
+                    resource_lock=ResourceLock(resource_a, resource_a, resource_b),
+                    )
 
     # Run
     final = starting.assign_pickup_to_starting_items(p)
@@ -99,8 +100,8 @@ def test_state_with_pickup(database, patches):
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
+                    progression=(
+                        (resource_a, 1),
                     ))
 
     # Run

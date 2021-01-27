@@ -7,7 +7,7 @@ from randovania.resolver import resolver, debug
 @pytest.mark.skip_resolver_tests
 def test_resolver_with_log_file(test_files_dir):
     # Setup
-    debug.set_level(0)
+    debug.set_level(2)
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     configuration = description.permalink.presets[0].configuration

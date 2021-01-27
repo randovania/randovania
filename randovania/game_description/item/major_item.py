@@ -13,7 +13,7 @@ class MajorItem:
     model_index: Optional[int]
     progression: Tuple[int, ...]
     ammo_index: Tuple[int, ...] = tuple()
-    converts_indices: Tuple[int, ...] = tuple()
+    unlocks_ammo: bool = False
     required: bool = False
     original_index: Optional[PickupIndex] = None
     probability_offset: int = 0
@@ -29,7 +29,7 @@ class MajorItem:
             model_index=value["model_index"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),
-            converts_indices=tuple(value.get("converts_indices", [])),
+            unlocks_ammo=value.get("unlocks_ammo", False),
             required=value.get("required", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
@@ -45,7 +45,7 @@ class MajorItem:
             "model_index": self.model_index,
             "progression": list(self.progression),
             "ammo": list(self.ammo_index),
-            "converts_indices": list(self.converts_indices),
+            "unlocks_ammo": self.unlocks_ammo,
             "required": self.required,
             "probability_offset": self.probability_offset,
             "probability_multiplier": self.probability_multiplier,

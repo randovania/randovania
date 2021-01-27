@@ -12,7 +12,8 @@ from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
+    ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
@@ -160,36 +161,27 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     # Setup
     name = "Some Random Name"
     if has_convert:
-        convert_resources = (
-            ResourceConversion(
-                find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
-                find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage")
-            ),
+        resource_lock = ResourceLock(
+            find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
+            find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"),
+            find_resource_info_with_long_name(echoes_resource_database.item, "Space Jump Boots"),
         )
     else:
-        convert_resources = ()
+        resource_lock = None
 
     pickup = PickupEntry(
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
-        resources=(
-            ConditionalResources(
-                "Morph Ball", None,
-                (
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 2),
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
-                ),
-            ),
-            ConditionalResources(
-                "Grapple Beam", find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
-                (
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 3),
-                ),
-            )
+        progression=(
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),
         ),
-        convert_resources=convert_resources
+        extra_resources=(
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
+        ),
+        resource_lock=resource_lock
     )
 
     # Run
