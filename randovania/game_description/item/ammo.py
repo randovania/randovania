@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from typing import Tuple, Optional
 
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.pickup_entry import ResourceLock
+from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 @dataclass(frozen=True, order=True)
@@ -11,19 +13,19 @@ class Ammo:
     items: Tuple[int, ...]
     broad_category: ItemCategory
     unlocked_by: Optional[int] = None
-    temporaries: Tuple[int, ...] = tuple()
+    temporary: Optional[int] = None
     models: Tuple[int, ...] = tuple()
 
     def __post_init__(self):
-        if self.temporaries:
+        if self.temporary is not None:
             if self.unlocked_by is None:
-                raise ValueError("If temporaries is not empty, unlocked_by must be set.")
-            if len(self.temporaries) != len(self.items):
-                raise ValueError("If non-empty, temporaries must have the same size of items. Got {0} and {1}".format(
-                    len(self.temporaries), len(self.items)
+                raise ValueError("If temporaries is set, unlocked_by must be set.")
+            if len(self.items) != 1:
+                raise ValueError("If temporaries is set, only one item is supported. Got {0} instead".format(
+                    len(self.items)
                 ))
         elif self.unlocked_by is not None:
-            raise ValueError("If temporaries is empty, unlocked_by must not be set.")
+            raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
     @classmethod
     def from_json(cls, name: str, value: dict) -> "Ammo":
@@ -34,7 +36,7 @@ class Ammo:
             items=tuple(value["items"]),
             broad_category=ItemCategory(value["broad_category"]),
             unlocked_by=value.get("unlocked_by"),
-            temporaries=tuple(value.get("temporaries", [])),
+            temporary=value.get("temporary"),
         )
 
     @property
@@ -44,12 +46,21 @@ class Ammo:
             "models": list(self.models),
             "items": list(self.items),
             "broad_category": self.broad_category.value,
-            "temporaries": list(self.temporaries),
         }
         if self.unlocked_by is not None:
+            result["temporary"] = self.temporary
             result["unlocked_by"] = self.unlocked_by
         return result
 
     @property
     def model_index(self):
         return self.models[0]
+
+    def create_resource_lock(self, resource_database: ResourceDatabase) -> Optional[ResourceLock]:
+        if self.unlocked_by is not None:
+            return ResourceLock(
+                locked_by=resource_database.get_item(self.unlocked_by),
+                item_to_lock=resource_database.get_item(self.items[0]),
+                temporary_item=resource_database.get_item(self.temporary),
+            )
+        return None

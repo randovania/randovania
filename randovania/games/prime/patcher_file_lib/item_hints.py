@@ -191,7 +191,7 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
         target = PickupTarget(
             pickup=PickupEntry(
                 name="Energy Transfer Module",
-                resources=(ConditionalResources(None, None, ()),),
+                progression=tuple(),
                 model_index=USELESS_PICKUP_MODEL,
                 item_category=ItemCategory.ETM,
                 broad_category=ItemCategory.ETM,

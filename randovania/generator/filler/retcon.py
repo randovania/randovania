@@ -92,7 +92,7 @@ Action = Union[ResourceNode, PickupEntry]
 
 
 def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResources) -> FrozenSet[ResourceInfo]:
-    resource_gain = pickup.resource_gain(current_resources)
+    resource_gain = pickup.resource_gain(current_resources, force_lock=True)
     return frozenset(resource for resource, _ in resource_gain)
 
 

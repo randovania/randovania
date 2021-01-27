@@ -122,7 +122,7 @@ class PickupNode(ResourceNode):
 
         target = patches.pickup_assignment.get(self.pickup_index)
         if target is not None and target.player == patches.player_index:
-            yield from target.pickup.resource_gain(current_resources)
+            yield from target.pickup.resource_gain(current_resources, force_lock=True)
 
 
 @dataclasses.dataclass(frozen=True)
