@@ -138,11 +138,16 @@ class NetworkClient:
                 else:
                     message = str(e)
                 await self.on_connect_error(message)
-            raise UnableToConnect(self._connect_error)
+            error = self._connect_error
+            await self.sio.disconnect()
+            raise UnableToConnect(error)
 
-    def notify_on_connect(self, result):
+    def notify_on_connect(self, error_message: Optional[Exception]):
         if self._waiting_for_on_connect is not None:
-            self._waiting_for_on_connect.set_result(result)
+            if error_message is None:
+                self._waiting_for_on_connect.set_result(None)
+            else:
+                self._waiting_for_on_connect.set_exception(error_message)
             self._waiting_for_on_connect = None
 
     def connect_to_server(self) -> asyncio.Task:
@@ -191,9 +196,12 @@ class NetworkClient:
             self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
             await self._restore_session_task
         finally:
-            self.notify_on_connect(True)
+            self.notify_on_connect(None)
 
     async def on_connect_error(self, error_message: str):
+        if isinstance(error_message, dict) and "message" in error_message:
+            error_message = error_message["message"]
+
         try:
             self._connect_error = error_message
             self.logger.warning(error_message)
@@ -201,7 +209,7 @@ class NetworkClient:
             if self._restore_session_task is not None:
                 self._restore_session_task.cancel()
         finally:
-            self.notify_on_connect(False)
+            self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
     async def on_disconnect(self):
         self.logger.info(f"on_disconnect")
