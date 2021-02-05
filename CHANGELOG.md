@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Removed: "Automatically track inventory" toggle, as the functionality was already removed.
+
+-   Fixed: Randovania now considers any inventory item with amount above capacity, or capacity above the strict maximum as the game not being connected.
+
+## [2.4.0] - 2021-02-01
+
 -   **Major** - Added: The visor and beam you start the game equipped with is now configurable.
 
 -   **Major** - Changed: In multiworld, items are now delivered at the same time as the message. It should also no longer fail to send with Nintendont.
