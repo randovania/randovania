@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Detect if the internal game copy was modified by a future version of Randovania, prompting for the user to press "Delete internal copy".
+
 -   Removed: "Automatically track inventory" toggle, as the functionality was already removed.
 
 -   Fixed: Randovania now considers any inventory item with amount above capacity, or capacity above the strict maximum as the game not being connected.
