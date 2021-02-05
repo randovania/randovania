@@ -31,6 +31,20 @@ def _mock_is_windows(request):
         yield request.param
 
 
+@pytest.fixture(name="valid_tmp_game_root")
+def _valid_tmp_game_root(tmp_path):
+    game_root = tmp_path.joinpath("game_root")
+    game_root.joinpath("files").mkdir(parents=True)
+    game_root.joinpath("sys").mkdir()
+
+    for f in ['default.dol', 'FrontEnd.pak', 'Metroid1.pak', 'Metroid2.pak']:
+        game_root.joinpath("files", f).write_bytes(b"")
+
+    game_root.joinpath("sys", 'main.dol').write_bytes(b"")
+
+    return game_root
+
+
 @patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
 def test_run_with_args_success(mock_process_command: MagicMock,
                                mock_is_windows: bool,
@@ -268,9 +282,10 @@ def test_apply_patcher_file(
         mock_create_progress_update_from_successive_messages: MagicMock,
         include_menu_mod: bool,
         has_backup_path: bool,
+        valid_tmp_game_root
 ):
     # Setup
-    game_root = MagicMock(spec=Path())
+    game_root = valid_tmp_game_root
     backup_files_path = MagicMock() if has_backup_path else None
     game_specific = MagicMock()
     progress_update = MagicMock()
@@ -281,6 +296,7 @@ def test_apply_patcher_file(
         "user_preferences": EchoesUserPreferences().as_json,
         "default_items": {"foo": "bar"},
     }
+    assert claris_randomizer.get_patch_version(game_root) == 0
 
     # Run
     claris_randomizer.apply_patcher_file(game_root, backup_files_path,
@@ -304,6 +320,8 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
     else:
         mock_add_menu_mod_to_files.assert_not_called()
+
+    assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
 
 
 @patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)

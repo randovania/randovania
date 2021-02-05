@@ -25,6 +25,25 @@ from randovania.layout.layout_description import LayoutDescription
 IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
 
 
+CURRENT_PATCH_VERSION = 1
+
+
+def _patch_version_file(game_root: Path) -> Path:
+    return game_root.joinpath("randovania_patch_version.txt")
+
+
+def get_patch_version(game_root: Path) -> int:
+    file = _patch_version_file(game_root)
+    if file.exists():
+        return int(file.read_text("utf-8"))
+    else:
+        return 0
+
+
+def write_patch_version(game_root: Path, version: int):
+    _patch_version_file(game_root).write_text(str(version))
+
+
 def _get_randomizer_folder() -> Path:
     return get_data_path().joinpath("ClarisPrimeRandomizer")
 
@@ -233,6 +252,12 @@ def apply_patcher_file(game_root: Path,
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
 
+    last_version = get_patch_version(game_root)
+    if last_version > CURRENT_PATCH_VERSION:
+        raise RuntimeError(f"Game at {game_root} was last patched with version {last_version}, "
+                           f"which is above supported version {CURRENT_PATCH_VERSION}. "
+                           f"Please press 'Delete internal copy'.")
+
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     if backup_files_path is not None:
         _create_pak_backups(game_root, backup_files_path, status_update)
@@ -242,6 +267,7 @@ def apply_patcher_file(game_root: Path,
                    "Randomized!",
                    status_update)
     dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items)
+    write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
