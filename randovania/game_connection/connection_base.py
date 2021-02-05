@@ -37,7 +37,6 @@ class InventoryItem(NamedTuple):
 
 class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
-    _tracking_inventory: bool = True
 
     @property
     def current_status(self) -> GameConnectionStatus:
@@ -55,7 +54,3 @@ class ConnectionBase:
     async def _emit_location_collected(self, location: int):
         if self._location_collected_listener is not None:
             await self._location_collected_listener(location)
-
-    @property
-    def tracking_inventory(self) -> bool:
-        return self._tracking_inventory

@@ -48,7 +48,6 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
                                                          self.game_connection, options)
-        self.force_update_button.setEnabled(not options.tracking_inventory)
         self.force_update_button.clicked.connect(self.on_force_update_button)
 
         self._update_timer = QTimer(self)
@@ -87,7 +86,6 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     @asyncSlot()
     async def _on_timer_update(self):
         try:
-            self.force_update_button.setEnabled(not self.game_connection.tracking_inventory)
             current_status = self.game_connection.current_status
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 inventory = self.game_connection.get_current_inventory()

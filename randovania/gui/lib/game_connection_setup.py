@@ -42,15 +42,12 @@ class GameConnectionSetup:
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
         self.connect_to_game = _create_check("Connect to the game", self.on_connect_to_game, True)
-        self.track_items = _create_check("Automatically track inventory",
-                                         self.on_track_items, options.tracking_inventory)
 
         self.game_connection_menu.addAction(self.use_dolphin_backend)
         self.game_connection_menu.addAction(self.use_nintendont_backend)
         self.game_connection_menu.addAction(self.upload_nintendont_action)
         self.game_connection_menu.addSeparator()
         self.game_connection_menu.addAction(self.connect_to_game)
-        self.game_connection_menu.addAction(self.track_items)
 
         self.tool.setMenu(self.game_connection_menu)
 
@@ -128,9 +125,3 @@ class GameConnectionSetup:
     def on_connect_to_game(self):
         connect_to_game = self.connect_to_game.isChecked()
         self.game_connection.backend.set_connection_enabled(connect_to_game)
-
-    def on_track_items(self):
-        track_items = self.track_items.isChecked()
-        with self.options as options:
-            options.tracking_inventory = track_items
-        self.game_connection.tracking_inventory = track_items

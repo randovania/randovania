@@ -35,7 +35,6 @@ class GameConnection(QObject, ConnectionBase):
         self.backend.set_location_collected_listener(self._emit_location_collected)
         self.backend.checking_for_collected_index = self._location_collected_listener is not None
         self.backend.set_permanent_pickups(self._permanent_pickups)
-        self.backend.tracking_inventory = self.tracking_inventory
         self._notify_status()
 
     async def start(self):
@@ -76,9 +75,4 @@ class GameConnection(QObject, ConnectionBase):
     def set_location_collected_listener(self, listener):
         super().set_location_collected_listener(listener)
         self.backend.checking_for_collected_index = listener is not None
-
-    @ConnectionBase.tracking_inventory.setter
-    def tracking_inventory(self, value: bool):
-        self._tracking_inventory = value
-        self.backend.tracking_inventory = value
 
