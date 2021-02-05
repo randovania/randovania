@@ -1,3 +1,4 @@
+import re
 import struct
 from typing import Optional
 
@@ -73,11 +74,11 @@ async def test_write_string_to_game_buffer(backend, message_original, message_en
 
 
 @pytest.mark.asyncio
-async def test_get_inventory(backend):
+async def test_get_inventory_valid(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     backend._perform_memory_operations.side_effect = lambda ops: {
-        op: struct.pack(">II", item.index, item.index)
+        op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, backend.game.resource_database.item)
     }
 
@@ -86,9 +87,44 @@ async def test_get_inventory(backend):
 
     # Assert
     assert inventory == {
-        item: InventoryItem(item.index, item.index)
+        item: InventoryItem(item.max_capacity, item.max_capacity)
         for item in backend.game.resource_database.item
     }
+
+
+@pytest.mark.asyncio
+async def test_get_inventory_invalid_capacity(backend):
+    # Setup
+    custom_inventory = {5: InventoryItem(0, 50)}
+
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations.side_effect = lambda ops: {
+        op: struct.pack(">II", *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
+        for op, item in zip(ops, backend.game.resource_database.item)
+    }
+
+    # Run
+    msg = "Received InventoryItem(amount=0, capacity=50) for Darkburst, which is an invalid state."
+    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+        await backend._get_inventory()
+
+
+@pytest.mark.asyncio
+async def test_get_inventory_invalid_amount(backend):
+    # Setup
+    custom_inventory = {5: InventoryItem(1, 0)}
+
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations.side_effect = lambda ops: {
+        op: struct.pack(">II", *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
+        for op, item in zip(ops, backend.game.resource_database.item)
+    }
+
+    # Run
+    msg = "Received InventoryItem(amount=1, capacity=0) for Darkburst, which is an invalid state."
+    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+        await backend._get_inventory()
+
 
 
 @pytest.mark.asyncio

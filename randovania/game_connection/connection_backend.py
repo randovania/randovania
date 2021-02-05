@@ -138,10 +138,6 @@ class ConnectionBackend(ConnectionBase):
     def checking_for_collected_index(self, value):
         self._checking_for_collected_index = value
 
-    @ConnectionBase.tracking_inventory.setter
-    def tracking_inventory(self, value: bool):
-        self._tracking_inventory = value
-
     def set_connection_enabled(self, value: bool):
         self._enabled = value
         if not value:
@@ -234,7 +230,10 @@ class ConnectionBackend(ConnectionBase):
 
         inventory = {}
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
-            inventory[item] = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
+            inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
+            if inv.amount > inv.capacity or inv.capacity > item.max_capacity:
+                raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
+            inventory[item] = inv
 
         return inventory
 
