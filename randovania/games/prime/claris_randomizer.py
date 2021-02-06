@@ -256,7 +256,7 @@ def apply_patcher_file(game_root: Path,
     if last_version > CURRENT_PATCH_VERSION:
         raise RuntimeError(f"Game at {game_root} was last patched with version {last_version}, "
                            f"which is above supported version {CURRENT_PATCH_VERSION}. "
-                           f"Please press 'Delete internal copy'.")
+                           f"\nPlease press 'Delete internal copy'.")
 
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     if backup_files_path is not None:

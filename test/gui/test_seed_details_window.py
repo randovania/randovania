@@ -21,14 +21,14 @@ async def test_export_iso(skip_qtbot, mocker):
     window = SeedDetailsWindow(None, options)
     window.layout_description = MagicMock()
     window._player_names = {}
-    window.run_in_background_thread = MagicMock()
+    window.run_in_background_async = AsyncMock()
 
     # Run
     await window._export_iso()
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    window.run_in_background_thread.assert_called_once()
+    window.run_in_background_async.assert_awaited_once()
 
 
 def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
