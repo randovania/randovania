@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Error message when the server rejects your client version not being displayed.
 
+-   Fixed: Setting beam ammo expansions to 0 pickups no longer hides the boxes.
+
 ## [2.4.0] - 2021-02-01
 
 -   **Major** - Added: The visor and beam you start the game equipped with is now configurable.

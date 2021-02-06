@@ -24,6 +24,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         self.unified_ammo = unified_ammo
         self.split_ammo = list(split_ammo)
         self.setTristate(True)
+        self._last_check_state = (True, False)
         self.clicked.connect(self.change_split)
 
     def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]):
@@ -32,6 +33,11 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0
         has_split = any(ammo_configuration.items_state[item].pickup_count > 0
                         for item in self.split_ammo)
+
+        if not has_split and not has_unified:
+            has_split, has_unified = self._last_check_state
+        else:
+            self._last_check_state = has_split, has_unified
 
         if has_unified:
             new_state = Qt.PartiallyChecked if has_split else Qt.Unchecked
@@ -63,3 +69,4 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
                 new_states[ammo] = split_state
 
             editor.ammo_configuration = ammo_configuration.replace_states(new_states)
+            self._last_check_state = (has_split, not has_split)
