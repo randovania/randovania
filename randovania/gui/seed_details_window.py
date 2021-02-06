@@ -1,4 +1,6 @@
 import collections
+import logging
+import traceback
 from functools import partial
 from typing import List, Dict, Optional
 
@@ -63,6 +65,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     _window_manager: Optional[WindowManager]
     _player_names: Dict[int, str]
     _pickup_spoiler_current_game: Optional[GameDescription] = None
+    _last_percentage: float = 0
 
     def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
@@ -227,7 +230,20 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
             progress_update(f"Finished!", 1)
 
-        self.run_in_background_thread(work, "Exporting...")
+        try:
+            await self.run_in_background_async(work, "Exporting...")
+        except Exception as e:
+            logging.exception("Unable to export ISO")
+
+            self.progress_update_signal.emit(f"Unable to export ISO: {e}", None)
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
+                                        "Unable to export ISO",
+                                        str(e),
+                                        QtWidgets.QMessageBox.Ok)
+            common_qt_lib.set_default_window_icon(box)
+            if e.__traceback__ is not None:
+                box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
+            await async_dialog.execute_dialog(box)
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
@@ -446,6 +462,11 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0
+
+        if percentage is None:
+            percentage = self._last_percentage
+        else:
+            self._last_percentage = percentage
         if percentage >= 0:
             self.progress_bar.setRange(0, 100)
             self.progress_bar.setValue(percentage)
