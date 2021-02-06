@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Randovania now considers any inventory item with amount above capacity, or capacity above the strict maximum as the game not being connected.
 
+-   Fixed: Error message when the server rejects your client version not being displayed.
+
 ## [2.4.0] - 2021-02-01
 
 -   **Major** - Added: The visor and beam you start the game equipped with is now configurable.
