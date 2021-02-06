@@ -91,6 +91,10 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Install docker-compose
+        run: |
+          python -m pip install docker-compose
+
       - name: start deployment
         uses: bobheadxi/deployments@master
         id: deployment
