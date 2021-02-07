@@ -925,7 +925,7 @@
             },
             {
                 "index": 97,
-                "long_name": "SkyTown Federation Landing Site Item",
+                "long_name": "SkyTown Federation Landing Site Unlocked",
                 "short_name": "Event97"
             },
             {
@@ -15245,7 +15245,7 @@
                     "in_dark_aether": false,
                     "asset_id": 12448241480574438186,
                     "default_node_index": 7,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Hangar Bay Hall",
@@ -15504,15 +15504,6 @@
                                             ]
                                         }
                                     ]
-                                },
-                                "Event - Ship Upgrade": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 35,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 },
                                 "Samus Ship": {
                                     "type": "and",
@@ -31075,7 +31066,7 @@
                     "in_dark_aether": false,
                     "asset_id": 18200553231954089224,
                     "default_node_index": 2,
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "nodes": [
                         {
                             "name": "Door to Landing Access",
@@ -31101,7 +31092,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Event - Landing Site Item": {
+                                "Event - Landing Site Unlocked": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -31158,17 +31149,21 @@
                                 "Door to Landing Access": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Pickup (Ship Grapple)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Event - Landing Site Item",
+                            "name": "Event - Landing Site Unlocked",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 97,
                             "connections": {
-                                "Pickup (Ship Grapple)": {
+                                "Door to Landing Access": {
                                     "type": "and",
                                     "data": []
                                 }
