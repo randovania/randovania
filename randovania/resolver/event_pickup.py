@@ -69,6 +69,10 @@ def replace_with_event_pickups(game: GameDescription):
                 event_node.index,
                 event_node, next_node)
 
+            # If the default node index is beyond one of the removed nodes, then fix it
+            if area.default_node_index >= min(area.nodes.index(event_node), area.nodes.index(next_node)):
+                object.__setattr__(area, "default_node_index", area.default_node_index - 1)
+
             area.nodes[area.nodes.index(event_node)] = combined_node
             game.world_list.add_new_node(area, combined_node)
             area.nodes.remove(next_node)
