@@ -142,7 +142,11 @@ class WorldList:
         area = self.area_by_area_location(connection)
         if area.default_node_index is None:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
-        return area.nodes[area.default_node_index]
+        try:
+            return area.nodes[area.default_node_index]
+        except IndexError:
+            raise IndexError("Area '{}' default_node_index ({}), but there's only {} nodes".format(
+                area.name, area.default_node_index, len(area.nodes)))
 
     def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
         """
