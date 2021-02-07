@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
-from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b, Pass
+from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag, \
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b
 
 from randovania.game_description.node import LoreType
 from randovania.games.game import RandovaniaGame
@@ -141,26 +141,33 @@ def OptionalValue(subcon):
     )
 
 
-ConstructResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
-)
+def _build_resource_info(**kwargs):
+    return Struct(
+        index=VarInt,
+        long_name=CString("utf8"),
+        short_name=CString("utf8"),
+        **kwargs,
+    )
 
-ConstructItemResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
+
+ConstructResourceInfo = _build_resource_info()
+
+ConstructItemResourceInfo = _build_resource_info(
     max_capacity=Int32ub,
     extra=OptionalValue(Int32ub),
 )
 
-ConstructTrickResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
+ConstructTrickResourceInfo = _build_resource_info(
     description=CString("utf8"),
 )
+
+ConstructDamageResourceInfo = _build_resource_info(
+    reductions=PrefixedArray(VarInt, Struct(
+        index=VarInt,
+        multiplier=Float32b,
+    ))
+)
+
 
 ConstructResourceRequirement = Struct(
     type=Byte,
@@ -195,13 +202,7 @@ ConstructResourceDatabase = Struct(
     multiworld_magic_item_index=VarInt,
     events=PrefixedArray(VarInt, ConstructResourceInfo),
     tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
-    damage=PrefixedArray(VarInt, Struct(
-        Embedded(ConstructResourceInfo),
-        reductions=PrefixedArray(VarInt, Struct(
-            index=VarInt,
-            multiplier=Float32b,
-        )),
-    )),
+    damage=PrefixedArray(VarInt, ConstructDamageResourceInfo),
     versions=PrefixedArray(VarInt, ConstructResourceInfo),
     misc=PrefixedArray(VarInt, ConstructResourceInfo),
     requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
