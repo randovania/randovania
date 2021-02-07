@@ -70,7 +70,7 @@ setup(
     install_requires=[
         'networkx',
         'bitstruct',
-        'construct<2.10',
+        'construct',
         'tenacity',
         'python-slugify',
         'python-socketio[asyncio_client]',
