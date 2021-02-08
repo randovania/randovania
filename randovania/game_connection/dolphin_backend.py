@@ -67,8 +67,8 @@ class DolphinBackend(ConnectionBackend):
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
                 self._test_still_hooked()
 
-        if not self.dolphin.is_hooked():
-            raise MemoryOperationException("Lost connection do Dolphin")
+            if not self.dolphin.is_hooked():
+                raise MemoryOperationException("Lost connection do Dolphin")
 
         result = {}
         for op in ops:
