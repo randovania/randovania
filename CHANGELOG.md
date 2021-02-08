@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2] - 2021-02-08
+
+-   Fixed: Randovania no longer crashes if the connected Dolphin stops emulation.
+
+## [2.4.1] - 2021-02-06
+
 -   Added: Detect if the internal game copy was modified by a future version of Randovania, prompting for the user to press "Delete internal copy".
 
 -   Changed: An error popup now shows up when exporting an ISO fails.

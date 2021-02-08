@@ -183,7 +183,7 @@ class ConnectionBackend(ConnectionBase):
         cstate_manager_global = self.patches.cstate_manager_global
         self._last_world = self._world
 
-        player_vtable = None
+        player_vtable = 0
         try:
             memory_ops = [
                 MemoryOperation(self.patches.game_state_pointer, offset=4, read_byte_count=4),
