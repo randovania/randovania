@@ -44,6 +44,9 @@ class DolphinBackend(ConnectionBackend):
 
         _validate_range(address, op.byte_count)
 
+        if not self.dolphin.is_hooked():
+            raise MemoryOperationException("Lost connection do Dolphin")
+
         result = None
         if op.read_byte_count is not None:
             result = self.dolphin.read_bytes(address, op.read_byte_count)
@@ -51,6 +54,7 @@ class DolphinBackend(ConnectionBackend):
         if op.write_bytes is not None:
             self.dolphin.write_bytes(address, op.write_bytes)
             self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
+
         return result
 
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
@@ -61,6 +65,9 @@ class DolphinBackend(ConnectionBackend):
 
         pointers = {}
         for pointer in pointers_to_read:
+            if not self.dolphin.is_hooked():
+                raise MemoryOperationException("Lost connection do Dolphin")
+
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
             except RuntimeError:
