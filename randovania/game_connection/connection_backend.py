@@ -208,7 +208,7 @@ class ConnectionBackend(ConnectionBase):
             self.logger.info(
                 f"Detected world as {new_world.name if new_world else 'None'}. "
                 f"Player vtable: {hex(player_vtable)}; Expected vtable: {hex(self.patches.cplayer_vtable)}")
-            if player_vtable == self.patches.cplayer_vtable:
+            if player_vtable == self.patches.cplayer_vtable or new_world is None:
                 self._world = new_world
 
     def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
