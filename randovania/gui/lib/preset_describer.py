@@ -1,3 +1,4 @@
+import copy
 from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import default_database
@@ -6,6 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
+from randovania.layout.elevators import LayoutElevators
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
@@ -27,34 +29,17 @@ _ECHOES_TEMPLATE_STRINGS = {
         "Random Starting Items: {random_starting_items}",
     ],
     "Items": [
-        "Progressive Suit: {progressive_suit}",
-        "Progressive Grapple: {progressive_grapple}",
-        "Split Beam Ammo: {split_beam_ammo}",
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
         "Translator Gates: {translator_gates}",
-        "Elevators: {elevators}",
     ],
     "Game Changes": [
-        "Missiles needs Launcher: {missile_launcher_required}",
-        "Power Bombs needs Main PBs: {main_pb_required}",
-        "Warp to Start: {warp_to_start}",
-        "Final bosses included? {include_final_bosses}",
-        "Menu Mod included? {menu_mod}",
     ],
     "Difficulty": [
-        "Energy Tank: {energy_tank}",
-        "1 HP Mode: {dangerous_energy_tank}",
-        "Safe Zone: {safe_zone}",
-        "Dark Aether Suit Damage: {dark_aether_suit_damage}",
         "Damage Strictness: {damage_strictness}",
-        "Pickup Model: {pickup_model}",
-    ],
-    "Sky Temple Keys": [
-        "Target: {target}",
     ],
 }
 _CORRUPTION_TEMPLATE_STRINGS = {
@@ -268,29 +253,41 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
     return format_params
 
 
-def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
+def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
+    template_strings = copy.deepcopy(_ECHOES_TEMPLATE_STRINGS)
 
     format_params = {}
 
     # Items
-    unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
+    inventory_changes = []
+    if has_shuffled_item(major_items, "Progressive Suit"):
+        inventory_changes.append("Progressive Suit")
+    if has_shuffled_item(major_items, "Progressive Grapple"):
+        inventory_changes.append("Progressive Grapple")
 
-    format_params["progressive_suit"] = _bool_to_str(has_shuffled_item(major_items, "Progressive Suit"))
-    format_params["progressive_grapple"] = _bool_to_str(has_shuffled_item(major_items, "Progressive Grapple"))
-    format_params["split_beam_ammo"] = _bool_to_str(unified_ammo.pickup_count == 0)
+    unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
+    if unified_ammo.pickup_count == 0:
+        inventory_changes.append("Split beam ammo")
+
+    if inventory_changes:
+        template_strings["Items"].append(", ".join(inventory_changes))
 
     # Difficulty
-    if configuration.varia_suit_damage == 6 and configuration.dark_suit_damage == 1.2:
-        dark_aether_suit_damage = "Normal"
-    else:
-        dark_aether_suit_damage = "Custom"
+    if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
+        template_strings["Difficulty"].append("Dark Aether Suit Damage: {} dmg/s Varia, {} dmg/s Dark".format(
+            configuration.varia_suit_damage, configuration.dark_suit_damage
+        ))
 
-    format_params["energy_tank"] = f"{configuration.energy_per_tank} energy"
-    format_params["dangerous_energy_tank"] = _bool_to_str(configuration.dangerous_energy_tank)
-    format_params["safe_zone"] = f"{configuration.safe_zone.heal_per_second} energy/s"
-    format_params["dark_aether_suit_damage"] = dark_aether_suit_damage
+    if configuration.energy_per_tank != 100:
+        template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
+
+    if configuration.safe_zone.heal_per_second != 1:
+        template_strings["Difficulty"].append(f"Safe Zone: {configuration.safe_zone.heal_per_second} energy/s")
+
+    if configuration.dangerous_energy_tank:
+        template_strings["Difficulty"].append("1-HP Mode")
 
     # Gameplay
     translator_gates = "Custom"
@@ -305,8 +302,10 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
             break
 
     format_params["translator_gates"] = translator_gates
-    format_params["elevators"] = configuration.elevators.value
     format_params["hints"] = "Yes"
+
+    if configuration.elevators != LayoutElevators.VANILLA:
+        template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.long_name}")
 
     # Game Changes
     missile_launcher_required = True
@@ -317,25 +316,40 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> dict:
         elif ammo.name == "Power Bomb Expansion":
             main_pb_required = state.requires_major_item
 
-    format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
-    format_params["main_pb_required"] = _bool_to_str(main_pb_required)
-    format_params["warp_to_start"] = _bool_to_str(configuration.warp_to_start)
-    format_params["generic_patches"] = "Some"
-    format_params["menu_mod"] = _bool_to_str(configuration.menu_mod)
-    format_params["include_final_bosses"] = _bool_to_str(not configuration.skip_final_bosses)
+    required_messages = []
+    if missile_launcher_required:
+        required_messages.append("Missiles needs Launcher")
+    if main_pb_required:
+        required_messages.append("Power Bomb needs Main")
+
+    if required_messages:
+        template_strings["Game Changes"].append(", ".join(required_messages))
+
+    qol_changes = []
+    if configuration.warp_to_start:
+        qol_changes.append("Can warp to start")
+    if configuration.menu_mod:
+        qol_changes.append("Menu Mod included")
+    if configuration.skip_final_bosses:
+        qol_changes.append("Final bosses removed")
+
+    if qol_changes:
+        template_strings["Game Changes"].append(", ".join(qol_changes))
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-        stk_location = "Bosses"
+        template_strings["Items"].append("Sky Temple Keys at all bosses")
     elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-        stk_location = "Guardians"
+        template_strings["Items"].append("Sky Temple Keys at all guardians")
     else:
-        stk_location = "Random"
+        template_strings["Items"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys shuffled")
 
-    format_params["target"] = "{0} of {0}".format(configuration.sky_temple_keys.num_keys)
-    format_params["location"] = stk_location
+    # Item Model
+    if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
+        template_strings["Difficulty"].append(f"Pickup: {configuration.pickup_model_style.long_name} "
+                                              f"({configuration.pickup_model_data_source.long_name})")
 
-    return format_params
+    return template_strings, format_params
 
 
 def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
@@ -392,8 +406,8 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     template_strings = None
     if preset.game == RandovaniaGame.PRIME2:
-        template_strings = _ECHOES_TEMPLATE_STRINGS
-        format_params.update(_echoes_format_params(configuration))
+        template_strings, params = _echoes_format_params(configuration)
+        format_params.update(params)
 
     elif preset.game == RandovaniaGame.PRIME3:
         template_strings = _CORRUPTION_TEMPLATE_STRINGS
