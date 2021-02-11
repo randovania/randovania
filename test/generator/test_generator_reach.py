@@ -14,19 +14,23 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.generator import base_patches_factory, generator
-from randovania.generator.generator_reach import GeneratorReach, filter_pickup_nodes, \
-    reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
-    advance_reach_with_possible_unsafe_resources, collectable_resource_nodes
+from randovania.generator import base_patches_factory
+from randovania.generator.generator_reach import (
+    GeneratorReach, filter_pickup_nodes,
+    reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach,
+    advance_reach_with_possible_unsafe_resources, collectable_resource_nodes)
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.resolver import bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
 
@@ -38,7 +42,7 @@ def run_bootstrap(preset: Preset):
         spoiler=True,
         presets={0: preset},
     )
-    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False)
+    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
     _, state = logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
@@ -178,31 +182,82 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-@pytest.mark.parametrize(["minimal_logic", "nodes", "safe_nodes"], [
-    (False, 44, 5),
-    (True, 1000, 1000),
-])
-def test_reach_size_from_start_echoes(echoes_game_description, default_layout_configuration, minimal_logic, nodes,
-                                      safe_nodes):
+def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
     # Setup
+    game = small_echoes_game_description
     specific_levels = {
         trick.short_name: LayoutTrickLevel.HYPERMODE
-        for trick in echoes_game_description.resource_database.trick
+        for trick in game.resource_database.trick
     }
+
+    def item(name: str):
+        return find_resource_info_with_long_name(game.resource_database.item, name)
+
+    def nodes(*names):
+        result = [
+            game.world_list.node_from_name(name)
+            for name in names
+        ]
+        result.sort(key=lambda it: it.index)
+        return result
 
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
-        trick_level=TrickLevelConfiguration(minimal_logic=minimal_logic,
-                                            specific_levels=specific_levels if not minimal_logic else {},
+        trick_level=TrickLevelConfiguration(minimal_logic=False,
+                                            specific_levels=specific_levels,
                                             game=default_layout_configuration.game),
+        starting_location=StartingLocation.with_elements(
+            [game.starting_location],
+            game=RandovaniaGame.PRIME2,
+        )
     )
-    player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0, 1)
-
-    game, state = logic_bootstrap(layout_configuration, player_pool.game, player_pool.patches)
+    patches = base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
+                                                       False, player_index=0)
+    state = bootstrap.calculate_starting_state(game, patches)
+    state.resources[item("Combat Visor")] = 1
+    state.resources[item("Amber Translator")] = 1
+    state.resources[item("Scan Visor")] = 1
+    state.resources[item("Morph Ball")] = 1
+    state.resources[item("Power Beam")] = 1
+    state.resources[item("Charge Beam")] = 1
+    state.resources[item("Grapple Beam")] = 1
+    state.resources[item("Dark Beam")] = 1
+    state.resources[item("Dark Ammo")] = 50
+    state.resources[item("Missile")] = 5
 
     # Run
     reach = GeneratorReach.reach_from_state(game, state)
 
     # Assert
-    assert len(list(reach.nodes)) >= nodes
-    assert len(list(reach.safe_nodes)) >= safe_nodes
+    assert list(reach.nodes) == nodes(
+        "Temple Grounds/Path of Eyes/Front of Translator Gate",
+        "Temple Grounds/Path of Eyes/Lore Scan",
+        "Temple Grounds/Path of Eyes/Translator Gate",
+        "Temple Grounds/Path of Eyes/Door to Torvus Transport Access",
+
+        "Temple Grounds/Torvus Transport Access/Door to Path of Eyes",
+        "Temple Grounds/Torvus Transport Access/Door to Transport to Torvus Bog",
+
+        "Temple Grounds/Transport to Torvus Bog/Door to Torvus Transport Access",
+        "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds",
+
+        "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
+        "Torvus Bog/Transport to Temple Grounds/Door to Temple Transport Access",
+
+        "Torvus Bog/Temple Transport Access/Door to Transport to Temple Grounds",
+        "Torvus Bog/Temple Transport Access/Door to Torvus Lagoon",
+
+        "Torvus Bog/Torvus Lagoon/Door to Temple Transport Access",
+        "Torvus Bog/Torvus Lagoon/Door to Path of Roots",
+        "Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)",
+
+        "Torvus Bog/Path of Roots/Door to Torvus Lagoon",
+        "Torvus Bog/Path of Roots/Door to Great Bridge",
+        "Torvus Bog/Path of Roots/Pickup (Missile)",
+        "Torvus Bog/Path of Roots/Next to Pickup",
+        "Torvus Bog/Path of Roots/Under Lore Scan",
+        "Torvus Bog/Path of Roots/Lore Scan",
+
+        "Torvus Bog/Great Bridge/Door to Path of Roots",
+    )
+    assert len(list(reach.safe_nodes)) == 20
