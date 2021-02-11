@@ -8,10 +8,6 @@ class LayoutDamageStrictness(BitPackEnum, Enum):
     MEDIUM = 1.5
     LENIENT = 2.0
 
-    @classmethod
-    def default(cls):
-        return cls.MEDIUM
-
     @property
     def long_name(self) -> str:
         if self == LayoutDamageStrictness.STRICT:
@@ -21,4 +17,4 @@ class LayoutDamageStrictness(BitPackEnum, Enum):
         elif self == LayoutDamageStrictness.LENIENT:
             return "Lenient"
         else:
-            return "Custom"
+            return f"Custom ({self.value})"
