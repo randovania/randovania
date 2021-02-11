@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
+
+-   Added: Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
+
+-   Added: Method of reaching Worker's Path from the top level in Sanctuary Temple with Scan Visor and an Extended Dash (Expert and above).
+
+-   Added: Method of reaching Windchamber Gateway from Windchamber Tunnel in Grand Windchamber with a Boost Jump (Expert and above).
+
+-   Added: Method of reaching Temple Access in Mining Station A with a Boost Jump (Advanced and above).
+
+-   Changed: Reaching the pickup in Path of Roots from Torvus Lagoon with Gravity Boost, Space Jump, and a Slope Jump is now Intermediate (from Beginner).
+
+-   Fixed: Reliquary Grounds now has proper requirements for reaching Ing Reliquary with Light Suit.
+
 ## [2.4.2] - 2021-02-08
 
 -   Fixed: Randovania no longer crashes if the connected Dolphin stops emulation.
