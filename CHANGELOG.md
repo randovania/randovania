@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Preset summary now only include differences from vanilla game.
+
 -   Added: Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
 
 -   Added: Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
