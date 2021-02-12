@@ -36,10 +36,10 @@ _ECHOES_TEMPLATE_STRINGS = {
         "Starting Location: {starting_location}",
         "Translator Gates: {translator_gates}",
     ],
-    "Game Changes": [
-    ],
     "Difficulty": [
         "Damage Strictness: {damage_strictness}",
+    ],
+    "Game Changes": [
     ],
 }
 _CORRUPTION_TEMPLATE_STRINGS = {
@@ -102,6 +102,7 @@ _EXPECTED_ITEMS = {
         "Power Beam"
     },
     RandovaniaGame.PRIME2: {
+        "Combat Visor",
         "Scan Visor",
         "Morph Ball",
         "Power Beam",
@@ -276,7 +277,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
 
     # Difficulty
     if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
-        template_strings["Difficulty"].append("Dark Aether Suit Damage: {} dmg/s Varia, {} dmg/s Dark".format(
+        template_strings["Difficulty"].append("Dark Aether: {:.2f} dmg/s Varia, {:.2f} dmg/s Dark".format(
             configuration.varia_suit_damage, configuration.dark_suit_damage
         ))
 
@@ -284,7 +285,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
         template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
 
     if configuration.safe_zone.heal_per_second != 1:
-        template_strings["Difficulty"].append(f"Safe Zone: {configuration.safe_zone.heal_per_second} energy/s")
+        template_strings["Difficulty"].append(f"Safe Zone: {configuration.safe_zone.heal_per_second:.2f} energy/s")
 
     if configuration.dangerous_energy_tank:
         template_strings["Difficulty"].append("1-HP Mode")
@@ -335,6 +336,9 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
 
     if qol_changes:
         template_strings["Game Changes"].append(", ".join(qol_changes))
+
+    if not template_strings["Game Changes"]:
+        template_strings.pop("Game Changes")
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
