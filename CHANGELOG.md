@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Preset summary now only include differences from vanilla game.
 
+### Logic Database Changes
+
 -   Added: Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
 
 -   Added: Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
@@ -20,7 +22,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of reaching Temple Access in Mining Station A with a Boost Jump (Advanced and above).
 
+-   Added: Method of reaching pickup in Temple Access (Sanctuary) with Space Jump, Screw Attack, and Standable Terrain (Intermediate and above).
+
+-   Added: Method of climbing Temple Access (Sanctuary) with Space Jump, standing on a Rezbit, and dashing off the other Rezbit (Expert and above).
+
 -   Changed: Reaching the pickup in Path of Roots from Torvus Lagoon with Gravity Boost, Space Jump, and a Slope Jump is now Intermediate (from Beginner).
+
+-   Changed: Reaching the pickup in Grand Windchamber with Space Jump, Screw Attack, Slope Jump, Standable Terrain is now Advanced (from Intermediate).
+
+-   Changed: Bomb Jumping over the 2nd light block heading to Hall of Eyes is now Intermediate (from Beginner).
+
+-   Changed: Energy Tank requirements for Chykka have been lowered.
 
 -   Fixed: Reliquary Grounds now has proper requirements for reaching Ing Reliquary with Light Suit.
 
