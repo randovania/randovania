@@ -120,11 +120,15 @@ def add_relative_hint(world_list: WorldList,
     area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
                                                              key=lambda a: a[0].area_asset_id)), rng)
 
+    distance_offset = 0
+    if not precise_distance:
+        distance_offset = max_distance - distances[area]
+
     if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
-        relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
+        relative = RelativeDataArea(distance_offset, world_list.area_to_area_location(area),
                                     precision)
     elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
-        relative = RelativeDataItem(precise_distance, rng.choice(list(_major_pickups(area))), precision)
+        relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)
     else:
         raise ValueError(f"Invalid relative_type: {relative_type}")
 
@@ -147,8 +151,8 @@ def _relative(relative_type: HintLocationPrecision,
 def _get_relative_hint_providers():
     return [
         _relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),
         _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
-        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.PRECISE_CATEGORY, 3),
     ]
 
 

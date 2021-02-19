@@ -288,8 +288,8 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
     (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
-    (False, "up to"),
-    (True, "exactly"),
+    (1, "up to"),
+    (0, "exactly"),
 ])
 def test_create_message_for_hint_relative_item(echoes_game_description, pickup, players_config,
                                                distance_precise, distance_text,
@@ -318,15 +318,15 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
-                      f'&push;&main-color=#FF3333;{distance_text} 7 rooms&pop; away from {reference_name}.')
+                      f'&push;&main-color=#FF3333;{distance_text} {7 + distance_precise} rooms&pop; away from {reference_name}.')
 
 
-@pytest.mark.parametrize(["distance_precise", "distance_text"], [
-    (False, "up to"),
-    (True, "exactly"),
+@pytest.mark.parametrize(["offset", "distance_text"], [
+    (2, "up to"),
+    (0, "exactly"),
 ])
 def test_create_message_for_hint_relative_area(echoes_game_description, pickup, players_config,
-                                               distance_precise, distance_text):
+                                               offset, distance_text):
     world_list = echoes_game_description.world_list
     patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
         PickupIndex(5): PickupTarget(pickup, 0),
@@ -337,7 +337,7 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup, 
     hint = Hint(
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED, include_owner=False,
-                      relative=RelativeDataArea(distance_precise,
+                      relative=RelativeDataArea(offset,
                                                 AreaLocation(1039999561, 3822429534),
                                                 HintRelativeAreaName.NAME)),
         PickupIndex(5)
@@ -350,4 +350,5 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup, 
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
-                      f'&push;&main-color=#FF3333;{distance_text} 10 rooms&pop; away from Torvus Bog - Great Bridge.')
+                      f'&push;&main-color=#FF3333;{distance_text} {10 + offset} rooms&pop; away from '
+                      f'Torvus Bog - Great Bridge.')
