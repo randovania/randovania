@@ -709,12 +709,12 @@ Asset id: 3997643454
   > Translator Gate
       Trivial
 
-> Event - Path of Eyes Light Block to Windchamber Gateway; Heals? False
+> Event - Light Block to Windchamber Gateway; Heals? False
   * Event Path of Eyes Light Block to Windchamber Gateway
   > Front of Center Door
       Trivial
 
-> Event - Path of Eyes Light Block In Tunnel; Heals? False
+> Event - Light Block In Tunnel; Heals? False
   * Event Path of Eyes Light Block In Tunnel
   > Door to Hall of Eyes
       Trivial
@@ -728,7 +728,7 @@ Asset id: 3997643454
           Any of the following:
               After Path of Eyes Light Block In Tunnel
               Boost Ball and Morph Ball Bomb and Bomb Jump (Intermediate) and Movement (Intermediate) and NTSC
-  > Event - Path of Eyes Light Block In Tunnel
+  > Event - Light Block In Tunnel
       Morph Ball and Shoot Light Beam
   > Translator Gate
       Trivial
@@ -757,8 +757,8 @@ Asset id: 3997643454
   > Door to Hall of Eyes
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
-  > Event - Path of Eyes Light Block to Windchamber Gateway
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Intermediate)
+  > Event - Light Block to Windchamber Gateway
       Shoot Light Beam
   > Front of Translator Gate
       Any of the following:
@@ -1143,7 +1143,7 @@ Asset id: 2909835645
                   Any of the following:
                       Screw Attack or After Ing Windchamber Yellow Seeker Lock
                       Scan Visor and Combat/Scan Dash (Expert)
-              Screw Attack and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+              Screw Attack and Slope Jump (Advanced) and Standable Terrain (Advanced)
 
 > Portal to Ing Windchamber; Heals? False
   * Dark Portal to Ing Windchamber/Portal to Grand Windchamber
@@ -6646,9 +6646,8 @@ Asset id: 912503189
               Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 50 and Poison Water Damage ≥ 35
               Gravity Boost and Dark World Damage ≥ 35 and Poison Water Damage ≥ 10
           Any of the following:
-              Combat (Advanced) or Normal Damage ≥ 300
-              Combat (Beginner) and Normal Damage ≥ 200
-              Combat (Intermediate) and Normal Damage ≥ 100
+              Combat (Intermediate) or Normal Damage ≥ 150
+              Combat (Beginner) and Normal Damage ≥ 75
   > Safe Zone (Temple Access Side)
       Dark World Damage ≥ 5
   > Central Safe Zone (Top)
@@ -9864,6 +9863,8 @@ Asset id: 1815493844
           Morph Ball and Spider Ball and Morph Ball Bomb and Bomb Jump (Intermediate)
   > Out of Bounds
       Single Room Out of Bounds (Expert) and Use Screw Attack (No Space Jump)
+  > Event - Temple Access Reloaded (Bottom)
+      After Temple Access (Sanctuary) Quad
 
 > Room Center (Top); Heals? False
   > Door to Controller Access
@@ -9893,6 +9894,8 @@ Asset id: 1815493844
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
           Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
           Scan Visor and Extended Dash (Expert)
+  > Event - Temple Access Reloaded (Top)
+      After Temple Access (Sanctuary) Quad
 
 > Translator Gate; Heals? False
   * Translator Gate (TranslatorGate 16)
@@ -9916,6 +9919,16 @@ Asset id: 1815493844
   > Room Center (Top)
       Trivial
   > Translator Gate
+      Trivial
+
+> Event - Temple Access Reloaded (Top); Heals? False
+  * Event Temple Access (Sanctuary) Reloaded after Quad
+  > Room Center (Top)
+      Trivial
+
+> Event - Temple Access Reloaded (Bottom); Heals? False
+  * Event Temple Access (Sanctuary) Reloaded after Quad
+  > Room Center (Bottom)
       Trivial
 
 ----------------
@@ -10236,25 +10249,21 @@ Asset id: 3312357786
   * Normal Door to Main Gyro Chamber/Door to Temple Access
   > Pickup (Missile)
       All of the following:
-          Morph Ball and Morph Ball Bomb and Space Jump Boots
+          Morph Ball and Space Jump Boots
           Any of the following:
-              Bomb Space Jump (Advanced)
-              Screw Attack and Bomb Space Jump (Intermediate)
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Bomb Space Jump (Advanced)
+                      Screw Attack and Bomb Space Jump (Intermediate)
+              Screw Attack and Standable Terrain (Intermediate)
   > Room Center
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Boost Ball or Morph Ball Bomb or Power Bomb
-              Dark Visor and Seeker Launcher and Missile ≥ 4 and Knowledge (Beginner)
+      Trivial
 
 > Door to Sanctuary Temple; Heals? False
   * Normal Door to Sanctuary Temple/Door to Temple Access
   > Room Center
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Boost Ball or Morph Ball Bomb or Power Bomb
-              Dark Visor and Seeker Launcher and Missile ≥ 4 and Knowledge (Beginner)
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Pickup 113; Major Location? False
@@ -10263,18 +10272,39 @@ Asset id: 3312357786
 
 > Room Center; Heals? False
   > Door to Main Gyro Chamber
-      Any of the following:
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Dark Visor and Seeker Launcher and Missile ≥ 4
-                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
-          Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
-          Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+      All of the following:
+          After Temple Access (Sanctuary) Quad
+          Any of the following:
+              Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
+              Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      After Temple Access (Sanctuary) Activate Cannon
+                      Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+              Space Jump Boots and After Temple Access (Sanctuary) Reloaded after Quad and Combat/Scan Dash (Expert) and Jump Off Enemy (Expert)
   > Door to Sanctuary Temple
-      Trivial
+      After Temple Access (Sanctuary) Quad
   > Pickup (Missile)
-      Dark Visor and Echo Visor and Morph Ball and Seeker Launcher and Missile ≥ 4
+      Echo Visor and Morph Ball and After Temple Access (Sanctuary) Activate Cannon
+  > Event - Quad
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Boost Ball or Morph Ball Bomb or Power Bomb
+              After Temple Access (Sanctuary) Activate Cannon and Knowledge (Beginner)
+  > Event - Activate Cannon
+      Dark Visor and Seeker Launcher and Missile ≥ 4
+
+> Event - Quad; Heals? False
+  * Event Temple Access (Sanctuary) Quad
+  > Room Center
+      Trivial
+
+> Event - Activate Cannon; Heals? False
+  * Event Temple Access (Sanctuary) Activate Cannon
+  > Room Center
+      Trivial
 
 ----------------
 Checkpoint Station
