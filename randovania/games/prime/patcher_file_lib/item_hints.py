@@ -128,12 +128,12 @@ class RelativeFormatter(LocationFormatter):
 
     def relative_format(self, determiner: Determiner, pickup: str, hint: Hint, other_area: Area, other_name: str,
                         ) -> str:
-        distance = self._calculate_distance(hint.target, other_area)
-        if distance > 1:
-            precise_msg = "exactly " if hint.precision.relative.precise_distance else "up to "
-            distance_msg = f"{precise_msg}{distance} rooms"
-        else:
+        distance = self._calculate_distance(hint.target, other_area) + hint.precision.relative.distance_offset
+        if distance == 1:
             distance_msg = "one room"
+        else:
+            precise_msg = "exactly " if hint.precision.relative.distance_offset == 0 else "up to "
+            distance_msg = f"{precise_msg}{distance} rooms"
 
         return (f"{determiner.title}{pickup} can be found "
                 f"{color_text(TextColor.LOCATION, distance_msg)} away from {other_name}.")

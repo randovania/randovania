@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Preset summary now only include differences from vanilla game.
 
+-   Changed: The relative hint using an item category has been replaced with a relative hint using an area, with up to distance.
+
 ### Logic Database Changes
 
 -   Added: Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).

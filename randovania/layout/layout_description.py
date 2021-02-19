@@ -20,7 +20,7 @@ def _shareable_hash_words():
         return json.load(hash_words_file)
 
 
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 2
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 3
 
 
 def migrate_description(json_dict: dict) -> dict:
@@ -40,6 +40,15 @@ def migrate_description(json_dict: dict) -> dict:
                         owner = True
                         hint["precision"]["item"] = "nothing"
                     hint["precision"]["include_owner"] = owner
+        version += 1
+
+    if version == 2:
+        for game in json_dict["game_modifications"]:
+            for hint in game["hints"].values():
+                precision = hint.get("precision")
+                if precision is not None and precision.get("relative") is not None:
+                    precision["relative"]["distance_offset"] = 0
+                    precision["relative"].pop("precise_distance")
         version += 1
 
     json_dict["schema_version"] = version
