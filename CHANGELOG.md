@@ -8,35 +8,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2021-02-19
+
 -   Changed: Preset summary now only include differences from vanilla game.
 
 -   Changed: The relative hint using an item category has been replaced with a relative hint using an area, with up to distance.
 
 ### Logic Database Changes
 
--   Added: Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
+#### Added
 
--   Added: Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
+-   Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
 
--   Added: Method of reaching Worker's Path from the top level in Sanctuary Temple with Scan Visor and an Extended Dash (Expert and above).
+-   Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
 
--   Added: Method of reaching Windchamber Gateway from Windchamber Tunnel in Grand Windchamber with a Boost Jump (Expert and above).
+-   Method of reaching Worker's Path from the top level in Sanctuary Temple with Scan Visor and an Extended Dash (Expert and above).
 
--   Added: Method of reaching Temple Access in Mining Station A with a Boost Jump (Advanced and above).
+-   Method of reaching Windchamber Gateway from Windchamber Tunnel in Grand Windchamber with a Boost Jump (Expert and above).
 
--   Added: Method of reaching pickup in Temple Access (Sanctuary) with Space Jump, Screw Attack, and Standable Terrain (Intermediate and above).
+-   Method of reaching Temple Access in Mining Station A with a Boost Jump (Advanced and above).
 
--   Added: Method of climbing Temple Access (Sanctuary) with Space Jump, standing on a Rezbit, and dashing off the other Rezbit (Expert and above).
+-   Method of reaching pickup in Temple Access (Sanctuary) with Space Jump, Screw Attack, and Standable Terrain (Intermediate and above).
 
--   Changed: Reaching the pickup in Path of Roots from Torvus Lagoon with Gravity Boost, Space Jump, and a Slope Jump is now Intermediate (from Beginner).
+-   Method of climbing Temple Access (Sanctuary) with Space Jump, standing on a Rezbit, and dashing off the other Rezbit (Expert and above).
 
--   Changed: Reaching the pickup in Grand Windchamber with Space Jump, Screw Attack, Slope Jump, Standable Terrain is now Advanced (from Intermediate).
+#### Changed
 
--   Changed: Bomb Jumping over the 2nd light block heading to Hall of Eyes is now Intermediate (from Beginner).
+-   Increased weight for Energy Tanks to be selected as progression.
 
--   Changed: Energy Tank requirements for Chykka have been lowered.
+-   Reaching the pickup in Path of Roots from Torvus Lagoon with Gravity Boost, Space Jump, and a Slope Jump is now Intermediate (from Beginner).
 
--   Fixed: Reliquary Grounds now has proper requirements for reaching Ing Reliquary with Light Suit.
+-   Reaching the pickup in Grand Windchamber with Space Jump, Screw Attack, Slope Jump, Standable Terrain is now Advanced (from Intermediate).
+
+-   Bomb Jumping over the 2nd light block heading to Hall of Eyes is now Intermediate (from Beginner).
+
+-   Energy Tank requirements for Chykka have been lowered.
+
+#### Fixed
+
+-   Reliquary Grounds now has proper requirements for reaching Ing Reliquary with Light Suit.
+
 
 ## [2.4.2] - 2021-02-08
 
