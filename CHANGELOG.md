@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Drag and dropping rdvgame and rdvpreset files into the main Randovania window now imports that game file and preset, respectively.
+
 ## [2.5.0] - 2021-02-19
 
 -   Changed: Preset summary now only include differences from vanilla game.

@@ -1,6 +1,7 @@
 import asyncio
 import os
 import subprocess
+from pathlib import Path
 from typing import Union
 
 import pytest
@@ -27,6 +28,61 @@ def test_drop_random_event(default_main_window: MainWindow,
                            ):
     # Creating a window should not fail
     pass
+
+
+@pytest.mark.parametrize(["url", "should_accept"], [
+    ("something/game.iso", False),
+    ("other/game.rdvgame", True),
+    ("boss/custom.rdvpreset", True),
+])
+def test_dragEnterEvent(default_main_window: MainWindow, url, should_accept):
+    mock_url = MagicMock()
+    mock_url.toLocalFile.return_value = url
+    event = MagicMock()
+    event.mimeData.return_value.urls.return_value = [mock_url]
+
+    # Run
+    default_main_window.dragEnterEvent(event)
+
+    # Assert
+    if should_accept:
+        event.acceptProposedAction.assert_called_once_with()
+    else:
+        event.acceptProposedAction.assert_not_called()
+
+
+def test_drop_event_layout(default_main_window, mocker):
+    mock_url = MagicMock()
+    mock_url.toLocalFile.return_value = "/my/path.rdvgame"
+
+    event = MagicMock()
+    event.mimeData.return_value.urls.return_value = [mock_url]
+    mock_from_file: MagicMock = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
+
+    default_main_window.open_game_details = MagicMock()
+
+    # Run
+    default_main_window.dropEvent(event)
+
+    # Assert
+    mock_from_file.assert_called_once_with(Path("/my/path.rdvgame"))
+    default_main_window.open_game_details.assert_called_once_with(mock_from_file.return_value)
+
+
+def test_drop_event_preset(default_main_window):
+    mock_url = MagicMock()
+    mock_url.toLocalFile.return_value = "/my/path.rdvpreset"
+    event = MagicMock()
+    event.mimeData.return_value.urls.return_value = [mock_url]
+    default_main_window.generate_seed_tab.import_preset_file = MagicMock()
+
+    # Run
+    default_main_window.dropEvent(event)
+
+    # Assert
+    default_main_window.generate_seed_tab.import_preset_file(Path("/my/path.rdvpreset"))
+    assert default_main_window.main_tab_widget.currentWidget() == default_main_window.welcome_tab
+    assert default_main_window.welcome_tab_widget.currentWidget() == default_main_window.tab_create_seed
 
 
 @pytest.mark.asyncio
@@ -177,8 +233,6 @@ def test_on_menu_action_previously_generated_games(default_main_window, mocker, 
         else:
             mock_subprocess_run.assert_called_once()
             mock_message_box.return_value.show.assert_not_called()
-
-
 
 
 @pytest.mark.asyncio
