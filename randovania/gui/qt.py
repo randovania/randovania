@@ -48,9 +48,12 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
 
+    logger.info("Loading user presets...")
     await preset_manager.load_user_presets()
+    logger.info("Finished loading presets!")
 
     from randovania.gui.main_window import MainWindow
+    logger.info("Preparing main window...")
     main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
 
@@ -94,6 +97,7 @@ def create_backend(debug_game_backend: bool, options):
     from randovania.interface_common.options import Options
     options = typing.cast(Options, options)
 
+    logger.info("Preparing game backend...")
     if debug_game_backend:
         from randovania.gui.debug_backend_window import DebugBackendWindow
         backend = DebugBackendWindow()
@@ -109,18 +113,22 @@ def create_backend(debug_game_backend: bool, options):
         from randovania.game_connection.nintendont_backend import NintendontBackend
         from randovania.game_connection.backend_choice import GameBackendChoice
 
+        logger.info("Loaded all game backends...")
         if options.game_backend == GameBackendChoice.NINTENDONT and options.nintendont_ip is not None:
             backend = NintendontBackend(options.nintendont_ip)
         else:
             backend = DolphinBackend()
 
+    logger.info("Game backend configured: %s", type(backend))
     return backend
 
 
 def _load_options():
+    logger.info("Loading up user preferences code...")
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
 
+    logger.info("Restoring saved user preferences...")
     options = Options.with_default_data_dir()
     if not startup_tools.load_options_from_disk(options):
         raise SystemExit(1)
@@ -130,6 +138,8 @@ def _load_options():
     from randovania.layout.preset_migration import VersionedPreset
     for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
         old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
+
+    logger.info("Loaded user preferences")
 
     return options
 
@@ -190,6 +200,7 @@ def start_logger(data_dir: Path, is_preview: bool):
             'handlers': ['default', 'local_app_data'],
         },
     })
+    logging.info("Logging initialized.")
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
