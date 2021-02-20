@@ -1,6 +1,5 @@
 import asyncio
 import locale
-import logging.config
 import logging.handlers
 import os
 import sys
@@ -11,6 +10,8 @@ from pathlib import Path
 
 from PySide2 import QtCore, QtWidgets
 from asyncqt import asyncClose
+
+import randovania
 
 logger = logging.getLogger(__name__)
 
@@ -149,58 +150,7 @@ def start_logger(data_dir: Path, is_preview: bool):
     log_dir = data_dir.joinpath("logs")
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    logging.config.dictConfig({
-        'version': 1,
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s',
-            }
-        },
-        'handlers': {
-            'default': {
-                'level': 'DEBUG' if is_preview else 'INFO',
-                'formatter': 'default',
-                'class': 'logging.StreamHandler',
-                'stream': 'ext://sys.stdout',  # Default is stderr
-            },
-            'local_app_data': {
-                'level': 'DEBUG',
-                'formatter': 'default',
-                'class': 'logging.handlers.TimedRotatingFileHandler',
-                'filename': log_dir.joinpath(f"logger.log"),
-                'encoding': 'utf-8',
-                'backupCount': 10,
-            }
-        },
-        'loggers': {
-            'randovania.network_client.network_client': {
-                'level': 'DEBUG',
-            },
-            'randovania.game_connection.connection_backend': {
-                'level': 'DEBUG',
-            },
-            'randovania.gui.multiworld_client': {
-                'level': 'DEBUG',
-            },
-            'NintendontBackend': {
-                'level': 'DEBUG',
-            },
-            'DolphinBackend': {
-                'level': 'DEBUG',
-            },
-            'randovania.gui.qt': {
-                'level': 'INFO',
-            },
-            # 'socketio.client': {
-            #     'level': 'DEBUG',
-            # }
-        },
-        'root': {
-            'level': 'WARNING',
-            'handlers': ['default', 'local_app_data'],
-        },
-    })
-    logging.info("Logging initialized.")
+    randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath(f"logger.log"))
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
