@@ -12,7 +12,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
