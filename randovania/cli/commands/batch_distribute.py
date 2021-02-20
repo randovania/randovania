@@ -1,25 +1,27 @@
 import math
 import multiprocessing
 import time
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
-from randovania.generator import generator
 from randovania.interface_common import sleep_inhibitor
-from randovania.layout.permalink import Permalink
 
 
-def batch_distribute_helper(base_permalink: Permalink,
+def batch_distribute_helper(base_permalink,
                             seed_number: int,
                             timeout: int,
                             validate: bool,
                             output_dir: Path,
                             ) -> float:
+    from randovania.generator import generator
+    from randovania.layout.permalink import Permalink
+
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
-        presets=base_permalink.presets,
+        presets=typing.cast(Permalink, base_permalink).presets,
     )
 
     start_time = time.perf_counter()
@@ -33,6 +35,8 @@ def batch_distribute_helper(base_permalink: Permalink,
 
 
 def batch_distribute_command_logic(args):
+    from randovania.layout.permalink import Permalink
+
     finished_count = 0
 
     timeout: int = args.timeout

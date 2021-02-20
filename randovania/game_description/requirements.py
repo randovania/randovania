@@ -1,12 +1,11 @@
 import dataclasses
 from functools import lru_cache
 from math import ceil
-from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
+from typing import Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 MAX_DAMAGE = 9999999
 

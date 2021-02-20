@@ -1,8 +1,5 @@
 from argparse import ArgumentParser
 
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel
-
 
 def add_debug_argument(parser: ArgumentParser):
     parser.add_argument(
@@ -11,26 +8,6 @@ def add_debug_argument(parser: ArgumentParser):
         type=int,
         default=0,
         help="The level of debug logging to print.")
-
-
-def add_layout_configuration_arguments(parser: ArgumentParser):
-    parser.add_argument(
-        "--trick-level",
-        type=str,
-        choices=[layout.value for layout in LayoutTrickLevel],
-        default=LayoutTrickLevel.DISABLED.value,
-        help="The level of tricks to use.")
-    parser.add_argument(
-        "--sky-temple-keys",
-        type=str,
-        choices=[str(mode.value) for mode in LayoutSkyTempleKeyMode],
-        default=LayoutSkyTempleKeyMode.default().value,
-        help="The Sky Temple Keys randomization mode.")
-    parser.add_argument(
-        "--skip-item-loss",
-        action="store_true",
-        help="Disables the item loss cutscene, disabling losing your items."
-    )
 
 
 def add_validate_argument(parser: ArgumentParser):

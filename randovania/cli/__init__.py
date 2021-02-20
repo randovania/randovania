@@ -4,10 +4,10 @@ import sys
 from pathlib import Path
 
 import randovania
-from randovania.cli import echoes, server, gui, prime_database
 
 
 def create_subparsers(root_parser):
+    from randovania.cli import echoes, server, gui, prime_database
     echoes.create_subparsers(root_parser)
     prime_database.create_subparsers(root_parser)
     server.create_subparsers(root_parser)
@@ -56,6 +56,7 @@ def run_cli(argv):
         run_pytest(argv)
     else:
         args = argv[1:]
+        from randovania.cli import gui
         if gui.has_gui and not args:
             args = ["gui", "main"]
 

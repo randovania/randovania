@@ -4,26 +4,27 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
-from randovania.generator import generator
-from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.permalink import Permalink
 from randovania.resolver import debug
 
 
-async def _create_permalink(args) -> Permalink:
-    from randovania.interface_common import persistence
-    preset_manager = PresetManager(persistence.user_data_dir())
-    await preset_manager.load_user_presets()
-    preset = preset_manager.preset_for_name(args.preset_name).get_preset()
-
-    return Permalink(
-        args.seed_number,
-        spoiler=True,
-        presets={i: preset for i in range(args.player_count)},
-    )
-
-
 def distribute_command_logic(args):
+    from randovania.layout.permalink import Permalink
+    from randovania.generator import generator
+
+    async def _create_permalink(args_) -> Permalink:
+        from randovania.interface_common import persistence
+        from randovania.interface_common.preset_manager import PresetManager
+
+        preset_manager = PresetManager(persistence.user_data_dir())
+        await preset_manager.load_user_presets()
+        preset = preset_manager.preset_for_name(args_.preset_name).get_preset()
+
+        return Permalink(
+            args_.seed_number,
+            spoiler=True,
+            presets={i: preset for i in range(args_.player_count)},
+        )
+
     def status_update(s):
         if args.status_update:
             print(s)

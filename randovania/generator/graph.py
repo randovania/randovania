@@ -1,8 +1,6 @@
 import copy
 from typing import Dict, Iterator, Tuple, Set, Callable
 
-import networkx
-
 from randovania.game_description.requirements import Requirement
 
 
@@ -46,6 +44,8 @@ class RandovaniaGraph(BaseGraph):
         return cls({})
 
     def __init__(self, edges: Dict[int, Dict[int, Requirement]]):
+        import networkx
+        self.networkx = networkx
         self.edges = edges
 
     def copy(self):
@@ -78,13 +78,13 @@ class RandovaniaGraph(BaseGraph):
                 yield source, target, requirement
 
     def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, Requirement], float]):
-        return networkx.multi_source_dijkstra(self, sources, weight=weight)
+        return self.networkx.multi_source_dijkstra(self, sources, weight=weight)
 
     def single_source_dijkstra_path(self, source: int):
-        return networkx.single_source_dijkstra_path(self, source, weight="unweighted")
+        return self.networkx.single_source_dijkstra_path(self, source, weight="unweighted")
 
     def strongly_connected_components(self) -> Iterator[Set[int]]:
-        yield from networkx.strongly_connected_components(self)
+        yield from self.networkx.strongly_connected_components(self)
 
     # Networkx compatibility API
     def is_multigraph(self):
