@@ -12,8 +12,9 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
-    find_resource_info_with_long_name, MissingResource
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id, \
+    find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
