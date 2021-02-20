@@ -143,9 +143,10 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
     def _on_import_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
-        if path is None:
-            return
+        if path is not None:
+            self.import_preset_file(path)
 
+    def import_preset_file(self, path: Path):
         preset = VersionedPreset.from_file_sync(path)
         try:
             preset.get_preset()
