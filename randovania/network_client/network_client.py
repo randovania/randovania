@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import List, Optional, Tuple, Dict, Any
 
 import aiofiles
-import aiohttp.client_exceptions
 import engineio
 import socketio
 import socketio.exceptions
@@ -107,6 +106,8 @@ class NetworkClient:
             self.logger.debug("no session data")
 
     async def _internal_connect_to_server(self):
+        import aiohttp.client_exceptions
+
         if self.sio.connected:
             return
 

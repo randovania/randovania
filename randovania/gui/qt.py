@@ -164,15 +164,21 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
-    import asyncqt
+    logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.game_connection.game_connection import GameConnection
-
+    logging.info("Configuring server client...")
     app.network_client = QtNetworkClient(data_dir)
-    options = _load_options()
+    logging.info("Server client ready.")
 
+    options = _load_options()
     backend = create_backend(args.debug_game_backend, options)
+
+    logging.info("Configuring game connection with the backend...")
+    from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(backend)
+
+    logging.info("Configuring asyncqt...")
+    import asyncqt
 
     @asyncqt.asyncClose
     async def _on_last_window_closed():
