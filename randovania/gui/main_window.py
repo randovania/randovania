@@ -1,10 +1,10 @@
 import functools
-import functools
 import json
 import os
 import platform
 import subprocess
 from functools import partial
+from pathlib import Path
 from typing import Optional, List
 
 import markdown
@@ -165,6 +165,39 @@ class MainWindow(WindowManager, Ui_MainWindow):
     def closeEvent(self, event):
         self.generate_seed_tab.stop_background_process()
         super().closeEvent(event)
+
+    def dragEnterEvent(self, event: QtGui.QDragEnterEvent):
+        from randovania.layout.preset_migration import VersionedPreset
+
+        valid_extensions = [
+            LayoutDescription.file_extension(),
+            VersionedPreset.file_extension(),
+        ]
+        valid_extensions_with_dot = {
+            f".{extension}"
+            for extension in valid_extensions
+        }
+
+        for url in event.mimeData().urls():
+            ext = os.path.splitext(url.toLocalFile())[1]
+            if ext in valid_extensions_with_dot:
+                event.acceptProposedAction()
+                return
+
+    def dropEvent(self, event: QtGui.QDropEvent):
+        from randovania.layout.preset_migration import VersionedPreset
+
+        for url in event.mimeData().urls():
+            path = Path(url.toLocalFile())
+            if path.suffix == f".{LayoutDescription.file_extension()}":
+                self.open_game_details(LayoutDescription.from_file(path))
+                return
+
+            elif path.suffix == f".{VersionedPreset.file_extension()}":
+                self.main_tab_widget.setCurrentWidget(self.welcome_tab)
+                self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed)
+                self.generate_seed_tab.import_preset_file(path)
+                return
 
     # Generate Seed
     def _open_faq(self):
