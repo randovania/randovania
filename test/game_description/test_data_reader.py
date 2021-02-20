@@ -3,7 +3,8 @@ import copy
 import pytest
 
 from randovania.game_description.data_reader import WorldReader
-from randovania.game_description.resources.resource_database import ResourceDatabase, MissingResource
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.search import MissingResource
 
 
 def test_copy_worlds(echoes_game_description):

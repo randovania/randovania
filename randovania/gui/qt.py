@@ -9,7 +9,6 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide2 import QtCore, QtWidgets
-from asyncqt import asyncClose
 
 import randovania
 
@@ -165,6 +164,7 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
+    import asyncqt
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection
 
@@ -174,7 +174,7 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     backend = create_backend(args.debug_game_backend, options)
     app.game_connection = GameConnection(backend)
 
-    @asyncClose
+    @asyncqt.asyncClose
     async def _on_last_window_closed():
         await app.network_client.disconnect_from_server()
         await app.game_connection.stop()

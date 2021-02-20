@@ -10,7 +10,7 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair, Hint
     HintDarkTemple
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
