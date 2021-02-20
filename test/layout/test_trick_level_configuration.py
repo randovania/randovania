@@ -3,7 +3,8 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
-from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
+from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 
 
 @pytest.fixture(
@@ -19,7 +20,7 @@ from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLe
     name="configuration_with_data")
 def _configuration_with_data(request, mocker, echoes_game_description):
     tricks = echoes_game_description.resource_database.trick[:14]
-    mocker.patch("randovania.layout.trick_level._all_tricks", return_value=tricks)
+    mocker.patch("randovania.layout.trick_level_configuration._all_tricks", return_value=tricks)
     return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"],
                                                                        game=RandovaniaGame.PRIME2)
 

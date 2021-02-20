@@ -23,7 +23,8 @@ from randovania.layout import game_patches_serializer
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.permalink import Permalink
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 
 
 @pytest.fixture(
