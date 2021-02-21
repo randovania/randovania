@@ -164,6 +164,7 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
+    app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     logging.info("Configuring server client...")

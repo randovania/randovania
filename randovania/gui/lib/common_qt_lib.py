@@ -151,11 +151,6 @@ def set_edit_if_different(edit: QLineEdit, new_text: str):
         edit.setText(new_text)
 
 
-def get_network_client():
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    return typing.cast(QtNetworkClient, QApplication.instance().network_client)
-
-
 def get_game_connection():
     from randovania.game_connection.game_connection import GameConnection
     return typing.cast(GameConnection, QApplication.instance().game_connection)
