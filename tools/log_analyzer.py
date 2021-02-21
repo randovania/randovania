@@ -8,7 +8,7 @@ import re
 import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional, List, Iterable
+from typing import Dict, Tuple, Optional, List, Iterable, Set
 
 from randovania.game_description.default_database import game_description_for
 from randovania.game_description.node import PickupNode, LogbookNode
@@ -90,16 +90,20 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Dict[str, int]:
-    order = {
-        item.split(" at ")[0]: i
-        for i, item in enumerate(item_order)
-    }
+def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Dict[str, int], Set[str]]:
+    locations = set()
+    order = {}
+
+    for i, entry in enumerate(item_order):
+        item, location = entry.split(" at ", 1)
+        order[item] = i
+        locations.add(location.split(" with ", 1)[0])
+
     for item in all_items:
         if item not in order:
             order[item] = len(item_order)
 
-    return order
+    return order, locations
 
 
 def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
@@ -120,6 +124,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         for node in game_description.world_list.all_nodes
         if isinstance(node, PickupNode)
     }
+    progression_count_for_location = collections.defaultdict(int)
 
     logbook_to_name = {
         str(node.string_asset_id): game_description.world_list.node_name(node)
@@ -139,8 +144,12 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
-        for item, order in get_items_order(list(items.keys()), seed_data["item_order"]).items():
+        item_orders, locations_with_progression = get_items_order(list(items.keys()), seed_data["item_order"])
+        for item, order in item_orders.items():
             item_order[item].append(order)
+
+        for location in locations_with_progression:
+            progression_count_for_location[location] += 1
 
         seed_count += 1
 
@@ -162,6 +171,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         "locations": sort_by_contents(locations),
         "item_hints": sort_by_contents(item_hints),
         "location_hints": sort_by_contents(location_hints),
+        "location_progression_count": {
+            location: value
+            for location, value in sorted(progression_count_for_location.items(), key=lambda t: t[1], reverse=True)
+        },
         "item_order": {
             "average": {
                 name: statistics.mean(orders)
