@@ -1,3 +1,5 @@
+import json
+import logging
 import re
 
 import discord
@@ -6,6 +8,7 @@ import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import preset_describer
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset_migration import VersionedPreset
 
 _PRETTY_GAME_NAME = {
     RandovaniaGame.PRIME1: "Metroid Prime 1",
@@ -35,6 +38,22 @@ async def look_for_permalinks(message: str, channel: discord.TextChannel):
         await channel.send(embed=embed)
 
 
+async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
+    try:
+        preset = versioned_preset.get_preset()
+    except ValueError as e:
+        logging.info("Invalid preset '{}' from {}: {}".format(versioned_preset.name,
+                                                              message.author.display_name,
+                                                              e))
+        return
+
+    embed = discord.Embed(title=preset.name,
+                          description=preset.description)
+    for category, items in preset_describer.describe(preset):
+        embed.add_field(name=category, value="\n".join(items), inline=True)
+    await message.reply(embed=embed)
+
+
 class Bot(discord.Client):
     def __init__(self, configuration: dict):
         super().__init__()
@@ -44,14 +63,19 @@ class Bot(discord.Client):
         if message.author == self.user:
             return
 
-        channel: discord.TextChannel = message.channel
-        if self.configuration["channel_name_filter"] not in channel.name:
-            return
-
         if message.guild.id != self.configuration["guild"]:
             return
 
-        await look_for_permalinks(message.content, channel)
+        for attachment in message.attachments:
+            filename: str = attachment.filename
+            if filename.endswith(VersionedPreset.file_extension()):
+                data = await attachment.read()
+                versioned_preset = VersionedPreset(json.loads(data.decode("utf-8")))
+                await reply_for_preset(message, versioned_preset)
+
+        channel: discord.TextChannel = message.channel
+        if self.configuration["channel_name_filter"] in channel.name:
+            await look_for_permalinks(message.content, channel)
 
 
 def run():

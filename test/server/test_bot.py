@@ -98,3 +98,30 @@ async def test_look_for_permalinks(mocker):
         call(embed=embed_1),
         call(embed=embed_2),
     ])
+
+
+@pytest.mark.asyncio
+async def test_reply_for_preset(mocker):
+    mock_describe: MagicMock = mocker.patch("randovania.gui.lib.preset_describer.describe",
+                                            return_value=[
+                                                ("General", ["Foo", "Bar"]),
+                                                ("Other", ["X", "Y"]),
+                                            ])
+    message = AsyncMock()
+    versioned_preset = MagicMock()
+    preset = versioned_preset.get_preset.return_value
+    embed = MagicMock()
+
+    mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
+
+    # Run
+    await bot.reply_for_preset(message, versioned_preset)
+
+    # Assert
+    mock_embed.assert_called_once_with(title=preset.name, description=preset.description)
+    embed.add_field.assert_has_calls([
+        call(name="General", value="Foo\nBar", inline=True),
+        call(name="Other", value="X\nY", inline=True),
+    ])
+    message.reply.assert_awaited_once_with(embed=embed)
+    mock_describe.assert_called_once_with(preset)
