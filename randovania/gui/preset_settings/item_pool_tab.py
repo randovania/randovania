@@ -184,13 +184,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Item pool count
         try:
-            pool_pickup = pool_creator.calculate_pool_results(layout, resource_database).pickups
-            min_starting_items = layout.major_items_configuration.minimum_random_starting_items
-            maximum_size = self.game_description.world_list.num_pickup_nodes + min_starting_items
-            self.item_pool_count_label.setText(
-                "Items in pool: {}/{}".format(len(pool_pickup), maximum_size)
-            )
-            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, len(pool_pickup) > maximum_size)
+            pool_items, maximum_size = pool_creator.calculate_pool_item_count(layout)
+            self.item_pool_count_label.setText("Items in pool: {}/{}".format(pool_items, maximum_size))
+            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
 
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))

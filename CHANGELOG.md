@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The number of items in the pool is now included in the summary.
+
+## [2.5.1] - 2021-02-26
+
 -   Added: Drag and dropping rdvgame and rdvpreset files into the main Randovania window now imports that game file and preset, respectively.
 
 -   Added: Discord bot now posts summary whenever a preset is attached to a message.
