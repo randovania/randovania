@@ -4,6 +4,7 @@ from typing import List, Iterable, Tuple, Dict
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
+from randovania.generator.item_pool import pool_creator
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
@@ -31,6 +32,7 @@ _ECHOES_TEMPLATE_STRINGS = {
     "Items": [
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
+        "Item Pool Size: {item_pool_size}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -53,6 +55,7 @@ _CORRUPTION_TEMPLATE_STRINGS = {
         "Progressive Beam: {progressive_beam}",
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
+        "Item Pool Size: {item_pool_size}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -80,6 +83,7 @@ _PRIME_TEMPLATE_STRINGS = {
     "Items": [
         "Starting Items: {starting_items}",
         "Item Pool: {item_pool}",
+        "Item Pool Size: {item_pool_size}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -233,6 +237,7 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
     # Items
     format_params["starting_items"] = _calculate_starting_items(configuration.game, major_items.items_state)
     format_params["item_pool"] = _calculate_item_pool(configuration.game, major_items)
+    format_params["item_pool_size"] = "{} of {}".format(*pool_creator.calculate_pool_item_count(configuration))
 
     # Difficulty
     format_params["damage_strictness"] = configuration.damage_strictness.long_name
