@@ -1,13 +1,17 @@
+from typing import Tuple
+
+from randovania.game_description import default_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
+from randovania.generator.item_pool.artifacts import add_artifacts
 from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.generator.item_pool.energy_cells import add_energy_cells
-from randovania.generator.item_pool.artifacts import add_artifacts
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
+from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
 
@@ -56,3 +60,17 @@ def calculate_pool_results(layout_configuration: EchoesConfiguration,
         _extend_pool_results(base_results, add_artifacts(resource_database))
 
     return base_results
+
+
+def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
+    """
+    Calculate how many pickups are needed for given layout, with how many spots are there.
+    :param layout:
+    :return:
+    """
+    game_description = default_database.game_description_for(layout.game)
+    num_pickup_nodes = game_description.world_list.num_pickup_nodes
+    pool_pickup = calculate_pool_results(layout, game_description.resource_database).pickups
+    min_starting_items = layout.major_items_configuration.minimum_random_starting_items
+    maximum_size = num_pickup_nodes + min_starting_items
+    return len(pool_pickup), maximum_size
