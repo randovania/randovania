@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The number of items in the pool is now included in the summary.
 
+-   Fixed: Shuffling Combat Visor with item acquisition popups enabled no longer errors.
+
 ## [2.5.1] - 2021-02-26
 
 -   Added: Drag and dropping rdvgame and rdvpreset files into the main Randovania window now imports that game file and preset, respectively.
