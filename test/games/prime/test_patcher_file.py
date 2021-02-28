@@ -264,6 +264,22 @@ def test_get_single_hud_text_locked_pbs():
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
 
 
+def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):
+    memo_data = default_prime2_memo_data()
+
+    # Run
+    for item in echoes_item_database.major_items.values():
+        pickup = pickup_creator.create_major_item(item, MajorItemState(), False, echoes_resource_database, None, False)
+
+        result = patcher_file._get_all_hud_text(pickup, memo_data)
+        for i, progression in enumerate(pickup.resources):
+            assert progression.name in result[i]
+        assert result
+        for line in result:
+            assert len(line) > 10
+            assert isinstance(line, str)
+
+
 @pytest.mark.parametrize("order", [
     ("X", "Y"),
     ("Y", "X"),
