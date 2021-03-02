@@ -343,10 +343,10 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
-def _elevator_area_name(world_list: WorldList,
-                        area_location: AreaLocation,
-                        include_world_name: bool,
-                        ) -> str:
+def elevator_area_name(world_list: WorldList,
+                       area_location: AreaLocation,
+                       include_world_name: bool,
+                       ) -> str:
     if area_location.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
         return _CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
 
@@ -374,7 +374,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(_elevator_area_name(world_list, connection, False))
+    return "Transport to {}".format(elevator_area_name(world_list, connection, False))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -452,7 +452,7 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = _elevator_area_name(world_list, elevator_connection[teleporter_id], True)
+        target_area_name = elevator_area_name(world_list, elevator_connection[teleporter_id], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],

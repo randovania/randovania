@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
+
+## [2.5.2] - 2021-02-28
+
 -   Added: The number of items in the pool is now included in the summary.
 
 -   Fixed: Shuffling Combat Visor with item acquisition popups enabled no longer errors.
