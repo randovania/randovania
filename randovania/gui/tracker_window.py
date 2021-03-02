@@ -26,6 +26,7 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime import patcher_file
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -481,7 +482,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             if isinstance(node, TeleporterNode) and node.editable and area.area_asset_id not in areas_to_not_change:
                 name = world.correct_name(area.in_dark_aether)
                 nodes_by_world[name].append(node)
-                targets[f"{name} - {area.name}"] = AreaLocation(world.world_asset_id, area.area_asset_id)
+
+                location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                targets[patcher_file.elevator_area_name(world_list, location, True)] = location
 
         if self.layout_configuration.elevators == LayoutElevators.ONE_WAY_ANYTHING:
             targets = {}
@@ -493,6 +496,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
         for world_name in sorted(nodes_by_world.keys()):
+            nodes = nodes_by_world[world_name]
+            nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
+                                            world_list.nodes_to_area(node).area_asset_id)
+                               for node in nodes]
+            nodes_names = [patcher_file.elevator_area_name(world_list, location, True)
+                           for location in nodes_locations]
+
             nodes = sorted(nodes_by_world[world_name], key=lambda it: world_list.nodes_to_area(it).name)
 
             group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
@@ -500,10 +510,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             self.elevators_scroll_layout.addWidget(group)
             layout = QtWidgets.QGridLayout(group)
 
-            for i, node in enumerate(nodes):
-                area = world_list.nodes_to_area(node)
+            for i, (node, location, name) in enumerate(sorted(zip(nodes, nodes_locations, nodes_names),
+                                                              key=lambda it: it[2])):
                 node_name = QtWidgets.QLabel(group)
-                node_name.setText(area.name)
+                node_name.setText(name)
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
@@ -511,10 +521,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     combo.addItem("Vanilla", node.default_connection)
                     combo.setEnabled(False)
                 else:
-                    combo.addItem("Undefined", AreaLocation(world_list.nodes_to_world(node).world_asset_id,
-                                                            area.area_asset_id))
-                    for name, connection in combo_targets:
-                        combo.addItem(name, connection)
+                    combo.addItem("Undefined", location)
+                    for target_name, connection in combo_targets:
+                        combo.addItem(target_name, connection)
 
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
                 self._elevator_id_to_combo[node.teleporter_instance_id] = combo
