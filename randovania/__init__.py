@@ -91,6 +91,9 @@ def setup_logging(default_level: str, log_to_file: Optional[Path]):
             'randovania.gui.qt': {
                 'level': 'INFO',
             },
+            'asyncqt': {
+                'level': 'INFO',
+            },
             # 'socketio.client': {
             #     'level': 'DEBUG',
             # }
