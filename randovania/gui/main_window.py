@@ -98,6 +98,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
                                                                  RandovaniaGame.PRIME2))
 
+        for game in RandovaniaGame:
+            self.hint_item_names_game_combo.addItem(game.long_name, game)
+        self.hint_item_names_game_combo.currentIndexChanged.connect(self._update_hints_text)
+
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
         self.browse_racetime_button.clicked.connect(self._browse_racetime)
@@ -192,6 +196,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         # Update hints text
         self._update_hints_text()
+        self._update_hint_locations()
 
         with self._options:
             self.on_options_changed()
@@ -514,12 +519,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _update_hints_text(self):
         from randovania.game_description import default_database
-        from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
         from randovania.game_description.item.item_category import ItemCategory
-        from randovania.game_description.node import LogbookNode, LoreType
 
-        game_description = default_database.default_prime2_game_description()
-        item_database = default_database.default_prime2_item_database()
+        game = self.hint_item_names_game_combo.currentData()
+        item_database = default_database.item_database_for_game(game)
 
         rows = []
 
@@ -531,20 +534,22 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 item.broad_category.hint_details[1],
             ))
 
-        for dark_temple_key in DARK_TEMPLE_KEY_NAMES:
+        if game == RandovaniaGame.PRIME2:
+            from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
+            for dark_temple_key in DARK_TEMPLE_KEY_NAMES:
+                rows.append((
+                    dark_temple_key.format("").strip(),
+                    ItemCategory.TEMPLE_KEY.hint_details[1],
+                    ItemCategory.TEMPLE_KEY.general_details[1],
+                    ItemCategory.KEY.hint_details[1],
+                ))
+
             rows.append((
-                dark_temple_key.format("").strip(),
-                ItemCategory.TEMPLE_KEY.hint_details[1],
-                ItemCategory.TEMPLE_KEY.general_details[1],
+                "Sky Temple Key",
+                ItemCategory.SKY_TEMPLE_KEY.hint_details[1],
+                ItemCategory.SKY_TEMPLE_KEY.general_details[1],
                 ItemCategory.KEY.hint_details[1],
             ))
-
-        rows.append((
-            "Sky Temple Key",
-            ItemCategory.SKY_TEMPLE_KEY.hint_details[1],
-            ItemCategory.SKY_TEMPLE_KEY.general_details[1],
-            ItemCategory.KEY.hint_details[1],
-        ))
 
         for item in item_database.ammo.values():
             rows.append((
@@ -561,6 +566,11 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         for i in range(4):
             self.hint_item_names_tree_widget.resizeColumnToContents(i)
+
+    def _update_hint_locations(self):
+        from randovania.game_description.node import LogbookNode, LoreType
+        from randovania.game_description import default_database
+        game_description = default_database.game_description_for(RandovaniaGame.PRIME2)
 
         number_for_hint_type = {
             hint_type: i + 1
