@@ -1,14 +1,11 @@
 import argparse
 import json
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
-import randovania.game_description.pretty_print
-from randovania.game_description import data_reader, data_writer, pretty_print
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
+from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import binary_data, default_data
@@ -35,6 +32,7 @@ def export_as_binary(data: dict, output_binary: Path):
 
 
 def convert_database_command_logic(args):
+    from randovania.game_description import data_reader, data_writer
     data = decode_data_file(args)
 
     if args.decode_to_game_description:
@@ -82,6 +80,7 @@ def create_convert_database_command(sub_parsers):
 
 
 def view_area_command_logic(args):
+    from randovania.game_description import pretty_print
     game = load_game_description(args)
     world_list = game.world_list
 
@@ -101,10 +100,12 @@ def view_area_command_logic(args):
         print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
         raise SystemExit(1)
 
-    randovania.game_description.pretty_print.pretty_print_area(game, area)
+    pretty_print.pretty_print_area(game, area)
 
 
-def load_game_description(args) -> GameDescription:
+def load_game_description(args):
+    from randovania.game_description import data_reader
+
     data = decode_data_file(args)
     gd = data_reader.decode_data(data)
     return gd
@@ -136,6 +137,7 @@ def view_area_command(sub_parsers):
 
 
 def export_areas_command_logic(args):
+    from randovania.game_description import pretty_print
     gd = load_game_description(args)
     output_file: Path = args.output_file
 
@@ -153,11 +155,14 @@ def export_areas_command(sub_parsers):
     parser.set_defaults(func=export_areas_command_logic)
 
 
-def _list_paths_with_resource(game: GameDescription,
+def _list_paths_with_resource(game,
                               print_only_area: bool,
                               resource: ResourceInfo,
                               needed_quantity: Optional[int]):
+    from randovania.game_description.game_description import GameDescription
+
     count = 0
+    game = typing.cast(GameDescription, game)
 
     for area in game.world_list.all_areas:
         area_had_resource = False
@@ -263,6 +268,7 @@ def list_paths_with_resource_command(sub_parsers):
 
 
 def pickups_per_area_command_logic(args):
+    from randovania.game_description.node import PickupNode
     gd = load_game_description(args)
 
     for world in gd.world_list.worlds:

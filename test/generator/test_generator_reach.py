@@ -25,7 +25,8 @@ from randovania.generator.generator_reach import GeneratorReach, filter_pickup_n
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
 

@@ -1,5 +1,4 @@
 import re
-from typing import Optional
 
 from PySide2.QtWidgets import QDialog, QWidget
 
