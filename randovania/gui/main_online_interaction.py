@@ -22,7 +22,7 @@ class OnlineInteractions(QtWidgets.QWidget):
 
     def __init__(self, window_manager: WindowManager, preset_manager: PresetManager, network_client: QtNetworkClient,
                  main_window: Ui_MainWindow, options: Options):
-        super().__init__(main_window)
+        super().__init__(window_manager)
 
         self.window_manager = window_manager
         self.preset_manager = preset_manager

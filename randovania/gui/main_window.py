@@ -179,7 +179,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
     @asyncSlot()
     async def initialize_post_show(self):
         self.InitPostShowSignal.disconnect(self.initialize_post_show)
+        await self._initialize_post_show_body()
 
+    async def _initialize_post_show_body(self):
         from randovania.gui.main_online_interaction import OnlineInteractions
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
