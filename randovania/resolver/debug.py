@@ -1,13 +1,10 @@
 import time
 from typing import Set
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, PickupNode
+from randovania.game_description.node import Node
 from randovania.game_description.requirements import RequirementList, RequirementSet
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.generator_reach import GeneratorReach, get_collectable_resource_nodes_of_reach
-from randovania.resolver.logic import Logic
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -85,7 +82,7 @@ def log_rollback(state: "State", has_action, possible_action: bool):
     _current_indent -= 1
 
 
-def log_skip_action_missing_requirement(node: Node, game: GameDescription, requirement_set: RequirementSet):
+def log_skip_action_missing_requirement(node: Node, game: "GameDescription", requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
         if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
             print("{}* Skip {}, same additional".format(_indent(), n(node, world_list=game.world_list)))

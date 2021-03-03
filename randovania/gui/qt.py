@@ -1,6 +1,5 @@
 import asyncio
 import locale
-import logging.config
 import logging.handlers
 import os
 import sys
@@ -10,7 +9,8 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide2 import QtCore, QtWidgets
-from asyncqt import asyncClose
+
+import randovania
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +48,12 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
 
+    logger.info("Loading user presets...")
     await preset_manager.load_user_presets()
+    logger.info("Finished loading presets!")
 
     from randovania.gui.main_window import MainWindow
+    logger.info("Preparing main window...")
     main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
 
@@ -94,6 +97,7 @@ def create_backend(debug_game_backend: bool, options):
     from randovania.interface_common.options import Options
     options = typing.cast(Options, options)
 
+    logger.info("Preparing game backend...")
     if debug_game_backend:
         from randovania.gui.debug_backend_window import DebugBackendWindow
         backend = DebugBackendWindow()
@@ -109,18 +113,22 @@ def create_backend(debug_game_backend: bool, options):
         from randovania.game_connection.nintendont_backend import NintendontBackend
         from randovania.game_connection.backend_choice import GameBackendChoice
 
+        logger.info("Loaded all game backends...")
         if options.game_backend == GameBackendChoice.NINTENDONT and options.nintendont_ip is not None:
             backend = NintendontBackend(options.nintendont_ip)
         else:
             backend = DolphinBackend()
 
+    logger.info("Game backend configured: %s", type(backend))
     return backend
 
 
 def _load_options():
+    logger.info("Loading up user preferences code...")
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
 
+    logger.info("Restoring saved user preferences...")
     options = Options.with_default_data_dir()
     if not startup_tools.load_options_from_disk(options):
         raise SystemExit(1)
@@ -131,6 +139,8 @@ def _load_options():
     for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
         old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
 
+    logger.info("Loaded user preferences")
+
     return options
 
 
@@ -139,57 +149,7 @@ def start_logger(data_dir: Path, is_preview: bool):
     log_dir = data_dir.joinpath("logs")
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    logging.config.dictConfig({
-        'version': 1,
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s',
-            }
-        },
-        'handlers': {
-            'default': {
-                'level': 'DEBUG' if is_preview else 'INFO',
-                'formatter': 'default',
-                'class': 'logging.StreamHandler',
-                'stream': 'ext://sys.stdout',  # Default is stderr
-            },
-            'local_app_data': {
-                'level': 'DEBUG',
-                'formatter': 'default',
-                'class': 'logging.handlers.TimedRotatingFileHandler',
-                'filename': log_dir.joinpath(f"logger.log"),
-                'encoding': 'utf-8',
-                'backupCount': 10,
-            }
-        },
-        'loggers': {
-            'randovania.network_client.network_client': {
-                'level': 'DEBUG',
-            },
-            'randovania.game_connection.connection_backend': {
-                'level': 'DEBUG',
-            },
-            'randovania.gui.multiworld_client': {
-                'level': 'DEBUG',
-            },
-            'NintendontBackend': {
-                'level': 'DEBUG',
-            },
-            'DolphinBackend': {
-                'level': 'DEBUG',
-            },
-            'randovania.gui.qt': {
-                'level': 'INFO',
-            },
-            # 'socketio.client': {
-            #     'level': 'DEBUG',
-            # }
-        },
-        'root': {
-            'level': 'WARNING',
-            'handlers': ['default', 'local_app_data'],
-        },
-    })
+    randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath(f"logger.log"))
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
@@ -204,16 +164,24 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
+    app.network_client = None
+    logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.game_connection.game_connection import GameConnection
-
+    logging.info("Configuring server client...")
     app.network_client = QtNetworkClient(data_dir)
-    options = _load_options()
+    logging.info("Server client ready.")
 
+    options = _load_options()
     backend = create_backend(args.debug_game_backend, options)
+
+    logging.info("Configuring game connection with the backend...")
+    from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(backend)
 
-    @asyncClose
+    logging.info("Configuring asyncqt...")
+    import asyncqt
+
+    @asyncqt.asyncClose
     async def _on_last_window_closed():
         await app.network_client.disconnect_from_server()
         await app.game_connection.stop()

@@ -42,5 +42,69 @@ def get_configuration() -> dict:
             raise
 
 
+def setup_logging(default_level: str, log_to_file: Optional[Path]):
+    import logging.config
+    import logging.handlers
+
+    handlers = {
+        'default': {
+            'level': default_level,
+            'formatter': 'default',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stdout',  # Default is stderr
+        },
+    }
+    if log_to_file is not None:
+        handlers['local_app_data'] = {
+            'level': 'DEBUG',
+            'formatter': 'default',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': log_to_file,
+            'encoding': 'utf-8',
+            'backupCount': 10,
+        }
+
+    logging.config.dictConfig({
+        'version': 1,
+        'formatters': {
+            'default': {
+                'format': '[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s',
+            }
+        },
+        'handlers': handlers,
+        'loggers': {
+            'randovania.network_client.network_client': {
+                'level': 'DEBUG',
+            },
+            'randovania.game_connection.connection_backend': {
+                'level': 'DEBUG',
+            },
+            'randovania.gui.multiworld_client': {
+                'level': 'DEBUG',
+            },
+            'NintendontBackend': {
+                'level': 'DEBUG',
+            },
+            'DolphinBackend': {
+                'level': 'DEBUG',
+            },
+            'randovania.gui.qt': {
+                'level': 'INFO',
+            },
+            'asyncqt': {
+                'level': 'INFO',
+            },
+            # 'socketio.client': {
+            #     'level': 'DEBUG',
+            # }
+        },
+        'root': {
+            'level': default_level,
+            'handlers': list(handlers.keys()),
+        },
+    })
+    logging.info("Logging initialized.")
+
+
 __version__ = version
 VERSION = version

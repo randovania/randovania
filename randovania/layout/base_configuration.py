@@ -13,7 +13,7 @@ from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.trick_level import TrickLevelConfiguration
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
