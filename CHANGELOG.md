@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).
+
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
 
 ## [2.5.2] - 2021-02-28
