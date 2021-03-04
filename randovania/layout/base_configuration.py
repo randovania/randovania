@@ -12,14 +12,14 @@ from randovania.layout.available_locations import AvailableLocationsConfiguratio
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.location_list import LocationList
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
 class BaseConfiguration(BitPackDataClass, JsonDataclass):
     trick_level: TrickLevelConfiguration
-    starting_location: StartingLocation
+    starting_location: LocationList
     available_locations: AvailableLocationsConfiguration
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration

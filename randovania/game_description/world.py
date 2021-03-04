@@ -49,8 +49,10 @@ class World:
                 return area
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
-    def area_by_name(self, area_name: str) -> Area:
+    def area_by_name(self, area_name: str, is_dark_aether: Optional[bool] = None) -> Area:
         for area in self.areas:
+            if is_dark_aether is not None and area.in_dark_aether != is_dark_aether:
+                continue
             if area.name == area_name:
                 return area
         raise KeyError("Unknown name: {}".format(area_name))
