@@ -81,7 +81,7 @@ setup(
         "gui": [
             'PySide2>=5.12,<5.16',
             'appdirs',
-            'asyncqt',
+            'qasync',
             'async-wiiload',
             'dolphin-memory-engine>=1.0.2',
             'markdown',

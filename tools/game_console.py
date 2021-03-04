@@ -42,8 +42,8 @@ def main():
     app = QCoreApplication(sys.argv)
 
     os.environ['QT_API'] = "PySide2"
-    import asyncqt
-    loop = asyncqt.QEventLoop(app)
+    import qasync
+    loop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
     logging.config.dictConfig({
