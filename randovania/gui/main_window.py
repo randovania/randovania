@@ -35,6 +35,16 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
+def _update_label_on_show(label: QtWidgets.QLabel, text: str):
+    def showEvent(_):
+        if label._delayed_text is not None:
+            label.setText(label._delayed_text)
+            label._delayed_text = None
+
+    label._delayed_text = text
+    label.showEvent = showEvent
+
+
 class MainWindow(WindowManager, Ui_MainWindow):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
@@ -310,11 +320,14 @@ class MainWindow(WindowManager, Ui_MainWindow):
             changelog_scroll_contents.setObjectName("changelog_scroll_contents")
             changelog_scroll_layout = QtWidgets.QVBoxLayout(changelog_scroll_contents)
             changelog_scroll_layout.setObjectName("changelog_scroll_layout")
-            changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
-            changelog_label.setObjectName("changelog_label")
-            changelog_label.setText(markdown.markdown("\n".join(all_change_logs)))
-            changelog_label.setWordWrap(True)
-            changelog_scroll_layout.addWidget(changelog_label)
+
+            for entry in all_change_logs:
+                changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
+                _update_label_on_show(changelog_label, markdown.markdown(entry))
+                changelog_label.setObjectName("changelog_label")
+                changelog_label.setWordWrap(True)
+                changelog_scroll_layout.addWidget(changelog_label)
+
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
             self.help_tab_widget.addTab(changelog_tab, "Change Log")
