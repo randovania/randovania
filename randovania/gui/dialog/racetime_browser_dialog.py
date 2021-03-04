@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import aiohttp
 from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
 from randovania.gui.lib import common_qt_lib, async_dialog

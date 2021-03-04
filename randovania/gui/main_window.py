@@ -1,5 +1,6 @@
 import functools
 import json
+import logging
 import os
 import platform
 import subprocess
@@ -9,7 +10,7 @@ from typing import Optional, List
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania import VERSION
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -32,6 +33,16 @@ _DISABLE_VALIDATION_WARNING = """
 Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable with possibly unbeatable seeds.
 </p><p align="center">Are you sure you want to disable validation?</p></body></html>
 """
+
+
+def _update_label_on_show(label: QtWidgets.QLabel, text: str):
+    def showEvent(_):
+        if label._delayed_text is not None:
+            label.setText(label._delayed_text)
+            label._delayed_text = None
+
+    label._delayed_text = text
+    label.showEvent = showEvent
 
 
 class MainWindow(WindowManager, Ui_MainWindow):
@@ -186,22 +197,32 @@ class MainWindow(WindowManager, Ui_MainWindow):
     @asyncSlot()
     async def initialize_post_show(self):
         self.InitPostShowSignal.disconnect(self.initialize_post_show)
+        logging.info("Will initialize things in post show")
         await self._initialize_post_show_body()
+        logging.info("Finished initializing post show")
 
     async def _initialize_post_show_body(self):
+        logging.info("Will load OnlineInteractions")
         from randovania.gui.main_online_interaction import OnlineInteractions
+        logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
 
+        logging.info("Will load GenerateSeedTab")
         from randovania.gui.generate_seed_tab import GenerateSeedTab
+        logging.info("Creating GenerateSeedTab...")
         self.generate_seed_tab = GenerateSeedTab(self, self, self._options)
+        logging.info("Running GenerateSeedTab.setup_ui")
         self.generate_seed_tab.setup_ui()
 
         # Update hints text
+        logging.info("Will _update_hints_text")
         self._update_hints_text()
+        logging.info("Will hide hint locations combo")
         self.hint_location_game_combo.setVisible(False)
         self.hint_location_game_combo.setCurrentIndex(1)
 
+        logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
 
@@ -299,11 +320,14 @@ class MainWindow(WindowManager, Ui_MainWindow):
             changelog_scroll_contents.setObjectName("changelog_scroll_contents")
             changelog_scroll_layout = QtWidgets.QVBoxLayout(changelog_scroll_contents)
             changelog_scroll_layout.setObjectName("changelog_scroll_layout")
-            changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
-            changelog_label.setObjectName("changelog_label")
-            changelog_label.setText(markdown.markdown("\n".join(all_change_logs)))
-            changelog_label.setWordWrap(True)
-            changelog_scroll_layout.addWidget(changelog_label)
+
+            for entry in all_change_logs:
+                changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
+                _update_label_on_show(changelog_label, markdown.markdown(entry))
+                changelog_label.setObjectName("changelog_label")
+                changelog_label.setWordWrap(True)
+                changelog_scroll_layout.addWidget(changelog_label)
+
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
             self.help_tab_widget.addTab(changelog_tab, "Change Log")

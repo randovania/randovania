@@ -7,7 +7,7 @@ import PySide2
 from PySide2.QtCore import QTimer, Signal, Qt
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QMainWindow, QLabel
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania import get_data_path
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem

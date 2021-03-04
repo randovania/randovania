@@ -2,7 +2,7 @@ from typing import Optional
 
 import wiiload
 from PySide2 import QtWidgets
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania import get_data_path
 from randovania.game_connection.backend_choice import GameBackendChoice
