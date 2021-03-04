@@ -225,11 +225,11 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     patches.append(patches[-1].assign_starting_location.return_value)
 
     # Run
-    result = base_patches_factory.create_base_patches(layout_configuration, rng, game, is_multiworld)
+    result = base_patches_factory.create_base_patches(layout_configuration, rng, game, is_multiworld, player_index=0)
 
     # Assert
     game.create_game_patches.assert_called_once_with()
-    mock_replace.assert_called_once_with(game.create_game_patches.return_value, game_specific=ANY)
+    mock_replace.assert_called_once_with(game.create_game_patches.return_value, game_specific=ANY, player_index=0)
     mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
 
     # Gate Assignment

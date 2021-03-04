@@ -229,11 +229,13 @@ def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
                         is_multiworld: bool,
+                        player_index: int,
                         ) -> GamePatches:
     """
     """
     patches = dataclasses.replace(game.create_game_patches(),
-                                  game_specific=create_game_specific(configuration, game))
+                                  game_specific=create_game_specific(configuration, game),
+                                  player_index=player_index)
 
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 

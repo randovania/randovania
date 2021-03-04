@@ -87,6 +87,13 @@ def randomizer_data() -> dict:
     return default_data.decode_randomizer_data()
 
 
+@pytest.fixture()
+def small_echoes_game_description(test_files_dir) -> GameDescription:
+    from randovania.game_description import data_reader
+    with test_files_dir.joinpath("prime2_small.json").open("r") as small_game:
+        return data_reader.decode_data(json.load(small_game))
+
+
 class DataclassTestLib:
     def mock_dataclass(self, obj) -> MagicMock:
         return MagicMock(spec=[field.name for field in dataclasses.fields(obj)])
