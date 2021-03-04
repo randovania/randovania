@@ -87,7 +87,8 @@ def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguratio
                 rng=rng,
                 elevator_database=elevator_db,
                 world_list=world_list,
-                elevator_target=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR
+                elevator_target=layout_configuration.elevators != LayoutElevators.ONE_WAY_ANYTHING,
+                replacement=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR_REPLACEMENT,
             )
 
         elevator_connection.update(connections)

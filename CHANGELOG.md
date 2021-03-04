@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: New elevator randomization setting: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
+
 -   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
 
 -   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).
