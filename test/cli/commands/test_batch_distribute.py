@@ -15,6 +15,7 @@ def test_batch_distribute_helper(mock_perf_counter: MagicMock,
     validate = MagicMock()
     output_dir = MagicMock()
     timeout = 67
+    mock_generate_description.return_value.file_extension.return_value = "rdvgame"
 
     expected_permalink = Permalink(
         seed_number=seed_number,
@@ -31,6 +32,7 @@ def test_batch_distribute_helper(mock_perf_counter: MagicMock,
     mock_generate_description.assert_called_once_with(permalink=expected_permalink, status_update=None,
                                                       validate_after_generation=validate, timeout=timeout,
                                                       attempts=0)
+
     assert delta_time == 4000
-    output_dir.joinpath.assert_called_once_with("{}.json".format(seed_number))
+    output_dir.joinpath.assert_called_once_with("{}.rdvgame".format(seed_number))
     mock_generate_description.return_value.save_to_file.assert_called_once_with(output_dir.joinpath.return_value)
