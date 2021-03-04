@@ -8,6 +8,7 @@ class LayoutElevators(BitPackEnum, Enum):
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
     ONE_WAY_ELEVATOR = "one-way-elevator"
+    ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
     @classmethod
@@ -23,7 +24,9 @@ class LayoutElevators(BitPackEnum, Enum):
         elif self == LayoutElevators.TWO_WAY_UNCHECKED:
             return "Two-way, unchecked"
         elif self == LayoutElevators.ONE_WAY_ELEVATOR:
-            return "One-way, elevator room"
+            return "One-way, elevator room with cycles"
+        elif self == LayoutElevators.ONE_WAY_ELEVATOR_REPLACEMENT:
+            return "One-way, elevator room with replacement"
         elif self == LayoutElevators.ONE_WAY_ANYTHING:
             return "One-way, anywhere"
         else:

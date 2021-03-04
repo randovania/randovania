@@ -358,11 +358,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     # Elevator
     def setup_elevator_elements(self):
-        self.elevators_combo.setItemData(0, LayoutElevators.VANILLA)
-        self.elevators_combo.setItemData(1, LayoutElevators.TWO_WAY_RANDOMIZED)
-        self.elevators_combo.setItemData(2, LayoutElevators.TWO_WAY_UNCHECKED)
-        self.elevators_combo.setItemData(3, LayoutElevators.ONE_WAY_ELEVATOR)
-        self.elevators_combo.setItemData(4, LayoutElevators.ONE_WAY_ANYTHING)
+        for value in iterate_enum(LayoutElevators):
+            self.elevators_combo.addItem(value.long_name, value)
 
         self.elevators_combo.options_field_name = "layout_configuration_elevators"
         self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,

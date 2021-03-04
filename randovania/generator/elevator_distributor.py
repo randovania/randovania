@@ -110,7 +110,8 @@ def two_way_elevator_connections(rng: Random,
 def one_way_elevator_connections(rng: Random,
                                  elevator_database: Tuple[Elevator, ...],
                                  world_list: WorldList,
-                                 elevator_target: bool
+                                 elevator_target: bool,
+                                 replacement: bool,
                                  ) -> Dict[int, AreaLocation]:
     if elevator_target:
         target_locations = [elevator.area_location for elevator in elevator_database]
@@ -123,8 +124,14 @@ def one_way_elevator_connections(rng: Random,
 
     rng.shuffle(target_locations)
 
+    def _create_target():
+        if replacement:
+            return rng.choice(target_locations)
+        else:
+            return target_locations.pop()
+
     return {
-        elevator.instance_id: target_locations.pop()
+        elevator.instance_id: _create_target()
         for elevator in elevator_database
     }
 
