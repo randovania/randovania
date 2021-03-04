@@ -10,6 +10,8 @@ from pathlib import Path
 from statistics import stdev
 from typing import Dict, Tuple, Optional, List, Iterable, Set
 
+import tqdm as tqdm
+
 from randovania.game_description.default_database import game_description_for
 from randovania.game_description.node import PickupNode, LogbookNode
 from randovania.games.game import RandovaniaGame
@@ -134,7 +136,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
 
     seed_count = 0
     pickup_count = None
-    for seed in Path(seeds_dir).glob("**/*.json"):
+    for seed in tqdm.tqdm(list(Path(seeds_dir).glob("**/*.json"))):
         seed_data = read_json(seed)
         for game_modifications in seed_data["game_modifications"]:
             accumulate_results(game_modifications,
