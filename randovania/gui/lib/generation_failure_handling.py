@@ -1,7 +1,7 @@
 import multiprocessing
 
 from PySide2 import QtCore, QtWidgets
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.gui.lib import async_dialog, common_qt_lib

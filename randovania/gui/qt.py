@@ -154,8 +154,8 @@ def start_logger(data_dir: Path, is_preview: bool):
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     os.environ['QT_API'] = "PySide2"
-    import asyncqt
-    loop: asyncio.AbstractEventLoop = asyncqt.QEventLoop(app)
+    import qasync
+    loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
     sys.excepthook = catch_exceptions
@@ -178,10 +178,10 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(backend)
 
-    logging.info("Configuring asyncqt...")
-    import asyncqt
+    logging.info("Configuring qasync...")
+    import qasync
 
-    @asyncqt.asyncClose
+    @qasync.asyncClose
     async def _on_last_window_closed():
         await app.network_client.disconnect_from_server()
         await app.game_connection.stop()
