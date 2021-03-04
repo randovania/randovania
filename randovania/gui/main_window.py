@@ -100,7 +100,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         for game in RandovaniaGame:
             self.hint_item_names_game_combo.addItem(game.long_name, game)
+            self.hint_location_game_combo.addItem(game.long_name, game)
+
         self.hint_item_names_game_combo.currentIndexChanged.connect(self._update_hints_text)
+        self.hint_location_game_combo.currentIndexChanged.connect(self._update_hint_locations)
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -196,10 +199,19 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         # Update hints text
         self._update_hints_text()
-        self._update_hint_locations()
+        self.hint_location_game_combo.setVisible(False)
+        self.hint_location_game_combo.setCurrentIndex(1)
 
         with self._options:
             self.on_options_changed()
+
+    def _update_hints_text(self):
+        from randovania.gui.lib import hints_text
+        hints_text.update_hints_text(self.hint_item_names_game_combo.currentData(), self.hint_item_names_tree_widget)
+
+    def _update_hint_locations(self):
+        from randovania.gui.lib import hints_text
+        hints_text.update_hint_locations(self.hint_location_game_combo.currentData(), self.hint_tree_widget)
 
     # Generate Seed
     def _open_faq(self):
@@ -516,98 +528,3 @@ class MainWindow(WindowManager, Ui_MainWindow):
         from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
         self.corruption_editor = CorruptionLayoutEditor()
         self.corruption_editor.show()
-
-    def _update_hints_text(self):
-        from randovania.game_description import default_database
-        from randovania.game_description.item.item_category import ItemCategory
-
-        game = self.hint_item_names_game_combo.currentData()
-        item_database = default_database.item_database_for_game(game)
-
-        rows = []
-
-        for item in item_database.major_items.values():
-            rows.append((
-                item.name,
-                item.item_category.hint_details[1],
-                item.item_category.general_details[1],
-                item.broad_category.hint_details[1],
-            ))
-
-        if game == RandovaniaGame.PRIME2:
-            from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
-            for dark_temple_key in DARK_TEMPLE_KEY_NAMES:
-                rows.append((
-                    dark_temple_key.format("").strip(),
-                    ItemCategory.TEMPLE_KEY.hint_details[1],
-                    ItemCategory.TEMPLE_KEY.general_details[1],
-                    ItemCategory.KEY.hint_details[1],
-                ))
-
-            rows.append((
-                "Sky Temple Key",
-                ItemCategory.SKY_TEMPLE_KEY.hint_details[1],
-                ItemCategory.SKY_TEMPLE_KEY.general_details[1],
-                ItemCategory.KEY.hint_details[1],
-            ))
-
-        for item in item_database.ammo.values():
-            rows.append((
-                item.name,
-                ItemCategory.EXPANSION.hint_details[1],
-                ItemCategory.EXPANSION.general_details[1],
-                item.broad_category.hint_details[1],
-            ))
-
-        self.hint_item_names_tree_widget.setRowCount(len(rows))
-        for i, elements in enumerate(rows):
-            for j, element in enumerate(elements):
-                self.hint_item_names_tree_widget.setItem(i, j, QtWidgets.QTableWidgetItem(element))
-
-        for i in range(4):
-            self.hint_item_names_tree_widget.resizeColumnToContents(i)
-
-    def _update_hint_locations(self):
-        from randovania.game_description.node import LogbookNode, LoreType
-        from randovania.game_description import default_database
-        game_description = default_database.game_description_for(RandovaniaGame.PRIME2)
-
-        number_for_hint_type = {
-            hint_type: i + 1
-            for i, hint_type in enumerate(LoreType)
-        }
-        used_hint_types = set()
-
-        self.hint_tree_widget.setSortingEnabled(False)
-
-        # TODO: This ignores the Dark World names. But there's currently no logbook nodes in Dark World.
-        for world in game_description.world_list.worlds:
-
-            world_item = QtWidgets.QTreeWidgetItem(self.hint_tree_widget)
-            world_item.setText(0, world.name)
-            world_item.setExpanded(True)
-
-            for area in world.areas:
-                hint_types = {}
-
-                for node in area.nodes:
-                    if isinstance(node, LogbookNode):
-                        if node.required_translator is not None:
-                            hint_types[node.lore_type] = node.required_translator.short_name
-                        else:
-                            hint_types[node.lore_type] = "✓"
-
-                if hint_types:
-                    area_item = QtWidgets.QTreeWidgetItem(world_item)
-                    area_item.setText(0, area.name)
-
-                    for hint_type, text in hint_types.items():
-                        area_item.setText(number_for_hint_type[hint_type], text)
-                        used_hint_types.add(hint_type)
-
-        self.hint_tree_widget.resizeColumnToContents(0)
-        self.hint_tree_widget.setSortingEnabled(True)
-        self.hint_tree_widget.sortByColumn(0, QtCore.Qt.AscendingOrder)
-
-        for hint_type in used_hint_types:
-            self.hint_tree_widget.headerItem().setText(number_for_hint_type[hint_type], hint_type.long_name)

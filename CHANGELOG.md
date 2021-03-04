@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
 
+-   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
+
 ## [2.5.2] - 2021-02-28
 
 -   Added: The number of items in the pool is now included in the summary.
