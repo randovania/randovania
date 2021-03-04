@@ -9,7 +9,7 @@ import slugify
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 8
+CURRENT_PRESET_VERSION = 9
 
 
 class InvalidPreset(Exception):
@@ -213,6 +213,10 @@ def _migrate_v7(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v8(preset: dict) -> dict:
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -221,6 +225,7 @@ _MIGRATIONS = {
     5: _migrate_v5,
     6: _migrate_v6,
     7: _migrate_v7,
+    8: _migrate_v8,
 }
 
 

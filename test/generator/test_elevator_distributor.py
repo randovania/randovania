@@ -78,30 +78,33 @@ def test_two_way_elevator_connections_unchecked():
     }
 
 
-def test_one_way_elevator_connections_elevator_target():
-    # Setup
-    rng = random.Random(5000)
-    elevators = [
-        Elevator(i, i, i, i, i)
-        for i in range(6)
-    ]
-    database = tuple(elevators)
-
-    # Run
-    result = elevator_distributor.one_way_elevator_connections(rng, database, None, True)
-
-    # Assert
-    assert result == {
+@pytest.mark.parametrize(["elevator_target", "replacement", "expected"], [
+    (True, False, {
         0: AreaLocation(1, 1),
         1: AreaLocation(2, 2),
         2: AreaLocation(3, 3),
         3: AreaLocation(5, 5),
         4: AreaLocation(0, 0),
         5: AreaLocation(4, 4),
-    }
-
-
-def test_one_way_elevator_connections_any_target(echoes_game_description):
+    }),
+    (True, True, {
+        0: AreaLocation(2, 2),
+        1: AreaLocation(3, 3),
+        2: AreaLocation(4, 4),
+        3: AreaLocation(2, 2),
+        4: AreaLocation(5, 5),
+        5: AreaLocation(3, 3),
+    }),
+    (False, False, {
+        0: AreaLocation(0x42B935E4, 0xA4B2CB7E),
+        1: AreaLocation(0x3DFD2249, 0xCB165BD8),
+        2: AreaLocation(0x3DFD2249, 0x63190A61),
+        3: AreaLocation(0x1BAA96C2, 0xA2406387),
+        4: AreaLocation(0x3BFA3EFF, 0x531079BA),
+        5: AreaLocation(0x1BAA96C2, 0x844A690C),
+    }),
+])
+def test_one_way_elevator_connections(echoes_game_description, elevator_target, replacement, expected):
     # Setup
     rng = random.Random(5000)
     elevators = [
@@ -111,14 +114,8 @@ def test_one_way_elevator_connections_any_target(echoes_game_description):
     database = tuple(elevators)
 
     # Run
-    result = elevator_distributor.one_way_elevator_connections(rng, database, echoes_game_description.world_list, False)
+    result = elevator_distributor.one_way_elevator_connections(rng, database, echoes_game_description.world_list,
+                                                               elevator_target, replacement)
 
     # Assert
-    assert result == {
-        0: AreaLocation(0x42B935E4, 0xA4B2CB7E),
-        1: AreaLocation(0x3DFD2249, 0xCB165BD8),
-        2: AreaLocation(0x3DFD2249, 0x63190A61),
-        3: AreaLocation(0x1BAA96C2, 0xA2406387),
-        4: AreaLocation(0x3BFA3EFF, 0x531079BA),
-        5: AreaLocation(0x1BAA96C2, 0x844A690C),
-    }
+    assert result == expected
