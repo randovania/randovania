@@ -1,4 +1,3 @@
-import dataclasses
 import multiprocessing.dummy
 from random import Random
 from typing import Iterator, Optional, Callable, List, Dict
@@ -6,7 +5,7 @@ from typing import Iterator, Optional, Callable, List, Dict
 import tenacity
 
 from randovania import VERSION
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -165,9 +164,8 @@ def _async_create_description(permalink: Permalink,
 def create_player_pool(rng: Random, configuration: EchoesConfiguration,
                        player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game)
-    base_patches = dataclasses.replace(base_patches_factory.create_base_patches(configuration, rng, game,
-                                                                                num_players > 1),
-                                       player_index=player_index)
+    base_patches = base_patches_factory.create_base_patches(configuration, rng, game, num_players > 1,
+                                                            player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
                                                                                       game.resource_database)
