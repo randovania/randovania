@@ -114,7 +114,7 @@ class NetworkClient:
         waiting_for_on_connect = asyncio.get_running_loop().create_future()
         self._waiting_for_on_connect = waiting_for_on_connect
         try:
-            # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
+            # sio.connect is raising a NotImplementedError, likely due to Windows and/or qasync?
             engineio.asyncio_client.async_signal_handler_set = True
 
             self.connection_state = ConnectionState.Connecting

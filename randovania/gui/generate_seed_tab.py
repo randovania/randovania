@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QMenu, QAction
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow

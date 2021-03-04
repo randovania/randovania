@@ -9,7 +9,7 @@ from typing import List, Optional
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import Qt, QTimer
 from PySide2.QtWidgets import QMessageBox
-from asyncqt import asyncSlot, asyncClose
+from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader

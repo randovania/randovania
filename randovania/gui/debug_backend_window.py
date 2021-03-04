@@ -4,7 +4,7 @@ from typing import List, Optional, Dict
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _powerup_offset
 from randovania.game_connection.connection_base import GameConnectionStatus

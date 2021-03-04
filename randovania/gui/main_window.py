@@ -1,5 +1,6 @@
 import functools
 import json
+import logging
 import os
 import platform
 import subprocess
@@ -9,7 +10,7 @@ from typing import Optional, List
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania import VERSION
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -186,22 +187,32 @@ class MainWindow(WindowManager, Ui_MainWindow):
     @asyncSlot()
     async def initialize_post_show(self):
         self.InitPostShowSignal.disconnect(self.initialize_post_show)
+        logging.info("Will initialize things in post show")
         await self._initialize_post_show_body()
+        logging.info("Finished initializing post show")
 
     async def _initialize_post_show_body(self):
+        logging.info("Will load OnlineInteractions")
         from randovania.gui.main_online_interaction import OnlineInteractions
+        logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
 
+        logging.info("Will load GenerateSeedTab")
         from randovania.gui.generate_seed_tab import GenerateSeedTab
+        logging.info("Creating GenerateSeedTab...")
         self.generate_seed_tab = GenerateSeedTab(self, self, self._options)
+        logging.info("Running GenerateSeedTab.setup_ui")
         self.generate_seed_tab.setup_ui()
 
         # Update hints text
+        logging.info("Will _update_hints_text")
         self._update_hints_text()
+        logging.info("Will hide hint locations combo")
         self.hint_location_game_combo.setVisible(False)
         self.hint_location_game_combo.setCurrentIndex(1)
 
+        logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
 

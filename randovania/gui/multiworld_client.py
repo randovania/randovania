@@ -6,7 +6,7 @@ from typing import List, Set, Optional, AsyncContextManager, Tuple
 
 import pid
 from PySide2.QtCore import QObject
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.game_connection import GameConnection

@@ -8,7 +8,7 @@ from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.game_description import data_reader, default_database
 from randovania.game_description.game_description import GameDescription

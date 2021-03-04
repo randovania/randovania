@@ -1,5 +1,5 @@
 from PySide2 import QtWidgets
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation

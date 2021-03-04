@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PySide2 import QtWidgets
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.game_session_window import GameSessionWindow
