@@ -6,6 +6,7 @@ from typing import Optional, Dict
 import aiofiles
 import slugify
 
+from randovania.game_description.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
@@ -214,6 +215,20 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
+    from randovania.game_description import default_database
+    game = default_database.game_description_for(RandovaniaGame(preset["game"]))
+
+    def _name_to_location(name: str):
+        world_name, area_name = name.split("/", 1)
+        world = game.world_list.world_with_name(world_name)
+        area = world.area_by_name(area_name)
+        return AreaLocation(world.world_asset_id, area.area_asset_id)
+
+    preset["configuration"]["starting_location"] = [
+        _name_to_location(location).as_json
+        for location in preset["configuration"]["starting_location"]
+    ]
+
     return preset
 
 

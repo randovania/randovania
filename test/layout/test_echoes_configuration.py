@@ -14,7 +14,7 @@ from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSk
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.location_list import LocationList
 from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 
@@ -65,7 +65,7 @@ def _layout_config_with_data(request, default_layout_configuration):
     beam_configuration = DummyValue()
 
     with patch.multiple(TrickLevelConfiguration, bit_pack_unpack=MagicMock(return_value=trick_config)), \
-         patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
+         patch.multiple(LocationList, bit_pack_unpack=MagicMock(return_value=starting_location)), \
          patch.multiple(AvailableLocationsConfiguration, bit_pack_unpack=MagicMock(return_value=available_locations)), \
          patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \

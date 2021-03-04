@@ -27,7 +27,7 @@ from randovania.generator.generator_reach import (
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.location_list import LocationList
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver import bootstrap
@@ -206,7 +206,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
         trick_level=TrickLevelConfiguration(minimal_logic=False,
                                             specific_levels=specific_levels,
                                             game=default_layout_configuration.game),
-        starting_location=StartingLocation.with_elements(
+        starting_location=LocationList.with_elements(
             [game.starting_location],
             game=RandovaniaGame.PRIME2,
         )
