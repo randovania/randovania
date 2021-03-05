@@ -37,7 +37,7 @@ from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
 from randovania.layout.preset import Preset
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.location_list import LocationList
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
@@ -455,7 +455,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
-                StartingLocation.with_elements([self.game_description.starting_location], self.game_enum)
+                LocationList.with_elements([self.game_description.starting_location], self.game_enum)
             )
 
     def _starting_location_on_select_save_station(self):
@@ -466,7 +466,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
-                StartingLocation.with_elements(save_stations, self.game_enum)
+                LocationList.with_elements(save_stations, self.game_enum)
             )
 
     def on_preset_changed_starting_area(self, preset: Preset):

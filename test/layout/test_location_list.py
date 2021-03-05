@@ -6,14 +6,17 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.location_list import LocationList
 
 
 @pytest.fixture(
     params=[
         {"encoded": b'\x00', "json": []},
-        {"encoded": b'\x0c\x00', "json": ["Temple Grounds/Landing Site"]},
-        {"encoded": b'\x14\x84', "json": ["Temple Grounds/Hall of Honored Dead", "Temple Grounds/Path of Eyes"]},
+        {"encoded": b'\x0c\x00', "json": [{"world_asset_id": 1006255871, "area_asset_id": 1655756413}]},
+        {"encoded": b'\x14\x84', "json": [
+            {"world_asset_id": 1006255871, "area_asset_id": 3098756660},
+            {"world_asset_id": 1006255871, "area_asset_id": 3997643454}
+        ]},
     ],
     name="location_with_data")
 def _location_with_data(request, mocker, echoes_game_description):
@@ -24,9 +27,9 @@ def _location_with_data(request, mocker, echoes_game_description):
          for area in world.areas
          if area.valid_starting_location), 15))
 
-    mocker.patch("randovania.layout.starting_location._areas_list",
+    mocker.patch("randovania.layout.location_list.LocationList.areas_list",
                  return_value=list(sorted(areas)))
-    return request.param["encoded"], StartingLocation.from_json(request.param["json"], RandovaniaGame.PRIME2)
+    return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.PRIME2)
 
 
 def test_decode(location_with_data):
@@ -35,8 +38,8 @@ def test_decode(location_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = StartingLocation.bit_pack_unpack(
-        decoder, {"reference": StartingLocation.with_elements([], RandovaniaGame.PRIME2)})
+    result = LocationList.bit_pack_unpack(
+        decoder, {"reference": LocationList.with_elements([], RandovaniaGame.PRIME2)})
 
     # Assert
     assert result == expected
