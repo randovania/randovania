@@ -24,7 +24,7 @@ from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
@@ -83,7 +83,7 @@ def test_create_elevators_field_no_elevator(empty_patches):
         patcher_file._create_elevators_field(empty_patches, game)
 
     # Assert
-    assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
+    assert str(exp.value) == "Invalid elevator count. Expected 21, got 0."
 
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
@@ -157,11 +157,6 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
          "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2399252740},
          "target_location": {"world_asset_id": 1006255871, "area_asset_id": 1287880522},
          "room_name": "Transport to Agon Quadrant"},
-
-        {"instance_id": 589949,
-         "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2068511343},
-         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
-         "room_name": "Sky Temple Energy Controller"},
 
         {"instance_id": 122,
          "origin_location": {"world_asset_id": 1119434212, "area_asset_id": 1473133138},
@@ -240,7 +235,7 @@ def test_create_translator_gates_field():
     ]
 
 
-@pytest.mark.parametrize("elevators", [LayoutElevators.VANILLA, LayoutElevators.TWO_WAY_RANDOMIZED])
+@pytest.mark.parametrize("elevators", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
 def test_apply_translator_gate_patches(elevators):
     # Setup
     target = {}
@@ -252,7 +247,7 @@ def test_apply_translator_gate_patches(elevators):
     assert target == {
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
-        "always_up_great_temple": elevators != LayoutElevators.VANILLA,
+        "always_up_great_temple": elevators != TeleporterShuffleMode.VANILLA,
     }
 
 
@@ -800,7 +795,7 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["pickups"]) == 119
 
     assert isinstance(result["elevators"], list)
-    assert len(result["elevators"]) == 22
+    assert len(result["elevators"]) == 21
 
     assert isinstance(result["translator_gates"], list)
     assert len(result["translator_gates"]) == 17

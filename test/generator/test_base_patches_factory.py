@@ -14,7 +14,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
@@ -27,10 +27,14 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
     expected = dataclasses.replace(game.create_game_patches())
     if skip_final_bosses:
         expected.elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
+    config = default_layout_configuration
+    config = dataclasses.replace(config,
+                                 elevators=dataclasses.replace(config.elevators,
+                                                               skip_final_bosses=skip_final_bosses))
 
     # Run
     result = base_patches_factory.add_elevator_connections_to_patches(
-        dataclasses.replace(default_layout_configuration, skip_final_bosses=skip_final_bosses),
+        config,
         Random(0),
         game.create_game_patches())
 
@@ -44,9 +48,14 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data,
                                                     default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
-    layout_configuration = dataclasses.replace(default_layout_configuration,
-                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
-                                               skip_final_bosses=skip_final_bosses)
+    layout_configuration = dataclasses.replace(
+        default_layout_configuration,
+        elevators=dataclasses.replace(
+            default_layout_configuration.elevators,
+            mode=TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
+            skip_final_bosses=skip_final_bosses,
+        ),
+    )
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),
@@ -60,7 +69,6 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data,
                                        152: AreaLocation(1006255871, 2889020216),
                                        393260: AreaLocation(464164546, 3145160350),
                                        524321: AreaLocation(464164546, 900285955),
-                                       589949: AreaLocation(1006255871, 2278776548),
                                        122: AreaLocation(464164546, 3528156989),
                                        1245307: AreaLocation(1006255871, 1345979968),
                                        2949235: AreaLocation(1006255871, 1287880522),

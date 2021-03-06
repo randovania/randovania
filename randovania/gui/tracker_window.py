@@ -33,7 +33,7 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
 from randovania.layout import translator_configuration
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
@@ -486,7 +486,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 location = AreaLocation(world.world_asset_id, area.area_asset_id)
                 targets[patcher_file.elevator_area_name(world_list, location, True)] = location
 
-        if self.layout_configuration.elevators == LayoutElevators.ONE_WAY_ANYTHING:
+        if self.layout_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
             for world in world_list.worlds:
                 for area in world.areas:
@@ -517,7 +517,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
-                if self.layout_configuration.elevators == LayoutElevators.VANILLA:
+                if self.layout_configuration.elevators.is_vanilla:
                     combo.addItem("Vanilla", node.default_connection)
                     combo.setEnabled(False)
                 else:

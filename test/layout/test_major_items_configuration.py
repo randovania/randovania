@@ -6,7 +6,6 @@ import pytest
 from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
@@ -24,8 +23,8 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
             data[field][key] = inner_value
 
     return (
-        MajorItemsConfiguration.from_json(default_data, default_database.item_database_for_game(game)),
-        MajorItemsConfiguration.from_json(data, default_database.item_database_for_game(game)),
+        MajorItemsConfiguration.from_json(default_data, game),
+        MajorItemsConfiguration.from_json(data, game),
     )
 
 

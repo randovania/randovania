@@ -3,17 +3,17 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.resolver import bootstrap
 
 
-@pytest.mark.parametrize("elevators", [LayoutElevators.VANILLA, LayoutElevators.TWO_WAY_RANDOMIZED])
+@pytest.mark.parametrize("vanilla_elevators", [False, True])
 def test_misc_resources_for_configuration(echoes_resource_database,
-                                          elevators: LayoutElevators,
+                                          vanilla_elevators: bool,
                                           ):
     # Setup
     configuration = MagicMock()
-    configuration.elevators = elevators
+    configuration.elevators.is_vanilla = vanilla_elevators
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 16)
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 17)
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 18)
@@ -29,7 +29,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     assert relevant_tricks == {
         gfmc_resource: 0,
         torvus_resource: 0,
-        great_resource: 0 if elevators != LayoutElevators.VANILLA else 1,
+        great_resource: 0 if not vanilla_elevators else 1,
     }
 
 

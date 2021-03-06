@@ -5,7 +5,7 @@ import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 
@@ -46,7 +46,6 @@ def test_decode_invalid(invalid: str):
     {},
     {
         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-        "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     },
     {
         "menu_mod": True,

@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Added: New elevator randomization setting: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
+-   **Major** - Added: New elevator randomization settings: 
+    * New mode: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
+    * Select which elevators can be randomized.
+    * Select possible destinations for *One-way, anywhere*.
+    * Randomize Sky Temple Gateway, Aerie Access and Aerie elevators.
 
 -   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
 

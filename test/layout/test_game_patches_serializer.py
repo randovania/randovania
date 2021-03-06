@@ -58,7 +58,6 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             "Great Temple/Temple Transport C": "Temple Grounds/Temple Transport C",
             "Great Temple/Temple Transport B": "Temple Grounds/Temple Transport B",
             "Sky Temple Grounds/Sky Temple Gateway": "Sky Temple/Sky Temple Energy Controller",
-            "Sky Temple/Sky Temple Energy Controller": "Sky Temple Grounds/Sky Temple Gateway",
             "Agon Wastes/Transport to Temple Grounds": "Temple Grounds/Transport to Agon Wastes",
             "Agon Wastes/Transport to Torvus Bog": "Torvus Bog/Transport to Agon Wastes",
             "Agon Wastes/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Agon Wastes",

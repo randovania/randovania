@@ -6,12 +6,12 @@ from pathlib import Path
 import pytest
 
 from randovania.gui import tracker_window
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.fixture(params=[{},
-                        {"elevators": LayoutElevators.ONE_WAY_ANYTHING,
+                        {"elevators": TeleporterShuffleMode.ONE_WAY_ANYTHING,
                          "translator_configuration": True}],
                 name="layout_config")
 def _layout_config(request, default_layout_configuration):
@@ -107,7 +107,10 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_layout_configu
                                        translator_requirement=translator_requirement)
         layout_config = dataclasses.replace(
             default_layout_configuration,
-            elevators=LayoutElevators.ONE_WAY_ANYTHING,
+            elevators=dataclasses.replace(
+                default_layout_configuration.elevators,
+                mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
+            ),
             translator_configuration=new_gate)
     else:
         layout_config = default_layout_configuration
