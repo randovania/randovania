@@ -41,7 +41,8 @@ _JOKE_HINTS = [
     "While in Morph Ball mode, press &image=SI,0.70,0.68,D523DE3B; to drop Bombs.",
     "Charge your beam to fire a normal shot when out of ammo.",
     "Movement in Morph Ball mode is faster than unmorphed, even without Boost Ball.",
-    "While walking, holding L makes you move faster."
+    "While walking, holding L makes you move faster.",
+    "I wonder how many players will see this message...?",
 ]
 
 _DET_AN = [
