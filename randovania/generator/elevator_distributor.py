@@ -5,31 +5,68 @@ from typing import List, Dict, Optional, Tuple, AbstractSet
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.node import TeleporterNode
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
 
 
-class Elevator:
-    instance_id: int
-    world_asset_id: int
-    area_asset_id: int
-    destination_world: int
-    destination_area: int
-    connected_elevator: Optional["Elevator"]
+CUSTOM_NAMES_FOR_ELEVATORS = {
+    # Great Temple
+    408633584: "Temple Transport Emerald",
+    2399252740: "Temple Transport Violet",
+    2556480432: "Temple Transport Amber",
 
-    def __init__(self, instance_id: int, world_asset_id: int, area_asset_id: int, destination_world: int,
-                 destination_area: int):
-        self.world_asset_id = world_asset_id
-        self.area_asset_id = area_asset_id
-        self.instance_id = instance_id
-        self.destination_world = destination_world
-        self.destination_area = destination_area
+    # Temple Grounds to Great Temple
+    1345979968: "Sanctuary Quadrant",
+    1287880522: "Agon Quadrant",
+    2918020398: "Torvus Quadrant",
+
+    # Temple Grounds to Areas
+    1660916974: "Agon Gate",
+    2889020216: "Torvus Gate",
+    3455543403: "Sanctuary Gate",
+
+    # Agon
+    1473133138: "Agon Entrance",
+    2806956034: "Agon Portal Access",
+    3331021649: "Agon Temple Access",
+
+    # Torvus
+    1868895730: "Torvus Entrance",
+    3479543630: "Torvus Temple Access",
+    3205424168: "Lower Torvus Access",
+
+    # Sanctuary
+    3528156989: "Sanctuary Entrance",
+    900285955: "Sanctuary Spider side",
+    3145160350: "Sanctuary Vault side",
+}
+
+
+class ElevatorHelper:
+    teleporter: Teleporter
+    destination: AreaLocation
+    connected_elevator: Optional["ElevatorHelper"]
+
+    def __init__(self, teleporter: Teleporter, destination: AreaLocation):
+        self.teleporter = teleporter
+        self.destination = destination
         self.connected_elevator = None
 
-    def connect_to(self, other: "Elevator"):
-        self.destination_world = other.world_asset_id
-        self.destination_area = other.area_asset_id
-        other.destination_world = self.world_asset_id
-        other.destination_area = self.area_asset_id
+    @property
+    def world_asset_id(self):
+        return self.teleporter.world_asset_id
+
+    @property
+    def area_asset_id(self):
+        return self.teleporter.area_asset_id
+
+    @property
+    def instance_id(self):
+        return self.teleporter.instance_id
+
+    def connect_to(self, other: "ElevatorHelper"):
+        self.destination = other.teleporter.area_location
+        other.destination = self.teleporter.area_location
         self.connected_elevator = other
         other.connected_elevator = self
 
@@ -39,18 +76,19 @@ class Elevator:
 
 
 def try_randomize_elevators(rng: Random,
-                            echoes_elevators: Tuple[Elevator, ...],
-                            ) -> List[Elevator]:
-    elevator_database: List[Elevator] = list(echoes_elevators)
+                            echoes_elevators: Tuple[ElevatorHelper, ...],
+                            ) -> List[ElevatorHelper]:
+    elevator_database: List[ElevatorHelper] = list(echoes_elevators)
+    assert len(elevator_database) % 2 == 0
 
     elevator_list = copy.copy(elevator_database)
-    elevators_by_world: Dict[int, List[Elevator]] = defaultdict(list)
+    elevators_by_world: Dict[int, List[ElevatorHelper]] = defaultdict(list)
     for elevator in elevator_list:
         elevators_by_world[elevator.world_asset_id].append(elevator)
 
     while elevator_list:
-        source_elevators: List[Elevator] = max(elevators_by_world.values(), key=len)
-        target_elevators: List[Elevator] = [
+        source_elevators: List[ElevatorHelper] = max(elevators_by_world.values(), key=len)
+        target_elevators: List[ElevatorHelper] = [
             elevator
             for elevator in elevator_list
             if elevator not in source_elevators
@@ -74,7 +112,8 @@ def try_randomize_elevators(rng: Random,
             index = 0
             while index < len(list3):
                 celevator2 = list3[index]
-                if celevator2.world_asset_id == celevator1.world_asset_id or celevator2.area_asset_id == celevator1.destination_area:
+                if (celevator2.world_asset_id == celevator1.world_asset_id
+                        or celevator2.area_asset_id == celevator1.destination.area_asset_id):
                     celevator_list1.append(celevator2)
                     list3.remove(celevator2)
                 else:
@@ -89,13 +128,14 @@ def try_randomize_elevators(rng: Random,
 
 
 def two_way_elevator_connections(rng: Random,
-                                 elevator_database: Tuple[Elevator, ...],
+                                 elevator_database: Tuple[ElevatorHelper, ...],
                                  between_areas: bool
                                  ) -> Dict[int, AreaLocation]:
+    if len(elevator_database) % 2 != 0:
+        raise ValueError("Two-way elevator shuffle, but odd number of elevators to shuffle.")
     if between_areas:
         elevator_database = try_randomize_elevators(rng, elevator_database)
     else:
-        assert len(elevator_database) % 2 == 0
         elevators = list(elevator_database)
         rng.shuffle(elevators)
         while elevators:
@@ -108,20 +148,11 @@ def two_way_elevator_connections(rng: Random,
 
 
 def one_way_elevator_connections(rng: Random,
-                                 elevator_database: Tuple[Elevator, ...],
-                                 world_list: WorldList,
-                                 elevator_target: bool,
+                                 elevator_database: Tuple[ElevatorHelper, ...],
+                                 target_locations: List[AreaLocation],
                                  replacement: bool,
                                  ) -> Dict[int, AreaLocation]:
-    if elevator_target:
-        target_locations = [elevator.area_location for elevator in elevator_database]
-    else:
-        target_locations = [
-            AreaLocation(world.world_asset_id, area.area_asset_id)
-            for world in world_list.worlds
-            for area in world.areas
-        ]
-
+    target_locations.sort()
     rng.shuffle(target_locations)
 
     def _create_target():
@@ -137,21 +168,23 @@ def one_way_elevator_connections(rng: Random,
 
 
 def create_elevator_database(world_list: WorldList,
-                             areas_to_not_change: AbstractSet[int],
-                             ) -> Tuple[Elevator, ...]:
+                             all_teleporters: List[Teleporter],
+                             ) -> Tuple[ElevatorHelper, ...]:
     """
     Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
     :param world_list:
-    :param areas_to_not_change: Set of asset_id of Areas whose teleporters are to be ignored
+    :param all_teleporters: Set of teleporters to use
     :return:
     """
-    return tuple(
-        Elevator(node.teleporter_instance_id,
-                 world.world_asset_id,
-                 area.area_asset_id,
-                 node.default_connection.world_asset_id,
-                 node.default_connection.area_asset_id)
+    all_helpers = [
+        ElevatorHelper(Teleporter(world.world_asset_id, area.area_asset_id, node.teleporter_instance_id),
+                       node.default_connection)
 
         for world, area, node in world_list.all_worlds_areas_nodes
-        if isinstance(node, TeleporterNode) and node.editable and area.area_asset_id not in areas_to_not_change
+        if isinstance(node, TeleporterNode)
+    ]
+    return tuple(
+        helper
+        for helper in all_helpers
+        if helper.teleporter in all_teleporters
     )

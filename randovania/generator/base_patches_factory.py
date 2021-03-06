@@ -20,7 +20,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
@@ -61,40 +61,34 @@ def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguratio
     :return:
     """
     elevator_connection = copy.copy(patches.elevator_connection)
+    elevators = layout_configuration.elevators
 
-    if layout_configuration.elevators != LayoutElevators.VANILLA:
+    if not elevators.is_vanilla:
         if rng is None:
             raise MissingRng("Elevator")
 
         world_list = data_reader.decode_data(layout_configuration.game_data).world_list
-        areas_to_not_change = {
-            2278776548,  # Sky Temple Gateway
-            2068511343,  # Sky Temple Energy Controller
-            3136899603,  # Aerie Transport Station
-            1564082177,  # Aerie
-        }
+        elevator_db = elevator_distributor.create_elevator_database(
+            world_list, elevators.editable_teleporters)
 
-        elevator_db = elevator_distributor.create_elevator_database(world_list, areas_to_not_change)
-
-        if layout_configuration.elevators in {LayoutElevators.TWO_WAY_RANDOMIZED, LayoutElevators.TWO_WAY_UNCHECKED}:
+        if elevators.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
             connections = elevator_distributor.two_way_elevator_connections(
                 rng=rng,
                 elevator_database=elevator_db,
-                between_areas=layout_configuration.elevators == LayoutElevators.TWO_WAY_RANDOMIZED
+                between_areas=elevators.mode == TeleporterShuffleMode.TWO_WAY_RANDOMIZED
             )
         else:
             connections = elevator_distributor.one_way_elevator_connections(
                 rng=rng,
                 elevator_database=elevator_db,
-                world_list=world_list,
-                elevator_target=layout_configuration.elevators != LayoutElevators.ONE_WAY_ANYTHING,
-                replacement=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR_REPLACEMENT,
+                target_locations=elevators.valid_targets,
+                replacement=elevators.mode == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT,
             )
 
         elevator_connection.update(connections)
 
-    if layout_configuration.skip_final_bosses:
-        elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
+    for teleporter, destination in elevators.static_teleporters.items():
+        elevator_connection[teleporter.instance_id] = destination
 
     return dataclasses.replace(patches, elevator_connection=elevator_connection)
 

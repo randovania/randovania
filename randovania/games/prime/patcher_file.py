@@ -18,48 +18,18 @@ from randovania.game_description.resources.resource_info import ResourceGainTupl
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
+from randovania.generator import elevator_distributor
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
-_CUSTOM_NAMES_FOR_ELEVATORS = {
-    # Great Temple
-    408633584: "Temple Transport Emerald",
-    2399252740: "Temple Transport Violet",
-    2556480432: "Temple Transport Amber",
-
-    # Temple Grounds to Great Temple
-    1345979968: "Sanctuary Quadrant",
-    1287880522: "Agon Quadrant",
-    2918020398: "Torvus Quadrant",
-
-    # Temple Grounds to Areas
-    1660916974: "Agon Gate",
-    2889020216: "Torvus Gate",
-    3455543403: "Sanctuary Gate",
-
-    # Agon
-    1473133138: "Agon Entrance",
-    2806956034: "Agon Portal Access",
-    3331021649: "Agon Temple Access",
-
-    # Torvus
-    1868895730: "Torvus Entrance",
-    3479543630: "Torvus Temple Access",
-    3205424168: "Lower Torvus Access",
-
-    # Sanctuary
-    3528156989: "Sanctuary Entrance",
-    900285955: "Sanctuary Spider side",
-    3145160350: "Sanctuary Vault side",
-}
 
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',
@@ -361,8 +331,8 @@ def elevator_area_name(world_list: WorldList,
                        area_location: AreaLocation,
                        include_world_name: bool,
                        ) -> str:
-    if area_location.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
-        return _CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
+    if area_location.area_asset_id in elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS:
+        return elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
 
     else:
         world = world_list.world_by_area_location(area_location)
@@ -446,7 +416,7 @@ def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
     ]
 
 
-def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElevators) -> None:
+def _apply_translator_gate_patches(specific_patches: dict, elevators: TeleporterShuffleMode) -> None:
     """
 
     :param specific_patches:
@@ -455,7 +425,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElev
     """
     specific_patches["always_up_gfmc_compound"] = True
     specific_patches["always_up_torvus_temple"] = True
-    specific_patches["always_up_great_temple"] = elevators != LayoutElevators.VANILLA
+    specific_patches["always_up_great_temple"] = elevators != TeleporterShuffleMode.VANILLA
 
 
 def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connection: Dict[int, AreaLocation],
@@ -717,7 +687,7 @@ def create_patcher_file(description: LayoutDescription,
         {"asset_id": 327, "connections": [46, 275], },
     ]
 
-    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators)
+    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators.mode)
 
     return result
 

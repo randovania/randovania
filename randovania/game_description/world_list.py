@@ -9,6 +9,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 
 
@@ -222,6 +223,13 @@ class WorldList:
                 for connections in area.connections.values():
                     for target, value in connections.items():
                         connections[target] = value.patch_requirements(static_resources, damage_multiplier).simplify()
+
+    def teleporter_to_node(self, teleporter: Teleporter) -> TeleporterNode:
+        area = self.area_by_area_location(teleporter.area_location)
+        for node in area.nodes:
+            if isinstance(node, TeleporterNode) and node.teleporter_instance_id == teleporter.instance_id:
+                return node
+        raise ValueError(f"No teleporter id with instance id {teleporter.instance_id} found in {area}")
 
     def area_by_area_location(self, location: AreaLocation) -> Area:
         return self._ids_to_area[location]
