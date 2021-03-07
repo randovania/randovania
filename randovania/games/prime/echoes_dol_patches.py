@@ -1,7 +1,9 @@
 import dataclasses
 import struct
 from enum import Enum
+from typing import List
 
+from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
@@ -102,6 +104,96 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     dol_file.write_instructions(game_options_constructor_offset + 8 * 4, patch)
 
 
+def _is_out_of_ammo_patch(patch_addresses: BeamCostAddresses, ammo_types: List[Tuple[int, int]]):
+    def get_beam_ammo_amount(index: int):
+        label = f"_after_get_ammo_type_{index}"
+
+        body = [
+            lwz(r0, 0x774, r30),  # r0 = get current beam
+            addi(r0, r0, 0x1),    # current_beam += 1
+            mtspr(CTR, r0),       # count_register = current_beam
+        ]
+
+        for beam_index, beam_ammo_types in enumerate(ammo_types):
+            if beam_index + 1 < len(ammo_types):
+                body.append(bdnz(8, relative=True))
+
+            if beam_ammo_types[index] == -1:
+                body.extend([
+                    li(r3, 0),        # No ammo type, so load result
+                    b("_end"),           # and return
+                ])
+            else:
+                body.extend([
+                    li(r4, beam_ammo_types[index]),
+                    b(label),
+                ])
+
+        # Last beam doesn't need to jump forward
+        body.pop()
+
+        body.extend([
+            or_(r3, r31, r31).with_label(label),  # arg1 = playerState, arg2 is already there
+            li(r5, 1),  # arg3 = true, allow multiplayer ammo stuff
+            bl("CPlayerState::GetItemAmount"),  # r3 = ammoCount
+        ])
+
+        return body
+
+    get_uncharged_cost = [
+        custom_ppc.load_unsigned_32bit(r4, patch_addresses.uncharged_cost),
+        lwz(r0, 0x774, r30),             # r0 = get current beam
+        rlwinm(r0, r0, 0x2, 0x0, 0x1d),  # r0 *= 4
+        lwzx(r4, r4, r0),                # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
+    ]
+    compare_count_to_cost = [
+        cmpw(0, r3, r4),
+        bge(2 * 4, relative=True),  # if ammoCount_3 >= ammoCost_r4, goto
+        li(r3, 1),                  # Not enough ammo, load true
+        b("_end"),                  # and return
+    ]
+
+    return [
+        # Save stack
+        stwu(r1, -0x10, r1),
+        mfspr(r0, LR),
+        stw(r0, 0x14, r1),
+
+        # Save r31 and r30
+        stw(r31, 0xc, r1),
+        stw(r30, 0x8, r1),
+
+        # Save a pointer to CPlayerGun
+        or_(r30, r3, r3),
+        bl("CPlayerGun::GetPlayer"),
+
+        # Get and save a pointer to CPlayerState
+        lwz(r31, 0x1314, r3),
+
+        # check ammo type 1
+        *get_beam_ammo_amount(0),  # r3 = ammo amount
+        *get_uncharged_cost,     # r4 = uncharged_cost
+        *compare_count_to_cost,
+
+        # check ammo type 2
+        *get_beam_ammo_amount(1),  # r3 = ammo amount
+        *get_uncharged_cost,     # r4 = uncharged_cost
+        *compare_count_to_cost,
+
+        # All ammo types for this beam are fine!
+        li(r3, 0),
+        b("_end"),  # and return
+
+        # end
+        lwz(r0, 0x14, r1).with_label("_end"),
+        lwz(r31, 0xc, r1),
+        lwz(r30, 0x8, r1),
+        mtspr(LR, r0),
+        addi(r1, r1, 0x10),
+        blr(),
+    ]
+
+
 def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: EchoesGameSpecific,
                           dol_file: DolFile):
     uncharged_costs = []
@@ -130,44 +222,45 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
     # The following patch also changes the fact that the game doesn't check if there's enough ammo for Power Beam
     # we start our patch right after the `addi r3,r31,0x0`
     ammo_type_patch_offset = 0x40
+    offset_to_body_end = 0xB4
     ammo_type_patch = [
-        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
-        0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
+        lwz(r10, 0x774, r25),      # r10 = get current beam
+        rlwinm(r10, r10, 0x2, 0x0, 0x1d),        # r10 *= 4
 
-        0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
-        *stw(r0, 0x0, r29).bytes_for(0),  # *outBeamAmmoCost = r0
+        lwzx(r0, r3, r10),                       # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
+        stw(r0, 0x0, r29),  # *outBeamAmmoCost = r0
 
-        *lwz(r10, 0x774, r25).bytes_for(0),  # r10 = get current beam
-        *addi(r10, r10, 0x1).bytes_for(0),  # r10 = r10 + 1
-        0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
+        lwz(r10, 0x774, r25),  # r10 = get current beam
+        addi(r10, r10, 0x1),  # r10 = r10 + 1
+        mtspr(CTR, r10),      # count_register = r10
 
         # Power Beam
-        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[0][0]).bytes_for(0),
-        *li(r9, ammo_types[0][1]).bytes_for(0),
-        0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
+        bdnz("dark_beam"),  # if (--count_register > 0) goto
+        li(r3, ammo_types[0][0]),
+        li(r9, ammo_types[0][1]),
+        b("update_out_beam_type"),
 
         # Dark Beam
-        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[1][0]).bytes_for(0),
-        *li(r9, ammo_types[1][1]).bytes_for(0),
-        0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
+        bdnz("light_beam").with_label("dark_beam"),  # if (--count_register > 0) goto
+        li(r3, ammo_types[1][0]),
+        li(r9, ammo_types[1][1]),
+        b("update_out_beam_type"),
 
         # Light Beam
-        0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
-        *li(r3, ammo_types[2][0]).bytes_for(0),
-        *li(r9, ammo_types[2][1]).bytes_for(0),
-        0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
+        bdnz("annihilator_beam").with_label("light_beam"),  # if (--count_register > 0) goto
+        li(r3, ammo_types[2][0]),
+        li(r9, ammo_types[2][1]),
+        b("update_out_beam_type"),
 
         # Annihilator Beam
-        *li(r3, ammo_types[3][0]).bytes_for(0),
-        *li(r9, ammo_types[3][1]).bytes_for(0),
+        li(r3, ammo_types[3][0]).with_label("annihilator_beam"),
+        li(r9, ammo_types[3][1]),
 
         # update_out_beam_type
-        *stw(r3, 0x0, r27).bytes_for(0),  # *outBeamAmmoTypeA = r3
-        *stw(r9, 0x0, r28).bytes_for(0),  # *outBeamAmmoTypeB = r9
+        stw(r3, 0x0, r27).with_label("update_out_beam_type"),  # *outBeamAmmoTypeA = r3
+        stw(r9, 0x0, r28),  # *outBeamAmmoTypeB = r9
 
-        0x42, 0x80, 0x00, 0x18,  # b body_end
+        b(patch_addresses.get_beam_ammo_type_and_costs + offset_to_body_end),
         # jump to the code for getting the charged/combo costs and then check if has ammo
         # The address in question is at 0x801ccd64 for NTSC
     ]
@@ -176,7 +269,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
     dol_file.write(patch_addresses.charged_cost, charged_costs_patch)
     dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs_patch)
     dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs_patch)
-    dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset, ammo_type_patch)
+    dol_file.write_instructions(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset,
+                                ammo_type_patch)
 
 
 def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
