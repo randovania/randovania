@@ -1,7 +1,7 @@
 import dataclasses
 import struct
 from pathlib import Path
-from typing import Tuple, Optional, BinaryIO, Iterable
+from typing import Tuple, Optional, BinaryIO, Iterable, List
 
 from randovania.dol_patching import assembler
 
@@ -87,5 +87,5 @@ class DolFile:
         self.dol_file.seek(offset)
         self.dol_file.write(bytes(code_points))
 
-    def write_instructions(self, address: int, instructions: Iterable[assembler.BaseInstruction]):
+    def write_instructions(self, address: int, instructions: List[assembler.BaseInstruction]):
         self.write(address, assembler.assemble_instructions(address, instructions))
