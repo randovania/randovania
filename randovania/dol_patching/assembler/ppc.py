@@ -1,10 +1,13 @@
 import dataclasses as _dataclasses
 import struct as _struct
-from typing import Optional, Callable, Tuple
+from typing import Optional, Callable, Tuple, Dict, Union
 
 
 def _pack(*args):
     return _struct.pack(*args)
+
+
+JumpTarget = Union[str, int]
 
 
 @_dataclasses.dataclass(frozen=True)
@@ -30,7 +33,7 @@ class BaseInstruction:
         self.label = label
         return self
 
-    def bytes_for(self, address: int):
+    def bytes_for(self, address: int, symbols: Dict[str, int]):
         raise NotImplementedError()
 
     def __eq__(self, other):
@@ -48,7 +51,7 @@ class Instruction(BaseInstruction):
         super().__init__()
         self.value = value
 
-    def bytes_for(self, address: int):
+    def bytes_for(self, address: int, symbols: Dict[str, int]):
         return iter(_pack(">I", self.value))
 
     def __eq__(self, other):
@@ -81,11 +84,39 @@ class AddressDependantInstruction(BaseInstruction):
         super().__init__()
         self.factory = factory
 
-    def bytes_for(self, address: int):
-        yield from Instruction.compose(self.factory(address)).bytes_for(address)
+    def bytes_for(self, address: int, symbols: Dict[str, int]):
+        yield from Instruction.compose(self.factory(address)).bytes_for(address, symbols=symbols)
 
     def __eq__(self, other):
         return isinstance(other, AddressDependantInstruction) and self.factory == other.factory
+
+    @property
+    def byte_count(self):
+        return 4
+
+
+class RelativeAddressInstruction(BaseInstruction):
+    def __init__(self,
+                 address_or_symbol: JumpTarget,
+                 factory: Callable[[int, int], Tuple[Tuple[int, int, bool], ...]]):
+        super().__init__()
+        self.address_or_symbol = address_or_symbol
+        self.factory = factory
+
+    def concrete_instruction(self, instruction_address: int, symbols: Dict[str, int]) -> Instruction:
+        if isinstance(self.address_or_symbol, str):
+            address = symbols[self.address_or_symbol]
+        else:
+            address = self.address_or_symbol
+        return Instruction.compose(self.factory(address, instruction_address))
+
+    def bytes_for(self, instruction_address: int, symbols: Dict[str, int]):
+        instruction = self.concrete_instruction(instruction_address, symbols=symbols)
+        yield from instruction.bytes_for(instruction_address, symbols=symbols)
+
+    def __eq__(self, other):
+        return isinstance(other, RelativeAddressInstruction) and (self.factory == other.factory and
+                                                                  self.address_or_symbol == other.address_or_symbol)
 
     @property
     def byte_count(self):
@@ -140,6 +171,20 @@ def lwz(output_register: GeneralRegister, offset: int, input_register: GeneralRe
                                 (offset, 16, True)))
 
 
+def lwzx(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister):
+    """
+    output_register = *(input_register_a + input_register_b)
+    https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_lwzx_lx_lwzi_instrus.html
+    """
+    return Instruction.compose(((31, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register_a.number, 5, False),
+                                (input_register_b.number, 5, False),
+                                (23, 10, False),
+                                (0, 1, False),
+                                ))
+
+
 def lbz(output_register: GeneralRegister, offset: int, input_register: GeneralRegister):
     """
     *(output_register + offset) = input_register
@@ -148,6 +193,21 @@ def lbz(output_register: GeneralRegister, offset: int, input_register: GeneralRe
                                 (output_register.number, 5, False),
                                 (input_register.number, 5, False),
                                 (offset, 16, True)))
+
+
+def rlwinm(output_register: GeneralRegister, input_register: GeneralRegister,
+           shift: int, mask_begin: int, mask_end: int):
+    """
+    https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_rlwinm_rlinm_rtlwrdimm_instrs.html
+    """
+    return Instruction.compose(((21, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (shift, 5, False),
+                                (mask_begin, 5, False),
+                                (mask_end, 5, False),
+                                (0, 1, False),
+                                ))
 
 
 def or_(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister,
@@ -214,50 +274,88 @@ def cmpwi(input_register: GeneralRegister, literal: int):
                                 (literal, 16, True)))
 
 
-def _jump_to_relative_address(address_or_symbol: int, link: bool):
-    def with_inc_address(instruction_address: int):
-        jump_offset = (address_or_symbol - instruction_address) // 4
+def cmp(bf, l, ra: GeneralRegister, rb: GeneralRegister):
+    """
+    https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_cmp_instr.html
+    :param bf: Specifies Condition Register Field 0-7 which indicates result of compare.
+    :param l: Must be set to 0 for the 32-bit subset architecture.
+    :param ra: Specifies source general-purpose register for operation.
+    :param rb: Specifies source general-purpose register for operation.
+    :return:
+    """
+    return Instruction.compose(((31, 6, False),
+                                (bf, 3, False),
+                                (0, 1, False),
+                                (l, 1, False),
+                                (ra.number, 5, False),
+                                (rb.number, 5, False),
+                                (0, 10, False),
+                                (0, 1, False),
+                                ))
+
+
+def cmpw(bf, ra, rb):
+    """https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_em_fpcinst.html"""
+    return cmp(bf, 0, ra, rb)
+
+
+def _jump_to_relative_address(address_or_symbol: JumpTarget, *, relative: bool, link: bool):
+    def with_inc_address(address: int, instruction_address: int):
+        jump_offset = (address - instruction_address) // 4
         return (((18, 6, False),
                  (jump_offset, 24, True),
                  (0, 1, False),
                  (int(link), 1, False)))
 
-    return AddressDependantInstruction(with_inc_address)
+    instruction = RelativeAddressInstruction(address_or_symbol, with_inc_address)
+    if relative:
+        return instruction.concrete_instruction(0, {})
+    else:
+        return instruction
 
 
-def b(address_or_symbol: int):
+def b(address_or_symbol: JumpTarget, *, relative: bool = False):
     """
     jumps to the given address, not setting the link register
     """
-    return _jump_to_relative_address(address_or_symbol, False)
+    return _jump_to_relative_address(address_or_symbol, relative=relative, link=False)
 
 
-def bl(address_or_symbol: int):
+def bl(address_or_symbol: JumpTarget, *, relative: bool = False):
     """
     jumps to the given address, setting the link register
     """
-    return _jump_to_relative_address(address_or_symbol, True)
+    return _jump_to_relative_address(address_or_symbol, relative=relative, link=True)
 
 
-def _conditional_branch(bo: int, bi: int, address_or_symbol: int, relative: bool = False):
+def _conditional_branch(bo: int, bi: int, address_or_symbol: JumpTarget, *, relative: bool = False,
+                        absolute_address: bool = False, link_bit: bool = False):
     # https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_ext_br_mnem_bofield.html#idalangref_ext_br_mnem_bofield__row-d2e17648
 
-    def with_inc_address(instruction_address: int):
-        jump_offset = (address_or_symbol - instruction_address) // 4
+    def with_inc_address(address: int, instruction_address: int):
+        jump_offset = (address - instruction_address) // 4
         return (((16, 6, False),
                  (bo, 5, False),
                  (bi, 5, False),
                  (jump_offset, 14, True),
-                 (0, 1, False),
-                 (0, 1, False)))
+                 (int(absolute_address), 1, False),
+                 (int(link_bit), 1, False)))
 
+    instruction = RelativeAddressInstruction(address_or_symbol, with_inc_address)
     if relative:
-        return Instruction.compose(with_inc_address(0))
+        return instruction.concrete_instruction(0, {})
     else:
-        return AddressDependantInstruction(with_inc_address)
+        return instruction
 
 
-def beq(address_or_symbol: int, relative: bool = False):
+def bdnz(address_or_symbol: JumpTarget, relative: bool = False):
+    """https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_brmenmonics_booperand.html"""
+    bo = 16
+    bi = 0
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
+
+
+def beq(address_or_symbol: JumpTarget, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
@@ -266,11 +364,20 @@ def beq(address_or_symbol: int, relative: bool = False):
     return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
-def bne(address_or_symbol: int, relative: bool = False):
+def bge(address_or_symbol: JumpTarget, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
     """
-    bo = 4  # Branch if condition true (BO=4)
+    bo = 4  # Branch if condition false (BO=4)
+    bi = 0  # condition: less than
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
+
+
+def bne(address_or_symbol: JumpTarget, relative: bool = False):
+    """
+    jumps to the given address, if last comparison was a successful equality
+    """
+    bo = 4  # Branch if condition false (BO=4)
     bi = 2  # condition: equals
     return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 

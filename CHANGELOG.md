@@ -12,11 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
 
+-   Added: One additional joke hint. (Thanks CZeke)
+
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
     
 -   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
 
 -   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
+
+-   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
 
 ### Logic Database Changes
 
