@@ -1,7 +1,7 @@
 import dataclasses
 import struct
 from pathlib import Path
-from typing import Tuple, Optional, BinaryIO, Iterable, List
+from typing import Tuple, Optional, BinaryIO, Iterable, List, Dict, Union
 
 from randovania.dol_patching import assembler
 
@@ -37,16 +37,30 @@ class DolHeader:
 
         return cls(sections, bss_address, bss_size, entry_point)
 
-    def offset_for_address(self, address: int) -> Optional[int]:
+    def as_bytes(self) -> bytes:
+        args = []
+        args.extend(section.offset for section in self.sections)
+        args.extend(section.base_address for section in self.sections)
+        args.extend(section.size for section in self.sections)
+        args.extend([self.bss_address, self.bss_size, self.entry_point])
+
+        return struct.pack(f">{_NUM_SECTIONS}L{_NUM_SECTIONS}L{_NUM_SECTIONS}LLLL", *args) + (b"\x00" * 0x1C)
+
+    def section_for_address(self, address: int) -> Optional[Section]:
         for section in self.sections:
             relative_to_base = address - section.base_address
             if 0 <= relative_to_base < section.size:
-                return section.offset + relative_to_base
+                return section
 
+    def offset_for_address(self, address: int) -> Optional[int]:
+        section = self.section_for_address(address)
+        if section is not None:
+            return section.offset + (address - section.base_address)
         return None
 
 
 class DolFile:
+    symbols: Dict[str, int]
     dol_file: Optional[BinaryIO] = None
     editable: bool = False
 
@@ -56,6 +70,7 @@ class DolFile:
 
         self.dol_path = dol_path
         self.header = DolHeader.from_bytes(header_bytes)
+        self.symbols = {}
 
     def set_editable(self, editable: bool):
         self.editable = editable
@@ -71,6 +86,12 @@ class DolFile:
         self.dol_file.__exit__(exc_type, exc_type, exc_tb)
         self.dol_file = None
 
+    def resolve_symbol(self, address_or_symbol: Union[int, str]) -> int:
+        if isinstance(address_or_symbol, str):
+            return self.symbols[address_or_symbol]
+        else:
+            return address_or_symbol
+
     def offset_for_address(self, address: int) -> int:
         offset = self.header.offset_for_address(address)
         if offset is None:
@@ -82,10 +103,12 @@ class DolFile:
         self.dol_file.seek(offset)
         return self.dol_file.read(size)
 
-    def write(self, address: int, code_points: Iterable[int]):
-        offset = self.offset_for_address(address)
+    def write(self, address_or_symbol: Union[int, str], code_points: Iterable[int]):
+        offset = self.offset_for_address(self.resolve_symbol(address_or_symbol))
         self.dol_file.seek(offset)
         self.dol_file.write(bytes(code_points))
 
-    def write_instructions(self, address: int, instructions: List[assembler.BaseInstruction]):
-        self.write(address, assembler.assemble_instructions(address, instructions))
+    def write_instructions(self, address_or_symbol: Union[int, str],
+                           instructions: List[assembler.BaseInstruction]):
+        address = self.resolve_symbol(address_or_symbol)
+        self.write(address, assembler.assemble_instructions(address, instructions, symbols=self.symbols))

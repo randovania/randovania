@@ -18,6 +18,9 @@ class BeamCostAddresses:
     charge_combo_ammo_cost: int
     charge_combo_missile_cost: int
     get_beam_ammo_type_and_costs: int
+    is_out_of_ammo_to_shoot: int
+    gun_get_player: int
+    get_item_amount: int
 
 
 @dataclasses.dataclass(frozen=True)
@@ -104,33 +107,34 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     dol_file.write_instructions(game_options_constructor_offset + 8 * 4, patch)
 
 
-def _is_out_of_ammo_patch(patch_addresses: BeamCostAddresses, ammo_types: List[Tuple[int, int]]):
+def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, int]]):
     def get_beam_ammo_amount(index: int):
         label = f"_after_get_ammo_type_{index}"
 
         body = [
-            lwz(r0, 0x774, r30),  # r0 = get current beam
-            addi(r0, r0, 0x1),    # current_beam += 1
-            mtspr(CTR, r0),       # count_register = current_beam
+            lwz(r5, 0x774, r30),  # r5 = get current beam
+            addi(r5, r5, 0x1),    # current_beam += 1
+            mtspr(CTR, r5),       # count_register = current_beam
         ]
 
         for beam_index, beam_ammo_types in enumerate(ammo_types):
+            instructions = []
             if beam_index + 1 < len(ammo_types):
-                body.append(bdnz(8, relative=True))
+                instructions.append(bdnz(f"_before_get_ammo_type_{beam_index + 1}_{index}"))
 
             if beam_ammo_types[index] == -1:
-                body.extend([
+                instructions.extend([
                     li(r3, 0),        # No ammo type, so load result
                     b("_end"),           # and return
                 ])
             else:
-                body.extend([
+                instructions.extend([
                     li(r4, beam_ammo_types[index]),
                     b(label),
                 ])
 
-        # Last beam doesn't need to jump forward
-        body.pop()
+            instructions[0].with_label(f"_before_get_ammo_type_{beam_index}_{index}")
+            body.extend(instructions)
 
         body.extend([
             or_(r3, r31, r31).with_label(label),  # arg1 = playerState, arg2 is already there
@@ -141,14 +145,14 @@ def _is_out_of_ammo_patch(patch_addresses: BeamCostAddresses, ammo_types: List[T
         return body
 
     get_uncharged_cost = [
-        custom_ppc.load_unsigned_32bit(r4, patch_addresses.uncharged_cost),
-        lwz(r0, 0x774, r30),             # r0 = get current beam
-        rlwinm(r0, r0, 0x2, 0x0, 0x1d),  # r0 *= 4
-        lwzx(r4, r4, r0),                # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
+        custom_ppc.load_unsigned_32bit(r4, symbols["BeamIdToChargedShotAmmoCost"]),
+        lwz(r5, 0x774, r30),             # r5 = get current beam
+        rlwinm(r5, r5, 0x2, 0x0, 0x1d),  # r5 *= 4
+        lwzx(r4, r4, r5),                # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
     ]
     compare_count_to_cost = [
         cmpw(0, r3, r4),
-        bge(2 * 4, relative=True),  # if ammoCount_3 >= ammoCost_r4, goto
+        bge(3 * 4, relative=True),  # if ammoCount_3 >= ammoCost_r4, goto
         li(r3, 1),                  # Not enough ammo, load true
         b("_end"),                  # and return
     ]
@@ -212,13 +216,6 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
             beam_config.ammo_b.index if beam_config.ammo_b is not None else -1,
         ))
 
-    uncharged_costs_patch = struct.pack(">llll", *uncharged_costs)
-    charged_costs_patch = struct.pack(">llll", *charged_costs)
-    combo_costs_patch = struct.pack(">llll", *combo_costs)
-    missile_costs_patch = struct.pack(">llll", *missile_costs)
-
-    # TODO: patch CPlayerGun::IsOutOfAmmoToShoot
-
     # The following patch also changes the fact that the game doesn't check if there's enough ammo for Power Beam
     # we start our patch right after the `addi r3,r31,0x0`
     ammo_type_patch_offset = 0x40
@@ -265,12 +262,27 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
         # The address in question is at 0x801ccd64 for NTSC
     ]
 
-    dol_file.write(patch_addresses.uncharged_cost, uncharged_costs_patch)
-    dol_file.write(patch_addresses.charged_cost, charged_costs_patch)
-    dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs_patch)
-    dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs_patch)
+    # FIXME: depend on version
+    dol_file.symbols["BeamIdToChargedShotAmmoCost"] = patch_addresses.uncharged_cost
+    dol_file.symbols["BeamIdToUnchargedShotAmmoCost"] = patch_addresses.charged_cost
+    dol_file.symbols["BeamIdToChargeComboAmmoCost"] = patch_addresses.charge_combo_ammo_cost
+    dol_file.symbols["g_ChargeComboMissileCosts"] = patch_addresses.charge_combo_missile_cost
+    dol_file.symbols["CPlayerGun::IsOutOfAmmoToShoot"] = patch_addresses.is_out_of_ammo_to_shoot
+    dol_file.symbols["CPlayerGun::GetPlayer"] = patch_addresses.gun_get_player
+    dol_file.symbols["CPlayerState::GetItemAmount"] = patch_addresses.get_item_amount
+
+    uncharged_costs_patch = struct.pack(">llll", *uncharged_costs)
+    charged_costs_patch = struct.pack(">llll", *charged_costs)
+    combo_costs_patch = struct.pack(">llll", *combo_costs)
+    missile_costs_patch = struct.pack(">llll", *missile_costs)
+
+    dol_file.write("BeamIdToChargedShotAmmoCost", uncharged_costs_patch)
+    dol_file.write("BeamIdToUnchargedShotAmmoCost", charged_costs_patch)
+    dol_file.write("BeamIdToChargeComboAmmoCost", combo_costs_patch)
+    dol_file.write("g_ChargeComboMissileCosts", missile_costs_patch)
     dol_file.write_instructions(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset,
                                 ammo_type_patch)
+    dol_file.write_instructions("CPlayerGun::IsOutOfAmmoToShoot", _is_out_of_ammo_patch(dol_file.symbols, ammo_types))
 
 
 def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
