@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
 
+-   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
+
 ### Logic Database Changes
 
 -   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).

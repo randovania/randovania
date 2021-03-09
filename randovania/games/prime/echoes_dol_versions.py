@@ -40,6 +40,9 @@ ALL_VERSIONS = [
             charge_combo_ammo_cost=0x803aa8e8,
             charge_combo_missile_cost=0x803a74ac,
             get_beam_ammo_type_and_costs=0x801cccb0,
+            is_out_of_ammo_to_shoot=0x801c92e8,
+            gun_get_player=0x801dd758,
+            get_item_amount=0x80085514,
         ),
         game_options_constructor_address=0x80161b48,
         safe_zone=SafeZoneAddresses(
@@ -89,6 +92,9 @@ ALL_VERSIONS = [
             charge_combo_ammo_cost=0x803abc48,
             charge_combo_missile_cost=0x803a7c04,
             get_beam_ammo_type_and_costs=0x801ccfe4,
+            is_out_of_ammo_to_shoot=0x801c961c,
+            gun_get_player=0x801dda8c,
+            get_item_amount=0x80085650,
         ),
         game_options_constructor_address=0x80161d9c,
         safe_zone=SafeZoneAddresses(
