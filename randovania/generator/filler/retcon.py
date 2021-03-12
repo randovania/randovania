@@ -192,12 +192,12 @@ def retcon_playthrough_filler(rng: Random,
             for new_pickup in new_pickups:
                 log_entry = _assign_pickup_somewhere(new_pickup, current_player, player_states, rng,
                                                      all_locations_weighted)
-                actions_log.append(log_entry)
+            actions_log.append(log_entry)
                 debug.debug_print(f"* {log_entry}")
 
-                # TODO: this item is potentially dangerous and we should remove the invalidated paths
+            # TODO: this item is potentially dangerous and we should remove the invalidated paths
                 current_player.pickups_left.remove(new_pickup)
-                current_player.num_actions += 1
+            current_player.num_actions += 1
 
             count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states)
             last_message = "{} items left.".format(count_pickups_left)
@@ -329,9 +329,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
 def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
                            ) -> float:
-    if potential_reach.game.victory_condition.satisfied(potential_reach.state.resources,
-                                                        potential_reach.state.energy,
-                                                        potential_reach.state.resource_database):
+    if potential_reach.victory_condition_satisfied():
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected

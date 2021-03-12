@@ -3,8 +3,7 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, ResourceNode, PickupNode
-from randovania.game_description.requirements import RequirementSet, Requirement, RequirementAnd, \
-    ResourceRequirement
+from randovania.game_description.requirements import RequirementSet, Requirement, ResourceRequirement
 from randovania.generator import graph as graph_module
 from randovania.resolver.state import State
 
@@ -40,7 +39,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def filter_collectable(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes,
+        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.all_nodes,
                                      reach.state.resource_database):
             yield resource_node
 
@@ -179,7 +178,7 @@ class GeneratorReach:
         if self._reachable_paths is not None:
             return
 
-        all_nodes = self.game.world_list.all_nodes
+        all_nodes = self.all_nodes
 
         def weight(source: int, target: int, attributes):
             if self._can_advance(all_nodes[target]):
@@ -219,7 +218,7 @@ class GeneratorReach:
         :return:
         """
         self._calculate_reachable_paths()
-        all_nodes = self.game.world_list.all_nodes
+        all_nodes = self.all_nodes
         for index in self._reachable_paths.keys():
             yield all_nodes[index]
 
@@ -232,8 +231,12 @@ class GeneratorReach:
         return self._game
 
     @property
+    def all_nodes(self) -> Tuple[Node, ...]:
+        return self.game.world_list.all_nodes
+
+    @property
     def nodes(self) -> Iterator[Node]:
-        for node in self.game.world_list.all_nodes:
+        for node in self.all_nodes:
             if node.index in self._digraph:
                 yield node
 
@@ -287,7 +290,7 @@ class GeneratorReach:
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
-        all_nodes = self.game.world_list.all_nodes
+        all_nodes = self.all_nodes
         new_dangerous_resources = set(
             resource
             for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes,
@@ -299,9 +302,7 @@ class GeneratorReach:
         if new_dangerous_resources:
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
-                # FIXME: don't convert to set!
-                dangerous = requirement.dangerous_resources
-                if dangerous and new_dangerous_resources.intersection(dangerous):
+                if not new_dangerous_resources.isdisjoint(requirement.dangerous_resources):
                     if not requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
                         edges_to_remove.append((source, target))
 
@@ -327,6 +328,10 @@ class GeneratorReach:
             else:
                 results[node] = requirement
         return results
+
+    def victory_condition_satisfied(self):
+        return self.game.victory_condition.satisfied(self.state.resources,
+                                                     self.state.energy)
 
 
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[Requirement]:
@@ -375,7 +380,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
 
         for action in actions:
             if action.can_collect(reach.state.patches, reach.state.resources,
-                                  reach.game.world_list.all_nodes, reach.state.resource_database):
+                                  reach.all_nodes, reach.state.resource_database):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
