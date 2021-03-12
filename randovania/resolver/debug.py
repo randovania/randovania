@@ -4,7 +4,6 @@ from typing import Set
 from randovania.game_description.world.node import Node
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.generator_reach import GeneratorReach, get_collectable_resource_nodes_of_reach
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -107,21 +106,6 @@ def print_distribute_one_item(state: "State", available_item_pickups):
             len(available_item_pickups)
         ))
         return time.perf_counter()
-
-
-def print_actions_of_reach(reach: GeneratorReach):
-    if _DEBUG_LEVEL <= 1:
-        return
-
-    game = reach.game
-    actions = get_collectable_resource_nodes_of_reach(reach)
-
-    for action in actions:
-        print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
-            game.world_list.node_name(action),
-            reach.is_safe_node(action),
-            action.resource() in game.dangerous_resources
-        ))
 
 
 def set_level(level: int):

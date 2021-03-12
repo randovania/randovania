@@ -1,4 +1,6 @@
 import copy
+import itertools
+from heapq import heappush, heappop
 from typing import Dict, Iterator, Tuple, Set, Callable
 
 from randovania.game_description.requirements import Requirement, RequirementSet
@@ -78,10 +80,45 @@ class RandovaniaGraph(BaseGraph):
                 yield source, target, requirement
 
     def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
-        return self.networkx.multi_source_dijkstra(self, sources, weight=weight)
+        paths = {source: [source] for source in sources}  # dictionary of paths
+        edges = self.edges
+
+        push = heappush
+        pop = heappop
+
+        dist = {}  # dictionary of final distances
+        seen = {}
+        # fringe is heapq with 3-tuples (distance,c,node)
+        # use the count c to avoid comparing nodes (may not be able to)
+        c = itertools.count()
+        fringe = []
+        for source in sources:
+            seen[source] = 0
+            push(fringe, (0, next(c), source))
+        while fringe:
+            (d, _, v) = pop(fringe)
+            if v in dist:
+                continue  # already searched this node.
+            dist[v] = d
+            for u, e in edges[v].items():
+                cost = weight(v, u, e)
+                if cost is None:
+                    continue
+                vu_dist = dist[v] + cost
+                if u in dist:
+                    u_dist = dist[u]
+                    if vu_dist < u_dist:
+                        raise ValueError("Contradictory paths found:", "negative weights?")
+                elif u not in seen or vu_dist < seen[u]:
+                    seen[u] = vu_dist
+                    push(fringe, (vu_dist, next(c), u))
+                    paths[u] = paths[v] + [u]
+
+        return dist, paths
 
     def single_source_dijkstra_path(self, source: int):
-        return self.networkx.single_source_dijkstra_path(self, source, weight="unweighted")
+        length, path = self.multi_source_dijkstra({source}, weight=lambda s, t, req: 1)
+        return path
 
     def strongly_connected_components(self) -> Iterator[Set[int]]:
         yield from self.networkx.strongly_connected_components(self)
