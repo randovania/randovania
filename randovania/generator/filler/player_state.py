@@ -10,14 +10,13 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
+from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
 from randovania.generator.filler.pickup_list import get_pickups_that_solves_unreachable, \
     get_pickups_with_interesting_resources, interesting_resources_for_reach
-from randovania.generator.generator_reach import advance_reach_with_possible_unsafe_resources, \
-    reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.state import State
@@ -44,7 +43,9 @@ class PlayerState:
                  ):
         self.index = index
         self.game = game
-        self.reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
+
+        self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
+            reach_lib.reach_with_all_safe_resources(game, initial_state))
         self.pickups_left = pickups_left
         self.configuration = configuration
 
@@ -89,7 +90,7 @@ class PlayerState:
         print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
 
     def _calculate_potential_actions(self):
-        uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(self.reach)
+        uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
         if self.configuration.multi_pickup_placement:
             get_pickups = get_pickups_that_solves_unreachable
         else:
