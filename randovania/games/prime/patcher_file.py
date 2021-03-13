@@ -9,7 +9,7 @@ from randovania.game_description.default_database import default_prime2_memo_dat
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode, PickupNode
+from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -21,9 +21,9 @@ from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hi
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.elevators import LayoutElevators
+from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 
@@ -63,7 +63,11 @@ _CUSTOM_NAMES_FOR_ELEVATORS = {
 
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',
-    'Temporary Power Bombs': 'Power Bomb',
+    'Temporary Power Bomb': 'Power Bomb',
+}
+_ITEMS_TO_PLURALIZE = {
+    "Missile",
+    "Power Bomb",
 }
 
 
@@ -103,6 +107,10 @@ def _get_jingle_index_for(category: ItemCategory) -> int:
         return 0
 
 
+def _add_quantity_to_resource(resource: str, quantity: int) -> str:
+    return "{} {}{}".format(quantity, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
+
+
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != ItemCategory.EXPANSION:
         if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
@@ -111,13 +119,19 @@ def _pickup_scan(pickup: PickupEntry) -> str:
         else:
             return pickup.name
 
-    return "{} that provides {}".format(
-        pickup.name,
-        " and ".join(
-            "{} {}".format(quantity, _resource_user_friendly_name(resource))
-            for resource, quantity in pickup.resources[-1].resources
+    ammo_desc = [
+        _add_quantity_to_resource(_resource_user_friendly_name(resource), quantity)
+        for resource, quantity in pickup.resources[-1].resources
+    ]
+    if ammo_desc:
+        return "{}. Provides {}{}{}".format(
+            pickup.name,
+            ", ".join(ammo_desc[:-1]),
+            " and " if len(ammo_desc) > 1 else "",
+            ammo_desc[-1],
         )
-    )
+    else:
+        return pickup.name
 
 
 def _create_pickup_resources_for(resources: ResourceGain):
@@ -663,7 +677,8 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches, players_config, rng)
+    result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,
+                                                      players_config, rng)
 
     # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
