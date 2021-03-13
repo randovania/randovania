@@ -457,7 +457,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     }
     assert result[4] == {
         "pickup_index": 4,
-        "scan": "C that provides 2 B and 1 A" if has_scan_text else "Unknown item",
+        "scan": "C. Provides 2 B and 1 A" if has_scan_text else "Unknown item",
         "model_index": 2 if model_style == PickupModelStyle.ALL_VISIBLE else 30,
         "hud_text": ["C acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         "sound_index": 0,
@@ -601,6 +601,22 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
 
     # Assert
     assert result == "Progressive Suit. Provides the following in order: Dark Suit, Light Suit"
+
+
+@pytest.mark.parametrize(["item", "ammo", "result"], [
+    ("Beam Ammo Expansion", [4, 20], "Beam Ammo Expansion. Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage"),
+    ("Missile Expansion", [4], "Missile Expansion. Provides 4 Missiles and 1 Item Percentage"),
+])
+def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_database, item, ammo, result):
+    # Setup
+    expansion = echoes_item_database.ammo[item]
+    pickup = pickup_creator.create_ammo_expansion(expansion, ammo, False, echoes_resource_database)
+
+    # Run
+    result = patcher_file._pickup_scan(pickup)
+
+    # Assert
+    assert result == result
 
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])
