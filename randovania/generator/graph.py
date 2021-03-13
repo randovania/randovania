@@ -3,7 +3,7 @@ import itertools
 from heapq import heappush, heappop
 from typing import Dict, Iterator, Tuple, Set, Callable
 
-from randovania.game_description.requirements import Requirement, RequirementSet
+from randovania.game_description.requirements import RequirementSet
 
 
 class BaseGraph:
@@ -95,6 +95,7 @@ class RandovaniaGraph(BaseGraph):
         for source in sources:
             seen[source] = 0
             push(fringe, (0, next(c), source))
+
         while fringe:
             (d, _, v) = pop(fringe)
             if v in dist:
@@ -121,21 +122,40 @@ class RandovaniaGraph(BaseGraph):
         return path
 
     def strongly_connected_components(self) -> Iterator[Set[int]]:
-        yield from self.networkx.strongly_connected_components(self)
-
-    # Networkx compatibility API
-    def is_multigraph(self):
-        return False
-
-    def is_directed(self):
-        return True
-
-    @property
-    def _succ(self):
-        return self.edges
-
-    def __iter__(self):
-        yield from self.edges.keys()
-
-    def __getitem__(self, n):
-        return self.edges[n].keys()
+        preorder = {}
+        lowlink = {}
+        scc_found = set()
+        scc_queue = []
+        i = 0  # Preorder counter
+        for source in self.edges.keys():
+            if source not in scc_found:
+                queue = [source]
+                while queue:
+                    v = queue[-1]
+                    if v not in preorder:
+                        i = i + 1
+                        preorder[v] = i
+                    done = True
+                    for w in self.edges[v].keys():
+                        if w not in preorder:
+                            queue.append(w)
+                            done = False
+                            break
+                    if done:
+                        lowlink[v] = preorder[v]
+                        for w in self.edges[v].keys():
+                            if w not in scc_found:
+                                if preorder[w] > preorder[v]:
+                                    lowlink[v] = min([lowlink[v], lowlink[w]])
+                                else:
+                                    lowlink[v] = min([lowlink[v], preorder[w]])
+                        queue.pop()
+                        if lowlink[v] == preorder[v]:
+                            scc = {v}
+                            while scc_queue and preorder[scc_queue[-1]] > preorder[v]:
+                                k = scc_queue.pop()
+                                scc.add(k)
+                            scc_found.update(scc)
+                            yield scc
+                        else:
+                            scc_queue.append(v)
