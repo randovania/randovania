@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).
 
+-   Changed: Logic paths that require Screw Attack without Space Jump now make sure to not have Space Jump to be valid.
+
 ## [2.5.2] - 2021-02-28
 
 -   Added: The number of items in the pool is now included in the summary.
