@@ -16,6 +16,9 @@ class Section:
     base_address: int
     size: int
 
+    def is_empty(self):
+        return self.size == 0
+
 
 @dataclasses.dataclass(frozen=True)
 class DolHeader:
@@ -60,6 +63,7 @@ class DolHeader:
 
 
 class DolFile:
+    header: DolHeader
     symbols: Dict[str, int]
     dol_file: Optional[BinaryIO] = None
     editable: bool = False
@@ -112,3 +116,31 @@ class DolFile:
                            instructions: List[assembler.BaseInstruction]):
         address = self.resolve_symbol(address_or_symbol)
         self.write(address, assembler.assemble_instructions(address, instructions, symbols=self.symbols))
+
+    def _check_for_overlapping_segment(self, address: int, size: int):
+        if (self.header.section_for_address(address) is not None
+                or self.header.section_for_address(address + size) is not None):
+            raise ValueError(f"New segment at {address:x} with size {size} overlaps with existing segments")
+
+    def add_text_section(self, address: int, data: bytes):
+        if len(data) & 0x1f != 0:
+            raise ValueError(f"Invalid length for new text ({len(data)}) - not 32 byte aligned")
+        self._check_for_overlapping_segment(address, len(data))
+        try:
+            index = next(i for i, section in enumerate(self.header.sections[:_NUM_TEXT_SECTIONS]) if section.is_empty())
+        except StopIteration:
+            raise ValueError("No empty sections available")
+
+        self.dol_file.seek(0, 2)
+        offset = self.dol_file.tell()
+        self.dol_file.write(data)
+
+        sections = list(self.header.sections)
+        sections[index] = Section(
+            offset=offset,
+            base_address=address,
+            size=len(data),
+        )
+        self.header = dataclasses.replace(self.header, sections=tuple(sections))
+        self.dol_file.seek(0, 0)
+        self.dol_file.write(self.header.as_bytes())
