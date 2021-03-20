@@ -28,6 +28,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).
 
+-   Added: Method of climbing Torvus Grove with Space Jump, Screw Attack, and Standable Terrain (Advanced and above).
+
+-   Added: Method of reaching cannon in Great Bridge with Boost Ball and a Boost Jump (Expert and above).
+
+-   Added: Method of reaching the main part of Hall of Combat Mastery with a Scan Dash and after blowing up the glass (Intermediate and above).
+
+-   Added: Method of activating the portal in Portal Terminal with Screw Attack, Slope Jump, and No Bombs or Space Jump (Expert and above).
+
 -   Changed: Logic paths that require Screw Attack without Space Jump now make sure to not have Space Jump to be valid.
 
 ## [2.5.2] - 2021-02-28
