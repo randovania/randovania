@@ -55,7 +55,8 @@ ALL_VERSIONS = [
             health_info_constructor=0x801420c8,
             enter_morph_ball_state=0x80184118,
             start_transition_to_visor=0x80085314,
-        )
+        ),
+        anything_set_address=0x8010f084,
     ),
     EchoesDolVersion(
         game=RandovaniaGame.PRIME2,
@@ -107,6 +108,7 @@ ALL_VERSIONS = [
             health_info_constructor=0x80142304,
             enter_morph_ball_state=0x801843f8,
             start_transition_to_visor=0x80085450,
-        )
+        ),
+        anything_set_address=0x8010f238,
     ),
 ]

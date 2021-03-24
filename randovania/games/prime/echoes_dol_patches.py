@@ -337,3 +337,15 @@ class EchoesDolVersion(BasePrimeDolVersion):
     beam_cost_addresses: BeamCostAddresses
     safe_zone: SafeZoneAddresses
     starting_beam_visor: StartingBeamVisorAddresses
+    anything_set_address: int
+
+
+def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
+    dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
+
+    dol_file.write_instructions("CMapWorldInfo::IsAnythingSet", [
+        li(r3, 1),
+        blr(),
+    ])
+
+    return None
