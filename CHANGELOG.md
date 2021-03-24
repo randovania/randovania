@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: One additional joke hint. (Thanks CZeke)
 
+-   Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
+
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
     
 -   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
