@@ -28,6 +28,8 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
                                                                    version.game, dol_file)
 
         if isinstance(version, EchoesDolVersion):
+            echoes_dol_patches.apply_fixes(version, dol_file)
+
             echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
                                                         user_preferences, dol_file)
             echoes_dol_patches.apply_beam_cost_patch(version.beam_cost_addresses, game_specific, dol_file)
