@@ -339,6 +339,7 @@ class EchoesDolVersion(BasePrimeDolVersion):
     starting_beam_visor: StartingBeamVisorAddresses
     anything_set_address: int
     rs_debugger_printf_loop_address: int
+    unvisited_room_names_address: int
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
@@ -353,4 +354,10 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
         nop(),
     ])
 
-    return None
+
+def apply_unvisited_room_names(version: EchoesDolVersion, dol_file: DolFile, unvisited_room_names: bool):
+    # In CAutoMapper::Update, the function checks for `mwInfo.IsMapped` then `mwInfo.IsAreaVisited` and if both are
+    # false, sets a variable to false. This variable indicates if the room name is displayed used.
+    dol_file.write_instructions(version.unvisited_room_names_address, [
+        li(r28, 1 if unvisited_room_names else 0),
+    ])

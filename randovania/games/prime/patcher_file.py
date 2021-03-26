@@ -23,13 +23,50 @@ from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.teleporters import TeleporterShuffleMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
+
+_ENERGY_CONTROLLER_MAP_ASSET_IDS = [
+    618058071,  # Agon EC
+    724159530,  # Torvus EC
+    988679813,  # Sanc EC
+]
+_ELEVATOR_ROOMS_MAP_ASSET_IDS = [
+    # cliff
+    0x1C7CBD3E,
+    0x92A2ADA3,
+    0xFB9E9C00,
+
+    # sand
+    0xEF5EA06C,
+    0x8E9B3B3F,
+    0x7E1BC16F,
+
+    # swamp
+    0x96DB1F15,
+    0xE6B06473,
+    0xAF420D17,
+
+    # tg -> areas
+    0x46B0EECF,
+    0xE4229356,
+    0x4B2A6FD3,
+
+    # tg -> gt
+    0x79EFFD7D,
+    0x65168477,
+    0x84388E13,
+
+    # gt -> tg
+    0xA6D44A39,
+    0x318EBBCD,
+    0xB1B5308D,
+]
 
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',
@@ -615,6 +652,8 @@ def create_patcher_file(description: LayoutDescription,
         "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
         "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
     }
+    result["unvisited_room_names"] = (configuration.elevators.can_use_unvisited_room_names
+                                      and cosmetic_patches.unvisited_room_names)
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
@@ -686,6 +725,14 @@ def create_patcher_file(description: LayoutDescription,
         {"asset_id": 326, "connections": [124, 194, 241, 327], },
         {"asset_id": 327, "connections": [46, 275], },
     ]
+
+    if not configuration.elevators.is_vanilla and (cosmetic_patches.unvisited_room_names
+                                                   and configuration.elevators.can_use_unvisited_room_names):
+        exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
+    else:
+        exclude_map_ids = []
+    result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
+    result["maps_to_never_reveal"] = exclude_map_ids
 
     _apply_translator_gate_patches(result["specific_patches"], configuration.elevators.mode)
 

@@ -38,6 +38,7 @@ def test_migrate_from_v11(option):
             "speed_up_credits": True,
             "open_map": True,
             "pickup_markers": True,
+            "unvisited_room_names": True
         }
     }
     assert new_data == expected_data

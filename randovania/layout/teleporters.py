@@ -86,6 +86,7 @@ class TeleporterConfiguration(BitPackDataClass, JsonDataclass):
     excluded_teleporters: TeleporterList
     excluded_targets: TeleporterTargetList
     skip_final_bosses: bool
+    allow_unvisited_room_names: bool
 
     @property
     def game(self) -> RandovaniaGame:
@@ -94,6 +95,10 @@ class TeleporterConfiguration(BitPackDataClass, JsonDataclass):
     @property
     def is_vanilla(self):
         return self.mode == TeleporterShuffleMode.VANILLA
+
+    @property
+    def can_use_unvisited_room_names(self) -> bool:
+        return self.is_vanilla or self.allow_unvisited_room_names
 
     @property
     def has_shuffled_target(self):

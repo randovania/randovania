@@ -719,7 +719,7 @@
                 <widget class="QComboBox" name="elevators_combo"/>
                </item>
                <item>
-                <widget class="Line" name="line_2">
+                <widget class="Line" name="elevators_line_2">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -739,6 +739,37 @@
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="elevators_line_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="elevators_allow_unvisited_names_check">
+                 <property name="text">
+                  <string>Allow &quot;Always display room names on map&quot; when elevators are shuffled</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="elevators_line_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="elevators_help_list_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shuffling Sky Temple Gateway, Aerie and Aerie Transport Station is possible, but they're not included by default as they behave somewhat differently to other elevators.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -861,8 +892,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>76</width>
+                <height>16</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="starting_locations_layout">
