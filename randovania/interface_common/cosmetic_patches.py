@@ -8,6 +8,7 @@ class CosmeticPatches:
     disable_hud_popup: bool = True
     speed_up_credits: bool = True
     open_map: bool = True
+    unvisited_room_names: bool = True
     pickup_markers: bool = True
     user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
 
@@ -17,6 +18,7 @@ class CosmeticPatches:
             "disable_hud_popup": self.disable_hud_popup,
             "speed_up_credits": self.speed_up_credits,
             "open_map": self.open_map,
+            "unvisited_room_names": self.unvisited_room_names,
             "pickup_markers": self.pickup_markers,
             "user_preferences": self.user_preferences.as_json,
         }
@@ -27,6 +29,7 @@ class CosmeticPatches:
             disable_hud_popup=json_dict["disable_hud_popup"],
             speed_up_credits=json_dict["speed_up_credits"],
             open_map=json_dict["open_map"],
+            unvisited_room_names=json_dict["unvisited_room_names"],
             pickup_markers=json_dict["pickup_markers"],
             user_preferences=(EchoesUserPreferences.from_json_dict(json_dict["user_preferences"])
                               if "user_preferences" in json_dict else EchoesUserPreferences())

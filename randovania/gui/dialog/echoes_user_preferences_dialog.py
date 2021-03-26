@@ -50,6 +50,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("disable_hud_popup"))
         self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.unvisited_room_names_check.stateChanged.connect(self._persist_option_then_notify("unvisited_room_names"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
 
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
@@ -68,6 +69,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
         self.open_map_check.setChecked(patches.open_map)
+        self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.on_new_user_preferences(patches.user_preferences)
 
