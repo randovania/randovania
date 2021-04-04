@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 
 import tqdm
+import typing
 
 from randovania.layout.layout_description import LayoutDescription
 
@@ -31,8 +32,16 @@ def create_report(seeds_dir: str, output_file: str):
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
     for seed in tqdm.tqdm(seed_files):
-        seed_data = read_json(seed)
+        seed = typing.cast(Path, seed)
+        try:
+            seed_data = read_json(seed)
+        except json.JSONDecodeError:
+            continue
+
         for item_order in seed_data["item_order"]:
+            if " as " in item_order:
+                continue
+
             item_name, item_location = item_order.split(" at ", 1)
             item_name = _filter_item_name(item_name)
             item_location = item_location.split(" with hint ", 1)[0]
@@ -40,7 +49,7 @@ def create_report(seeds_dir: str, output_file: str):
             if "Expansion" in item_name or item_name == "Energy Tank":
                 continue
 
-            item_name_to_location[item_name][item_location].append(seed.name)
+            item_name_to_location[item_name][item_location].append(str(seed.relative_to(seeds_dir)))
 
     final_results = {
         item_name: {

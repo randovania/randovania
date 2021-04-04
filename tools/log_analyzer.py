@@ -84,6 +84,7 @@ def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]
     balanced_freq = {
         item: count / pickup_count[item]
         for item, count in item_counts.items()
+        if item in pickup_count
     }
     return stdev(balanced_freq.values())
 
@@ -99,7 +100,10 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
     order = {}
 
     for i, entry in enumerate(item_order):
-        item, location = entry.split(" at ", 1)
+        splitter = " as "
+        if splitter not in entry:
+            splitter = " at "
+        item, location = entry.split(splitter, 1)
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
@@ -146,7 +150,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
     for seed in tqdm.tqdm(seed_files):
-        seed_data = read_json(seed)
+        try:
+            seed_data = read_json(seed)
+        except json.JSONDecodeError:
+            continue
         for game_modifications in seed_data["game_modifications"]:
             accumulate_results(game_modifications,
                                items, locations,
@@ -155,8 +162,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
-        item_orders, locations_with_progression, no_key_progression = \
-            get_items_order(list(items.keys()), seed_data["item_order"])
+        item_orders, locations_with_progression, no_key_progression = get_items_order(list(items.keys()),
+                                                                                      seed_data["item_order"])
         for item, order in item_orders.items():
             item_order[item].append(order)
 
