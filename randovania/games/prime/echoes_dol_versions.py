@@ -57,6 +57,7 @@ ALL_VERSIONS = [
             start_transition_to_visor=0x80085314,
         ),
         anything_set_address=0x8010f084,
+        rs_debugger_printf_loop_address=0x8028c604,
     ),
     EchoesDolVersion(
         game=RandovaniaGame.PRIME2,
@@ -110,5 +111,6 @@ ALL_VERSIONS = [
             start_transition_to_visor=0x80085450,
         ),
         anything_set_address=0x8010f238,
+        rs_debugger_printf_loop_address=0x8028ca0c,
     ),
 ]
