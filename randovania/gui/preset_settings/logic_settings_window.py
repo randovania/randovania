@@ -548,6 +548,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self.elevators_combo.addItem(value.long_name, value)
         self.elevators_combo.currentIndexChanged.connect(self._update_elevator_mode)
         self.skip_final_bosses_check.stateChanged.connect(self._update_require_final_bosses)
+        self.elevators_allow_unvisited_names_check.stateChanged.connect(self._update_allow_unvisited_names)
 
         # Elevator Source
         self._create_source_elevators()
@@ -579,6 +580,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             editor.layout_configuration_elevators = dataclasses.replace(
                 editor.layout_configuration_elevators,
                 skip_final_bosses=checked,
+            )
+
+    def _update_allow_unvisited_names(self, checked: bool):
+        with self._editor as editor:
+            editor.layout_configuration_elevators = dataclasses.replace(
+                editor.layout_configuration_elevators,
+                allow_unvisited_room_names=checked,
             )
 
     def _on_elevator_source_check_changed(self, location: Teleporter, checked: bool):
@@ -632,6 +640,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self.elevators_target_group.setEnabled(config.elevators.has_shuffled_target)
         self.skip_final_bosses_check.setChecked(config.elevators.skip_final_bosses)
+        self.elevators_allow_unvisited_names_check.setChecked(config.elevators.allow_unvisited_room_names)
         self._update_area_list(
             config.elevators.excluded_targets.locations,
             True,

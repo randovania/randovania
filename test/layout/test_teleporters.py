@@ -10,7 +10,7 @@ from randovania.layout.teleporters import TeleporterConfiguration, TeleporterShu
 
 
 def _m(encoded: bytes, mode: str = "vanilla", skip_final_bosses=False,
-       excluded_teleporters=None, excluded_targets=None):
+       allow_unvisited_room_names=True, excluded_teleporters=None, excluded_targets=None):
     if excluded_teleporters is None:
         excluded_teleporters = []
     if excluded_targets is None:
@@ -20,6 +20,7 @@ def _m(encoded: bytes, mode: str = "vanilla", skip_final_bosses=False,
         "json": {
             "mode": mode,
             "skip_final_bosses": skip_final_bosses,
+            "allow_unvisited_room_names": allow_unvisited_room_names,
             "excluded_teleporters": excluded_teleporters,
             "excluded_targets": excluded_targets,
         },
@@ -34,10 +35,10 @@ def _a(world, area, instance_id=None):
 
 @pytest.fixture(
     params=[
-        _m(b'\x00'),
-        _m(b'\x10', skip_final_bosses=True),
-        _m(b'\xb0', mode="one-way-elevator"),
-        _m(b'\xb81`', mode="one-way-elevator", excluded_teleporters=[_a(1119434212, 1473133138, 122)]),
+        _m(b'\x08'),
+        _m(b'\x18', skip_final_bosses=True),
+        _m(b'\xb1', mode="one-way-elevator"),
+        _m(b'\xb81d', mode="one-way-elevator", excluded_teleporters=[_a(1119434212, 1473133138, 122)]),
     ],
     name="with_data")
 def _with_data(request):
@@ -45,6 +46,7 @@ def _with_data(request):
     reference = TeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
+        allow_unvisited_room_names=False,
         excluded_teleporters=TeleporterList(frozenset(), game),
         excluded_targets=TeleporterTargetList(frozenset(), game),
     )
