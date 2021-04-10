@@ -29,7 +29,7 @@ def _config_with_data(request):
     with get_data_path().joinpath("item_database", game.value, "default_state", "ammo.json").open() as open_file:
         default_data = json.load(open_file)
 
-    default = AmmoConfiguration.from_json(default_data, default_database.item_database_for_game(game))
+    default = AmmoConfiguration.from_json(default_data, game)
     data = copy.deepcopy(default_data)
 
     for key, value in request.param.get("items_state", {}).items():
@@ -38,7 +38,7 @@ def _config_with_data(request):
     for key, value in request.param.get("maximum_ammo", {}).items():
         data["maximum_ammo"][key] = value
 
-    config = AmmoConfiguration.from_json(data, default_database.item_database_for_game(game))
+    config = AmmoConfiguration.from_json(data, game)
     return request.param["encoded"], config, default
 
 

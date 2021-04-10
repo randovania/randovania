@@ -8,7 +8,7 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
@@ -310,8 +310,8 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
     format_params["translator_gates"] = translator_gates
     format_params["hints"] = "Yes"
 
-    if configuration.elevators != LayoutElevators.VANILLA:
-        template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.long_name}")
+    if not configuration.elevators.is_vanilla:
+        template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.description()}")
 
     # Game Changes
     missile_launcher_required = True
@@ -336,7 +336,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
         qol_changes.append("Can warp to start")
     if configuration.menu_mod:
         qol_changes.append("Menu Mod included")
-    if configuration.skip_final_bosses:
+    if configuration.elevators.skip_final_bosses:
         qol_changes.append("Final bosses removed")
 
     if qol_changes:
@@ -366,8 +366,8 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
                      "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
-                     "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
-                     "elevators": configuration.elevators.value,
+                     "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
+                     "elevators": configuration.elevators.description(),
                      "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
                      "progressive_beam": _bool_to_str(has_shuffled_item(major_items, "Progressive Beam"))}
 
@@ -390,8 +390,8 @@ def _prime_format_params(configuration: PrimeConfiguration) -> dict:
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
                      "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
-                     "include_final_bosses": _bool_to_str(not configuration.skip_final_bosses),
-                     "elevators": configuration.elevators.value
+                     "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
+                     "elevators": configuration.elevators.description()
                      }
 
     missile_launcher_required = True

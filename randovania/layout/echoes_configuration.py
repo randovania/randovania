@@ -7,7 +7,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.beam_configuration import BeamConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.translator_configuration import TranslatorConfiguration
 
@@ -50,19 +50,24 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class EchoesConfiguration(BaseConfiguration):
-    elevators: LayoutElevators
+    elevators: TeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration
     beam_configuration: BeamConfiguration
-    skip_final_bosses: bool
-    energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0, "precision": 1.0})
+    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     safe_zone: LayoutSafeZone
     menu_mod: bool
     warp_to_start: bool
-    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 2.0})
-    dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 2.0})
+    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 3.0})
+    dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
+
+    def __post_init__(self):
+        for f in dataclasses.fields(self):
+            v = getattr(self, f.name)
+            if not isinstance(v, f.type):
+                raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f.type}.")
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -70,9 +75,7 @@ class EchoesConfiguration(BaseConfiguration):
 
     def dangerous_settings(self) -> List[str]:
         result = super().dangerous_settings()
-
-        if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
-            result.append("One-way anywhere elevators")
+        result.extend(self.elevators.dangerous_settings())
 
         if self.dangerous_energy_tank:
             result.append("1 HP Mode")

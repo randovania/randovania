@@ -4,8 +4,10 @@ from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_database import ItemDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_state import AmmoState
 
 
@@ -69,7 +71,8 @@ class AmmoConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, item_database: ItemDatabase) -> "AmmoConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> "AmmoConfiguration":
+        item_database = default_database.item_database_for_game(game)
         return cls(
             maximum_ammo={
                 int(ammo_item): maximum

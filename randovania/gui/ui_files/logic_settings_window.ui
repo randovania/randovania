@@ -364,7 +364,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>745</width>
-                   <height>356</height>
+                   <height>358</height>
                   </rect>
                  </property>
                  <layout class="QHBoxLayout" name="excluded_locations_area_layout">
@@ -665,31 +665,137 @@
           <attribute name="title">
            <string>Elevators</string>
           </attribute>
-          <layout class="QVBoxLayout" name="elevator_layout">
+          <layout class="QVBoxLayout" name="elevator_parent_layout">
            <property name="leftMargin">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="topMargin">
-            <number>8</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="elevators_description_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Connections&lt;/span&gt;: all elevators are connected to where they do in the original game.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were. An elevator will never connect to another in the same area.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with cycles&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. All rooms are used as a destination exactly once, causing all elevators to be separated into loops.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with replacement&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.&lt;span style=&quot; font-style:italic;&quot;&gt; Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Warning:&lt;/span&gt; there's an audio bug whenever you take an elevator. This bug lasts until you restart the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
+            <widget class="QScrollArea" name="elevator_scroll_area">
+             <property name="widgetResizable">
               <bool>true</bool>
              </property>
+             <widget class="QWidget" name="elevator_scroll_area_contents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>755</width>
+                <height>557</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="elevator_layout">
+               <property name="leftMargin">
+                <number>4</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>4</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="elevators_description_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Connections&lt;/span&gt;: all elevators are connected to where they do in the original game.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were. An elevator will never connect to another in the same area.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with cycles&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. All rooms are used as a destination exactly once, causing all elevators to be separated into loops.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with replacement&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.&lt;span style=&quot; font-style:italic;&quot;&gt; Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Warning:&lt;/span&gt; there's an audio bug whenever you take an elevator. This bug lasts until you restart the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="elevators_combo"/>
+               </item>
+               <item>
+                <widget class="Line" name="line_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="skip_final_bosses_check">
+                 <property name="text">
+                  <string>Go directly to credits from Sky Temple Gateway</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="skip_final_bosses_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change the light beam in Sky Temple Gateway to go directly to the credits, skipping the final bosses.&lt;/p&gt;&lt;p&gt;This changes the requirements to &lt;span style=&quot; font-weight:600;&quot;&gt;not need the final bosses&lt;/span&gt;, turning certain items optional such as Screw Attack and Spider Ball.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="elevators_source_group">
+                 <property name="title">
+                  <string>Elevators to randomize</string>
+                 </property>
+                 <layout class="QGridLayout" name="elevators_source_layout">
+                  <property name="leftMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="spacing">
+                   <number>3</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="elevators_target_group">
+                 <property name="title">
+                  <string>Valid elevator targets</string>
+                 </property>
+                 <layout class="QGridLayout" name="elevators_target_layout">
+                  <property name="leftMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="spacing">
+                   <number>3</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="elevators_combo"/>
            </item>
           </layout>
          </widget>
@@ -755,8 +861,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>76</width>
-                <height>16</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="starting_locations_layout">

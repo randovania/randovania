@@ -22,7 +22,7 @@ def set_dark_theme(active: bool):
             padding: 0px;
         }
         QGroupBox::title {
-          padding-bottom: 12px;
+            padding-bottom: 12px;
         }
         QComboBox {
             padding-right: 10px;

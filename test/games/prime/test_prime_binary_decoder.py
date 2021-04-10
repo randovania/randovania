@@ -25,7 +25,7 @@ def test_simple_round_trip():
             "requirement_template": {},
         },
         "game_specific": {
-            "energy_per_tank": 100.0,
+            "energy_per_tank": 100,
             "safe_zone_heal_per_second": 1.0,
             "beam_configurations": [],
             "dangerous_energy_tank": True,

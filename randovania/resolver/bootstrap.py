@@ -10,7 +10,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.games.game import RandovaniaGame
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
@@ -150,7 +150,7 @@ def misc_resources_for_configuration(configuration: EchoesConfiguration,
         # Allow Vanilla X
         19, 20, 21, 22, 23, 24, 25
     }
-    if configuration.elevators == LayoutElevators.VANILLA:
+    if configuration.elevators.is_vanilla:
         # Vanilla Great Temple Emerald Translator Gate
         enabled_resources.add(18)
 

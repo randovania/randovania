@@ -192,7 +192,7 @@ def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, g
     """
     Patches the base health capacity and the energy tank capacity with matching values.
     """
-    tank_capacity = game_specific.energy_per_tank
+    tank_capacity = float(game_specific.energy_per_tank)
 
     dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
     dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))
