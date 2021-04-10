@@ -37,7 +37,8 @@ class JsonDataclass:
 
         new_instance = {}
         for field in dataclasses.fields(cls):
-            if not field.init or (field.name not in json_dict and field.default != dataclasses.MISSING):
+            if not field.init or (field.name not in json_dict and (field.default != dataclasses.MISSING
+                                                                   or field.default_factory != dataclasses.MISSING)):
                 continue
             arg = json_dict[field.name]
             if arg is not None:
@@ -52,4 +53,9 @@ class JsonDataclass:
                         if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
                     })
             new_instance[field.name] = arg
+
+        unknown_keys = set(json_dict.keys()) - set(new_instance.keys())
+        if unknown_keys:
+            raise ValueError(f"Unknown keys present in argument: {unknown_keys}")
+
         return cls(**new_instance)
