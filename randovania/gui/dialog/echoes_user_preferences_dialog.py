@@ -52,6 +52,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
         self.unvisited_room_names_check.stateChanged.connect(self._persist_option_then_notify("unvisited_room_names"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
+        self.elevator_sound_check.stateChanged.connect(self._persist_option_then_notify("teleporter_sounds"))
 
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
 
@@ -71,6 +72,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         self.open_map_check.setChecked(patches.open_map)
         self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
+        self.elevator_sound_check.setChecked(patches.teleporter_sounds)
         self.on_new_user_preferences(patches.user_preferences)
 
     def on_new_user_preferences(self, user_preferences: EchoesUserPreferences):

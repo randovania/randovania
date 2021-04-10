@@ -12,7 +12,7 @@ ALL_VERSIONS_PATCHES = echoes_dol_versions.ALL_VERSIONS
 
 
 def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences,
-                  default_items: dict, unvisited_room_names: bool):
+                  default_items: dict, unvisited_room_names: bool, teleporter_sounds: bool):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version = find_version_for_dol(dol_file, ALL_VERSIONS_PATCHES)
@@ -30,6 +30,7 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
         if isinstance(version, EchoesDolVersion):
             echoes_dol_patches.apply_fixes(version, dol_file)
             echoes_dol_patches.apply_unvisited_room_names(version, dol_file, unvisited_room_names)
+            echoes_dol_patches.apply_teleporter_sounds(version, dol_file, teleporter_sounds)
 
             echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
                                                         user_preferences, dol_file)
