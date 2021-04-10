@@ -4,9 +4,11 @@ from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.game_description import default_database
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
+from randovania.games.game import RandovaniaGame
 from randovania.layout.major_item_state import MajorItemState
 
 RANDOM_STARTING_ITEMS_LIMIT = 31
@@ -35,7 +37,9 @@ class MajorItemsConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, item_database: ItemDatabase) -> "MajorItemsConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> "MajorItemsConfiguration":
+        item_database = default_database.item_database_for_game(game)
+
         items_state = {}
         for name, item in item_database.major_items.items():
             if name in value["items_state"]:

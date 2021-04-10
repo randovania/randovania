@@ -1,11 +1,23 @@
 from dataclasses import dataclass
-from typing import Iterator, Tuple, FrozenSet, List
+from typing import Iterator, Tuple, FrozenSet, List, Callable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
+from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
+
+
+def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area], bool]) -> List[AreaLocation]:
+    world_list = default_database.game_description_for(game).world_list
+    areas = [
+        AreaLocation(world.world_asset_id, area.area_asset_id)
+        for world in world_list.worlds
+        for area in world.areas
+        if condition(area)
+    ]
+    return list(sorted(areas))
 
 
 @dataclass(frozen=True)
@@ -15,14 +27,11 @@ class LocationList(BitPackValue):
 
     @classmethod
     def areas_list(cls, game: RandovaniaGame):
-        world_list = default_database.game_description_for(game).world_list
-        areas = [
-            AreaLocation(world.world_asset_id, area.area_asset_id)
-            for world in world_list.worlds
-            for area in world.areas
-            if area.valid_starting_location
-        ]
-        return list(sorted(areas))
+        return area_locations_with_filter(game, lambda area: True)
+
+    @classmethod
+    def element_type(cls):
+        return AreaLocation
 
     @classmethod
     def with_elements(cls, elements: Iterator[AreaLocation], game: RandovaniaGame) -> "LocationList":
@@ -45,7 +54,7 @@ class LocationList(BitPackValue):
         if not isinstance(value, list):
             raise ValueError("StartingLocation from_json must receive a list, got {}".format(type(value)))
 
-        elements = [AreaLocation.from_json(location) for location in value]
+        elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
 
     def ensure_has_location(self, area_location: AreaLocation, enabled: bool) -> "LocationList":
@@ -55,13 +64,13 @@ class LocationList(BitPackValue):
         elif area_location in new_locations:
             new_locations.remove(area_location)
 
-        return LocationList.with_elements(iter(new_locations), self.game)
+        return self.with_elements(iter(new_locations), self.game)
 
-    def ensure_has_locations(self, area_locations: list, enabled: bool) -> "LocationList":
+    def ensure_has_locations(self, area_locations: List[AreaLocation], enabled: bool) -> "LocationList":
         new_locations = set(self.locations)
         for area_location in area_locations:
             if enabled:
                 new_locations.add(area_location)
             elif area_location in new_locations:
                 new_locations.remove(area_location)
-        return LocationList.with_elements(iter(new_locations), self.game)
+        return self.with_elements(iter(new_locations), self.game)

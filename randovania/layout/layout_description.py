@@ -1,4 +1,5 @@
 import base64
+import copy
 import hashlib
 import json
 from dataclasses import dataclass
@@ -20,7 +21,7 @@ def _shareable_hash_words():
         return json.load(hash_words_file)
 
 
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 3
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 4
 
 
 def migrate_description(json_dict: dict) -> dict:
@@ -50,6 +51,10 @@ def migrate_description(json_dict: dict) -> dict:
                     precision["relative"]["distance_offset"] = 0
                     precision["relative"].pop("precise_distance")
         version += 1
+
+    if version == 3:
+        for game in json_dict["game_modifications"]:
+            game["elevators"].pop("Sky Temple/Sky Temple Energy Controller", None)
 
     json_dict["schema_version"] = version
     return json_dict

@@ -30,7 +30,6 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         # Signals
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
-        self.skip_final_bosses_check.stateChanged.connect(self._persist_option_then_notify("skip_final_bosses"))
 
         self.pickup_model_combo.currentIndexChanged.connect(self._persist_enum(self.pickup_model_combo,
                                                                                "pickup_model_style"))
@@ -59,7 +58,6 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         config = preset.configuration
         self.warp_to_start_check.setChecked(config.warp_to_start)
         self.include_menu_mod_check.setChecked(config.menu_mod)
-        self.skip_final_bosses_check.setChecked(config.skip_final_bosses)
 
         self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(

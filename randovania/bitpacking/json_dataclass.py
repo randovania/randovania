@@ -1,4 +1,5 @@
 import dataclasses
+import inspect
 import typing
 from enum import Enum
 
@@ -26,8 +27,15 @@ class JsonDataclass:
         return result
 
     @classmethod
-    def from_json(cls, json_dict: dict) -> "JsonDataclass":
-        kwargs = {}
+    def json_extra_arguments(cls):
+        return {}
+
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra) -> "JsonDataclass":
+        extra_args = cls.json_extra_arguments()
+        extra_args.update(extra)
+
+        new_instance = {}
         for field in dataclasses.fields(cls):
             if not field.init or (field.name not in json_dict and field.default != dataclasses.MISSING):
                 continue
@@ -37,6 +45,11 @@ class JsonDataclass:
                 if issubclass(type_, Enum):
                     arg = type_(arg)
                 elif hasattr(type_, "from_json"):
-                    arg = type_.from_json(arg)
-            kwargs[field.name] = arg
-        return cls(**kwargs)
+                    arg_spec = inspect.getfullargspec(type_.from_json)
+                    arg = type_.from_json(arg, **{
+                        name: value
+                        for name, value in extra_args.items()
+                        if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
+                    })
+            new_instance[field.name] = arg
+        return cls(**new_instance)

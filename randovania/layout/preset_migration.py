@@ -59,7 +59,7 @@ def _migrate_v1(preset: dict) -> dict:
         }
     }
     layout_configuration["skip_final_bosses"] = False
-    layout_configuration["energy_per_tank"] = 100.0
+    layout_configuration["energy_per_tank"] = 100
     return preset
 
 
@@ -224,10 +224,36 @@ def _migrate_v8(preset: dict) -> dict:
         area = world.area_by_name(area_name)
         return AreaLocation(world.world_asset_id, area.area_asset_id)
 
+    if "energy_per_tank" in preset["configuration"]:
+        preset["configuration"]["energy_per_tank"] = int(preset["configuration"]["energy_per_tank"])
+
     preset["configuration"]["starting_location"] = [
         _name_to_location(location).as_json
         for location in preset["configuration"]["starting_location"]
     ]
+
+    preset["configuration"]["elevators"] = {
+        "mode": preset["configuration"]["elevators"],
+        "excluded_teleporters": [
+            {
+                "world_asset_id": 464164546,
+                "area_asset_id": 3136899603,
+                "instance_id": 204865660
+            },
+            {
+                "world_asset_id": 464164546,
+                "area_asset_id": 1564082177,
+                "instance_id": 4260106
+            },
+            {
+                "world_asset_id": 1006255871,
+                "area_asset_id": 2278776548,
+                "instance_id": 136970379
+            }
+        ],
+        "excluded_targets": [],
+        "skip_final_bosses": preset["configuration"].pop("skip_final_bosses", False),
+    }
 
     return preset
 

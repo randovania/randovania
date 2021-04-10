@@ -7,7 +7,7 @@ from randovania.layout.available_locations import AvailableLocationsConfiguratio
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.elevators import LayoutElevators
+from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset import Preset
 
@@ -131,11 +131,11 @@ class PresetEditor:
         self.set_configuration_field("damage_strictness", value)
 
     @property
-    def layout_configuration_elevators(self) -> LayoutElevators:
+    def layout_configuration_elevators(self) -> TeleporterConfiguration:
         return self.configuration.elevators
 
     @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: LayoutElevators):
+    def layout_configuration_elevators(self, value: TeleporterConfiguration):
         self.set_configuration_field("elevators", value)
 
     @property
@@ -161,14 +161,6 @@ class PresetEditor:
     @ammo_configuration.setter
     def ammo_configuration(self, value: AmmoConfiguration):
         self.set_configuration_field("ammo_configuration", value)
-
-    @property
-    def skip_final_bosses(self) -> bool:
-        return self.configuration.skip_final_bosses
-
-    @skip_final_bosses.setter
-    def skip_final_bosses(self, value: bool):
-        self.set_configuration_field("skip_final_bosses", value)
 
     def set_configuration_field(self, field_name: str, value):
         self._edit_field(
