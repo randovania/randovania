@@ -253,6 +253,7 @@ def _migrate_v8(preset: dict) -> dict:
         ],
         "excluded_targets": [],
         "skip_final_bosses": preset["configuration"].pop("skip_final_bosses", False),
+        "allow_unvisited_room_names": True,
     }
 
     return preset

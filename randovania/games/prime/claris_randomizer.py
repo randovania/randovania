@@ -25,7 +25,7 @@ from randovania.layout.layout_description import LayoutDescription
 IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
 
 
-CURRENT_PATCH_VERSION = 1
+CURRENT_PATCH_VERSION = 2
 
 
 def _patch_version_file(game_root: Path) -> Path:
@@ -248,6 +248,7 @@ def apply_patcher_file(game_root: Path,
     menu_mod = patcher_data["menu_mod"]
     user_preferences = EchoesUserPreferences.from_json_dict(patcher_data["user_preferences"])
     default_items = patcher_data["default_items"]
+    unvisited_room_names = patcher_data["unvisited_room_names"]
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
@@ -266,7 +267,7 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items)
+    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items, unvisited_room_names)
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:
