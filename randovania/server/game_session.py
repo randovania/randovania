@@ -427,7 +427,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         membership.save()
 
     elif action == SessionAdminUserAction.CREATE_PATCHER_FILE:
-        cosmetic_patches = CosmeticPatches.from_json_dict(arg)
+        cosmetic_patches = CosmeticPatches.from_json(arg)
         player_names = {i: f"Player {i + 1}" for i in range(session.num_rows)}
 
         for member in GameSessionMembership.non_observer_members(session):

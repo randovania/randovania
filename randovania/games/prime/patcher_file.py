@@ -654,6 +654,7 @@ def create_patcher_file(description: LayoutDescription,
     }
     result["unvisited_room_names"] = (configuration.elevators.can_use_unvisited_room_names
                                       and cosmetic_patches.unvisited_room_names)
+    result["teleporter_sounds"] = cosmetic_patches.teleporter_sounds
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)

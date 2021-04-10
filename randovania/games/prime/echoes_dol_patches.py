@@ -340,6 +340,7 @@ class EchoesDolVersion(BasePrimeDolVersion):
     anything_set_address: int
     rs_debugger_printf_loop_address: int
     unvisited_room_names_address: int
+    cworldtransmanager_sfxstart: int
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
@@ -355,9 +356,22 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
     ])
 
 
-def apply_unvisited_room_names(version: EchoesDolVersion, dol_file: DolFile, unvisited_room_names: bool):
+def apply_unvisited_room_names(version: EchoesDolVersion, dol_file: DolFile, enabled: bool):
     # In CAutoMapper::Update, the function checks for `mwInfo.IsMapped` then `mwInfo.IsAreaVisited` and if both are
     # false, sets a variable to false. This variable indicates if the room name is displayed used.
     dol_file.write_instructions(version.unvisited_room_names_address, [
-        li(r28, 1 if unvisited_room_names else 0),
+        li(r28, 1 if enabled else 0),
+    ])
+
+
+def apply_teleporter_sounds(version: EchoesDolVersion, dol_file: DolFile, enabled: bool):
+    dol_file.symbols["CWorldTransManager::SfxStart"] = version.cworldtransmanager_sfxstart
+
+    if enabled:
+        inst = stwu(r1, -0x20, r1)
+    else:
+        inst = blr()
+
+    dol_file.write_instructions("CWorldTransManager::SfxStart", [
+        inst
     ])
