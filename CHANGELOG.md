@@ -14,16 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * Select possible destinations for *One-way, anywhere*.
     * Randomize Sky Temple Gateway, Aerie Transport Station and Aerie elevators.
 
--   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
-
--   Added: One additional joke hint. (Thanks CZeke)
-
 -   Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
 
 -   Added: An option for the map to display names of unvisited rooms.
     When randomizing elevators, the elevator rooms are excluded to prevent spoiling their destinations. An option were added to disallow displaying names entirely, since otherwise you can use a Map Station to find the names.  
 
+-   Added: An option to disable the elevator sound effect, preventing it from playing endlessly in certain cases.
+
 -   Added: When a crash happens, the game now displays an error screen instead of just stopping.
+
+-   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
+
+-   Added: One additional joke hint. (Thanks CZeke)
 
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
     

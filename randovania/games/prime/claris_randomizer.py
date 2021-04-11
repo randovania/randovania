@@ -246,9 +246,10 @@ def apply_patcher_file(game_root: Path,
     :return:
     """
     menu_mod = patcher_data["menu_mod"]
-    user_preferences = EchoesUserPreferences.from_json_dict(patcher_data["user_preferences"])
+    user_preferences = EchoesUserPreferences.from_json(patcher_data["user_preferences"])
     default_items = patcher_data["default_items"]
     unvisited_room_names = patcher_data["unvisited_room_names"]
+    teleporter_sounds = patcher_data["teleporter_sounds"]
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
@@ -267,7 +268,8 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items, unvisited_room_names)
+    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items,
+                              unvisited_room_names, teleporter_sounds)
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:

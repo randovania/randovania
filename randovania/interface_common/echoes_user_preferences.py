@@ -1,6 +1,7 @@
-import copy
 import dataclasses
 from enum import Enum
+
+from randovania.bitpacking.json_dataclass import JsonDataclass
 
 
 def _int_field(default: int, min_value: int, max_value: int, display_as_percentage: bool = True):
@@ -15,7 +16,7 @@ class SoundMode(Enum):
 
 
 @dataclasses.dataclass(frozen=True)
-class EchoesUserPreferences:
+class EchoesUserPreferences(JsonDataclass):
     sound_mode: SoundMode = SoundMode.STEREO
     screen_brightness: int = _int_field(4, 0, 8)
     screen_x_offset: int = _int_field(0, -0x1e, 0x1f, False)
@@ -37,18 +38,3 @@ class EchoesUserPreferences:
                 raise ValueError(f'Value {value} for field "{field.name}" is less than minimum {field.metadata["min"]}')
             if "max" in field.metadata and value > field.metadata["max"]:
                 raise ValueError(f'Value {value} for field "{field.name}" is less than maximum {field.metadata["max"]}')
-
-    @property
-    def as_json(self) -> dict:
-        result = {
-            field.name: getattr(self, field.name)
-            for field in dataclasses.fields(self)
-        }
-        result["sound_mode"] = self.sound_mode.value
-        return result
-
-    @classmethod
-    def from_json_dict(cls, json_dict: dict) -> "EchoesUserPreferences":
-        kwargs = copy.copy(json_dict)
-        kwargs["sound_mode"] = SoundMode(kwargs["sound_mode"])
-        return cls(**kwargs)
