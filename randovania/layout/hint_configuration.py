@@ -1,7 +1,8 @@
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackDataClass, BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 
 
 class SkyTempleKeyHintMode(BitPackEnum, Enum):
@@ -15,7 +16,7 @@ class SkyTempleKeyHintMode(BitPackEnum, Enum):
 
 
 @dataclasses.dataclass(frozen=True)
-class HintConfiguration(BitPackDataClass):
+class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck):
     item_hints: bool = True
     sky_temple_keys: SkyTempleKeyHintMode = SkyTempleKeyHintMode.default()
 

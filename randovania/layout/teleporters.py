@@ -2,8 +2,9 @@ import dataclasses
 from enum import Enum
 from typing import Dict, List
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -81,7 +82,7 @@ class TeleporterTargetList(location_list.LocationList):
 
 
 @dataclasses.dataclass(frozen=True)
-class TeleporterConfiguration(BitPackDataClass, JsonDataclass):
+class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     mode: TeleporterShuffleMode
     excluded_teleporters: TeleporterList
     excluded_targets: TeleporterTargetList
