@@ -340,7 +340,6 @@ def run_filler(rng: Random,
         rng.shuffle(player_expansions[index])
 
         new_game, state = bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
-        new_game.patch_requirements(state.resources, pool.configuration.damage_strictness.value)
 
         major_configuration = pool.configuration.major_items_configuration
         player_states.append(PlayerState(
