@@ -255,6 +255,11 @@ def _migrate_v8(preset: dict) -> dict:
         "skip_final_bosses": preset["configuration"].pop("skip_final_bosses", False),
         "allow_unvisited_room_names": True,
     }
+    if preset["configuration"]["major_items_configuration"]["default_items"].get("visor") == "Dark Visor":
+        preset["configuration"]["major_items_configuration"]["default_items"]["visor"] = "Combat Visor"
+        preset["configuration"]["major_items_configuration"]["items_state"]["Scan Visor"] = {
+            "num_included_in_starting_items": 1
+        }
 
     return preset
 

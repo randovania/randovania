@@ -14,9 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * Select possible destinations for *One-way, anywhere*.
     * Randomize Sky Temple Gateway, Aerie Transport Station and Aerie elevators.
 
--   Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
+-   **Major** - Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
 
--   Added: An option for the map to display names of unvisited rooms.
+-   **Major** - Added: An option for the map to display names of unvisited rooms.
     When randomizing elevators, the elevator rooms are excluded to prevent spoiling their destinations. An option were added to disallow displaying names entirely, since otherwise you can use a Map Station to find the names.  
 
 -   Added: An option to disable the elevator sound effect, preventing it from playing endlessly in certain cases.
@@ -38,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
 
 -   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
+
+-   Fixed: Fixed the game defaulting to Combat Visor after an elevator.
+
+-   Removed: Using Dark Visor as the starting visor is no longer supported. (Game crashes on unmorph for unknown reasons)
 
 ### Logic Database Changes
 
