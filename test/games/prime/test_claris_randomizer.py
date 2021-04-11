@@ -291,12 +291,14 @@ def test_apply_patcher_file(
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
     unvisited_room_names = "unvisited_room_names placeholder value"
+    teleporter_sounds = "teleporter_sounds placeholder value"
 
     patcher_data = {
         "menu_mod": include_menu_mod,
         "user_preferences": EchoesUserPreferences().as_json,
         "default_items": {"foo": "bar"},
         "unvisited_room_names": unvisited_room_names,
+        "teleporter_sounds": teleporter_sounds,
     }
     assert claris_randomizer.get_patch_version(game_root) == 0
 
@@ -317,7 +319,7 @@ def test_apply_patcher_file(
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
     mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences(), {"foo": "bar"},
-                                               unvisited_room_names)
+                                               unvisited_room_names, teleporter_sounds)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)

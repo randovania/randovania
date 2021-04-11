@@ -53,7 +53,7 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "selected_preset_name": Serializer(identity, str),
-    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
+    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),

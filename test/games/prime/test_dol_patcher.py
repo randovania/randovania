@@ -17,6 +17,7 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     game_patches = MagicMock()
     user_preferences = MagicMock()
     unvisited_room_names = MagicMock()
+    teleporter_sounds = MagicMock()
     version_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     mock_find_version_for_dol.return_value = version_patches
     dol_file = mock_dol_file_constructor.return_value
@@ -35,10 +36,12 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
         "randovania.games.prime.echoes_dol_patches.apply_fixes", autospec=True)
     mock_apply_unvisited_room_names: MagicMock = mocker.patch(
         "randovania.games.prime.echoes_dol_patches.apply_unvisited_room_names", autospec=True)
+    mock_apply_teleporter_sounds: MagicMock = mocker.patch(
+        "randovania.games.prime.echoes_dol_patches.apply_teleporter_sounds", autospec=True)
 
     # Run
     dol_patcher.apply_patches(game_root, game_patches.game_specific, user_preferences, {"foo": "bar"},
-                              unvisited_room_names)
+                              unvisited_room_names, teleporter_sounds)
 
     # Assert
     mock_find_version_for_dol.assert_called_once_with(dol_file, dol_patcher.ALL_VERSIONS_PATCHES)
@@ -63,6 +66,7 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     )
     mock_apply_fixes.assert_called_once_with(version_patches, dol_file)
     mock_apply_unvisited_room_names.assert_called_once_with(version_patches, dol_file, unvisited_room_names)
+    mock_apply_teleporter_sounds.assert_called_once_with(version_patches, dol_file, teleporter_sounds)
 
 
 def test_get_dol_path():
