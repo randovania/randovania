@@ -1,14 +1,15 @@
 import dataclasses
 from typing import Tuple
 
-from randovania.bitpacking.bitpacking import BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration
 from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 @dataclasses.dataclass(frozen=True)
-class BeamAmmoConfiguration(BitPackDataClass, JsonDataclass):
+class BeamAmmoConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     item_index: int = dataclasses.field(metadata={"min": 0, "max": 108})
     ammo_a: int = dataclasses.field(metadata={"min": -1, "max": 108})
     ammo_b: int = dataclasses.field(metadata={"min": -1, "max": 108})
@@ -30,7 +31,7 @@ class BeamAmmoConfiguration(BitPackDataClass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class BeamConfiguration(BitPackDataClass, JsonDataclass):
+class BeamConfiguration(BitPackDataclass, JsonDataclass):
     power: BeamAmmoConfiguration
     dark: BeamAmmoConfiguration
     light: BeamAmmoConfiguration

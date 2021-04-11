@@ -1,8 +1,9 @@
 import dataclasses
 from typing import List
 
-from randovania.bitpacking.bitpacking import BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.layout import location_list
@@ -21,7 +22,7 @@ class StartingLocationList(location_list.LocationList):
 
 
 @dataclasses.dataclass(frozen=True)
-class BaseConfiguration(BitPackDataClass, JsonDataclass):
+class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     trick_level: TrickLevelConfiguration
     starting_location: StartingLocationList
     available_locations: AvailableLocationsConfiguration
