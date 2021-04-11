@@ -22,7 +22,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
@@ -321,7 +321,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
-        self.dangerous_tank_check.stateChanged.connect(self._persist_dangerous_tank)
+        signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
 
         if self.game_enum == RandovaniaGame.PRIME2:
             config_fields = {
@@ -333,7 +333,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self.dark_suit_spin_box.setMinimum(config_fields["dark_suit_damage"].metadata["min"])
             self.dark_suit_spin_box.setMaximum(config_fields["dark_suit_damage"].metadata["max"])
 
-            self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
+            signal_handling.on_checked(self.safe_zone_logic_heal_check, self._persist_safe_zone_logic_heal)
             self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
             self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
             self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
@@ -353,17 +353,17 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             )
             editor.set_configuration_field("safe_zone", safe_zone)
 
-    def _persist_safe_zone_logic_heal(self):
+    def _persist_safe_zone_logic_heal(self, checked: bool):
         with self._editor as editor:
             safe_zone = dataclasses.replace(
                 editor.configuration.safe_zone,
-                fully_heal=self.safe_zone_logic_heal_check.isChecked()
+                fully_heal=checked
             )
             editor.set_configuration_field("safe_zone", safe_zone)
 
-    def _persist_dangerous_tank(self):
+    def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
-            editor.set_configuration_field("dangerous_energy_tank", self.dangerous_tank_check.isChecked())
+            editor.set_configuration_field("dangerous_energy_tank", checked)
 
     # Area List
 
@@ -485,7 +485,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)
         check.area_location = location
-        check.stateChanged.connect(functools.partial(self._on_elevator_source_check_changed, location))
+        signal_handling.on_checked(check, functools.partial(self._on_elevator_source_check_changed, location))
         return check
 
     def _create_source_elevators(self):
@@ -547,8 +547,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         for value in iterate_enum(TeleporterShuffleMode):
             self.elevators_combo.addItem(value.long_name, value)
         self.elevators_combo.currentIndexChanged.connect(self._update_elevator_mode)
-        self.skip_final_bosses_check.stateChanged.connect(self._update_require_final_bosses)
-        self.elevators_allow_unvisited_names_check.stateChanged.connect(self._update_allow_unvisited_names)
+        signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
+        signal_handling.on_checked(self.elevators_allow_unvisited_names_check, self._update_allow_unvisited_names)
 
         # Elevator Source
         self._create_source_elevators()
@@ -575,18 +575,18 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 mode=self.elevators_combo.currentData(),
             )
 
-    def _update_require_final_bosses(self, checked: int):
+    def _update_require_final_bosses(self, checked: bool):
         with self._editor as editor:
             editor.layout_configuration_elevators = dataclasses.replace(
                 editor.layout_configuration_elevators,
-                skip_final_bosses=bool(checked),
+                skip_final_bosses=checked,
             )
 
-    def _update_allow_unvisited_names(self, checked: int):
+    def _update_allow_unvisited_names(self, checked: bool):
         with self._editor as editor:
             editor.layout_configuration_elevators = dataclasses.replace(
                 editor.layout_configuration_elevators,
-                allow_unvisited_room_names=bool(checked),
+                allow_unvisited_room_names=checked,
             )
 
     def _on_elevator_source_check_changed(self, location: Teleporter, checked: bool):
