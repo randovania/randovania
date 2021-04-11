@@ -613,7 +613,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
         static_areas = set(
-            teleporter.area_location
+            teleporter
             for teleporter in config.elevators.static_teleporters.keys()
         )
 
