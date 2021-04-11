@@ -50,7 +50,7 @@ def _has_editable_teleporter(area: Area) -> bool:
 
 class TeleporterList(location_list.LocationList):
     @classmethod
-    def areas_list(cls, game: RandovaniaGame):
+    def areas_list(cls, game: RandovaniaGame) -> List[Teleporter]:
         world_list = default_database.game_description_for(game).world_list
         areas = [
             Teleporter(world.world_asset_id, area.area_asset_id, node.teleporter_instance_id)
@@ -65,6 +65,12 @@ class TeleporterList(location_list.LocationList):
     @classmethod
     def element_type(cls):
         return Teleporter
+
+    def ensure_has_location(self, area_location: Teleporter, enabled: bool) -> "TeleporterList":
+        return super().ensure_has_location(area_location, enabled)
+
+    def ensure_has_locations(self, area_locations: List[AreaLocation], enabled: bool) -> "TeleporterList":
+        return super().ensure_has_locations(area_locations, enabled)
 
 
 def _valid_teleporter_target(area: Area, game: RandovaniaGame):
