@@ -36,6 +36,7 @@ class StartingBeamVisorAddresses:
     health_info_constructor: int
     enter_morph_ball_state: int
     start_transition_to_visor: int
+    reset_visor: int
 
 
 _PREFERENCES_ORDER = (
@@ -324,12 +325,15 @@ def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_it
         stw(r0, 0x34, r30),
     ])
 
-    # Patch EnterMorphBallState's unconditional call for StartTransitionToVisor, but only if default visor isn't combat
-    if default_visor == 0:
-        patch = [bl(addresses.start_transition_to_visor)]
-    else:
-        patch = [nop()]
-    dol_file.write_instructions(addresses.enter_morph_ball_state + 0xEC, patch)
+    # Patch EnterMorphBallState's call for StartTransitionToVisor to use the new default visor
+    dol_file.write_instructions(addresses.enter_morph_ball_state + 0xE8, [
+        li(r4, default_visor),
+    ])
+
+    # Patch CPlayerState::ResetVisor so elevators use the new default visor
+    dol_file.write_instructions(addresses.reset_visor, [
+        li(r0, default_visor),
+    ])
 
 
 @dataclasses.dataclass(frozen=True)
