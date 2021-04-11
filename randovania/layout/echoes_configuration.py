@@ -2,13 +2,13 @@ import dataclasses
 from enum import Enum
 from typing import List
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.beam_configuration import BeamConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
+from randovania.layout.teleporters import TeleporterConfiguration
 from randovania.layout.translator_configuration import TranslatorConfiguration
 
 
@@ -41,7 +41,7 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
 
 
 @dataclasses.dataclass(frozen=True)
-class LayoutSafeZone(BitPackDataClass, JsonDataclass):
+class LayoutSafeZone(BitPackDataclass, JsonDataclass):
     fully_heal: bool
     prevents_dark_aether: bool
     heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
@@ -62,12 +62,6 @@ class EchoesConfiguration(BaseConfiguration):
     varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 3.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
-
-    def __post_init__(self):
-        for f in dataclasses.fields(self):
-            v = getattr(self, f.name)
-            if not isinstance(v, f.type):
-                raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f.type}.")
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
