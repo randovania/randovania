@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Improve scan text for expansions.
 
+-   Fixed: The *Logic damage strictness* multipliers are no longer applied twice.
+
 -   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
 
 -   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
