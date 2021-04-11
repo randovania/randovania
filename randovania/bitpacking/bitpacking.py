@@ -198,7 +198,7 @@ class BitPackDataClass(BitPackValue):
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
             if any((a >= b) for (a, b) in encoded_item):
-                raise ValueError(f"Encoding field {field.name} of {type(self)} generated invalid value.")
+                raise ValueError(f"Encoding field {field.name} of {type(self)} generated invalid value: {encoded_item}.")
             should_encode = True
 
             if bit_pack_value.bit_pack_skip_if_equals() and reference_item is not None:
