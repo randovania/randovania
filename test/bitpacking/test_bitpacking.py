@@ -221,7 +221,7 @@ class BitPackValueUsingReference(bitpacking.BitPackValue):
 
 
 @dataclasses.dataclass(frozen=True)
-class DataclassForTest(bitpacking.BitPackDataClass):
+class DataclassForTest(bitpacking.BitPackDataclass):
     uses_reference: BitPackValueUsingReference
 
 

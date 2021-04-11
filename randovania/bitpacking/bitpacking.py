@@ -177,7 +177,7 @@ def _get_bit_pack_value_for(value, dataclass_type: type):
     return _get_bit_pack_value_for_type(dataclass_type)(value)
 
 
-class BitPackDataClass(BitPackValue):
+class BitPackDataclass(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         reference = metadata.get("reference")
 
