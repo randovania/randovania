@@ -120,7 +120,7 @@ def add_relative_hint(world_list: WorldList,
     area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
                                                              key=lambda a: a[0].area_asset_id)), rng)
 
-    distance_offset = 0
+    distance_offset = None
     if not precise_distance:
         distance_offset = max_distance - distances[area]
 

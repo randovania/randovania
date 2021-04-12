@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: The *Logic damage strictness* multipliers are no longer applied twice.
 
+-   Fixed: *Up to* relative hints are no longer converted into *exactly* if the actual distance matches the displayed number.
+
 -   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
 
 -   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
