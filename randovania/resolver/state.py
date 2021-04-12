@@ -126,8 +126,12 @@ class State:
         return new_state
 
     def assign_pickup_resources(self, pickup: PickupEntry) -> "State":
+        return self.assign_pickups_resources([pickup])
+
+    def assign_pickups_resources(self, pickups: Iterator[PickupEntry]) -> "State":
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(pickup.resource_gain(self.resources, force_lock=True), new_resources)
+        for pickup in pickups:
+            add_resource_gain_to_current_resources(pickup.resource_gain(self.resources, force_lock=True), new_resources)
 
         energy = self.energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
