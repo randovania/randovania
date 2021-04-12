@@ -42,7 +42,9 @@ class LocationList(BitPackValue):
         return cls(frozenset(sorted(elements)), game)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield from bitpacking.pack_sorted_array_elements(list(sorted(self.locations)), self.areas_list(self.game))
+        areas = self.areas_list(self.game)
+        locations = list(sorted(self.locations))
+        yield from bitpacking.pack_sorted_array_elements(locations, areas)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "LocationList":
