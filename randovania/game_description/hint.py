@@ -71,7 +71,7 @@ class HintRelativeAreaName(Enum):
 
 @dataclass(frozen=True)
 class RelativeData:
-    distance_offset: int
+    distance_offset: Optional[int]
 
     @classmethod
     def from_json(cls, param: dict) -> "RelativeData":

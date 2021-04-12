@@ -139,14 +139,14 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
         max_distance = 8
         data = RelativeDataArea(
-            0 if precise_distance else 2,
+            None if precise_distance else 2,
             AreaLocation(0x3BFA3EFF, 0x62AC8AC4),
             precision,
         )
     else:
         max_distance = 20
         data = RelativeDataItem(
-            0 if precise_distance else 11,
+            None if precise_distance else 11,
             PickupIndex(8),
             precision,
         )

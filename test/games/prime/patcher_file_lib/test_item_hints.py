@@ -289,7 +289,8 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
     (1, "up to"),
-    (0, "exactly"),
+    (0, "up to"),
+    (None, "exactly"),
 ])
 def test_create_message_for_hint_relative_item(echoes_game_description, pickup, players_config,
                                                distance_precise, distance_text,
@@ -318,12 +319,13 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
-                      f'&push;&main-color=#FF3333;{distance_text} {7 + distance_precise} rooms&pop; away from {reference_name}.')
+                      f'&push;&main-color=#FF3333;{distance_text} {7 + (distance_precise or 0)} '
+                      f'rooms&pop; away from {reference_name}.')
 
 
 @pytest.mark.parametrize(["offset", "distance_text"], [
     (2, "up to"),
-    (0, "exactly"),
+    (None, "exactly"),
 ])
 def test_create_message_for_hint_relative_area(echoes_game_description, pickup, players_config,
                                                offset, distance_text):
@@ -350,5 +352,5 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup, 
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
-                      f'&push;&main-color=#FF3333;{distance_text} {10 + offset} rooms&pop; away from '
+                      f'&push;&main-color=#FF3333;{distance_text} {10 + (offset or 0)} rooms&pop; away from '
                       f'Torvus Bog - Great Bridge.')
