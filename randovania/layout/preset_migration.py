@@ -232,9 +232,9 @@ def _migrate_v8(preset: dict) -> dict:
         for location in preset["configuration"]["starting_location"]
     ]
 
-    preset["configuration"]["elevators"] = {
-        "mode": preset["configuration"]["elevators"],
-        "excluded_teleporters": [
+    excluded_teleporters = []
+    if preset["game"] == "prime2":
+        excluded_teleporters = [
             {
                 "world_asset_id": 464164546,
                 "area_asset_id": 3136899603,
@@ -250,7 +250,11 @@ def _migrate_v8(preset: dict) -> dict:
                 "area_asset_id": 2278776548,
                 "instance_id": 136970379
             }
-        ],
+        ]
+
+    preset["configuration"]["elevators"] = {
+        "mode": preset["configuration"]["elevators"],
+        "excluded_teleporters": excluded_teleporters,
         "excluded_targets": [],
         "skip_final_bosses": preset["configuration"].pop("skip_final_bosses", False),
         "allow_unvisited_room_names": True,
