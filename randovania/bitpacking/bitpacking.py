@@ -2,11 +2,13 @@ import dataclasses
 import hashlib
 import math
 from enum import Enum
-from typing import Iterator, Tuple, TypeVar, List, Optional
+from typing import Iterator, Tuple, TypeVar, List, Optional, Callable
 
 import bitstruct
 
 T = TypeVar("T")
+
+ARBITRARY_INT_SIZE_LIMITS = (4, 16, 128, 1024)
 
 
 def _bits_for_number(value: int) -> int:
@@ -352,14 +354,22 @@ def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> 
     return value
 
 
+def encode_big_int(i: int):
+    yield from encode_int_with_limits(i, ARBITRARY_INT_SIZE_LIMITS)
+
+
+def decode_big_int(decoder: BitPackDecoder) -> int:
+    return decode_int_with_limits(decoder, ARBITRARY_INT_SIZE_LIMITS)
+
+
 def encode_bytes(b: bytes):
-    yield from encode_int_with_limits(len(b), (8, 32, 128))
+    yield from encode_big_int(len(b))
     for item in b:
         yield item, 256
 
 
 def decode_bytes(decoder: BitPackDecoder) -> bytes:
-    size = decode_int_with_limits(decoder, (8, 32, 128))
+    size = decode_big_int(decoder)
     return bytes(decoder.decode(*([256] * size)))
 
 
@@ -372,11 +382,25 @@ def decode_string(decoder: BitPackDecoder) -> str:
 
 
 def encode_bool(value: bool) -> Iterator[Tuple[int, int]]:
-    yield int(value), 2
+    yield int(bool(value)), 2
 
 
 def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
+
+
+def encode_tuple(value: Tuple[T, ...], encoder: Callable[[T], Iterator[Tuple[int, int]]]):
+    yield from encode_big_int(len(value))
+    for it in value:
+        yield from encoder(it)
+
+
+def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> Tuple[T, ...]:
+    size = decode_big_int(decoder)
+    return tuple(
+        item_decoder(decoder)
+        for _ in range(size)
+    )
 
 
 def _format_string_for(values: List[Tuple[int, int]]) -> str:

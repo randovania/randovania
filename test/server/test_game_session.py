@@ -189,9 +189,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
     pickup = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
-                         (
-                             ConditionalResources(None, None, ((echoes_resource_database.item[0], 1),)),
-                         ))
+                         progression=((echoes_resource_database.item[0], 1),))
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
 
@@ -201,7 +199,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == [{'provider_name': 'Other Name', 'pickup': '6c8P51ON~'}]
+    assert result == [{'provider_name': 'Other Name', 'pickup': 'C?#$nLBI'}]
 
 
 @patch("flask_socketio.emit", autospec=True)
@@ -217,9 +215,7 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
     pickup = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
-                         (
-                             ConditionalResources(None, None, ((echoes_resource_database.item[0], 1),)),
-                         ))
+                         progression=((echoes_resource_database.item[0], 1),))
     mock_get_resource_database.return_value = echoes_resource_database
     mock_get_pickup_target.return_value = PickupTarget(pickup, 0)
 

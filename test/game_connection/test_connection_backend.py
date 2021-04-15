@@ -8,7 +8,7 @@ from mock import AsyncMock, MagicMock
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import dol_patcher
 
 
@@ -210,12 +210,11 @@ async def test_patches_for_pickup(backend, mocker):
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
 
     db = backend.game.resource_database
-    pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, (
-        ConditionalResources(None, None,
-                             ((db.energy_tank, db.energy_tank.max_capacity),
-                              (db.item_percentage, 1)),
-                             ),
-    ))
+    pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, progression=tuple(),
+                         extra_resources=(
+                             (db.energy_tank, db.energy_tank.max_capacity),
+                             (db.item_percentage, 1),
+                         ))
     backend._inventory = {
         db.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),

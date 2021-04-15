@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Improve scan text for expansions.
 
+-   Changed: Missiles, Power Bombs and Ship Missiles are now only in logic after their respective main launcher, even if it's not required in game. 
+
 -   Fixed: The *Logic damage strictness* multipliers are no longer applied twice.
 
 -   Fixed: *Up to* relative hints are no longer converted into *exactly* if the actual distance matches the displayed number.
