@@ -10,11 +10,11 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
-    ResourceInfo
+    ResourceInfo, convert_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
@@ -114,21 +114,58 @@ def _get_jingle_index_for(category: ItemCategory) -> int:
         return 0
 
 
+def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalResources]:
+    if len(pickup.progression) > 1:
+        assert pickup.resource_lock is None, pickup.name
+        return list(pickup.conditional_resources)
+
+    else:
+        resources = list(pickup.extra_resources)
+        name = pickup.name
+        if pickup.progression:
+            name = pickup.progression[0][0].long_name
+            resources.append(pickup.progression[0])
+
+        lock = pickup.resource_lock
+        if pickup.respects_lock and not pickup.unlocks_resource and lock is not None:
+            locked_resources = lock.convert_gain(resources)
+            return [
+                ConditionalResources(
+                    name=f"Locked {name}",
+                    item=None,
+                    resources=tuple(locked_resources),
+                ),
+                ConditionalResources(
+                    name=name,
+                    item=lock.locked_by,
+                    resources=tuple(resources),
+                ),
+            ]
+        else:
+            return [
+                ConditionalResources(
+                    name=name,
+                    item=None,
+                    resources=tuple(resources),
+                ),
+            ]
+
+
 def _add_quantity_to_resource(resource: str, quantity: int) -> str:
     return "{} {}{}".format(quantity, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
 
 
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != ItemCategory.EXPANSION:
-        if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
+        if len(pickup.progression) > 1:
             return "{}. Provides the following in order: {}".format(
-                pickup.name, ", ".join(conditional.name for conditional in pickup.resources))
+                pickup.name, ", ".join(conditional.name for conditional in pickup.conditional_resources))
         else:
             return pickup.name
 
     ammo_desc = [
         _add_quantity_to_resource(_resource_user_friendly_name(resource), quantity)
-        for resource, quantity in pickup.resources[-1].resources
+        for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
         return "{}. Provides {}{}{}".format(
@@ -162,12 +199,12 @@ def _get_single_hud_text(pickup_name: str,
     })
 
 
-def _get_all_hud_text(pickup: PickupEntry,
+def _get_all_hud_text(conditionals: List[ConditionalResources],
                       memo_data: Dict[str, str],
                       ) -> List[str]:
     return [
-        _get_single_hud_text(conditional.name or pickup.name, memo_data, conditional.resources)
-        for conditional in pickup.resources
+        _get_single_hud_text(conditional.name, memo_data, conditional.resources)
+        for conditional in conditionals
     ]
 
 
@@ -186,14 +223,15 @@ def _calculate_hud_text(pickup: PickupEntry,
     """
 
     if model_style == PickupModelStyle.HIDE_ALL:
-        hud_text = _get_all_hud_text(visual_pickup, memo_data)
-        if len(hud_text) == len(pickup.resources):
+        hud_text = _get_all_hud_text(_conditional_resources_for_pickup(visual_pickup), memo_data)
+        num_conditional = len(_conditional_resources_for_pickup(pickup))
+        if len(hud_text) == num_conditional:
             return hud_text
         else:
-            return [hud_text[0]] * len(pickup.resources)
+            return [hud_text[0]] * num_conditional
 
     else:
-        return _get_all_hud_text(pickup, memo_data)
+        return _get_all_hud_text(_conditional_resources_for_pickup(pickup), memo_data)
 
 
 class PickupCreator:
@@ -248,19 +286,22 @@ class PickupCreatorSolo(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
-        hud_text = _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data)
+        pickup = pickup_target.pickup
+        hud_text = _calculate_hud_text(pickup, visual_pickup, model_style, self.memo_data)
         if hud_text == ["Energy Transfer Module acquired!"] and (
                 self.rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
             hud_text = ["Run validated!"]
 
+        conditional_resources = _conditional_resources_for_pickup(pickup)
+
         return {
-            "resources": _create_pickup_resources_for(pickup_target.pickup.resources[0].resources),
+            "resources": _create_pickup_resources_for(conditional_resources[0].resources),
             "conditional_resources": [
                 {
                     "item": conditional.item.index,
                     "resources": _create_pickup_resources_for(conditional.resources),
                 }
-                for conditional in pickup_target.pickup.resources[1:]
+                for conditional in conditional_resources[1:]
             ],
             "convert": [
                 {
@@ -269,7 +310,7 @@ class PickupCreatorSolo(PickupCreator):
                     "clear_source": conversion.clear_source,
                     "overwrite_target": conversion.overwrite_target,
                 }
-                for conversion in pickup_target.pickup.convert_resources
+                for conversion in pickup.convert_resources
             ],
             "hud_text": hud_text,
             "scan": scan_text,
@@ -617,8 +658,10 @@ class _SimplifiedMemo(dict):
 
 def _simplified_memo_data() -> Dict[str, str]:
     result = _SimplifiedMemo()
-    result["Temporary Power Bombs"] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
-    result["Temporary Missile"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
+    result["Locked Power Bomb Expansion"] = ("Power Bomb Expansion acquired, "
+                                             "but the main Power Bomb is required to use it.")
+    result["Locked Missile Expansion"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
+    result["Locked Seeker Launcher"] = "Seeker Launcher acquired, but the Missile Launcher is required to use it."
     return result
 
 

@@ -127,7 +127,7 @@ class State:
 
     def assign_pickup_resources(self, pickup: PickupEntry) -> "State":
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(pickup.resource_gain(self.resources), new_resources)
+        add_resource_gain_to_current_resources(pickup.resource_gain(self.resources, force_lock=True), new_resources)
 
         energy = self.energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
@@ -145,7 +145,8 @@ class State:
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
-        pickup_resources = convert_resource_gain_to_current_resources(pickup.resource_gain(self.resources))
+        pickup_resources = convert_resource_gain_to_current_resources(
+            pickup.resource_gain(self.resources, force_lock=True))
 
         # Make sure there's no item percentage on starting items
         pickup_resources.pop(self.resource_database.item_percentage, None)
@@ -179,7 +180,7 @@ def add_pickup_to_state(state: State, pickup: PickupEntry):
     :param pickup:
     :return:
     """
-    add_resource_gain_to_current_resources(pickup.resource_gain(state.resources), state.resources)
+    add_resource_gain_to_current_resources(pickup.resource_gain(state.resources, force_lock=True), state.resources)
 
 
 def state_with_pickup(state: State,
