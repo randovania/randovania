@@ -41,9 +41,9 @@ def distribute_command_logic(args):
         extra_args["attempts"] = 0
 
     before = time.perf_counter()
-    layout_description = asyncio.run(generator.generate_description(permalink=permalink, status_update=status_update,
-                                                                    validate_after_generation=args.validate,
-                                                                    timeout=None, **extra_args))
+    layout_description = asyncio.run(generator.generate_and_validate_description(permalink=permalink, status_update=status_update,
+                                                                                 validate_after_generation=args.validate,
+                                                                                 timeout=None, **extra_args))
     after = time.perf_counter()
     print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 

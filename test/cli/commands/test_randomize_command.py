@@ -10,7 +10,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 def test_randomize_command_logic(mocker, with_permalink):
     mock_from_str = mocker.patch("randovania.layout.permalink.Permalink.from_str")
     mock_from_file = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
-    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_description",
+    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
     mock_apply = mocker.patch("randovania.games.prime.claris_randomizer.apply_layout")
 

@@ -10,17 +10,17 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair, Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
 
-@patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True)
-def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
-                    echoes_game_description,
-                    default_layout_configuration,
-                    ):
+@pytest.mark.asyncio
+async def test_run_filler(echoes_game_description,
+                          default_layout_configuration,
+                          mocker,
+                          ):
     # Setup
     rng = Random(5000)
     status_update = MagicMock()
@@ -43,10 +43,11 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
     player_state.scan_asset_initial_pickups = {}
 
-    mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
+    mocker.patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True,
+                 return_value=({player_state: patches}, action_log))
 
     # Run
-    filler_result = runner.run_filler(rng, player_pools, status_update)
+    filler_result = await runner.run_filler(rng, player_pools, status_update)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1

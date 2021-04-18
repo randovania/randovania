@@ -194,7 +194,8 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     assert pickup == decoded
 
 
-def test_round_trip_generated_patches(echoes_game_data, default_preset):
+@pytest.mark.asyncio
+async def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
         default_preset,
@@ -210,7 +211,7 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
         )
     )
 
-    all_patches = generator._async_create_description(
+    description = await generator._create_description(
         permalink=Permalink(
             seed_number=1000,
             spoiler=True,
@@ -218,7 +219,8 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
         ),
         status_update=lambda x: None,
         attempts=0,
-    ).all_patches
+    )
+    all_patches = description.all_patches
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})

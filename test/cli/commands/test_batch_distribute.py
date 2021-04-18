@@ -7,8 +7,9 @@ from randovania.layout.permalink import Permalink
 def test_batch_distribute_helper(mocker):
     # Setup
     description = MagicMock()
-    mock_generate_description: AsyncMock = mocker.patch("randovania.generator.generator.generate_description",
-                                                        new_callable=AsyncMock, return_value=description)
+    mock_generate_description: AsyncMock = mocker.patch(
+        "randovania.generator.generator.generate_and_validate_description",
+        new_callable=AsyncMock, return_value=description)
     mock_perf_counter = mocker.patch("time.perf_counter", autospec=False)  # TODO: pytest-qt bug
 
     base_permalink = MagicMock()

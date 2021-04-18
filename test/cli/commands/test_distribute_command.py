@@ -11,7 +11,7 @@ from randovania.layout.permalink import Permalink
 @pytest.mark.parametrize("no_retry", [False, True])
 def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, preset_manager):
     # Setup
-    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_description",
+    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
 
