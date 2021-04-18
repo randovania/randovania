@@ -109,12 +109,15 @@ jobs:
       - name: codecov
         uses: codecov/codecov-action@v1
 
-      - name: Upload executable to Bintray
-        if: ${{ matrix.executable && startsWith(github.ref, 'refs/heads/') && matrix.os == 'windows-latest' }}
-        run: python tools/upload_release_to_bintray.py
-        env:
-          BINTRAY_USER: henriquegemignani
-          BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
+      - name: Upload artifacts
+        if: ${{ matrix.executable }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          path: |
+            dist/randovania-*.zip
+            dist/randovania-*.tar.gz
+            dist/randovania-*.7z
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
