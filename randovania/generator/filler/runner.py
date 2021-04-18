@@ -17,7 +17,9 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.filler.filler_library import should_have_hint, UnableToGenerate
-from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
+from randovania.generator.filler.retcon import retcon_playthrough_filler
+from randovania.generator.filler.player_state import PlayerState
+from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
 
