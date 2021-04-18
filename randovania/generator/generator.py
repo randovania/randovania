@@ -1,4 +1,4 @@
-import multiprocessing.dummy
+import asyncio
 from random import Random
 from typing import Iterator, Optional, Callable, List, Dict
 
@@ -31,12 +31,12 @@ def _iterate_previous_states(state: State) -> Iterator[State]:
         state = state.previous_state
 
 
-def generate_description(permalink: Permalink,
-                         status_update: Optional[Callable[[str], None]],
-                         validate_after_generation: bool,
-                         timeout: Optional[int] = 600,
-                         attempts: int = 15,
-                         ) -> LayoutDescription:
+async def generate_description(permalink: Permalink,
+                               status_update: Optional[Callable[[str], None]],
+                               validate_after_generation: bool,
+                               timeout: Optional[int] = 600,
+                               attempts: int = 15,
+                               ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
     :param permalink:
@@ -60,25 +60,20 @@ def generate_description(permalink: Permalink,
                                 permalink=permalink, source=e) from e
 
     if validate_after_generation and permalink.player_count == 1:
-        with multiprocessing.dummy.Pool(1) as dummy_pool:
-            resolve_params = {
-                "configuration": permalink.presets[0].configuration,
-                "patches": result.all_patches[0],
-                "status_update": status_update,
-            }
-            final_state_async = dummy_pool.apply_async(func=resolver.resolve,
-                                                       kwds=resolve_params)
+        final_state_async = resolver.resolve(
+            configuration=permalink.presets[0].configuration,
+            patches=result.all_patches[0],
+            status_update=status_update,
+        )
+        try:
+            final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
+        except asyncio.TimeoutError as e:
+            raise GenerationFailure("Timeout reached when validating possibility",
+                                    permalink=permalink, source=e) from e
 
-            try:
-                final_state_by_resolve = final_state_async.get(timeout)
-            except multiprocessing.TimeoutError as e:
-                raise GenerationFailure("Timeout reached when validating possibility",
-                                        permalink=permalink, source=e) from e
-
-            if final_state_by_resolve is None:
-                # Why is final_state_by_distribution not OK?
-                raise GenerationFailure("Generated game was considered impossible by the solver",
-                                        permalink=permalink, source=ImpossibleForSolver())
+        if final_state_by_resolve is None:
+            raise GenerationFailure("Generated game was considered impossible by the solver",
+                                    permalink=permalink, source=ImpossibleForSolver())
 
     return result
 
