@@ -1,37 +1,26 @@
-import collections
-import dataclasses
 import math
 import pprint
-import re
 import typing
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
-    DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
+from typing import Tuple, Iterator, Set, AbstractSet, Dict, \
+    Mapping, FrozenSet, Callable, List, Optional
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
-from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
-from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint
-from randovania.generator.filler.pickup_list import interesting_resources_for_reach, \
-    get_pickups_that_solves_unreachable, get_pickups_with_interesting_resources
-from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
-    advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
-    get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
-from randovania.layout.available_locations import RandomizationMode
+from randovania.generator.filler.action import Action, action_name
+from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint, UncollectedState, \
+    find_node_with_resource
+from randovania.generator.filler.filler_logging import debug_print_collect_event
+from randovania.generator.filler.player_state import PlayerState
+from randovania.generator.generator_reach import GeneratorReach, advance_reach_with_possible_unsafe_resources, \
+    advance_to_with_reach_copy
 from randovania.resolver import debug
 from randovania.resolver.random_lib import select_element_with_weight
-from randovania.resolver.state import State
-
-X = TypeVar("X")
 
 _RESOURCES_WEIGHT_MULTIPLIER = 1
 _INDICES_WEIGHT_MULTIPLIER = 1
@@ -40,57 +29,10 @@ _VICTORY_WEIGHT = 1000
 WeightedLocations = Dict[Tuple["PlayerState", PickupIndex], float]
 
 
-@dataclasses.dataclass(frozen=True)
-class FillerConfiguration:
-    randomization_mode: RandomizationMode
-    minimum_random_starting_items: int
-    maximum_random_starting_items: int
-    indices_to_exclude: FrozenSet[PickupIndex]
-    multi_pickup_placement: bool
-
-
-def _filter_not_in_dict(elements: Iterator[X],
-                        dictionary: Dict[X, Any],
-                        ) -> Set[X]:
-    return set(elements) - set(dictionary.keys())
-
-
-class UncollectedState(NamedTuple):
-    indices: Set[PickupIndex]
-    logbooks: Set[LogbookAsset]
-    resources: Set[ResourceNode]
-
-    @classmethod
-    def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
-        return UncollectedState(
-            _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
-            _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
-            set(collectable_resource_nodes(reach.connected_nodes, reach))
-        )
-
-    def __sub__(self, other: "UncollectedState") -> "UncollectedState":
-        return UncollectedState(
-            self.indices - other.indices,
-            self.logbooks - other.logbooks,
-            self.resources - other.resources
-        )
-
-
-def find_node_with_resource(resource: ResourceInfo,
-                            haystack: Iterator[Node],
-                            ) -> ResourceNode:
-    for node in haystack:
-        if isinstance(node, ResourceNode) and node.resource() == resource:
-            return node
-
-
 def _calculate_reach_for_progression(reach: GeneratorReach,
                                      progressions: Iterator[PickupEntry],
                                      ) -> GeneratorReach:
     return advance_to_with_reach_copy(reach, reach.state.assign_pickups_resources(progressions))
-
-
-Action = Union[ResourceNode, Tuple[PickupEntry, ...]]
 
 
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
@@ -109,188 +51,6 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
             # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
 
     return result
-
-
-def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
-    if randomization_mode is RandomizationMode.FULL:
-        yield from world.pickup_indices
-    elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        yield from world.major_pickup_indices
-    else:
-        raise RuntimeError("Unknown randomization_mode: {}".format(randomization_mode))
-
-
-def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
-                            ) -> Tuple[List[Set[PickupIndex]], Set[PickupIndex]]:
-    """
-    Groups indices into separated groups, so each group can be weighted separately.
-    """
-    indices_groups = [
-        set(world_indices_for_mode(world, configuration.randomization_mode)) - configuration.indices_to_exclude
-        for world in world_list.worlds
-    ]
-    all_indices = set().union(*indices_groups)
-
-    return indices_groups, all_indices
-
-
-def _action_name(action: Action) -> str:
-    if isinstance(action, tuple):
-        return "[{}]".format(", ".join(a.name for a in action))
-    return action.name
-
-
-class PlayerState:
-    index: int
-    game: GameDescription
-    pickups_left: List[PickupEntry]
-    configuration: FillerConfiguration
-    pickup_index_seen_count: DefaultDict[PickupIndex, int]
-    scan_asset_seen_count: DefaultDict[LogbookAsset, int]
-    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
-    _unfiltered_potential_actions: List[Action]
-    num_random_starting_items_placed: int
-    num_assigned_pickups: int
-
-    def __init__(self,
-                 index: int,
-                 game: GameDescription,
-                 initial_state: State,
-                 pickups_left: List[PickupEntry],
-                 configuration: FillerConfiguration,
-                 ):
-        self.index = index
-        self.game = game
-        self.reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
-        self.pickups_left = pickups_left
-        self.configuration = configuration
-
-        self.pickup_index_seen_count = collections.defaultdict(int)
-        self.scan_asset_seen_count = collections.defaultdict(int)
-        self.scan_asset_initial_pickups = {}
-        self.num_random_starting_items_placed = 0
-        self.num_assigned_pickups = 0
-        self.num_actions = 0
-        self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
-
-    def __repr__(self):
-        return f"Player {self.index}"
-
-    def update_for_new_state(self):
-        debug.debug_print(f"\n>>> Updating state of {self}")
-        self._advance_pickup_index_seen_count()
-        self._advance_scan_asset_seen_count()
-        self._calculate_potential_actions()
-
-    def _advance_pickup_index_seen_count(self):
-        for pickup_index in self.reach.state.collected_pickup_indices:
-            self.pickup_index_seen_count[pickup_index] += 1
-
-        print_new_resources(self.game, self.reach, self.pickup_index_seen_count, "Pickup Index")
-
-    def _advance_scan_asset_seen_count(self):
-        for scan_asset in self.reach.state.collected_scan_assets:
-            self.scan_asset_seen_count[scan_asset] += 1
-            if self.scan_asset_seen_count[scan_asset] == 1:
-                self.scan_asset_initial_pickups[scan_asset] = frozenset(self.reach.state.collected_pickup_indices)
-
-        print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
-
-    def _calculate_potential_actions(self):
-        uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(self.reach)
-        if self.configuration.multi_pickup_placement:
-            get_pickups = get_pickups_that_solves_unreachable
-        else:
-            get_pickups = get_pickups_with_interesting_resources
-        pickups = get_pickups(self.pickups_left, self.reach, uncollected_resource_nodes)
-        print_retcon_loop_start(self.game, self.pickups_left, self.reach, self.index)
-
-        self._unfiltered_potential_actions = list(pickups)
-        self._unfiltered_potential_actions.extend(uncollected_resource_nodes)
-
-    def potential_actions(self, num_available_indices: int) -> List[Action]:
-        num_available_indices += (self.configuration.maximum_random_starting_items
-                                  - self.num_random_starting_items_placed)
-        return [
-            action
-            for action in self._unfiltered_potential_actions
-            if not isinstance(action, tuple) or len(action) <= num_available_indices
-        ]
-
-    def weighted_potential_actions(self, status_update: Callable[[str], None], num_available_indices: int,
-                                   ) -> Dict[Action, float]:
-        """
-        Weights all potential actions based on current criteria.
-        :param status_update:
-        :param num_available_indices: The number of indices available for placement.
-        :return:
-        """
-        actions_weights: Dict[Action, float] = {}
-        current_uncollected = UncollectedState.from_reach(self.reach)
-
-        actions = self.potential_actions(num_available_indices)
-        options_considered = 0
-
-        def update_for_option():
-            nonlocal options_considered
-            options_considered += 1
-            status_update("Checked {} of {} options.".format(options_considered, len(actions)))
-
-        for action in actions:
-            if isinstance(action, tuple):
-                pickups = typing.cast(Tuple[PickupEntry, ...], action)
-                base_weight = _calculate_weights_for(_calculate_reach_for_progression(self.reach, pickups),
-                                                     current_uncollected)
-
-                multiplier = sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
-                offset = sum(pickup.probability_offset for pickup in pickups)
-                weight = (base_weight * multiplier + offset) / len(pickups)
-
-            else:
-                weight = _calculate_weights_for(
-                    advance_to_with_reach_copy(self.reach, self.reach.state.act_on_node(action)),
-                    current_uncollected)
-
-            actions_weights[action] = weight
-            update_for_option()
-
-        if debug.debug_level() > 1:
-            for action, weight in actions_weights.items():
-                print("({}) {} - {}".format(type(action).__name__, _action_name(action), weight))
-
-        return actions_weights
-
-    def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.reach.state.resources, self.reach.state.energy)
-
-    def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
-        self.num_assigned_pickups += 1
-        self.reach.state.patches = self.reach.state.patches.assign_new_pickups([
-            (pickup_index, target),
-        ])
-
-    def current_state_report(self) -> str:
-        state = UncollectedState.from_reach(self.reach)
-        pickups_by_name_and_quantity = collections.defaultdict(int)
-
-        _KEY_MATCH = re.compile(r"Key (\d+)")
-        for pickup in self.pickups_left:
-            pickups_by_name_and_quantity[_KEY_MATCH.sub("Key", pickup.name)] += 1
-
-        to_progress = {_KEY_MATCH.sub("Key", resource.long_name)
-                       for resource in interesting_resources_for_reach(self.reach)
-                       if resource.resource_type == ResourceType.ITEM}
-
-        return ("At {0} after {1} actions and {2} pickups, with {3} collected locations.\n\n"
-                "Pickups still available: {4}\n\nResources to progress: {5}").format(
-            self.game.world_list.node_name(self.reach.state.node, with_world=True, distinguish_dark_aether=True),
-            self.num_actions,
-            self.num_assigned_pickups,
-            len(state.indices),
-            ", ".join(name if quantity == 1 else f"{name} x{quantity}"
-                      for name, quantity in sorted(pickups_by_name_and_quantity.items())),
-            ", ".join(sorted(to_progress)),
-        )
 
 
 def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices: int) -> Optional[PlayerState]:
@@ -329,6 +89,51 @@ def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices:
         else:
             total_actions = sum(player_state.num_actions for player_state in player_states)
             raise UnableToGenerate(f"No players with possible actions after {total_actions} total actions.")
+
+
+def weighted_potential_actions(player_state: PlayerState, status_update: Callable[[str], None],
+                               num_available_indices: int) -> Dict[Action, float]:
+    """
+    Weights all potential actions based on current criteria.
+    :param player_state:
+    :param status_update:
+    :param num_available_indices: The number of indices available for placement.
+    :return:
+    """
+    actions_weights: Dict[Action, float] = {}
+    current_uncollected = UncollectedState.from_reach(player_state.reach)
+
+    actions = player_state.potential_actions(num_available_indices)
+    options_considered = 0
+
+    def update_for_option():
+        nonlocal options_considered
+        options_considered += 1
+        status_update("Checked {} of {} options.".format(options_considered, len(actions)))
+
+    for action in actions:
+        if isinstance(action, tuple):
+            pickups = typing.cast(Tuple[PickupEntry, ...], action)
+            base_weight = _calculate_weights_for(_calculate_reach_for_progression(player_state.reach, pickups),
+                                                 current_uncollected)
+
+            multiplier = sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
+            offset = sum(pickup.probability_offset for pickup in pickups)
+            weight = (base_weight * multiplier + offset) / len(pickups)
+
+        else:
+            weight = _calculate_weights_for(
+                advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
+                current_uncollected)
+
+        actions_weights[action] = weight
+        update_for_option()
+
+    if debug.debug_level() > 1:
+        for action, weight in actions_weights.items():
+            print("({}) {} - {}".format(type(action).__name__, action_name(action), weight))
+
+    return actions_weights
 
 
 def retcon_playthrough_filler(rng: Random,
@@ -371,7 +176,7 @@ def retcon_playthrough_filler(rng: Random,
         if current_player is None:
             break
 
-        weighted_actions = current_player.weighted_potential_actions(action_report, len(all_locations_weighted))
+        weighted_actions = weighted_potential_actions(current_player, action_report, len(all_locations_weighted))
         try:
             action = select_element_with_weight(weighted_actions, rng=rng)
         except StopIteration:
@@ -536,39 +341,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
     ))
 
 
-def debug_print_collect_event(action, game):
-    if debug.debug_level() > 0:
-        print("\n--> Collecting {}".format(game.world_list.node_name(action, with_world=True)))
-
-
-def print_retcon_loop_start(game: GameDescription,
-                            pickups_left: Iterator[PickupEntry],
-                            reach: GeneratorReach,
-                            player_index: int,
-                            ):
-    if debug.debug_level() > 0:
-        current_uncollected = UncollectedState.from_reach(reach)
-        if debug.debug_level() > 1:
-            extra = ", pickups_left: {}".format(sorted(set(pickup.name for pickup in pickups_left)))
-        else:
-            extra = ""
-
-        print("\n\n===============================")
-        print("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
-            player_index,
-            game.world_list.node_name(reach.state.node, with_world=True),
-            len(current_uncollected.indices),
-            len(current_uncollected.resources),
-            extra
-        ))
-
-        if debug.debug_level() > 2:
-            print("\nCurrent reach:")
-            for node in reach.nodes:
-                print("[{!s:>5}, {!s:>5}] {}".format(reach.is_reachable_node(node), reach.is_safe_node(node),
-                                                     game.world_list.node_name(node)))
-
-
 def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
                                    pickup_index: PickupIndex, hint: Optional[LogbookAsset],
                                    player_index: int, add_indices: bool) -> str:
@@ -588,17 +360,3 @@ def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: 
         f"player {player_index + 1}'s " if add_indices else "",
         f"Player {owner_index + 1}'s " if add_indices else "",
     )
-
-
-def print_new_resources(game: GameDescription,
-                        reach: GeneratorReach,
-                        seen_count: Dict[ResourceInfo, int],
-                        label: str,
-                        ):
-    world_list = game.world_list
-    if debug.debug_level() > 1:
-        for index, count in seen_count.items():
-            if count == 1:
-                node = find_node_with_resource(index, world_list.all_nodes)
-                print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
-        print("")

@@ -3,10 +3,11 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import randovania.generator.filler.player_state
 from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
-from randovania.generator.filler.retcon import FillerConfiguration
+from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import logic_bootstrap
 
@@ -33,7 +34,7 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
     configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False)
 
     # Run
-    indices_per_world, all_indices = retcon.build_available_indices(world_list, configuration)
+    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list, configuration)
 
     # Assert
     if major_mode == RandomizationMode.FULL:
