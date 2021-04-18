@@ -1,8 +1,9 @@
 import asyncio
 import datetime
 import os
+import pprint
 import subprocess
-import urllib.parse
+import typing
 
 import aiohttp
 
@@ -21,8 +22,41 @@ async def post_to_discord():
             message += line
             message += "\n"
 
-    download_base = "https://bintray.com/randovania/randovania/download_file?file_path="
-    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.7z")
+    run_id = os.environ["GITHUB_RUN_ID"]
+    org_name = "randovania"
+    repo_name = "randovania"
+
+    async with aiohttp.ClientSession() as session:
+        session.headers['Authorization'] = f"Bearer {os.environ['GITHUB_TOKEN']}"
+
+        run_details_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}"
+        print(f"> Get run details: {run_details_url}")
+        async with session.get(run_details_url, raise_for_status=True) as response:
+            run_details = await response.json()
+            pprint.pprint(run_details)
+            check_suite_id = run_details["check_suite_id"]
+
+        artifacts_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}/artifacts"
+        print(f"> Get artifact details: {artifacts_url}")
+        async with session.get(artifacts_url, raise_for_status=True) as response:
+            artifacts = await response.json()
+            pprint.pprint(artifacts)
+
+    fields = [
+        {
+            "name": typing.cast(str, artifact["name"]).replace("Executable", "").strip(),
+            "value": f"[Download](https://github.com/{org_name}/{repo_name}/suites/{check_suite_id}/artifacts/{artifact['id']})",
+            "inline": True
+        }
+        for artifact in artifacts["artifacts"]
+    ]
+    fields.append(
+        {
+            "name": "Downloads",
+            "value": f"[Link](https://github.com/{org_name}/{repo_name}/actions/runs/{run_id})",
+            "inline": True
+        }
+    )
 
     webhook_data = {
         "embeds": [{
@@ -30,13 +64,7 @@ async def post_to_discord():
             "title": f"Randovania {VERSION}",
             "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
             "description": message.strip(),
-            "fields": [
-                {
-                    "name": "Windows",
-                    "value": f"[Download]({windows_download_url})",
-                    "inline": True
-                },
-            ],
+            "fields": fields,
             "timestamp": datetime.datetime.now().isoformat()
         }]
     }
