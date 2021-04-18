@@ -50,6 +50,13 @@ async def post_to_discord():
         }
         for artifact in artifacts["artifacts"]
     ]
+    fields.append(
+        {
+            "name": "Downloads",
+            "value": f"[Link](https://github.com/{org_name}/{repo_name}/actions/runs/{run_id})",
+            "inline": True
+        }
+    )
 
     webhook_data = {
         "embeds": [{
