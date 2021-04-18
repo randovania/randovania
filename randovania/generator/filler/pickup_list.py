@@ -100,10 +100,10 @@ def _requirement_lists_without_satisfied_resources(state: State,
             for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
                 _add_items(items)
 
-    debug.debug_print("=======================")
-    for items in sorted(result):
-        debug.debug_print(f"* {items}")
-    debug.debug_print("=======================")
+    if debug.debug_level() > 2:
+        print(">> All requirement lists:")
+        for items in sorted(result):
+            print(f"* {items}")
 
     return result
 
@@ -136,7 +136,6 @@ def pickups_to_solve_list(pickup_pool: List[PickupEntry],
                 break
 
         if not individual.satisfied(resources, state.energy):
-            debug.debug_print(f"Couldn't satisfy {individual}")
             return None
 
     return pickups
@@ -161,9 +160,10 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
             # FIXME: avoid duplicates in result
             result.append(tuple(pickups))
 
-    for items in sorted(result):
-        debug.debug_print("* {}".format(", ".join(p.name for p in items)))
-    debug.debug_print("=======================")
+    if debug.debug_level() > 2:
+        print(">> All pickup combinations alternatives:")
+        for items in sorted(result):
+            print("* {}".format(", ".join(p.name for p in items)))
 
     return tuple(result)
 
