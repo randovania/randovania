@@ -113,7 +113,8 @@ jobs:
         if: ${{ matrix.executable }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.name }}
+          name: Randovania ${{ matrix.name }}
+          if-no-files-found: error
           path: |
             dist/randovania-*.zip
             dist/randovania-*.tar.gz

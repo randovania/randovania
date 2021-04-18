@@ -2,7 +2,7 @@ import asyncio
 import datetime
 import os
 import subprocess
-import urllib.parse
+import typing
 
 import aiohttp
 
@@ -21,8 +21,30 @@ async def post_to_discord():
             message += line
             message += "\n"
 
-    download_base = "https://bintray.com/randovania/randovania/download_file?file_path="
-    windows_download_url = download_base + urllib.parse.quote(f"randovania-{VERSION}-windows.7z")
+    run_id = os.environ["GITHUB_RUN_ID"]
+    org_name = "randovania"
+    repo_name = "randovania"
+
+    async with aiohttp.ClientSession() as session:
+        session.headers['Authorization'] = f"Bearer {os.environ['GITHUB_TOKEN']}"
+
+        async with session.get(f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}",
+                               raise_for_status=True) as response:
+            run_details = await response.json()
+            check_suite_id = run_details["check_suite_id"]
+
+        async with session.get(f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}/artifacts",
+                               raise_for_status=True) as response:
+            artifacts = await response.json()
+
+    fields = [
+        {
+            "name": typing.cast(str, artifact["name"]).replace("Executable", "").strip(),
+            "value": f"[Download](https://github.com/{org_name}/{repo_name}/suites/{check_suite_id}/artifacts/{artifact['id']})",
+            "inline": True
+        }
+        for artifact in artifacts["artifacts"]
+    ]
 
     webhook_data = {
         "embeds": [{
@@ -30,13 +52,7 @@ async def post_to_discord():
             "title": f"Randovania {VERSION}",
             "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
             "description": message.strip(),
-            "fields": [
-                {
-                    "name": "Windows",
-                    "value": f"[Download]({windows_download_url})",
-                    "inline": True
-                },
-            ],
+            "fields": fields,
             "timestamp": datetime.datetime.now().isoformat()
         }]
     }
