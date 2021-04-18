@@ -288,7 +288,7 @@ def fill_unassigned_hints(patches: GamePatches,
         except StopIteration:
             # If everything has weight 0, then just choose randomly.
             new_index = random_lib.random_key(pickup_indices_weight, rng)
-            
+
         del pickup_indices_weight[new_index]
 
         new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
@@ -318,10 +318,10 @@ class FillerResults:
     action_log: Tuple[str, ...]
 
 
-def run_filler(rng: Random,
-               player_pools: Dict[int, PlayerPool],
-               status_update: Callable[[str], None],
-               ) -> FillerResults:
+async def run_filler(rng: Random,
+                     player_pools: Dict[int, PlayerPool],
+                     status_update: Callable[[str], None],
+                     ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
     Returns a GamePatches with progression items and hints assigned, along with all items in the pool
