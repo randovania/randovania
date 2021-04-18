@@ -58,16 +58,17 @@ def test_unpack_iso(mock_delete_files_location: MagicMock,
     )
 
 
-@patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback",
-       autospec=False)  # TODO: pytest-qt bug
-@patch("randovania.interface_common.echoes.generate_layout", autospec=True)
-def test_generate_layout(mock_generate_layout: MagicMock,
-                         mock_constant_percentage_callback: MagicMock,
-                         ):
+def test_generate_layout(mocker):
     # Setup
     options: Options = MagicMock()
     permalink: Permalink = MagicMock()
     progress_update = MagicMock()
+
+    mock_generate_layout = mocker.patch("randovania.interface_common.echoes.generate_description", autospec=True)
+    mock_constant_percentage_callback = mocker.patch(
+        "randovania.interface_common.simplified_patcher.ConstantPercentageCallback",
+        autospec=False,  # TODO: pytest-qt bug
+    )
 
     # Run
     simplified_patcher.generate_layout(options, permalink, progress_update)
@@ -79,6 +80,7 @@ def test_generate_layout(mock_generate_layout: MagicMock,
         status_update=mock_constant_percentage_callback.return_value,
         validate_after_generation=options.advanced_validate_seed_after,
         timeout_during_generation=options.advanced_timeout_during_generation,
+        attempts=None,
     )
 
 

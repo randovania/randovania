@@ -64,6 +64,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self.window.create_choose_game_combo.setVisible(self._window_manager.is_preview_mode)
         self.window.create_choose_game_label.setVisible(self._window_manager.is_preview_mode)
         self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
+        self.window.create_generate_no_retry_button.setVisible(self._window_manager.is_preview_mode)
 
         # Menu
         self._tool_button_menu = QMenu(window.preset_tool_button)
@@ -86,6 +87,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         window.preset_tool_button.clicked.connect(self._on_customize_button)
         window.create_preset_combo.activated.connect(self._on_select_preset)
         window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
+        window.create_generate_no_retry_button.clicked.connect(partial(self._generate_new_seed, True, retries=0))
         window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
 
         self._action_delete.triggered.connect(self._on_delete_preset)
@@ -207,7 +209,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
     # Generate seed
 
-    def _generate_new_seed(self, spoiler: bool):
+    def _generate_new_seed(self, spoiler: bool, retries: Optional[int] = None):
         preset = self._current_preset_data
         num_players = self.window.num_players_spin_box.value()
 
@@ -218,14 +220,15 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                 i: preset.get_preset()
                 for i in range(num_players)
             },
-        ))
+        ), retries=retries)
 
-    def generate_seed_from_permalink(self, permalink: Permalink):
+    def generate_seed_from_permalink(self, permalink: Permalink, retries: Optional[int] = None):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 layout = simplified_patcher.generate_layout(progress_update=progress_update,
                                                             permalink=permalink,
-                                                            options=self._options)
+                                                            options=self._options,
+                                                            retries=retries)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
                 persist_layout(self._options.data_dir, layout)
                 self._window_manager.open_game_details(layout)
