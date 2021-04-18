@@ -177,4 +177,5 @@ jobs:
       - name: Discord Notifications
         run: python tools/post_discord_webhook.py
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
