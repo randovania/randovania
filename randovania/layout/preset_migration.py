@@ -224,6 +224,8 @@ def _migrate_v8(preset: dict) -> dict:
         area = world.area_by_name(area_name)
         return AreaLocation(world.world_asset_id, area.area_asset_id)
 
+    preset["configuration"]["multi_pickup_placement"] = False
+
     if "energy_per_tank" in preset["configuration"]:
         preset["configuration"]["energy_per_tank"] = int(preset["configuration"]["energy_per_tank"])
 

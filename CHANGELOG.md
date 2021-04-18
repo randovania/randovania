@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
 
+-   Added: An option to use an experimental new pickup placement logic, able to place multiple pickups at once.
+
 -   Added: One additional joke hint. (Thanks CZeke)
 
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.

@@ -31,6 +31,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     damage_strictness: LayoutDamageStrictness
     pickup_model_style: PickupModelStyle
     pickup_model_data_source: PickupModelDataSource
+    multi_pickup_placement: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -56,5 +57,8 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             f = getattr(self, field.name)
             if hasattr(f, "dangerous_settings"):
                 result.extend(f.dangerous_settings())
+
+        if self.multi_pickup_placement:
+            result.append("Multi-pickup placement enabled")
 
         return result

@@ -8,7 +8,6 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
@@ -419,12 +418,15 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
         format_params.update(params)
 
     elif preset.game == RandovaniaGame.PRIME3:
-        template_strings = _CORRUPTION_TEMPLATE_STRINGS
+        template_strings = copy.deepcopy(_CORRUPTION_TEMPLATE_STRINGS)
         format_params.update(_corruption_format_params(configuration))
 
     elif preset.game == RandovaniaGame.PRIME1:
-        template_strings = _PRIME_TEMPLATE_STRINGS
+        template_strings = copy.deepcopy(_PRIME_TEMPLATE_STRINGS)
         format_params.update(_prime_format_params(configuration))
+
+    if configuration.multi_pickup_placement:
+        template_strings["Item Placement"].append("Multi-pickup placement")
 
     for category, templates in template_strings.items():
         yield category, [

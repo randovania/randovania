@@ -21,7 +21,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
@@ -63,6 +63,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
+        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
         self._register_random_starting_events()
         self._create_categories_boxes(item_database, size_policy)
         self._create_customizable_default_items(item_database)
@@ -89,6 +90,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         for split_ammo in self._split_ammo_widgets:
             split_ammo.on_preset_changed(preset, self._ammo_pickup_widgets)
+
+        # General
+        self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -191,6 +195,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
+
+    # General
+
+    def _persist_multi_pickup_placement(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("multi_pickup_placement", value)
 
     # Item Alternatives
 

@@ -335,7 +335,10 @@ def run_filler(rng: Random,
 
     for index, pool in player_pools.items():
         status_update(f"Creating state for player {index + 1}")
-        major_items, player_expansions[index] = _split_expansions(pool.pickups)
+        if pool.configuration.multi_pickup_placement:
+            major_items, player_expansions[index] = list(pool.pickups), []
+        else:
+            major_items, player_expansions[index] = _split_expansions(pool.pickups)
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
 
@@ -352,6 +355,7 @@ def run_filler(rng: Random,
                 minimum_random_starting_items=major_configuration.minimum_random_starting_items,
                 maximum_random_starting_items=major_configuration.maximum_random_starting_items,
                 indices_to_exclude=pool.configuration.available_locations.excluded_indices,
+                multi_pickup_placement=pool.configuration.multi_pickup_placement,
             ),
         ))
 
