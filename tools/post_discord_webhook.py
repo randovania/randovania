@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 import os
+import pprint
 import subprocess
 import typing
 
@@ -28,14 +29,18 @@ async def post_to_discord():
     async with aiohttp.ClientSession() as session:
         session.headers['Authorization'] = f"Bearer {os.environ['GITHUB_TOKEN']}"
 
-        async with session.get(f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}",
-                               raise_for_status=True) as response:
+        run_details_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}"
+        print(f"> Get run details: {run_details_url}")
+        async with session.get(run_details_url, raise_for_status=True) as response:
             run_details = await response.json()
+            pprint.pprint(run_details)
             check_suite_id = run_details["check_suite_id"]
 
-        async with session.get(f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}/artifacts",
-                               raise_for_status=True) as response:
+        artifacts_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}/artifacts"
+        print(f"> Get artifact details: {artifacts_url}")
+        async with session.get(artifacts_url, raise_for_status=True) as response:
             artifacts = await response.json()
+            pprint.pprint(artifacts)
 
     fields = [
         {
