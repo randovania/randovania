@@ -337,7 +337,7 @@ def run_filler(rng: Random,
 
     for index, pool in player_pools.items():
         status_update(f"Creating state for player {index + 1}")
-        if pool.configuration.multi_pickup_placement:
+        if pool.configuration.multi_pickup_placement and False:
             major_items, player_expansions[index] = list(pool.pickups), []
         else:
             major_items, player_expansions[index] = _split_expansions(pool.pickups)
