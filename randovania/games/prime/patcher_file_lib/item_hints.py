@@ -43,6 +43,7 @@ _JOKE_HINTS = [
     "Movement in Morph Ball mode is faster than unmorphed, even without Boost Ball.",
     "While walking, holding L makes you move faster.",
     "I wonder how many players will see this message...?",
+    "We've been trying to contact you about your ship's extended warranty.",
 ]
 
 _DET_AN = [
