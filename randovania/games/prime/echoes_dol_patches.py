@@ -379,3 +379,15 @@ def apply_teleporter_sounds(version: EchoesDolVersion, dol_file: DolFile, enable
     dol_file.write_instructions("CWorldTransManager::SfxStart", [
         inst
     ])
+
+
+def freeze_player():
+    return [
+        lfs(f1, -0x707c, r2),  # timeout = 5.0f
+        lwz(r3, 0x14fc, r31),  # player = manager->players[0]
+        lhz(r6, -0x40da, r2),  # sfxId = kInvalidSoundId
+        or_(r4, r31, r31),  # mgr
+        li(r5, -0x1),  # steamTextureId
+        li(r7, -0x1),  # iceTextureId
+        bl("CPlayer::Freeze"),
+    ]

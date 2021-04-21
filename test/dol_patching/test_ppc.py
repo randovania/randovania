@@ -58,6 +58,10 @@ def test_lwzx():
     assert _b(ppc.lwzx(ppc.r0, ppc.r4, ppc.r0)) == [0x7c, 0x04, 0x00, 0x2e]
 
 
+def test_lhz():
+    assert _b(ppc.lhz(ppc.r6, -0x40da, ppc.r2)) == [0xa0, 0xc2, 0xbf, 0x26]
+
+
 def test_lbz():
     assert _b(ppc.lbz(ppc.r4, 0x2, ppc.r3)) == [0x88, 0x83, 0x00, 0x02]
 
