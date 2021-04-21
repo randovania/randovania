@@ -50,6 +50,7 @@ class PlayerState:
 
         self.pickup_index_seen_count = collections.defaultdict(int)
         self.scan_asset_seen_count = collections.defaultdict(int)
+        self.event_seen_count = collections.defaultdict(int)
         self.scan_asset_initial_pickups = {}
         self.num_random_starting_items_placed = 0
         self.num_assigned_pickups = 0
@@ -63,6 +64,7 @@ class PlayerState:
         debug.debug_print(f"\n>>> Updating state of {self}")
         self._advance_pickup_index_seen_count()
         self._advance_scan_asset_seen_count()
+        self._advance_event_seen_count()
         self._calculate_potential_actions()
 
     def _advance_pickup_index_seen_count(self):
@@ -78,6 +80,13 @@ class PlayerState:
                 self.scan_asset_initial_pickups[scan_asset] = frozenset(self.reach.state.collected_pickup_indices)
 
         print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
+
+    def _advance_event_seen_count(self):
+        for resource, quantity in self.reach.state.resources.items():
+            if resource.resource_type == ResourceType.EVENT and quantity > 0:
+                self.event_seen_count[resource] += 1
+
+        print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
 
     def _calculate_potential_actions(self):
         uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(self.reach)

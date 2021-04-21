@@ -131,7 +131,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
     if debug.debug_level() > 1:
         for action, weight in actions_weights.items():
-            print("({}) {} - {}".format(type(action).__name__, action_name(action), weight))
+            print("{} - {}".format(action_name(action), weight))
 
     return actions_weights
 

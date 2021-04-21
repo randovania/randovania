@@ -22,11 +22,11 @@ def print_retcon_loop_start(game: GameDescription,
     if debug.debug_level() > 0:
         current_uncollected = UncollectedState.from_reach(reach)
         if debug.debug_level() > 1:
-            extra = ", pickups_left: {}".format(sorted(set(pickup.name for pickup in pickups_left)))
+            extra = ", pickups_left:\n{}".format(sorted(set(pickup.name for pickup in pickups_left)))
         else:
             extra = ""
 
-        print("\n\n===============================")
+        print("\n===============================")
         print("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
             player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
@@ -53,4 +53,3 @@ def print_new_resources(game: GameDescription,
             if count == 1:
                 node = find_node_with_resource(index, world_list.all_nodes)
                 print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
-        print("")
