@@ -185,6 +185,16 @@ def lwzx(output_register: GeneralRegister, input_register_a: GeneralRegister, in
                                 ))
 
 
+def lhz(output_register: GeneralRegister, offset: int, input_register: GeneralRegister):
+    """
+    *(output_register + offset) = input_register
+    """
+    return Instruction.compose(((40, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (offset, 16, True)))
+
+
 def lbz(output_register: GeneralRegister, offset: int, input_register: GeneralRegister):
     """
     *(output_register + offset) = input_register
