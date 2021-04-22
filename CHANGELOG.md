@@ -65,6 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of activating the portal in Portal Terminal with Screw Attack, Slope Jump, and No Bombs or Space Jump (Expert and above).
 
+-   Added: Method of climbing Sacred Bridge with Bombs and a Bomb Space Jump (Advanced and above).
+
 -   Changed: Logic paths that require Screw Attack without Space Jump now make sure to not have Space Jump to be valid.
 
 ## [2.5.2] - 2021-02-28
