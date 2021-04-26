@@ -260,6 +260,10 @@ def apply_patcher_file(game_root: Path,
                            f"which is above supported version {CURRENT_PATCH_VERSION}. "
                            f"\nPlease press 'Delete internal copy'.")
 
+    # dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items,
+    #                           unvisited_room_names, teleporter_sounds)
+    # return
+
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     if backup_files_path is not None:
         _create_pak_backups(game_root, backup_files_path, status_update)

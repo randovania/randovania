@@ -222,9 +222,9 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                             progress_update=updaters[-2])
 
             # Pack ISO
-            simplified_patcher.pack_iso(output_iso=output_file,
-                                        options=options,
-                                        progress_update=updaters[-1])
+            # simplified_patcher.pack_iso(output_iso=output_file,
+            #                             options=options,
+            #                             progress_update=updaters[-1])
             if has_spoiler and auto_save_spoiler:
                 layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 
