@@ -53,8 +53,8 @@ def migrate_description(json_dict: dict) -> dict:
         version += 1
 
     if version == 3:
-        for game in json_dict["game_modifications"]:
-            game["elevators"].pop("Sky Temple/Sky Temple Energy Controller", None)
+        # Used to remove the sanc EC elevator, but changed in development
+        pass
 
     json_dict["schema_version"] = version
     return json_dict

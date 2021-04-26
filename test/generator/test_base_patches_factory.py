@@ -64,6 +64,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data,
                                        2097251: AreaLocation(1119434212, 3331021649),
                                        136970379: (AreaLocation(1006255871, 1393588666)
                                                    if skip_final_bosses else AreaLocation(2252328306, 2068511343)),
+                                       589949: AreaLocation(0x3BFA3EFF, 0x87D35EE4),
                                        3342446: AreaLocation(1039999561, 3205424168),
                                        3538975: AreaLocation(1119434212, 2806956034),
                                        152: AreaLocation(1006255871, 2889020216),

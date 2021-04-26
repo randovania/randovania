@@ -14,7 +14,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock
+from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -83,7 +83,7 @@ def test_create_elevators_field_no_elevator(empty_patches):
         patcher_file._create_elevators_field(empty_patches, game)
 
     # Assert
-    assert str(exp.value) == "Invalid elevator count. Expected 21, got 0."
+    assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
 
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
@@ -157,6 +157,11 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
          "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2399252740},
          "target_location": {"world_asset_id": 1006255871, "area_asset_id": 1287880522},
          "room_name": "Transport to Agon Quadrant"},
+
+        {'instance_id': 589949,
+         'origin_location': {'area_asset_id': 2068511343, 'world_asset_id': 2252328306},
+         'target_location': {'area_asset_id': 2278776548, 'world_asset_id': 1006255871},
+         'room_name': 'Sky Temple Energy Controller'},
 
         {"instance_id": 122,
          "origin_location": {"world_asset_id": 1119434212, "area_asset_id": 1473133138},
@@ -897,7 +902,7 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["pickups"]) == 119
 
     assert isinstance(result["elevators"], list)
-    assert len(result["elevators"]) == 21
+    assert len(result["elevators"]) == 22
 
     assert isinstance(result["translator_gates"], list)
     assert len(result["translator_gates"]) == 17
