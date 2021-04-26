@@ -621,20 +621,25 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             origin_check = self._elevator_source_for_location[origin]
             dest_check = self._elevator_source_for_location.get(destination)
 
-            origin_check.setEnabled(not config.elevators.is_vanilla and origin not in static_areas)
-            origin_check.setChecked(origin not in config.elevators.excluded_teleporters.locations)
+            is_locked = origin in static_areas
+            if not can_shuffle_target:
+                is_locked = is_locked or destination in static_areas
+
+            origin_check.setEnabled(not config.elevators.is_vanilla and not is_locked)
+            origin_check.setChecked(origin not in config.elevators.excluded_teleporters.locations and not is_locked)
 
             origin_check.setToolTip("The destination for this teleporter is locked due to other settings."
-                                    if origin in static_areas else "")
+                                    if is_locked else "")
 
             if dest_check is None:
                 if not can_shuffle_target:
                     origin_check.setEnabled(False)
                 continue
 
-            dest_check.setEnabled(can_shuffle_target)
+            dest_check.setEnabled(can_shuffle_target and destination not in static_areas)
             if can_shuffle_target:
-                dest_check.setChecked(destination not in config.elevators.excluded_teleporters.locations)
+                dest_check.setChecked(destination not in config.elevators.excluded_teleporters.locations
+                                      and destination not in static_areas)
             else:
                 dest_check.setChecked(origin_check.isChecked())
 
