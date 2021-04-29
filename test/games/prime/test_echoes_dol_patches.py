@@ -1,8 +1,52 @@
 import pytest
 
-from randovania.games.prime import echoes_dol_patches
+from randovania.dol_patching.dol_file import DolHeader, Section
+from randovania.games.prime import echoes_dol_patches, echoes_dol_versions
 from randovania.games.prime.echoes_dol_patches import StartingBeamVisorAddresses
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+
+DOLS = [
+    (DolHeader(sections=(Section(offset=256, base_address=2147496192, size=1344),
+                         Section(offset=1600, base_address=2147498048, size=3808352),
+                         Section(offset=3969024, base_address=2147491840, size=352),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=3809952, base_address=2147497536, size=288),
+                         Section(offset=3810240, base_address=2147497824, size=224),
+                         Section(offset=3810464, base_address=2151306400, size=512),
+                         Section(offset=3810976, base_address=2151306912, size=32),
+                         Section(offset=3811008, base_address=2151306944, size=46400),
+                         Section(offset=3857408, base_address=2151353344, size=85536),
+                         Section(offset=3942944, base_address=2151775616, size=4384),
+                         Section(offset=3947328, base_address=2151785408, size=21696),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0)),
+               bss_address=2151438880, bss_size=368356, entry_point=2147496588),
+     echoes_dol_versions.ALL_VERSIONS[0]),
+    (DolHeader(sections=(Section(offset=256, base_address=2147496192, size=1344),
+                         Section(offset=1600, base_address=2147498048, size=3809312),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=3810912, base_address=2147497536, size=288),
+                         Section(offset=3811200, base_address=2147497824, size=224),
+                         Section(offset=3811424, base_address=2151307360, size=512),
+                         Section(offset=3811936, base_address=2151307872, size=32),
+                         Section(offset=3811968, base_address=2151307904, size=50432),
+                         Section(offset=3862400, base_address=2151358336, size=85184),
+                         Section(offset=3947584, base_address=2151780448, size=4384),
+                         Section(offset=3951968, base_address=2151790272, size=21664),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0),
+                         Section(offset=0, base_address=0, size=0)),
+               bss_address=2151443520, bss_size=368548, entry_point=2147496588),
+     echoes_dol_versions.ALL_VERSIONS[1]),
+]
 
 
 def test_apply_game_options_patch(dol_file):
@@ -205,3 +249,35 @@ def test_apply_safe_zone_heal_patch(dol_file, echoes_game_description):
                 )
 
     assert results == expected
+
+
+@pytest.mark.parametrize(["header", "version"], DOLS)
+def test_apply_fixes(dol_file, header, version):
+    dol_file.header = header
+
+    # Run
+    dol_file.set_editable(True)
+    with dol_file:
+        echoes_dol_patches.apply_fixes(version, dol_file)
+
+
+@pytest.mark.parametrize(["header", "version"], DOLS)
+@pytest.mark.parametrize("enabled", [False, True])
+def test_apply_unvisited_room_names(dol_file, header, version, enabled):
+    dol_file.header = header
+
+    # Run
+    dol_file.set_editable(True)
+    with dol_file:
+        echoes_dol_patches.apply_unvisited_room_names(version, dol_file, enabled)
+
+
+@pytest.mark.parametrize(["header", "version"], DOLS)
+@pytest.mark.parametrize("enabled", [False, True])
+def test_apply_teleporter_sounds(dol_file, header, version, enabled):
+    dol_file.header = header
+
+    # Run
+    dol_file.set_editable(True)
+    with dol_file:
+        echoes_dol_patches.apply_teleporter_sounds(version, dol_file, enabled)
