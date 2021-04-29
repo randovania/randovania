@@ -1,10 +1,10 @@
 from typing import List, NamedTuple, Dict
 
+from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.search import find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
@@ -40,10 +40,13 @@ class ResourceDatabase(NamedTuple):
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               index: int) -> ResourceInfo:
-        return find_resource_info_with_id(self.get_by_type(resource_type), index, resource_type)
+        return search.find_resource_info_with_id(self.get_by_type(resource_type), index, resource_type)
 
     def get_item(self, index: int) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, index)
+
+    def get_item_by_name(self, name: str) -> ItemResourceInfo:
+        return search.find_resource_info_with_long_name(self.item, name)
 
     @property
     def item_percentage(self) -> ItemResourceInfo:
