@@ -6,7 +6,9 @@ from typing import List
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
+from randovania.game_description import default_database
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
@@ -345,9 +347,12 @@ class EchoesDolVersion(BasePrimeDolVersion):
     rs_debugger_printf_loop_address: int
     unvisited_room_names_address: int
     cworldtransmanager_sfxstart: int
+    powerup_should_persist: int
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
+    resource_database = default_database.game_description_for(RandovaniaGame.PRIME2).resource_database
+
     dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
 
     dol_file.write_instructions("CMapWorldInfo::IsAnythingSet", [
@@ -358,6 +363,10 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
     dol_file.write_instructions(version.rs_debugger_printf_loop_address, [
         nop(),
     ])
+
+    for item in ["Double Damage", "Unlimited Missiles", "Unlimited Beam Ammo"]:
+        index = resource_database.get_item_by_name(item).index
+        dol_file.write(version.powerup_should_persist + index, b"\x01")
 
 
 def apply_unvisited_room_names(version: EchoesDolVersion, dol_file: DolFile, enabled: bool):

@@ -61,6 +61,7 @@ ALL_VERSIONS = [
         rs_debugger_printf_loop_address=0x8028c604,
         unvisited_room_names_address=0x8008b714,
         cworldtransmanager_sfxstart=0x80158e50,
+        powerup_should_persist=0x803a743c,
     ),
     EchoesDolVersion(
         game=RandovaniaGame.PRIME2,
@@ -118,5 +119,6 @@ ALL_VERSIONS = [
         rs_debugger_printf_loop_address=0x8028ca0c,
         unvisited_room_names_address=0x8008b850,
         cworldtransmanager_sfxstart=0x801590a4,
+        powerup_should_persist=0x803a7b94,
     ),
 ]
