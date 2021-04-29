@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Two additional joke hint. (Thanks CZeke and Geoffistopheles)
 
+-   Added: It's now possible to add Infinite Beam Ammo, Infinite Missiles and Double Damage to the item pool.
+
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
     
 -   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
