@@ -31,7 +31,7 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00\x00', "replace": {}},
-        {"encoded": b'\x05\t\x00\x00\x00', "replace": {
+        {"encoded": b'\x05)\x00\x00\x00', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
