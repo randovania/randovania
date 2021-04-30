@@ -64,8 +64,8 @@ def _create_weighted_list(rng: Random,
 
 def precision_pair_weighted_list() -> List[PrecisionPair]:
     tiers = {
-        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False, False): 3,
-        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False, True): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
         (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
         (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
 
