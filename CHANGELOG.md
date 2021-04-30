@@ -71,6 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Logic paths that require Screw Attack without Space Jump now make sure to not have Space Jump to be valid.
 
+-   Fixed: Spawn point of Aerie Transport Station is now the door, making DS2 required to take the elevator there.
+
 ## [2.5.2] - 2021-02-28
 
 -   Added: The number of items in the pool is now included in the summary.
