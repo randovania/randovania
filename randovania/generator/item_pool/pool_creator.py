@@ -21,7 +21,7 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     add_resources_into_another(base_results.initial_resources, extension.initial_resources)
 
 
-def calculate_pool_results(layout_configuration: EchoesConfiguration,
+def calculate_pool_results(layout_configuration: BaseConfiguration,
                            resource_database: ResourceDatabase,
                            ) -> PoolResults:
     """
