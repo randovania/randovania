@@ -130,8 +130,8 @@ def _make_pickup(item_category: ItemCategory):
 def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision):
     # Setup
     rng = Random(5000)
-    target_precision = MagicMock()
-    precision = MagicMock()
+    target_precision = MagicMock(spec=HintItemPrecision)
+    precision = MagicMock(spec=HintItemPrecision)
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(8): PickupTarget(_make_pickup(ItemCategory.MOVEMENT), 0),
     })

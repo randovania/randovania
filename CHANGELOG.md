@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Improve scan text for expansions.
 
+-   Changed: Some hints in multiworld games now also include the player names.
+
 -   Changed: Missiles, Power Bombs and Ship Missiles are now only in logic after their respective main launcher, even if it's not required in game. 
 
 -   Changed: You can add up to 99 of any expansion to the pool, up from 64.
