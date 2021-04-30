@@ -99,14 +99,14 @@ def _distribute_remaining_items(rng: Random,
     all_remaining_pickups = []
     assignments: Dict[int, PickupAssignment] = {}
 
-    for index, filler_result in filler_results.items():
+    for player, filler_result in filler_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.all_nodes,
                                                           filler_result.patches.pickup_assignment):
-            unassigned_pickup_nodes.append((index, pickup_node))
+            unassigned_pickup_nodes.append((player, pickup_node))
 
-        all_remaining_pickups.extend(zip([index] * len(filler_result.unassigned_pickups),
+        all_remaining_pickups.extend(zip([player] * len(filler_result.unassigned_pickups),
                                          filler_result.unassigned_pickups))
-        assignments[index] = {}
+        assignments[player] = {}
 
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
