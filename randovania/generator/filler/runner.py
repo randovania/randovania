@@ -64,17 +64,18 @@ def _create_weighted_list(rng: Random,
 
 def precision_pair_weighted_list() -> List[PrecisionPair]:
     tiers = {
-        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED): 5,
-        (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY): 2,
-        (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY): 1,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
 
-        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED): 2,
-        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED, False): 2,
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
     }
 
     hints = []
     for params, quantity in tiers.items():
-        hints.extend([PrecisionPair(*params, include_owner=False)] * quantity)
+        hints.extend([PrecisionPair(*params)] * quantity)
 
     return hints
 
