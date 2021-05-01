@@ -120,11 +120,8 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
     else:
         raise ValueError(f"Unknown precision: {precision}")
 
-    if include_owner and len(players_config.player_names) > 1:
-        determiner = Determiner(
-            "{}'s ".format(hint_lib.color_text(hint_lib.TextColor.PLAYER, players_config.player_names[target.player])),
-            False
-        )
+    if include_owner and players_config.is_multiworld:
+        determiner = hint_lib.player_determiner(players_config, target.player)
     else:
         determiner = Determiner(details[0], True)
 

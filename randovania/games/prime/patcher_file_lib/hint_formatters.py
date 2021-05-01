@@ -33,10 +33,10 @@ class TemplatedFormatter(LocationFormatter):
         self.hint_name_creator = area_namer
 
     def format(self, determiner: hint_lib.Determiner, pickup: str, hint: Hint) -> str:
-        node_name = hint_lib.color_text(hint_lib.TextColor.LOCATION, self.hint_name_creator.index_node_name(
+        node_name = self.hint_name_creator.location_name(
             hint.target,
             hint.precision.location == HintLocationPrecision.WORLD_ONLY
-        ))
+        )
         return self.template.format(determiner=determiner,
                                     pickup=pickup,
                                     node=node_name)
