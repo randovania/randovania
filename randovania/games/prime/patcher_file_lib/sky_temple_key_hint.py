@@ -4,8 +4,9 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
-    color_text, TextColor
+from randovania.games.prime.patcher_file_lib import hint_lib
+from randovania.games.prime.patcher_file_lib.hint_lib import create_simple_logbook_hint
+from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
@@ -22,7 +23,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 
 def _sky_temple_key_name(key_number: int) -> str:
-    return color_text(TextColor.ITEM, f"Sky Temple Key {key_number}")
+    return hint_lib.color_text(hint_lib.TextColor.ITEM, f"Sky Temple Key {key_number}")
 
 
 def create_hints(all_patches: Dict[int, GamePatches],
@@ -63,10 +64,10 @@ def create_hints(all_patches: Dict[int, GamePatches],
 
                 sky_temple_key_hints[resource.index] = "{} is located in {}{}.".format(
                     _sky_temple_key_name(key_number),
-                    color_text(TextColor.LOCATION, player_name) if len(all_patches) > 1 else "",
-                    color_text(TextColor.LOCATION,
-                               location_hint_creator.index_node_name(pickup_index, hide_area),
-                               ),
+                    hint_lib.color_text(hint_lib.TextColor.LOCATION, player_name) if len(all_patches) > 1 else "",
+                    hint_lib.color_text(hint_lib.TextColor.LOCATION,
+                                        location_hint_creator.index_node_name(pickup_index, hide_area),
+                                        ),
                 )
 
     for starting_resource, quantity in all_patches[players_config.player_index].starting_items.items():
