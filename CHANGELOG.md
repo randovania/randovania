@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * New mode: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
     * Select which elevators can be randomized.
     * Select possible destinations for *One-way, anywhere*.
-    * Randomize Sky Temple Gateway, Aerie Transport Station and Aerie elevators.
+    * Randomize Sky Temple Gateway, Sky Temple Energy Controller, Aerie Transport Station and Aerie elevators. *Warning*: These rooms have some details you must consider. Please read the elevators tab for more information.
 
 -   **Major** - Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
 
