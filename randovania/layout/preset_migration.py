@@ -243,6 +243,11 @@ def _migrate_v8(preset: dict) -> dict:
                 "instance_id": 204865660
             },
             {
+                "world_asset_id": 2252328306,
+                "area_asset_id": 2068511343,
+                "instance_id": 589949
+            },
+            {
                 "world_asset_id": 464164546,
                 "area_asset_id": 1564082177,
                 "instance_id": 4260106
@@ -251,7 +256,7 @@ def _migrate_v8(preset: dict) -> dict:
                 "world_asset_id": 1006255871,
                 "area_asset_id": 2278776548,
                 "instance_id": 136970379
-            }
+            },
         ]
 
     preset["configuration"]["elevators"] = {
