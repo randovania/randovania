@@ -4,6 +4,7 @@ from typing import Dict
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class TextColor(Enum):
@@ -38,8 +39,11 @@ class AreaNamer:
             if isinstance(node, PickupNode)
         }
 
-    def index_node_name(self, pickup_index: PickupIndex, hide_area: bool) -> str:
-        return self.node_name(self.index_to_node[pickup_index], hide_area)
+    def location_name(self, pickup_index: PickupIndex, hide_area: bool) -> str:
+        return color_text(
+            TextColor.LOCATION,
+            self.node_name(self.index_to_node[pickup_index], hide_area)
+        )
 
     def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
         if hide_area:
@@ -65,3 +69,10 @@ class Determiner:
             return self.s.title()
         else:
             return self.s
+
+
+def player_determiner(players_config: PlayersConfiguration, player: int) -> Determiner:
+    return Determiner(
+        "{}'s ".format(color_text(TextColor.PLAYER, players_config.player_names[player])),
+        False
+    )
