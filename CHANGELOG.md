@@ -57,6 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Fixed the game defaulting to Combat Visor after an elevator.
 
+-   Fixed: Multiworld spoiler logs now use 1-indexed player names for locations.
+
 -   Removed: Using Dark Visor as the starting visor is no longer supported. (Game crashes on unmorph for unknown reasons)
 
 ### Logic Database Changes

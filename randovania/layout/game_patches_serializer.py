@@ -38,7 +38,7 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
             if num_players > 1:
-                item_name = f"{target.pickup.name} for Player {target.player}"
+                item_name = f"{target.pickup.name} for Player {target.player + 1}"
             else:
                 item_name = f"{target.pickup.name}"
         else:
@@ -212,7 +212,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
             pickup_name_match = target_name_re.match(target_name)
             if pickup_name_match is not None:
                 pickup_name = pickup_name_match.group(1)
-                target_player = int(pickup_name_match.group(2))
+                target_player = int(pickup_name_match.group(2)) - 1
             else:
                 pickup_name = target_name
                 target_player = 0
