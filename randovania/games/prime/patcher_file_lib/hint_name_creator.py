@@ -1,37 +1,25 @@
-from enum import Enum
 from random import Random
 from typing import Dict, List
 
-from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import HintType, Hint, HintLocationPrecision
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime.patcher_file_lib import hint_lib
+from randovania.games.prime.patcher_file_lib.hint_formatters import LocationFormatter
+from randovania.games.prime.patcher_file_lib.hint_lib import AreaNamer
+from randovania.games.prime.patcher_file_lib.item_hints import create_pickup_hint
+from randovania.games.prime.patcher_file_lib.temple_key_hint import create_temple_key_hint
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-class LocationHintCreator:
-    world_list: WorldList
+class LocationHintCreator(AreaNamer):
     joke_hints: List[str]
-    index_to_node: Dict[PickupIndex, PickupNode]
 
     def __init__(self, world_list: WorldList, rng: Random, base_joke_hints: List[str]):
-        self.world_list = world_list
+        super().__init__(world_list)
         self.rng = rng
         self.base_joke_hints = base_joke_hints
         self.joke_hints = []
-
-        self.index_to_node = {
-            node.pickup_index: node
-            for node in world_list.all_nodes
-            if isinstance(node, PickupNode)
-        }
-
-    def index_node_name(self, pickup_index: PickupIndex, hide_area: bool) -> str:
-        return self.node_name(self.index_to_node[pickup_index], hide_area)
-
-    def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
-        if hide_area:
-            return self.world_list.world_name_from_node(pickup_node, True)
-        else:
-            return self.world_list.area_name(self.world_list.nodes_to_area(pickup_node))
 
     def create_joke_hint(self) -> str:
         if not self.joke_hints:
@@ -39,20 +27,30 @@ class LocationHintCreator:
             self.rng.shuffle(self.joke_hints)
         return self.joke_hints.pop()
 
+    def create_message_for_hint(self, hint: Hint,
+                                all_patches: Dict[int, GamePatches],
+                                players_config: PlayersConfiguration,
+                                location_formatters: Dict[HintLocationPrecision, LocationFormatter],
+                                ) -> str:
+        if hint.hint_type == HintType.JOKE:
+            return hint_lib.color_text(hint_lib.TextColor.JOKE, self.create_joke_hint())
 
-class TextColor(Enum):
-    GUARDIAN = "#FF3333"
-    ITEM = "#FF6705B3"
-    JOKE = "#45F731"
-    LOCATION = "#FF3333"
+        elif hint.hint_type == HintType.RED_TEMPLE_KEY_SET:
+            return create_temple_key_hint(all_patches, players_config.player_index, hint.dark_temple, self.world_list)
 
+        else:
+            assert hint.hint_type == HintType.LOCATION
+            patches = all_patches[players_config.player_index]
+            pickup_target = patches.pickup_assignment.get(hint.target)
+            determiner, pickup_name = create_pickup_hint(patches.pickup_assignment,
+                                                         self.world_list,
+                                                         hint.precision.item,
+                                                         pickup_target,
+                                                         players_config,
+                                                         hint.precision.include_owner)
 
-def color_text(color: TextColor, text: str):
-    return f"&push;&main-color={color.value};{text}&pop;"
-
-
-def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
-    return {
-        "asset_id": asset_id,
-        "strings": [hint, "", hint],
-    }
+            return location_formatters[hint.precision.location].format(
+                determiner,
+                hint_lib.color_text(hint_lib.TextColor.ITEM, pickup_name),
+                hint,
+            )

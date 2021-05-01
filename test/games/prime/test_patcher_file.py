@@ -833,7 +833,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
 @patch("randovania.games.prime.patcher_file._logbook_title_string_patches", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.item_hints.create_hints", autospec=True)
+@patch("randovania.games.prime.patcher_file_lib.hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
 def test_create_string_patches(mock_stk_create_hints: MagicMock,

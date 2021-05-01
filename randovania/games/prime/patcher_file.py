@@ -2,6 +2,7 @@ from random import Random
 from typing import Dict, List, Iterator
 
 import randovania
+import randovania.games.prime.patcher_file_lib.hints
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
@@ -607,7 +608,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        item_hints.create_hints(all_patches, players_config, game.world_list, rng)
+        randovania.games.prime.patcher_file_lib.hints.create_hints(all_patches, players_config, game.world_list, rng)
     )
 
     # Sky Temple Keys

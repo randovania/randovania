@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import randovania.games.prime.patcher_file_lib.hints
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
@@ -10,14 +11,14 @@ from randovania.game_description.hint import Hint, HintType, HintLocationPrecisi
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib import item_hints
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
-from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter, RelativeAreaFormatter
+from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter
+from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -73,7 +74,7 @@ def test_create_hints_nothing(empty_patches, players_config):
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = ("The &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
@@ -96,7 +97,7 @@ def test_create_hints_item_joke(empty_patches, players_config, pickup):
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     joke = "While walking, holding L makes you move faster."
@@ -119,6 +120,7 @@ def test_create_hints_item_joke(empty_patches, players_config, pickup):
 def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoes_game_description, pickup,
                                             indices, expected_message):
     # Setup
+    hint_name_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
     db = echoes_game_description.resource_database
     keys = [
         (
@@ -140,8 +142,7 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
     hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
 
     # Run
-    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config, None, {},
-                                                echoes_game_description.world_list)
+    result = hint_name_creator.create_message_for_hint(hint, {0: patches}, players_config, {})
 
     # Assert
     assert result == expected_message
@@ -149,11 +150,11 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
 
 def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_config, echoes_game_description):
     # Setup
+    hint_name_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
     hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
 
     # Run
-    result = item_hints.create_message_for_hint(hint, {0: empty_patches}, players_config, None, {},
-                                                echoes_game_description.world_list)
+    result = hint_name_creator.create_message_for_hint(hint, {0: empty_patches}, players_config, {})
 
     # Assert
     assert result == 'The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found.'
@@ -183,7 +184,7 @@ def test_create_hints_item_location(empty_patches, pickup, item, location, owner
     )
     location_precision, determiner, item_name = item
     if owner and is_multiworld:
-        determiner = "Player 1's"
+        determiner = "&push;&main-color=#d4cc33;Player 1&pop;'s"
 
     patches = dataclasses.replace(
         empty_patches,
@@ -198,7 +199,7 @@ def test_create_hints_item_location(empty_patches, pickup, item, location, owner
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = "{} {} can be found in {}.".format(determiner, item_name, location[1])
@@ -239,7 +240,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = f"{guardian} is guarding {item[1]}."
@@ -273,7 +274,7 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
@@ -311,9 +312,7 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
     )
 
     # Run
-    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config, hint_name_creator,
-                                                location_formatters,
-                                                world_list)
+    result = hint_name_creator.create_message_for_hint(hint, {0: patches}, players_config, location_formatters)
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
@@ -327,6 +326,7 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
 ])
 def test_create_message_for_hint_relative_area(echoes_game_description, pickup, players_config,
                                                offset, distance_text):
+    hint_name_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
     world_list = echoes_game_description.world_list
     patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
         PickupIndex(5): PickupTarget(pickup, 0),
@@ -344,9 +344,7 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup, 
     )
 
     # Run
-    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config,
-                                                hint_name_creator, location_formatters,
-                                                world_list)
+    result = hint_name_creator.create_message_for_hint(hint, {0: patches}, players_config, location_formatters)
 
     # Assert
     assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
