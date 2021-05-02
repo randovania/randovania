@@ -38,10 +38,15 @@ _ENERGY_CONTROLLER_MAP_ASSET_IDS = [
     988679813,  # Sanc EC
 ]
 _ELEVATOR_ROOMS_MAP_ASSET_IDS = [
+    # 0x529F0152,  # Sky Temple Energy Controller
+    0xAE06A5D9,  # Sky Temple Gateway
+
     # cliff
     0x1C7CBD3E,
     0x92A2ADA3,
     0xFB9E9C00,
+    0x74EFFB3C,  # Aerie
+    0x932CB12E,  # Aerie Transport Station
 
     # sand
     0xEF5EA06C,
