@@ -2,11 +2,14 @@ import base64
 import copy
 import hashlib
 import json
+import re
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
 from typing import Tuple, Dict
+
+import typing
 
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
@@ -53,8 +56,15 @@ def migrate_description(json_dict: dict) -> dict:
         version += 1
 
     if version == 3:
-        # Used to remove the sanc EC elevator, but changed in development
-        pass
+        target_name_re = re.compile(r"(.*) for Player (\d+)")
+        if len(json_dict["game_modifications"]) > 1:
+            for game in json_dict["game_modifications"]:
+                for area in game["locations"].values():
+                    for location_name, contents in typing.cast(Dict[str, str], area).items():
+                        m = target_name_re.match(contents)
+                        if m is not None:
+                            part_one, part_two = m.group(1, 2)
+                            area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
 
     json_dict["schema_version"] = version
     return json_dict
