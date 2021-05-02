@@ -122,6 +122,9 @@ _EXPECTED_ITEMS = {
 }
 _CUSTOM_ITEMS = {
     "Cannon Ball",
+    "Double Damage",
+    "Unlimited Beam Ammo",
+    "Unlimited Missiles",
 }
 
 PresetDescription = Tuple[str, List[str]]
