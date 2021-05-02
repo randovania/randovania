@@ -1,4 +1,6 @@
+import asyncio
 import json
+import platform
 import sys
 from pathlib import Path
 from typing import Union
@@ -6,13 +8,9 @@ from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
-import randovania
-import randovania.generator.elevator_distributor
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -43,6 +41,21 @@ def _valid_tmp_game_root(tmp_path):
     game_root.joinpath("sys", 'main.dol').write_bytes(b"")
 
     return game_root
+
+
+@pytest.mark.parametrize(["system_name", "expected"], [
+    ("Windows", True),
+    ("Linux", False),
+])
+def test_is_windows(mocker, system_name, expected):
+    # Setup
+    mocker.patch("platform.system", return_value=system_name)
+
+    # Run
+    result = claris_randomizer._is_windows()
+
+    # Assert
+    assert result == expected
 
 
 @patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
@@ -359,10 +372,16 @@ def test_apply_layout(mock_apply_patcher_file: MagicMock,
                                                     progress_update)
 
 
-def test_process_command_no_thread(echo_tool):
+def test_process_command_no_thread(echo_tool, mock_is_windows, mocker, monkeypatch):
     read_callback = MagicMock()
 
     claris_randomizer.IO_LOOP = None
+    if platform.system() == "Windows":
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+
+    mock_set_event: MagicMock = mocker.patch("asyncio.set_event_loop_policy")
+    loop_policy = MagicMock()
+    monkeypatch.setattr(asyncio, "WindowsProactorEventLoopPolicy", loop_policy, raising=False)
 
     # Run
     claris_randomizer._process_command(
@@ -380,3 +399,7 @@ def test_process_command_no_thread(echo_tool):
         call("this is a nice world"),
         call("We some crazy stuff."),
     ])
+    if mock_is_windows:
+        mock_set_event.assert_called_once_with(loop_policy.return_value)
+    else:
+        mock_set_event.assert_not_called()
