@@ -1,5 +1,4 @@
 import collections
-import dataclasses
 import re
 from typing import Dict, List, DefaultDict
 
@@ -7,7 +6,6 @@ from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint

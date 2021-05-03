@@ -1,15 +1,13 @@
 import base64
-import copy
 import hashlib
 import json
 import re
+import typing
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
 from typing import Tuple, Dict
-
-import typing
 
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches

@@ -1,6 +1,6 @@
 import copy
 import itertools
-from typing import FrozenSet, List, Tuple, Set, Iterable
+from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
 from randovania.game_description.node import ResourceNode

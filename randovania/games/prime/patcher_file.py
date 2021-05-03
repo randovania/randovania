@@ -15,10 +15,10 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, Cond
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
-    ResourceInfo, convert_resource_gain_to_current_resources
+    ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
 from randovania.generator import elevator_distributor
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
