@@ -6,7 +6,6 @@ from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLab
     QLineEdit
 
 import randovania.game_description.pretty_print
-from randovania.game_description import data_writer
 from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo

@@ -1,6 +1,5 @@
 from typing import Tuple
 
-from PySide2 import QtWidgets
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QWidget
 

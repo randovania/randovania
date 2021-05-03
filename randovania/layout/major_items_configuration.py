@@ -6,7 +6,6 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.layout.major_item_state import MajorItemState
