@@ -1,5 +1,5 @@
 import dataclasses
-from typing import NamedTuple, List, Iterator, Optional, Dict
+from typing import List, Iterator, Optional, Dict
 
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node

@@ -7,9 +7,9 @@ from randovania.layout.available_locations import AvailableLocationsConfiguratio
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset import Preset
+from randovania.layout.teleporters import TeleporterConfiguration
 
 
 class PresetEditor:

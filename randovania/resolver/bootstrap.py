@@ -10,11 +10,9 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.games.game import RandovaniaGame
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
-from randovania.resolver import debug
 from randovania.resolver.state import State
 
 _items_to_not_add_in_minimal_logic = {

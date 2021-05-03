@@ -1,6 +1,5 @@
 import dataclasses
 import json
-import logging
 from typing import Dict, List, Union
 
 import PySide2

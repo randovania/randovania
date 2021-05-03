@@ -1,13 +1,12 @@
 import copy
 from collections import defaultdict
 from random import Random
-from typing import List, Dict, Optional, Tuple, AbstractSet
+from typing import List, Dict, Optional, Tuple
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
-
 
 CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
