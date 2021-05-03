@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional, Any, Tuple
+from typing import List, Dict, Any, Tuple
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot

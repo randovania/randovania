@@ -2,7 +2,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime.all_prime_dol_patches import StringDisplayPatchAddresses, HealthCapacityAddresses, \
     DangerousEnergyTankAddresses
 from randovania.games.prime.corruption_dol_patches import CorruptionDolVersion
-from randovania.games.prime.echoes_dol_patches import BeamCostAddresses, SafeZoneAddresses, EchoesDolVersion
 
 ALL_VERSIONS = [
     CorruptionDolVersion(

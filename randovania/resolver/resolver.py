@@ -5,7 +5,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap

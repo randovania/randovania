@@ -6,7 +6,6 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_database import ItemDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_state import AmmoState
 

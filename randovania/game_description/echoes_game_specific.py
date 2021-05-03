@@ -2,7 +2,6 @@ import dataclasses
 from typing import Optional, Tuple
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 @dataclasses.dataclass(frozen=True)
