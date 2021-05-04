@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
+
+## [2.6.0] - 2021-05-02
+
 -   **Major** - Added: New elevator randomization settings: 
     * New mode: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
     * Select which elevators can be randomized.
