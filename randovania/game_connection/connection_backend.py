@@ -231,7 +231,8 @@ class ConnectionBackend(ConnectionBase):
         inventory = {}
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
-            if inv.amount > inv.capacity or inv.capacity > item.max_capacity:
+            if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (
+                    item.index != self.game.resource_database.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
