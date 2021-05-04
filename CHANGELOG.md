@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.6.1] - 2021-05-05
+
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
     
 -   Fixed: "One-way anywhere" no longer shows up twice in preset warnings for multiworld
 
 -   Fixed: Changing starting location to Ship or Save Stations now works again.
+
+-   Fixed: Torvus Gate elevator is now properly hidden instead of Dark Torvus Ammo Station.
+
 
 ## [2.6.0] - 2021-05-02
 
