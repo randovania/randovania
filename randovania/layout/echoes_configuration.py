@@ -69,7 +69,6 @@ class EchoesConfiguration(BaseConfiguration):
 
     def dangerous_settings(self) -> List[str]:
         result = super().dangerous_settings()
-        result.extend(self.elevators.dangerous_settings())
 
         if self.dangerous_energy_tank:
             result.append("1 HP Mode")
