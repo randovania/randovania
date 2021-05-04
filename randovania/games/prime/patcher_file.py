@@ -42,26 +42,26 @@ _ELEVATOR_ROOMS_MAP_ASSET_IDS = [
     0xAE06A5D9,  # Sky Temple Gateway
 
     # cliff
-    0x1C7CBD3E,
-    0x92A2ADA3,
-    0xFB9E9C00,
+    0x1C7CBD3E,  # agon
+    0x92A2ADA3,  # Torvus
+    0xFB9E9C00,  # Entrance
     0x74EFFB3C,  # Aerie
     0x932CB12E,  # Aerie Transport Station
 
     # sand
-    0xEF5EA06C,
-    0x8E9B3B3F,
-    0x7E1BC16F,
+    0xEF5EA06C,  # Sanc
+    0x8E9B3B3F,  # Torvus
+    0x7E1BC16F,  # Entrance
 
     # swamp
-    0x96DB1F15,
-    0xE6B06473,
-    0xAF420D17,
+    0x46B0EECF,  # Entrance
+    0xE6B06473,  # Agon
+    0x96DB1F15,  # Sanc
 
     # tg -> areas
-    0x46B0EECF,
-    0xE4229356,
-    0x4B2A6FD3,
+    0x4B2A6FD3,  # Agon
+    0x85E70805,  # Torvus
+    0xE4229356,  # Sanc
 
     # tg -> gt
     0x79EFFD7D,
