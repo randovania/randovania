@@ -675,7 +675,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
-                LocationList.with_elements([self.game_description.starting_location], self.game_enum)
+                editor.configuration.starting_location.with_elements(
+                    [self.game_description.starting_location],
+                    self.game_enum,
+                )
             )
 
     def _starting_location_on_select_save_station(self):
@@ -686,7 +689,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
-                LocationList.with_elements(save_stations, self.game_enum)
+                editor.configuration.starting_location.with_elements(save_stations, self.game_enum)
             )
 
     def on_preset_changed_starting_area(self, preset: Preset):
