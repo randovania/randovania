@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Advanced and above).
+
+-   Added: Method of bypassing the breakable glass in Sand Processing from Main Reactor with Space Jump and Screw Attack (Expert and above).
+
+-   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
 
 ## [2.6.1] - 2021-05-05
 
