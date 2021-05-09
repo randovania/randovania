@@ -1,6 +1,7 @@
 import collections
 import copy
 import dataclasses
+import uuid
 
 import pytest
 
@@ -197,7 +198,8 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
         default_preset,
-        base_preset_name=default_preset.name,
+        uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+        base_preset_uuid=default_preset.uuid,
         configuration=dataclasses.replace(
             default_preset.configuration,
             trick_level=TrickLevelConfiguration(

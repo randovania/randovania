@@ -1,3 +1,6 @@
+import dataclasses
+import uuid
+
 import pytest
 from PySide2.QtCore import Qt
 
@@ -9,7 +12,11 @@ from randovania.interface_common.preset_editor import PresetEditor
 @pytest.mark.parametrize("game", [RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
-    editor = PresetEditor(preset_manager.default_preset_for_game(game).get_preset())
+    base = preset_manager.default_preset_for_game(game).get_preset()
+    preset = dataclasses.replace(base,
+                                 uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+                                 base_preset_uuid=base.uuid)
+    editor = PresetEditor(preset)
     window = LogicSettingsWindow(None, editor)
 
     # Run
@@ -18,7 +25,10 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
 
 def test_starting_location_world_select(skip_qtbot, default_preset):
     # Setup
-    editor = PresetEditor(default_preset)
+    preset = dataclasses.replace(default_preset,
+                                 uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+                                 base_preset_uuid=default_preset.uuid)
+    editor = PresetEditor(preset)
     window = LogicSettingsWindow(None, editor)
     skip_qtbot.addWidget(window)
 
