@@ -76,6 +76,7 @@ setup(
         'python-socketio[asyncio_client]',
         'aiohttp[speedups]',
         'aiofiles',
+        'GitPython>=3.0,<4.0',
     ],
     extras_require={
         "gui": [
