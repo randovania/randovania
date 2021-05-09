@@ -149,6 +149,7 @@ class RowWidget:
 
     def set_preset(self, preset: Preset):
         self.name.setText(preset.name)
+        self.save_copy.setEnabled(preset.base_preset_uuid is not None)
 
 
 _PRESET_COLUMNS = 3
@@ -393,9 +394,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.pop().delete_widgets()
 
     def _create_actions_for_import_menu(self, row: RowWidget):
-        for included_preset in self._preset_manager.all_presets:
-            if included_preset.game != RandovaniaGame.PRIME2:
-                continue
+        for included_preset in self._preset_manager.presets_for_game(RandovaniaGame.PRIME2):
             action = QtWidgets.QAction(row.import_menu)
             action.setText(included_preset.name)
             action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
@@ -435,7 +434,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         row_index = self.rows.index(row)
-        editor = PresetEditor(self._game_session.presets[row_index].get_preset())
+        old_preset = self._game_session.presets[row_index].get_preset()
+        if old_preset.base_preset_uuid is None:
+            old_preset = old_preset.fork()
+        editor = PresetEditor(old_preset)
         self._logic_settings_window = LogicSettingsWindow(None, editor)
         self._logic_settings_window._game_session_row = row
 
@@ -462,20 +464,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
 
-        existing_preset = self._preset_manager.preset_for_name(preset.name)
-        if existing_preset is not None:
-            if existing_preset == preset:
-                return
-
-            user_response = QMessageBox.warning(
-                self,
-                "Preset name conflict",
-                "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            if user_response == QMessageBox.No:
-                return
+        # FIXME? Customizing a preset is now always an inplace change
+        # existing_preset = self._preset_manager.preset_for_name(preset.name)
+        # if existing_preset is not None:
+        #     if existing_preset == preset:
+        #         return
+        #
+        #     user_response = QMessageBox.warning(
+        #         self,
+        #         "Preset name conflict",
+        #         "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
+        #         QMessageBox.Yes | QMessageBox.No,
+        #         QMessageBox.No
+        #     )
+        #     if user_response == QMessageBox.No:
+        #         return
 
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()

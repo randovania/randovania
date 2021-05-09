@@ -1,4 +1,5 @@
 import dataclasses
+import uuid
 from typing import Optional, Callable, Union
 
 from randovania.games.game import RandovaniaGame
@@ -18,17 +19,18 @@ class PresetEditor:
     _is_dirty: bool = False
 
     _name: str
-    _base_preset_name: str
+    _uuid: uuid.UUID
+    _base_preset_uuid: uuid.UUID
     _game: RandovaniaGame
     _configuration: Union[EchoesConfiguration, CorruptionConfiguration]
 
     def __init__(self, initial_preset: Preset):
-        if initial_preset.base_preset_name is None:
-            self._name = "{} Custom".format(initial_preset.name)
-            self._base_preset_name = initial_preset.name
-        else:
-            self._name = initial_preset.name
-            self._base_preset_name = initial_preset.base_preset_name
+        if initial_preset.base_preset_uuid is None:
+            raise ValueError("Unable to edit an included preset!")
+
+        self._name = initial_preset.name
+        self._uuid = initial_preset.uuid
+        self._base_preset_uuid = initial_preset.base_preset_uuid
         self._game = initial_preset.game
         self._configuration = initial_preset.configuration
 
@@ -59,7 +61,8 @@ class PresetEditor:
         return Preset(
             name=self.name,
             description="A preset that was customized.",
-            base_preset_name=self._base_preset_name,
+            uuid=self._uuid,
+            base_preset_uuid=self._base_preset_uuid,
             game=self._game,
             configuration=self.configuration,
         )

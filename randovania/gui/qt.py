@@ -46,7 +46,9 @@ def catch_exceptions_async(loop, context):
 
 async def show_main_window(app: QtWidgets.QApplication, options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
-    preset_manager = PresetManager(options.data_dir)
+    from randovania.interface_common.options import Options
+    options = typing.cast(Options, options)
+    preset_manager = PresetManager(options.presets_path)
 
     logger.info("Loading user presets...")
     await preset_manager.load_user_presets()
@@ -133,6 +135,13 @@ def _load_options():
     if not startup_tools.load_options_from_disk(options):
         raise SystemExit(1)
 
+    logger.info("Creating user preferences folder")
+    import git
+    try:
+        git.Repo(options.user_dir, search_parent_directories=False)
+    except (git.InvalidGitRepositoryError, git.NoSuchPathError):
+        git.Repo.init(options.user_dir)
+
     theme.set_dark_theme(options.dark_mode)
 
     from randovania.layout.preset_migration import VersionedPreset
@@ -200,7 +209,7 @@ def run(args):
     data_dir = args.custom_network_storage
     if data_dir is None:
         from randovania.interface_common import persistence
-        data_dir = persistence.user_data_dir()
+        data_dir = persistence.local_data_dir()
 
     is_preview = args.preview
     start_logger(data_dir, is_preview)

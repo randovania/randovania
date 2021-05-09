@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
@@ -52,7 +53,7 @@ _SERIALIZER_FOR_FIELD = {
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
-    "selected_preset_name": Serializer(identity, str),
+    "selected_preset_uuid": Serializer(str, uuid.UUID),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
@@ -79,6 +80,7 @@ class DecodeFailedException(ValueError):
 
 class Options:
     _data_dir: Path
+    _user_dir: Path
     _on_options_changed: Optional[Callable[[], None]] = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
@@ -89,19 +91,20 @@ class Options:
     _auto_save_spoiler: Optional[bool] = None
     _dark_mode: Optional[bool] = None
     _output_directory: Optional[Path] = None
-    _selected_preset_name: Optional[str] = None
+    _selected_preset_uuid: Optional[uuid.UUID] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, user_dir: Optional[Path] = None):
         self._data_dir = data_dir
+        self._user_dir = user_dir or data_dir
         self._last_changelog_displayed = str(update_checker.strict_current_version())
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
-        return cls(persistence.user_data_dir())
+        return cls(persistence.local_data_dir(), persistence.roaming_data_dir())
 
     def _read_persisted_options(self) -> Optional[dict]:
         try:
@@ -236,8 +239,20 @@ class Options:
         return self._data_dir.joinpath("tracker")
 
     @property
+    def presets_path(self) -> Path:
+        return self._user_dir.joinpath("presets")
+
+    @property
+    def game_history_path(self) -> Path:
+        return self._data_dir.joinpath("game_history")
+
+    @property
     def data_dir(self) -> Path:
         return self._data_dir
+
+    @property
+    def user_dir(self) -> Path:
+        return self._user_dir
 
     # Access to Direct fields
     @property
@@ -275,12 +290,12 @@ class Options:
         self._edit_field("dark_mode", value)
 
     @property
-    def selected_preset_name(self) -> Optional[str]:
-        return self._selected_preset_name
+    def selected_preset_uuid(self) -> Optional[uuid.UUID]:
+        return self._selected_preset_uuid
 
-    @selected_preset_name.setter
-    def selected_preset_name(self, value: str):
-        self._edit_field("selected_preset_name", value)
+    @selected_preset_uuid.setter
+    def selected_preset_uuid(self, value: uuid.UUID):
+        self._edit_field("selected_preset_uuid", value)
 
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
