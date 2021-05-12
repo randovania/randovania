@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
 
--   Changed: Wallboost to reach the pickup in Temple Transport B is now Hypermode (from Expert).
+-   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
 
