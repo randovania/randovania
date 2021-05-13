@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 import os
 import typing
 import uuid
@@ -10,7 +11,7 @@ import git
 
 import randovania
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 
 
 def read_preset_list() -> List[Path]:
@@ -115,3 +116,37 @@ class PresetManager:
 
     def _file_name_for_preset(self, preset: VersionedPreset) -> Path:
         return self._data_dir.joinpath("{}.{}".format(preset.uuid, preset.file_extension()))
+
+    def should_do_migration(self):
+        if not self.custom_presets:
+            from randovania.interface_common import persistence
+            for _ in persistence.local_data_dir().joinpath("presets").glob("*.rdvpreset"):
+                return True
+        return False
+
+    async def migrate_from_old_path(self, on_update):
+        from randovania.interface_common import persistence
+        author = git.Actor("randovania", "nobody@example.com")
+        repo = git.Repo(self._data_dir.parent)
+
+        files_to_commit = []
+
+        all_files = list(persistence.local_data_dir().joinpath("presets").glob("*.rdvpreset"))
+
+        for i, old_file in enumerate(all_files):
+            on_update(i, len(all_files))
+            preset = await VersionedPreset.from_file(old_file)
+            try:
+                preset.ensure_converted()
+                path = self._file_name_for_preset(preset)
+                preset.save_to_file(path)
+                self.custom_presets[preset.uuid] = preset
+                files_to_commit.append(path)
+            except InvalidPreset as e:
+                logging.info(f"Not migrating {preset.name}: {e}")
+                continue
+
+        on_update(len(all_files), len(all_files))
+        repo.index.add([os.fspath(p) for p in files_to_commit])
+        repo.index.commit(f"Migrated old presets using Randovania v{randovania.VERSION}",
+                          author=author, committer=author)

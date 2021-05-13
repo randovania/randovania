@@ -5,20 +5,19 @@ import random
 import uuid
 from functools import partial
 from pathlib import Path
-from typing import Optional, Dict
+from typing import Optional, Callable
 
 from PySide2 import QtWidgets, QtCore, QtGui
-from PySide2.QtCore import Qt
+from PySide2.QtCore import QTimer
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
-from randovania.interface_common import simplified_patcher, enum_lib
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -99,6 +98,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
     _has_set_from_last_selected: bool = False
     _preset_menu: PresetMenu
     _action_delete: QtWidgets.QAction
+    _original_show_event: Callable[[QtGui.QShowEvent], None]
 
     def __init__(self, window: Ui_MainWindow, window_manager: WindowManager, options: Options):
         super().__init__()
@@ -111,6 +111,9 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
     def setup_ui(self):
         window = self.window
         window.create_preset_tree.window_manager = self._window_manager
+
+        self._original_show_event = window.tab_create_seed.showEvent
+        window.tab_create_seed.showEvent = self._tab_show_event
 
         # Progress
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -139,6 +142,34 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._preset_menu.action_import.triggered.connect(self._on_import_preset)
 
         window.create_preset_tree.update_items()
+
+    @asyncSlot()
+    async def _do_migration(self):
+        dialog = QtWidgets.QProgressDialog(
+            ("Randovania changed where your presets are saved and a one-time migration is being performed.\n"
+             "Further changes in old versions won't be migrated."),
+            None,
+            0, 1, self,
+        )
+        common_qt_lib.set_default_window_icon(dialog)
+        dialog.setWindowTitle("Preset Migration")
+        dialog.setAutoReset(False)
+        dialog.setAutoClose(False)
+        dialog.show()
+
+        def on_update(current, target):
+            dialog.setValue(current)
+            dialog.setMaximum(target)
+
+        await self._window_manager.preset_manager.migrate_from_old_path(on_update)
+        self.window.create_preset_tree.update_items()
+        dialog.setCancelButtonText("Ok")
+
+    def _tab_show_event(self, event: QtGui.QShowEvent):
+        if self._window_manager.preset_manager.should_do_migration():
+            QTimer.singleShot(0, self._do_migration)
+
+        return self._original_show_event(event)
 
     @property
     def _current_preset_data(self) -> Optional[VersionedPreset]:
