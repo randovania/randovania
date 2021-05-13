@@ -343,21 +343,21 @@ class VersionedPreset:
 
     @property
     def name(self) -> str:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.name
         else:
             return self.data["name"]
 
     @property
     def base_preset_uuid(self) -> Optional[uuid.UUID]:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.base_preset_uuid
         elif self.data["base_preset_uuid"] is not None:
             return uuid.UUID(self.data["base_preset_uuid"])
 
     @property
     def game(self) -> RandovaniaGame:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.configuration.game
 
         if self.data["schema_version"] < 6:
@@ -367,7 +367,7 @@ class VersionedPreset:
 
     @property
     def uuid(self) -> uuid.UUID:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.uuid
         else:
             return uuid.UUID(self.data["uuid"])
@@ -385,7 +385,7 @@ class VersionedPreset:
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(convert_to_current_version(copy.deepcopy(self.data)))
-            except (ValueError, KeyError) as e:
+            except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
 
