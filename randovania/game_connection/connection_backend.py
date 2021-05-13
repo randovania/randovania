@@ -241,21 +241,20 @@ class ConnectionBackend(ConnectionBase):
     # Multiworld
     async def _update_magic_item(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
+        message = None
         patches = []
 
         magic_inv = self._inventory[multiworld_magic_item]
         magic_capacity = magic_inv.capacity
         if magic_inv.amount > 0:
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_capacity}")
-            magic_capacity -= magic_inv.amount
             await self._emit_location_collected(magic_inv.amount - 1)
             patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(self.patches.powerup_functions,
                                                                                        multiworld_magic_item.index,
                                                                                        -magic_inv.amount))
 
-        # Only attempt to give the next item if outside cooldown
-        message = None
-        if self.message_cooldown <= 0 and magic_capacity < len(self._permanent_pickups):
+        elif self.message_cooldown <= 0 and magic_capacity < len(self._permanent_pickups):
+            # Only attempt to give the next item if outside cooldown
             item_patches, message = await self._patches_for_pickup(*self._permanent_pickups[magic_capacity])
             self.logger.info(f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}. "
                              f"Next pickup: {message}")
