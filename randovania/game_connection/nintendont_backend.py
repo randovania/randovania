@@ -158,14 +158,14 @@ class NintendontBackend(ConnectionBackend):
 
         processes_ops = []
         max_write_size = self._socket.max_input - 20
-        for op in ops:
+        for i, op in enumerate(ops):
             if op.byte_count == 0:
                 continue
             op.validate_byte_sizes()
 
             if op.read_byte_count is None and (op.write_bytes is not None
                                                and len(op.write_bytes) > max_write_size):
-                self.logger.debug(f"Operation had {len(op.write_bytes)} bytes, "
+                self.logger.debug(f"Operation {i} had {len(op.write_bytes)} bytes, "
                                   f"above the limit of {max_write_size}. Splitting.")
                 for offset in range(0, len(op.write_bytes), max_write_size):
                     if op.offset is None:
