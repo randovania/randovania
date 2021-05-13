@@ -1,4 +1,5 @@
 import dataclasses
+import uuid
 from unittest.mock import patch, MagicMock, ANY
 
 import pytest
@@ -54,12 +55,17 @@ def test_decode_invalid(invalid: str):
 ])
 def test_round_trip(spoiler: bool,
                     layout: dict,
-                    default_preset):
+                    default_preset,
+                    mocker):
     # Setup
+    random_uuid = uuid.uuid4()
+    mocker.patch("uuid.uuid4", return_value=random_uuid)
+
     preset = Preset(
         name="{} Custom".format(default_preset.name),
         description="A customized preset.",
-        base_preset_name=default_preset.name,
+        uuid=random_uuid,
+        base_preset_uuid=default_preset.uuid,
         game=default_preset.game,
         configuration=dataclasses.replace(default_preset.configuration, **layout),
     )

@@ -19,15 +19,16 @@ def _tab(skip_qtbot):
 
 
 def test_add_new_preset(tab, preset_manager):
+    preset = preset_manager.default_preset
     tab.setup_ui()
-    tab._window_manager.preset_manager.add_new_preset.return_value = True
+    tab.window.create_preset_tree.select_preset = MagicMock()
 
     # Run
-    tab._add_new_preset(preset_manager.default_preset)
+    tab._add_new_preset(preset)
 
     # Assert
-    tab._window_manager.preset_manager.add_new_preset.assert_called_once_with(preset_manager.default_preset)
-    assert not tab._action_delete.isEnabled()
+    tab._window_manager.preset_manager.add_new_preset.assert_called_once_with(preset)
+    tab.window.create_preset_tree.select_preset.assert_called_once_with(preset)
 
 
 @pytest.mark.parametrize("has_existing_window", [False, True])
@@ -38,9 +39,11 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
     mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
     tab._add_new_preset = MagicMock()
     tab._logic_settings_window = MagicMock() if has_existing_window else None
+    tab.window.create_preset_tree = MagicMock()
+    tab.window.create_preset_tree.selectedItems.return_value = [MagicMock()]
 
     # Run
-    await tab._on_customize_button()
+    await tab._on_customize_preset()
 
     # Assert
     if has_existing_window:
@@ -61,21 +64,10 @@ def test_on_options_changed_select_preset(tab, preset_manager, game):
     tab._window_manager.preset_manager = preset_manager
     tab.setup_ui()
 
-    tab._options.selected_preset_name = preset.name
+    tab._options.selected_preset_uuid = preset.uuid
 
     # Run
     tab.on_options_changed(tab._options)
 
     # Assert
     assert tab._current_preset_data == preset
-
-
-def test_select_game(tab, preset_manager):
-    tab._window_manager.preset_manager = preset_manager
-    tab.setup_ui()
-
-    tab.select_game(RandovaniaGame.PRIME3)
-    assert tab._current_preset_data.game == RandovaniaGame.PRIME3
-
-    tab.select_game(RandovaniaGame.PRIME2)
-    assert tab._current_preset_data.game == RandovaniaGame.PRIME2

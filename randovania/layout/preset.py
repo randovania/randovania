@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import uuid
 from typing import Optional, List, Iterator, Tuple, Union
 
 from randovania.bitpacking import bitpacking
@@ -24,8 +25,9 @@ _game_to_config = {
 @dataclasses.dataclass(frozen=True)
 class Preset(BitPackValue):
     name: str
+    uuid: uuid.UUID
     description: str
-    base_preset_name: Optional[str]
+    base_preset_uuid: Optional[uuid.UUID]
     game: RandovaniaGame
     configuration: Union[EchoesConfiguration, CorruptionConfiguration]
 
@@ -33,8 +35,9 @@ class Preset(BitPackValue):
     def as_json(self) -> dict:
         return {
             "name": self.name,
+            "uuid": str(self.uuid),
             "description": self.description,
-            "base_preset_name": self.base_preset_name,
+            "base_preset_uuid": str(self.base_preset_uuid) if self.base_preset_uuid is not None else None,
             "game": self.game.value,
             "configuration": self.configuration.as_json,
         }
@@ -44,8 +47,9 @@ class Preset(BitPackValue):
         game = RandovaniaGame(value["game"])
         return Preset(
             name=value["name"],
+            uuid=uuid.UUID(value["uuid"]),
             description=value["description"],
-            base_preset_name=value["base_preset_name"],
+            base_preset_uuid=uuid.UUID(value["base_preset_uuid"]) if value["base_preset_uuid"] is not None else None,
             game=game,
             configuration=_game_to_config[game].from_json(value["configuration"]),
         )
@@ -61,17 +65,16 @@ class Preset(BitPackValue):
         manager: PresetManager = metadata["manager"]
 
         # Is this a custom preset?
-        is_custom_preset = self.base_preset_name is not None
+        is_custom_preset = self.base_preset_uuid is not None
+        reference = self
         if is_custom_preset:
-            reference_versioned = manager.included_preset_with_name(self.base_preset_name)
-            if reference_versioned is None:
-                reference_versioned = manager.default_preset_for_game(self.game)
-            reference = reference_versioned.get_preset()
-        else:
-            reference = self
+            while reference.base_preset_uuid is not None:
+                reference_versioned = manager.preset_for_uuid(reference.base_preset_uuid)
+                if reference_versioned is None:
+                    reference_versioned = manager.default_preset_for_game(reference.game)
+                reference = reference_versioned.get_preset()
 
-        included_presets = [versioned.get_preset() for versioned in manager.included_presets]
-
+        included_presets = [versioned.get_preset() for versioned in manager.included_presets.values()]
         yield from bitpacking.encode_bool(is_custom_preset)
         yield from bitpacking.pack_array_element(reference, included_presets)
         if is_custom_preset:
@@ -83,7 +86,7 @@ class Preset(BitPackValue):
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
-        included_presets = [versioned.get_preset() for versioned in manager.included_presets]
+        included_presets = [versioned.get_preset() for versioned in manager.included_presets.values()]
 
         is_custom_preset = bitpacking.decode_bool(decoder)
         reference = decoder.decode_element(included_presets)
@@ -91,7 +94,8 @@ class Preset(BitPackValue):
             preset = Preset(
                 name="{} Custom".format(reference.name),
                 description="A customized preset.",
-                base_preset_name=reference.name,
+                uuid=uuid.uuid4(),
+                base_preset_uuid=reference.uuid,
                 game=reference.game,
                 configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
             )
@@ -104,3 +108,8 @@ class Preset(BitPackValue):
             raise ValueError("Given permalink is for a Randovania database with hash '{}', "
                              "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
         return preset
+
+    def fork(self) -> "Preset":
+        return dataclasses.replace(self, name=f"{self.name} Copy",
+                                   description=f"A copy version of {self.name}.",
+                                   uuid=uuid.uuid4(), base_preset_uuid=self.uuid)

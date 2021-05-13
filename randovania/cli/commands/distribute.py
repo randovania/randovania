@@ -12,12 +12,10 @@ def distribute_command_logic(args):
     from randovania.generator import generator
 
     async def _create_permalink(args_) -> Permalink:
-        from randovania.interface_common import persistence
         from randovania.interface_common.preset_manager import PresetManager
 
-        preset_manager = PresetManager(persistence.user_data_dir())
-        await preset_manager.load_user_presets()
-        preset = preset_manager.preset_for_name(args_.preset_name).get_preset()
+        preset_manager = PresetManager(None)
+        preset = preset_manager.included_preset_with_name(args_.preset_name).get_preset()
 
         return Permalink(
             args_.seed_number,

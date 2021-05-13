@@ -1,5 +1,6 @@
 import copy
 import json
+import uuid
 from pathlib import Path
 from typing import Optional, Dict
 
@@ -10,7 +11,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 9
+CURRENT_PRESET_VERSION = 10
 
 
 class InvalidPreset(Exception):
@@ -275,6 +276,24 @@ def _migrate_v8(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v9(preset: dict) -> dict:
+    if preset.get("uuid") is None:
+        preset["uuid"] = str(uuid.uuid4())
+
+    _name_to_uuid = {
+        "Corruption Preset": "5682c9ef-d447-4327-b473-ba1216d83439",
+        "Darkszero's Deluxe": "ea1eced4-53b8-4bb3-a08f-27ac1afe6aab",
+        "Fewest Changes": "bba48268-0710-4ac5-baae-dcd5fcd31d80",
+        "Prime Preset": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
+        "Starter Preset": "fcbe4e3f-b1fa-41cc-83cb-c86d84c10f0f",
+    }
+
+    base_preset_name = preset.pop("base_preset_name")
+    preset["base_preset_uuid"] = _name_to_uuid.get(base_preset_name, str(uuid.uuid4()))
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -284,6 +303,7 @@ _MIGRATIONS = {
     6: _migrate_v6,
     7: _migrate_v7,
     8: _migrate_v8,
+    9: _migrate_v9
 }
 
 
@@ -323,20 +343,34 @@ class VersionedPreset:
 
     @property
     def name(self) -> str:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.name
         else:
             return self.data["name"]
 
     @property
+    def base_preset_uuid(self) -> Optional[uuid.UUID]:
+        if self._preset is not None:
+            return self._preset.base_preset_uuid
+        elif self.data["base_preset_uuid"] is not None:
+            return uuid.UUID(self.data["base_preset_uuid"])
+
+    @property
     def game(self) -> RandovaniaGame:
-        if self.data is None:
+        if self._preset is not None:
             return self._preset.configuration.game
 
         if self.data["schema_version"] < 6:
             return RandovaniaGame.PRIME2
 
         return RandovaniaGame(self.data["game"])
+
+    @property
+    def uuid(self) -> uuid.UUID:
+        if self._preset is not None:
+            return self._preset.uuid
+        else:
+            return uuid.UUID(self.data["uuid"])
 
     def __eq__(self, other):
         if isinstance(other, VersionedPreset):
@@ -351,7 +385,7 @@ class VersionedPreset:
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(convert_to_current_version(copy.deepcopy(self.data)))
-            except (ValueError, KeyError) as e:
+            except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
 

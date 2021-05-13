@@ -27,7 +27,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
         permalink = mock_from_str.return_value
     else:
         args.permalink = None
-        permalink = Permalink(0, True, {0: preset_manager.preset_for_name(preset_name).get_preset()})
+        permalink = Permalink(0, True, {0: preset_manager.included_preset_with_name(preset_name).get_preset()})
 
     # Run
     randovania.cli.commands.distribute.distribute_command_logic(args)

@@ -6,13 +6,10 @@ from randovania.layout.permalink import Permalink
 
 
 async def permalink_command_body(args):
-    from randovania.interface_common import persistence
     from randovania.interface_common.preset_manager import PresetManager
 
-    preset_manager = PresetManager(persistence.user_data_dir())
-    await preset_manager.load_user_presets()
-
-    versioned_preset = preset_manager.preset_for_name(args.preset)
+    preset_manager = PresetManager(None)
+    versioned_preset = preset_manager.included_preset_with_name(args.preset)
     if versioned_preset is None:
         raise ValueError(f"Unknown preset: {args.preset}")
 
