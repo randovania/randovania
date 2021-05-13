@@ -134,7 +134,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
 
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
-        self.menu_action_map_tracker.triggered.connect(self._on_menu_action_map_tracker)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
@@ -400,18 +399,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    @asyncSlot()
-    async def _on_menu_action_map_tracker(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setWindowTitle("Map Tracker")
-        dialog.setLabelText("Select preset used for the tracker.")
-        dialog.setComboBoxItems([preset.name for preset in self._preset_manager.all_presets])
-        dialog.setTextValue(self._options.selected_preset_name)
-        result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.Accepted:
-            preset = self._preset_manager.preset_for_name(dialog.textValue())
-            self.open_map_tracker(preset.get_preset().configuration)
-
     def open_map_tracker(self, configuration: "EchoesConfiguration"):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 
@@ -532,7 +519,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.auto_tracker_window.show()
 
     def _on_menu_action_previously_generated_games(self):
-        path = self._options.data_dir.joinpath("game_history")
+        path = self._options.game_history_path
         try:
             if platform.system() == "Windows":
                 os.startfile(path)

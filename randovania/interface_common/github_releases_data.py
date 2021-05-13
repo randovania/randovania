@@ -13,7 +13,7 @@ _RELEASES_URL = "https://api.github.com/repos/randovania/randovania/releases"
 
 
 def _last_check_file() -> Path:
-    return persistence.user_data_dir() / "last_releases.json"
+    return persistence.local_data_dir() / "last_releases.json"
 
 
 def _is_recent(last_check) -> bool:
