@@ -7,7 +7,8 @@ import uuid
 from pathlib import Path
 from typing import List, Optional, Iterator, Dict
 
-import git
+import dulwich.porcelain
+import dulwich.repo
 
 import randovania
 from randovania.games.game import RandovaniaGame
@@ -27,13 +28,13 @@ def read_preset_list() -> List[Path]:
 
 
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
-    author = git.Actor("randovania", "nobody@example.com")
-    repo = git.Repo(repository)
+    author = "randovania <nobody@example.com>"
     if remove:
-        repo.index.remove(os.fspath(file_path))
+        dulwich.porcelain.remove(repository, file_path)
     else:
-        repo.index.add(os.fspath(file_path))
-    repo.index.commit(f"{message} using Randovania v{randovania.VERSION}", author=author, committer=author)
+        dulwich.porcelain.add(repository, file_path)
+    dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
+                             author=author, committer=author)
 
 
 class PresetManager:
@@ -126,8 +127,6 @@ class PresetManager:
 
     async def migrate_from_old_path(self, on_update):
         from randovania.interface_common import persistence
-        author = git.Actor("randovania", "nobody@example.com")
-        repo = git.Repo(self._data_dir.parent)
 
         files_to_commit = []
 
@@ -147,6 +146,9 @@ class PresetManager:
                 continue
 
         on_update(len(all_files), len(all_files))
-        repo.index.add([os.fspath(p) for p in files_to_commit])
-        repo.index.commit(f"Migrated old presets using Randovania v{randovania.VERSION}",
-                          author=author, committer=author)
+        dulwich.porcelain.add(self._data_dir.parent, files_to_commit)
+
+        author = "randovania <nobody@example.com>"
+        dulwich.porcelain.commit(self._data_dir.parent,
+                                 message=f"Migrated old presets using Randovania v{randovania.VERSION}",
+                                 author=author, committer=author)
