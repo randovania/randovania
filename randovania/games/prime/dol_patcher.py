@@ -3,12 +3,12 @@ from pathlib import Path
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import find_version_for_dol
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
-from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches
+from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches, prime1_dol_versions
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 from randovania.games.prime.echoes_dol_patches import EchoesDolVersion
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
-ALL_VERSIONS_PATCHES = echoes_dol_versions.ALL_VERSIONS
+ALL_VERSIONS_PATCHES = echoes_dol_versions.ALL_VERSIONS + prime1_dol_versions.ALL_VERSIONS
 
 
 def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences,

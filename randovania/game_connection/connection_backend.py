@@ -58,7 +58,14 @@ class MemoryOperation:
         return f"At {address_text}, {' and '.join(operation_pretty)}"
 
 
-def _powerup_offset(item_index: int) -> int:
+def _prime1_powerup_offset(item_index: int) -> int:
+    powerups_offset = 0x24
+    vector_data_offset = 0x4
+    powerup_size = 0x8
+    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
+
+
+def _echoes_powerup_offset(item_index: int) -> int:
     powerups_offset = 0x58
     vector_data_offset = 0x4
     powerup_size = 0xc
@@ -185,10 +192,17 @@ class ConnectionBackend(ConnectionBase):
 
         player_vtable = 0
         try:
+            if self.patches.game == RandovaniaGame.PRIME1:
+                mlvl_offset = 0x84
+                cplayer_offset = 0x84c
+            else:
+                mlvl_offset = 4
+                cplayer_offset = 0x14fc
+
             memory_ops = [
-                MemoryOperation(self.patches.game_state_pointer, offset=4, read_byte_count=4),
+                MemoryOperation(self.patches.game_state_pointer, offset=mlvl_offset, read_byte_count=4),
                 MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
-                MemoryOperation(cstate_manager_global + 0x14fc, offset=0, read_byte_count=4),
+                MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
             ]
             results = await self._perform_memory_operations(memory_ops)
 
@@ -215,15 +229,24 @@ class ConnectionBackend(ConnectionBase):
         return self._inventory
 
     async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
-        player_state_pointer = self.patches.cstate_manager_global + 0x150c
+        if self.patches.game == RandovaniaGame.PRIME1:
+            offset_func = _prime1_powerup_offset
+            player_state_pointer = int.from_bytes(await self._perform_single_memory_operations(MemoryOperation(
+                address=self.patches.cstate_manager_global + 0x8b8,
+                read_byte_count=4,
+            )), "big")
+        else:
+            offset_func = _echoes_powerup_offset
+            player_state_pointer = self.patches.cstate_manager_global + 0x150c
 
         memory_ops = [
             MemoryOperation(
                 address=player_state_pointer,
                 read_byte_count=8,
-                offset=_powerup_offset(item.index),
+                offset=offset_func(item.index),
             )
             for item in self.game.resource_database.item
+            if item.index < 1000
         ]
 
         ops_result = await self._perform_memory_operations(memory_ops)

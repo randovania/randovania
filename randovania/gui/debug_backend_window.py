@@ -6,7 +6,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _powerup_offset
+from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _echoes_powerup_offset
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -139,7 +139,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
     def _get_magic_address(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
-        magic_address = 0xA00000 + _powerup_offset(multiworld_magic_item.index)
+        magic_address = 0xA00000 + _echoes_powerup_offset(multiworld_magic_item.index)
         return magic_address
 
     def _read_magic(self):
