@@ -103,7 +103,7 @@ def setup_logging(default_level: str, log_to_file: Optional[Path]):
             'handlers': list(handlers.keys()),
         },
     })
-    logging.info("Logging initialized.")
+    logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
 
 
 __version__ = version
