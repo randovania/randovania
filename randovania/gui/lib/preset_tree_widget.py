@@ -76,7 +76,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             self.preset_to_item[preset.uuid] = item
 
         # Set parents after, so don't have issues with order
-        for preset in self.window_manager.preset_manager.custom_presets.values():
+        for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
             if preset.base_preset_uuid in self.preset_to_item:
                 tree_item[preset.game].removeChild(self.preset_to_item[preset.uuid])
                 self.preset_to_item[preset.base_preset_uuid].addChild(self.preset_to_item[preset.uuid])
