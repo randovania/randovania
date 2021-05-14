@@ -39,7 +39,7 @@ class DolphinBackend(ConnectionBackend):
         address = op.address
         if op.offset is not None:
             if address not in pointers:
-                raise MemoryOperationException(f"Invalid op: {address} is not in pointers")
+                raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
             address = pointers[address] + op.offset
 
         _validate_range(address, op.byte_count)

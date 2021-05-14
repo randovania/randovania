@@ -340,6 +340,7 @@ def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_it
 
 @dataclasses.dataclass(frozen=True)
 class EchoesDolVersion(BasePrimeDolVersion):
+    game_options_constructor_address: int
     beam_cost_addresses: BeamCostAddresses
     safe_zone: SafeZoneAddresses
     starting_beam_visor: StartingBeamVisorAddresses
