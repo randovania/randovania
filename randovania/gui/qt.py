@@ -136,11 +136,13 @@ def _load_options():
         raise SystemExit(1)
 
     logger.info("Creating user preferences folder")
-    import git
+    import dulwich.repo
+    import dulwich.errors
     try:
-        git.Repo(options.user_dir, search_parent_directories=False)
-    except (git.InvalidGitRepositoryError, git.NoSuchPathError):
-        git.Repo.init(options.user_dir)
+        dulwich.repo.Repo(options.user_dir)
+    except dulwich.errors.NotGitRepository:
+        options.user_dir.mkdir(parents=True, exist_ok=True)
+        dulwich.repo.Repo.init(options.user_dir)
 
     theme.set_dark_theme(options.dark_mode)
 
