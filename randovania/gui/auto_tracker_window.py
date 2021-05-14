@@ -5,7 +5,7 @@ from typing import Dict, List, Union
 import PySide2
 from PySide2.QtCore import QTimer, Signal, Qt
 from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QMainWindow, QLabel
+from PySide2.QtWidgets import QMainWindow, QLabel, QSpacerItem, QSizePolicy
 from qasync import asyncSlot
 
 from randovania import get_data_path
@@ -34,6 +34,7 @@ class Element:
 class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     _hooked = False
     _base_address: int
+    _last_game: RandovaniaGame = None
     give_item_signal = Signal(PickupEntry)
 
     def __init__(self, game_connection: GameConnection, options: Options):
@@ -43,7 +44,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         common_qt_lib.set_default_window_icon(self)
 
         self._tracker_elements: List[Element] = []
-        self.create_tracker()
+        self.create_tracker(RandovaniaGame.PRIME2)
 
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
                                                          self.game_connection, options)
@@ -86,6 +87,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     async def _on_timer_update(self):
         try:
             current_status = self.game_connection.current_status
+            if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,
+                                      GameConnectionStatus.WrongGame}:
+                self.create_tracker(self.game_connection.backend.patches.game)
+                self.force_update_button.setEnabled(True)
+            else:
+                self.force_update_button.setEnabled(False)
+
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 inventory = self.game_connection.get_current_inventory()
                 self._update_tracker_from_hook(inventory)
@@ -98,9 +106,10 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         self._tracker_elements.clear()
 
-    def create_tracker(self):
+    def create_tracker(self, game_enum: RandovaniaGame):
+        if game_enum == self._last_game:
+            return
         self.delete_tracker()
-        game_enum = RandovaniaGame.PRIME2
 
         resource_database = default_database.resource_database_for(game_enum)
         with get_data_path().joinpath(f"gui_assets/tracker/{game_enum.value}.json").open("r") as tracker_details_file:
@@ -132,6 +141,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             ]
             self._tracker_elements.append(Element(label, resources, text_template))
             self.inventory_layout.addWidget(label, element["row"], element["column"])
+
+        self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
+                                      self.inventory_layout.columnCount())
+        self._update_tracker_from_hook({})
+
+        self._last_game = game_enum
 
     @asyncSlot()
     async def on_force_update_button(self):

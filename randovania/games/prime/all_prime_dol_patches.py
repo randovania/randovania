@@ -47,7 +47,6 @@ class BasePrimeDolVersion(DolVersion):
     string_display: StringDisplayPatchAddresses
     powerup_functions: PowerupFunctionsAddresses
     health_capacity: HealthCapacityAddresses
-    game_options_constructor_address: int
     dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
