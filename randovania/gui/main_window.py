@@ -88,6 +88,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         # Remove all hardcoded link color
         about_document: QtGui.QTextDocument = self.about_text_browser.document()
         about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
+        cursor: QtGui.QTextCursor = self.about_text_browser.textCursor()
+        cursor.setPosition(0)
+        self.about_text_browser.setTextCursor(cursor)
+
         self.browse_racetime_label.setText(self.browse_racetime_label.text().replace("color:#0000ff;", ""))
 
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
