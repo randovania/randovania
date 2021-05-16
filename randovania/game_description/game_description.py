@@ -5,7 +5,6 @@ from typing import Iterator, FrozenSet, Dict, Optional
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
@@ -34,7 +33,6 @@ class GameDescription:
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
-    game_specific: EchoesGameSpecific
     victory_condition: Requirement
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
@@ -45,7 +43,6 @@ class GameDescription:
         new_game = GameDescription(
             game=self.game,
             resource_database=self.resource_database,
-            game_specific=self.game_specific,
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
@@ -60,7 +57,6 @@ class GameDescription:
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
-                 game_specific: EchoesGameSpecific,
                  victory_condition: Requirement,
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
@@ -70,7 +66,6 @@ class GameDescription:
         self.dock_weakness_database = dock_weakness_database
 
         self.resource_database = resource_database
-        self.game_specific = game_specific
         self.victory_condition = victory_condition
         self.starting_location = starting_location
         self.initial_states = initial_states
@@ -88,8 +83,7 @@ class GameDescription:
             if isinstance(node, TeleporterNode) and node.editable
         }
 
-        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {},
-                           game_specific=self.game_specific)
+        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
 
     @property
     def dangerous_resources(self) -> FrozenSet[ResourceInfo]:

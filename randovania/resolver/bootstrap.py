@@ -13,7 +13,7 @@ from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
-from randovania.resolver.state import State
+from randovania.resolver.state import State, StateGameData
 
 _items_to_not_add_in_minimal_logic = {
     # Dark Visor
@@ -104,7 +104,7 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
             resources[item] = _minimal_logic_custom_item_count.get(item.index, 1)
 
 
-def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "State":
+def calculate_starting_state(game: GameDescription, patches: GamePatches, energy_per_tank: int) -> "State":
     starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
 
@@ -125,8 +125,11 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
         starting_node,
         patches,
         None,
-        game.resource_database,
-        game.world_list,
+        StateGameData(
+            game.resource_database,
+            game.world_list,
+            energy_per_tank,
+        )
     )
 
     # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
@@ -173,7 +176,7 @@ def logic_bootstrap(configuration: EchoesConfiguration,
     :return:
     """
     game = copy.deepcopy(game)
-    starting_state = calculate_starting_state(game, patches)
+    starting_state = calculate_starting_state(game, patches, configuration.energy_per_tank)
 
     if configuration.trick_level.minimal_logic:
         _add_minimal_logic_initial_resources(starting_state.resources,

@@ -5,13 +5,11 @@ from random import Random
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
 from randovania.game_description.node import LogbookNode, LoreType
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -26,29 +24,6 @@ from randovania.layout.translator_configuration import LayoutTranslatorRequireme
 
 class MissingRng(Exception):
     pass
-
-
-# M-Dhe -> E3B417BF -> Temple Grounds - Landing Site -> Defiled Shrine -> 11
-# J-Fme -> 65206511 -> Temple Grounds - Industrial Site -> Accursed Lake -> 15
-# D-Isl -> 28E8C41A -> Temple Grounds - Storage Cavern A -> Ing Reliquary -> 19
-# J-Stl -> 150E8DB8 -> Agon Wastes - Central Mining Station -> Battleground -> 45
-# B-Stl -> DE525E1D -> Agon Wastes - Main Reactor -> Dark Oasis -> 53
-# S-Dly -> 58C62CB3 -> Torvus Bog - Torvus Lagoon -> Poisoned Bog -> 68
-# G-Sch -> 939AFF16 -> Torvus Bog - Catacombs -> Dungeon -> 91
-# C-Rch -> A9909E66 -> Sanctuary Fortress - Dynamo Works -> Hive Dynamo Works -> 106
-# S-Jrs -> 62CC4DC3 -> Sanctuary Fortress - Sanctuary Entrance -> Hive Entrance -> 117
-
-_KEYBEARERS_HINTS = {
-    LogbookAsset(0xDE525E1D): PickupIndex(53),
-    LogbookAsset(0xA9909E66): PickupIndex(106),
-    LogbookAsset(0x28E8C41A): PickupIndex(19),
-    LogbookAsset(0x939AFF16): PickupIndex(91),
-    LogbookAsset(0x65206511): PickupIndex(15),
-    LogbookAsset(0x150E8DB8): PickupIndex(45),
-    LogbookAsset(0xE3B417BF): PickupIndex(11),
-    LogbookAsset(0x58C62CB3): PickupIndex(68),
-    LogbookAsset(0x62CC4DC3): PickupIndex(117),
-}
 
 
 def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguration,
@@ -208,18 +183,6 @@ def add_echoes_default_hints_to_patches(rng: Random,
     return patches
 
 
-def create_game_specific(configuration: EchoesConfiguration, game: GameDescription) -> EchoesGameSpecific:
-    if configuration.game == RandovaniaGame.PRIME2:
-        return EchoesGameSpecific(
-            energy_per_tank=configuration.energy_per_tank,
-            safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
-            dangerous_energy_tank=configuration.dangerous_energy_tank,
-        )
-    else:
-        return game.game_specific
-
-
 def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
@@ -229,7 +192,6 @@ def create_base_patches(configuration: EchoesConfiguration,
     """
     """
     patches = dataclasses.replace(game.create_game_patches(),
-                                  game_specific=create_game_specific(configuration, game),
                                   player_index=player_index)
 
     patches = add_elevator_connections_to_patches(configuration, rng, patches)

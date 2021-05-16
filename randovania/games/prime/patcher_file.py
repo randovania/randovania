@@ -18,6 +18,7 @@ from randovania.game_description.resources.resource_info import ResourceGainTupl
     ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime.dol_patcher import DolPatchesData
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
 from randovania.generator import elevator_distributor
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -696,14 +697,20 @@ def create_patcher_file(description: LayoutDescription,
     _add_header_data_to_result(description, result)
 
     result["menu_mod"] = configuration.menu_mod
-    result["user_preferences"] = cosmetic_patches.user_preferences.as_json
-    result["default_items"] = {
-        "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
-        "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
-    }
-    result["unvisited_room_names"] = (configuration.elevators.can_use_unvisited_room_names
-                                      and cosmetic_patches.unvisited_room_names)
-    result["teleporter_sounds"] = cosmetic_patches.teleporter_sounds
+    result["dol_patches"] = DolPatchesData(
+        energy_per_tank=configuration.energy_per_tank,
+        beam_configuration=configuration.beam_configuration,
+        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
+        user_preferences=cosmetic_patches.user_preferences,
+        default_items={
+            "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
+            "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
+        },
+        unvisited_room_names=(configuration.elevators.can_use_unvisited_room_names
+                              and cosmetic_patches.unvisited_room_names),
+        teleporter_sounds=cosmetic_patches.teleporter_sounds,
+        dangerous_energy_tank=configuration.dangerous_energy_tank,
+    ).as_json
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
@@ -792,4 +799,6 @@ def create_patcher_file(description: LayoutDescription,
 def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
     result["permalink"] = "-permalink-"
     result["seed_hash"] = f"- {description.shareable_word_hash} ({description.shareable_hash})"
+    result["shareable_hash"] = description.shareable_hash
+    result["shareable_word_hash"] = description.shareable_word_hash
     result["randovania_version"] = randovania.VERSION

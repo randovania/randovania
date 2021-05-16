@@ -10,6 +10,7 @@ def test_round_trip_full():
     game = data_reader.decode_data(original_data)
     encoded_data = data_writer.write_game_description(game)
 
+    assert list(encoded_data.keys()) == list(original_data.keys())
     assert encoded_data == original_data
 
 

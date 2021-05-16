@@ -7,7 +7,6 @@ import pytest
 from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
@@ -28,12 +27,11 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.location_list import LocationList
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver import bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.state import State, add_pickup_to_state
+from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
@@ -160,10 +158,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ])
     ])
-    game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=(),
-                                       dangerous_energy_tank=False)
     game = GameDescription(RandovaniaGame.PRIME2, DockWeaknessDatabase([], [], [], []),
-                           echoes_resource_database, game_specific, Requirement.impossible(),
+                           echoes_resource_database, Requirement.impossible(),
                            None, {}, world_list)
 
     patches = game.create_game_patches()
@@ -171,7 +167,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         TranslatorGate(1): scan_visor
     })
     initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
-                          node_a, patches, None, echoes_resource_database, game.world_list)
+                          node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100))
 
     # Run
     reach = reach_with_all_safe_resources(game, initial_state)
@@ -214,7 +210,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     )
     patches = base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
                                                        False, player_index=0)
-    state = bootstrap.calculate_starting_state(game, patches)
+    state = bootstrap.calculate_starting_state(game, patches, 100)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1

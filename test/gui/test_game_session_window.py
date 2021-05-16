@@ -451,7 +451,6 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     )
     mock_apply_patcher.assert_called_once_with(
         patcher_file=window.network_client.session_admin_player.return_value,
-        game_specific=base_patches_factory.create_game_specific(layout_configuration, echoes_game_description),
         shareable_hash=window._game_session.seed_hash,
         options=window._options,
         progress_update=ANY,

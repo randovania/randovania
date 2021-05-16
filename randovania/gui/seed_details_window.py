@@ -2,7 +2,7 @@ import collections
 import logging
 import traceback
 from functools import partial
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Set
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
@@ -14,6 +14,7 @@ from randovania.game_description import data_reader, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games import patcher_provider
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -123,10 +124,15 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
-        game = self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
-        default_name = "{} Randomizer - {}.{}".format(game.short_name,
-                                                      self.layout_description.shareable_word_hash,
-                                                      self.layout_description.file_extension())
+        all_games: Set[RandovaniaGame] = {preset.game for preset in self.layout_description.permalink.presets.values()}
+        if len(all_games) > 1:
+            game_name = "Crossgame Multiworld"
+        else:
+            game_name = f"{list(all_games)[0].short_name} Randomizer"
+
+        default_name = "{} - {}.{}".format(game_name,
+                                           self.layout_description.shareable_word_hash,
+                                           self.layout_description.file_extension())
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
@@ -167,9 +173,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         has_spoiler = layout.permalink.spoiler
         options = self._options
 
-        if layout.permalink.get_preset(self.current_player_index).configuration.game == RandovaniaGame.PRIME3:
-            return await self._show_dialog_for_prime3_layout()
-
         if not options.is_alert_displayed(InfoAlert.FAQ):
             await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "FAQ",
                                            "Have you read the Randovania FAQ?\n"
@@ -177,54 +180,42 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = layout.permalink.get_preset(self.current_player_index).configuration.game
-        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
-                                                                          layout.shareable_word_hash), has_spoiler)
-        result = await async_dialog.execute_dialog(dialog)
+        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
 
-        if result != QDialog.Accepted:
-            return
-
-        if simplified_patcher.export_busy:
+        if patcher.is_busy:
             return await async_dialog.message_box(
                 self, QtWidgets.QMessageBox.Critical,
                 "Can't save ISO",
                 "Error: Unable to save multiple ISOs at the same time,"
                 "another window is saving an ISO right now.")
 
+        if game == RandovaniaGame.PRIME3:
+            return await self._show_dialog_for_prime3_layout()
+
+        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
+                                                                          layout.shareable_word_hash), has_spoiler)
+        result = await async_dialog.execute_dialog(dialog)
+        if result != QDialog.Accepted:
+            return
+
         input_file = dialog.input_file
         output_file = dialog.output_file
         auto_save_spoiler = dialog.auto_save_spoiler
-        player_index = self.current_player_index
-        player_names = self._player_names
+        players_config = PlayersConfiguration(
+            player_index=self.current_player_index,
+            player_names=self._player_names,
+        )
 
         with options:
             options.output_directory = output_file.parent
             options.auto_save_spoiler = auto_save_spoiler
 
+        patch_data = await patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
+
         def work(progress_update: ProgressUpdateCallable):
-            num_updaters = 2
-            if input_file is not None:
-                num_updaters += 1
-            updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
+            patcher.patch_game(input_file, output_file, patch_data,
+                               progress_update=progress_update)
 
-            if input_file is not None:
-                simplified_patcher.unpack_iso(input_iso=input_file,
-                                              options=options,
-                                              progress_update=updaters[0])
-
-            # Apply Layout
-            simplified_patcher.apply_layout(layout=layout,
-                                            players_config=PlayersConfiguration(
-                                                player_index=player_index,
-                                                player_names=player_names,
-                                            ),
-                                            options=options,
-                                            progress_update=updaters[-2])
-
-            # Pack ISO
-            simplified_patcher.pack_iso(output_iso=output_file,
-                                        options=options,
-                                        progress_update=updaters[-1])
             if has_spoiler and auto_save_spoiler:
                 layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 

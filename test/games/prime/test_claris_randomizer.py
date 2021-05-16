@@ -295,7 +295,8 @@ def test_apply_patcher_file(
         mock_create_progress_update_from_successive_messages: MagicMock,
         include_menu_mod: bool,
         has_backup_path: bool,
-        valid_tmp_game_root
+        valid_tmp_game_root,
+        mocker,
 ):
     # Setup
     game_root = valid_tmp_game_root
@@ -303,21 +304,17 @@ def test_apply_patcher_file(
     game_specific = MagicMock()
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
-    unvisited_room_names = "unvisited_room_names placeholder value"
-    teleporter_sounds = "teleporter_sounds placeholder value"
+    mock_data_from_json = mocker.patch("randovania.games.prime.dol_patcher.DolPatchesData.from_json")
 
     patcher_data = {
         "menu_mod": include_menu_mod,
-        "user_preferences": EchoesUserPreferences().as_json,
-        "default_items": {"foo": "bar"},
-        "unvisited_room_names": unvisited_room_names,
-        "teleporter_sounds": teleporter_sounds,
+        "dol_patches": {"key": "special"}
     }
     assert claris_randomizer.get_patch_version(game_root) == 0
 
     # Run
     claris_randomizer.apply_patcher_file(game_root, backup_files_path,
-                                         patcher_data, game_specific, progress_update)
+                                         patcher_data, progress_update)
 
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
@@ -331,8 +328,8 @@ def test_apply_patcher_file(
         mock_create_pak_backups.assert_not_called()
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
-    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences(), {"foo": "bar"},
-                                               unvisited_room_names, teleporter_sounds)
+    mock_data_from_json.assert_called_once_with({"key": "special"})
+    mock_apply_patches.assert_called_once_with(game_root, mock_data_from_json.return_value)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
@@ -368,7 +365,6 @@ def test_apply_layout(mock_apply_patcher_file: MagicMock,
     mock_create_patcher_file.assert_called_once_with(description, player_config, cosmetic_patches)
     mock_apply_patcher_file.assert_called_once_with(game_root, backup_files_path,
                                                     mock_create_patcher_file.return_value,
-                                                    description.all_patches[player_config.player_index].game_specific,
                                                     progress_update)
 
 

@@ -46,6 +46,11 @@ def default_preset(preset_manager) -> Preset:
 
 
 @pytest.fixture()
+def default_echoes_preset(preset_manager) -> Preset:
+    return preset_manager.default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
+
+
+@pytest.fixture()
 def default_layout_configuration(preset_manager) -> EchoesConfiguration:
     return preset_manager.default_preset.get_preset().configuration
 
@@ -106,7 +111,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches(0, {}, {}, {}, {}, {}, {}, None, {}, None)
+    return GamePatches(0, {}, {}, {}, {}, {}, {}, None, {})
 
 
 def pytest_addoption(parser):

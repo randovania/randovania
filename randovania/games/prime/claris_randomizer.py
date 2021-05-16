@@ -4,6 +4,9 @@ import platform
 import re
 import shutil
 from asyncio import StreamWriter, StreamReader
+
+from randovania.games.prime.dol_patcher import DolPatchesData
+
 try:
     from asyncio.exceptions import IncompleteReadError
 except ImportError:
@@ -12,11 +15,9 @@ from pathlib import Path
 from typing import Callable, List, Union, Optional
 
 from randovania import get_data_path
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.prime import patcher_file, dol_patcher
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -226,14 +227,12 @@ def apply_layout(description: LayoutDescription,
 
     apply_patcher_file(game_root, backup_files_path,
                        patcher_file.create_patcher_file(description, players_config, cosmetic_patches),
-                       description.all_patches[players_config.player_index].game_specific,
                        progress_update)
 
 
 def apply_patcher_file(game_root: Path,
                        backup_files_path: Optional[Path],
                        patcher_data: dict,
-                       game_specific: EchoesGameSpecific,
                        progress_update: ProgressUpdateCallable,
                        ):
     """
@@ -241,15 +240,10 @@ def apply_patcher_file(game_root: Path,
     :param game_root:
     :param backup_files_path:
     :param patcher_data:
-    :param game_specific:
     :param progress_update:
     :return:
     """
     menu_mod = patcher_data["menu_mod"]
-    user_preferences = EchoesUserPreferences.from_json(patcher_data["user_preferences"])
-    default_items = patcher_data["default_items"]
-    unvisited_room_names = patcher_data["unvisited_room_names"]
-    teleporter_sounds = patcher_data["teleporter_sounds"]
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
@@ -268,8 +262,7 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items,
-                              unvisited_room_names, teleporter_sounds)
+    dol_patcher.apply_patches(game_root, DolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:

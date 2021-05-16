@@ -12,9 +12,8 @@ from PySide2.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import data_reader
+from randovania.games import patcher_provider
 from randovania.games.game import RandovaniaGame
-from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -27,7 +26,7 @@ from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetwor
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
 from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
-from randovania.interface_common import simplified_patcher, status_update_lib
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
@@ -1005,19 +1004,22 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                            "It can be found in the main Randovania window → Help → Multiworld")
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
-        dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(self._game_session.word_hash), False)
+        game = self._game_session.presets[membership.row].game
+        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
+
+        if patcher.is_busy:
+            return await async_dialog.message_box(
+                self, QtWidgets.QMessageBox.Critical,
+                "Can't save ISO",
+                "Error: Unable to save multiple ISOs at the same time,"
+                "another window is saving an ISO right now.")
+
+        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
+                                                                          self._game_session.word_hash), False)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:
             return
-
-        patcher_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
-                                                       options.cosmetic_patches.as_json)
-        shareable_hash = self._game_session.seed_hash
-
-        configuration = self._game_session.presets[membership.row].get_preset().configuration
-        game = data_reader.decode_data(configuration.game_data)
-        game_specific = base_patches_factory.create_game_specific(configuration, game)
 
         input_file = dialog.input_file
         output_file = dialog.output_file
@@ -1025,28 +1027,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         with options:
             options.output_directory = output_file.parent
 
+        patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
+                                                     options.cosmetic_patches.as_json)
+
         def work(progress_update: ProgressUpdateCallable):
-            num_updaters = 2
-            if input_file is not None:
-                num_updaters += 1
+            patcher.patch_game(input_file, output_file, patch_data,
+                               progress_update=progress_update)
 
-            updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
-            if input_file is not None:
-                simplified_patcher.unpack_iso(input_iso=input_file,
-                                              options=options,
-                                              progress_update=updaters[0])
-
-            # Apply Layout
-            simplified_patcher.apply_patcher_file(patcher_file=patcher_data,
-                                                  game_specific=game_specific,
-                                                  shareable_hash=shareable_hash,
-                                                  options=options,
-                                                  progress_update=updaters[-2])
-
-            # Pack ISO
-            simplified_patcher.pack_iso(output_iso=output_file,
-                                        options=options,
-                                        progress_update=updaters[-1])
             progress_update(f"Finished!", 1)
 
         self.run_in_background_thread(work, "Exporting...")

@@ -40,7 +40,6 @@ from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.location_list import LocationList
 from randovania.layout.preset import Preset
 from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
 from randovania.layout.trick_level import LayoutTrickLevel
