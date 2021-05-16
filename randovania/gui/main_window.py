@@ -15,6 +15,7 @@ from qasync import asyncSlot
 from randovania import VERSION
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
+from randovania.games.patcher_provider import PatcherProvider
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
@@ -69,6 +70,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         return self._preset_manager
 
     @property
+    def patcher_provider(self) -> PatcherProvider:
+        return self._patcher_provider
+
+    @property
     def main_window(self) -> QtWidgets.QMainWindow:
         return self
 
@@ -82,6 +87,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
         self._is_preview_mode = preview
+        self._patcher_provider = PatcherProvider(options)
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 

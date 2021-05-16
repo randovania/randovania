@@ -7,7 +7,6 @@ from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.game import RandovaniaGame
 
 
@@ -186,12 +185,12 @@ def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
     return body_address, body_bytes
 
 
-def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
+def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, energy_per_tank: int,
                                      dol_file: DolFile):
     """
     Patches the base health capacity and the energy tank capacity with matching values.
     """
-    tank_capacity = float(game_specific.energy_per_tank)
+    tank_capacity = float(energy_per_tank)
 
     dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
     dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))

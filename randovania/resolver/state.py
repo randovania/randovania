@@ -1,4 +1,5 @@
 import copy
+import dataclasses
 from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.game_patches import GamePatches
@@ -19,6 +20,13 @@ def _energy_tank_difference(new_resources: CurrentResources,
     return new_resources.get(database.energy_tank, 0) - old_resources.get(database.energy_tank, 0)
 
 
+@dataclasses.dataclass(frozen=True)
+class StateGameData:
+    resource_database: ResourceDatabase
+    world_list: WorldList
+    energy_per_tank: int
+
+
 class State:
     resources: CurrentResources
     collected_resource_nodes: Tuple[ResourceNode, ...]
@@ -27,8 +35,15 @@ class State:
     patches: GamePatches
     previous_state: Optional["State"]
     path_from_previous_state: Tuple[Node, ...]
-    resource_database: ResourceDatabase
-    world_list: WorldList
+    game_data: StateGameData
+
+    @property
+    def resource_database(self) -> ResourceDatabase:
+        return self.game_data.resource_database
+
+    @property
+    def world_list(self) -> WorldList:
+        return self.game_data.world_list
 
     def __init__(self,
                  resources: CurrentResources,
@@ -37,8 +52,7 @@ class State:
                  node: Node,
                  patches: GamePatches,
                  previous: Optional["State"],
-                 resource_database: ResourceDatabase,
-                 world_list: WorldList):
+                 game_data: StateGameData):
 
         self.resources = resources
         self.collected_resource_nodes = collected_resource_nodes
@@ -46,8 +60,7 @@ class State:
         self.patches = patches
         self.path_from_previous_state = ()
         self.previous_state = previous
-        self.resource_database = resource_database
-        self.world_list = world_list
+        self.game_data = game_data
 
         # We place this last because we need resource_database set
         self.energy = min(energy, self.maximum_energy)
@@ -62,8 +75,7 @@ class State:
                      self.node,
                      self.patches,
                      self.previous_state,
-                     self.resource_database,
-                     self.world_list)
+                     self.game_data)
 
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
@@ -79,15 +91,16 @@ class State:
 
     def take_damage(self, damage: int) -> "State":
         return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self,
-                     self.resource_database, self.world_list)
+                     self.game_data)
 
     def heal(self) -> "State":
         return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self,
-                     self.resource_database, self.world_list)
+                     self.game_data)
 
     def _energy_for(self, resources: CurrentResources) -> int:
-        energy_per_tank = self.patches.game_specific.energy_per_tank if self.patches.game_specific is not None else 100
-        return (energy_per_tank - 1) + (energy_per_tank * resources.get(self.resource_database.energy_tank, 0))
+        num_tanks = resources.get(self.game_data.resource_database.energy_tank, 0)
+        energy_per_tank = self.game_data.energy_per_tank
+        return (energy_per_tank - 1) + (energy_per_tank * num_tanks)
 
     @property
     def maximum_energy(self) -> int:
@@ -115,7 +128,7 @@ class State:
             energy = self._energy_for(new_resources)
 
         return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self,
-                     self.resource_database, self.world_list)
+                     self.game_data)
 
     def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
         if new_energy is None:
@@ -144,8 +157,7 @@ class State:
             self.node,
             self.patches,
             self,
-            self.resource_database,
-            self.world_list,
+            self.game_data,
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
@@ -159,21 +171,16 @@ class State:
         add_resources_into_another(new_resources, pickup_resources)
         new_patches = self.patches.assign_extra_initial_items(pickup_resources)
 
-        if self.patches.game_specific is not None:
-            energy_per_tank = self.patches.game_specific.energy_per_tank
-        else:
-            energy_per_tank = 100
+        tank_delta = _energy_tank_difference(new_resources, self.resources, self.resource_database)
 
         return State(
             new_resources,
             self.collected_resource_nodes,
-            self.energy + _energy_tank_difference(new_resources, self.resources,
-                                                  self.resource_database) * energy_per_tank,
+            self.energy + tank_delta * self.game_data.energy_per_tank,
             self.node,
             new_patches,
             self,
-            self.resource_database,
-            self.world_list,
+            self.game_data,
         )
 
 

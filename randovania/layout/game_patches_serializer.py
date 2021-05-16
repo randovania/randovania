@@ -163,7 +163,6 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     :param configuration:
     :return:
     """
-    game_specific = base_patches_factory.create_game_specific(configuration, game)
     world_list = game.world_list
 
     initial_pickup_assignment = all_pools[player_index].assignment
@@ -247,7 +246,6 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
         hints=hints,
-        game_specific=game_specific,
     )
 
 

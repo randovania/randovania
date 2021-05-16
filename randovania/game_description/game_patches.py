@@ -6,7 +6,6 @@ from typing import Dict, Tuple, Iterator
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
 from randovania.game_description.dock import DockWeakness, DockConnection
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -29,7 +28,6 @@ class GamePatches:
     starting_items: CurrentResources
     starting_location: AreaLocation
     hints: Dict[LogbookAsset, Hint]
-    game_specific: EchoesGameSpecific
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)

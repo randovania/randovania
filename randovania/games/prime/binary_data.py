@@ -68,7 +68,6 @@ def decode(binary_io: BinaryIO) -> Dict:
     fields = [
         "game",
         "resource_database",
-        "game_specific",
         "starting_location",
         "initial_states",
         "victory_condition",
@@ -122,7 +121,6 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
     # Resource Info database
     data.pop("game")
     data.pop("resource_database")
-    data.pop("game_specific")
     data.pop("dock_weakness_database")
     data.pop("worlds")
     data.pop("victory_condition")
@@ -167,7 +165,6 @@ ConstructDamageResourceInfo = _build_resource_info(
         multiplier=Float32b,
     ))
 )
-
 
 ConstructResourceRequirement = Struct(
     type=Byte,
@@ -309,18 +306,11 @@ ConstructWorld = Struct(
 
 ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
 
-game_specific_map = {
-    RandovaniaGame.PRIME1.value: Struct(),
-    RandovaniaGame.PRIME2.value: ConstructEchoesGameSpecific,
-    RandovaniaGame.PRIME3.value: Struct(),
-}
-
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
     game=ConstructGameEnum,
     resource_database=ConstructResourceDatabase,
-    game_specific=Switch(lambda this: this.game, game_specific_map),
     dock_weakness_database=Struct(
         door=PrefixedArray(VarInt, ConstructDockWeakness),
         portal=PrefixedArray(VarInt, ConstructDockWeakness),

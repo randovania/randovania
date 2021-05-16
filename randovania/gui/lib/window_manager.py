@@ -3,6 +3,7 @@ from typing import Optional, List
 from PySide2.QtWidgets import QMainWindow
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.patcher_provider import PatcherProvider
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.echoes_configuration import EchoesConfiguration
@@ -18,6 +19,10 @@ class WindowManager(QMainWindow):
 
     @property
     def preset_manager(self) -> PresetManager:
+        raise NotImplemented()
+
+    @property
+    def patcher_provider(self) -> PatcherProvider:
         raise NotImplemented()
 
     def open_map_tracker(self, configuration: EchoesConfiguration):
