@@ -109,7 +109,10 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
     initial_resources = copy.copy(patches.starting_items)
 
     if isinstance(starting_node, PlayerShipNode):
-        initial_resources[starting_node.resource()] = 1
+        add_resource_gain_to_current_resources(
+            starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes),
+            initial_resources,
+        )
 
     initial_game_state = game.initial_states.get("Default")
     if initial_game_state is not None:

@@ -133,7 +133,6 @@ class ResolverReach:
                             victory_condition: Requirement,
                             ) -> Iterator[Tuple[ResourceNode, int]]:
 
-        # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
         interesting_resources = calculate_interesting_resources(
             self._satisfiable_requirements.union(victory_condition.as_set.alternatives),
             state.resources,
