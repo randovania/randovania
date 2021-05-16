@@ -1,5 +1,5 @@
 from pathlib import Path
-from unittest.mock import MagicMock, ANY
+from mock import MagicMock, ANY, AsyncMock
 
 import pytest
 
@@ -11,7 +11,8 @@ from randovania.layout.permalink import Permalink
 @pytest.mark.parametrize("no_retry", [False, True])
 def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, preset_manager):
     # Setup
-    mock_generate: MagicMock = mocker.patch("randovania.generator.generator.generate_description", autospec=True)
+    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
+                                            new_callable=AsyncMock)
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
 
     args = MagicMock()
@@ -38,7 +39,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     else:
         mock_from_str.assert_not_called()
 
-    mock_generate.assert_called_once_with(
+    mock_generate.assert_awaited_once_with(
         permalink=permalink,
         status_update=ANY,
         validate_after_generation=args.validate,

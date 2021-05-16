@@ -1,6 +1,5 @@
-from unittest.mock import MagicMock, ANY
-
 import pytest
+from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -11,7 +10,8 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 def test_randomize_command_logic(mocker, with_permalink):
     mock_from_str = mocker.patch("randovania.layout.permalink.Permalink.from_str")
     mock_from_file = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
-    mock_generate = mocker.patch("randovania.generator.generator.generate_description")
+    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
+                                            new_callable=AsyncMock)
     mock_apply = mocker.patch("randovania.games.prime.claris_randomizer.apply_layout")
 
     args = MagicMock()
@@ -40,9 +40,9 @@ def test_randomize_command_logic(mocker, with_permalink):
 
     if with_permalink:
         mock_from_str.assert_called_once_with(args.permalink)
-        mock_generate.assert_called_once_with(permalink=mock_from_str.return_value,
-                                              status_update=ANY,
-                                              validate_after_generation=True)
+        mock_generate.assert_awaited_once_with(permalink=mock_from_str.return_value,
+                                               status_update=ANY,
+                                               validate_after_generation=True)
         mock_from_file.assert_not_called()
     else:
         mock_from_str.assert_not_called()

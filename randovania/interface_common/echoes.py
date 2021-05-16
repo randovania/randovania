@@ -1,3 +1,4 @@
+import asyncio
 import multiprocessing
 from concurrent.futures.process import ProcessPoolExecutor
 from multiprocessing.connection import Connection
@@ -18,7 +19,7 @@ def _generate_layout_worker(output_pipe: Connection,
             raise RuntimeError(output_pipe.recv())
 
     debug.set_level(debug_level)
-    return generator.generate_description(status_update=status_update, **extra_args)
+    return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))
 
 
 def generate_description(permalink: Permalink,

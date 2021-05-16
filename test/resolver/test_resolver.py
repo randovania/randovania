@@ -5,7 +5,8 @@ from randovania.resolver import resolver, debug
 
 
 @pytest.mark.skip_resolver_tests
-def test_resolver_with_log_file(test_files_dir):
+@pytest.mark.asyncio
+async def test_resolver_with_log_file(test_files_dir):
     # Setup
     debug.set_level(2)
 
@@ -14,8 +15,8 @@ def test_resolver_with_log_file(test_files_dir):
     patches = description.all_patches[0]
 
     # Run
-    final_state_by_resolve = resolver.resolve(configuration=configuration,
-                                              patches=patches)
+    final_state_by_resolve = await resolver.resolve(configuration=configuration,
+                                                    patches=patches)
 
     # Assert
     assert final_state_by_resolve is not None
