@@ -15,9 +15,12 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
-from randovania.generator.filler.filler_library import should_have_hint
-from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.games.game import RandovaniaGame
+from randovania.generator.filler.filler_configuration import FillerConfiguration
+from randovania.generator.filler.filler_library import should_have_hint, UnableToGenerate
+from randovania.generator.filler.player_state import PlayerState
+from randovania.generator.filler.retcon import retcon_playthrough_filler
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
 
 T = TypeVar("T")
@@ -61,12 +64,13 @@ def _create_weighted_list(rng: Random,
 
 def precision_pair_weighted_list() -> List[PrecisionPair]:
     tiers = {
-        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED): 5,
-        (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY): 2,
-        (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY): 1,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
 
-        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED): 2,
-        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED, False): 2,
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
     }
 
     hints = []
@@ -95,6 +99,7 @@ def add_relative_hint(world_list: WorldList,
     :return: Might be None, if no hint could be created.
     """
     target_node = node_search.pickup_index_to_node(world_list, target)
+    target_area = world_list.nodes_to_area(target_node)
     distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
 
     def _major_pickups(area: Area) -> Iterator[PickupIndex]:
@@ -110,22 +115,27 @@ def add_relative_hint(world_list: WorldList,
     area_choices = {
         area: 1 / max(distance, 2)
         for area, distance in distances.items()
-        if distance > 0 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
-                             or _not_empty(_major_pickups(area)))
+        if (distance > 0 and area.in_dark_aether == target_area.in_dark_aether
+            and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA or _not_empty(_major_pickups(area))))
     }
     if not area_choices:
         return None
-    area = random_lib.select_element_with_weight(area_choices, rng)
+    area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
+                                                             key=lambda a: a[0].area_asset_id)), rng)
+
+    distance_offset = None
+    if not precise_distance:
+        distance_offset = max_distance - distances[area]
 
     if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
-        relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
+        relative = RelativeDataArea(distance_offset, world_list.area_to_area_location(area),
                                     precision)
     elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
-        relative = RelativeDataItem(precise_distance, rng.choice(list(_major_pickups(area))), precision)
+        relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)
     else:
         raise ValueError(f"Invalid relative_type: {relative_type}")
 
-    precision_pair = PrecisionPair(relative_type, target_precision, relative)
+    precision_pair = PrecisionPair(relative_type, target_precision, include_owner=False, relative=relative)
     return Hint(HintType.LOCATION, precision_pair, target)
 
 
@@ -144,8 +154,8 @@ def _relative(relative_type: HintLocationPrecision,
 def _get_relative_hint_providers():
     return [
         _relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),
         _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
-        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.PRECISE_CATEGORY, 3),
     ]
 
 
@@ -253,11 +263,12 @@ def fill_unassigned_hints(patches: GamePatches,
                             if isinstance(node, PickupNode)}
 
     # Get an stable order
-    possible_indices = list(sorted(possible_indices))
+    ordered_possible_indices = list(sorted(possible_indices))
+    ordered_potential_hint_locations = list(sorted(potential_hint_locations))
 
     num_logbooks: Dict[PickupIndex, int] = {
         index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
-        for index in possible_indices
+        for index in ordered_possible_indices
     }
     max_seen = max(num_logbooks.values())
     pickup_indices_weight: Dict[PickupIndex, int] = {
@@ -265,11 +276,11 @@ def fill_unassigned_hints(patches: GamePatches,
         for index, num_logbook in num_logbooks.items()
     }
     # Ensure all indices are present with at least weight 0
-    for index in possible_indices:
+    for index in ordered_possible_indices:
         if index not in pickup_indices_weight:
             pickup_indices_weight[index] = 0
 
-    for logbook in sorted(potential_hint_locations,
+    for logbook in sorted(ordered_potential_hint_locations,
                           key=lambda r: len(scan_asset_initial_pickups[r]),
                           reverse=True):
         try:
@@ -277,7 +288,7 @@ def fill_unassigned_hints(patches: GamePatches,
         except StopIteration:
             # If everything has weight 0, then just choose randomly.
             new_index = random_lib.random_key(pickup_indices_weight, rng)
-            
+
         del pickup_indices_weight[new_index]
 
         new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
@@ -289,7 +300,7 @@ def fill_unassigned_hints(patches: GamePatches,
 @dataclasses.dataclass(frozen=True)
 class PlayerPool:
     game: GameDescription
-    configuration: LayoutConfiguration
+    configuration: EchoesConfiguration
     patches: GamePatches
     pickups: List[PickupEntry]
 
@@ -307,10 +318,10 @@ class FillerResults:
     action_log: Tuple[str, ...]
 
 
-def run_filler(rng: Random,
-               player_pools: Dict[int, PlayerPool],
-               status_update: Callable[[str], None],
-               ) -> FillerResults:
+async def run_filler(rng: Random,
+                     player_pools: Dict[int, PlayerPool],
+                     status_update: Callable[[str], None],
+                     ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
     Returns a GamePatches with progression items and hints assigned, along with all items in the pool
@@ -327,12 +338,14 @@ def run_filler(rng: Random,
 
     for index, pool in player_pools.items():
         status_update(f"Creating state for player {index + 1}")
-        major_items, player_expansions[index] = _split_expansions(pool.pickups)
+        if pool.configuration.multi_pickup_placement and False:
+            major_items, player_expansions[index] = list(pool.pickups), []
+        else:
+            major_items, player_expansions[index] = _split_expansions(pool.pickups)
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
 
         new_game, state = bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
-        new_game.patch_requirements(state.resources, pool.configuration.damage_strictness.value)
 
         major_configuration = pool.configuration.major_items_configuration
         player_states.append(PlayerState(
@@ -345,24 +358,39 @@ def run_filler(rng: Random,
                 minimum_random_starting_items=major_configuration.minimum_random_starting_items,
                 maximum_random_starting_items=major_configuration.maximum_random_starting_items,
                 indices_to_exclude=pool.configuration.available_locations.excluded_indices,
+                multi_pickup_placement=pool.configuration.multi_pickup_placement,
             ),
         ))
 
-    filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
+    try:
+        filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
+    except UnableToGenerate as e:
+        message = "{}\n\n{}".format(
+            str(e),
+            "\n\n".join(
+                "#### Player {}\n{}".format(player.index + 1, player.current_state_report())
+                for player in player_states
+            ),
+        )
+        debug.debug_print(message)
+        raise UnableToGenerate(message) from e
 
     results = {}
 
     for player_state, patches in filler_result.items():
         game = player_state.game
 
-        # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
-                                                   player_state.scan_asset_initial_pickups)
+        if game.game == RandovaniaGame.PRIME2:
+            # Since we haven't added expansions yet, these hints will always be for items added by the filler.
+            full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
+                                                       player_state.scan_asset_initial_pickups)
 
-        if player_pools[player_state.index].configuration.hints.item_hints:
-            result = add_hints_precision(player_state, full_hints_patches, rng)
+            if player_pools[player_state.index].configuration.hints.item_hints:
+                result = add_hints_precision(player_state, full_hints_patches, rng)
+            else:
+                result = replace_hints_without_precision_with_jokes(full_hints_patches)
         else:
-            result = replace_hints_without_precision_with_jokes(full_hints_patches)
+            result = patches
 
         results[player_state.index] = FillerPlayerResult(
             game=game,

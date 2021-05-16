@@ -84,40 +84,38 @@ async def test_refresh_received_pickups(client):
     await client.refresh_received_pickups()
 
     # Assert
-    assert client._received_messages == ["Message A", "Message B", "Message C"]
-    assert client._received_pickups == pickups
+    assert client._received_pickups == list(zip(["Message A", "Message B", "Message C"], pickups))
     client._decode_pickup.assert_has_calls([call(b"bytesA"), call(b"bytesB"), call(b"bytesC")])
 
 
 @pytest.mark.asyncio
 async def test_on_game_updated(client, tmpdir):
     client.refresh_received_pickups = AsyncMock()
-    client._received_messages = ["Message A", "Message B", "Message C"]
-    client._received_pickups = [MagicMock(), MagicMock(), MagicMock()]
+    client._received_pickups = MagicMock()
 
     client._data = Data(Path(tmpdir).joinpath("data.json"))
-    client._data.latest_message_displayed = 1
 
     # Run
     await client.on_network_game_updated()
 
     # Assert
-    client.game_connection.display_message.assert_has_calls([call("Message B"), call("Message C")])
     client.game_connection.set_permanent_pickups.assert_called_once_with(client._received_pickups)
-    assert client._data.latest_message_displayed == 3
 
 
 def test_decode_pickup(client, echoes_resource_database):
-    data = b'\x00\xc8@\x00'
+    data = b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\x08@\x0e'
     expected_pickup = PickupEntry(
-        name="",
+        name="The Name",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.MOVEMENT,
-        resources=(
-            ConditionalResources(None, None, ()),
-        ),
+        progression=tuple(),
     )
+
+    # from randovania.bitpacking import bitpacking
+    # from randovania.network_common.pickup_serializer import BitPackPickupEntry
+    # new_data = bitpacking.pack_value(BitPackPickupEntry(expected_pickup, echoes_resource_database))
+    # assert new_data == data
 
     # Run
     pickup = client._decode_pickup(data)

@@ -135,7 +135,7 @@ class GameSession(BaseModel):
                 "spoiler": description.permalink.spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
-                "permalink": description.permalink.as_str,
+                "permalink": description.permalink.as_base64_str,
             }
         else:
             game_details = {

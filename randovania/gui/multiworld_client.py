@@ -2,11 +2,11 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import List, Set, Optional, AsyncContextManager
+from typing import List, Set, Optional, AsyncContextManager, Tuple
 
 import pid
 from PySide2.QtCore import QObject
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.game_connection import GameConnection
@@ -58,16 +58,13 @@ class Data(AsyncContextManager):
 
 class MultiworldClient(QObject):
     _data: Optional[Data] = None
-    _received_messages: List[str]
-    _received_pickups: List[PickupEntry]
+    _received_pickups: List[Tuple[str, PickupEntry]]
     _notify_task: Optional[asyncio.Task] = None
     _pid: Optional[pid.PidFile] = None
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):
         super().__init__()
-
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
 
         self.network_client = network_client
         self.game_connection = game_connection
@@ -80,7 +77,7 @@ class MultiworldClient(QObject):
                 self._pid.create()
             except pid.PidFileError as e:
                 raise BackendInUse(Path(self._pid.filename)) from e
-            self.logger.info(f"Creating pid file at {self._pid.filename}")
+            self.logger.debug(f"Creating pid file at {self._pid.filename}")
 
         self._game = data_reader.decode_data(default_data.decode_default_prime2())
 
@@ -89,7 +86,7 @@ class MultiworldClient(QObject):
         return self._data is not None
 
     async def start(self, persist_path: Path):
-        self.logger.info("start")
+        self.logger.debug("start")
 
         if self._pid is not None and self._pid.fh is None:
             self._pid.create()
@@ -103,7 +100,7 @@ class MultiworldClient(QObject):
         self.start_notify_collect_locations_task()
 
     async def stop(self):
-        self.logger.info("stop")
+        self.logger.debug("stop")
 
         if self._notify_task is not None:
             self._notify_task.cancel()
@@ -124,7 +121,7 @@ class MultiworldClient(QObject):
 
     def _decode_pickup(self, data: bytes) -> PickupEntry:
         decoder = bitpacking.BitPackDecoder(data)
-        return BitPackPickupEntry.bit_pack_unpack(decoder, "", self._game.resource_database)
+        return BitPackPickupEntry.bit_pack_unpack(decoder, self._game.resource_database)
 
     async def _notify_collect_locations(self):
         while True:
@@ -151,39 +148,29 @@ class MultiworldClient(QObject):
 
     async def on_location_collected(self, location: int):
         if location in self._data.collected_locations:
-            self.logger.info(f"on_location_collected: {location}, but location was already collected")
+            self.logger.info(f"{location}, but location was already collected")
             return
 
-        self.logger.info(f"on_location_collected: {location}, a new location")
+        self.logger.info(f"{location}, a new location")
         async with self._data as data:
             data.collected_locations.add(location)
 
         self.start_notify_collect_locations_task()
 
     async def refresh_received_pickups(self):
-        self.logger.debug(f"refresh_received_pickups: start")
+        self.logger.debug(f"start")
         async with self._pickups_lock:
             result = await self.network_client.game_session_request_pickups()
 
-            self._received_messages = []
-            self._received_pickups = []
-            self.logger.info(f"refresh_received_pickups: received {len(result)} items")
-
-            for message, data in result:
-                self._received_messages.append(message)
-                self._received_pickups.append(self._decode_pickup(data))
+            self.logger.info(f"received {len(result)} items")
+            self._received_pickups = [
+                (provider_name, self._decode_pickup(data))
+                for provider_name, data in result
+            ]
 
     @asyncSlot()
     async def on_network_game_updated(self):
         await self.refresh_received_pickups()
 
         async with self._pickups_lock:
-            self.logger.info(f"on_game_updated: message {self._data.latest_message_displayed} last displayed")
-
-            if self._data.latest_message_displayed < len(self._received_messages):
-                async with self._data as data:
-                    while data.latest_message_displayed < len(self._received_messages):
-                        self.game_connection.display_message(self._received_messages[data.latest_message_displayed])
-                        data.latest_message_displayed += 1
-
             self.game_connection.set_permanent_pickups(self._received_pickups)

@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 12
+_CURRENT_OPTIONS_FILE_VERSION = 13
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -14,8 +14,16 @@ def _convert_v11(options: dict) -> dict:
     return options
 
 
+def _convert_v12(options: dict) -> dict:
+    if "cosmetic_patches" in options:
+        options["cosmetic_patches"]["unvisited_room_names"] = True
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
+    12: _convert_v12,
 }
 
 

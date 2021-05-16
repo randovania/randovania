@@ -3,6 +3,8 @@ from typing import Optional
 
 from PySide2 import QtWidgets
 
+from randovania.gui.lib import common_qt_lib
+
 
 async def execute_dialog(dialog: QtWidgets.QDialog) -> QtWidgets.QDialog.DialogCode:
     """
@@ -28,6 +30,7 @@ async def message_box(parent: Optional[QtWidgets.QWidget],
                       ) -> QtWidgets.QMessageBox.StandardButton:
     box = QtWidgets.QMessageBox(icon, title, text, buttons, parent)
     box.setDefaultButton(default_button)
+    common_qt_lib.set_default_window_icon(box)
     return await execute_dialog(box)
 
 

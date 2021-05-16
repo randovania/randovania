@@ -3,7 +3,7 @@ from typing import List
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania.gui.generated.game_session_browser_dialog_ui import Ui_GameSessionBrowserDialog
 from randovania.gui.lib import common_qt_lib, async_dialog

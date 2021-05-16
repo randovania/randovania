@@ -131,7 +131,7 @@ def test_leave_game_session_without_session(mocker, server_app):
 
 def test_on_success_ok(server_app):
     # Setup
-    custom = MagicMock()
+    custom = MagicMock(return_value={"foo": 12345})
     server_app.on("custom", custom)
 
     # Run
@@ -140,7 +140,7 @@ def test_on_success_ok(server_app):
 
     # Assert
     custom.assert_called_once_with(server_app)
-    assert result == {"result": custom.return_value}
+    assert result == {"result": {"foo": 12345}}
 
 
 def test_on_success_network_error(server_app):

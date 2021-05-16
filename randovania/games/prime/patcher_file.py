@@ -2,6 +2,7 @@ from random import Random
 from typing import Dict, List, Iterator
 
 import randovania
+import randovania.games.prime.patcher_file_lib.hints
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
@@ -9,60 +10,77 @@ from randovania.game_description.default_database import default_prime2_memo_dat
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode, PickupNode
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.node import TeleporterNode
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
     ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
+from randovania.generator import elevator_distributor
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.teleporters import TeleporterShuffleMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
-_CUSTOM_NAMES_FOR_ELEVATORS = {
-    # Great Temple
-    408633584: "Temple Transport Emerald",
-    2399252740: "Temple Transport Violet",
-    2556480432: "Temple Transport Amber",
 
-    # Temple Grounds to Great Temple
-    1345979968: "Sanctuary Quadrant",
-    1287880522: "Agon Quadrant",
-    2918020398: "Torvus Quadrant",
+_ENERGY_CONTROLLER_MAP_ASSET_IDS = [
+    618058071,  # Agon EC
+    724159530,  # Torvus EC
+    988679813,  # Sanc EC
+]
+_ELEVATOR_ROOMS_MAP_ASSET_IDS = [
+    # 0x529F0152,  # Sky Temple Energy Controller
+    0xAE06A5D9,  # Sky Temple Gateway
 
-    # Temple Grounds to Areas
-    1660916974: "Agon Gate",
-    2889020216: "Torvus Gate",
-    3455543403: "Sanctuary Gate",
+    # cliff
+    0x1C7CBD3E,  # agon
+    0x92A2ADA3,  # Torvus
+    0xFB9E9C00,  # Entrance
+    0x74EFFB3C,  # Aerie
+    0x932CB12E,  # Aerie Transport Station
 
-    # Agon
-    1473133138: "Agon Entrance",
-    2806956034: "Agon Portal Access",
-    3331021649: "Agon Temple Access",
+    # sand
+    0xEF5EA06C,  # Sanc
+    0x8E9B3B3F,  # Torvus
+    0x7E1BC16F,  # Entrance
 
-    # Torvus
-    1868895730: "Torvus Entrance",
-    3479543630: "Torvus Temple Access",
-    3205424168: "Lower Torvus Access",
+    # swamp
+    0x46B0EECF,  # Entrance
+    0xE6B06473,  # Agon
+    0x96DB1F15,  # Sanc
 
-    # Sanctuary
-    3528156989: "Sanctuary Entrance",
-    900285955: "Sanctuary Spider side",
-    3145160350: "Sanctuary Vault side",
-}
+    # tg -> areas
+    0x4B2A6FD3,  # Agon
+    0x85E70805,  # Torvus
+    0xE4229356,  # Sanc
+
+    # tg -> gt
+    0x79EFFD7D,
+    0x65168477,
+    0x84388E13,
+
+    # gt -> tg
+    0xA6D44A39,
+    0x318EBBCD,
+    0xB1B5308D,
+]
 
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',
-    'Temporary Power Bombs': 'Power Bomb',
+    'Temporary Power Bomb': 'Power Bomb',
+}
+_ITEMS_TO_PLURALIZE = {
+    "Missile",
+    "Power Bomb",
 }
 
 
@@ -102,21 +120,68 @@ def _get_jingle_index_for(category: ItemCategory) -> int:
         return 0
 
 
+def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalResources]:
+    if len(pickup.progression) > 1:
+        assert pickup.resource_lock is None, pickup.name
+        return list(pickup.conditional_resources)
+
+    else:
+        resources = list(pickup.extra_resources)
+        name = pickup.name
+        if pickup.progression:
+            name = pickup.progression[0][0].long_name
+            resources.append(pickup.progression[0])
+
+        lock = pickup.resource_lock
+        if pickup.respects_lock and not pickup.unlocks_resource and lock is not None:
+            locked_resources = lock.convert_gain(resources)
+            return [
+                ConditionalResources(
+                    name=f"Locked {name}",
+                    item=None,
+                    resources=tuple(locked_resources),
+                ),
+                ConditionalResources(
+                    name=name,
+                    item=lock.locked_by,
+                    resources=tuple(resources),
+                ),
+            ]
+        else:
+            return [
+                ConditionalResources(
+                    name=name,
+                    item=None,
+                    resources=tuple(resources),
+                ),
+            ]
+
+
+def _add_quantity_to_resource(resource: str, quantity: int) -> str:
+    return "{} {}{}".format(quantity, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
+
+
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != ItemCategory.EXPANSION:
-        if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
+        if len(pickup.progression) > 1:
             return "{}. Provides the following in order: {}".format(
-                pickup.name, ", ".join(conditional.name for conditional in pickup.resources))
+                pickup.name, ", ".join(conditional.name for conditional in pickup.conditional_resources))
         else:
             return pickup.name
 
-    return "{} that provides {}".format(
-        pickup.name,
-        " and ".join(
-            "{} {}".format(quantity, _resource_user_friendly_name(resource))
-            for resource, quantity in pickup.resources[-1].resources
+    ammo_desc = [
+        _add_quantity_to_resource(_resource_user_friendly_name(resource), quantity)
+        for resource, quantity in pickup.extra_resources
+    ]
+    if ammo_desc:
+        return "{}. Provides {}{}{}".format(
+            pickup.name,
+            ", ".join(ammo_desc[:-1]),
+            " and " if len(ammo_desc) > 1 else "",
+            ammo_desc[-1],
         )
-    )
+    else:
+        return pickup.name
 
 
 def _create_pickup_resources_for(resources: ResourceGain):
@@ -140,12 +205,12 @@ def _get_single_hud_text(pickup_name: str,
     })
 
 
-def _get_all_hud_text(pickup: PickupEntry,
+def _get_all_hud_text(conditionals: List[ConditionalResources],
                       memo_data: Dict[str, str],
                       ) -> List[str]:
     return [
-        _get_single_hud_text(conditional.name or pickup.name, memo_data, conditional.resources)
-        for conditional in pickup.resources
+        _get_single_hud_text(conditional.name, memo_data, conditional.resources)
+        for conditional in conditionals
     ]
 
 
@@ -164,14 +229,15 @@ def _calculate_hud_text(pickup: PickupEntry,
     """
 
     if model_style == PickupModelStyle.HIDE_ALL:
-        hud_text = _get_all_hud_text(visual_pickup, memo_data)
-        if len(hud_text) == len(pickup.resources):
+        hud_text = _get_all_hud_text(_conditional_resources_for_pickup(visual_pickup), memo_data)
+        num_conditional = len(_conditional_resources_for_pickup(pickup))
+        if len(hud_text) == num_conditional:
             return hud_text
         else:
-            return [hud_text[0]] * len(pickup.resources)
+            return [hud_text[0]] * num_conditional
 
     else:
-        return _get_all_hud_text(pickup, memo_data)
+        return _get_all_hud_text(_conditional_resources_for_pickup(pickup), memo_data)
 
 
 class PickupCreator:
@@ -226,19 +292,22 @@ class PickupCreatorSolo(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
-        hud_text = _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data)
+        pickup = pickup_target.pickup
+        hud_text = _calculate_hud_text(pickup, visual_pickup, model_style, self.memo_data)
         if hud_text == ["Energy Transfer Module acquired!"] and (
                 self.rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
             hud_text = ["Run validated!"]
 
+        conditional_resources = _conditional_resources_for_pickup(pickup)
+
         return {
-            "resources": _create_pickup_resources_for(pickup_target.pickup.resources[0].resources),
+            "resources": _create_pickup_resources_for(conditional_resources[0].resources),
             "conditional_resources": [
                 {
                     "item": conditional.item.index,
                     "resources": _create_pickup_resources_for(conditional.resources),
                 }
-                for conditional in pickup_target.pickup.resources[1:]
+                for conditional in conditional_resources[1:]
             ],
             "convert": [
                 {
@@ -247,7 +316,7 @@ class PickupCreatorSolo(PickupCreator):
                     "clear_source": conversion.clear_source,
                     "overwrite_target": conversion.overwrite_target,
                 }
-                for conversion in pickup_target.pickup.convert_resources
+                for conversion in pickup.convert_resources
             ],
             "hud_text": hud_text,
             "scan": scan_text,
@@ -342,12 +411,12 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
-def _elevator_area_name(world_list: WorldList,
-                        area_location: AreaLocation,
-                        include_world_name: bool,
-                        ) -> str:
-    if area_location.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
-        return _CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
+def elevator_area_name(world_list: WorldList,
+                       area_location: AreaLocation,
+                       include_world_name: bool,
+                       ) -> str:
+    if area_location.area_asset_id in elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS:
+        return elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
 
     else:
         world = world_list.world_by_area_location(area_location)
@@ -373,7 +442,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(_elevator_area_name(world_list, connection, False))
+    return "Transport to {}".format(elevator_area_name(world_list, connection, False))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -431,7 +500,7 @@ def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
     ]
 
 
-def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElevators) -> None:
+def _apply_translator_gate_patches(specific_patches: dict, elevators: TeleporterShuffleMode) -> None:
     """
 
     :param specific_patches:
@@ -440,7 +509,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElev
     """
     specific_patches["always_up_gfmc_compound"] = True
     specific_patches["always_up_torvus_temple"] = True
-    specific_patches["always_up_great_temple"] = elevators != LayoutElevators.VANILLA
+    specific_patches["always_up_great_temple"] = elevators != TeleporterShuffleMode.VANILLA
 
 
 def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connection: Dict[int, AreaLocation],
@@ -451,7 +520,7 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = _elevator_area_name(world_list, elevator_connection[teleporter_id], True)
+        target_area_name = elevator_area_name(world_list, elevator_connection[teleporter_id], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
@@ -544,7 +613,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        item_hints.create_hints(all_patches, players_config, game.world_list, rng)
+        randovania.games.prime.patcher_file_lib.hints.create_hints(all_patches, players_config, game.world_list, rng)
     )
 
     # Sky Temple Keys
@@ -563,7 +632,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def additional_starting_items(layout_configuration: LayoutConfiguration,
+def additional_starting_items(layout_configuration: EchoesConfiguration,
                               resource_database: ResourceDatabase,
                               starting_items: CurrentResources) -> List[str]:
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
@@ -575,7 +644,7 @@ def additional_starting_items(layout_configuration: LayoutConfiguration,
     ]
 
 
-def _create_starting_popup(layout_configuration: LayoutConfiguration,
+def _create_starting_popup(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
                            starting_items: CurrentResources) -> list:
     extra_items = additional_starting_items(layout_configuration, resource_database, starting_items)
@@ -595,8 +664,10 @@ class _SimplifiedMemo(dict):
 
 def _simplified_memo_data() -> Dict[str, str]:
     result = _SimplifiedMemo()
-    result["Temporary Power Bombs"] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
-    result["Temporary Missile"] = "Missile Expansion acquired, but the Missile Launcher, is required to use it."
+    result["Locked Power Bomb Expansion"] = ("Power Bomb Expansion acquired, "
+                                             "but the main Power Bomb is required to use it.")
+    result["Locked Missile Expansion"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
+    result["Locked Seeker Launcher"] = "Seeker Launcher acquired, but the Missile Launcher is required to use it."
     return result
 
 
@@ -612,12 +683,11 @@ def create_patcher_file(description: LayoutDescription,
     :return:
     """
     preset = description.permalink.get_preset(players_config.player_index)
-    patcher_config = preset.patcher_configuration
-    layout = preset.layout_configuration
+    configuration = preset.configuration
     patches = description.all_patches[players_config.player_index]
-    rng = Random(description.permalink.as_str)
+    rng = Random(description.permalink.seed_number)
 
-    game = data_reader.decode_data(layout.game_data)
+    game = data_reader.decode_data(configuration.game_data)
     pickup_count = game.world_list.num_pickup_nodes
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
@@ -625,13 +695,20 @@ def create_patcher_file(description: LayoutDescription,
     result = {}
     _add_header_data_to_result(description, result)
 
-    result["menu_mod"] = patcher_config.menu_mod
+    result["menu_mod"] = configuration.menu_mod
     result["user_preferences"] = cosmetic_patches.user_preferences.as_json
+    result["default_items"] = {
+        "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
+        "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
+    }
+    result["unvisited_room_names"] = (configuration.elevators.can_use_unvisited_room_names
+                                      and cosmetic_patches.unvisited_room_names)
+    result["teleporter_sounds"] = cosmetic_patches.teleporter_sounds
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
-    result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
+    result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
 
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:
@@ -647,8 +724,8 @@ def create_patcher_file(description: LayoutDescription,
     result["pickups"] = _create_pickup_list(patches,
                                             useless_target, pickup_count,
                                             rng,
-                                            patcher_config.pickup_model_style,
-                                            patcher_config.pickup_model_data_source,
+                                            configuration.pickup_model_style,
+                                            configuration.pickup_model_data_source,
                                             creator=creator,
                                             )
 
@@ -659,20 +736,21 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(layout.hints, game, description.all_patches, players_config, rng)
+    result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,
+                                                      players_config, rng)
 
     # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
-        "warp_to_start": patcher_config.warp_to_start,
+        "warp_to_start": configuration.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": patcher_config.varia_suit_damage,
-        "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
+        "dark_world_varia_suit_damage": configuration.varia_suit_damage,
+        "dark_world_dark_suit_damage": configuration.dark_suit_damage,
     }
 
     result["logbook_patches"] = [
@@ -698,12 +776,20 @@ def create_patcher_file(description: LayoutDescription,
         {"asset_id": 327, "connections": [46, 275], },
     ]
 
-    _apply_translator_gate_patches(result["specific_patches"], layout.elevators)
+    if not configuration.elevators.is_vanilla and (cosmetic_patches.unvisited_room_names
+                                                   and configuration.elevators.can_use_unvisited_room_names):
+        exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
+    else:
+        exclude_map_ids = []
+    result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
+    result["maps_to_never_reveal"] = exclude_map_ids
+
+    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators.mode)
 
     return result
 
 
 def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
-    result["permalink"] = description.permalink.as_str
+    result["permalink"] = "-permalink-"
     result["seed_hash"] = f"- {description.shareable_word_hash} ({description.shareable_hash})"
     result["randovania_version"] = randovania.VERSION

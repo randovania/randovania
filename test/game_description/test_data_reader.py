@@ -3,16 +3,15 @@ import copy
 import pytest
 
 from randovania.game_description.data_reader import WorldReader
-from randovania.game_description.default_database import default_prime2_game_description
-from randovania.game_description.resources.resource_database import ResourceDatabase, MissingResource
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.search import MissingResource
 
 
-def test_copy_worlds():
-    game_description = default_prime2_game_description()
-    game_copy = copy.deepcopy(game_description)
+def test_copy_worlds(echoes_game_description):
+    game_copy = copy.deepcopy(echoes_game_description)
 
-    assert game_description.world_list.worlds == game_copy.world_list.worlds
-    assert game_description.world_list.worlds is not game_copy.world_list.worlds
+    assert echoes_game_description.world_list.worlds == game_copy.world_list.worlds
+    assert echoes_game_description.world_list.worlds is not game_copy.world_list.worlds
 
 
 def test_invalid_node_type():
@@ -32,7 +31,7 @@ def test_invalid_node_type():
 
 def test_area_with_invalid_connections():
     # Setup
-    db = ResourceDatabase([], [], [], [], [], [], {})
+    db = ResourceDatabase([], [], [], [], [], [], {}, 0, 0, 0)
     reader = WorldReader(db, None)
 
     with pytest.raises(MissingResource) as e:

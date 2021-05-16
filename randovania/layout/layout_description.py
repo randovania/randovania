@@ -1,6 +1,8 @@
 import base64
 import hashlib
 import json
+import re
+import typing
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -11,7 +13,6 @@ from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 
 
@@ -19,6 +20,52 @@ from randovania.layout.preset_migration import VersionedPreset
 def _shareable_hash_words():
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
         return json.load(hash_words_file)
+
+
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 4
+
+
+def migrate_description(json_dict: dict) -> dict:
+    if "schema_version" not in json_dict:
+        raise ValueError(f"missing schema_version")
+
+    version = json_dict["schema_version"]
+    if version > CURRENT_DESCRIPTION_SCHEMA_VERSION:
+        raise ValueError(f"Version {version} is newer than latest supported {CURRENT_DESCRIPTION_SCHEMA_VERSION}")
+
+    if version == 1:
+        for game in json_dict["game_modifications"]:
+            for hint in game["hints"].values():
+                if hint.get("precision") is not None:
+                    owner = False
+                    if hint["precision"]["item"] == "owner":
+                        owner = True
+                        hint["precision"]["item"] = "nothing"
+                    hint["precision"]["include_owner"] = owner
+        version += 1
+
+    if version == 2:
+        for game in json_dict["game_modifications"]:
+            for hint in game["hints"].values():
+                precision = hint.get("precision")
+                if precision is not None and precision.get("relative") is not None:
+                    precision["relative"]["distance_offset"] = 0
+                    precision["relative"].pop("precise_distance")
+        version += 1
+
+    if version == 3:
+        target_name_re = re.compile(r"(.*) for Player (\d+)")
+        if len(json_dict["game_modifications"]) > 1:
+            for game in json_dict["game_modifications"]:
+                for area in game["locations"].values():
+                    for location_name, contents in typing.cast(Dict[str, str], area).items():
+                        m = target_name_re.match(contents)
+                        if m is not None:
+                            part_one, part_two = m.group(1, 2)
+                            area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
+
+    json_dict["schema_version"] = version
+    return json_dict
 
 
 @dataclass(frozen=True)
@@ -36,14 +83,8 @@ class LayoutDescription:
         return "rdvgame"
 
     @classmethod
-    def schema_version(cls) -> int:
-        return 1
-
-    @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
-        version = json_dict.get("schema_version")
-        if version != cls.schema_version():
-            raise RuntimeError("Unsupported log file version '{}'. Expected {}.".format(version, cls.schema_version()))
+        json_dict = migrate_description(json_dict)
 
         has_spoiler = "game_modifications" in json_dict
         if not has_spoiler:
@@ -63,7 +104,7 @@ class LayoutDescription:
             permalink=permalink,
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
-                    index: preset.layout_configuration
+                    index: preset.configuration
                     for index, preset in permalink.presets.items()
                 }),
             item_order=json_dict["item_order"],
@@ -81,7 +122,7 @@ class LayoutDescription:
             cached_result = game_patches_serializer.serialize(
                 self.all_patches,
                 {
-                    index: preset.layout_configuration.game_data
+                    index: preset.configuration.game_data
                     for index, preset in self.permalink.presets.items()
                 })
             object.__setattr__(self, "__cached_serialized_patches", cached_result)
@@ -91,10 +132,10 @@ class LayoutDescription:
     @property
     def as_json(self) -> dict:
         result = {
-            "schema_version": self.schema_version(),
+            "schema_version": CURRENT_DESCRIPTION_SCHEMA_VERSION,
             "info": {
                 "version": self.version,
-                "permalink": self.permalink.as_str,
+                "permalink": self.permalink.as_base64_str,
                 "seed": self.permalink.seed_number,
                 "presets": [
                     VersionedPreset.with_preset(preset).as_json

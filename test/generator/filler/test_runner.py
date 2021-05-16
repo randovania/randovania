@@ -10,17 +10,17 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair, Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
 
-@patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True)
-def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
-                    echoes_game_description,
-                    default_layout_configuration,
-                    ):
+@pytest.mark.asyncio
+async def test_run_filler(echoes_game_description,
+                          default_layout_configuration,
+                          mocker,
+                          ):
     # Setup
     rng = Random(5000)
     status_update = MagicMock()
@@ -28,7 +28,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
     player_pools = {
-        0: create_player_pool(rng, default_layout_configuration, 0),
+        0: create_player_pool(rng, default_layout_configuration, 0, 1),
     }
     initial_pickup_count = len(player_pools[0].pickups)
 
@@ -43,10 +43,11 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
     player_state.scan_asset_initial_pickups = {}
 
-    mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
+    mocker.patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True,
+                 return_value=({player_state: patches}, action_log))
 
     # Run
-    filler_result = runner.run_filler(rng, player_pools, status_update)
+    filler_result = await runner.run_filler(rng, player_pools, status_update)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1
@@ -86,7 +87,7 @@ def test_add_hints_precision(empty_patches, mocker):
     rng = MagicMock()
     hints = [
         Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
-                                              HintItemPrecision.DETAILED), PickupIndex(1)),
+                                              HintItemPrecision.DETAILED, include_owner=False), PickupIndex(1)),
         Hint(HintType.LOCATION, None, PickupIndex(2)),
         Hint(HintType.LOCATION, None, PickupIndex(3)),
     ]
@@ -103,9 +104,13 @@ def test_add_hints_precision(empty_patches, mocker):
     relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
     assert result.hints == {
         LogbookAsset(0): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
-                                                               HintItemPrecision.DETAILED), PickupIndex(1)),
+                                                               HintItemPrecision.DETAILED,
+                                                               include_owner=False),
+                              PickupIndex(1)),
         LogbookAsset(1): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
-                                                               HintItemPrecision.PRECISE_CATEGORY), PickupIndex(2)),
+                                                               HintItemPrecision.PRECISE_CATEGORY,
+                                                               include_owner=True),
+                              PickupIndex(2)),
         LogbookAsset(2): relative_hint_provider.return_value,
     }
 
@@ -116,20 +121,18 @@ def _make_pickup(item_category: ItemCategory):
         model_index=0,
         item_category=item_category,
         broad_category=item_category,
-        resources=(
-            ConditionalResources(None, None, ()),
-        ),
+        progression=tuple(),
     )
 
 
+@pytest.mark.parametrize("precise_distance", [False, True])
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
-def test_add_relative_hint(echoes_game_description, empty_patches, location_precision):
+def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision):
     # Setup
     rng = Random(5000)
-    target_precision = MagicMock()
-    precise_distance = MagicMock()
-    precision = MagicMock()
+    target_precision = MagicMock(spec=HintItemPrecision)
+    precision = MagicMock(spec=HintItemPrecision)
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(8): PickupTarget(_make_pickup(ItemCategory.MOVEMENT), 0),
     })
@@ -137,14 +140,14 @@ def test_add_relative_hint(echoes_game_description, empty_patches, location_prec
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
         max_distance = 8
         data = RelativeDataArea(
-            precise_distance,
-            AreaLocation(0x3BFA3EFF, 0x62B0D67D),
+            None if precise_distance else 2,
+            AreaLocation(0x3BFA3EFF, 0x62AC8AC4),
             precision,
         )
     else:
         max_distance = 20
         data = RelativeDataItem(
-            precise_distance,
+            None if precise_distance else 11,
             PickupIndex(8),
             precision,
         )
@@ -161,5 +164,5 @@ def test_add_relative_hint(echoes_game_description, empty_patches, location_prec
                                       max_distance=max_distance)
 
     # Assert
-    pair = PrecisionPair(location_precision, target_precision, data)
+    pair = PrecisionPair(location_precision, target_precision, include_owner=False, relative=data)
     assert result == Hint(HintType.LOCATION, pair, PickupIndex(1))

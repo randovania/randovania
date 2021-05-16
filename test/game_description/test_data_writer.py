@@ -10,7 +10,7 @@ def test_round_trip_full():
     game = data_reader.decode_data(original_data)
     encoded_data = data_writer.write_game_description(game)
 
-    assert original_data == encoded_data
+    assert encoded_data == original_data
 
 
 def test_round_trip_small(test_files_dir):
@@ -21,6 +21,6 @@ def test_round_trip_small(test_files_dir):
     game = data_reader.decode_data(original_data)
     encoded_data = data_writer.write_game_description(game)
 
-    assert original_data == encoded_data
+    assert encoded_data == original_data
 
 

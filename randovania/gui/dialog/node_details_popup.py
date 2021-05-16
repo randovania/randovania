@@ -1,17 +1,21 @@
 from PySide2 import QtWidgets
+from qasync import asyncSlot
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockType, DockConnection
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
+from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.interface_common import enum_lib
 
 
@@ -21,6 +25,9 @@ def refresh_if_needed(combo: QtWidgets.QComboBox, func):
 
 
 class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
+    _unlocked_by_requirement = Requirement.trivial()
+    _connections_visualizer = None
+
     def __init__(self, game: GameDescription, node: Node):
         super().__init__()
         self.setupUi(self)
@@ -28,7 +35,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         self.game = game
         self.node = node
-        world = game.world_list.nodes_to_world(node)
+        self.world = game.world_list.nodes_to_world(node)
+        world = self.world
 
         self._type_to_tab = {
             GenericNode: self.tab_generic,
@@ -38,6 +46,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             EventNode: self.tab_event,
             TranslatorGateNode: self.tab_translator_gate,
             LogbookNode: self.tab_logbook,
+            PlayerShipNode: self.tab_player_ship,
         }
         tab_to_type = {tab: node_type for node_type, tab in self._type_to_tab.items()}
 
@@ -56,7 +65,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.teleporter_destination_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
 
-        for event in game.resource_database.event:
+        for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
             self.event_resource_combo.addItem(event.long_name, event)
         if self.event_resource_combo.count() == 0:
             self.event_resource_combo.addItem("No events in database", None)
@@ -65,6 +74,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for i, enum in enumerate(enum_lib.iterate_enum(LoreType)):
             self.lore_type_combo.setItemData(i, enum)
         refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
+
+        self.set_unlocked_by(Requirement.trivial())
 
         # Signals
         self.button_box.accepted.connect(self.try_accept)
@@ -75,6 +86,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_type_combo.currentIndexChanged.connect(self.on_dock_type_combo)
         self.teleporter_destination_world_combo.currentIndexChanged.connect(self.on_teleporter_destination_world_combo)
         self.lore_type_combo.currentIndexChanged.connect(self.on_lore_type_combo)
+        self.player_ship_unlocked_button.clicked.connect(self.on_player_ship_unlocked_button)
 
         # Hide the tab bar
         tab_bar: QtWidgets.QTabBar = self.tab_widget.findChild(QtWidgets.QTabBar)
@@ -121,11 +133,19 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.fill_for_logbook_node(node)
             return self.tab_logbook
 
+        elif isinstance(node, PlayerShipNode):
+            self.fill_for_player_ship_node(node)
+            return self.tab_player_ship
+
+        else:
+            raise ValueError(f"Unknown node type: {node}")
+
     def fill_for_dock(self, node: DockNode):
         self.dock_index_spin.setValue(node.dock_index)
 
         # Connection
-        other_area = self.game.world_list.area_by_asset_id(node.default_connection.area_asset_id)
+        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.world_asset_id,
+                                                                             node.default_connection.area_asset_id))
         self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(other_area))
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         self.dock_connection_node_combo.setCurrentIndex(
@@ -143,9 +163,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
-        area = world.area_by_asset_id(node.default_connection.area_asset_id)
+        area = self.game.world_list.area_by_area_location(node.default_connection)
 
-        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id))
+        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
+                                                 if node.teleporter_instance_id is not None else "")
         self.teleporter_destination_world_combo.setCurrentIndex(self.teleporter_destination_world_combo.findData(world))
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
         self.teleporter_destination_area_combo.setCurrentIndex(self.teleporter_destination_area_combo.findData(area))
@@ -169,6 +190,23 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node.lore_type == LoreType.LUMINOTH_WARRIOR:
             self.logbook_extra_combo.setCurrentIndex(self.logbook_extra_combo.findData(node.hint_index))
+
+    def fill_for_player_ship_node(self, node: PlayerShipNode):
+        self.set_unlocked_by(node.is_unlocked)
+
+    def set_unlocked_by(self, requirement: Requirement):
+        if self._connections_visualizer is not None:
+            self._connections_visualizer.deleteLater()
+            self._connections_visualizer = None
+
+        self._unlocked_by_requirement = requirement
+        self._connections_visualizer = ConnectionsVisualizer(
+            self.player_ship_unlocked_group,
+            self.player_ship_unlocked_layout,
+            self.game.resource_database,
+            requirement,
+            False
+        )
 
     # Signals
     def on_node_type_combo(self, _):
@@ -222,6 +260,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.logbook_extra_label.setText("Nothing:")
             self.logbook_extra_combo.addItem("Nothing", None)
 
+    @asyncSlot()
+    async def on_player_ship_unlocked_button(self):
+        self._edit_popup = ConnectionsEditor(self, self.game.resource_database, self._unlocked_by_requirement)
+        self._edit_popup.setModal(True)
+        try:
+            result = await async_dialog.execute_dialog(self._edit_popup)
+            if result == QtWidgets.QDialog.Accepted:
+                self.set_unlocked_by(self._edit_popup.final_requirement)
+        finally:
+            self._edit_popup = None
+
     # Final
     def create_new_node(self) -> Node:
         node_type = self.node_type_combo.currentData()
@@ -254,11 +303,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == TeleporterNode:
+            instance_id = self.teleporter_instance_id_edit.text()
             scan_asset_id = self.teleporter_scan_asset_id_edit.text()
 
             return TeleporterNode(
                 name, heal, location, index,
-                int(self.teleporter_instance_id_edit.text(), 0),
+                int(instance_id, 0) if instance_id != "" else None,
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
                 int(scan_asset_id, 0) if scan_asset_id != "" else None,
@@ -305,6 +355,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 hint_index
             )
 
+        elif node_type == PlayerShipNode:
+            return PlayerShipNode(
+                name, heal, location, index,
+                self._unlocked_by_requirement,
+                self._get_command_visor()
+            )
+
         else:
             raise RuntimeError(f"Unknown node type: {node_type}")
 
@@ -312,6 +369,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         return find_resource_info_with_long_name(
             self.game.resource_database.item,
             "Scan Visor"
+        )
+
+    def _get_command_visor(self):
+        return find_resource_info_with_long_name(
+            self.game.resource_database.item,
+            "Command Visor"
         )
 
     def try_accept(self):

@@ -1,5 +1,6 @@
 import shutil
 from pathlib import Path
+from typing import Optional
 
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.prime import iso_packager, claris_randomizer
@@ -53,19 +54,22 @@ def unpack_iso(input_iso: Path,
 def generate_layout(options: Options,
                     permalink: Permalink,
                     progress_update: ProgressUpdateCallable,
+                    retries: Optional[int] = None,
                     ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink
     :param options:
     :param permalink:
     :param progress_update:
+    :param retries:
     :return:
     """
-    return echoes.generate_layout(
+    return echoes.generate_description(
         permalink=permalink,
         status_update=ConstantPercentageCallback(progress_update, -1),
         validate_after_generation=options.advanced_validate_seed_after,
         timeout_during_generation=options.advanced_timeout_during_generation,
+        attempts=retries,
     )
 
 

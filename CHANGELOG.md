@@ -8,7 +8,348 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.0] - 2020-10-??
+-   **Major** - Presets are now presented in a tree view, with custom presets being nested under another one. They're also saved separately from Randovania data.
+
+-   Added: Auto tracker now supports Prime 1.
+
+-   Added: A second theme for the auto tracker for Echoes, which uses images of the in game models. Thanks MaskedKirby.
+
+-   Changed: Multiworld connection is slightly more conservative when giving items.
+
+
+### Logic Database Changes
+
+-   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
+
+-   Added: Method of bypassing the breakable glass in Sand Processing from Main Reactor with Space Jump and Screw Attack (Expert and above).
+
+-   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
+
+-   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
+
+-   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
+
+## [2.6.1] - 2021-05-05
+
+-   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
+    
+-   Fixed: "One-way anywhere" no longer shows up twice in preset warnings for multiworld
+
+-   Fixed: Changing starting location to Ship or Save Stations now works again.
+
+-   Fixed: Torvus Gate elevator is now properly hidden instead of Dark Torvus Ammo Station.
+
+
+## [2.6.0] - 2021-05-02
+
+-   **Major** - Added: New elevator randomization settings: 
+    * New mode: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
+    * Select which elevators can be randomized.
+    * Select possible destinations for *One-way, anywhere*.
+    * Randomize Sky Temple Gateway, Sky Temple Energy Controller, Aerie Transport Station and Aerie elevators. *Warning*: These rooms have some details you must consider. Please read the elevators tab for more information.
+
+-   **Major** - Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
+
+-   **Major** - Added: An user preference (in *Customize in-game settings*) for the map to display names of unvisited rooms.
+    When randomizing elevators, the elevator rooms are excluded to prevent spoiling their destinations. An option were added to disallow displaying names entirely, since otherwise you can use a Map Station to find the names.  
+
+-   Added: An option to disable the elevator sound effect, preventing it from playing endlessly in certain cases.
+
+-   Added: When a crash happens, the game now displays an error screen instead of just stopping.
+
+-   Added: The *Hint Item Names* tab now supports switching between all 3 Prime games.
+
+-   Added: An option to use an experimental new pickup placement logic, able to place multiple pickups at once.
+
+-   Added: Two additional joke hints. (Thanks CZeke and Geoffistopheles)
+
+-   Added: It's now possible to add Infinite Beam Ammo, Infinite Missiles and Double Damage to the item pool.
+
+-   Added: Player names are now colored yellow in hints.
+
+-   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
+    
+-   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
+
+-   Changed: Improve scan text for expansions.
+
+-   Changed: Some hints in multiworld games now also include the player names.
+
+-   Changed: Missiles, Power Bombs and Ship Missiles are now only in logic after their respective main launcher, even if it's not required in game. 
+
+-   Changed: You can add up to 99 of any expansion to the pool, up from 64.
+
+-   Fixed: The *Logic damage strictness* multipliers are no longer applied twice.
+
+-   Fixed: *Up to* relative hints are no longer converted into *exactly* if the actual distance matches the displayed number.
+
+-   Fixed: Dark Torvus Bog - Portal Chamber is no longer silently ignored as a starting location.
+
+-   Fixed: Charging your beam to shoot when out of ammo now works even when customizing the ammo type required.
+
+-   Fixed: Having the maximum number allowed of an expansion in a preset no longer causes permalink errors.
+
+-   Fixed: Fixed the game defaulting to Combat Visor after an elevator.
+
+-   Fixed: Multiworld spoiler logs now use 1-indexed player names for locations.
+
+-   Removed: Using Dark Visor as the starting visor is no longer supported. (Game crashes on unmorph for unknown reasons)
+
+### Logic Database Changes
+
+-   Added: Method of reaching the pickup in Hive Gyro Chamber with Space Jump, Boost Ball, and a Boost Jump (Expert and above).
+
+-   Added: Method of climbing Torvus Grove with Space Jump, Screw Attack, and Standable Terrain (Advanced and above).
+
+-   Added: Method of reaching cannon in Great Bridge with Boost Ball and a Boost Jump (Expert and above).
+
+-   Added: Method of reaching the main part of Hall of Combat Mastery with a Scan Dash and after blowing up the glass (Intermediate and above).
+
+-   Added: Method of activating the portal in Portal Terminal with Screw Attack, Slope Jump, and No Bombs or Space Jump (Expert and above).
+
+-   Added: Method of climbing Sacred Bridge with Bombs and a Bomb Space Jump (Advanced and above).
+
+-   Changed: Logic paths that require Screw Attack without Space Jump now make sure to not have Space Jump to be valid.
+
+-   Fixed: Spawn point of Aerie Transport Station is now the door, making DS2 required to take the elevator there.
+
+## [2.5.2] - 2021-02-28
+
+-   Added: The number of items in the pool is now included in the summary.
+
+-   Fixed: Shuffling Combat Visor with item acquisition popups enabled no longer errors.
+
+## [2.5.1] - 2021-02-26
+
+-   Added: Drag and dropping rdvgame and rdvpreset files into the main Randovania window now imports that game file and preset, respectively.
+
+-   Added: Discord bot now posts summary whenever a preset is attached to a message.
+
+## [2.5.0] - 2021-02-19
+
+-   Changed: Preset summary now only include differences from vanilla game.
+
+-   Changed: The relative hint using an item category has been replaced with a relative hint using an area, with up to distance.
+
+### Logic Database Changes
+
+#### Added
+
+-   Method of climbing Sanctuary Temple from the bottom with Bombs and Spider Ball (Intermediate and above).
+
+-   Method of climbing Sanctuary Temple from the bottom with Screw Attack and Single Room Out of Bounds (Expert and above).
+
+-   Method of reaching Worker's Path from the top level in Sanctuary Temple with Scan Visor and an Extended Dash (Expert and above).
+
+-   Method of reaching Windchamber Gateway from Windchamber Tunnel in Grand Windchamber with a Boost Jump (Expert and above).
+
+-   Method of reaching Temple Access in Mining Station A with a Boost Jump (Advanced and above).
+
+-   Method of reaching pickup in Temple Access (Sanctuary) with Space Jump, Screw Attack, and Standable Terrain (Intermediate and above).
+
+-   Method of climbing Temple Access (Sanctuary) with Space Jump, standing on a Rezbit, and dashing off the other Rezbit (Expert and above).
+
+#### Changed
+
+-   Increased weight for Energy Tanks to be selected as progression.
+
+-   Reaching the pickup in Path of Roots from Torvus Lagoon with Gravity Boost, Space Jump, and a Slope Jump is now Intermediate (from Beginner).
+
+-   Reaching the pickup in Grand Windchamber with Space Jump, Screw Attack, Slope Jump, Standable Terrain is now Advanced (from Intermediate).
+
+-   Bomb Jumping over the 2nd light block heading to Hall of Eyes is now Intermediate (from Beginner).
+
+-   Energy Tank requirements for Chykka have been lowered.
+
+#### Fixed
+
+-   Reliquary Grounds now has proper requirements for reaching Ing Reliquary with Light Suit.
+
+
+## [2.4.2] - 2021-02-08
+
+-   Fixed: Randovania no longer crashes if the connected Dolphin stops emulation.
+
+## [2.4.1] - 2021-02-06
+
+-   Added: Detect if the internal game copy was modified by a future version of Randovania, prompting for the user to press "Delete internal copy".
+
+-   Changed: An error popup now shows up when exporting an ISO fails.
+
+-   Removed: "Automatically track inventory" toggle, as the functionality was already removed.
+
+-   Fixed: Randovania now considers any inventory item with amount above capacity, or capacity above the strict maximum as the game not being connected.
+
+-   Fixed: Error message when the server rejects your client version not being displayed.
+
+-   Fixed: Setting beam ammo expansions to 0 pickups no longer hides the boxes.
+
+## [2.4.0] - 2021-02-01
+
+-   **Major** - Added: The visor and beam you start the game equipped with is now configurable.
+
+-   **Major** - Changed: In multiworld, items are now delivered at the same time as the message. It should also no longer fail to send with Nintendont.
+
+-   Added: Additional joke hints were added.
+
+-   Added: Method to climb to the portal Base Access with just Screw Attack (Intermediate and above).
+
+-   Added: Method to reach the pickup in Grand Windchamber with Space Jump, Screw Attack, and a Slope Jump (Intermediate and above).
+
+-   Added: Method to traverse Ventilation Area B from Bionenergy Production without Bombs by Screw Attacking into the tunnel and destorying the barriers with Missiles (Advanced and above).
+
+-   Added: Method to reach the pickup in Path of Roots from Torvus Lagoon without Morph Ball (Beginner and above).
+
+-   Added: Method to enter the tunnel in Underground Tunnel to Torvus Temple from Torvus Grove with an Instant Morph (Advanced and above).
+
+-   Added: Method to reach the halfpipe pickup in Dark Torvus Arena with Space Jump and a Roll Jump (Expert and above).
+
+-   Added: Method to climb to the upper level in Biostorage Station with Bomb Space Jump (Advanced and above).
+
+-   Added: Method to reach the pickup in Grand Windchamber with a Space Jump, Bomb Space Jump, and a Scan Dash (Expert and above).
+
+-   Added: Method to climb Mining Station B with Space Jump and a Slope Jump (Expert and above).
+
+-   Added: Method to reach the portal in Mining Station B with Space Jump, Scan Visor, and Dashing for Single Room OoB (Expert and above).
+
+-   Added: Method to cross Bitter Well to Phazon Site with Wall Boosts (Hypermode).
+
+-   Added: Method to reach the bomb slot in Training Chamber with Gravity Boost and Air Underwater (Advanced and above).
+
+-   Added: Method to open activate the Bomb Slot in Training Chamber with Darkburst or Sonic Boom (Hypermode).
+
+-   Changed: Auto tracker internally uses a configuration file for the item positions.
+
+-   Changed: The item pool tab when customizing presets now can edit major items directly. 
+
+-   Changed: Defeating Quadraxis with Power Bombs is now Advanced (from Beginner).
+
+-   Changed: Bypassing the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump is now Expert (from Advanced).
+
+-   Changed: Escaping Hive Temple without Spider Ball is now Expert (from Hypermode).
+
+-   Changed: Bomb Space Jump in Great Bridge/Venomous Pond to reach Abandonded Worksite/Brooding Ground is now Expert (from Hypermode).
+
+-   Changed: Using Seeker Missiles now requires either Combat Visor or Dark Visor.
+
+-   Changed: Bomb Slots without Bombs in Sand Processing, Main Gyro Chamber, and Vault are now Advanced (from Expert).
+
+## [2.3.0] - 2021-01-08
+
+-   Added: Method to enter tunnels in Transit Tunnel East/Undertransit One from Catacombs/Dungeon to Training Chamber/Sacrificial Chamber with an Instant Morph (Intermediate and above).
+
+-   Added: Method to reach the pickup on the Screw Attack wall in Aerial Training Site with a Roll Jump (Expert and above).
+
+-   Added: Method to reach the pickup in Abandoned Worksite from the tunnel with a Boost Jump (Advanced and above).
+
+-   Added: Method to bypass the statue in Training Chamber from the back with Screw Attack and a Bomb Space Jump (Advanced and above).
+
+-   Added: Methods to reach the pickup in Mining Station B with Space Jump, Screw Attack, and Standable Terrain or after the puzzle with a Bomb Jump (Advanced and above).
+
+-   Changed: In multiworld, keybearer hints now tells the player and broad category instead of just player.
+
+-   Changed: Dark Alpha Splinter no longer strictly requires Power Beam.
+
+-   Changed: Crossing Main Gyro Chamber with Screw Attack before stopping the gyro is now Hypermode (from Expert).
+
+-   Changed: Phazon Grounds and Transport to Agon Wastes (Torvus) Seeker Locks without Seekers are now Expert (from Hypermode).
+
+-   Fixed: Properly handle invalid ammo configurations in preset editor. 
+
+-   Fixed: Randovania no longer instantly crashes on macOS.
+
+-   Fixed: Logic properly considers the Transport A gate being gone after entering from that side in Random Elevators.
+
+## [2.2.0] - 2020-12-20
+
+-   Added: 1 HP Mode, where all Energy Tanks and Save Stations leave you at 1 HP instead of fully healing.
+
+-   Added: Added a detailed report of the generator's state when a game fails to generate.
+
+-   Fixed: Generator will no longer ignore players that have no locations left. This would likely cause multiworld generation to fail more often.
+
+-   Fixed: Error messages are properly shown if a game fails to generate.
+
+-   Fixed: Alerts are now properly saved as displayed.
+
+-   Fixed: Errors in the default preset no longer prevent Randovania from starting. 
+
+-   Changed: Optimized game generation, it now takes roughly 2/3 of the time.
+
+-   Changed: Optimized game validation, it now also takes roughly 2/3 of the time.
+
+-   Changed: Relative hints no longer cross portals.
+
+-   Changed: In multiworld, keybearer hints now instead tells the player the item is for, instead of a category.
+
+-   Changed: Decreased the chance of Power Bombs being late in a game.
+
+-   Changed: Account name are updated every time you login via Discord.
+
+-   Changed: Warning about dangerous presets in Multiworld sessions now include the player name.
+
+-   Changed: Roll Jump in Meditation Vista to reach the pickup is now Hypermode (from Expert).
+
+## [2.1.2] - 2020-12-05
+
+-   Added: The Item Pool size now displays a warning if it's above the maximum.
+
+-   Changed: The minimum random starting items is now considered for checking the pool size.
+
+-   Fixed: Being kicked from an online session would leave the window stuck there forever.
+
+-   Fixed: Bulk selecting areas for starting location no longer includes areas that aren't valid starting locations.
+
+## [2.1.1] - 2020-12-02
+
+-   Added: A prompt is now shown asking the user to install the Visual C++ Redistributable if loading the Dolphin backend fails.
+
+-   Fixed: Changing ammo configuration breaks everything.
+
+-   Fixed: Patching ISOs should work again.
+
+-   Fixed: Clean installations can select presets again.
+
+## [2.1.0] - 2020-12-02
+
+-   Changed: Multiworld session history now auto-scrolls to the bottom
+
+-   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
+
+-   Changed: Minimum Varia Suit Dark Aether is now 0.1, as 0 crashes the game. 
+
+-   Changed: Permalinks are now entirely different for different games.
+
+-   Changed: Preset summary now specifies if hidden model uses ETM or random item.
+
+-   Added: A very basic visualization of the map to the tracker.
+
+-   Added: Trick Details can now be used with all 3 games.
+
+-   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.
+
+-   Removed: Intermediate path for reaching item in Main Reactor from Security Station B door without Screw Attack since it was broken and impossible.
+    
+-   Changed: Renamed "Before Pickup" to "Next to Pickup" in various locations for more clarity
+
+
+## [2.0.2] - 2020-11-21
+
+-   Added: Starting locations tab has checkboxes to easily select all locations in an area
+
+-   Added: The map tracker now supports random elevators, translator gates and starting location.
+
+-   Changed: The pickup spoiler in game details is now sorted.
+
+-   Fixed: Multiworld sessions should no longer occasionally duplicate messages.
+    
+-   Fixed: Custom safe zone healing should now work in multiworld sessions.
+
+-   Fixed: Occasional error with switching an observer into a player.
+
+## [2.0.1] - Skipped
+
+## [2.0.0] - 2020-11-15
 
 This version is dedicated to SpaghettiToastBook, a great member of our community who sadly lost her life this year.
 

@@ -1,4 +1,6 @@
+import asyncio
 import json
+import platform
 import sys
 from pathlib import Path
 from typing import Union
@@ -6,13 +8,9 @@ from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
-import randovania
-import randovania.generator.elevator_distributor
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -29,6 +27,35 @@ class CustomException(Exception):
 def _mock_is_windows(request):
     with patch("randovania.games.prime.claris_randomizer._is_windows", return_value=request.param):
         yield request.param
+
+
+@pytest.fixture(name="valid_tmp_game_root")
+def _valid_tmp_game_root(tmp_path):
+    game_root = tmp_path.joinpath("game_root")
+    game_root.joinpath("files").mkdir(parents=True)
+    game_root.joinpath("sys").mkdir()
+
+    for f in ['default.dol', 'FrontEnd.pak', 'Metroid1.pak', 'Metroid2.pak']:
+        game_root.joinpath("files", f).write_bytes(b"")
+
+    game_root.joinpath("sys", 'main.dol').write_bytes(b"")
+
+    return game_root
+
+
+@pytest.mark.parametrize(["system_name", "expected"], [
+    ("Windows", True),
+    ("Linux", False),
+])
+def test_is_windows(mocker, system_name, expected):
+    # Setup
+    mocker.patch("platform.system", return_value=system_name)
+
+    # Run
+    result = claris_randomizer._is_windows()
+
+    # Assert
+    assert result == expected
 
 
 @patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
@@ -268,18 +295,25 @@ def test_apply_patcher_file(
         mock_create_progress_update_from_successive_messages: MagicMock,
         include_menu_mod: bool,
         has_backup_path: bool,
+        valid_tmp_game_root
 ):
     # Setup
-    game_root = MagicMock(spec=Path())
+    game_root = valid_tmp_game_root
     backup_files_path = MagicMock() if has_backup_path else None
     game_specific = MagicMock()
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
+    unvisited_room_names = "unvisited_room_names placeholder value"
+    teleporter_sounds = "teleporter_sounds placeholder value"
 
     patcher_data = {
         "menu_mod": include_menu_mod,
         "user_preferences": EchoesUserPreferences().as_json,
+        "default_items": {"foo": "bar"},
+        "unvisited_room_names": unvisited_room_names,
+        "teleporter_sounds": teleporter_sounds,
     }
+    assert claris_randomizer.get_patch_version(game_root) == 0
 
     # Run
     claris_randomizer.apply_patcher_file(game_root, backup_files_path,
@@ -297,12 +331,15 @@ def test_apply_patcher_file(
         mock_create_pak_backups.assert_not_called()
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
-    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences())
+    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences(), {"foo": "bar"},
+                                               unvisited_room_names, teleporter_sounds)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
     else:
         mock_add_menu_mod_to_files.assert_not_called()
+
+    assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
 
 
 @patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
@@ -335,10 +372,16 @@ def test_apply_layout(mock_apply_patcher_file: MagicMock,
                                                     progress_update)
 
 
-def test_process_command_no_thread(echo_tool):
+def test_process_command_no_thread(echo_tool, mock_is_windows, mocker, monkeypatch):
     read_callback = MagicMock()
 
     claris_randomizer.IO_LOOP = None
+    if platform.system() == "Windows":
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+
+    mock_set_event: MagicMock = mocker.patch("asyncio.set_event_loop_policy")
+    loop_policy = MagicMock()
+    monkeypatch.setattr(asyncio, "WindowsProactorEventLoopPolicy", loop_policy, raising=False)
 
     # Run
     claris_randomizer._process_command(
@@ -356,3 +399,7 @@ def test_process_command_no_thread(echo_tool):
         call("this is a nice world"),
         call("We some crazy stuff."),
     ])
+    if mock_is_windows:
+        mock_set_event.assert_called_once_with(loop_policy.return_value)
+    else:
+        mock_set_event.assert_not_called()

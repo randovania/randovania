@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.layout_description import LayoutDescription, CURRENT_DESCRIPTION_SCHEMA_VERSION
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
@@ -21,6 +21,7 @@ def test_load_multiworld(test_files_dir):
 
     # Run
     result = LayoutDescription.from_json_dict(input_data)
+    input_data["schema_version"] = CURRENT_DESCRIPTION_SCHEMA_VERSION
 
     # Assert
     as_json = result.as_json

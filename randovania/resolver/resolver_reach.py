@@ -1,4 +1,5 @@
 import math
+import typing
 from collections import defaultdict
 from typing import Dict, Set, Iterator, Tuple, FrozenSet
 
@@ -141,7 +142,8 @@ class ResolverReach:
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
-            for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
+            for resource, amount in action.resource_gain_on_collect(state.patches, state.resources,
+                                                                    self._logic.game.world_list.all_nodes):
                 if resource in interesting_resources:
                     yield action, energy
                     break
@@ -151,6 +153,6 @@ class ResolverReach:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue
-
-            if node.can_collect(state.patches, state.resources):
+            node = typing.cast(ResourceNode, node)
+            if node.can_collect(state.patches, state.resources, self._logic.game.world_list.all_nodes):
                 yield node

@@ -6,7 +6,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_sky_temple_key
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.resolver.exceptions import InvalidConfiguration
 
 

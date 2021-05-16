@@ -1,22 +1,24 @@
+import asyncio
 from argparse import ArgumentParser
 from pathlib import Path
 
-from randovania.games.prime import claris_randomizer
-from randovania.generator import generator
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
-
 
 def randomize_command_logic(args):
+    from randovania.games.prime import claris_randomizer
+    from randovania.generator import generator
+    from randovania.interface_common.cosmetic_patches import CosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.layout_description import LayoutDescription
+    from randovania.layout.permalink import Permalink
+
     def status_update(s):
         if args.verbose:
             print(s)
 
     if args.permalink is not None:
-        layout_description = generator.generate_description(permalink=Permalink.from_str(args.permalink),
-                                                            status_update=status_update,
-                                                            validate_after_generation=True)
+        layout_description = asyncio.run(generator.generate_and_validate_description(permalink=Permalink.from_str(args.permalink),
+                                                                                     status_update=status_update,
+                                                                                     validate_after_generation=True))
     else:
         layout_description = LayoutDescription.from_file(args.log_file)
 
@@ -29,6 +31,7 @@ def randomize_command_logic(args):
                                    backup_files_path=args.backup_files,
                                    progress_update=lambda x, _: status_update(x),
                                    game_root=args.game_files,
+                                   players_config=PlayersConfiguration(0, {0: "You"})
                                    )
 
 

@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import List, Optional, Tuple, Dict, Any
 
 import aiofiles
-import aiohttp.client_exceptions
 import engineio
 import socketio
 import socketio.exceptions
@@ -52,13 +51,13 @@ class NetworkClient:
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
     _connect_task: Optional[asyncio.Task] = None
+    _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
     _last_self_update: Any = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
 
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()
@@ -98,20 +97,24 @@ class NetworkClient:
 
     async def connect_if_authenticated(self):
         if self.session_data_path.is_file():
-            self.logger.info("connect_if_authenticated: session data exists")
+            self.logger.debug("session data exists")
             try:
                 return await self.connect_to_server()
             except UnableToConnect:
                 pass
         else:
-            self.logger.info("connect_if_authenticated: no session data")
+            self.logger.debug("no session data")
 
     async def _internal_connect_to_server(self):
+        import aiohttp.client_exceptions
+
         if self.sio.connected:
             return
 
+        waiting_for_on_connect = asyncio.get_running_loop().create_future()
+        self._waiting_for_on_connect = waiting_for_on_connect
         try:
-            # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
+            # sio.connect is raising a NotImplementedError, likely due to Windows and/or qasync?
             engineio.asyncio_client.async_signal_handler_set = True
 
             self.connection_state = ConnectionState.Connecting
@@ -119,25 +122,34 @@ class NetworkClient:
             # await asyncio.sleep(1)
             # self.logger.info(f"connect_to_server: sleep over")
 
-            self.logger.info(f"connect_to_server: connecting to {self.configuration['server_address']}")
+            self.logger.info(f"connecting to {self.configuration['server_address']}")
             self._connect_error = None
             await self.sio.connect(self.configuration["server_address"],
                                    socketio_path=self.configuration["socketio_path"],
+                                   transports=['websocket'],
                                    headers={"X-Randovania-Version": randovania.VERSION})
-            if self._restore_session_task is not None:
-                self.logger.info(f"connect_to_server: waiting for restore session")
-                await asyncio.wait_for(self._restore_session_task, timeout=30)
-            self.logger.info(f"connect_to_server: connected! -- {self._restore_session_task}")
+            await waiting_for_on_connect
+            self.logger.info(f"connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
-            self.logger.info(f"connect_to_server: failed with {e} - {type(e)}")
+            self.logger.info(f"failed with {e} - {type(e)}")
             if self._connect_error is None:
                 if isinstance(e, aiohttp.client_exceptions.ContentTypeError):
                     message = e.message
                 else:
                     message = str(e)
                 await self.on_connect_error(message)
-            raise UnableToConnect(self._connect_error)
+            error = self._connect_error
+            await self.sio.disconnect()
+            raise UnableToConnect(error)
+
+    def notify_on_connect(self, error_message: Optional[Exception]):
+        if self._waiting_for_on_connect is not None:
+            if error_message is None:
+                self._waiting_for_on_connect.set_result(None)
+            else:
+                self._waiting_for_on_connect.set_exception(error_message)
+            self._waiting_for_on_connect = None
 
     def connect_to_server(self) -> asyncio.Task:
         if self._connect_task is None:
@@ -160,7 +172,7 @@ class NetworkClient:
                 session_id = None
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
-                self.logger.debug(f"on_connect: session restoring session, with id {session_id}")
+                self.logger.debug(f"session restoring session, with id {session_id}")
                 await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
                                                                                 (persisted_session, session_id)))
 
@@ -169,27 +181,36 @@ class NetworkClient:
                         await self._emit_with_result("game_session_request_update", self._current_game_session.id))
                     await self.on_game_update_notification({})
 
-                self.logger.info(f"on_connect: session restored successful")
+                self.logger.info(f"session restored successful")
                 self.connection_state = ConnectionState.Connected
             except InvalidSession:
-                self.logger.info(f"on_connect: invalid session, deleting")
+                self.logger.info(f"invalid session, deleting")
                 self.connection_state = ConnectionState.ConnectedNotLogged
                 self.session_data_path.unlink()
         else:
-            self.logger.info(f"on_connect: no session to restore")
+            self.logger.info(f"no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
-        self._restore_session_task = asyncio.create_task(self._restore_session())
-        self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
-        await self._restore_session_task
+        try:
+            self._restore_session_task = asyncio.create_task(self._restore_session())
+            self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
+            await self._restore_session_task
+        finally:
+            self.notify_on_connect(None)
 
     async def on_connect_error(self, error_message: str):
-        self._connect_error = error_message
-        self.logger.info(f"on_connect_error: {error_message}")
-        self.connection_state = ConnectionState.Disconnected
-        if self._restore_session_task is not None:
-            self._restore_session_task.cancel()
+        if isinstance(error_message, dict) and "message" in error_message:
+            error_message = error_message["message"]
+
+        try:
+            self._connect_error = error_message
+            self.logger.warning(error_message)
+            self.connection_state = ConnectionState.Disconnected
+            if self._restore_session_task is not None:
+                self._restore_session_task.cancel()
+        finally:
+            self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
     async def on_disconnect(self):
         self.logger.info(f"on_disconnect")
@@ -202,7 +223,7 @@ class NetworkClient:
         if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
             self.connection_state = ConnectionState.Connected
 
-        self.logger.info(f"on_user_session_updated: {self._current_user.name}, state: {self.connection_state}")
+        self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
         self.server_data_path.mkdir(exist_ok=True, parents=True)
@@ -211,20 +232,20 @@ class NetworkClient:
 
     async def on_game_session_updated(self, data):
         self._current_game_session = GameSessionEntry.from_json(data)
-        self.logger.debug(f"on_game_session_updated - {self._current_game_session.id}")
+        self.logger.debug(f"{self._current_game_session.id}")
 
     async def on_game_update_notification(self, details):
         pass
 
     async def _emit_with_result(self, event, data=None, namespace=None):
         if self.connection_state.is_disconnected:
-            self.logger.debug(f"_emit_with_result: {event}, urgent connect start")
+            self.logger.debug(f"{event}, urgent connect start")
             await self.connect_to_server()
-            self.logger.debug(f"_emit_with_result: {event}, urgent connect finished")
+            self.logger.debug(f"{event}, urgent connect finished")
 
-        self.logger.debug(f"_emit_with_result: {event}, getting lock")
+        self.logger.debug(f"{event}, getting lock")
         async with self._call_lock:
-            self.logger.debug(f"_emit_with_result: {event}, will call")
+            self.logger.debug(f"{event}, will call")
             result = await self.sio.call(event, data, namespace=namespace, timeout=30)
 
         if result is None:
@@ -243,7 +264,7 @@ class NetworkClient:
     async def game_session_request_pickups(self) -> List[Tuple[str, bytes]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
         return [
-            (item["message"], base64.b85decode(item["pickup"]))
+            (item["provider_name"], base64.b85decode(item["pickup"]))
             for item in data
             if item is not None
         ]

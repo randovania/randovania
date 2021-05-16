@@ -12,6 +12,7 @@ class ResourceType(Enum):
     PICKUP_INDEX = 7
     GATE_INDEX = 8
     LOGBOOK_INDEX = 9
+    SHIP_NODE = 10
 
     @property
     def negated_prefix(self) -> str:

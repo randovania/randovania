@@ -1,5 +1,4 @@
 import collections
-import dataclasses
 import re
 from typing import Dict, List, DefaultDict
 
@@ -7,20 +6,19 @@ from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
 from randovania.game_description.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator, PoolResults
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 
@@ -38,7 +36,7 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
             if num_players > 1:
-                item_name = f"{target.pickup.name} for Player {target.player}"
+                item_name = f"{target.pickup.name} for Player {target.player + 1}"
             else:
                 item_name = f"{target.pickup.name}"
         else:
@@ -155,7 +153,7 @@ def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> Pi
 
 
 def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: GameDescription,
-                  game_modifications: dict, configuration: LayoutConfiguration) -> GamePatches:
+                  game_modifications: dict, configuration: EchoesConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
     :param player_index:
@@ -212,7 +210,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
             pickup_name_match = target_name_re.match(target_name)
             if pickup_name_match is not None:
                 pickup_name = pickup_name_match.group(1)
-                target_player = int(pickup_name_match.group(2))
+                target_player = int(pickup_name_match.group(2)) - 1
             else:
                 pickup_name = target_name
                 target_player = 0
@@ -254,7 +252,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
 
 def decode(game_modifications: List[dict],
-           layout_configurations: Dict[int, LayoutConfiguration],
+           layout_configurations: Dict[int, EchoesConfiguration],
            ) -> Dict[int, GamePatches]:
 
     all_games = {index: data_reader.decode_data(configuration.game_data)

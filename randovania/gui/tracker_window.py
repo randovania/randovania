@@ -1,21 +1,40 @@
+import collections
 import functools
 import json
+import typing
 from pathlib import Path
+from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
+import matplotlib.pyplot as plt
+import networkx
+from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
+from matplotlib.axes import Axes
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
 
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode
+from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
-from randovania.generator import base_patches_factory, generator
+from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world import World
+from randovania.games.game import RandovaniaGame
+from randovania.games.prime import patcher_file
+from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout import translator_configuration
+from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.teleporters import TeleporterShuffleMode
+from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -27,12 +46,12 @@ class InvalidLayoutForTracker(Exception):
 
 
 def _load_previous_state(persistence_path: Path,
-                         layout_configuration: LayoutConfiguration,
+                         layout_configuration: EchoesConfiguration,
                          ) -> Optional[dict]:
     previous_layout_path = persistence_path.joinpath("layout_configuration.json")
     try:
         with previous_layout_path.open() as previous_layout_file:
-            previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
+            previous_layout = EchoesConfiguration.from_json(json.load(previous_layout_file))
     except (FileNotFoundError, TypeError, KeyError, ValueError, json.JSONDecodeError):
         return None
 
@@ -47,6 +66,23 @@ def _load_previous_state(persistence_path: Path,
         return None
 
 
+class MatplotlibWidget(QtWidgets.QWidget):
+    ax: Axes
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        fig = Figure(figsize=(7, 5), dpi=65, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
+        self.canvas = FigureCanvas(fig)
+        self.toolbar = NavigationToolbar(self.canvas, self)
+        lay = QtWidgets.QVBoxLayout(self)
+        lay.addWidget(self.toolbar)
+        lay.addWidget(self.canvas)
+
+        self.ax = fig.add_subplot(111)
+        self.line, *_ = self.ax.plot([])
+
+
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker state
     _collected_pickups: Dict[PickupEntry, int]
@@ -55,9 +91,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker configuration
     logic: Logic
     game_description: GameDescription
-    layout_configuration: LayoutConfiguration
+    layout_configuration: EchoesConfiguration
     persistence_path: Path
     _initial_state: State
+    _elevator_id_to_combo: Dict[int, QtWidgets.QComboBox]
+    _translator_gate_to_combo: Dict[TranslatorGate, QtWidgets.QComboBox]
+    _starting_nodes: Set[ResourceNode]
+    _undefined_item = ItemResourceInfo(-1, "Undefined", "Undefined", 0, None)
 
     # UI tools
     _asset_id_to_item: Dict[int, QTreeWidgetItem]
@@ -65,7 +105,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, CustomSpinBox]]
     _during_setup = False
 
-    def __init__(self, persistence_path: Path, layout_configuration: LayoutConfiguration):
+    def __init__(self, persistence_path: Path, layout_configuration: EchoesConfiguration):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -78,13 +118,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.layout_configuration = layout_configuration
         self.persistence_path = persistence_path
 
-        player_index = 0  # FIXME
-        try:
-            player_pool = generator.create_player_pool(None, self.layout_configuration, player_index)
-        except base_patches_factory.MissingRng as e:
-            raise InvalidLayoutForTracker("Layout is configured to have random {}, "
-                                          "but that isn't supported by the tracker.".format(e))
-
+        player_pool = generator.create_player_pool(Random(0), self.layout_configuration, 0, 1)
         pool_patches = player_pool.patches
         self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
                                                                      player_pool.game,
@@ -98,8 +132,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
-        self.configuration_label.setText("Trick Level: {}; Elevators: Vanilla; Starts with:\n{}".format(
-            layout_configuration.trick_level_configuration.pretty_description,
+        self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
+            layout_configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()
@@ -108,17 +142,24 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.setup_pickups_box(player_pool.pickups)
         self.setup_possible_locations_tree()
+        self.setup_elevators()
+        self.setup_translator_gates()
 
-        self._starting_nodes = {
-            node
-            for node in self.game_description.world_list.all_nodes
-            if node.is_resource_node and node.resource() in self._initial_state.resources
-        }
+        self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
+        self.tab_graph_map_layout.addWidget(self.matplot_widget)
+        self._world_to_node_positions = {}
+        self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
+
+        for world in self.game_description.world_list.worlds:
+            self.graph_map_world_combo.addItem(world.name, world)
+        self.graph_map_world_combo.currentIndexChanged.connect(self.on_graph_map_world_combo)
 
         persistence_path.mkdir(parents=True, exist_ok=True)
         previous_state = _load_previous_state(persistence_path, layout_configuration)
 
         if not self.apply_previous_state(previous_state):
+            self.setup_starting_location(None)
+
             with persistence_path.joinpath("layout_configuration.json").open("w") as layout_file:
                 json.dump(layout_configuration.as_json, layout_file)
             self._add_new_action(self._initial_state.node)
@@ -126,6 +167,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def apply_previous_state(self, previous_state: Optional[dict]) -> bool:
         if previous_state is None:
             return False
+
+        starting_location = None
+        needs_starting_location = len(self.layout_configuration.starting_location.locations) > 1
+        resource_db = self.game_description.resource_database
+        translator_gates = {}
 
         try:
             pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
@@ -137,8 +183,41 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 self.game_description.world_list.all_nodes[index]
                 for index in previous_state["actions"]
             ]
+            if needs_starting_location:
+                starting_location = AreaLocation.from_json(previous_state["starting_location"])
+
+            elevators = {
+                int(elevator_id): AreaLocation.from_json(location) if location is not None else None
+                for elevator_id, location in previous_state["elevators"].items()
+            }
+            if self.layout_configuration.game == RandovaniaGame.PRIME2:
+                translator_gates = {
+                    TranslatorGate(int(gate)): (resource_db.get_item(item)
+                                                if item is not None
+                                                else self._undefined_item)
+                    for gate, item in previous_state["translator_gates"].items()
+                }
         except KeyError:
             return False
+
+        self.setup_starting_location(starting_location)
+
+        for elevator_id, area_location in elevators.items():
+            combo = self._elevator_id_to_combo[elevator_id]
+            if area_location is None:
+                combo.setCurrentIndex(0)
+                continue
+            for i in range(combo.count()):
+                if area_location == combo.itemData(i):
+                    combo.setCurrentIndex(i)
+                    break
+
+        for gate, item in translator_gates.items():
+            combo = self._translator_gate_to_combo[gate]
+            for i in range(combo.count()):
+                if item == combo.itemData(i):
+                    combo.setCurrentIndex(i)
+                    break
 
         self.bulk_change_quantity(quantity_to_change)
         self._add_new_actions(previous_actions)
@@ -153,6 +232,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         while len(self._actions) > 1:
             self._actions.pop()
             self.actions_list.takeItem(len(self._actions))
+
+        for elevator in self._elevator_id_to_combo.values():
+            elevator.setCurrentIndex(0)
+        for elevator in self._translator_gate_to_combo.values():
+            elevator.setCurrentIndex(0)
 
         self._refresh_for_new_action()
 
@@ -176,11 +260,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def _pretty_node_name(self, node: Node) -> str:
         world_list = self.game_description.world_list
-        return "{} / {}".format(world_list.nodes_to_area(node).name, node.name)
+        return "{} / {}".format(world_list.area_name(world_list.nodes_to_area(node)), node.name)
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
-        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
+        self.current_location_label.setText("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
         self.update_locations_tree_for_reachable_nodes()
 
     def _add_new_action(self, node: Node):
@@ -203,16 +287,104 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
 
-    def update_locations_tree_for_reachable_nodes(self):
-        # Calculate which nodes are in reach right now
+    def _positions_for_world(self, world: World):
+        g = networkx.DiGraph()
+        world_list = self.game_description.world_list
         state = self.state_for_current_configuration()
+
+        for area in world.areas:
+            g.add_node(area)
+
+        for area in world.areas:
+            nearby_areas = set()
+            for node in area.nodes:
+                if isinstance(node, DockNode):
+                    try:
+                        target_node = world_list.resolve_dock_node(node, state.patches)
+                        nearby_areas.add(world_list.nodes_to_area(target_node))
+                    except IndexError as e:
+                        print(f"For {node.name} in {area.name}, received {e}")
+                        continue
+            for other_area in nearby_areas:
+                g.add_edge(area, other_area)
+
+        return networkx.drawing.spring_layout(g)
+
+    def update_matplot_widget(self, nodes_in_reach: Set[Node]):
+        g = networkx.DiGraph()
+        world_list = self.game_description.world_list
+        state = self.state_for_current_configuration()
+
+        world = self.graph_map_world_combo.currentData()
+        for area in world.areas:
+            g.add_node(area)
+
+        for area in world.areas:
+            nearby_areas = set()
+            for node in area.nodes:
+                if node not in nodes_in_reach:
+                    continue
+
+                if isinstance(node, DockNode):
+                    # TODO: respect is_blast_shield: if already opened once, no requirement needed.
+                    # Includes opening form behind with different criteria
+                    try:
+                        target_node = world_list.resolve_dock_node(node, state.patches)
+                        dock_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
+                                                                        node.default_dock_weakness)
+                        if dock_weakness.requirement.satisfied(state.resources, state.energy):
+                            nearby_areas.add(world_list.nodes_to_area(target_node))
+                    except IndexError as e:
+                        print(f"For {node.name} in {area.name}, received {e}")
+                        continue
+
+            for other_area in nearby_areas:
+                g.add_edge(area, other_area)
+
+        self.matplot_widget.ax.clear()
+
+        cf = self.matplot_widget.ax.get_figure()
+        cf.set_facecolor("w")
+
+        if world.world_asset_id not in self._world_to_node_positions:
+            self._world_to_node_positions[world.world_asset_id] = self._positions_for_world(world)
+        pos = self._world_to_node_positions[world.world_asset_id]
+
+        networkx.draw_networkx_nodes(g, pos, ax=self.matplot_widget.ax)
+        networkx.draw_networkx_edges(g, pos, arrows=True, ax=self.matplot_widget.ax)
+        networkx.draw_networkx_labels(g, pos, ax=self.matplot_widget.ax,
+                                      labels={area: area.name for area in world.areas},
+                                      verticalalignment='top')
+
+        self.matplot_widget.ax.set_axis_off()
+
+        plt.draw_if_interactive()
+        self.matplot_widget.canvas.draw()
+
+    def on_graph_map_world_combo(self):
+        nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
+        self.update_matplot_widget(nodes_in_reach)
+
+    def current_nodes_in_reach(self, state):
         if state is None:
             nodes_in_reach = set()
         else:
             reach = ResolverReach.calculate_reach(self.logic, state)
             nodes_in_reach = set(reach.nodes)
             nodes_in_reach.add(state.node)
+        return nodes_in_reach
 
+    def _on_tab_changed(self):
+        if self.map_tab_widget.currentWidget() == self.tab_graph_map:
+            self.on_graph_map_world_combo()
+
+    def update_locations_tree_for_reachable_nodes(self):
+        state = self.state_for_current_configuration()
+        nodes_in_reach = self.current_nodes_in_reach(state)
+        if self.map_tab_widget.currentWidget() == self.tab_graph_map:
+            self.update_matplot_widget(nodes_in_reach)
+
+        all_nodes = self.game_description.world_list.all_nodes
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
                 area_is_visible = False
@@ -227,14 +399,18 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item = self._node_to_item[node]
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
-                        resource_node: ResourceNode = node
-                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources))
+                        resource_node = typing.cast(ResourceNode, node)
+                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources, all_nodes))
                         node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
                 self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
 
         # Persist the current state
+        self.persist_current_state()
+
+    def persist_current_state(self):
+        world_list = self.game_description.world_list
         with self.persistence_path.joinpath("state.json").open("w") as state_file:
             json.dump(
                 {
@@ -245,7 +421,16 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     "collected_pickups": {
                         pickup.name: quantity
                         for pickup, quantity in self._collected_pickups.items()
-                    }
+                    },
+                    "elevators": {
+                        str(elevator_id): combo.currentData().as_json if combo.currentIndex() > 0 else None
+                        for elevator_id, combo in self._elevator_id_to_combo.items()
+                    },
+                    "translator_gates": {
+                        str(gate.index): combo.currentData().index if combo.currentIndex() > 0 else None
+                        for gate, combo in self._translator_gate_to_combo.items()
+                    },
+                    "starting_location": world_list.node_to_area_location(self._initial_state.node).as_json,
                 },
                 state_file
             )
@@ -273,14 +458,134 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 for node in area.nodes:
                     node_item = QTreeWidgetItem(area_item)
                     if isinstance(node, TranslatorGateNode):
-                        translator = self._initial_state.patches.translator_gates[node.gate]
-                        node_item.setText(0, "{} ({})".format(node.name, translator.short_name))
+                        node_item.setText(0, "{} ({})".format(node.name, node.gate))
                     else:
                         node_item.setText(0, node.name)
                     node_item.node = node
                     if node.is_resource_node:
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
                     self._node_to_item[node] = node_item
+
+    def setup_elevators(self):
+        world_list = self.game_description.world_list
+        nodes_by_world: Dict[str, List[TeleporterNode]] = collections.defaultdict(list)
+        self._elevator_id_to_combo = {}
+
+        areas_to_not_change = {
+            2278776548,  # Sky Temple Gateway
+            2068511343,  # Sky Temple Energy Controller
+            3136899603,  # Aerie Transport Station
+            1564082177,  # Aerie
+        }
+        targets = {}
+        for world, area, node in world_list.all_worlds_areas_nodes:
+            if isinstance(node, TeleporterNode) and node.editable and area.area_asset_id not in areas_to_not_change:
+                name = world.correct_name(area.in_dark_aether)
+                nodes_by_world[name].append(node)
+
+                location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                targets[patcher_file.elevator_area_name(world_list, location, True)] = location
+
+        if self.layout_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+            targets = {}
+            for world in world_list.worlds:
+                for area in world.areas:
+                    name = world.correct_name(area.in_dark_aether)
+                    targets[f"{name} - {area.name}"] = AreaLocation(world.world_asset_id, area.area_asset_id)
+
+        combo_targets = sorted(targets.items(), key=lambda it: it[0])
+
+        for world_name in sorted(nodes_by_world.keys()):
+            nodes = nodes_by_world[world_name]
+            nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
+                                            world_list.nodes_to_area(node).area_asset_id)
+                               for node in nodes]
+            nodes_names = [patcher_file.elevator_area_name(world_list, location, True)
+                           for location in nodes_locations]
+
+            nodes = sorted(nodes_by_world[world_name], key=lambda it: world_list.nodes_to_area(it).name)
+
+            group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
+            group.setTitle(world_name)
+            self.elevators_scroll_layout.addWidget(group)
+            layout = QtWidgets.QGridLayout(group)
+
+            for i, (node, location, name) in enumerate(sorted(zip(nodes, nodes_locations, nodes_names),
+                                                              key=lambda it: it[2])):
+                node_name = QtWidgets.QLabel(group)
+                node_name.setText(name)
+                layout.addWidget(node_name, i, 0)
+
+                combo = QtWidgets.QComboBox(group)
+                if self.layout_configuration.elevators.is_vanilla:
+                    combo.addItem("Vanilla", node.default_connection)
+                    combo.setEnabled(False)
+                else:
+                    combo.addItem("Undefined", location)
+                    for target_name, connection in combo_targets:
+                        combo.addItem(target_name, connection)
+
+                combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
+                self._elevator_id_to_combo[node.teleporter_instance_id] = combo
+                layout.addWidget(combo, i, 1)
+
+    def setup_translator_gates(self):
+        world_list = self.game_description.world_list
+        resource_db = self.game_description.resource_database
+        self._translator_gate_to_combo = {}
+
+        if self.layout_configuration.game != RandovaniaGame.PRIME2:
+            return
+
+        gates = {
+            f"{area.name} ({node.gate.index})": node.gate
+            for world, area, node in world_list.all_worlds_areas_nodes
+            if isinstance(node, TranslatorGateNode)
+        }
+        translator_requirement = self.layout_configuration.translator_configuration.translator_requirement
+
+        for i, (gate_name, gate) in enumerate(sorted(gates.items(), key=lambda it: it[0])):
+            node_name = QtWidgets.QLabel(self.translator_gate_scroll_contents)
+            node_name.setText(gate_name)
+            self.translator_gate_scroll_layout.addWidget(node_name, i, 0)
+
+            combo = QtWidgets.QComboBox(self.translator_gate_scroll_contents)
+            gate_requirement = translator_requirement[gate]
+
+            if gate_requirement in (LayoutTranslatorRequirement.RANDOM,
+                                    LayoutTranslatorRequirement.RANDOM_WITH_REMOVED):
+                combo.addItem("Undefined", self._undefined_item)
+                for translator, index in translator_configuration.ITEM_INDICES.items():
+                    combo.addItem(translator.long_name, resource_db.get_item(index))
+            else:
+                combo.addItem(gate_requirement.long_name, resource_db.get_item(gate_requirement.item_index))
+                combo.setEnabled(False)
+
+            combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
+            self._translator_gate_to_combo[gate] = combo
+            self.translator_gate_scroll_layout.addWidget(combo, i, 1)
+
+    def setup_starting_location(self, area_location: Optional[AreaLocation]):
+        world_list = self.game_description.world_list
+
+        if len(self.layout_configuration.starting_location.locations) > 1:
+            if area_location is None:
+                area_locations = sorted(self.layout_configuration.starting_location.locations,
+                                        key=lambda it: world_list.area_name(world_list.area_by_area_location(it)))
+
+                location_names = [world_list.area_name(world_list.area_by_area_location(it))
+                                  for it in area_locations]
+                selected_name = QtWidgets.QInputDialog.getItem(self, "Starting Location", "Select starting location",
+                                                               location_names, 0, False)
+                area_location = area_locations[location_names.index(selected_name[0])]
+
+            self._initial_state.node = world_list.resolve_teleporter_connection(area_location)
+
+        self._starting_nodes = {
+            node
+            for node in world_list.all_nodes
+            if node.is_resource_node and node.resource() in self._initial_state.resources
+        }
 
     def _change_item_quantity(self, pickup: PickupEntry, use_quantity_as_bool: bool, quantity: int):
         if use_quantity_as_bool:
@@ -397,15 +702,26 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             row_for_parent[parent_widget] += 1
 
     def state_for_current_configuration(self) -> Optional[State]:
+        all_nodes = self.game_description.world_list.all_nodes
+
         state = self._initial_state.copy()
-        state.node = self._actions[-1]
+        if self._actions:
+            state.node = self._actions[-1]
+
+        for teleporter, combo in self._elevator_id_to_combo.items():
+            assert combo.currentData() is not None
+            state.patches.elevator_connection[teleporter] = combo.currentData()
+
+        for gate, item in self._translator_gate_to_combo.items():
+            state.patches.translator_gates[gate] = item.currentData()
 
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources,
+                                                                                 all_nodes),
                                                    state.resources)
 
         return state

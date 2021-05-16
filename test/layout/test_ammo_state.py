@@ -7,8 +7,10 @@ from randovania.layout.ammo_state import AmmoState
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x16', "json": {"variance": 0, "pickup_count": 5, }},
-        {"encoded": b'\xf2', "json": {"variance": 0, "pickup_count": 60, }},
+        {"encoded": b'\x01', "json": {"variance": 0, "pickup_count": 0, }},
+        {"encoded": b'\x0b', "json": {"variance": 0, "pickup_count": 5, }},
+        {"encoded": b'x', "json": {"variance": 0, "pickup_count": 60, "requires_major_item": False}},
+        {"encoded": b'\xc7', "json": {"variance": 0, "pickup_count": 99, }},
     ],
     name="state_with_data")
 def _state_with_data(request):

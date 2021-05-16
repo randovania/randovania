@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.cli import multiworld
+from randovania.cli import server
 
 
 def test_server_command_logic(mocker):
@@ -11,7 +11,7 @@ def test_server_command_logic(mocker):
     mock_create_app: MagicMock = mocker.patch("randovania.server.app.create_app")
 
     # Run
-    multiworld.server_command_logic(None)
+    server.flask_command_logic(None)
 
     # Assert
     mock_create_app.assert_called_once_with()
@@ -22,7 +22,7 @@ def test_create_subparsers():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
-    multiworld.create_subparsers(subparsers)
+    server.create_subparsers(subparsers)
 
     with pytest.raises(SystemExit):
         args = parser.parse_args(["multiworld"])

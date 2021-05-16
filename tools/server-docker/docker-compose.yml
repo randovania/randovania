@@ -1,0 +1,32 @@
+version: "3.3"
+
+networks:
+  web:
+    external: true
+
+services:
+  randovania:
+    image: "randovania/server:${VERSION}"
+    volumes:
+      - "${DATA_PATH}:/data"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PATH_PREFIX}.rule=Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)"
+      - "traefik.http.routers.${PATH_PREFIX}.entrypoints=websecure"
+      - "traefik.http.routers.${PATH_PREFIX}.tls.certresolver=myresolver"
+      - "traefik.http.routers.${PATH_PREFIX}.middlewares=${PATH_PREFIX}_stripprefix"
+      - "traefik.http.middlewares.${PATH_PREFIX}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}"
+      - "traefik.http.services.${PATH_PREFIX}.loadbalancer.server.port=5000"
+
+    networks:
+      - web
+    restart: always
+
+  bot:
+    image: "randovania/server:${VERSION}"
+    volumes:
+      - "${DATA_PATH}:/data"
+
+    command: --configuration /data/configuration.json server bot
+    restart: always

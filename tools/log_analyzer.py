@@ -5,12 +5,17 @@ import csv
 import json
 import os
 import re
+import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple, Optional, List, Iterable, Set
 
-from randovania.game_description.default_database import default_prime2_game_description
+import tqdm as tqdm
+
+from randovania.game_description.default_database import game_description_for
 from randovania.game_description.node import PickupNode, LogbookNode
+from randovania.games.game import RandovaniaGame
+from randovania.layout.layout_description import LayoutDescription
 
 
 def read_json(path: Path) -> dict:
@@ -79,6 +84,7 @@ def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]
     balanced_freq = {
         item: count / pickup_count[item]
         for item, count in item_counts.items()
+        if item in pickup_count
     }
     return stdev(balanced_freq.values())
 
@@ -86,6 +92,29 @@ def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]
 def first_key(d: dict):
     for key in d:
         return key
+
+
+def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Dict[str, int], Set[str], Set[str]]:
+    locations = set()
+    no_key = set()
+    order = {}
+
+    for i, entry in enumerate(item_order):
+        splitter = " as "
+        if splitter not in entry:
+            splitter = " at "
+        item, location = entry.split(splitter, 1)
+        order[item] = i
+        location = location.split(" with ", 1)[0]
+        locations.add(location)
+        if "Key" not in item:
+            no_key.add(location)
+
+    for item in all_items:
+        if item not in order:
+            order[item] = len(item_order)
+
+    return order, locations, no_key
 
 
 def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
@@ -96,8 +125,9 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     locations = collections.defaultdict(item_creator)
     item_hints = collections.defaultdict(item_creator)
     location_hints = collections.defaultdict(item_creator)
+    item_order = collections.defaultdict(list)
 
-    game_description = default_prime2_game_description()
+    game_description = game_description_for(RandovaniaGame.PRIME2)
     world_list = game_description.world_list
     index_to_location = {
         node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),
@@ -105,6 +135,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         for node in game_description.world_list.all_nodes
         if isinstance(node, PickupNode)
     }
+    progression_count_for_location = collections.defaultdict(int)
+    progression_no_key_count_for_location = collections.defaultdict(int)
 
     logbook_to_name = {
         str(node.string_asset_id): game_description.world_list.node_name(node)
@@ -114,14 +146,33 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
 
     seed_count = 0
     pickup_count = None
-    for seed in Path(seeds_dir).glob("**/*.json"):
-        for game_modifications in read_json(seed)["game_modifications"]:
+
+    seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
+    seed_files.extend(Path(seeds_dir).glob("**/*.json"))
+    for seed in tqdm.tqdm(seed_files):
+        try:
+            seed_data = read_json(seed)
+        except json.JSONDecodeError:
+            continue
+        for game_modifications in seed_data["game_modifications"]:
             accumulate_results(game_modifications,
                                items, locations,
                                item_hints, location_hints,
                                index_to_location, logbook_to_name)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
+
+        item_orders, locations_with_progression, no_key_progression = get_items_order(list(items.keys()),
+                                                                                      seed_data["item_order"])
+        for item, order in item_orders.items():
+            item_order[item].append(order)
+
+        for location in locations_with_progression:
+            progression_count_for_location[location] += 1
+
+        for location in no_key_progression:
+            progression_no_key_count_for_location[location] += 1
+
         seed_count += 1
 
     if pickup_count is None:
@@ -142,6 +193,29 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         "locations": sort_by_contents(locations),
         "item_hints": sort_by_contents(item_hints),
         "location_hints": sort_by_contents(location_hints),
+        "location_progression_count": {
+            location: value
+            for location, value in sorted(progression_count_for_location.items(), key=lambda t: t[1], reverse=True)
+        },
+        "location_progression_no_key_count": {
+            location: value
+            for location, value in sorted(progression_no_key_count_for_location.items(),
+                                          key=lambda t: t[1], reverse=True)
+        },
+        "item_order": {
+            "average": {
+                name: statistics.mean(orders)
+                for name, orders in item_order.items()
+            },
+            "median": {
+                name: int(statistics.median(orders))
+                for name, orders in item_order.items()
+            },
+            "stdev": {
+                name: statistics.stdev(orders)
+                for name, orders in item_order.items()
+            },
+        }
     }
 
     if csv_dir is not None:

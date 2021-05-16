@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
@@ -9,6 +10,7 @@ from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
+from randovania.interface_common.tracker_theme import TrackerTheme
 
 T = TypeVar("T")
 
@@ -52,13 +54,12 @@ _SERIALIZER_FOR_FIELD = {
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
-    "selected_preset_name": Serializer(identity, str),
-    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
+    "selected_preset_uuid": Serializer(str, uuid.UUID),
+    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
-    "tracking_inventory": Serializer(identity, bool),
-    "displaying_messages": Serializer(identity, bool),
+    "tracker_theme": Serializer(lambda it: it.value, TrackerTheme),
 }
 
 
@@ -81,6 +82,7 @@ class DecodeFailedException(ValueError):
 
 class Options:
     _data_dir: Path
+    _user_dir: Path
     _on_options_changed: Optional[Callable[[], None]] = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
@@ -91,21 +93,21 @@ class Options:
     _auto_save_spoiler: Optional[bool] = None
     _dark_mode: Optional[bool] = None
     _output_directory: Optional[Path] = None
-    _selected_preset_name: Optional[str] = None
+    _selected_preset_uuid: Optional[uuid.UUID] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
-    _tracking_inventory: Optional[bool] = None
-    _displaying_messages: Optional[bool] = None
+    _tracker_theme: Optional[TrackerTheme] = None
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, user_dir: Optional[Path] = None):
         self._data_dir = data_dir
+        self._user_dir = user_dir or data_dir
         self._last_changelog_displayed = str(update_checker.strict_current_version())
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
-        return cls(persistence.user_data_dir())
+        return cls(persistence.local_data_dir(), persistence.roaming_data_dir())
 
     def _read_persisted_options(self) -> Optional[dict]:
         try:
@@ -225,8 +227,7 @@ class Options:
         self._dark_mode = None
         self._game_backend = None
         self._nintendont_ip = None
-        self._tracking_inventory = None
-        self._displaying_messages = None
+        self._tracker_theme = None
 
     # Files paths
     @property
@@ -242,8 +243,20 @@ class Options:
         return self._data_dir.joinpath("tracker")
 
     @property
+    def presets_path(self) -> Path:
+        return self._user_dir.joinpath("presets")
+
+    @property
+    def game_history_path(self) -> Path:
+        return self._data_dir.joinpath("game_history")
+
+    @property
     def data_dir(self) -> Path:
         return self._data_dir
+
+    @property
+    def user_dir(self) -> Path:
+        return self._user_dir
 
     # Access to Direct fields
     @property
@@ -281,12 +294,12 @@ class Options:
         self._edit_field("dark_mode", value)
 
     @property
-    def selected_preset_name(self) -> Optional[str]:
-        return self._selected_preset_name
+    def selected_preset_uuid(self) -> Optional[uuid.UUID]:
+        return self._selected_preset_uuid
 
-    @selected_preset_name.setter
-    def selected_preset_name(self, value: str):
-        self._edit_field("selected_preset_name", value)
+    @selected_preset_uuid.setter
+    def selected_preset_uuid(self, value: uuid.UUID):
+        self._edit_field("selected_preset_uuid", value)
 
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
@@ -313,20 +326,12 @@ class Options:
         self._edit_field("nintendont_ip", value)
 
     @property
-    def tracking_inventory(self) -> bool:
-        return _return_with_default(self._tracking_inventory, lambda: True)
+    def tracker_theme(self) -> TrackerTheme:
+        return _return_with_default(self._tracker_theme, TrackerTheme.default)
 
-    @tracking_inventory.setter
-    def tracking_inventory(self, value: bool):
-        self._edit_field("tracking_inventory", value)
-
-    @property
-    def displaying_messages(self):
-        return _return_with_default(self._displaying_messages, lambda: True)
-
-    @displaying_messages.setter
-    def displaying_messages(self, value):
-        self._edit_field("displaying_messages", value)
+    @tracker_theme.setter
+    def tracker_theme(self, value: TrackerTheme):
+        self._edit_field("tracker_theme", value)
 
     @property
     def displayed_alerts(self):
@@ -340,8 +345,9 @@ class Options:
         return value in self.displayed_alerts
 
     def mark_alert_as_displayed(self, value: InfoAlert):
-        alerts = self.displayed_alerts
-        if value not in alerts:
+        if value not in self.displayed_alerts:
+            # Create a copy so we don't modify the existing field
+            alerts = set(self.displayed_alerts)
             alerts.add(value)
             with self:
                 self.displayed_alerts = alerts

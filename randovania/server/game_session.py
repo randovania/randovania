@@ -14,6 +14,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -147,6 +148,7 @@ def _create_row(sio: ServerApp, session: GameSession, preset_json: dict):
 
     new_row_id = session.num_rows
     with database.db.atomic():
+        logger().info(f"Session {session.id}: Creating row {new_row_id}.")
         GameSessionPreset.create(session=session, row=new_row_id,
                                  preset=json.dumps(preset.as_json))
 
@@ -159,12 +161,15 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
+    if preset.game != RandovaniaGame.PRIME2:
+        raise InvalidAction("Only Prime 2 presets allowed.")
 
     try:
         with database.db.atomic():
             preset_row = GameSessionPreset.get(GameSessionPreset.session == session,
                                                GameSessionPreset.row == row_id)
             preset_row.preset = json.dumps(preset.as_json)
+            logger().info(f"Session {session.id}: Changing row {row_id}.")
             preset_row.save()
 
     except peewee.DoesNotExist:
@@ -183,6 +188,7 @@ def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
         raise InvalidAction(f"Can only delete the last row")
 
     with database.db.atomic():
+        logger().info(f"Session {session.id}: Deleting {row_id}.")
         GameSessionPreset.delete().where(GameSessionPreset.session == session,
                                          GameSessionPreset.row == row_id).execute()
         GameSessionMembership.update(row=None).where(
@@ -203,6 +209,7 @@ def _update_layout_generation(sio: ServerApp, session: GameSession, active: bool
     else:
         session.generation_in_progress = None
 
+    logger().info(f"Session {session.id}: Making generation in progress to {session.generation_in_progress}.")
     session.save()
 
 
@@ -230,7 +237,10 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
         for permalink_preset, preset_row in zip(permalink.presets.values(), session.presets):
             preset_row = typing.cast(GameSessionPreset, preset_row)
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
-                preset_row.preset = json.dumps(VersionedPreset.with_preset(permalink_preset).as_json)
+                preset = VersionedPreset.with_preset(permalink_preset)
+                if preset.game != RandovaniaGame.PRIME2:
+                    raise InvalidAction("Only Prime 2 presets allowed.")
+                preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
     with database.db.atomic():
@@ -272,6 +282,7 @@ def _start_session(sio: ServerApp, session: GameSession):
                             f"({session.num_rows} x {session.num_teams}).")
 
     session.state = GameSessionState.IN_PROGRESS
+    logger().info(f"Session {session.id}: Starting session.")
     session.save()
 
 
@@ -281,6 +292,7 @@ def _finish_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Session is not in progress")
 
     session.state = GameSessionState.FINISHED
+    logger().info(f"Session {session.id}: Finishing session.")
     session.save()
 
 
@@ -296,6 +308,7 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
     _verify_has_admin(sio, session.id, None)
 
     session.password = _hash_password(password)
+    logger().info(f"Session {session.id}: Changing password.")
     session.save()
 
 
@@ -334,22 +347,20 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         _change_password(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.DELETE_SESSION:
+        logger().info(f"Session {session.id}: Deleting session.")
         session.delete_instance(recursive=True)
 
     _emit_session_update(session)
 
 
 def _find_empty_row(session: GameSession) -> int:
-    empty_row = 0
-    for possible_slot in GameSessionMembership.non_observer_members(session):
-        if empty_row != possible_slot.row:
-            break
-        else:
-            empty_row += 1
+    possible_rows = set(range(session.num_rows))
+    for member in GameSessionMembership.non_observer_members(session):
+        possible_rows.remove(member.row)
 
-    if empty_row >= session.num_rows:
-        raise InvalidAction("Session is full")
-    return empty_row
+    for empty_row in sorted(possible_rows):
+        return empty_row
+    raise InvalidAction("Session is full")
 
 
 def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
@@ -363,6 +374,9 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         membership.delete_instance()
         if not list(session.players):
             session.delete_instance(recursive=True)
+            logger().info(f"Session {session_id}. Kicking user {user_id} and deleting session.")
+        else:
+            logger().info(f"Session {session_id}. Kicking user {user_id}.")
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
@@ -386,6 +400,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             raise InvalidAction("No empty slots found in this direction")
 
         with database.db.atomic():
+            logger().info(f"Session {session_id}, User {user_id}. "
+                          f"Performing {action}, new row is {new_row}, from {membership.row}.")
             membership.row = new_row
             membership.save()
 
@@ -394,6 +410,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             membership.row = _find_empty_row(session)
         else:
             membership.row = None
+        logger().info(f"Session {session_id}, User {user_id}. Performing {action}, new row is {membership.row}.")
         membership.save()
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:
@@ -406,10 +423,11 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             raise InvalidAction("can't demote the only admin")
 
         membership.admin = not membership.admin
+        logger().info(f"Session {session_id}, User {user_id}. Performing {action}, new status is {membership.admin}.")
         membership.save()
 
     elif action == SessionAdminUserAction.CREATE_PATCHER_FILE:
-        cosmetic_patches = CosmeticPatches.from_json_dict(arg)
+        cosmetic_patches = CosmeticPatches.from_json(arg)
         player_names = {i: f"Player {i + 1}" for i in range(session.num_rows)}
 
         for member in GameSessionMembership.non_observer_members(session):
@@ -457,16 +475,15 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
     player_row: int = membership.row
     pickup_target = _get_pickup_target(description, player_row, pickup_location)
 
+    def log(msg):
+        logger().info(f"Session {session.id}, Row {membership.row} found item at {pickup_location}. {msg}")
+
     if pickup_target is None:
-        logger().info(
-            f"Session {session.id}, Row {membership.row} found item "
-            f"at {pickup_location}. It's an ETM.")
+        log(f"It's an ETM.")
         return None
 
     if pickup_target.player == membership.row:
-        logger().info(
-            f"Session {session.id}, Row {membership.row} found item "
-            f"at {pickup_location}. It's a {pickup_target.pickup.name} for themselves.")
+        log(f"It's a {pickup_target.pickup.name} for themselves.")
         return None
 
     try:
@@ -478,14 +495,10 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
         )
     except peewee.IntegrityError:
         # Already exists and it's for another player, no inventory update needed
-        logger().info(
-            f"Session {session.id}, Row {membership.row} found item "
-            f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}, "
-            f"but it was already collected.")
+        log(f"It's a {pickup_target.pickup.name} for {pickup_target.player}, but it was already collected.")
         return None
 
-    logger().info(f"Session {session.id}, Row {membership.row} found item "
-                  f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}.")
+    log(f"It's a {pickup_target.pickup.name} for {pickup_target.player}.")
     return pickup_target.player
 
 
@@ -527,7 +540,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
-    game_data = description.permalink.get_preset(player).layout_configuration.game_data
+    game_data = description.permalink.get_preset(player).configuration.game_data
     return data_reader.read_resource_database(game_data["resource_database"])
 
 
@@ -569,7 +582,7 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
         else:
             name = row_to_member_name.get(action.provider_row, f"Player {action.provider_row + 1}")
             result.append({
-                "message": f"Received {pickup_target.pickup.name} from {name}",
+                "provider_name": name,
                 "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 

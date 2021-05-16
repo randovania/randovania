@@ -7,7 +7,8 @@ from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
+    ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import state
@@ -23,7 +24,8 @@ def _database() -> ResourceDatabase:
 def _patches(empty_patches) -> GamePatches:
     return dataclasses.replace(
         empty_patches,
-        game_specific=EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
+        game_specific=EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=(),
+                                         dangerous_energy_tank=False)
     )
 
 
@@ -34,7 +36,7 @@ def test_collected_pickup_indices(database, patches):
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
-    s = state.State(resources, (), 99, None, patches, None, database)
+    s = state.State(resources, (), 99, None, patches, None, database, None)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -45,14 +47,14 @@ def test_collected_pickup_indices(database, patches):
 
 def test_add_pickup_to_state(database, patches):
     # Starting State
-    s = state.State({}, (), 99, None, patches, None, database)
+    s = state.State({}, (), 99, None, patches, None, database, None)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
     p = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
-                        ConditionalResources(None, resource_a, ((resource_b, 1),)),
+                    progression=(
+                        (resource_a, 1),
+                        (resource_b, 1),
                     ))
 
     # Run
@@ -69,20 +71,20 @@ def test_add_pickup_to_state(database, patches):
 def test_assign_pickup_to_starting_items(patches, database):
     # Setup
 
-    starting = state.State({}, (), 99, None, patches, None, database)
+    starting = state.State({}, (), 99, None, patches, None, database, None)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
     p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    resources=(
-                        ConditionalResources(None, None, (
-                            (resource_a, 5),
-                            (database.item_percentage, 1),
-                        )),
+                    progression=(
+                        (resource_a, 5),
                     ),
-                    convert_resources=(
-                        ResourceConversion(resource_b, resource_a),
-                    ))
+                    extra_resources=(
+                        (database.item_percentage, 1),
+                    ),
+                    unlocks_resource=True,
+                    resource_lock=ResourceLock(resource_a, resource_a, resource_b),
+                    )
 
     # Run
     final = starting.assign_pickup_to_starting_items(p)
@@ -94,12 +96,12 @@ def test_assign_pickup_to_starting_items(patches, database):
 
 def test_state_with_pickup(database, patches):
     # Setup
-    starting = state.State({}, (), 99, None, patches, None, database)
+    starting = state.State({}, (), 99, None, patches, None, database, None)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
+                    progression=(
+                        (resource_a, 1),
                     ))
 
     # Run

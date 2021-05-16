@@ -4,9 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.layout_configuration import LayoutElevators, \
-    LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 @pytest.fixture(name="editor")
@@ -16,11 +14,9 @@ def _editor() -> PresetEditor:
 
 _sample_layout_configurations = [
     {
-        "trick_level_configuration": TrickLevelConfiguration(trick_level),
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
-        "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
+        "menu_mod": False,
     }
-    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.EXPERT, LayoutTrickLevel.MINIMAL_LOGIC]
 ]
 
 
@@ -29,21 +25,20 @@ def _initial_layout_configuration_params(request) -> dict:
     return request.param
 
 
-@pytest.mark.parametrize("new_trick_level",
-                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.BEGINNER, LayoutTrickLevel.HYPERMODE])
-def test_edit_layout_trick_level(editor: PresetEditor,
-                                 initial_layout_configuration_params: dict,
-                                 default_layout_configuration,
-                                 new_trick_level: LayoutTrickLevel):
+@pytest.mark.parametrize("menu_mod", [False, True])
+def test_edit_menu_mod(editor: PresetEditor,
+                       initial_layout_configuration_params: dict,
+                       default_layout_configuration,
+                       menu_mod):
     # Setup
-    editor._layout_configuration = dataclasses.replace(default_layout_configuration,
-                                                       **initial_layout_configuration_params)
+    editor._configuration = dataclasses.replace(default_layout_configuration,
+                                                **initial_layout_configuration_params)
     editor._nested_autosave_level = 1
 
     # Run
-    initial_layout_configuration_params["trick_level_configuration"] = TrickLevelConfiguration(new_trick_level)
-    editor.set_layout_configuration_field("trick_level_configuration", TrickLevelConfiguration(new_trick_level))
+    initial_layout_configuration_params["menu_mod"] = menu_mod
+    editor.set_configuration_field("menu_mod", menu_mod)
 
     # Assert
-    assert editor.layout_configuration == dataclasses.replace(default_layout_configuration,
-                                                              **initial_layout_configuration_params)
+    assert editor.configuration == dataclasses.replace(default_layout_configuration,
+                                                       **initial_layout_configuration_params)

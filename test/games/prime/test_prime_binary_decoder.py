@@ -11,10 +11,12 @@ from randovania.games.prime import binary_data
 
 def test_simple_round_trip():
     sample_data = {
-        "game": 2,
-        "game_name": "Metroid Prime 2: Echoes",
+        "game": "prime2",
         "resource_database": {
             "items": [],
+            "energy_tank_item_index": 0,
+            "item_percentage_index": 0,
+            "multiworld_magic_item_index": 0,
             "events": [],
             "tricks": [],
             "damage": [],
@@ -23,9 +25,10 @@ def test_simple_round_trip():
             "requirement_template": {},
         },
         "game_specific": {
-            "energy_per_tank": 100.0,
+            "energy_per_tank": 100,
             "safe_zone_heal_per_second": 1.0,
-            "beam_configurations": []
+            "beam_configurations": [],
+            "dangerous_energy_tank": True,
         },
         "starting_location": {
             "world_asset_id": 1006255871,
@@ -53,7 +56,7 @@ def test_simple_round_trip():
     b.seek(0)
     decoded = binary_data.decode(b)
 
-    assert sample_data == decoded
+    assert decoded == sample_data
 
 
 def test_complex_encode(test_files_dir):
@@ -184,6 +187,9 @@ def test_encode_resource_database():
     # Setup
     resource_database = {
         "items": [],
+        "energy_tank_item_index": 0,
+        "item_percentage_index": 0,
+        "multiworld_magic_item_index": 0,
         "events": [],
         "tricks": [],
         "damage": [],
@@ -202,4 +208,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'

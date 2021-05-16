@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Optional
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -37,6 +38,9 @@ class HintItemPrecision(Enum):
     # x-related, life-support, or just the precise category
     BROAD_CATEGORY = "broad-category"
 
+    # Say nothing at all about the item
+    NOTHING = "nothing"
+
 
 class HintLocationPrecision(Enum):
     # The exact location
@@ -68,7 +72,7 @@ class HintRelativeAreaName(Enum):
 
 @dataclass(frozen=True)
 class RelativeData:
-    precise_distance: bool
+    distance_offset: Optional[int]
 
     @classmethod
     def from_json(cls, param: dict) -> "RelativeData":
@@ -91,9 +95,10 @@ class RelativeDataArea(JsonDataclass, RelativeData):
 
 
 @dataclass(frozen=True)
-class PrecisionPair(JsonDataclass):
+class PrecisionPair(JsonDataclass, DataclassPostInitTypeCheck):
     location: HintLocationPrecision
     item: HintItemPrecision
+    include_owner: bool
     relative: Optional[RelativeData] = None
 
 

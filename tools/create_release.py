@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -10,6 +11,7 @@ from pathlib import Path
 
 import aiohttp
 import markdown
+import tenacity
 
 from randovania import VERSION
 from randovania.cli import prime_database
@@ -20,6 +22,10 @@ from randovania.interface_common.enum_lib import iterate_enum
 _ROOT_FOLDER = Path(__file__).parents[1]
 _NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/releases"
 zip_folder = "randovania-{}".format(VERSION)
+
+
+def is_production():
+    return os.getenv("PRODUCTION", "false") == "true"
 
 
 def open_zip(platform_name: str) -> zipfile.ZipFile:
@@ -36,8 +42,19 @@ async def get_nintendont_releases(session: aiohttp.ClientSession):
             raise RuntimeError("Unable to get Nintendont releases") from e
 
 
+@tenacity.retry(
+    stop=tenacity.stop_after_attempt(5),
+    retry=tenacity.retry_if_exception_type(aiohttp.ClientConnectorError),
+    wait=tenacity.wait_exponential(multiplier=1, min=4, max=30),
+)
 async def download_nintendont():
-    async with aiohttp.ClientSession() as session:
+    headers = None
+    if "GITHUB_TOKEN" in os.environ:
+        headers = {
+            "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"
+        }
+
+    async with aiohttp.ClientSession(headers=headers) as session:
         print("Fetching list of Nintendont releases.")
         releases = await get_nintendont_releases(session)
         latest_release = releases[0]
@@ -74,10 +91,14 @@ async def main():
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
 
+    if is_production():
+        server_suffix = "randovania"
+    else:
+        server_suffix = "randovania-staging"
     configuration = {
         "discord_client_id": 618134325921316864,
-        "server_address": "https://randovania.metroidprime.run/randovania",
-        "socketio_path": "/randovania/socket.io",
+        "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
+        "socketio_path": f"/{server_suffix}/socket.io",
     }
     with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
         json.dump(configuration, config_release)
@@ -95,12 +116,17 @@ async def main():
 
 
 def create_windows_zip(package_folder):
-    with open_zip("windows") as release_zip:
-        for f in package_folder.glob("**/*"):
-            print("Adding", f)
-            release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
+    if is_production():
+        with open_zip("windows") as release_zip:
+            for f in package_folder.glob("**/*"):
+                print("Adding", f)
+                release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
 
-        add_readme_to_zip(release_zip)
+            add_readme_to_zip(release_zip)
+    else:
+        zip_file = os.fspath(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-windows.7z"))
+        subprocess.run(["7z", "a", "-mx=7", "-myx=7", zip_file, os.fspath(package_folder)], check=True)
+        subprocess.run(["7z", "rn", zip_file, os.fspath(package_folder), zip_folder], check=True)
 
 
 def create_macos_zip(folder_to_pack: Path):

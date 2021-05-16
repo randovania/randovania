@@ -1,12 +1,11 @@
 import copy
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
-import networkx
-
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, Requirement, RequirementAnd, \
     ResourceRequirement
+from randovania.generator import graph as graph_module
 from randovania.resolver.state import State
 
 
@@ -15,13 +14,13 @@ class GraphPath(NamedTuple):
     node: Node
     requirement: Requirement
 
-    def is_in_graph(self, digraph: networkx.DiGraph):
+    def is_in_graph(self, digraph: graph_module.BaseGraph):
         if self.previous_node is None:
             return False
         else:
-            return (self.previous_node.index, self.node.index) in digraph.edges
+            return digraph.has_edge(self.previous_node.index, self.node.index)
 
-    def add_to_graph(self, digraph: networkx.DiGraph):
+    def add_to_graph(self, digraph: graph_module.BaseGraph):
         digraph.add_node(self.node.index)
         if self.previous_node is not None:
             digraph.add_edge(self.previous_node.index, self.node.index, requirement=self.requirement)
@@ -41,7 +40,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def filter_collectable(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.state.patches, reach.state.resources):
+        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
             yield resource_node
 
 
@@ -60,14 +59,14 @@ def filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
 
 
 class GeneratorReach:
-    _digraph: networkx.DiGraph
+    _digraph: graph_module.BaseGraph
     _state: State
     _game: GameDescription
     _reachable_paths: Optional[Dict[int, List[Node]]]
     _reachable_costs: Optional[Dict[int, int]]
     _node_reachable_cache: Dict[int, bool]
     _unreachable_paths: Dict[Tuple[Node, Node], Requirement]
-    _safe_nodes: Optional[Set[Node]]
+    _safe_nodes: Optional[Set[int]]
     _is_node_safe_cache: Dict[Node, bool]
 
     def __deepcopy__(self, memodict):
@@ -88,7 +87,7 @@ class GeneratorReach:
     def __init__(self,
                  game: GameDescription,
                  state: State,
-                 graph: networkx.DiGraph
+                 graph: graph_module.BaseGraph
                  ):
 
         self._game = game
@@ -105,7 +104,7 @@ class GeneratorReach:
                          initial_state: State,
                          ) -> "GeneratorReach":
 
-        reach = cls(game, initial_state, networkx.DiGraph())
+        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
         reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
         return reach
 
@@ -133,15 +132,20 @@ class GeneratorReach:
             path = paths_to_check.pop(0)
 
             if path.is_in_graph(self._digraph):
+                # print(">>> already in graph", self.game.world_list.node_name(path.node))
                 continue
 
+            # print(">>> will check starting at", self.game.world_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
             for target_node, requirement, satisfied in self._potential_nodes_from(path.node):
                 if satisfied:
+                    # print("* Queue path to", self.game.world_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
+                    # print("* Unreachable", self.game.world_list.node_name(target_node), requirement)
                     self._unreachable_paths[path.node, target_node] = requirement
+            # print("> done")
 
         self._safe_nodes = None
 
@@ -163,8 +167,7 @@ class GeneratorReach:
         if self._safe_nodes is not None:
             return
 
-        connected_components = list(networkx.strongly_connected_components(self._digraph))
-        for component in connected_components:
+        for component in self._digraph.strongly_connected_components():
             if self._state.node.index in component:
                 assert self._safe_nodes is None
                 self._safe_nodes = component
@@ -183,10 +186,8 @@ class GeneratorReach:
             else:
                 return 1
 
-        self._reachable_costs, self._reachable_paths = networkx.multi_source_dijkstra(
-            self._digraph,
-            {self.state.node.index},
-            weight=weight)
+        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra({self.state.node.index},
+                                                                                           weight=weight)
 
     def is_reachable_node(self, node: Node) -> bool:
         index = node.index
@@ -231,9 +232,9 @@ class GeneratorReach:
 
     @property
     def nodes(self) -> Iterator[Node]:
-        all_nodes = self.game.world_list.all_nodes
-        graph_nodes = [all_nodes[index] for index in self._digraph]
-        return sorted(graph_nodes)
+        for node in self.game.world_list.all_nodes:
+            if node.index in self._digraph:
+                yield node
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
@@ -285,17 +286,18 @@ class GeneratorReach:
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
+        all_nodes = self.game.world_list.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources)
+            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes)
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)
 
         if new_dangerous_resources:
             edges_to_remove = []
-            for source, target, attributes in self._digraph.edges.data():
-                requirement: Requirement = attributes["requirement"]
+            for source, target, requirement in self._digraph.edges_data():
+                # FIXME: don't convert to set!
                 dangerous = requirement.as_set.dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
                     if not requirement.satisfied(new_state.resources, new_state.energy):
@@ -308,7 +310,7 @@ class GeneratorReach:
 
     def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
         if node.index in self._digraph:
-            return networkx.shortest_path(self._digraph, node.index)
+            return self._digraph.single_source_dijkstra_path(node.index)
         else:
             return {}
 
@@ -370,7 +372,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.state.patches, reach.state.resources):
+            if action.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 

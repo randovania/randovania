@@ -2,27 +2,31 @@ import asyncio
 import dataclasses
 import functools
 import json
+import logging
 import random
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt, Signal, QTimer
+from PySide2.QtCore import Qt, QTimer
 from PySide2.QtWidgets import QMessageBox
-from asyncqt import asyncSlot, asyncClose
+from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
+from randovania.games.game import RandovaniaGame
+from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
-from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
+from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
+from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
@@ -37,6 +41,8 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
+
+logger = logging.getLogger(__name__)
 
 
 @dataclasses.dataclass()
@@ -143,6 +149,7 @@ class RowWidget:
 
     def set_preset(self, preset: Preset):
         self.name.setText(preset.name)
+        self.save_copy.setEnabled(preset.base_preset_uuid is not None)
 
 
 _PRESET_COLUMNS = 3
@@ -160,8 +167,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     _expecting_kick = False
     _already_kicked = False
 
-    failed_to_generate_signal = Signal(GenerationFailure)
-
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
                  preset_manager: PresetManager, window_manager: WindowManager, options: Options):
         super().__init__()
@@ -171,6 +176,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.network_client = network_client
         self.game_connection = game_connection
         self.multiworld_client = MultiworldClient(self.network_client, self.game_connection)
+        self.failure_handler = GenerationFailureHandler(self)
 
         self._preset_manager = preset_manager
         self._window_manager = window_manager
@@ -224,8 +230,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
         self.view_game_details_button.clicked.connect(self.view_game_details)
-        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
-        self.game_connection.Updated.connect(self.on_game_connection_updated)
 
         # Game Connection
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.game_connection_label,
@@ -266,6 +270,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
+        self.game_connection.Updated.connect(self.on_game_connection_updated)
 
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, game_connection: GameConnection,
@@ -288,39 +293,49 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
-        if self.network_client.current_user.id not in self._game_session.players:
-            super().closeEvent(event)
-            self.has_closed = True
-            return
+        return await self._on_close_event(event)
 
-        user_response = await async_dialog.warning(
-            self,
-            "Leaving Game Session",
-            ("Do you want to also leave the session?\n\n"
-             "Yes: Leave permanently, freeing a spot for others.\n"
-             "No: Close the window, but stay in the session. You can rejoin later.\n"
-             "Cancel: Do nothing\n"),
-            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
-            QMessageBox.No
-        )
+    async def _on_close_event(self, event: QtGui.QCloseEvent):
+        user_response = QMessageBox.No
+
+        is_kicked = self.network_client.current_user.id not in self._game_session.players
+        if not is_kicked:
+            user_response = await async_dialog.warning(
+                self,
+                "Leaving Game Session",
+                ("Do you want to also leave the session?\n\n"
+                 "Yes: Leave permanently, freeing a spot for others.\n"
+                 "No: Close the window, but stay in the session. You can rejoin later.\n"
+                 "Cancel: Do nothing\n"),
+                QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+                QMessageBox.No
+            )
+
         if user_response == QMessageBox.Cancel:
             event.ignore()
             return
 
         await self.multiworld_client.stop()
-        self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
+        try:
+            self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+        try:
+            self.network_client.ConnectionStateUpdated.disconnect(self.on_server_connection_state_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+        try:
+            self.game_connection.Updated.disconnect(self.on_game_connection_updated)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
 
         try:
-            if user_response == QMessageBox.Yes or not self.network_client.connection_state.is_disconnected:
+            if user_response == QMessageBox.Yes or (not is_kicked and
+                                                    not self.network_client.connection_state.is_disconnected):
                 await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
         finally:
             super().closeEvent(event)
         self.has_closed = True
-
-    def _show_failed_generation_exception(self, exception: GenerationFailure):
-        QMessageBox.critical(self._window_manager,
-                             "An error occurred while generating a seed",
-                             "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
     # Row Functions
 
@@ -379,7 +394,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.pop().delete_widgets()
 
     def _create_actions_for_import_menu(self, row: RowWidget):
-        for included_preset in self._preset_manager.all_presets:
+        for included_preset in self._preset_manager.presets_for_game(RandovaniaGame.PRIME2):
             action = QtWidgets.QAction(row.import_menu)
             action.setText(included_preset.name)
             action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
@@ -419,7 +434,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         row_index = self.rows.index(row)
-        editor = PresetEditor(self._game_session.presets[row_index].get_preset())
+        old_preset = self._game_session.presets[row_index].get_preset()
+        if old_preset.base_preset_uuid is None:
+            old_preset = old_preset.fork()
+        editor = PresetEditor(old_preset)
         self._logic_settings_window = LogicSettingsWindow(None, editor)
         self._logic_settings_window._game_session_row = row
 
@@ -446,20 +464,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
 
-        existing_preset = self._preset_manager.preset_for_name(preset.name)
-        if existing_preset is not None:
-            if existing_preset == preset:
-                return
-
-            user_response = QMessageBox.warning(
-                self,
-                "Preset name conflict",
-                "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            if user_response == QMessageBox.No:
-                return
+        # FIXME? Customizing a preset is now always an inplace change
+        # existing_preset = self._preset_manager.preset_for_name(preset.name)
+        # if existing_preset is not None:
+        #     if existing_preset == preset:
+        #         return
+        #
+        #     user_response = QMessageBox.warning(
+        #         self,
+        #         "Preset name conflict",
+        #         "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
+        #         QMessageBox.Yes | QMessageBox.No,
+        #         QMessageBox.No
+        #     )
+        #     if user_response == QMessageBox.No:
+        #         return
 
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
@@ -675,11 +694,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.reset_session_action.setEnabled(self_is_admin and game_session.state != GameSessionState.SETUP)
 
     def update_session_actions(self):
+        scrollbar = self.history_table_widget.verticalScrollBar()
+        autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_table_widget.horizontalHeader().setVisible(True)
         self.history_table_widget.setRowCount(len(self._game_session.actions))
         for i, action in enumerate(self._game_session.actions):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+        if autoscroll:
+            self.history_table_widget.scrollToBottom()
 
     async def update_multiworld_client_status(self):
         game_session_in_progress = self._game_session.state == GameSessionState.IN_PROGRESS
@@ -787,8 +810,14 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 all_dangerous_settings[i] = dangerous
 
         if all_dangerous_settings:
+            player_names = {
+                i: widget.player.name
+                for i, widget in enumerate(self.team_players)
+                if widget.player is not None
+            }
+
             warnings = "\n".join(
-                f"Row {i} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
+                f"{player_names.get(i, f'Player {i + 1}')} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
                 for i, dangerous in all_dangerous_settings.items()
             )
             message = ("The following presets have settings that can cause an impossible game:\n"
@@ -834,15 +863,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
-        except GenerationFailure as e:
+        except Exception as e:
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
 
             message = "Error"
             if isinstance(e, GenerationFailure):
                 message = "Generation Failure"
-                self.failed_to_generate_signal.emit(e)
+                self.failure_handler.handle_failure(e)
+            else:
+                logger.exception("Unable to generate")
 
-            self.update_progress(f"{message}: {e} - {type(e)}", -1)
+            self.update_progress(f"{message}: {e}", -1)
 
         finally:
             self._generating_game = False
@@ -984,12 +1015,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                        options.cosmetic_patches.as_json)
         shareable_hash = self._game_session.seed_hash
 
-        configuration = self._game_session.presets[membership.row].get_preset().layout_configuration
+        configuration = self._game_session.presets[membership.row].get_preset().configuration
         game = data_reader.decode_data(configuration.game_data)
-        game_specific = dataclasses.replace(
-            game.game_specific,
-            energy_per_tank=configuration.energy_per_tank,
-            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
+        game_specific = base_patches_factory.create_game_specific(configuration, game)
 
         input_file = dialog.input_file
         output_file = dialog.output_file

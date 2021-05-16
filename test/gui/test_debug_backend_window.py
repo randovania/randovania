@@ -2,9 +2,10 @@ import pytest
 from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
-from randovania.game_connection.connection_base import GameConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.games.prime import dol_patcher
 from randovania.gui.debug_backend_window import DebugBackendWindow
 from randovania.interface_common.enum_lib import iterate_enum
 
@@ -39,31 +40,22 @@ def test_current_status(backend, expected_status):
 
 @pytest.mark.asyncio
 async def test_display_message(backend):
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+
     message = "Foo"
-    backend.display_message(message)
+    await backend._perform_single_memory_operations(backend._write_string_to_game_buffer(message))
+    backend._write_memory(backend.patches.cstate_manager_global + 0x2, b"\x01")
     await backend.update(1)
     assert backend.messages_list.findItems(message, Qt.MatchFlag.MatchExactly)
 
 
 @pytest.mark.asyncio
-async def test_empty_get_inventory(backend):
-    await backend.update(1)
-    assert "Energy Tank x 0/0" in backend.inventory_label.text()
-
-
-@pytest.mark.asyncio
-async def test_send_pickup(backend, pickup):
-    backend.send_pickup(pickup)
-    backend.checking_for_collected_index = True
-    await backend.update(1)
-    assert "Energy Tank x 2/2" in backend.inventory_label.text()
-
-
-@pytest.mark.asyncio
-async def test_set_permanent_pickups(backend, pickup):
-    backend.set_permanent_pickups([pickup, pickup])
-    backend.checking_for_collected_index = True
-    await backend.update(1)
+async def test_update_inventory_label(backend, echoes_resource_database):
+    backend._inventory = {
+        echoes_resource_database.energy_tank: InventoryItem(4, 4),
+        echoes_resource_database.multiworld_magic_item: InventoryItem(0, 2),
+    }
+    backend._update_inventory_label()
     assert "Energy Tank x 4/4" in backend.inventory_label.text()
     assert "Multiworld Magic Identifier x 0/2" in backend.inventory_label.text()
 

@@ -278,96 +278,6 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="goal_tab">
-          <attribute name="title">
-           <string>Goal</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="goal_layout">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>8</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="skytemple_description">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where the Sky Temple Keys will be located.&lt;/p&gt;&lt;p&gt;All Guardians and Sub-Guardians: One key will be placed in each of the guardians and sub-guardians.&lt;br/&gt;Guardians: One key will be placed as the reward of each of the guardians.&lt;br/&gt;Collect Sky Temple Keys: A configurable quantity will be shuffled over the game world.&lt;/p&gt;&lt;p&gt;The Guardians are: Amorbis, Chykka and Quadraxis.&lt;br/&gt;The Sub-Guardians are: Bomb Guardian, Jump Guardian, Boost Guardian, Grapple Guardian, Spider Guardian and Power Bomb Guardian.&lt;/p&gt;&lt;p&gt;You can always check Sky Temple Gateway for hints where the keys were placed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="skytemple_combo">
-             <item>
-              <property name="text">
-               <string>Guardians and Sub-Guardians</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Guardians</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Collect Sky Temple Keys</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="skytemple_slider_layout">
-             <item>
-              <widget class="QSlider" name="skytemple_slider">
-               <property name="maximum">
-                <number>9</number>
-               </property>
-               <property name="pageStep">
-                <number>2</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::TicksBelow</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="skytemple_slider_label">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>20</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="location_pool_tab">
           <attribute name="title">
            <string>Location Pool</string>
@@ -424,6 +334,18 @@
               <string>Available Locations</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>3</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <item>
                <widget class="QLabel" name="excluded_locations_label">
                 <property name="text">
@@ -441,11 +363,11 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>731</width>
-                   <height>341</height>
+                   <width>745</width>
+                   <height>358</height>
                   </rect>
                  </property>
-                 <layout class="QVBoxLayout" name="excluded_locations_area_layout">
+                 <layout class="QHBoxLayout" name="excluded_locations_area_layout">
                   <property name="leftMargin">
                    <number>0</number>
                   </property>
@@ -463,54 +385,6 @@
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="hint_tab">
-          <attribute name="title">
-           <string>Hints</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="hint_layout">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>8</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="hint_sky_temple_key_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hints&lt;/span&gt;: The scans provide no useful information.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: Each scan says the corresponding key is in &amp;quot;Temple Grounds&amp;quot;, &amp;quot;Agon Wastes&amp;quot;, etc.&lt;br/&gt;Aether and Dark Aether are distinguished; for example, &amp;quot;Agon Wastes&amp;quot; refers only to the light world.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: Each scan says the corresponding key is in &amp;quot;Great Temple - Transport A Access&amp;quot;, &amp;quot;Ing Hive - Hive Entrance&amp;quot;, etc. For rooms with more than one item location, there's no way to distinguish which one of them that key is in.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="hint_sky_temple_key_combo">
-             <item>
-              <property name="text">
-               <string>No hints</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Show only the area name</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Show area and room name</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>
@@ -564,16 +438,10 @@
               <string>Energy tank</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
-              <item row="2" column="2">
-               <widget class="QSpinBox" name="energy_tank_capacity_spin_box">
-                <property name="suffix">
-                 <string> energy</string>
-                </property>
-                <property name="minimum">
-                 <number>2</number>
-                </property>
-                <property name="maximum">
-                 <number>1000</number>
+              <item row="4" column="0" colspan="2">
+               <widget class="QCheckBox" name="dangerous_tank_check">
+                <property name="text">
+                 <string>1 HP mode. In this mode, Energy Tanks and Save Stations leave you at 1 HP instead</string>
                 </property>
                </widget>
               </item>
@@ -587,10 +455,16 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="energy_tank_capacity_label">
-                <property name="text">
-                 <string>Energy per tank</string>
+              <item row="2" column="2">
+               <widget class="QSpinBox" name="energy_tank_capacity_spin_box">
+                <property name="suffix">
+                 <string> energy</string>
+                </property>
+                <property name="minimum">
+                 <number>2</number>
+                </property>
+                <property name="maximum">
+                 <number>1000</number>
                 </property>
                </widget>
               </item>
@@ -609,6 +483,20 @@
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item row="3" column="0" colspan="3">
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="energy_tank_capacity_label">
+                <property name="text">
+                 <string>Energy per tank</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -777,56 +665,177 @@
           <attribute name="title">
            <string>Elevators</string>
           </attribute>
-          <layout class="QVBoxLayout" name="elevator_layout">
+          <layout class="QVBoxLayout" name="elevator_parent_layout">
            <property name="leftMargin">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="topMargin">
-            <number>8</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="elevators_description_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls what each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Connections&lt;/span&gt;: all elevators are connected to what they do in the original game.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you're left brings you to where you where. An elevator will never connect to another in the same area.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you're left brings you to where you where. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room&lt;/span&gt;: all elevators brings you to another elevator room, but going backwards can go somewhere else. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Warning:&lt;/span&gt; there's an audio bug whenever you take an elevator. This bug lasts until you restart the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
+            <widget class="QScrollArea" name="elevator_scroll_area">
+             <property name="widgetResizable">
               <bool>true</bool>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="elevators_combo">
-             <item>
-              <property name="text">
-               <string>Original Connections</string>
+             <widget class="QWidget" name="elevator_scroll_area_contents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>-20</y>
+                <width>741</width>
+                <height>643</height>
+               </rect>
               </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Random: Two-way, between areas</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Random: Two-way, unchecked</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Random: One-way, elevator room</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Random: One-way, anywhere</string>
-              </property>
-             </item>
+              <layout class="QVBoxLayout" name="elevator_layout">
+               <property name="leftMargin">
+                <number>4</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>4</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="elevators_description_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Connections&lt;/span&gt;: all elevators are connected to where they do in the original game.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were. An elevator will never connect to another in the same area.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with cycles&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. All rooms are used as a destination exactly once, causing all elevators to be separated into loops.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with replacement&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.&lt;span style=&quot; font-style:italic;&quot;&gt; Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game. &lt;span style=&quot; font-style:italic;&quot;&gt;Experimental, can cause incompletable matches.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="elevators_combo"/>
+               </item>
+               <item>
+                <widget class="QLabel" name="elevators_help_sound_bug_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The looping sound effect that plays during the elevator cutscene only stops playing during the cutscene of the elevator landing, which only exists on the rooms that have an elevator. This also includes Sky Temple Energy Controller when coming from somewhere other than Sky Temple Gateway and Aerie Transport Station before Dark Samus 2 is defeated.&lt;/p&gt;&lt;p&gt;This bug can be minimized by disabling &amp;quot;Keep Elevator/Teleporter transition sound effect&amp;quot; in the &amp;quot;Customize in-game settings&amp;quot; dialog.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="elevators_line_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="skip_final_bosses_check">
+                 <property name="text">
+                  <string>Go directly to credits from Sky Temple Gateway</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="skip_final_bosses_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change the light beam in Sky Temple Gateway to go directly to the credits, skipping the final bosses.&lt;/p&gt;&lt;p&gt;This changes the requirements to &lt;span style=&quot; font-weight:600;&quot;&gt;not need the final bosses&lt;/span&gt;, turning certain items optional such as Screw Attack and Spider Ball.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="elevators_line_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="elevators_allow_unvisited_names_check">
+                 <property name="text">
+                  <string>Allow &quot;Always display room names on map&quot; when elevators are shuffled</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="elevators_line_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="elevators_help_list_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shuffling Sky Temple Gateway, Sky Temple Energy Controller, Aerie and Aerie Transport Station is possible, but they're not included by default as they behave somewhat differently to other elevators.&lt;/p&gt;&lt;p&gt;The elevator in Aerie Transport Station is only available after you defeat Dark Samus 2.&lt;/p&gt;&lt;p&gt;When shuffling Sky Temple Energy Controller, you &lt;span style=&quot; font-weight:600;&quot;&gt;must&lt;/span&gt; enter Sky Temple Gateway via an elevator otherwise the game will crash.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Warning&lt;/span&gt;: Entering Sky Temple Energy Controller from elsewhere causes the game to be stuck in a black screen in unknown conditions. The game is still running, so you can blindly use the menu mod to work around this issue.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="elevators_source_group">
+                 <property name="title">
+                  <string>Elevators to randomize</string>
+                 </property>
+                 <layout class="QGridLayout" name="elevators_source_layout">
+                  <property name="leftMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="spacing">
+                   <number>3</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="elevators_target_group">
+                 <property name="title">
+                  <string>Valid elevator targets</string>
+                 </property>
+                 <layout class="QGridLayout" name="elevators_target_layout">
+                  <property name="leftMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>1</number>
+                  </property>
+                  <property name="spacing">
+                   <number>3</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -913,180 +922,6 @@
               </layout>
              </widget>
             </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="translators_tab">
-          <attribute name="title">
-           <string>Translator Gates</string>
-          </attribute>
-          <layout class="QGridLayout" name="translators_top_layout">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>8</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item row="0" column="1">
-            <widget class="QScrollArea" name="translators_scroll">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
-             </property>
-             <property name="lineWidth">
-              <number>0</number>
-             </property>
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOff</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <widget class="QWidget" name="translators_scroll_contents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>256</width>
-                <height>234</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="translators_layout">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item row="1" column="0">
-                <widget class="QPushButton" name="translator_randomize_all_button">
-                 <property name="text">
-                  <string>Randomize All</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2">
-                <widget class="QPushButton" name="translator_vanilla_colors_button">
-                 <property name="text">
-                  <string>Vanilla (Colors)</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QPushButton" name="translator_vanilla_actual_button">
-                 <property name="text">
-                  <string>Vanilla (Actual)</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="3">
-                <widget class="QLabel" name="translators_description">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change which translator is required for all the gates in the game. Their colors are changed to match the necessary translator.&lt;/p&gt;&lt;p&gt;There are two vanilla options: using the actual translator requirements in the game, and using the vanilla gate colors.&lt;br/&gt;This is because in the original game, some translator gates are colored one way, but the translator requirement is something else.&lt;/p&gt;&lt;p&gt;The Emerald gate in Great Temple - Temple Sanctuary has a special case, when elevators aren't vanilla: if you enter Great Temple via Transport A, it will be permanently down.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="wordWrap">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="beam_configuration_tab">
-          <attribute name="title">
-           <string>Beam Configuration</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="beam_configuration_tab_layout">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>8</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="beam_configuration_label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure what each beam uses as ammo and how much ammo is consumed when shooting it uncharged, charged or with a charge combo.&lt;/p&gt;&lt;p&gt;Logic always uses the default values.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Known Issue: &lt;/span&gt;If you're out of the ammo a beam normally uses, you'll be unable to shoot that beam regardless of what it actually uses to shoot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="beam_configuration_group">
-             <property name="title">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-             <layout class="QGridLayout" name="beam_configuration_layout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="beam_configuration_spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>

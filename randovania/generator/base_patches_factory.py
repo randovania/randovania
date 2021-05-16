@@ -16,9 +16,11 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.interface_common.enum_lib import iterate_enum
-from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
@@ -49,7 +51,7 @@ _KEYBEARERS_HINTS = {
 }
 
 
-def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
+def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguration,
                                         rng: Random,
                                         patches: GamePatches) -> GamePatches:
     """
@@ -59,44 +61,39 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
     :return:
     """
     elevator_connection = copy.copy(patches.elevator_connection)
+    elevators = layout_configuration.elevators
 
-    if layout_configuration.elevators != LayoutElevators.VANILLA:
+    if not elevators.is_vanilla:
         if rng is None:
             raise MissingRng("Elevator")
 
         world_list = data_reader.decode_data(layout_configuration.game_data).world_list
-        areas_to_not_change = {
-            2278776548,  # Sky Temple Gateway
-            2068511343,  # Sky Temple Energy Controller
-            3136899603,  # Aerie Transport Station
-            1564082177,  # Aerie
-        }
+        elevator_db = elevator_distributor.create_elevator_database(
+            world_list, elevators.editable_teleporters)
 
-        elevator_db = elevator_distributor.create_elevator_database(world_list, areas_to_not_change)
-
-        if layout_configuration.elevators in {LayoutElevators.TWO_WAY_RANDOMIZED, LayoutElevators.TWO_WAY_UNCHECKED}:
+        if elevators.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
             connections = elevator_distributor.two_way_elevator_connections(
                 rng=rng,
                 elevator_database=elevator_db,
-                between_areas=layout_configuration.elevators == LayoutElevators.TWO_WAY_RANDOMIZED
+                between_areas=elevators.mode == TeleporterShuffleMode.TWO_WAY_RANDOMIZED
             )
         else:
             connections = elevator_distributor.one_way_elevator_connections(
                 rng=rng,
                 elevator_database=elevator_db,
-                world_list=world_list,
-                elevator_target=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR
+                target_locations=elevators.valid_targets,
+                replacement=elevators.mode == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT,
             )
 
         elevator_connection.update(connections)
 
-    if layout_configuration.skip_final_bosses:
-        elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
+    for teleporter, destination in elevators.static_teleporters.items():
+        elevator_connection[teleporter.instance_id] = destination
 
     return dataclasses.replace(patches, elevator_connection=elevator_connection)
 
 
-def gate_assignment_for_configuration(configuration: LayoutConfiguration,
+def gate_assignment_for_configuration(configuration: EchoesConfiguration,
                                       resource_database: ResourceDatabase,
                                       rng: Random,
                                       ) -> GateAssignment:
@@ -127,7 +124,7 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
     return result
 
 
-def starting_location_for_configuration(configuration: LayoutConfiguration,
+def starting_location_for_configuration(configuration: EchoesConfiguration,
                                         game: GameDescription,
                                         rng: Random,
                                         ) -> AreaLocation:
@@ -144,17 +141,19 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
     return location
 
 
-def add_default_hints_to_patches(rng: Random,
-                                 patches: GamePatches,
-                                 world_list: WorldList,
-                                 num_joke: int,
-                                 ) -> GamePatches:
+def add_echoes_default_hints_to_patches(rng: Random,
+                                        patches: GamePatches,
+                                        world_list: WorldList,
+                                        num_joke: int,
+                                        is_multiworld: bool,
+                                        ) -> GamePatches:
     """
     Adds hints that are present on all games.
     :param rng:
     :param patches:
     :param world_list:
     :param num_joke
+    :param is_multiworld
     :return:
     """
 
@@ -163,33 +162,34 @@ def add_default_hints_to_patches(rng: Random,
             patches = patches.assign_hint(node.resource(),
                                           Hint(HintType.LOCATION,
                                                PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                             HintItemPrecision.BROAD_CATEGORY),
+                                                             HintItemPrecision.BROAD_CATEGORY,
+                                                             include_owner=True),
                                                PickupIndex(node.hint_index)))
 
-    # TODO: this should be a flag in PickupNode
-    indices_with_hint = [
-        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
-        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
-        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
-        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
-    ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
                           if isinstance(node, LogbookNode)
                           and node.resource() not in patches.hints
                           and node.lore_type.holds_generic_hint]
 
-    rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
     # The 4 guaranteed hints
+    indices_with_hint = [
+        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
+        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
+        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
+        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
+    ]
+    rng.shuffle(indices_with_hint)
     for index, location_type in indices_with_hint:
         if not all_logbook_assets:
             break
 
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION,
-                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED),
+                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED,
+                                                                        include_owner=False),
                                                           index))
 
     # Dark Temple hints
@@ -208,40 +208,44 @@ def add_default_hints_to_patches(rng: Random,
     return patches
 
 
-def create_game_specific(configuration: LayoutConfiguration, game: GameDescription) -> EchoesGameSpecific:
-    return EchoesGameSpecific(
-        energy_per_tank=configuration.energy_per_tank,
-        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
-    )
+def create_game_specific(configuration: EchoesConfiguration, game: GameDescription) -> EchoesGameSpecific:
+    if configuration.game == RandovaniaGame.PRIME2:
+        return EchoesGameSpecific(
+            energy_per_tank=configuration.energy_per_tank,
+            safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
+            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
+            dangerous_energy_tank=configuration.dangerous_energy_tank,
+        )
+    else:
+        return game.game_specific
 
 
-def create_base_patches(configuration: LayoutConfiguration,
+def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
+                        is_multiworld: bool,
+                        player_index: int,
                         ) -> GamePatches:
     """
-
-    :param configuration:
-    :param rng:
-    :param game:
-    :return:
     """
     patches = dataclasses.replace(game.create_game_patches(),
-                                  game_specific=create_game_specific(configuration, game))
+                                  game_specific=create_game_specific(configuration, game),
+                                  player_index=player_index)
 
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
-    patches = patches.assign_gate_assignment(
-        gate_assignment_for_configuration(configuration, game.resource_database, rng))
+    if configuration.game == RandovaniaGame.PRIME2:
+        patches = patches.assign_gate_assignment(
+            gate_assignment_for_configuration(configuration, game.resource_database, rng))
 
     # Starting Location
     patches = patches.assign_starting_location(
         starting_location_for_configuration(configuration, game, rng))
 
     # Hints
-    if rng is not None:
-        patches = add_default_hints_to_patches(rng, patches, game.world_list, num_joke=2)
+    if rng is not None and configuration.game == RandovaniaGame.PRIME2:
+        patches = add_echoes_default_hints_to_patches(rng, patches, game.world_list,
+                                                      num_joke=2, is_multiworld=is_multiworld)
 
     return patches

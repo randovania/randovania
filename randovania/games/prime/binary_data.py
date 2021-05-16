@@ -3,10 +3,11 @@ from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
-from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b, Pass
+from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag, \
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b
 
 from randovania.game_description.node import LoreType
+from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')
 current_format_version = 8
@@ -66,7 +67,6 @@ def decode(binary_io: BinaryIO) -> Dict:
 
     fields = [
         "game",
-        "game_name",
         "resource_database",
         "game_specific",
         "starting_location",
@@ -121,7 +121,6 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
 
     # Resource Info database
     data.pop("game")
-    data.pop("game_name")
     data.pop("resource_database")
     data.pop("game_specific")
     data.pop("dock_weakness_database")
@@ -142,26 +141,33 @@ def OptionalValue(subcon):
     )
 
 
-ConstructResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
-)
+def _build_resource_info(**kwargs):
+    return Struct(
+        index=VarInt,
+        long_name=CString("utf8"),
+        short_name=CString("utf8"),
+        **kwargs,
+    )
 
-ConstructItemResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
+
+ConstructResourceInfo = _build_resource_info()
+
+ConstructItemResourceInfo = _build_resource_info(
     max_capacity=Int32ub,
-    custom_memory_offset=OptionalValue(Int32ub),
+    extra=OptionalValue(Int32ub),
 )
 
-ConstructTrickResourceInfo = Struct(
-    index=VarInt,
-    long_name=CString("utf8"),
-    short_name=CString("utf8"),
+ConstructTrickResourceInfo = _build_resource_info(
     description=CString("utf8"),
 )
+
+ConstructDamageResourceInfo = _build_resource_info(
+    reductions=PrefixedArray(VarInt, Struct(
+        index=VarInt,
+        multiplier=Float32b,
+    ))
+)
+
 
 ConstructResourceRequirement = Struct(
     type=Byte,
@@ -191,15 +197,12 @@ ConstructDockWeakness = Struct(
 
 ConstructResourceDatabase = Struct(
     items=PrefixedArray(VarInt, ConstructItemResourceInfo),
+    energy_tank_item_index=VarInt,
+    item_percentage_index=VarInt,
+    multiworld_magic_item_index=VarInt,
     events=PrefixedArray(VarInt, ConstructResourceInfo),
     tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
-    damage=PrefixedArray(VarInt, Struct(
-        Embedded(ConstructResourceInfo),
-        reductions=PrefixedArray(VarInt, Struct(
-            index=VarInt,
-            multiplier=Float32b,
-        )),
-    )),
+    damage=PrefixedArray(VarInt, ConstructDamageResourceInfo),
     versions=PrefixedArray(VarInt, ConstructResourceInfo),
     misc=PrefixedArray(VarInt, ConstructResourceInfo),
     requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
@@ -216,9 +219,10 @@ ConstructEchoesBeamConfiguration = Struct(
 )
 
 ConstructEchoesGameSpecific = Struct(
-    energy_per_tank=Float32b,
+    energy_per_tank=VarInt,
     safe_zone_heal_per_second=Float32b,
     beam_configurations=PrefixedArray(VarInt, ConstructEchoesBeamConfiguration),
+    dangerous_energy_tank=Flag,
 )
 
 ConstructResourceGain = Struct(
@@ -239,7 +243,8 @@ ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
     coordinates=OptionalValue(ConstructNodeCoordinates),
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
+                             logbook=6, player_ship=7),
     data=Switch(
         lambda this: this.node_type,
         {
@@ -258,7 +263,7 @@ ConstructNode = Struct(
             "teleporter": Struct(
                 destination_world_asset_id=VarInt,
                 destination_area_asset_id=VarInt,
-                teleporter_instance_id=VarInt,
+                teleporter_instance_id=OptionalValue(VarInt),
                 scan_asset_id=OptionalValue(VarInt),
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
@@ -273,6 +278,9 @@ ConstructNode = Struct(
                 string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
                 extra=VarInt,
+            ),
+            "player_ship": Struct(
+                is_unlocked=ConstructRequirement,
             )
         }
     )
@@ -294,22 +302,23 @@ ConstructArea = Struct(
 
 ConstructWorld = Struct(
     name=CString("utf8"),
-    dark_name=CString("utf8"),
+    dark_name=OptionalValue(CString("utf8")),
     asset_id=VarInt,
     areas=PrefixedArray(VarInt, ConstructArea),
 )
 
+ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
+
 game_specific_map = {
-    1: Struct(),
-    2: ConstructEchoesGameSpecific,
-    3: Struct(),
+    RandovaniaGame.PRIME1.value: Struct(),
+    RandovaniaGame.PRIME2.value: ConstructEchoesGameSpecific,
+    RandovaniaGame.PRIME3.value: Struct(),
 }
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
-    game=Byte,
-    game_name=CString("utf8"),
+    game=ConstructGameEnum,
     resource_database=ConstructResourceDatabase,
     game_specific=Switch(lambda this: this.game, game_specific_map),
     dock_weakness_database=Struct(

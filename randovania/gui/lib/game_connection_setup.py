@@ -2,7 +2,7 @@ from typing import Optional
 
 import wiiload
 from PySide2 import QtWidgets
-from asyncqt import asyncSlot
+from qasync import asyncSlot
 
 from randovania import get_data_path
 from randovania.game_connection.backend_choice import GameBackendChoice
@@ -42,18 +42,12 @@ class GameConnectionSetup:
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
         self.connect_to_game = _create_check("Connect to the game", self.on_connect_to_game, True)
-        self.track_items = _create_check("Automatically track inventory",
-                                         self.on_track_items, options.tracking_inventory)
-        self.displaying_messages = _create_check("Display in-game messages for received items",
-                                                 self.on_displaying_messages, options.displaying_messages)
 
         self.game_connection_menu.addAction(self.use_dolphin_backend)
         self.game_connection_menu.addAction(self.use_nintendont_backend)
         self.game_connection_menu.addAction(self.upload_nintendont_action)
         self.game_connection_menu.addSeparator()
         self.game_connection_menu.addAction(self.connect_to_game)
-        self.game_connection_menu.addAction(self.track_items)
-        self.game_connection_menu.addAction(self.displaying_messages)
 
         self.tool.setMenu(self.game_connection_menu)
 
@@ -131,15 +125,3 @@ class GameConnectionSetup:
     def on_connect_to_game(self):
         connect_to_game = self.connect_to_game.isChecked()
         self.game_connection.backend.set_connection_enabled(connect_to_game)
-
-    def on_track_items(self):
-        track_items = self.track_items.isChecked()
-        with self.options as options:
-            options.tracking_inventory = track_items
-        self.game_connection.tracking_inventory = track_items
-
-    def on_displaying_messages(self):
-        displaying_messages = self.displaying_messages.isChecked()
-        with self.options as options:
-            options.displaying_messages = displaying_messages
-        self.game_connection.displaying_messages = displaying_messages

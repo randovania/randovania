@@ -1,6 +1,7 @@
 import collections
 import copy
 import dataclasses
+import uuid
 
 import pytest
 
@@ -12,17 +13,19 @@ from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.pickup_entry import PickupEntry, \
+    ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.permalink import Permalink
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
 @pytest.fixture(
@@ -34,7 +37,8 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
                          "dark_temple": None,
-                         "precision": {"location": "detailed", "item": "detailed", "relative": None},
+                         "precision": {"location": "detailed", "item": "detailed", "relative": None,
+                                       "include_owner": False},
                          "target": 50}]},
     ],
     name="patches_with_data")
@@ -158,72 +162,69 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     # Setup
     name = "Some Random Name"
     if has_convert:
-        convert_resources = (
-            ResourceConversion(
-                find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
-                find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage")
-            ),
+        resource_lock = ResourceLock(
+            find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
+            find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"),
+            find_resource_info_with_long_name(echoes_resource_database.item, "Space Jump Boots"),
         )
     else:
-        convert_resources = ()
+        resource_lock = None
 
     pickup = PickupEntry(
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
-        resources=(
-            ConditionalResources(
-                "Morph Ball", None,
-                (
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 2),
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
-                ),
-            ),
-            ConditionalResources(
-                "Grapple Beam", find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
-                (
-                    (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 3),
-                ),
-            )
+        progression=(
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),
         ),
-        convert_resources=convert_resources
+        extra_resources=(
+            (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
+        ),
+        resource_lock=resource_lock
     )
 
     # Run
     encoded = bitpacking.pack_value(BitPackPickupEntry(pickup, echoes_resource_database))
     decoder = BitPackDecoder(encoded)
-    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, name, echoes_resource_database)
+    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, echoes_resource_database)
 
     # Assert
     assert pickup == decoded
 
 
-def test_round_trip_generated_patches(echoes_game_data, default_preset):
+@pytest.mark.asyncio
+async def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
         default_preset,
-        layout_configuration=dataclasses.replace(
-            default_preset.layout_configuration,
-            trick_level_configuration=TrickLevelConfiguration(
+        uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+        base_preset_uuid=default_preset.uuid,
+        configuration=dataclasses.replace(
+            default_preset.configuration,
+            trick_level=TrickLevelConfiguration(
                 minimal_logic=True,
                 specific_levels={},
+                game=RandovaniaGame.PRIME2,
             )
         )
     )
 
-    all_patches = generator._async_create_description(
+    description = await generator._create_description(
         permalink=Permalink(
             seed_number=1000,
             spoiler=True,
             presets={0: preset},
         ),
         status_update=lambda x: None,
-    ).all_patches
+        attempts=0,
+    )
+    all_patches = description.all_patches
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})
-    decoded = game_patches_serializer.decode(encoded, {0: preset.layout_configuration})
+    decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
 
     # Assert
     assert all_patches == decoded

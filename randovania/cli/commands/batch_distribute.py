@@ -1,37 +1,45 @@
+import asyncio
 import math
 import multiprocessing
 import time
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
-from randovania.generator import generator
 from randovania.interface_common import sleep_inhibitor
-from randovania.layout.permalink import Permalink
 
 
-def batch_distribute_helper(base_permalink: Permalink,
+def batch_distribute_helper(base_permalink,
                             seed_number: int,
                             timeout: int,
                             validate: bool,
                             output_dir: Path,
                             ) -> float:
+    from randovania.generator import generator
+    from randovania.layout.permalink import Permalink
+
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
-        presets=base_permalink.presets,
+        presets=typing.cast(Permalink, base_permalink).presets,
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_description(permalink=permalink, status_update=None,
-                                                 validate_after_generation=validate, timeout=timeout)
+    description = asyncio.run(generator.generate_and_validate_description(
+        permalink=permalink, status_update=None,
+        validate_after_generation=validate, timeout=timeout,
+        attempts=0,
+    ))
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(output_dir.joinpath("{}.json".format(seed_number)))
+    description.save_to_file(output_dir.joinpath("{}.{}".format(seed_number, description.file_extension())))
     return delta_time
 
 
 def batch_distribute_command_logic(args):
+    from randovania.layout.permalink import Permalink
+
     finished_count = 0
 
     timeout: int = args.timeout
@@ -56,7 +64,7 @@ def batch_distribute_command_logic(args):
     def error_callback(e):
         report_update(f"Failed to generate seed: {e}")
 
-    with multiprocessing.Pool() as pool, sleep_inhibitor.get_inhibitor():
+    with multiprocessing.Pool(processes=args.process_count) as pool, sleep_inhibitor.get_inhibitor():
         for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
@@ -75,6 +83,7 @@ def add_batch_distribute_command(sub_parsers):
     )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
+    parser.add_argument("--process-count", type=int, help="How many processes to use. Defaults to CPU count.")
     parser.add_argument(
         "--timeout",
         type=int,

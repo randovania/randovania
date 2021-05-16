@@ -1,10 +1,12 @@
 import copy
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple, List
+from typing import Dict, Iterator, Tuple
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_database import ItemDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.layout.ammo_state import AmmoState
 
 
@@ -14,55 +16,43 @@ class AmmoConfiguration(BitPackValue):
     items_state: Dict[Ammo, AmmoState]
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        default = AmmoConfiguration.default()
+        default: AmmoConfiguration = metadata["reference"]
 
-        for key, value in self.maximum_ammo.items():
-            yield int(value != default.maximum_ammo[key]), 2
+        assert list(self.maximum_ammo.keys()) == list(default.maximum_ammo.keys())
+        assert list(self.items_state.keys()) == list(default.items_state.keys())
 
-        for key, value in self.maximum_ammo.items():
-            if value != default.maximum_ammo[key]:
-                yield value, 256
+        for this, reference in zip(self.maximum_ammo.values(), default.maximum_ammo.values()):
+            is_different = this != reference
+            yield from bitpacking.encode_bool(is_different)
+            if is_different:
+                yield this, 256
 
-        result: List[Tuple[int, Ammo, AmmoState]] = []
-        for i, (item, state) in enumerate(self.items_state.items()):
-            if state != default.items_state[item]:
-                result.append((i, item, state))
-
-        yield len(result), len(self.items_state)
-        for index, _, _ in result:
-            yield index, len(self.items_state)
-
-        for index, _, state in result:
-            yield from state.bit_pack_encode({})
+        for this, reference in zip(self.items_state.values(), default.items_state.values()):
+            is_different = this != reference
+            yield from bitpacking.encode_bool(is_different)
+            if is_different:
+                yield from this.bit_pack_encode({})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        from randovania.game_description import default_database
-        item_database = default_database.default_prime2_item_database()
-        default = cls.default()
+        default: AmmoConfiguration = metadata["reference"]
 
         # Maximum Ammo
-        has_value = {
-            item_key: bool(decoder.decode_single(2))
-            for item_key in default.maximum_ammo.keys()
-        }
-        maximum_ammo = {
-            item_key: decoder.decode_single(256) if has_value[item_key] else default.maximum_ammo[item_key]
-            for item_key, default_value in default.maximum_ammo.items()
-        }
-
-        num_items = decoder.decode_single(len(default.items_state))
-        indices_with_custom = {
-            decoder.decode_single(len(default.items_state))
-            for _ in range(num_items)
-        }
+        maximum_ammo = {}
+        for item_key, default_value in default.maximum_ammo.items():
+            is_different = bitpacking.decode_bool(decoder)
+            if is_different:
+                maximum_ammo[item_key] = decoder.decode_single(256)
+            else:
+                maximum_ammo[item_key] = default_value
 
         items_state = {}
-        for index, item in enumerate(item_database.ammo.values()):
-            if index in indices_with_custom:
+        for item, default_state in default.items_state.items():
+            is_different = bitpacking.decode_bool(decoder)
+            if is_different:
                 items_state[item] = AmmoState.bit_pack_unpack(decoder, {})
             else:
-                items_state[item] = default.items_state[item]
+                items_state[item] = default_state
 
         return cls(maximum_ammo, items_state)
 
@@ -80,7 +70,8 @@ class AmmoConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, item_database: ItemDatabase) -> "AmmoConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> "AmmoConfiguration":
+        item_database = default_database.item_database_for_game(game)
         return cls(
             maximum_ammo={
                 int(ammo_item): maximum
@@ -117,8 +108,3 @@ class AmmoConfiguration(BitPackValue):
             items_state[item] = state
 
         return AmmoConfiguration(copy.copy(self.maximum_ammo), items_state)
-
-    @classmethod
-    def default(cls):
-        from randovania.layout import configuration_factory
-        return configuration_factory.get_default_ammo_configurations()
