@@ -1,3 +1,4 @@
+import asyncio
 from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import data_reader
@@ -77,12 +78,12 @@ def _should_check_if_action_is_safe(state: State,
     return False
 
 
-def _inner_advance_depth(state: State,
-                         logic: Logic,
-                         status_update: Callable[[str], None],
-                         *,
-                         reach: Optional[ResolverReach] = None,
-                         ) -> Tuple[Optional[State], bool]:
+async def _inner_advance_depth(state: State,
+                               logic: Logic,
+                               status_update: Callable[[str], None],
+                               *,
+                               reach: Optional[ResolverReach] = None,
+                               ) -> Tuple[Optional[State], bool]:
     """
 
     :param state:
@@ -94,6 +95,9 @@ def _inner_advance_depth(state: State,
 
     if logic.game.victory_condition.satisfied(state.resources, state.energy):
         return state, True
+
+    # Yield back to the asyncio runner, so cancel can do something
+    await asyncio.sleep(0)
 
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
@@ -110,10 +114,12 @@ def _inner_advance_depth(state: State,
 
             # If we can go back to where we were, it's a simple safe node
             if state.node in potential_reach.nodes:
-                new_result = _inner_advance_depth(state=potential_state,
-                                                  logic=logic,
-                                                  status_update=status_update,
-                                                  reach=potential_reach)
+                new_result = await _inner_advance_depth(
+                    state=potential_state,
+                    logic=logic,
+                    status_update=status_update,
+                    reach=potential_reach,
+                )
 
                 if not new_result[1]:
                     debug.log_rollback(state, True, True)
@@ -124,10 +130,11 @@ def _inner_advance_depth(state: State,
     debug.log_checking_satisfiable_actions()
     has_action = False
     for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
-        new_result = _inner_advance_depth(
+        new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
             logic=logic,
-            status_update=status_update)
+            status_update=status_update,
+        )
 
         # We got a positive result. Send it back up
         if new_result[0] is not None:
@@ -151,18 +158,18 @@ def _inner_advance_depth(state: State,
     return None, has_action
 
 
-def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
-    return _inner_advance_depth(state, logic, status_update)[0]
+async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
+    return (await _inner_advance_depth(state, logic, status_update))[0]
 
 
 def _quiet_print(s):
     pass
 
 
-def resolve(configuration: EchoesConfiguration,
-            patches: GamePatches,
-            status_update: Optional[Callable[[str], None]] = None
-            ) -> Optional[State]:
+async def resolve(configuration: EchoesConfiguration,
+                  patches: GamePatches,
+                  status_update: Optional[Callable[[str], None]] = None
+                  ) -> Optional[State]:
     if status_update is None:
         status_update = _quiet_print
 
@@ -174,4 +181,4 @@ def resolve(configuration: EchoesConfiguration,
     starting_state.resources["add_self_as_requirement_to_resources"] = 1
     debug.log_resolve_start()
 
-    return advance_depth(starting_state, logic, status_update)
+    return await advance_depth(starting_state, logic, status_update)

@@ -1,3 +1,4 @@
+import asyncio
 import math
 import multiprocessing
 import time
@@ -25,9 +26,11 @@ def batch_distribute_helper(base_permalink,
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_description(permalink=permalink, status_update=None,
-                                                 validate_after_generation=validate, timeout=timeout,
-                                                 attempts=0)
+    description = asyncio.run(generator.generate_and_validate_description(
+        permalink=permalink, status_update=None,
+        validate_after_generation=validate, timeout=timeout,
+        attempts=0,
+    ))
     delta_time = time.perf_counter() - start_time
 
     description.save_to_file(output_dir.joinpath("{}.{}".format(seed_number, description.file_extension())))
