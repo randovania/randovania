@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
 
+-   Changed: Reaching the portal in Hydrodynamo Shaft with Air Underwater and Screw Attack is now Hypermode (from Expert).
+
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
