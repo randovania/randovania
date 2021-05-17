@@ -16,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Multiworld connection is slightly more conservative when giving items.
 
-
 ### Logic Database Changes
 
 -   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
@@ -24,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method of bypassing the breakable glass in Sand Processing from Main Reactor with Space Jump and Screw Attack (Expert and above).
 
 -   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
+
+-   Added: Method of climbing the Sand Processing bomb slot with a Slope Jump for Bombless Bomb Slots (Advanced and above).
 
 -   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
