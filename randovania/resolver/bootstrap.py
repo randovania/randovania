@@ -71,7 +71,7 @@ def trick_resources_for_configuration(configuration: TrickLevelConfiguration,
 
     for trick in resource_database.trick:
         if configuration.minimal_logic:
-            level = LayoutTrickLevel.HYPERMODE
+            level = LayoutTrickLevel.maximum()
         else:
             level = configuration.level_for_trick(trick)
         static_resources[trick] = level.as_number
