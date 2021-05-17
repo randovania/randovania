@@ -17,6 +17,10 @@ class LayoutTrickLevel(BitPackEnum, Enum):
         return cls.DISABLED
 
     @classmethod
+    def maximum(cls) -> "LayoutTrickLevel":
+        return _TRICK_LEVEL_ORDER[-1]
+
+    @classmethod
     def from_number(cls, number: int) -> "LayoutTrickLevel":
         return _TRICK_LEVEL_ORDER[number]
 

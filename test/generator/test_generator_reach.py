@@ -94,7 +94,7 @@ def test_database_collectable(preset_manager, preset_name, ignore_events, ignore
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)
     for trick in game.resource_database.trick:
-        initial_state.resources[trick] = LayoutTrickLevel.HYPERMODE.as_number
+        initial_state.resources[trick] = LayoutTrickLevel.maximum().as_number
 
     expected_events = [event for event in game.resource_database.event if event.index not in ignore_events]
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
@@ -187,7 +187,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     # Setup
     game = small_echoes_game_description
     specific_levels = {
-        trick.short_name: LayoutTrickLevel.HYPERMODE
+        trick.short_name: LayoutTrickLevel.maximum()
         for trick in game.resource_database.trick
     }
 
