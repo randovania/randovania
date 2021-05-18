@@ -71,7 +71,7 @@ setup(
         'networkx',
         'bitstruct',
         'construct',
-        'tenacity',
+        'tenacity>=7.0.0',
         'python-slugify',
         'python-socketio[asyncio_client]',
         'aiohttp[speedups]',
