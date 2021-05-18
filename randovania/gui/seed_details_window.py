@@ -14,9 +14,8 @@ from randovania.game_description import data_reader, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games import patcher_provider
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import patcher_file
+from randovania.games.prime.patcher_file_lib import item_names
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
@@ -25,7 +24,7 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common import simplified_patcher, status_update_lib
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -138,7 +137,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             self.layout_description.save_to_file(json_path)
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.prime import gollop_corruption_patcher
+        from randovania.games.patchers import gollop_corruption_patcher
 
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.PRIME3)
@@ -210,7 +209,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.output_directory = output_file.parent
             options.auto_save_spoiler = auto_save_spoiler
 
-        patch_data = await patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
+        patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
 
         def work(progress_update: ProgressUpdateCallable):
             patcher.patch_game(input_file, output_file, patch_data,
@@ -365,9 +364,9 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             self._create_pickup_spoilers(game_description)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
-            extra_items = patcher_file.additional_starting_items(preset.configuration,
-                                                                 game_description.resource_database,
-                                                                 patches.starting_items)
+            extra_items = item_names.additional_starting_items(preset.configuration,
+                                                               game_description.resource_database,
+                                                               patches.starting_items)
 
             self.spoiler_starting_location_label.setText("Starting Location: {}".format(
                 game_description.world_list.area_name(starting_area)

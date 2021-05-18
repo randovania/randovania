@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
-from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b
+from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
+                       Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b)
 
 from randovania.game_description.node import LoreType
 from randovania.games.game import RandovaniaGame

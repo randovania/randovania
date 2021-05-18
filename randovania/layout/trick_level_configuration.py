@@ -8,7 +8,7 @@ from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
+from randovania.games import default_data
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.trick_level import LayoutTrickLevel
 

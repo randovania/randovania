@@ -25,8 +25,8 @@ class Patcher(ABC):
         """
         raise NotImplementedError()
 
-    async def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                                cosmetic_patches: CosmeticPatches) -> dict:
+    def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
+                          cosmetic_patches: CosmeticPatches) -> dict:
         raise NotImplementedError()
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,

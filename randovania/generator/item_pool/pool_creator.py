@@ -12,7 +12,6 @@ from randovania.generator.item_pool.energy_cells import add_energy_cells
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):

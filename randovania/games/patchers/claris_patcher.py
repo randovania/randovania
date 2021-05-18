@@ -1,8 +1,12 @@
+import functools
+import json
 from pathlib import Path
 from typing import Optional
 
+from randovania import get_data_path
 from randovania.games.patcher import Patcher
-from randovania.games.prime import patcher_file, iso_packager, claris_randomizer, banner_patcher
+from randovania.games.patchers import claris_randomizer, claris_patcher_file
+from randovania.games.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import status_update_lib, simplified_patcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.options import Options
@@ -31,9 +35,9 @@ class ClarisPatcher(Patcher):
         """
         return False
 
-    async def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                                cosmetic_patches: CosmeticPatches):
-        return patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
+    def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
+                          cosmetic_patches: CosmeticPatches):
+        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    progress_update: ProgressUpdateCallable):
@@ -70,3 +74,11 @@ class ClarisPatcher(Patcher):
             game_files_path=game_files_path,
             progress_update=updaters[-1],
         )
+
+
+@functools.lru_cache()
+def decode_randomizer_data() -> dict:
+    randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
+
+    with randomizer_data_path.open() as randomizer_data_file:
+        return json.load(randomizer_data_file)

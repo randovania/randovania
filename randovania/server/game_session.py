@@ -15,7 +15,6 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
@@ -433,13 +432,16 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         for member in GameSessionMembership.non_observer_members(session):
             player_names[member.row] = member.effective_name
 
+        layout_description = session.layout_description
         players_config = PlayersConfiguration(
             player_index=membership.row,
             player_names=player_names,
         )
-        return patcher_file.create_patcher_file(session.layout_description,
-                                                players_config,
-                                                cosmetic_patches)
+        preset = layout_description.permalink.get_preset(players_config.player_index)
+        patcher = sio.patcher_provider.patcher_for_game(preset.game)
+        return patcher.create_patch_data(session.layout_description,
+                                         players_config,
+                                         cosmetic_patches)
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME

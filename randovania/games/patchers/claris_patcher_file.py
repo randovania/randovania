@@ -2,7 +2,9 @@ from random import Random
 from typing import Dict, List, Iterator
 
 import randovania
+import randovania.games.prime.echoes_teleporters
 import randovania.games.prime.patcher_file_lib.hints
+import randovania.games.prime.patcher_file_lib.item_names
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
@@ -14,14 +16,14 @@ from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
-    ResourceInfo
+from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.dol_patcher import DolPatchesData
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
-from randovania.generator import elevator_distributor
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.games.prime.echoes_teleporters import elevator_area_name
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names
+from randovania.games.prime.patcher_file_lib.item_names import add_quantity_to_resource, resource_user_friendly_name
+from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
@@ -74,24 +76,6 @@ _ELEVATOR_ROOMS_MAP_ASSET_IDS = [
     0x318EBBCD,
     0xB1B5308D,
 ]
-
-_RESOURCE_NAME_TRANSLATION = {
-    'Temporary Missile': 'Missile',
-    'Temporary Power Bomb': 'Power Bomb',
-}
-_ITEMS_TO_PLURALIZE = {
-    "Missile",
-    "Power Bomb",
-}
-
-
-def _resource_user_friendly_name(resource: ResourceInfo) -> str:
-    """
-    Gets a name that we should display to the user for the given resource.
-    :param resource:
-    :return:
-    """
-    return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
 
 
 def _create_spawn_point_field(patches: GamePatches,
@@ -158,10 +142,6 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalRe
             ]
 
 
-def _add_quantity_to_resource(resource: str, quantity: int) -> str:
-    return "{} {}{}".format(quantity, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
-
-
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != ItemCategory.EXPANSION:
         if len(pickup.progression) > 1:
@@ -171,7 +151,7 @@ def _pickup_scan(pickup: PickupEntry) -> str:
             return pickup.name
 
     ammo_desc = [
-        _add_quantity_to_resource(_resource_user_friendly_name(resource), quantity)
+        add_quantity_to_resource(resource_user_friendly_name(resource), quantity)
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
@@ -201,7 +181,7 @@ def _get_single_hud_text(pickup_name: str,
                          resources: ResourceGainTuple,
                          ) -> str:
     return memo_data[pickup_name].format(**{
-        _resource_user_friendly_name(resource): quantity
+        resource_user_friendly_name(resource): quantity
         for resource, quantity in resources
     })
 
@@ -412,22 +392,6 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
-def elevator_area_name(world_list: WorldList,
-                       area_location: AreaLocation,
-                       include_world_name: bool,
-                       ) -> str:
-    if area_location.area_asset_id in elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS:
-        return elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
-
-    else:
-        world = world_list.world_by_area_location(area_location)
-        area = world.area_by_asset_id(area_location.area_asset_id)
-        if include_world_name:
-            return world_list.area_name(area)
-        else:
-            return area.name
-
-
 def _pretty_name_for_elevator(world_list: WorldList,
                               original_teleporter_node: TeleporterNode,
                               connection: AreaLocation,
@@ -633,22 +597,10 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def additional_starting_items(layout_configuration: EchoesConfiguration,
-                              resource_database: ResourceDatabase,
-                              starting_items: CurrentResources) -> List[str]:
-    initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
-
-    return [
-        "{}{}".format("{} ".format(quantity) if quantity > 1 else "", _resource_user_friendly_name(item))
-        for item, quantity in starting_items.items()
-        if 0 < quantity != initial_items.get(item, 0)
-    ]
-
-
 def _create_starting_popup(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
                            starting_items: CurrentResources) -> list:
-    extra_items = additional_starting_items(layout_configuration, resource_database, starting_items)
+    extra_items = item_names.additional_starting_items(layout_configuration, resource_database, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
