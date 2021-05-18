@@ -1,15 +1,15 @@
 import functools
 import json
+import shutil
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from randovania import get_data_path
 from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
-from randovania.interface_common import status_update_lib, simplified_patcher
+from randovania.interface_common import status_update_lib, game_workdir
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
@@ -17,9 +17,6 @@ from randovania.layout.layout_description import LayoutDescription
 
 class ClarisPatcher(Patcher):
     _busy: bool = False
-
-    def __init__(self, options: Options):
-        self.options = options
 
     @property
     def is_busy(self) -> bool:
@@ -35,22 +32,46 @@ class ClarisPatcher(Patcher):
         """
         return False
 
+    def has_internal_copy(self, game_files_path: Path) -> bool:
+        result = game_workdir.discover_game(game_files_path.joinpath("prime2", "contents"))
+        if result is not None:
+            game_id, _ = result
+            if game_id.startswith("G2M"):
+                return True
+        return False
+
+    def delete_internal_copy(self, game_files_path: Path):
+        game_files_path = game_files_path.joinpath("prime2")
+        if game_files_path.exists():
+            shutil.rmtree(game_files_path)
+
+    def default_output_file(self, seed_hash: str) -> str:
+        return "Echoes Randomizer - {}.iso".format(seed_hash)
+
+    @property
+    def valid_input_file_types(self) -> List[str]:
+        return ["iso"]
+
+    @property
+    def valid_output_file_types(self) -> List[str]:
+        return ["iso"]
+
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: CosmeticPatches):
         return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
-                   progress_update: ProgressUpdateCallable):
+                   game_files_path: Path, progress_update: ProgressUpdateCallable):
         num_updaters = 2
         if input_file is not None:
             num_updaters += 1
         updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
 
-        game_files_path = self.options.game_files_path
-        backup_files_path = self.options.backup_files_path
+        game_files_path = game_files_path.joinpath("prime2", "contents")
+        backup_files_path = game_files_path.joinpath("prime2", "vanilla")
 
         if input_file is not None:
-            simplified_patcher.delete_files_location(self.options)
+            self.delete_internal_copy(game_files_path)
             iso_packager.unpack_iso(
                 iso=input_file,
                 game_files_path=game_files_path,

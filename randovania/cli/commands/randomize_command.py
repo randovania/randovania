@@ -39,10 +39,11 @@ async def randomize_command_logic_async(args):
                                            for i in range(layout_description.permalink.player_count)})
     preset = layout_description.permalink.get_preset(players_config.player_index)
 
+    game_files_path = Options.with_default_data_dir().game_files_path
     patcher_provider = PatcherProvider(Options.with_default_data_dir())
     patcher = patcher_provider.patcher_for_game(preset.game)
 
-    patch_data = patcher.create_patch_data(layout_description, players_config, cosmetic_patches)
+    patch_data = patcher.create_patch_data(layout_description, players_config, game_files_path, cosmetic_patches)
     patcher.patch_game(args.input_file, args.output_file, patch_data, lambda x, _: status_update(x))
 
 
