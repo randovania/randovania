@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Reaching the pickup in Dark Torvus Arena with a Roll Jump is now Hypermode (from Expert).
 
+-   Changed: Trial Grounds, reaching the door:
+    - From the portal with Space Jump and a Slope Jump is now Beginner (from Intermediate).
+    - From the left safe zone with a Dash is now Intermediate (from Expert) and without anything is now Advanced (from Expert).
+
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
