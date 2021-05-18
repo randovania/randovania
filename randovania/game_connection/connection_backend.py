@@ -15,7 +15,8 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher, default_data, all_prime_dol_patches
+from randovania.games.prime import dol_patcher, all_prime_dol_patches
+from randovania.games import default_data
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 

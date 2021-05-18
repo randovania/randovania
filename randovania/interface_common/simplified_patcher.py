@@ -2,7 +2,7 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
-from randovania.games.prime import iso_packager
+from randovania.games.patchers.gamecube import iso_packager
 from randovania.interface_common import echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback

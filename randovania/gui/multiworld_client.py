@@ -10,9 +10,9 @@ from qasync import asyncSlot
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import data_reader
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.games.prime import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
@@ -79,7 +79,8 @@ class MultiworldClient(QObject):
                 raise BackendInUse(Path(self._pid.filename)) from e
             self.logger.debug(f"Creating pid file at {self._pid.filename}")
 
-        self._game = data_reader.decode_data(default_data.decode_default_prime2())
+        # FIXME: hardcoded game
+        self._game = default_database.game_description_for(RandovaniaGame.PRIME2)
 
     @property
     def is_active(self) -> bool:

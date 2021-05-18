@@ -398,10 +398,8 @@ def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_ses
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_player_patcher_file(mock_layout_description: PropertyMock,
-                                                mock_create_patcher_file: MagicMock,
                                                 flask_app,
                                                 clean_database):
     user1 = database.User.create(id=1234, name="The Name")
@@ -414,6 +412,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
+    patcher = sio.patcher_provider.patcher_for_game.return_value
 
     cosmetic = CosmeticPatches(open_map=False)
 
@@ -422,7 +421,11 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         result = game_session.game_session_admin_player(sio, 1, 1234, "create_patcher_file", cosmetic.as_json)
 
     # Assert
-    mock_create_patcher_file.assert_called_once_with(
+    mock_layout_description.return_value.permalink.get_preset.assert_called_once_with(2)
+    sio.patcher_provider.patcher_for_game.assert_called_once_with(
+        mock_layout_description.return_value.permalink.get_preset.return_value.game
+    )
+    patcher.create_patch_data.assert_called_once_with(
         mock_layout_description.return_value,
         PlayersConfiguration(2, {
             0: "Player 1",
@@ -431,7 +434,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         }),
         cosmetic
     )
-    assert result is mock_create_patcher_file.return_value
+    assert result is patcher.create_patch_data.return_value
 
 
 def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):

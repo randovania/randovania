@@ -8,7 +8,7 @@ from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import binary_data, default_data
+from randovania.games import default_data, binary_data
 from randovania.interface_common.enum_lib import iterate_enum
 
 

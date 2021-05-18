@@ -26,7 +26,7 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import patcher_file
+from randovania.games.prime import echoes_teleporters
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -484,7 +484,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 nodes_by_world[name].append(node)
 
                 location = AreaLocation(world.world_asset_id, area.area_asset_id)
-                targets[patcher_file.elevator_area_name(world_list, location, True)] = location
+                targets[echoes_teleporters.elevator_area_name(world_list, location, True)] = location
 
         if self.layout_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -500,7 +500,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
                                             world_list.nodes_to_area(node).area_asset_id)
                                for node in nodes]
-            nodes_names = [patcher_file.elevator_area_name(world_list, location, True)
+            nodes_names = [echoes_teleporters.elevator_area_name(world_list, location, True)
                            for location in nodes_locations]
 
             nodes = sorted(nodes_by_world[world_name], key=lambda it: world_list.nodes_to_area(it).name)

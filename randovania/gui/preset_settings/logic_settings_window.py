@@ -9,6 +9,7 @@ from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
+import randovania.games.prime.echoes_teleporters
 from randovania.game_description import default_database
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -477,7 +478,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     # Elevator
     def _create_check_for_source_elevator(self, location: Teleporter):
         area = self.game_description.world_list.area_by_area_location(location.area_location)
-        name = elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
+        name = randovania.games.prime.echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
         if name is None:
             name = self.game_description.world_list.area_name(area)
 

@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
+from randovania.games import binary_data
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import binary_data
 
 
 def test_simple_round_trip():

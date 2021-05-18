@@ -15,7 +15,7 @@ from randovania.game_description.node import Node, DockNode, TeleporterNode, Gen
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
+from randovania.games import default_data
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow

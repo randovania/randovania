@@ -1,15 +1,11 @@
-import asyncio
 import json
-import platform
-import sys
 from pathlib import Path
 from typing import Union
 from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
-from randovania.games.prime import claris_randomizer
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.patchers import claris_randomizer
 from randovania.layout.layout_description import LayoutDescription
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
@@ -19,14 +15,6 @@ class CustomException(Exception):
     @classmethod
     def do_raise(cls, x):
         raise CustomException("test exception")
-
-
-@pytest.fixture(
-    params=[False, True],
-    name="mock_is_windows")
-def _mock_is_windows(request):
-    with patch("randovania.games.prime.claris_randomizer._is_windows", return_value=request.param):
-        yield request.param
 
 
 @pytest.fixture(name="valid_tmp_game_root")
@@ -43,24 +31,8 @@ def _valid_tmp_game_root(tmp_path):
     return game_root
 
 
-@pytest.mark.parametrize(["system_name", "expected"], [
-    ("Windows", True),
-    ("Linux", False),
-])
-def test_is_windows(mocker, system_name, expected):
-    # Setup
-    mocker.patch("platform.system", return_value=system_name)
-
-    # Run
-    result = claris_randomizer._is_windows()
-
-    # Assert
-    assert result == expected
-
-
-@patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
+@patch("randovania.games.patchers.csharp_subprocess.process_command", autospec=True)
 def test_run_with_args_success(mock_process_command: MagicMock,
-                               mock_is_windows: bool,
                                ):
     # Setup
     args = [MagicMock(), MagicMock()]
@@ -83,8 +55,7 @@ def test_run_with_args_success(mock_process_command: MagicMock,
     claris_randomizer._run_with_args(args, "", finish_string, status_update)
 
     # Assert
-    mock_process_command.assert_called_once_with(
-        ([] if mock_is_windows else ["mono"]) + [str(x) for x in args], "", ANY)
+    mock_process_command.assert_called_once_with([str(x) for x in args], "", ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),
@@ -92,10 +63,8 @@ def test_run_with_args_success(mock_process_command: MagicMock,
     ])
 
 
-@patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
-def test_run_with_args_failure(mock_process_command: MagicMock,
-                               mock_is_windows: bool,
-                               ):
+@patch("randovania.games.patchers.csharp_subprocess.process_command", autospec=True)
+def test_run_with_args_failure(mock_process_command: MagicMock):
     # Setup
     input_data = "asdf"
     finish_string = "We are done!"
@@ -117,7 +86,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock,
         claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert
-    mock_process_command.assert_called_once_with([] if mock_is_windows else ["mono"], input_data, ANY)
+    mock_process_command.assert_called_once_with([], input_data, ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),
@@ -126,8 +95,8 @@ def test_run_with_args_failure(mock_process_command: MagicMock,
     assert str(error.value) == "External tool did not send '{}'. Did something happen?".format(finish_string)
 
 
-@patch("randovania.games.prime.claris_randomizer.validate_game_files_path", autospec=True)
-@patch("randovania.games.prime.claris_randomizer.get_data_path", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer.validate_game_files_path", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer.get_data_path", autospec=True)
 def test_base_args(mock_get_data_path: MagicMock,
                    mock_validate_game_files_path: MagicMock,
                    ):
@@ -253,8 +222,8 @@ def test_create_pak_backups_no_existing(mock_copy: MagicMock,
     ])
 
 
-@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-@patch("randovania.games.prime.claris_randomizer.get_data_path", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer._run_with_args", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer.get_data_path", autospec=True)
 def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
                                mock_run_with_args: MagicMock,
                                tmpdir,
@@ -282,10 +251,10 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 @pytest.mark.parametrize("has_backup_path", [False, True])
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.dol_patcher.apply_patches", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer._run_with_args", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer._add_menu_mod_to_files", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer._create_pak_backups", autospec=True)
+@patch("randovania.games.patchers.claris_randomizer._ensure_no_menu_mod", autospec=True)
 def test_apply_patcher_file(
         mock_ensure_no_menu_mod: MagicMock,
         mock_create_pak_backups: MagicMock,
@@ -337,65 +306,3 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
-
-
-@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
-@patch("randovania.games.prime.claris_randomizer.apply_patcher_file", autospec=True)
-def test_apply_layout(mock_apply_patcher_file: MagicMock,
-                      mock_create_patcher_file: MagicMock,
-                      ):
-    # Setup
-    description = MagicMock()
-    description.file_extension.return_value = "foobar"
-    player_config = MagicMock()
-    cosmetic_patches = MagicMock()
-    backup_files_path = MagicMock()
-    progress_update = MagicMock()
-    game_root = MagicMock(spec=Path())
-
-    # Run
-    claris_randomizer.apply_layout(
-        description, player_config, cosmetic_patches,
-        backup_files_path, progress_update, game_root
-    )
-
-    # Assert
-    game_root.joinpath.assert_called_once_with("files", "randovania.foobar")
-    description.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
-    mock_create_patcher_file.assert_called_once_with(description, player_config, cosmetic_patches)
-    mock_apply_patcher_file.assert_called_once_with(game_root, backup_files_path,
-                                                    mock_create_patcher_file.return_value,
-                                                    progress_update)
-
-
-def test_process_command_no_thread(echo_tool, mock_is_windows, mocker, monkeypatch):
-    read_callback = MagicMock()
-
-    claris_randomizer.IO_LOOP = None
-    if platform.system() == "Windows":
-        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-
-    mock_set_event: MagicMock = mocker.patch("asyncio.set_event_loop_policy")
-    loop_policy = MagicMock()
-    monkeypatch.setattr(asyncio, "WindowsProactorEventLoopPolicy", loop_policy, raising=False)
-
-    # Run
-    claris_randomizer._process_command(
-        [
-            sys.executable,
-            str(echo_tool)
-        ],
-        "hello\r\nthis is a nice world\r\n\r\nWe some crazy stuff.",
-        read_callback
-    )
-
-    # Assert
-    read_callback.assert_has_calls([
-        call("hello"),
-        call("this is a nice world"),
-        call("We some crazy stuff."),
-    ])
-    if mock_is_windows:
-        mock_set_event.assert_called_once_with(loop_policy.return_value)
-    else:
-        mock_set_event.assert_not_called()

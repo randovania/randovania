@@ -3,8 +3,8 @@ import functools
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QComboBox
 
+import randovania.games.patchers.claris_patcher
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.games.prime import default_data
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -22,7 +22,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         self.setupUi(self)
         self._editor = editor
 
-        randomizer_data = default_data.decode_randomizer_data()
+        randomizer_data = randovania.games.patchers.claris_patcher.decode_randomizer_data()
 
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)

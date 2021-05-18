@@ -2,6 +2,7 @@ import contextlib
 import datetime
 
 import pytest
+import typing
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
@@ -423,9 +424,6 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     mock_input_dialog = mocker.patch("randovania.gui.game_session_window.GameInputDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
-    mock_unpack_iso: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.unpack_iso")
-    mock_apply_patcher: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.apply_patcher_file")
-    mock_pack_iso: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.pack_iso")
 
     window._game_session = MagicMock()
     window._game_session.players[window.network_client.current_user.id].is_observer = False
@@ -433,6 +431,10 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     window._game_session.presets = {0: preset_manager.default_preset}
     layout_configuration = preset_manager.default_preset.get_preset().configuration
     window.network_client.session_admin_player = AsyncMock()
+
+    patcher_provider = typing.cast(MagicMock, window._window_manager.patcher_provider)
+    patcher = patcher_provider.patcher_for_game.return_value
+    patcher.is_busy = False
 
     def run_in_background_thread(work, *args):
         work(MagicMock())
@@ -443,21 +445,14 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     await window.save_iso()
 
     # Assert
+    patcher_provider.patcher_for_game.assert_called_once_with(layout_configuration.game)
     mock_execute_dialog.assert_awaited_once_with(mock_input_dialog.return_value)
-    mock_unpack_iso.assert_called_once_with(
-        input_iso=mock_input_dialog.return_value.input_file,
-        options=window._options,
-        progress_update=ANY
-    )
-    mock_apply_patcher.assert_called_once_with(
-        patcher_file=window.network_client.session_admin_player.return_value,
-        shareable_hash=window._game_session.seed_hash,
-        options=window._options,
+    patcher.patch_game.assert_called_once_with(
+        mock_input_dialog.return_value.input_file,
+        mock_input_dialog.return_value.output_file,
+        window.network_client.session_admin_player.return_value,
         progress_update=ANY,
     )
-    mock_pack_iso.assert_called_once_with(output_iso=mock_input_dialog.return_value.output_file,
-                                          options=window._options,
-                                          progress_update=ANY)
 
 
 @pytest.mark.parametrize("dialog_response", [QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel])

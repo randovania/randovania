@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 import randovania
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
@@ -19,7 +19,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.games.prime import patcher_file, default_data
+from randovania.games.patchers import claris_patcher_file
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -45,7 +45,7 @@ def test_add_header_data_to_result():
     result = {}
 
     # Run
-    patcher_file._add_header_data_to_result(description, result)
+    claris_patcher_file._add_header_data_to_result(description, result)
 
     # Assert
     assert json.loads(json.dumps(result)) == expected
@@ -63,7 +63,7 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     ]
 
     # Run
-    result = patcher_file._create_spawn_point_field(patches, echoes_resource_database)
+    result = claris_patcher_file._create_spawn_point_field(patches, echoes_resource_database)
 
     # Assert
     assert result == {
@@ -76,13 +76,11 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     }
 
 
-def test_create_elevators_field_no_elevator(empty_patches):
+def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2())
-
     # Run
     with pytest.raises(ValueError) as exp:
-        patcher_file._create_elevators_field(empty_patches, game)
+        claris_patcher_file._create_elevators_field(empty_patches, echoes_game_description)
 
     # Assert
     assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
@@ -90,10 +88,9 @@ def test_create_elevators_field_no_elevator(empty_patches):
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
-                                                     echoes_resource_database, empty_patches):
+                                                     echoes_game_description, empty_patches):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2())
-    patches = game.create_game_patches()
+    patches = echoes_game_description.create_game_patches()
 
     elevator_connection = copy.copy(patches.elevator_connection)
     elevator_connection[589851] = AreaLocation(464164546, 900285955)
@@ -105,7 +102,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
 
     # Run
-    result = patcher_file._create_elevators_field(patches, game)
+    result = claris_patcher_file._create_elevators_field(patches, echoes_game_description)
 
     # Assert
     expected = [
@@ -232,7 +229,7 @@ def test_create_translator_gates_field():
     }
 
     # Run
-    result = patcher_file._create_translator_gates_field(gate_assignment)
+    result = claris_patcher_file._create_translator_gates_field(gate_assignment)
 
     # Assert
     assert result == [
@@ -248,7 +245,7 @@ def test_apply_translator_gate_patches(elevators):
     target = {}
 
     # Run
-    patcher_file._apply_translator_gate_patches(target, elevators)
+    claris_patcher_file._apply_translator_gate_patches(target, elevators)
 
     # Assert
     assert target == {
@@ -260,8 +257,9 @@ def test_apply_translator_gate_patches(elevators):
 
 def test_get_single_hud_text_locked_pbs():
     # Run
-    result = patcher_file._get_single_hud_text("Locked Power Bomb Expansion", patcher_file._simplified_memo_data(),
-                                               tuple())
+    result = claris_patcher_file._get_single_hud_text("Locked Power Bomb Expansion",
+                                                      claris_patcher_file._simplified_memo_data(),
+                                                      tuple())
 
     # Assert
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -274,7 +272,8 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
     for item in echoes_item_database.major_items.values():
         pickup = pickup_creator.create_major_item(item, MajorItemState(), False, echoes_resource_database, None, False)
 
-        result = patcher_file._get_all_hud_text(patcher_file._conditional_resources_for_pickup(pickup), memo_data)
+        result = claris_patcher_file._get_all_hud_text(claris_patcher_file._conditional_resources_for_pickup(pickup),
+                                                       memo_data)
         for i, progression in enumerate(pickup.progression):
             assert progression[0].long_name in result[i]
         assert result
@@ -319,8 +318,8 @@ def test_calculate_hud_text(order: Tuple[str, str]):
     }
 
     # Run
-    result = patcher_file._calculate_hud_text(pickups[order[0]], pickups[order[1]], PickupModelStyle.HIDE_ALL,
-                                              memo_data)
+    result = claris_patcher_file._calculate_hud_text(pickups[order[0]], pickups[order[1]], PickupModelStyle.HIDE_ALL,
+                                                     memo_data)
 
     # Assert
     if order[1] == "Y":
@@ -360,17 +359,17 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         PickupIndex(3): PickupTarget(pickup_a, 0),
         PickupIndex(4): PickupTarget(pickup_c, 0),
     })
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._simplified_memo_data())
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), claris_patcher_file._simplified_memo_data())
 
     # Run
-    result = patcher_file._create_pickup_list(patches,
-                                              PickupTarget(useless_pickup, 0),
-                                              5,
-                                              rng,
-                                              model_style,
-                                              PickupModelDataSource.ETM,
-                                              creator,
-                                              )
+    result = claris_patcher_file._create_pickup_list(patches,
+                                                     PickupTarget(useless_pickup, 0),
+                                                     5,
+                                                     rng,
+                                                     model_style,
+                                                     PickupModelDataSource.ETM,
+                                                     creator,
+                                                     )
 
     # Assert
     assert len(result) == 5
@@ -503,17 +502,17 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
             for name in ("A", "B", "C", "Useless")
         }
 
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
 
     # Run
-    result = patcher_file._create_pickup_list(patches,
-                                              PickupTarget(useless_pickup, 0),
-                                              5,
-                                              rng,
-                                              PickupModelStyle.HIDE_ALL,
-                                              PickupModelDataSource.RANDOM,
-                                              creator,
-                                              )
+    result = claris_patcher_file._create_pickup_list(patches,
+                                                     PickupTarget(useless_pickup, 0),
+                                                     5,
+                                                     rng,
+                                                     PickupModelStyle.HIDE_ALL,
+                                                     PickupModelDataSource.RANDOM,
+                                                     creator,
+                                                     )
 
     # Assert
     assert len(result) == 5
@@ -581,7 +580,7 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
                                               None, False)
 
     # Run
-    result = patcher_file._pickup_scan(pickup)
+    result = claris_patcher_file._pickup_scan(pickup)
 
     # Assert
     assert result == "Progressive Suit. Provides the following in order: Dark Suit, Light Suit"
@@ -597,7 +596,7 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
     pickup = pickup_creator.create_ammo_expansion(expansion, ammo, False, echoes_resource_database)
 
     # Run
-    result = patcher_file._pickup_scan(pickup)
+    result = claris_patcher_file._pickup_scan(pickup)
 
     # Assert
     assert result == result
@@ -619,7 +618,7 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
         echoes_item_database.ammo["Missile Expansion"],
         True
     )
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._simplified_memo_data())
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), claris_patcher_file._simplified_memo_data())
 
     # Run
     result = creator.create_pickup(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -656,7 +655,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
         echoes_resource_database,
     )
     if simplified:
-        memo = patcher_file._simplified_memo_data()
+        memo = claris_patcher_file._simplified_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired, but the main Power Bomb is required to use it.",
             "Power Bomb Expansion acquired!",
@@ -669,7 +668,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
             "Power Bomb Expansion acquired! \nMaximum Power Bomb carrying capacity increased by 2.",
         ]
 
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo)
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), memo)
 
     # Run
     result = creator.create_pickup(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -701,7 +700,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
         False,
         echoes_resource_database,
     )
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._simplified_memo_data())
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), claris_patcher_file._simplified_memo_data())
 
     # Run
     result = creator.create_pickup(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -730,10 +729,10 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
                                                     echoes_resource_database)
     index = PickupIndex(0)
     if disable_hud_popup:
-        memo_data = patcher_file._simplified_memo_data()
+        memo_data = claris_patcher_file._simplified_memo_data()
     else:
         memo_data = default_prime2_memo_data()
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
 
     for item in item_pool.pickups:
         data = creator.create_pickup(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
@@ -745,7 +744,7 @@ def test_run_validated_hud_text():
     # Setup
     rng = MagicMock()
     rng.randint.return_value = 0
-    creator = patcher_file.PickupCreatorSolo(rng, patcher_file._simplified_memo_data())
+    creator = claris_patcher_file.PickupCreatorSolo(rng, claris_patcher_file._simplified_memo_data())
     resource_a = ItemResourceInfo(1, "Energy Transfer Module", "Energy Transfer Module", 1, None)
     pickup = PickupEntry("Energy Transfer Module", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                          progression=(
@@ -773,7 +772,7 @@ def _create_pickup_data():
 
 def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     # Setup
-    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._simplified_memo_data())
+    creator = claris_patcher_file.PickupCreatorSolo(MagicMock(), claris_patcher_file._simplified_memo_data())
 
     # Run
     data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
@@ -794,9 +793,9 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Setup
-    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._simplified_memo_data(),
-                                              PlayersConfiguration(0, {0: "You",
-                                                                       1: "Someone"}))
+    creator = claris_patcher_file.PickupCreatorMulti(MagicMock(), claris_patcher_file._simplified_memo_data(),
+                                                     PlayersConfiguration(0, {0: "You",
+                                                                              1: "Someone"}))
 
     # Run
     data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
@@ -819,9 +818,9 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
-    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._simplified_memo_data(),
-                                              PlayersConfiguration(0, {0: "You",
-                                                                       1: "Someone"}))
+    creator = claris_patcher_file.PickupCreatorMulti(MagicMock(), claris_patcher_file._simplified_memo_data(),
+                                                     PlayersConfiguration(0, {0: "You",
+                                                                              1: "Someone"}))
 
     # Run
     data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),
@@ -839,7 +838,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
-@patch("randovania.games.prime.patcher_file._logbook_title_string_patches", autospec=True)
+@patch("randovania.games.patchers.claris_patcher_file._logbook_title_string_patches", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
@@ -860,12 +859,12 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     mock_logbook_title_string_patches.return_values = []
 
     # Run
-    result = patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
-                                                 game,
-                                                 all_patches,
-                                                 player_config,
-                                                 rng,
-                                                 )
+    result = claris_patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
+                                                        game,
+                                                        all_patches,
+                                                        player_config,
+                                                        rng,
+                                                        )
 
     # Assert
     expected_result = ["item", "hints"]
@@ -886,7 +885,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     assert result == expected_result
 
 
-def test_create_patcher_file(test_files_dir):
+def test_create_claris_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
@@ -894,8 +893,8 @@ def test_create_patcher_file(test_files_dir):
     cosmetic_patches = CosmeticPatches()
 
     # Run
-    result = patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),
-                                              cosmetic_patches)
+    result = claris_patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),
+                                                     cosmetic_patches)
 
     # Assert
     assert isinstance(result["spawn_point"], dict)

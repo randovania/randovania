@@ -2,7 +2,6 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 from randovania.games.prime import dol_patcher
-from randovania.games.prime.dol_patcher import DolPatchesData
 
 
 @patch("randovania.games.prime.dol_patcher.DolFile")

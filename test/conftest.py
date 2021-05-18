@@ -5,13 +5,14 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import randovania.games.patchers.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
+from randovania.games import default_data
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
@@ -67,7 +68,7 @@ def echoes_item_database() -> ItemDatabase:
 
 @pytest.fixture()
 def echoes_game_data() -> dict:
-    return default_data.decode_default_prime2()
+    return default_data.read_json_then_binary(RandovaniaGame.PRIME2)[1]
 
 
 @pytest.fixture()
@@ -78,7 +79,7 @@ def echoes_game_description(echoes_game_data) -> GameDescription:
 
 @pytest.fixture()
 def corruption_game_data() -> dict:
-    return default_data.decode_default_prime3()
+    return default_data.read_json_then_binary(RandovaniaGame.PRIME3)[1]
 
 
 @pytest.fixture()
@@ -89,7 +90,7 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 
 @pytest.fixture()
 def randomizer_data() -> dict:
-    return default_data.decode_randomizer_data()
+    return randovania.games.patchers.claris_patcher.decode_randomizer_data()
 
 
 @pytest.fixture()

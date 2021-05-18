@@ -2,6 +2,7 @@ import collections
 import re
 from typing import Dict, List, DefaultDict
 
+import randovania.games.patchers.claris_patcher
 from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -15,8 +16,6 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime import default_data
-from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
@@ -81,14 +80,14 @@ def _find_area_with_teleporter(world_list: WorldList, teleporter_id: int) -> Are
 
 
 def _name_for_gate(gate: TranslatorGate) -> str:
-    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+    for items in randovania.games.patchers.claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Index"] == gate.index:
             return items["Name"]
     raise ValueError("Unknown gate: {}".format(gate))
 
 
 def _find_gate_with_name(gate_name: str) -> TranslatorGate:
-    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+    for items in randovania.games.patchers.claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Name"] == gate_name:
             return TranslatorGate(items["Index"])
     raise ValueError("Unknown gate name: {}".format(gate_name))
