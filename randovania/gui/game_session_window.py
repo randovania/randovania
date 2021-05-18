@@ -1014,8 +1014,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 "Error: Unable to save multiple ISOs at the same time,"
                 "another window is saving an ISO right now.")
 
-        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
-                                                                          self._game_session.word_hash), False)
+        dialog = GameInputDialog(options, patcher, self._game_session.word_hash, False)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:
@@ -1031,7 +1030,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                      options.cosmetic_patches.as_json)
 
         def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data,
+            patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
                                progress_update=progress_update)
 
             progress_update(f"Finished!", 1)

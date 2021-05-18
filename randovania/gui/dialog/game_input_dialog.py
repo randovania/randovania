@@ -3,26 +3,28 @@ from typing import Optional
 
 from PySide2.QtWidgets import QMessageBox, QDialog
 
+from randovania.games.patcher import Patcher
 from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.options import Options
 
-_VALID_GAME_TEXT = "(internal Metroid Prime 2 copy)"
+_VALID_GAME_TEXT = "(internal game copy)"
 
 
 class GameInputDialog(QDialog, Ui_GameInputDialog):
     _options: Options
-    _has_game: bool
+    _prompt_input_file: bool
     _current_lock_state: bool = True
 
-    def __init__(self, options: Options, default_iso_name: str, spoiler: bool):
+    def __init__(self, options: Options, patcher: Patcher, word_hash: str, spoiler: bool):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
         self._options = options
-        self.default_iso_name = default_iso_name
+
+        self.patcher = patcher
+        self.default_output_name = patcher.default_output_file(word_hash)
         self.check_extracted_game()
 
         # Input
@@ -45,7 +47,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.output_file_edit.has_error = False
 
         if options.output_directory is not None:
-            self.output_file_edit.setText(str(options.output_directory.joinpath(self.default_iso_name)))
+            self.output_file_edit.setText(str(options.output_directory.joinpath(self.default_output_name)))
 
         self._validate_input_file()
         self._validate_output_file()
@@ -53,9 +55,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     # Getters
     @property
     def input_file(self) -> Optional[Path]:
-        if self._has_game:
-            return None
-        else:
+        if self._prompt_input_file:
             return Path(self.input_file_edit.text())
 
     @property
@@ -71,39 +71,35 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
     # Checks
     def check_extracted_game(self):
-        result = game_workdir.discover_game(self._options.game_files_path)
-        self._has_game = result is not None
-        self.input_file_edit.setEnabled(not self._has_game)
+        self._prompt_input_file = (self.patcher.uses_input_file_directly or
+                                   not self.patcher.has_internal_copy(self._options.game_files_path))
+        self.input_file_edit.setEnabled(self._prompt_input_file)
 
-        if not self._has_game:
+        if self._prompt_input_file:
             self.input_file_button.setText("Select File")
         else:
             self.input_file_button.setText("Delete internal copy")
-            game_id, _ = result
-            if game_id.startswith("G2M"):
-                self.input_file_edit.setText(_VALID_GAME_TEXT)
-            else:
-                self.input_file_edit.setText("(internal unknown game copy)")
+            self.input_file_edit.setText(_VALID_GAME_TEXT)
 
     # Input file
     def _validate_input_file(self):
-        if self._has_game:
-            has_error = self.input_file_edit.text() != _VALID_GAME_TEXT
-        else:
+        if self._prompt_input_file:
             has_error = not self.input_file.is_file()
+        else:
+            has_error = self.input_file_edit.text() != _VALID_GAME_TEXT
 
         common_qt_lib.set_error_border_stylesheet(self.input_file_edit, has_error)
         self._update_accept_button()
 
     def _on_input_file_button(self):
-        if self._has_game:
-            simplified_patcher.delete_files_location(self._options)
-            self.input_file_edit.setText("")
-            self.check_extracted_game()
-        else:
-            input_file = common_qt_lib.prompt_user_for_input_iso(self)
+        if self._prompt_input_file:
+            input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, self.patcher.valid_input_file_types)
             if input_file is not None:
                 self.input_file_edit.setText(str(input_file.absolute()))
+        else:
+            self.patcher.delete_internal_copy(self._options.game_files_path)
+            self.input_file_edit.setText("")
+            self.check_extracted_game()
 
     # Output File
     def _validate_output_file(self):
@@ -114,7 +110,8 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self._update_accept_button()
 
     def _on_output_file_button(self):
-        output_file = common_qt_lib.prompt_user_for_output_iso(self, self.default_iso_name)
+        output_file = common_qt_lib.prompt_user_for_output_file(self, self.default_output_name,
+                                                                self.patcher.valid_output_file_types)
         if output_file is None:
             return
 

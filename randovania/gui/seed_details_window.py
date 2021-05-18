@@ -191,8 +191,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
-        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
-                                                                          layout.shareable_word_hash), has_spoiler)
+        dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler)
         result = await async_dialog.execute_dialog(dialog)
         if result != QDialog.Accepted:
             return
@@ -212,7 +211,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
 
         def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data,
+            patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
                                progress_update=progress_update)
 
             if has_spoiler and auto_save_spoiler:

@@ -236,7 +236,7 @@ class Options:
 
     @property
     def game_files_path(self) -> Path:
-        return self._data_dir.joinpath("extracted_game")
+        return self._data_dir.joinpath("internal_copies")
 
     @property
     def tracker_files_path(self) -> Path:
