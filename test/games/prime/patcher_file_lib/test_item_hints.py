@@ -22,17 +22,6 @@ from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeArea
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-@pytest.fixture(name="pickup")
-def _pickup() -> PickupEntry:
-    return PickupEntry(
-        name="Pickup",
-        model_index=0,
-        item_category=ItemCategory.MOVEMENT,
-        broad_category=ItemCategory.LIFE_SUPPORT,
-        progression=(),
-    )
-
-
 @pytest.fixture(name="players_config")
 def _players_configuration() -> PlayersConfiguration:
     return PlayersConfiguration(
@@ -84,7 +73,7 @@ def test_create_hints_nothing(empty_patches, players_config):
     ]
 
 
-def test_create_hints_item_joke(empty_patches, players_config, pickup):
+def test_create_hints_item_joke(empty_patches, players_config):
     # Setup
     asset_id = 1000
     logbook_node, _, world_list = _create_world_list(asset_id, PickupIndex(50))
@@ -117,7 +106,7 @@ def test_create_hints_item_joke(empty_patches, players_config, pickup):
                    "&push;&main-color=#FF3333;Sanctuary Fortress&pop; and "
                    "&push;&main-color=#FF3333;Temple Grounds&pop;."),
 ])
-def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoes_game_description, pickup,
+def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoes_game_description, blank_pickup,
                                             indices, expected_message):
     # Setup
     hint_name_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
@@ -125,7 +114,7 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
     keys = [
         (
             PickupIndex(index),
-            dataclasses.replace(pickup, progression=(
+            dataclasses.replace(blank_pickup, progression=(
                 (db.get_item(item), 1),
             ))
         )
@@ -172,7 +161,7 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
 ])
 @pytest.mark.parametrize("owner", [False, True])
 @pytest.mark.parametrize("is_multiworld", [False, True])
-def test_create_hints_item_location(empty_patches, pickup, item, location, owner, is_multiworld):
+def test_create_hints_item_location(empty_patches, blank_pickup, item, location, owner, is_multiworld):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -189,7 +178,7 @@ def test_create_hints_item_location(empty_patches, pickup, item, location, owner
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: PickupTarget(pickup, 0),
+            pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
@@ -219,7 +208,7 @@ def test_create_hints_item_location(empty_patches, pickup, item, location, owner
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
-def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item, players_config):
+def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_pickup, item, players_config):
     # Setup
     asset_id = 1000
     pickup_index, guardian = pickup_index_and_guardian
@@ -229,7 +218,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: PickupTarget(pickup, 0),
+            pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
@@ -253,7 +242,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
-def test_create_hints_light_suit_location(empty_patches, players_config, pickup, item):
+def test_create_hints_light_suit_location(empty_patches, players_config, blank_pickup, item):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -263,7 +252,7 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: PickupTarget(pickup, 0),
+            pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
@@ -291,13 +280,13 @@ def test_create_hints_light_suit_location(empty_patches, players_config, pickup,
     (0, "up to"),
     (None, "exactly"),
 ])
-def test_create_message_for_hint_relative_item(echoes_game_description, pickup, players_config,
+def test_create_message_for_hint_relative_item(echoes_game_description, blank_pickup, players_config,
                                                distance_precise, distance_text,
                                                reference_precision, reference_name):
     world_list = echoes_game_description.world_list
     patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
-        PickupIndex(5): PickupTarget(pickup, 0),
-        PickupIndex(15): PickupTarget(dataclasses.replace(pickup, name="Reference Pickup"), 0),
+        PickupIndex(5): PickupTarget(blank_pickup, 0),
+        PickupIndex(15): PickupTarget(dataclasses.replace(blank_pickup, name="Reference Pickup"), 0),
     })
 
     hint_name_creator = LocationHintCreator(world_list, None, None)
@@ -324,12 +313,12 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup, 
     (2, "up to"),
     (None, "exactly"),
 ])
-def test_create_message_for_hint_relative_area(echoes_game_description, pickup, players_config,
+def test_create_message_for_hint_relative_area(echoes_game_description, blank_pickup, players_config,
                                                offset, distance_text):
     hint_name_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
     world_list = echoes_game_description.world_list
     patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
-        PickupIndex(5): PickupTarget(pickup, 0),
+        PickupIndex(5): PickupTarget(blank_pickup, 0),
     })
 
     hint_name_creator = LocationHintCreator(world_list, None, None)

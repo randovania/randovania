@@ -9,7 +9,7 @@ import flask_socketio
 import peewee
 
 from randovania.bitpacking import bitpacking
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -542,8 +542,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
-    game_data = description.permalink.get_preset(player).configuration.game_data
-    return data_reader.read_resource_database(game_data["resource_database"])
+    return default_database.resource_database_for(description.permalink.get_preset(player).game)
 
 
 def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> Optional[PickupTarget]:

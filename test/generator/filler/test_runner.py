@@ -10,8 +10,9 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair, Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
@@ -118,7 +119,10 @@ def test_add_hints_precision(empty_patches, mocker):
 def _make_pickup(item_category: ItemCategory):
     return PickupEntry(
         name="Pickup",
-        model_index=0,
+        model=PickupModel(
+            game=RandovaniaGame.PRIME2,
+            name="EnergyTransferModule",
+        ),
         item_category=item_category,
         broad_category=item_category,
         progression=tuple(),

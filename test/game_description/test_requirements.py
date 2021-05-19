@@ -6,25 +6,29 @@ import pytest
 from randovania.game_description import data_reader
 from randovania.game_description.requirements import ResourceRequirement, RequirementList, RequirementSet, \
     RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture(name="database")
 def _database() -> ResourceDatabase:
     return ResourceDatabase(
+        game_enum=RandovaniaGame.PRIME2,
         item=[
-            SimpleResourceInfo(0, "A", "A", ""),
-            SimpleResourceInfo(1, "B", "B", ""),
-            SimpleResourceInfo(2, "C", "C", ""),
+            ItemResourceInfo(0, "A", "A", 1, None),
+            ItemResourceInfo(1, "B", "B", 1, None),
+            ItemResourceInfo(2, "C", "C", 1, None),
         ],
         event=[],
         trick=[],
         damage=[],
         version=[],
         misc=[
-            SimpleResourceInfo(0, "Trivial", "Trivial", ""),
-            SimpleResourceInfo(1, "Impossible", "Impossible", ""),
+            SimpleResourceInfo(0, "Trivial", "Trivial", ResourceType.MISC),
+            SimpleResourceInfo(1, "Impossible", "Impossible", ResourceType.MISC),
         ],
         requirement_template={},
         energy_tank_item_index=0,

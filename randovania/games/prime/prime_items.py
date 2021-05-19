@@ -2,7 +2,6 @@
 Some constants related to specific Prime 1 items that the logic needs to deal with.
 """
 
-ARTIFACT_MODEL = [29 + i for i in range(12)]
 ARTIFACT_ITEMS = [29 + i for i in range(12)]
 ARTIFACT_NAMES = [
     "Artifact of Truth",
@@ -18,3 +17,4 @@ ARTIFACT_NAMES = [
     "Artifact of Spirit",
     "Artifact of Newborn"
 ]
+ARTIFACT_MODEL = list(ARTIFACT_NAMES)

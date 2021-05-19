@@ -8,7 +8,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement

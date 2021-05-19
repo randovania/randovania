@@ -222,8 +222,9 @@ def _calculate_hud_text(pickup: PickupEntry,
 
 
 class PickupCreator:
-    def __init__(self, rng: Random):
+    def __init__(self, rng: Random, name_to_index: Dict[str, int]):
         self.rng = rng
+        self.name_to_index = name_to_index
 
     def create_pickup_data(self,
                            original_index: PickupIndex,
@@ -247,15 +248,15 @@ class PickupCreator:
             scan_text = visual_pickup.name
 
         # TODO: less improvised, really
-        model_index = model_pickup.model_index
-        if model_index == 22 and self.rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
+        model_name = model_pickup.model.name
+        if model_name == "MissileExpansion" and self.rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
             # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
-            model_index = 23
+            model_name = "MissileExpansionPrime1"
 
         result = {
             "pickup_index": original_index.index,
             **self.create_pickup_data(original_index, pickup_target, visual_pickup, model_style, scan_text),
-            "model_index": model_index,
+            "model_index": self.name_to_index[model_name],
             "sound_index": 1 if model_pickup.item_category.is_key else 0,
             "jingle_index": _get_jingle_index_for(model_pickup.item_category),
         }
@@ -263,8 +264,8 @@ class PickupCreator:
 
 
 class PickupCreatorSolo(PickupCreator):
-    def __init__(self, rng: Random, memo_data: Dict[str, str]):
-        super().__init__(rng)
+    def __init__(self, rng: Random, name_to_index: Dict[str, int], memo_data: Dict[str, str]):
+        super().__init__(rng, name_to_index)
         self.memo_data = memo_data
 
     def create_pickup_data(self,
@@ -305,9 +306,10 @@ class PickupCreatorSolo(PickupCreator):
 
 
 class PickupCreatorMulti(PickupCreator):
-    def __init__(self, rng: Random, memo_data: Dict[str, str], players_config: PlayersConfiguration):
-        super().__init__(rng)
-        self.solo_creator = PickupCreatorSolo(rng, memo_data)
+    def __init__(self, rng: Random, name_to_index: Dict[str, int], memo_data: Dict[str, str],
+                 players_config: PlayersConfiguration):
+        super().__init__(rng, name_to_index)
+        self.solo_creator = PickupCreatorSolo(rng, name_to_index, memo_data)
         self.players_config = players_config
 
     def create_pickup_data(self,

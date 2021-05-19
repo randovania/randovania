@@ -1,3 +1,5 @@
+import dataclasses
+
 import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
@@ -27,13 +29,13 @@ def test_pickup_index_has():
     assert PickupIndex(1) in d
 
 
-def test_add_resource_gain_to_current_resources_convert():
+def test_add_resource_gain_to_current_resources_convert(blank_pickup):
     # Setup
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup = PickupEntry(
-        name="P1", model_index=1, item_category=ItemCategory.SUIT, broad_category=ItemCategory.LIFE_SUPPORT,
+    pickup = dataclasses.replace(
+        blank_pickup,
         progression=(), resource_lock=ResourceLock(resource_b, resource_b, resource_a), unlocks_resource=True,
     )
     current_resources = {

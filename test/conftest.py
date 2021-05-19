@@ -9,7 +9,9 @@ import randovania.games.patchers.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
@@ -91,6 +93,22 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 @pytest.fixture()
 def randomizer_data() -> dict:
     return randovania.games.patchers.claris_patcher.decode_randomizer_data()
+
+
+@pytest.fixture()
+def blank_pickup() -> PickupEntry:
+    return PickupEntry(
+        name="Blank Pickup",
+        model=PickupModel(
+            game=RandovaniaGame.PRIME2,
+            name="EnergyTransferModule",
+        ),
+        item_category=ItemCategory.SUIT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
+        progression=(),
+        resource_lock=None,
+        unlocks_resource=False,
+    )
 
 
 @pytest.fixture()

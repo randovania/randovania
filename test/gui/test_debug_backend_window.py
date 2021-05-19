@@ -3,31 +3,14 @@ from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.games.prime import dol_patcher
 from randovania.gui.debug_backend_window import DebugBackendWindow
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 
 
 @pytest.fixture(name="backend")
 def debug_backend_window(skip_qtbot):
     return DebugBackendWindow()
-
-
-@pytest.fixture(name="pickup")
-def _pickup(echoes_game_description) -> PickupEntry:
-    resource = echoes_game_description.resource_database.energy_tank
-
-    return PickupEntry(
-        name="Pickup",
-        model_index=0,
-        item_category=ItemCategory.MOVEMENT,
-        broad_category=ItemCategory.LIFE_SUPPORT,
-        resources=(
-            ConditionalResources(None, None, ((resource, 2),)),
-        ),
-    )
 
 
 @pytest.mark.parametrize("expected_status", iterate_enum(GameConnectionStatus))

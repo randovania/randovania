@@ -5,7 +5,6 @@ from unittest.mock import patch, MagicMock, ANY, call
 import pytest
 
 from randovania.games.patchers.gamecube import iso_packager
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 
 work_around_pytest_qt_bug = False  # TODO: pytest-qt bug
 

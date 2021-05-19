@@ -5,7 +5,8 @@ import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources, PickupModel
+from randovania.games.game import RandovaniaGame
 from randovania.gui.multiworld_client import MultiworldClient, Data
 
 
@@ -106,7 +107,10 @@ def test_decode_pickup(client, echoes_resource_database):
     data = b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\x08@\x0e'
     expected_pickup = PickupEntry(
         name="The Name",
-        model_index=0,
+        model=PickupModel(
+            game=RandovaniaGame.PRIME2,
+            name="EnergyTransferModule",
+        ),
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.MOVEMENT,
         progression=tuple(),

@@ -18,7 +18,7 @@ def default_prime2_game_description() -> GameDescription:
 
 @functools.lru_cache()
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
-    return read_resource_database(default_data.read_json_then_binary(game)[1]["resource_database"])
+    return read_resource_database(game, default_data.read_json_then_binary(game)[1]["resource_database"])
 
 
 def game_description_for(game: RandovaniaGame) -> GameDescription:

@@ -7,9 +7,11 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.games.game import RandovaniaGame
 
 
 class ResourceDatabase(NamedTuple):
+    game_enum: RandovaniaGame
     item: List[ItemResourceInfo]
     event: List[SimpleResourceInfo]
     trick: List[TrickResourceInfo]
