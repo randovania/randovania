@@ -5,17 +5,12 @@ from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.layout.trick_level import LayoutTrickLevel
-
-
-def _all_tricks(game_data: dict):
-    resource_database = data_reader.read_resource_database(game_data["resource_database"])
-    return resource_database.trick
 
 
 @dataclasses.dataclass(frozen=True)
@@ -31,7 +26,7 @@ class TrickLevelConfiguration(BitPackValue):
                                  f"expected a LayoutTrickLevel that isn't NO_TRICKS")
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        game_data = default_data.read_json_then_binary(self.game)[1]
+        resource_database = default_database.resource_database_for(self.game)
 
         yield from bitpacking.encode_bool(self.minimal_logic)
         if self.minimal_logic:
@@ -40,7 +35,7 @@ class TrickLevelConfiguration(BitPackValue):
         encodable_levels = list(LayoutTrickLevel)
         encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
-        for trick in sorted(_all_tricks(game_data)):
+        for trick in sorted(resource_database.trick):
             has_trick = self.has_specific_level_for_trick(trick)
             yield from bitpacking.encode_bool(has_trick)
             if has_trick:
@@ -49,7 +44,7 @@ class TrickLevelConfiguration(BitPackValue):
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         game = metadata["reference"].game
-        game_data = default_data.read_json_then_binary(game)[1]
+        resource_database = default_database.resource_database_for(game)
 
         minimal_logic = bitpacking.decode_bool(decoder)
         specific_levels = {}
@@ -58,7 +53,7 @@ class TrickLevelConfiguration(BitPackValue):
             encodable_levels = list(LayoutTrickLevel)
             encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
-            for trick in sorted(_all_tricks(game_data)):
+            for trick in sorted(resource_database.trick):
                 if bitpacking.decode_bool(decoder):
                     specific_levels[trick.short_name] = decoder.decode_element(encodable_levels)
 
@@ -69,9 +64,8 @@ class TrickLevelConfiguration(BitPackValue):
         if self.minimal_logic:
             return "Minimal Logic"
 
-        trick_list = _all_tricks(default_data.read_json_then_binary(self.game)[1])
         difficulties = collections.defaultdict(int)
-        for trick in trick_list:
+        for trick in default_database.resource_database_for(self.game).trick:
             difficulties[self.level_for_trick(trick)] += 1
 
         if len(difficulties) == 1:

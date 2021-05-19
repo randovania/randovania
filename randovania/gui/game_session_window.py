@@ -12,7 +12,6 @@ from PySide2.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
-from randovania.games import patcher_provider
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
@@ -30,7 +29,7 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset

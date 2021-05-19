@@ -8,10 +8,11 @@ from randovania import get_data_path
 from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
-from randovania.interface_common import status_update_lib, game_workdir
+from randovania.interface_common import game_workdir
+from randovania.lib import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
 

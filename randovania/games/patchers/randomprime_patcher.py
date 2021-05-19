@@ -14,7 +14,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
 _STARTING_ITEM_NAME_TO_INDEX = {
@@ -117,33 +117,25 @@ class RandomprimePatcher(Patcher):
                 for index in pickup_indices:
                     target = patches.pickup_assignment.get(index)
 
+                    pickup_type = "Nothing"
+                    count = 0
+
                     if target is None:
-                        pickup_type = "Nothing"
                         hud_memo = "Nothing"
-                        count = 0
+                        model_name = "Nothing"
 
                     else:
-                        pickup_type = None
                         hud_memo = target.pickup.name
-                        count = 0
+                        model_name = target.pickup.model.name
 
-                        for resource, quantity in target.pickup.progression:
+                        for resource, quantity in target.pickup.progression + target.pickup.extra_resources:
                             pickup_type = resource.long_name
                             count = quantity
                             break
 
-                        if pickup_type is None:
-                            for resource, quantity in target.pickup.extra_resources:
-                                pickup_type = resource.long_name
-                                count = quantity
-                                break
-
-                        if pickup_type is None:
-                            raise ValueError("pickup has nothing?!")
-
                     pickups.append({
                         "type": pickup_type,
-                        "model": pickup_type,
+                        "model": model_name,
                         "scanText": pickup_type,
                         "hudmemoText": f"{hud_memo} acquired!",
                         "count": count,

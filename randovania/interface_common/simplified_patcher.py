@@ -5,7 +5,7 @@ from typing import Optional
 from randovania.games.patchers.gamecube import iso_packager
 from randovania.interface_common import echoes
 from randovania.interface_common.options import Options
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
+from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 

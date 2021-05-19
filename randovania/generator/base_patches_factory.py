@@ -16,7 +16,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement

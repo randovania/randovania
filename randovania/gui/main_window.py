@@ -21,7 +21,7 @@ from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
@@ -249,7 +249,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.help_tab_widget.setCurrentWidget(self.tab_faq)
 
     async def generate_seed_from_permalink(self, permalink):
-        from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+        from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         def work(progress_update: ProgressUpdateCallable):

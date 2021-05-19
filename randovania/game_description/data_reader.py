@@ -315,9 +315,10 @@ def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[s
     }
 
 
-def read_resource_database(data: Dict) -> ResourceDatabase:
+def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase:
     item = read_array(data["items"], read_item_resource_info)
     db = ResourceDatabase(
+        game_enum=game,
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
         trick=read_array(data["tricks"], read_trick_resource_info),
@@ -343,7 +344,7 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
     game = RandovaniaGame(data["game"])
 
-    resource_database = read_resource_database(data["resource_database"])
+    resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
     world_reader = WorldReader(resource_database, dock_weakness_database)

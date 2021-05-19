@@ -2,7 +2,6 @@ import json
 import shutil
 
 from randovania.games.patchers import csharp_subprocess
-from randovania.games.patchers.csharp_subprocess import is_windows, process_command
 from randovania.games.prime.dol_patcher import DolPatchesData
 
 try:
@@ -14,9 +13,9 @@ from typing import Callable, List, Union, Optional
 
 from randovania import get_data_path
 from randovania.games.prime import dol_patcher
-from randovania.interface_common import status_update_lib
+from randovania.lib import status_update_lib
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 CURRENT_PATCH_VERSION = 2
 

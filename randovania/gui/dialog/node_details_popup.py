@@ -16,7 +16,7 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
-from randovania.interface_common import enum_lib
+from randovania.lib import enum_lib
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):

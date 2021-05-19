@@ -26,7 +26,7 @@ from randovania.gui.preset_settings.item_configuration_widget import ItemConfigu
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState

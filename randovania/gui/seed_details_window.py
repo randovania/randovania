@@ -27,7 +27,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
 
