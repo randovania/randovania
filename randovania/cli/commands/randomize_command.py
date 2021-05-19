@@ -43,8 +43,8 @@ async def randomize_command_logic_async(args):
     patcher_provider = PatcherProvider(Options.with_default_data_dir())
     patcher = patcher_provider.patcher_for_game(preset.game)
 
-    patch_data = patcher.create_patch_data(layout_description, players_config, game_files_path, cosmetic_patches)
-    patcher.patch_game(args.input_file, args.output_file, patch_data, lambda x, _: status_update(x))
+    patch_data = patcher.create_patch_data(layout_description, players_config, cosmetic_patches)
+    patcher.patch_game(args.input_file, args.output_file, patch_data, game_files_path, lambda x, _: status_update(x))
 
 
 def add_randomize_command(sub_parsers):
