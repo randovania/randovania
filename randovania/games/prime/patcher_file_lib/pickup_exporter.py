@@ -62,7 +62,7 @@ def _pickup_scan(pickup: PickupEntry) -> str:
             return pickup.name
 
     ammo_desc = [
-        item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity)
+        item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity, True)
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
