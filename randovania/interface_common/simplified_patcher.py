@@ -1,30 +1,14 @@
-import shutil
 from pathlib import Path
 from typing import Optional
 
 from randovania.games.patchers.gamecube import iso_packager
 from randovania.interface_common import echoes
 from randovania.interface_common.options import Options
-from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
+from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 
 export_busy = False
-
-
-def delete_files_location(options: Options, ):
-    """
-    Deletes an extracted game in given options.
-    :param options:
-    :return:
-    """
-    game_files_path = options.game_files_path
-    if game_files_path.exists():
-        shutil.rmtree(game_files_path)
-
-    backup_files_path = options.backup_files_path
-    if backup_files_path.exists():
-        shutil.rmtree(backup_files_path)
 
 
 def generate_layout(options: Options,

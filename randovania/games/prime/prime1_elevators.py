@@ -1,0 +1,25 @@
+from randovania.game_description.teleporter import Teleporter
+
+CUSTOM_NAMES = {
+    Teleporter(3241871825, 2472970646, 2818083): 'Crater Entry Point',
+    Teleporter(2831049361, 3222157185, 45): 'Phendrana Drifts North\0(Phendrana Shorelines)',
+    Teleporter(2831049361, 3708487481, 1900634): 'Phendrana Drifts South\0(Quarantine Cave)',
+    Teleporter(361692695, 3508802073, 134218592): 'Exterior Docking Hangar',
+    Teleporter(1056449404, 1005235657, 31): 'Magmoor Caverns North\0(Lava Lake)"',
+    Teleporter(1056449404, 3702104715, 852002): 'Magmoor Caverns West\0(Monitor Station)',
+    Teleporter(1056449404, 1279075404, 1048608): 'Magmoor Caverns East\0(Twin Fires)',
+    Teleporter(1056449404, 4012840000, 1703972): 'Magmoor Caverns South\0(Magmoor Workstation, Debris)',
+    Teleporter(1056449404, 3249312307, 1769512): 'Magmoor Caverns South\0(Magmoor Workstation, Save Station)',
+    Teleporter(2980859237, 1125030300, 28): 'Phazon Mines East\0(Main Quarry)',
+    Teleporter(2980859237, 3804417848, 1638417): 'Phazon Mines West\0(Phazon Processing Center)',
+    Teleporter(972217896, 295707720, 917509): 'Tallon Overworld North\0(Tallon Canyon)',
+    Teleporter(972217896, 597223686, 1049306): 'Artifact Temple',
+    Teleporter(972217896, 2318493278, 1441848): 'Tallon Overworld East\0(Frigate Crash Site)',
+    Teleporter(972217896, 366411659, 1507378): 'Tallon Overworld West\0(Root Cave)',
+    Teleporter(972217896, 212145392, 2687012): 'Tallon Overworld South\0(Great Tree Hall, Upper)',
+    Teleporter(972217896, 2098226800, 2818083): 'Tallon Overworld South\0(Great Tree Hall, Lower)',
+    Teleporter(2214002543, 1047210935, 125): 'Chozo Ruins West\0(Main Plaza)',
+    Teleporter(2214002543, 2199318005, 1572903): 'Chozo Ruins North\0(Sun Tower)',
+    Teleporter(2214002543, 2784651681, 4063276): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',
+    Teleporter(2214002543, 594418447, 4128808): 'Chozo Ruins South\0(Reflecting Pool, Far End)',
+}

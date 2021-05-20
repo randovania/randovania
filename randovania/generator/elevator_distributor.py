@@ -4,6 +4,7 @@ from random import Random
 from typing import List, Dict, Optional, Tuple
 
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.game_patches import ElevatorConnection
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
@@ -97,7 +98,7 @@ def try_randomize_elevators(rng: Random,
 def two_way_elevator_connections(rng: Random,
                                  elevator_database: Tuple[ElevatorHelper, ...],
                                  between_areas: bool
-                                 ) -> Dict[int, AreaLocation]:
+                                 ) -> ElevatorConnection:
     if len(elevator_database) % 2 != 0:
         raise ValueError("Two-way elevator shuffle, but odd number of elevators to shuffle.")
     if between_areas:
@@ -109,7 +110,7 @@ def two_way_elevator_connections(rng: Random,
             elevators.pop().connect_to(elevators.pop())
 
     return {
-        elevator.instance_id: elevator.connected_elevator.area_location
+        elevator.teleporter: elevator.connected_elevator.area_location
         for elevator in elevator_database
     }
 
@@ -118,7 +119,7 @@ def one_way_elevator_connections(rng: Random,
                                  elevator_database: Tuple[ElevatorHelper, ...],
                                  target_locations: List[AreaLocation],
                                  replacement: bool,
-                                 ) -> Dict[int, AreaLocation]:
+                                 ) -> ElevatorConnection:
     target_locations.sort()
     rng.shuffle(target_locations)
 
@@ -129,7 +130,7 @@ def one_way_elevator_connections(rng: Random,
             return target_locations.pop()
 
     return {
-        elevator.instance_id: _create_target()
+        elevator.teleporter: _create_target()
         for elevator in elevator_database
     }
 
@@ -144,8 +145,7 @@ def create_elevator_database(world_list: WorldList,
     :return:
     """
     all_helpers = [
-        ElevatorHelper(Teleporter(world.world_asset_id, area.area_asset_id, node.teleporter_instance_id),
-                       node.default_connection)
+        ElevatorHelper(node.teleporter, node.default_connection)
 
         for world, area, node in world_list.all_worlds_areas_nodes
         if isinstance(node, TeleporterNode)

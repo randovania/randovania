@@ -63,7 +63,7 @@ def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguratio
         elevator_connection.update(connections)
 
     for teleporter, destination in elevators.static_teleporters.items():
-        elevator_connection[teleporter.instance_id] = destination
+        elevator_connection[teleporter] = destination
 
     return dataclasses.replace(patches, elevator_connection=elevator_connection)
 

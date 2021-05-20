@@ -11,6 +11,7 @@ from randovania.game_description.requirements import SatisfiableRequirements, Re
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
@@ -76,8 +77,8 @@ class GameDescription:
         self._dangerous_resources = None
 
     def create_game_patches(self) -> GamePatches:
-        elevator_connection = {
-            node.teleporter_instance_id: node.default_connection
+        elevator_connection: Dict[Teleporter, AreaLocation] = {
+            node.teleporter: node.default_connection
 
             for node in self.world_list.all_nodes
             if isinstance(node, TeleporterNode) and node.editable

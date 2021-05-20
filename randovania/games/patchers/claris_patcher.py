@@ -59,7 +59,8 @@ class ClarisPatcher(Patcher):
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: CosmeticPatches):
-        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
+        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches,
+                                                       decode_randomizer_data())
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    game_files_path: Path, progress_update: ProgressUpdateCallable):

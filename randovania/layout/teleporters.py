@@ -53,7 +53,7 @@ class TeleporterList(location_list.LocationList):
     def areas_list(cls, game: RandovaniaGame) -> List[Teleporter]:
         world_list = default_database.game_description_for(game).world_list
         areas = [
-            Teleporter(world.world_asset_id, area.area_asset_id, node.teleporter_instance_id)
+            node.teleporter
             for world in world_list.worlds
             for area in world.areas
             for node in area.nodes

@@ -2,16 +2,20 @@ import copy
 import json
 import os
 from pathlib import Path
+from random import Random
 from typing import Optional, List, Union
 
 import py_randomprime
 
 from randovania.game_description import default_database
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
+from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -100,6 +104,26 @@ class RandomprimePatcher(Patcher):
                           cosmetic_patches: CosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.PRIME1)
+        preset = description.permalink.get_preset(players_config.player_index)
+        configuration = preset.configuration
+        rng = Random(description.permalink.seed_number)
+
+        # FIXME: this is Echoes' ETM
+        useless_target = PickupTarget(pickup_creator.create_useless_pickup(db.resource_database),
+                                      players_config.player_index)
+
+        pickup_list = pickup_exporter.export_all_indices(
+            patches,
+            useless_target,
+            db.world_list.num_pickup_nodes,
+            rng,
+            configuration.pickup_model_style,
+            configuration.pickup_model_data_source,
+            exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
+            visual_etm=pickup_creator.create_visual_etm(),
+        )
+
+        patches.elevator_connection
 
         world_data = {}
         for world in db.world_list.worlds:
@@ -115,29 +139,23 @@ class RandomprimePatcher(Patcher):
                 pickups = []
                 world_data[world.name]["rooms"][area.name] = {"pickups": pickups}
                 for index in pickup_indices:
-                    target = patches.pickup_assignment.get(index)
+                    detail = pickup_list[index.index]
+
+                    model_name = detail.model.name
 
                     pickup_type = "Nothing"
                     count = 0
 
-                    if target is None:
-                        hud_memo = "Nothing"
-                        model_name = "Nothing"
-
-                    else:
-                        hud_memo = target.pickup.name
-                        model_name = target.pickup.model.name
-
-                        for resource, quantity in target.pickup.progression + target.pickup.extra_resources:
-                            pickup_type = resource.long_name
-                            count = quantity
-                            break
+                    for resource, quantity in detail.conditional_resources[0].resources:
+                        pickup_type = resource.long_name
+                        count = quantity
+                        break
 
                     pickups.append({
                         "type": pickup_type,
                         "model": model_name,
-                        "scanText": pickup_type,
-                        "hudmemoText": f"{hud_memo} acquired!",
+                        "scanText": detail.scan_text,
+                        "hudmemoText": detail.hud_text[0],
                         "count": count,
                         "respawn": False
                     })

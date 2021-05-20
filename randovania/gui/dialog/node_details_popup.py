@@ -1,3 +1,5 @@
+import dataclasses
+
 from PySide2 import QtWidgets
 from qasync import asyncSlot
 
@@ -11,6 +13,7 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
@@ -306,9 +309,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             instance_id = self.teleporter_instance_id_edit.text()
             scan_asset_id = self.teleporter_scan_asset_id_edit.text()
 
+            if instance_id != "":
+                instance_id_value = int(instance_id, 0)
+                if isinstance(self.node, TeleporterNode):
+                    teleporter = dataclasses.replace(self.node.teleporter, instance_id=instance_id_value)
+                else:
+                    teleporter = Teleporter(0, 0, instance_id_value)
+            else:
+                teleporter = None
+
             return TeleporterNode(
-                name, heal, location, index,
-                int(instance_id, 0) if instance_id != "" else None,
+                name, heal, location, index, teleporter,
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
                 int(scan_asset_id, 0) if scan_asset_id != "" else None,

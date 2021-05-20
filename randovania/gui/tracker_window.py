@@ -24,6 +24,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
@@ -94,7 +95,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     layout_configuration: EchoesConfiguration
     persistence_path: Path
     _initial_state: State
-    _elevator_id_to_combo: Dict[int, QtWidgets.QComboBox]
+    _elevator_id_to_combo: Dict[Teleporter, QtWidgets.QComboBox]
     _translator_gate_to_combo: Dict[TranslatorGate, QtWidgets.QComboBox]
     _starting_nodes: Set[ResourceNode]
     _undefined_item = ItemResourceInfo(-1, "Undefined", "Undefined", 0, None)
@@ -186,9 +187,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             if needs_starting_location:
                 starting_location = AreaLocation.from_json(previous_state["starting_location"])
 
-            elevators = {
-                int(elevator_id): AreaLocation.from_json(location) if location is not None else None
-                for elevator_id, location in previous_state["elevators"].items()
+            elevators: Dict[Teleporter, Optional[AreaLocation]] = {
+                Teleporter.from_json(item["teleporter"]): AreaLocation.from_json(item["data"]) if item["data"] is not None else None
+                for item in previous_state["elevators"]
             }
             if self.layout_configuration.game == RandovaniaGame.PRIME2:
                 translator_gates = {
@@ -202,8 +203,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.setup_starting_location(starting_location)
 
-        for elevator_id, area_location in elevators.items():
-            combo = self._elevator_id_to_combo[elevator_id]
+        for teleporter, area_location in elevators.items():
+            combo = self._elevator_id_to_combo[teleporter]
             if area_location is None:
                 combo.setCurrentIndex(0)
                 continue
@@ -422,10 +423,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         pickup.name: quantity
                         for pickup, quantity in self._collected_pickups.items()
                     },
-                    "elevators": {
-                        str(elevator_id): combo.currentData().as_json if combo.currentIndex() > 0 else None
-                        for elevator_id, combo in self._elevator_id_to_combo.items()
-                    },
+                    "elevators": [
+                        {
+                            "teleporter": teleporter.as_json,
+                            "data": combo.currentData().as_json if combo.currentIndex() > 0 else None
+                        }
+                        for teleporter, combo in self._elevator_id_to_combo.items()
+                    ],
                     "translator_gates": {
                         str(gate.index): combo.currentData().index if combo.currentIndex() > 0 else None
                         for gate, combo in self._translator_gate_to_combo.items()
@@ -526,7 +530,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         combo.addItem(target_name, connection)
 
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
-                self._elevator_id_to_combo[node.teleporter_instance_id] = combo
+                self._elevator_id_to_combo[node.teleporter] = combo
                 layout.addWidget(combo, i, 1)
 
     def setup_translator_gates(self):

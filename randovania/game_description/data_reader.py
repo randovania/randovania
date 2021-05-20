@@ -19,6 +19,7 @@ from randovania.game_description.resources.search import MissingResource, find_r
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -174,6 +175,8 @@ class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     generic_index: int = -1
+    current_world: int
+    current_area: int
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -224,7 +227,8 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-                return TeleporterNode(name, heal, location, self.generic_index, instance_id,
+                return TeleporterNode(name, heal, location, self.generic_index,
+                                      Teleporter(self.current_world, self.current_area, instance_id),
                                       AreaLocation(destination_world_asset_id, destination_area_asset_id),
                                       data["scan_asset_id"],
                                       data["keep_name_when_vanilla"],
@@ -271,6 +275,7 @@ class WorldReader:
             raise Exception(f"In node {name}, got error: {e}")
 
     def read_area(self, data: Dict) -> Area:
+        self.current_area = data["asset_id"]
         nodes = read_array(data["nodes"], self.read_node)
         nodes_by_name = {node.name: node for node in nodes}
 
@@ -301,6 +306,7 @@ class WorldReader:
         return read_array(data, self.read_area)
 
     def read_world(self, data: Dict) -> World:
+        self.current_world = data["asset_id"]
         return World(data["name"], data["dark_name"], data["asset_id"],
                      self.read_area_list(data["areas"]))
 
