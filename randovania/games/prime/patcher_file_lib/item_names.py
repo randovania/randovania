@@ -15,8 +15,12 @@ _ITEMS_TO_PLURALIZE = {
 }
 
 
-def add_quantity_to_resource(resource: str, quantity: int) -> str:
-    return "{} {}{}".format(quantity, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
+def add_quantity_to_resource(resource: str, quantity: int, always_add_quantity: bool = False) -> str:
+    if always_add_quantity or quantity > 1:
+        first_part = f"{quantity} "
+    else:
+        first_part = ""
+    return "{}{}{}".format(first_part, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
 
 
 def resource_user_friendly_name(resource: ResourceInfo) -> str:
