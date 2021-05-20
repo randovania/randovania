@@ -45,6 +45,7 @@ async def test_export_iso(skip_qtbot, mocker):
         mock_input_dialog.return_value.input_file,
         mock_input_dialog.return_value.output_file,
         patcher.create_patch_data.return_value,
+        window._options.game_files_path,
         progress_update=ANY,
     )
 

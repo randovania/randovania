@@ -521,13 +521,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             other_locations = [
                 node.default_connection
                 for node in areas[location].nodes
-                if isinstance(node, TeleporterNode) and node.teleporter_instance_id == location.instance_id
+                if isinstance(node, TeleporterNode) and node.teleporter == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
-                Teleporter(other_locations[0].world_asset_id,
-                           other_locations[0].area_asset_id,
-                           node.teleporter_instance_id)
+                node.teleporter
                 for node in self.game_description.world_list.area_by_area_location(other_locations[0]).nodes
                 if isinstance(node, TeleporterNode)
             ]

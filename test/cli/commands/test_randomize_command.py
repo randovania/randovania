@@ -3,6 +3,7 @@ from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -48,7 +49,9 @@ def test_randomize_command_logic(mocker, with_permalink):
 
     patcher.create_patch_data.assert_called_once_with(layout_description, players_config, cosmetic_patches)
     patcher.patch_game.assert_called_once_with(args.input_file, args.output_file,
-                                               patcher.create_patch_data.return_value, ANY)
+                                               patcher.create_patch_data.return_value,
+                                               Options.with_default_data_dir().game_files_path,
+                                               ANY)
 
     if with_permalink:
         mock_from_str.assert_called_once_with(args.permalink)

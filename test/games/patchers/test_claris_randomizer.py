@@ -249,7 +249,7 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("has_backup_path", [False, True])
-@patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
+@patch("randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.dol_patcher.apply_patches", autospec=True)
 @patch("randovania.games.patchers.claris_randomizer._run_with_args", autospec=True)
 @patch("randovania.games.patchers.claris_randomizer._add_menu_mod_to_files", autospec=True)

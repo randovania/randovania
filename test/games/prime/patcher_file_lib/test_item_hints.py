@@ -150,8 +150,8 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
 
 
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Blank Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;suit&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "A", "&push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
 ])
@@ -203,8 +203,8 @@ def test_create_hints_item_location(empty_patches, blank_pickup, item, location,
     (PickupIndex(115), "&push;&main-color=#FF3333;Quadraxis&pop;"),
 ])
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
@@ -237,8 +237,8 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_
 
 
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
@@ -272,7 +272,7 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
 
 @pytest.mark.parametrize(["reference_precision", "reference_name"], [
     (HintItemPrecision.DETAILED, "the Reference Pickup"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a movement system"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a suit"),
     (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
@@ -304,7 +304,7 @@ def test_create_message_for_hint_relative_item(echoes_game_description, blank_pi
     result = hint_name_creator.create_message_for_hint(hint, {0: patches}, players_config, location_formatters)
 
     # Assert
-    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
+    assert result == (f'The &push;&main-color=#FF6705B3;Blank Pickup&pop; can be found '
                       f'&push;&main-color=#FF3333;{distance_text} {7 + (distance_precise or 0)} '
                       f'rooms&pop; away from {reference_name}.')
 
@@ -336,6 +336,6 @@ def test_create_message_for_hint_relative_area(echoes_game_description, blank_pi
     result = hint_name_creator.create_message_for_hint(hint, {0: patches}, players_config, location_formatters)
 
     # Assert
-    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
+    assert result == (f'The &push;&main-color=#FF6705B3;Blank Pickup&pop; can be found '
                       f'&push;&main-color=#FF3333;{distance_text} {10 + (offset or 0)} rooms&pop; away from '
                       f'Torvus Bog - Great Bridge.')

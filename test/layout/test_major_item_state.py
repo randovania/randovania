@@ -26,7 +26,7 @@ def _state_with_data(request):
         name="Item Name",
         item_category=ItemCategory(request.param.get("category", "visor")),
         broad_category=ItemCategory(request.param.get("broad_category", "visor")),
-        model_index=0,
+        model_name="Model Name",
         progression=(),
         ammo_index=request.param.get("ammo_index", ()),
         required=True,

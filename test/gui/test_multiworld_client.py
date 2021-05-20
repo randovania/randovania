@@ -104,7 +104,8 @@ async def test_on_game_updated(client, tmpdir):
 
 
 def test_decode_pickup(client, echoes_resource_database):
-    data = b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\x08@\x0e'
+    data = (b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\xcc\x08\x8a\xdc\xca\xe4\xce'
+            b'\xf2\xa8\xe4\xc2\xdc\xe6\xcc\xca\xe4\x9a\xde\xc8\xea\xd8\xcaB\x00p')
     expected_pickup = PickupEntry(
         name="The Name",
         model=PickupModel(

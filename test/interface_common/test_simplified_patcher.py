@@ -1,39 +1,8 @@
-from pathlib import Path
 from unittest.mock import MagicMock
-
-import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.layout.permalink import Permalink
-
-
-@pytest.mark.parametrize("games_path_exist", [False, True])
-@pytest.mark.parametrize("backup_path_exist", [False, True])
-def test_delete_files_location(tmpdir,
-                               games_path_exist: bool,
-                               backup_path_exist: bool,
-                               ):
-    # Setup
-    data_dir = Path(str(tmpdir.join("user_data_dir")))
-    options = Options(data_dir)
-
-    game_files = tmpdir.join("user_data_dir", "extracted_game")
-    if games_path_exist:
-        game_files.ensure_dir()
-        game_files.join("random.txt").write_text("yay", "utf-8")
-
-    backup_files = tmpdir.join("user_data_dir", "backup")
-    if backup_path_exist:
-        backup_files.ensure_dir()
-        backup_files.join("random.txt").write_text("yay", "utf-8")
-
-    # Run
-    simplified_patcher.delete_files_location(options)
-
-    # Assert
-    assert not game_files.exists()
-    assert not backup_files.exists()
 
 
 def test_generate_layout(mocker):

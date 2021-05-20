@@ -11,6 +11,10 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.teleporter import Teleporter
+
+
+ElevatorConnection = Dict[Teleporter, AreaLocation]
 
 
 @dataclass(frozen=True)
@@ -21,7 +25,7 @@ class GamePatches:
     """
     player_index: int
     pickup_assignment: PickupAssignment
-    elevator_connection: Dict[int, AreaLocation]
+    elevator_connection: ElevatorConnection
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     translator_gates: GateAssignment

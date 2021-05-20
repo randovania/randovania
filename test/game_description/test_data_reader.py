@@ -38,6 +38,7 @@ def test_area_with_invalid_connections():
     with pytest.raises(MissingResource) as e:
         reader.read_area({
             "name": "Broken Area",
+            "asset_id": 1234,
             "nodes": [
                 {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
                 {"name": "Broken", "heal": True, "coordinates": None, "node_type": "generic", "connections": {

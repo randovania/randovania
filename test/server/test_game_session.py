@@ -9,7 +9,7 @@ import pytest
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources, PickupModel
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
@@ -188,7 +188,8 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
-    pickup = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
+    pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
+                         ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                          progression=((echoes_resource_database.item[0], 1),))
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
@@ -199,7 +200,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == [{'provider_name': 'Other Name', 'pickup': 'C?#$nLBI'}]
+    assert result == [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
 
 
 @patch("flask_socketio.emit", autospec=True)
