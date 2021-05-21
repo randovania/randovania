@@ -83,6 +83,7 @@ def test_create_game_session(clean_database, preset_manager):
         'word_hash': None,
         'permalink': None,
         'generation_in_progress': None,
+        'allowed_games': ['prime2'],
     }
 
 
@@ -121,6 +122,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'word_hash': None,
         'permalink': None,
         'generation_in_progress': None,
+        'allowed_games': ['prime2'],
     }
 
 
@@ -200,7 +202,10 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
+    assert result == {
+        "game": "prime2",
+        "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
+    }
 
 
 @patch("flask_socketio.emit", autospec=True)
@@ -374,7 +379,8 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     mock_emit.assert_called_once_with(
         'game_session_update',
         {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [], 'actions': [],
-         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None},
+         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None,
+         'allowed_games': ['prime2'],},
         room='game-session-1')
 
 
@@ -871,4 +877,5 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "seed_hash": "ABCDEFG",
         "permalink": "<permalink>",
         "generation_in_progress": None,
+        'allowed_games': ['prime2'],
     }

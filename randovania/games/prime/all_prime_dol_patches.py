@@ -155,7 +155,7 @@ def adjust_item_amount_and_capacity_patch(
     return [
         *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
 
-        _load_player_state(game, r3, r31),
+        *_load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, abs(delta)),
         bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
@@ -166,7 +166,7 @@ def increment_item_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
 ) -> List[BaseInstruction]:
     return [
-        _load_player_state(game, r3, r31),
+        *_load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, delta),
         bl(patch_addresses.add_power_up),

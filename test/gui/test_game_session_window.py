@@ -7,6 +7,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
 
+from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.permalink import Permalink
@@ -48,6 +49,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         permalink=None,
         state=GameSessionState.SETUP,
         generation_in_progress=None,
+        allowed_games=[RandovaniaGame.PRIME2],
     )
     second_session = GameSessionEntry(
         id=1234,
@@ -66,6 +68,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         permalink="<permalink>",
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
+        allowed_games=[RandovaniaGame.PRIME2],
     )
     network_client.current_game_session = initial_session
 
