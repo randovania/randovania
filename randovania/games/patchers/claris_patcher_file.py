@@ -461,7 +461,7 @@ def create_patcher_file(description: LayoutDescription,
 def _create_pickup_list(cosmetic_patches: CosmeticPatches, configuration: BaseConfiguration, game: GameDescription,
                         patches: GamePatches, players_config: PlayersConfiguration, randomizer_data: dict,
                         rng: Random):
-    useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
+    useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),
                                   players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:

@@ -185,18 +185,21 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     )
 
 
-@pytest.mark.skip  # FIXME
 @pytest.mark.parametrize("has_memo_data", [False, True])
 def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches):
     # Setup
     rng = Random(5000)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY, progression=tuple())
-    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    model_1 = MagicMock(spec=PickupModel)
+    model_2 = MagicMock(spec=PickupModel)
+    useless_model = PickupModel(game=RandovaniaGame.PRIME3, name="Useless")
+
+    pickup_a = PickupEntry("A", model_1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY, progression=tuple())
+    pickup_b = PickupEntry("B", model_2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                            progression=((resource_b, 1), (resource_b, 1)))
-    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED, progression=tuple())
-    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, ItemCategory.ETM, progression=tuple())
+    pickup_c = PickupEntry("C", model_2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED, progression=tuple())
+    useless_pickup = PickupEntry("Useless", useless_model, ItemCategory.ETM, ItemCategory.ETM, progression=tuple())
 
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),
@@ -234,61 +237,49 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     # Assert
     assert len(result) == 5
-    assert result[0] == {
-        "pickup_index": 0,
-        "model_index": 1,
-        "scan": "A",
-        "hud_text": [memo_data["A"]],
-        "sound_index": 1,
-        "jingle_index": 2,
-        "resources": [],
-        "conditional_resources": [],
-        "convert": [],
-    }
-    assert result[1] == {
-        "pickup_index": 1,
-        "scan": "A",
-        "model_index": 1,
-        "hud_text": [memo_data["A"]],
-        "sound_index": 1,
-        "jingle_index": 2,
-        "resources": [],
-        "conditional_resources": [],
-        "convert": [],
-    }
-    assert result[2] == {
-        "pickup_index": 2,
-        "scan": "C",
-        "model_index": 2,
-        "hud_text": [memo_data["C"], memo_data["C"]],
-        "sound_index": 0,
-        "jingle_index": 0,
-        "resources": [{'amount': 1, 'index': 2}],
-        "conditional_resources": [{'item': 2, 'resources': [{'amount': 1, 'index': 2}]}],
-        "convert": [],
-    }
-    assert result[3] == {
-        "pickup_index": 3,
-        "scan": "B",
-        "model_index": 2,
-        "hud_text": [memo_data["B"]],
-        "sound_index": 0,
-        "jingle_index": 1,
-        "resources": [],
-        "conditional_resources": [],
-        "convert": [],
-    }
-    assert result[4] == {
-        "pickup_index": 4,
-        "scan": "A",
-        "model_index": 1,
-        "hud_text": [memo_data["A"]],
-        "sound_index": 1,
-        "jingle_index": 2,
-        "resources": [],
-        "conditional_resources": [],
-        "convert": [],
-    }
+    assert result[0] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(0),
+        scan_text="A",
+        hud_text=[memo_data["A"]],
+        conditional_resources=[ConditionalResources("A", None, ())],
+        conversion=[],
+        model=model_1,
+    )
+    assert result[1] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(1),
+        scan_text="A",
+        hud_text=[memo_data["A"]],
+        conditional_resources=[ConditionalResources("Useless", None, ())],
+        conversion=[],
+        model=model_1,
+    )
+    assert result[2] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(2),
+        scan_text="C",
+        hud_text=[memo_data["C"], memo_data["C"]],
+        conditional_resources=[
+            ConditionalResources("B", None, ((resource_b, 1),)),
+            ConditionalResources("B", resource_b, ((resource_b, 1),)),
+        ],
+        conversion=[],
+        model=model_2,
+    )
+    assert result[3] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(3),
+        scan_text="B",
+        hud_text=[memo_data["B"]],
+        conditional_resources=[ConditionalResources("A", None, ())],
+        conversion=[],
+        model=model_2,
+    )
+    assert result[4] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(4),
+        scan_text="A",
+        hud_text=[memo_data["A"]],
+        conditional_resources=[ConditionalResources("C", None, ())],
+        conversion=[],
+        model=model_1,
+    )
 
 
 def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_database):

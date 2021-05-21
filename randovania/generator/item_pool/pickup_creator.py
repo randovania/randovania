@@ -187,7 +187,7 @@ def create_artifact(artifact_index: int,
     )
 
 
-def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
     """
     Creates an Energy Transfer Module pickup.
     :param resource_database:
@@ -201,6 +201,26 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         model=PickupModel(
             game=resource_database.game_enum,
             name=echoes_items.USELESS_PICKUP_MODEL,
+        ),
+        item_category=ItemCategory.ETM,
+        broad_category=ItemCategory.ETM,
+    )
+
+
+def create_prime1_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+    """
+    Creates a Nothing pickup.
+    :param resource_database:
+    :return:
+    """
+    return PickupEntry(
+        name="Nothing",
+        progression=(
+            (resource_database.get_item_by_name("Nothing"), 1),
+        ),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name="Nothing",
         ),
         item_category=ItemCategory.ETM,
         broad_category=ItemCategory.ETM,

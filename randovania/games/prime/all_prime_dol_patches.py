@@ -57,7 +57,7 @@ _remote_execution_max_byte_count = 296
 def remote_execution_patch_start() -> List[BaseInstruction]:
     return_code = remote_execution_patch_end()
     intro = [
-        # setup stack
+        # se(r1tup stack
         stwu(r1, -(_remote_execution_stack_size - 4), r1),
         mfspr(r0, LR),
         stw(r0, _remote_execution_stack_size, r1),

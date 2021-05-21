@@ -3,6 +3,7 @@ from typing import List
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.generator.item_pool.pool_creator import calculate_pool_results
+from randovania.layout.base_configuration import BaseConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
 _RESOURCE_NAME_TRANSLATION = {
@@ -32,7 +33,7 @@ def resource_user_friendly_name(resource: ResourceInfo) -> str:
     return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
 
 
-def additional_starting_items(layout_configuration: EchoesConfiguration,
+def additional_starting_items(layout_configuration: BaseConfiguration,
                               resource_database: ResourceDatabase,
                               starting_items: CurrentResources) -> List[str]:
     initial_items = calculate_pool_results(layout_configuration, resource_database)[2]
