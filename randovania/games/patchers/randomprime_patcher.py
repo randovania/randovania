@@ -6,20 +6,25 @@ from random import Random
 from typing import Optional, List, Union
 
 import py_randomprime
+import typing
 
 from randovania.game_description import default_database
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.node import PickupNode
+from randovania.game_description.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
-from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.games.prime import prime1_elevators
+from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.prime_configuration import PrimeConfiguration
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": 0,
@@ -56,6 +61,32 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Unknown Item 2": 27,
 
 
+def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
+    if detail.model.game == RandovaniaGame.PRIME1:
+        model_name = detail.model.name
+    else:
+        model_name = "Nothing"
+
+    pickup_type = "Nothing"
+    count = 0
+
+    for resource, quantity in detail.conditional_resources[0].resources:
+        if resource.index >= 1000:
+            continue
+        pickup_type = resource.long_name
+        count = quantity
+        break
+
+    return {
+        "type": pickup_type,
+        "model": model_name,
+        "scanText": detail.scan_text,
+        "hudmemoText": detail.hud_text[0],
+        "count": count,
+        "respawn": False
+    }
+
+
 def _starting_items_value_for(resource_database: ResourceDatabase,
                               starting_items: CurrentResources, index: int) -> Union[bool, int]:
     item = resource_database.get_item(index)
@@ -64,6 +95,13 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
         return value
     else:
         return value > 0
+
+
+def _name_for_location(world_list: WorldList, location: AreaLocation) -> str:
+    if location in prime1_elevators.CUSTOM_NAMES:
+        return prime1_elevators.CUSTOM_NAMES[location]
+    else:
+        return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
 
 class RandomprimePatcher(Patcher):
@@ -105,11 +143,10 @@ class RandomprimePatcher(Patcher):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.PRIME1)
         preset = description.permalink.get_preset(players_config.player_index)
-        configuration = preset.configuration
+        configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
 
-        # FIXME: this is Echoes' ETM
-        useless_target = PickupTarget(pickup_creator.create_useless_pickup(db.resource_database),
+        useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
                                       players_config.player_index)
 
         pickup_list = pickup_exporter.export_all_indices(
@@ -122,43 +159,35 @@ class RandomprimePatcher(Patcher):
             exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
-
-        patches.elevator_connection
-
         world_data = {}
         for world in db.world_list.worlds:
             world_data[world.name] = {
-                 "transports": {},
-                 "rooms": {}
+                "transports": {},
+                "rooms": {}
             }
             for area in world.areas:
                 pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
-                if not pickup_indices:
-                    continue
+                if pickup_indices:
+                    world_data[world.name]["rooms"][area.name] = {
+                        "pickups": [
+                            prime1_pickup_details_to_patcher(pickup_list[index.index])
+                            for index in pickup_indices
+                        ],
+                    }
 
-                pickups = []
-                world_data[world.name]["rooms"][area.name] = {"pickups": pickups}
-                for index in pickup_indices:
-                    detail = pickup_list[index.index]
+                for node in area.nodes:
+                    if not isinstance(node, TeleporterNode) or not node.editable:
+                        continue
 
-                    model_name = detail.model.name
+                    target = _name_for_location(db.world_list, patches.elevator_connection[node.teleporter])
+                    source_name = prime1_elevators.CUSTOM_NAMES[node.teleporter.area_location]
+                    world_data[world.name]["transports"][source_name] = target
 
-                    pickup_type = "Nothing"
-                    count = 0
-
-                    for resource, quantity in detail.conditional_resources[0].resources:
-                        pickup_type = resource.long_name
-                        count = quantity
-                        break
-
-                    pickups.append({
-                        "type": pickup_type,
-                        "model": model_name,
-                        "scanText": detail.scan_text,
-                        "hudmemoText": detail.hud_text[0],
-                        "count": count,
-                        "respawn": False
-                    })
+        starting_memo = None
+        extra_starting = item_names.additional_starting_items(configuration, db.resource_database,
+                                                              patches.starting_items)
+        if extra_starting:
+            starting_memo = ", ".join(extra_starting)
 
         return {
             "seed": description.permalink.seed_number,
@@ -173,12 +202,25 @@ class RandomprimePatcher(Patcher):
                 "quiet": False,
             },
             "gameConfig": {
-                "startingRoom": "tallon:alcove",
-                "startingMemo": "nice",
+                "startingRoom": _name_for_location(db.world_list, patches.starting_location),
+                "startingMemo": starting_memo,
+
+                "nonvariaHeatDamage": True,
+                "staggered_suit_damage": True,
+                "autoEnabledElevators": False,
+
                 "startingItems": {
                     name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
                     for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
-                }
+                },
+
+                "etankCapacity": configuration.energy_per_tank,
+                "mainMenuMessage": description.shareable_word_hash,
+
+                "gameBanner": {
+                    "gameName": "Metroid Prime: Randomizer",
+                    "gameNameFull": "Metroid Prime: Randomizer - {}".format(description.shareable_hash),
+                },
             },
             "levelData": world_data,
         }
@@ -193,7 +235,7 @@ class RandomprimePatcher(Patcher):
         new_config["outputIso"] = os.fspath(output_file)
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
-        print(patch_as_str)
+        Path("patcher.json").write_text(patch_as_str)
 
         py_randomprime.patch_iso_raw(
             patch_as_str,

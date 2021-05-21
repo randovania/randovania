@@ -39,7 +39,9 @@ class LocationList(BitPackValue):
 
     @classmethod
     def with_elements(cls: Type[SelfType], elements: Iterator[AreaLocation], game: RandovaniaGame) -> SelfType:
-        return cls(frozenset(sorted(elements)), game)
+        elements_set = frozenset(sorted(elements))
+        all_locations = frozenset(cls.areas_list(game))
+        return cls(elements_set & all_locations, game)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         areas = self.areas_list(self.game)
