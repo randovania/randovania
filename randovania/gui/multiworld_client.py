@@ -12,9 +12,15 @@ from randovania.bitpacking import bitpacking
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
+
+
+def _decode_pickup(data: bytes, resource_database: ResourceDatabase) -> PickupEntry:
+    decoder = bitpacking.BitPackDecoder(data)
+    return BitPackPickupEntry.bit_pack_unpack(decoder, resource_database)
 
 
 class BackendInUse(Exception):
@@ -79,9 +85,6 @@ class MultiworldClient(QObject):
                 raise BackendInUse(Path(self._pid.filename)) from e
             self.logger.debug(f"Creating pid file at {self._pid.filename}")
 
-        # FIXME: hardcoded game
-        self._game = default_database.game_description_for(RandovaniaGame.PRIME2)
-
     @property
     def is_active(self) -> bool:
         return self._data is not None
@@ -120,10 +123,6 @@ class MultiworldClient(QObject):
         if self._pid is not None:
             self._pid.close()
 
-    def _decode_pickup(self, data: bytes) -> PickupEntry:
-        decoder = bitpacking.BitPackDecoder(data)
-        return BitPackPickupEntry.bit_pack_unpack(decoder, self._game.resource_database)
-
     async def _notify_collect_locations(self):
         while True:
             locations_to_upload = tuple(self._data.collected_locations - self._data.uploaded_locations)
@@ -161,11 +160,12 @@ class MultiworldClient(QObject):
     async def refresh_received_pickups(self):
         self.logger.debug(f"start")
         async with self._pickups_lock:
-            result = await self.network_client.game_session_request_pickups()
+            game, result = await self.network_client.game_session_request_pickups()
+            resource_database = default_database.resource_database_for(game)
 
             self.logger.info(f"received {len(result)} items")
             self._received_pickups = [
-                (provider_name, self._decode_pickup(data))
+                (provider_name, _decode_pickup(data, resource_database))
                 for provider_name, data in result
             ]
 

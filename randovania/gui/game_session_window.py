@@ -392,9 +392,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.pop().delete_widgets()
 
     def _create_actions_for_import_menu(self, row: RowWidget):
-        for included_preset in self._preset_manager.presets_for_game(RandovaniaGame.PRIME2):
+        for included_preset in self._preset_manager.all_presets:
             action = QtWidgets.QAction(row.import_menu)
-            action.setText(included_preset.name)
+            action.setText(f"{included_preset.game.short_name} - {included_preset.name}")
             action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
             row.import_actions.append(action)
             row.import_menu.addAction(action)

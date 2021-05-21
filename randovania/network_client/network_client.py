@@ -16,6 +16,7 @@ import randovania
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import decode_error, InvalidSession
@@ -261,11 +262,11 @@ class NetworkClient:
         await self._emit_with_result("game_session_collect_locations",
                                      (self._current_game_session.id, locations))
 
-    async def game_session_request_pickups(self) -> List[Tuple[str, bytes]]:
+    async def game_session_request_pickups(self) -> Tuple[RandovaniaGame, List[Tuple[str, bytes]]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
-        return [
+        return RandovaniaGame(data["game"]), [
             (item["provider_name"], base64.b85decode(item["pickup"]))
-            for item in data
+            for item in data["pickups"]
             if item is not None
         ]
 

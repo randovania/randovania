@@ -109,6 +109,7 @@ def remote_execution_patch_end() -> List[BaseInstruction]:
 
 
 def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List[BaseInstruction]:
+    # r31 = CStateManager
     return [
         # setup CHUDMemoParms
         lis(r5, 0x4100),  # 8.0f
@@ -133,22 +134,39 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List
     ]
 
 
-def adjust_item_amount_and_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int,
-                                          ) -> List[BaseInstruction]:
-    return [
-        *increment_item_capacity_patch(patch_addresses, item_id, delta),
+def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, state_mgr: GeneralRegister = r31):
+    if game == RandovaniaGame.PRIME1:
+        return [
+            lwz(target_register, 0x8b8, state_mgr),
+            lwz(target_register, 0, target_register),
+        ]
+    elif game == RandovaniaGame.PRIME2:
+        return [
+            lwz(target_register, 0x150c, state_mgr),
+        ]
+    else:
+        raise ValueError(f"Unsupported game {game}")
 
-        lwz(r3, 0x150c, r31),
+
+def adjust_item_amount_and_capacity_patch(
+        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
+) -> List[BaseInstruction]:
+    # r31 = CStateManager
+    return [
+        *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
+
+        _load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, abs(delta)),
         bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
     ]
 
 
-def increment_item_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int = 1
-                                  ) -> List[BaseInstruction]:
+def increment_item_capacity_patch(
+        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
+) -> List[BaseInstruction]:
     return [
-        lwz(r3, 0x150c, r31),
+        _load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, delta),
         bl(patch_addresses.add_power_up),

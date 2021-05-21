@@ -59,7 +59,53 @@ class DolHeader:
         return None
 
 
-class DolFile:
+Symbol = Union[int, str, Tuple[str, int]]
+
+
+class DolEditor:
+    header: DolHeader
+    symbols: Dict[str, int]
+
+    def __init__(self, header: DolHeader):
+        self.header = header
+        self.symbols = {}
+
+    def resolve_symbol(self, address_or_symbol: Symbol) -> int:
+        if isinstance(address_or_symbol, tuple):
+            symbol, offset = address_or_symbol
+            return self.symbols[symbol] + offset
+        elif isinstance(address_or_symbol, str):
+            return self.symbols[address_or_symbol]
+        else:
+            return address_or_symbol
+
+    def offset_for_address(self, address: int) -> int:
+        offset = self.header.offset_for_address(address)
+        if offset is None:
+            raise ValueError(f"Address 0x{address:x} could not be resolved for dol")
+        return offset
+
+    def _seek_and_read(self, seek: int, size: int):
+        raise NotImplementedError()
+
+    def _seek_and_write(self, seek: int, data: bytes):
+        raise NotImplementedError()
+
+    def read(self, address: int, size: int) -> bytes:
+        offset = self.offset_for_address(address)
+        return self._seek_and_read(offset, size)
+
+    def write(self, address_or_symbol: Symbol, code_points: Iterable[int]):
+        offset = self.offset_for_address(self.resolve_symbol(address_or_symbol))
+        self._seek_and_write(offset, bytes(code_points))
+
+    def write_instructions(self, address_or_symbol: Symbol,
+                           instructions: List[assembler.BaseInstruction]):
+        address = self.resolve_symbol(address_or_symbol)
+        self.write(address, assembler.assemble_instructions(address, instructions, symbols=self.symbols))
+
+
+class DolFile(DolEditor):
     symbols: Dict[str, int]
     dol_file: Optional[BinaryIO] = None
     editable: bool = False
@@ -69,8 +115,7 @@ class DolFile:
             header_bytes = f.read(0x100)
 
         self.dol_path = dol_path
-        self.header = DolHeader.from_bytes(header_bytes)
-        self.symbols = {}
+        super().__init__(DolHeader.from_bytes(header_bytes))
 
     def set_editable(self, editable: bool):
         self.editable = editable
@@ -86,29 +131,10 @@ class DolFile:
         self.dol_file.__exit__(exc_type, exc_type, exc_tb)
         self.dol_file = None
 
-    def resolve_symbol(self, address_or_symbol: Union[int, str]) -> int:
-        if isinstance(address_or_symbol, str):
-            return self.symbols[address_or_symbol]
-        else:
-            return address_or_symbol
-
-    def offset_for_address(self, address: int) -> int:
-        offset = self.header.offset_for_address(address)
-        if offset is None:
-            raise ValueError(f"Address 0x{address:x} could not be resolved for dol at {self.dol_file}")
-        return offset
-
-    def read(self, address: int, size: int) -> bytes:
-        offset = self.offset_for_address(address)
-        self.dol_file.seek(offset)
+    def _seek_and_read(self, seek: int, size: int):
+        self.dol_file.seek(seek)
         return self.dol_file.read(size)
 
-    def write(self, address_or_symbol: Union[int, str], code_points: Iterable[int]):
-        offset = self.offset_for_address(self.resolve_symbol(address_or_symbol))
-        self.dol_file.seek(offset)
-        self.dol_file.write(bytes(code_points))
-
-    def write_instructions(self, address_or_symbol: Union[int, str],
-                           instructions: List[assembler.BaseInstruction]):
-        address = self.resolve_symbol(address_or_symbol)
-        self.write(address, assembler.assemble_instructions(address, instructions, symbols=self.symbols))
+    def _seek_and_write(self, seek: int, data: bytes):
+        self.dol_file.seek(seek)
+        self.dol_file.write(data)
