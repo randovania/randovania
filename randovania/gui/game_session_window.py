@@ -29,11 +29,11 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
@@ -145,8 +145,11 @@ class RowWidget:
             widget.setEnabled(can_customize and (is_admin or is_your_row))
         self.delete.setEnabled(can_customize and is_admin)
 
-    def set_preset(self, preset: Preset):
-        self.name.setText(preset.name)
+    def set_preset(self, preset: VersionedPreset, include_game: bool):
+        if include_game:
+            self.name.setText(f"({preset.game.short_name}) {preset.name}")
+        else:
+            self.name.setText(preset.name)
         self.save_copy.setEnabled(preset.base_preset_uuid is not None)
 
 
@@ -392,12 +395,22 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.pop().delete_widgets()
 
     def _create_actions_for_import_menu(self, row: RowWidget):
-        for included_preset in self._preset_manager.all_presets:
-            action = QtWidgets.QAction(row.import_menu)
-            action.setText(f"{included_preset.game.short_name} - {included_preset.name}")
-            action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
-            row.import_actions.append(action)
-            row.import_menu.addAction(action)
+        def _add(game: RandovaniaGame, parent: QtWidgets.QMenu):
+            for included_preset in self._preset_manager.presets_for_game(game):
+                action = QtWidgets.QAction(parent)
+                action.setText(included_preset.name)
+                action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
+                row.import_actions.append(action)
+                parent.addAction(action)
+
+        if len(self._game_session.allowed_games) > 1:
+            for g in self._game_session.allowed_games:
+                menu = QtWidgets.QMenu(row.import_menu)
+                menu.setTitle(g.long_name)
+                row.import_menu.addMenu(menu)
+                _add(g, menu)
+        else:
+            _add(self._game_session.allowed_games[0], row.import_menu)
 
     def refresh_row_import_preset_actions(self):
         for row in self.rows:
@@ -619,7 +632,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         can_customize = game_session.generation_in_progress is None and game_session.seed_hash is None
         for i, (row, preset) in enumerate(zip(self.rows, game_session.presets)):
-            row.set_preset(preset)
+            row.set_preset(preset, len(game_session.allowed_games) > 1)
             row.set_is_admin(self_player.admin, is_your_row=self_player.row == i, can_customize=can_customize)
 
     def sync_player_widgets_to_game_session(self):

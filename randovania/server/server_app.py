@@ -33,6 +33,14 @@ class ServerApp:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
         self.patcher_provider = PatcherProvider(None)
 
+        # import playhouse.migrate
+        # from randovania.server import database
+        # migrator = playhouse.migrate.SqliteMigrator(database.db)
+        # with database.db.atomic():
+        #     playhouse.migrate.migrate(
+        #         migrator.add_column("gamesession", "dev_features", database.GameSession.dev_features)
+        #     )
+
     def get_server(self) -> socketio.Server:
         return self.sio.server
 
