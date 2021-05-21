@@ -144,7 +144,7 @@ def test_game_session_request_pickups_not_in_game(flask_app, clean_database):
     result = game_session.game_session_request_pickups(sio, 1)
 
     # Assert
-    assert result == []
+    assert result is None
 
 
 def test_game_session_request_pickups_observer(flask_app, clean_database):
@@ -160,7 +160,7 @@ def test_game_session_request_pickups_observer(flask_app, clean_database):
     result = game_session.game_session_request_pickups(sio, 1)
 
     # Assert
-    assert result == []
+    assert result is None
 
 
 @pytest.fixture(name="two_player_session")
