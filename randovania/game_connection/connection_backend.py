@@ -14,9 +14,9 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
 from randovania.game_description.world import World
+from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, all_prime_dol_patches
-from randovania.games import default_data
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
@@ -256,7 +256,7 @@ class ConnectionBackend(ConnectionBase):
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (
-                    item.index != self.game.resource_database.multiworld_magic_item):
+                    item != self.game.resource_database.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
@@ -273,9 +273,12 @@ class ConnectionBackend(ConnectionBase):
         if magic_inv.amount > 0:
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_capacity}")
             await self._emit_location_collected(magic_inv.amount - 1)
-            patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(self.patches.powerup_functions,
-                                                                                       multiworld_magic_item.index,
-                                                                                       -magic_inv.amount))
+            patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                self.patches.powerup_functions,
+                self.game.game,
+                multiworld_magic_item.index,
+                -magic_inv.amount,
+            ))
 
         elif self.message_cooldown <= 0 and magic_capacity < len(self._permanent_pickups):
             # Only attempt to give the next item if outside cooldown
@@ -284,8 +287,11 @@ class ConnectionBackend(ConnectionBase):
                              f"Next pickup: {message}")
 
             patches.extend(item_patches)
-            patches.append(all_prime_dol_patches.increment_item_capacity_patch(self.patches.powerup_functions,
-                                                                               multiworld_magic_item.index))
+            patches.append(all_prime_dol_patches.increment_item_capacity_patch(
+                self.patches.powerup_functions,
+                self.game.game,
+                multiworld_magic_item.index,
+            ))
 
         if patches:
             await self._execute_remote_patches(patches, message)
@@ -306,6 +312,7 @@ class ConnectionBackend(ConnectionBase):
             MemoryOperation(patch_address, write_bytes=patch_bytes),
             MemoryOperation(self.patches.cstate_manager_global + 0x2, write_bytes=b"\x01"),
         ])
+        self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
         await self._perform_memory_operations(memory_operations)
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry):
@@ -328,9 +335,13 @@ class ConnectionBackend(ConnectionBase):
         # Ignore item% for received items
         resources_to_give.pop(self.game.resource_database.item_percentage, None)
 
+        self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
+
         patches = [
-            all_prime_dol_patches.adjust_item_amount_and_capacity_patch(self.patches.powerup_functions,
-                                                                        item.index, delta)
+            all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                self.patches.powerup_functions, self.game.game,
+                item.index, delta,
+            )
             for item, delta in resources_to_give.items()
         ]
         return patches, f"Received {item_name} from {provider_name}."

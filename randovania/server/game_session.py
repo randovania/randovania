@@ -160,8 +160,8 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
-    if preset.game != RandovaniaGame.PRIME2:
-        raise InvalidAction("Only Prime 2 presets allowed.")
+    # if preset.game != RandovaniaGame.PRIME2:
+    #     raise InvalidAction("Only Prime 2 presets allowed.")
 
     try:
         with database.db.atomic():
@@ -588,9 +588,12 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
             })
 
     logger().info(f"Session {session_id}, Row {your_membership.row} "
-                  f"requested pickups, returning {len(result)} elements.")
+                  f"requested pickups, returning {len(result)} elements for {resource_database.game_enum.value}.")
 
-    return result
+    return {
+        "game": resource_database.game_enum.value,
+        "pickups": result,
+    }
 
 
 def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, game_connection_state: str):

@@ -1,13 +1,19 @@
+import contextlib
 import copy
 import json
+import mmap
 import os
+import struct
+import typing
 from pathlib import Path
 from random import Random
 from typing import Optional, List, Union
 
 import py_randomprime
-import typing
 
+from randovania.dol_patching import assembler
+from randovania.dol_patching.assembler import ppc
+from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
@@ -17,7 +23,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
-from randovania.games.prime import prime1_elevators
+from randovania.games.prime import prime1_elevators, all_prime_dol_patches
 from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -102,6 +108,44 @@ def _name_for_location(world_list: WorldList, location: AreaLocation) -> str:
         return prime1_elevators.CUSTOM_NAMES[location]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
+
+
+class IsoDolEditor(DolEditor):
+    iso_file: typing.BinaryIO
+    iso_mm: mmap.mmap
+    dol_offset: int
+
+    @classmethod
+    @contextlib.contextmanager
+    def open_iso(cls, output_file: Path):
+        import nod
+        result = nod.open_disc_from_image(os.fspath(output_file))
+        if result is None:
+            raise ValueError("Unable to read the recently written iso?")
+
+        disc, _ = result
+        dol_bytes = disc.get_data_partition().get_dol()
+        dol_header = DolHeader.from_bytes(dol_bytes)
+
+        with output_file.open("r+b") as out_iso:
+            mm = mmap.mmap(out_iso.fileno(), 0, access=mmap.ACCESS_WRITE)
+            dol_offset = mm.rfind(dol_bytes)
+            if dol_offset < 0:
+                raise ValueError("Unable to find dol in ISO")
+
+            editor = IsoDolEditor(dol_header)
+            editor.iso_file = out_iso
+            editor.iso_mm = mm
+            editor.dol_offset = dol_offset
+            yield editor
+
+    def _seek_and_read(self, seek: int, size: int):
+        self.iso_mm.seek(self.dol_offset + seek)
+        return self.iso_mm.read(size)
+
+    def _seek_and_write(self, seek: int, data: bytes):
+        self.iso_mm.seek(self.dol_offset + seek)
+        self.iso_mm.write(data)
 
 
 class RandomprimePatcher(Patcher):
@@ -230,6 +274,7 @@ class RandomprimePatcher(Patcher):
         if input_file is None:
             raise ValueError("Missing input file")
 
+        db = default_database.game_description_for(RandovaniaGame.PRIME1)
         new_config = copy.copy(patch_data)
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
@@ -241,3 +286,32 @@ class RandomprimePatcher(Patcher):
             patch_as_str,
             py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
         )
+
+        magic_item = db.resource_database.multiworld_magic_item
+
+        with IsoDolEditor.open_iso(output_file) as dol_editor:
+            dol_editor = typing.cast(IsoDolEditor, dol_editor)
+            dol_editor.symbols = py_randomprime.rust.get_mp1_symbols("0-00")
+
+            # Change the max capacity
+            dol_editor.write(0x803cd6c0 + magic_item.index * 4,
+                             struct.pack(">L", magic_item.max_capacity))
+
+            # Apply remote execution patch
+            dol_editor.write_instructions(
+                "UpdateHintState__13CStateManagerFf",
+                [
+                    *all_prime_dol_patches.remote_execution_patch_start(),
+                    *all_prime_dol_patches.remote_execution_patch_end(),
+                ]
+            )
+
+            # IncrPickUp's switch array for UnknownItem1 to actually give stuff
+            dol_editor.write(0x803DAD94, struct.pack(">L", 0x80091c54))
+
+            # Remove DecrPickUp checks for the correct item types
+            dol_editor.write_instructions(
+                ("DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei", 5 * 4),
+                [ppc.nop()] * 7,
+            )
+
