@@ -11,7 +11,6 @@ from typing import Optional, List, Union
 
 import py_randomprime
 
-from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
