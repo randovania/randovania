@@ -1,6 +1,6 @@
 import copy
 import re
-from typing import List, Dict, Iterator, Tuple, Iterable
+from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -8,6 +8,7 @@ from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
@@ -20,6 +21,7 @@ class WorldList:
     _nodes_to_world: Dict[Node, World]
     _ids_to_area: Dict[AreaLocation, Area]
     _nodes: Tuple[Node, ...]
+    _pickup_index_to_node: Dict[PickupIndex, PickupNode]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -33,6 +35,11 @@ class WorldList:
     def refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world, self._ids_to_area = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
+        self._pickup_index_to_node = {
+            node.pickup_index: node
+            for node in self._nodes
+            if isinstance(node, PickupNode)
+        }
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for world in self.worlds:
@@ -249,6 +256,9 @@ class WorldList:
             world_asset_id=self.nodes_to_world(node).world_asset_id,
             area_asset_id=self.nodes_to_area(node).area_asset_id,
         )
+
+    def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
+        return self._pickup_index_to_node[index]
 
     def add_new_node(self, area: Area, node: Node):
         self._nodes_to_area[node] = area

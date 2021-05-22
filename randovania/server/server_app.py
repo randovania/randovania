@@ -2,6 +2,7 @@ import functools
 from typing import Optional
 
 import flask
+import flask_discord
 import flask_socketio
 import peewee
 import socketio
@@ -32,14 +33,6 @@ class ServerApp:
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
         self.patcher_provider = PatcherProvider()
-
-        # import playhouse.migrate
-        # from randovania.server import database
-        # migrator = playhouse.migrate.SqliteMigrator(database.db)
-        # with database.db.atomic():
-        #     playhouse.migrate.migrate(
-        #         migrator.add_column("gamesession", "dev_features", database.GameSession.dev_features)
-        #     )
 
     def get_server(self) -> socketio.Server:
         return self.sio.server
@@ -91,3 +84,22 @@ class ServerApp:
         metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
 
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
+
+    def admin_route(self, route: str):
+        def decorator(handler):
+            @self.app.route(route)
+            @functools.wraps(handler)
+            def _handler(**kwargs):
+                try:
+                    user: User = User.get(discord_id=self.discord.fetch_user().id)
+                    if user is None or not user.admin:
+                        return "User not authorized", 403
+
+                    return handler(user, **kwargs)
+
+                except flask_discord.exceptions.Unauthorized:
+                    return "Unknown user", 404
+
+            return _handler
+
+        return decorator
