@@ -89,8 +89,6 @@ _PRIME_TEMPLATE_STRINGS = {
         "Elevators: {elevators}",
     ],
     "Game Changes": [
-        "Missiles needs Launcher: {missile_launcher_required}",
-        "Power Bomb needs Main: {main_pb_required}",
         "Final bosses included? {include_final_bosses}",
     ],
     "Difficulty": [
