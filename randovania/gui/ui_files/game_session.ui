@@ -270,6 +270,9 @@
         </property>
         <item>
          <widget class="QTableWidget" name="history_table_widget">
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <attribute name="horizontalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -281,7 +284,22 @@
           </attribute>
           <column>
            <property name="text">
-            <string>Message</string>
+            <string>Provider</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Receiver</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Pickup</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Location</string>
            </property>
           </column>
           <column>
@@ -297,6 +315,12 @@
     </item>
     <item>
      <widget class="QGroupBox" name="connection_group">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string/>
       </property>

@@ -9,6 +9,7 @@ from randovania.server import app
 def test_create_app(mocker, tmpdir):
     mocker.patch("randovania.get_configuration").return_value = {
         "discord_client_id": 1234,
+        "server_address": "https://somewhere.nice",
         "guest_key": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         "server_config": {
             "secret_key": "key",
@@ -37,7 +38,7 @@ def test_create_app(mocker, tmpdir):
     assert result.config['SECRET_KEY'] == "key"
     assert result.config["DISCORD_CLIENT_ID"] == 1234
     assert result.config["DISCORD_CLIENT_SECRET"] == 5678
-    assert result.config["DISCORD_REDIRECT_URI"] == "http://127.0.0.1:5000/callback/"
+    assert result.config["DISCORD_REDIRECT_URI"] == "https://somewhere.nice/login_callback"
     assert result.config["FERNET_KEY"] == b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
 
     encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='

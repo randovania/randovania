@@ -60,7 +60,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
             24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
         },
         actions=[
-            GameSessionAction("Hello", datetime.datetime(year=2020, month=1, day=5))
+            GameSessionAction("A", "B", "Bombs", "Landing Site", datetime.datetime(year=2020, month=1, day=5))
         ],
         seed_hash="AB12",
         word_hash="Chykka Required",
