@@ -31,7 +31,7 @@ class ServerApp:
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
-        self.patcher_provider = PatcherProvider(None)
+        self.patcher_provider = PatcherProvider()
 
         # import playhouse.migrate
         # from randovania.server import database

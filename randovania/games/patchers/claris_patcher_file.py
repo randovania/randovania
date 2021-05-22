@@ -3,9 +3,6 @@ from random import Random
 from typing import Dict, Iterator
 
 import randovania
-import randovania.games.prime.echoes_teleporters
-import randovania.games.prime.patcher_file_lib.hints
-import randovania.games.prime.patcher_file_lib.item_names
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
@@ -21,9 +18,9 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime import echoes_teleporters
 from randovania.games.prime.dol_patcher import DolPatchesData
-from randovania.games.prime.echoes_teleporters import elevator_area_name
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -112,7 +109,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(elevator_area_name(world_list, connection, False))
+    return "Transport to {}".format(echoes_teleporters.elevator_area_name(world_list, connection, False))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -189,7 +186,7 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = elevator_area_name(world_list, elevator_connection[teleporter], True)
+        target_area_name = echoes_teleporters.elevator_area_name(world_list, elevator_connection[teleporter], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
@@ -282,7 +279,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        randovania.games.prime.patcher_file_lib.hints.create_hints(all_patches, players_config, game.world_list, rng)
+        hints.create_hints(all_patches, players_config, game.world_list, rng)
     )
 
     # Sky Temple Keys
