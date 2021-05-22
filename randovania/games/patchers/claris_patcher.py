@@ -9,11 +9,10 @@ from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import game_workdir
-from randovania.lib import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import status_update_lib
 
 
 class ClarisPatcher(Patcher):
@@ -63,7 +62,7 @@ class ClarisPatcher(Patcher):
                                                        decode_randomizer_data())
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
-                   game_files_path: Path, progress_update: ProgressUpdateCallable):
+                   game_files_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
         num_updaters = 2
         if input_file is not None:
             num_updaters += 1

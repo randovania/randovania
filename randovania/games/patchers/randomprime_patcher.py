@@ -313,4 +313,3 @@ class RandomprimePatcher(Patcher):
                 ("DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei", 5 * 4),
                 [ppc.nop()] * 7,
             )
-
