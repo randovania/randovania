@@ -188,7 +188,7 @@ class RandomprimePatcher(Patcher):
         preset = description.permalink.get_preset(players_config.player_index)
         configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
-        
+
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
         useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
                                       players_config.player_index)
@@ -241,7 +241,7 @@ class RandomprimePatcher(Patcher):
                 "mapDefaultState": None,
                 "artifactHintBehavior": None,
                 "trilogyDiscPath": None,
-                "keepFmvs": True,
+                "keepFmvs": False,
                 "quickplay": False,
                 "quiet": False,
             },
