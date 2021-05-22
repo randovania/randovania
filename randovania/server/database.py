@@ -18,6 +18,7 @@ db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
 class BaseModel(peewee.Model):
     class Meta:
         database = db
+        legacy_table_names = False
 
 
 class EnumField(peewee.CharField):
@@ -40,6 +41,7 @@ class EnumField(peewee.CharField):
 class User(BaseModel):
     discord_id = peewee.IntegerField(index=True, null=True)
     name = peewee.CharField()
+    admin = peewee.BooleanField(default=False)
 
     @classmethod
     def get_by_id(cls, pk) -> "User":

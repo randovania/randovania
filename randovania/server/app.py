@@ -3,6 +3,7 @@ from enum import Enum
 from logging.config import dictConfig
 
 import flask
+import werkzeug.middleware.proxy_fix
 from flask_socketio import ConnectionRefusedError
 
 import randovania
@@ -51,11 +52,12 @@ def create_app():
     })
 
     app = flask.Flask(__name__)
+    app.wsgi_app = werkzeug.middleware.proxy_fix.ProxyFix(app.wsgi_app, x_proto=1, x_prefix=1)
     app.config['SECRET_KEY'] = configuration["server_config"]["secret_key"]
     app.config["GUEST_KEY"] = configuration["guest_secret"].encode("ascii") if "guest_secret" in configuration else None
     app.config["DISCORD_CLIENT_ID"] = configuration["discord_client_id"]
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
-    app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"  # Redirect URI.
+    app.config["DISCORD_REDIRECT_URI"] = f'{configuration["server_address"]}/login_callback'
     app.config["FERNET_KEY"] = configuration["server_config"]["fernet_key"].encode("ascii")
     version_checking = ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
