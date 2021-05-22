@@ -87,7 +87,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
         self._is_preview_mode = preview
-        self._patcher_provider = PatcherProvider(options)
+        self._patcher_provider = PatcherProvider()
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 
