@@ -10,7 +10,7 @@ class MajorItem:
     name: str
     item_category: ItemCategory
     broad_category: ItemCategory
-    model_index: Optional[int]
+    model_name: str
     progression: Tuple[int, ...]
     ammo_index: Tuple[int, ...] = tuple()
     unlocks_ammo: bool = False
@@ -26,7 +26,7 @@ class MajorItem:
             name=name,
             item_category=ItemCategory(value["item_category"]),
             broad_category=ItemCategory(value["broad_category"]),
-            model_index=value["model_index"],
+            model_name=value["model_name"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),
             unlocks_ammo=value.get("unlocks_ammo", False),
@@ -42,7 +42,7 @@ class MajorItem:
         result = {
             "item_category": self.item_category.value,
             "broad_category": self.broad_category.value,
-            "model_index": self.model_index,
+            "model_name": self.model_name,
             "progression": list(self.progression),
             "ammo": list(self.ammo_index),
             "unlocks_ammo": self.unlocks_ammo,

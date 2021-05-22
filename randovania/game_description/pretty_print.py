@@ -9,7 +9,7 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
     RequirementTemplate, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.layout.trick_level import LayoutTrickLevel
 
 

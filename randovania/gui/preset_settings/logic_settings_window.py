@@ -9,6 +9,7 @@ from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
+import randovania.games.prime.echoes_teleporters
 from randovania.game_description import default_database
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -19,7 +20,6 @@ from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.generator import elevator_distributor
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib, signal_handling
@@ -33,14 +33,13 @@ from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatche
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.location_list import LocationList
 from randovania.layout.preset import Preset
 from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
 from randovania.layout.trick_level import LayoutTrickLevel
@@ -478,7 +477,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     # Elevator
     def _create_check_for_source_elevator(self, location: Teleporter):
         area = self.game_description.world_list.area_by_area_location(location.area_location)
-        name = elevator_distributor.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
+        name = randovania.games.prime.echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
         if name is None:
             name = self.game_description.world_list.area_name(area)
 
@@ -522,13 +521,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             other_locations = [
                 node.default_connection
                 for node in areas[location].nodes
-                if isinstance(node, TeleporterNode) and node.teleporter_instance_id == location.instance_id
+                if isinstance(node, TeleporterNode) and node.teleporter == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
-                Teleporter(other_locations[0].world_asset_id,
-                           other_locations[0].area_asset_id,
-                           node.teleporter_instance_id)
+                node.teleporter
                 for node in self.game_description.world_list.area_by_area_location(other_locations[0]).nodes
                 if isinstance(node, TeleporterNode)
             ]

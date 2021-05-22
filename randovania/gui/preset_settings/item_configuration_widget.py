@@ -33,15 +33,10 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
 
         # Update
         self.vanilla_radio.setEnabled(item.original_index is not None)
-        self.shuffled_radio.setEnabled(item.model_index is not None)
 
         if not self.vanilla_radio.isEnabled():
             self.vanilla_radio.setToolTip(
                 "This item does not exist in the original game, so there's no vanilla location.")
-
-        if not self.shuffled_radio.isEnabled():
-            self.shuffled_radio.setToolTip(
-                "There's currently no available model and/or logic for this item to be shuffled.")
 
         # At least one radio should be selected
         for radio in (self.shuffled_radio, self.starting_radio, self.vanilla_radio):

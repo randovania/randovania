@@ -32,13 +32,6 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> FrozenSet[Resource
     )
 
 
-def _tank_capacity(state: State):
-    if state.patches.game_specific is not None:
-        return state.patches.game_specific.energy_per_tank
-    else:
-        return 100
-
-
 def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
                                            state: State,
                                            uncollected_resources: List[ResourceInfo]):
@@ -70,7 +63,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
 
     sum_damage = sum(req.damage(state.resources) for req in damage)
     if state.energy < sum_damage:
-        tank_count = (sum_damage - state.energy) // _tank_capacity(state)
+        tank_count = (sum_damage - state.energy) // state.game_data.energy_per_tank
         yield items + [ResourceRequirement(state.resource_database.energy_tank, tank_count + 1, False)]
         # FIXME: get the required items for reductions (aka suits)
     else:
@@ -81,7 +74,6 @@ def _requirement_lists_without_satisfied_resources(state: State,
                                                    possible_sets: List[RequirementSet],
                                                    uncollected_resources: List[ResourceInfo],
                                                    ) -> Set[RequirementList]:
-
     seen_lists = set()
     result = set()
 

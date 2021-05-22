@@ -2,7 +2,7 @@ import collections
 import logging
 import traceback
 from functools import partial
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Set
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
@@ -15,7 +15,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import patcher_file
+from randovania.games.prime.patcher_file_lib import item_names
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
@@ -24,10 +24,10 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common import simplified_patcher, status_update_lib
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -123,16 +123,21 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
-        game = self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
-        default_name = "{} Randomizer - {}.{}".format(game.short_name,
-                                                      self.layout_description.shareable_word_hash,
-                                                      self.layout_description.file_extension())
+        all_games: Set[RandovaniaGame] = {preset.game for preset in self.layout_description.permalink.presets.values()}
+        if len(all_games) > 1:
+            game_name = "Crossgame Multiworld"
+        else:
+            game_name = f"{list(all_games)[0].short_name} Randomizer"
+
+        default_name = "{} - {}.{}".format(game_name,
+                                           self.layout_description.shareable_word_hash,
+                                           self.layout_description.file_extension())
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.prime import gollop_corruption_patcher
+        from randovania.games.patchers import gollop_corruption_patcher
 
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.PRIME3)
@@ -167,9 +172,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         has_spoiler = layout.permalink.spoiler
         options = self._options
 
-        if layout.permalink.get_preset(self.current_player_index).configuration.game == RandovaniaGame.PRIME3:
-            return await self._show_dialog_for_prime3_layout()
-
         if not options.is_alert_displayed(InfoAlert.FAQ):
             await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "FAQ",
                                            "Have you read the Randovania FAQ?\n"
@@ -177,54 +179,41 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = layout.permalink.get_preset(self.current_player_index).configuration.game
-        dialog = GameInputDialog(options, "{} Randomizer - {}.iso".format(game.short_name,
-                                                                          layout.shareable_word_hash), has_spoiler)
-        result = await async_dialog.execute_dialog(dialog)
+        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
 
-        if result != QDialog.Accepted:
-            return
-
-        if simplified_patcher.export_busy:
+        if patcher.is_busy:
             return await async_dialog.message_box(
                 self, QtWidgets.QMessageBox.Critical,
                 "Can't save ISO",
                 "Error: Unable to save multiple ISOs at the same time,"
                 "another window is saving an ISO right now.")
 
+        if game == RandovaniaGame.PRIME3:
+            return await self._show_dialog_for_prime3_layout()
+
+        dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler)
+        result = await async_dialog.execute_dialog(dialog)
+        if result != QDialog.Accepted:
+            return
+
         input_file = dialog.input_file
         output_file = dialog.output_file
         auto_save_spoiler = dialog.auto_save_spoiler
-        player_index = self.current_player_index
-        player_names = self._player_names
+        players_config = PlayersConfiguration(
+            player_index=self.current_player_index,
+            player_names=self._player_names,
+        )
 
         with options:
             options.output_directory = output_file.parent
             options.auto_save_spoiler = auto_save_spoiler
 
+        patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
+
         def work(progress_update: ProgressUpdateCallable):
-            num_updaters = 2
-            if input_file is not None:
-                num_updaters += 1
-            updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
+            patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
+                               progress_update=progress_update)
 
-            if input_file is not None:
-                simplified_patcher.unpack_iso(input_iso=input_file,
-                                              options=options,
-                                              progress_update=updaters[0])
-
-            # Apply Layout
-            simplified_patcher.apply_layout(layout=layout,
-                                            players_config=PlayersConfiguration(
-                                                player_index=player_index,
-                                                player_names=player_names,
-                                            ),
-                                            options=options,
-                                            progress_update=updaters[-2])
-
-            # Pack ISO
-            simplified_patcher.pack_iso(output_iso=output_file,
-                                        options=options,
-                                        progress_update=updaters[-1])
             if has_spoiler and auto_save_spoiler:
                 layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 
@@ -374,9 +363,9 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             self._create_pickup_spoilers(game_description)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
-            extra_items = patcher_file.additional_starting_items(preset.configuration,
-                                                                 game_description.resource_database,
-                                                                 patches.starting_items)
+            extra_items = item_names.additional_starting_items(preset.configuration,
+                                                               game_description.resource_database,
+                                                               patches.starting_items)
 
             self.spoiler_starting_location_label.setText("Starting Location: {}".format(
                 game_description.world_list.area_name(starting_area)

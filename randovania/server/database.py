@@ -6,6 +6,7 @@ from typing import Iterator, List, Optional, Callable, Any
 import peewee
 
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
@@ -70,6 +71,7 @@ class GameSession(BaseModel):
     creator = peewee.ForeignKeyField(User)
     creation_date = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress = peewee.ForeignKeyField(User, null=True)
+    dev_features = peewee.CharField(null=True)
 
     @property
     def all_presets(self) -> List[Preset]:
@@ -145,6 +147,10 @@ class GameSession(BaseModel):
                 "permalink": None,
             }
 
+        games = [RandovaniaGame.PRIME2]
+        if "prime1" in (self.dev_features or ""):
+            games.append(RandovaniaGame.PRIME1)
+
         return {
             "id": self.id,
             "name": self.name,
@@ -165,6 +171,7 @@ class GameSession(BaseModel):
             **game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
+            "allowed_games": [game.value for game in games],
         }
 
     def reset_layout_description(self):

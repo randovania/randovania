@@ -4,9 +4,11 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock
+from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
+    PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.games.game import RandovaniaGame
 
 _PROBABILITY_OFFSET_META = {
     "min": -3,
@@ -81,7 +83,8 @@ class BitPackPickupEntry:
         helper = DatabaseBitPackHelper(self.database)
 
         yield from bitpacking.encode_string(self.value.name)
-        yield from bitpacking.encode_big_int(self.value.model_index)
+        yield from self.value.model.game.bit_pack_encode({})
+        yield from bitpacking.encode_string(self.value.model.name)
         yield from self.value.item_category.bit_pack_encode({})
         yield from self.value.broad_category.bit_pack_encode({})
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
@@ -99,7 +102,10 @@ class BitPackPickupEntry:
         helper = DatabaseBitPackHelper(database)
 
         name = bitpacking.decode_string(decoder)
-        model_index = bitpacking.decode_big_int(decoder)
+        model = PickupModel(
+            game=RandovaniaGame.bit_pack_unpack(decoder, {}),
+            name=bitpacking.decode_string(decoder),
+        )
         item_category = ItemCategory.bit_pack_unpack(decoder, {})
         broad_category = ItemCategory.bit_pack_unpack(decoder, {})
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
@@ -114,7 +120,7 @@ class BitPackPickupEntry:
 
         return PickupEntry(
             name=name,
-            model_index=model_index,
+            model=model,
             item_category=item_category,
             broad_category=broad_category,
             progression=progression,

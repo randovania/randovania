@@ -10,11 +10,11 @@ from randovania.game_description.resources.resource_database import ResourceData
 class Ammo:
     name: str
     maximum: int
+    model_name: str
     items: Tuple[int, ...]
     broad_category: ItemCategory
     unlocked_by: Optional[int] = None
     temporary: Optional[int] = None
-    models: Tuple[int, ...] = tuple()
 
     def __post_init__(self):
         if self.temporary is not None:
@@ -32,7 +32,7 @@ class Ammo:
         return cls(
             name=name,
             maximum=value["maximum"],
-            models=tuple(value["models"]),
+            model_name=value["model_name"],
             items=tuple(value["items"]),
             broad_category=ItemCategory(value["broad_category"]),
             unlocked_by=value.get("unlocked_by"),
@@ -43,7 +43,7 @@ class Ammo:
     def as_json(self) -> dict:
         result = {
             "maximum": self.maximum,
-            "models": list(self.models),
+            "model_name": self.model_name,
             "items": list(self.items),
             "broad_category": self.broad_category.value,
         }

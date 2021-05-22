@@ -77,6 +77,7 @@ setup(
         'aiohttp[speedups]',
         'aiofiles',
         'dulwich>=0.20',
+        'py_randomprime>=0.2.0',
     ],
     extras_require={
         "gui": [
@@ -87,7 +88,7 @@ setup(
             'dolphin-memory-engine>=1.0.2',
             'markdown',
             'matplotlib>=3.3.3',
-            'nod>=1.1',
+            'nod>=1.3',
             'pid>=3.0.0',
             'pypresence',
             'qdarkstyle',

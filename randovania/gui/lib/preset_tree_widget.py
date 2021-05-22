@@ -7,7 +7,7 @@ from PySide2.QtCore import Qt
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common import enum_lib
+from randovania.lib import enum_lib
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 
 

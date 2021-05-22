@@ -7,16 +7,15 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import Hint
 from randovania.game_description.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime import default_data
-from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
@@ -54,41 +53,21 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
     }
 
 
-def _node_mapping_to_elevator_connection(world_list: WorldList,
-                                         elevators: Dict[str, str],
-                                         ) -> Dict[int, AreaLocation]:
-    result = {}
-    for source_name, target_node in elevators.items():
-        source_node = world_list.node_from_name(source_name)
-        assert isinstance(source_node, TeleporterNode)
-
-        target_node = world_list.node_from_name(target_node)
-
-        result[source_node.teleporter_instance_id] = AreaLocation(
-            world_list.nodes_to_world(target_node).world_asset_id,
-            world_list.nodes_to_area(target_node).area_asset_id
-        )
-
-    return result
-
-
-def _find_area_with_teleporter(world_list: WorldList, teleporter_id: int) -> Area:
-    for _, area, node in world_list.all_worlds_areas_nodes:
-        if isinstance(node, TeleporterNode):
-            if node.teleporter_instance_id == teleporter_id:
-                return area
-    raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
+def _find_area_with_teleporter(world_list: WorldList, teleporter: Teleporter) -> Area:
+    return world_list.area_by_area_location(teleporter.area_location)
 
 
 def _name_for_gate(gate: TranslatorGate) -> str:
-    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+    from randovania.games.patchers import claris_patcher
+    for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Index"] == gate.index:
             return items["Name"]
     raise ValueError("Unknown gate: {}".format(gate))
 
 
 def _find_gate_with_name(gate_name: str) -> TranslatorGate:
-    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+    from randovania.games.patchers import claris_patcher
+    for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Name"] == gate_name:
             return TranslatorGate(items["Index"])
     raise ValueError("Unknown gate name: {}".format(gate_name))
@@ -114,9 +93,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
             for resource_info, quantity in patches.starting_items.items()
         },
         "elevators": {
-            world_list.area_name(_find_area_with_teleporter(world_list, teleporter_id), "/"):
+            world_list.area_name(_find_area_with_teleporter(world_list, teleporter), "/"):
                 world_list.area_name(world_list.area_by_area_location(connection), "/")
-            for teleporter_id, connection in patches.elevator_connection.items()
+            for teleporter, connection in patches.elevator_connection.items()
         },
         "translators": {
             _name_for_gate(gate): requirement.long_name
@@ -163,7 +142,6 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     :param configuration:
     :return:
     """
-    game_specific = base_patches_factory.create_game_specific(configuration, game)
     world_list = game.world_list
 
     initial_pickup_assignment = all_pools[player_index].assignment
@@ -178,7 +156,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     }
 
     # Elevators
-    elevator_connection = {}
+    elevator_connection: ElevatorConnection = {}
     for source_name, target_name in game_modifications["elevators"].items():
         source_area = _area_name_to_area_location(world_list, source_name)
         target_area = _area_name_to_area_location(world_list, target_name)
@@ -190,7 +168,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         ]
         assert len(potential_source_nodes) == 1
         source_node = potential_source_nodes[0]
-        elevator_connection[source_node.teleporter_instance_id] = target_area
+        elevator_connection[source_node.teleporter] = target_area
 
     # Translator Gates
     translator_gates = {
@@ -240,21 +218,19 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     return GamePatches(
         player_index=player_index,
         pickup_assignment=pickup_assignment,  # PickupAssignment
-        elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
+        elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
         translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
         hints=hints,
-        game_specific=game_specific,
     )
 
 
 def decode(game_modifications: List[dict],
            layout_configurations: Dict[int, EchoesConfiguration],
            ) -> Dict[int, GamePatches]:
-
     all_games = {index: data_reader.decode_data(configuration.game_data)
                  for index, configuration in layout_configurations.items()}
     all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)

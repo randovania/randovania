@@ -1,9 +1,9 @@
-import asyncio
 import json
-import platform
-import re
 import shutil
-from asyncio import StreamWriter, StreamReader
+
+from randovania.games.patchers import csharp_subprocess
+from randovania.games.prime.dol_patcher import DolPatchesData
+
 try:
     from asyncio.exceptions import IncompleteReadError
 except ImportError:
@@ -12,18 +12,10 @@ from pathlib import Path
 from typing import Callable, List, Union, Optional
 
 from randovania import get_data_path
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
-from randovania.games.prime import patcher_file, dol_patcher
-from randovania.interface_common import status_update_lib
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime import dol_patcher
+from randovania.lib import status_update_lib
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_description import LayoutDescription
-
-IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
-
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 CURRENT_PATCH_VERSION = 2
 
@@ -56,57 +48,6 @@ def _get_menu_mod_path() -> Path:
     return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
 
-def _is_windows() -> bool:
-    return platform.system() == "Windows"
-
-
-async def _write_data(stream: StreamWriter, data: str):
-    stream.write(data.encode("UTF-8"))
-    stream.close()
-
-
-async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]):
-    while True:
-        try:
-            line = await stream.readuntil(b"\r")
-        except IncompleteReadError as incomplete:
-            line = incomplete.partial
-        if line:
-            try:
-                decoded = line.decode()
-            except UnicodeDecodeError:
-                decoded = line.decode("latin1")
-            for x in re.split(r"[\r\n]", decoded.strip()):
-                if x:
-                    read_callback(x)
-        else:
-            break
-
-
-async def _process_command_async(args: List[str], input_data: str, read_callback: Callable[[str], None]):
-    process = await asyncio.create_subprocess_exec(*args,
-                                                   stdin=asyncio.subprocess.PIPE,
-                                                   stdout=asyncio.subprocess.PIPE,
-                                                   stderr=asyncio.subprocess.STDOUT)
-
-    await asyncio.wait([
-        _write_data(process.stdin, input_data),
-        _read_data(process.stdout, read_callback),
-    ])
-    await process.wait()
-
-
-def _process_command(args: List[str], input_data: str, read_callback: Callable[[str], None]):
-    work = _process_command_async(args, input_data, read_callback)
-
-    if IO_LOOP is None:
-        if _is_windows():
-            asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-        asyncio.run(work)
-    else:
-        asyncio.run_coroutine_threadsafe(work, IO_LOOP).result()
-
-
 def _run_with_args(args: List[Union[str, Path]],
                    input_data: str,
                    finish_string: str,
@@ -114,8 +55,6 @@ def _run_with_args(args: List[Union[str, Path]],
     finished_updates = False
 
     new_args = [str(arg) for arg in args]
-    if not _is_windows():
-        new_args.insert(0, "mono")
     print("Invoking external tool with: ", new_args)
 
     def read_callback(line: str):
@@ -125,7 +64,7 @@ def _run_with_args(args: List[Union[str, Path]],
             status_update(line)
             finished_updates = line == finish_string
 
-    _process_command(new_args, input_data, read_callback)
+    csharp_subprocess.process_command(new_args, input_data, read_callback)
 
     if not finished_updates:
         raise RuntimeError("External tool did not send '{}'. Did something happen?".format(finish_string))
@@ -205,35 +144,9 @@ def _add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
-def apply_layout(description: LayoutDescription,
-                 players_config: PlayersConfiguration,
-                 cosmetic_patches: CosmeticPatches,
-                 backup_files_path: Optional[Path],
-                 progress_update: ProgressUpdateCallable,
-                 game_root: Path,
-                 ):
-    """
-    Applies the modifications listed in the given LayoutDescription to the game in game_root.
-    :param description:
-    :param players_config:
-    :param cosmetic_patches:
-    :param game_root:
-    :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
-    :param progress_update:
-    :return:
-    """
-    description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
-
-    apply_patcher_file(game_root, backup_files_path,
-                       patcher_file.create_patcher_file(description, players_config, cosmetic_patches),
-                       description.all_patches[players_config.player_index].game_specific,
-                       progress_update)
-
-
 def apply_patcher_file(game_root: Path,
                        backup_files_path: Optional[Path],
                        patcher_data: dict,
-                       game_specific: EchoesGameSpecific,
                        progress_update: ProgressUpdateCallable,
                        ):
     """
@@ -241,15 +154,10 @@ def apply_patcher_file(game_root: Path,
     :param game_root:
     :param backup_files_path:
     :param patcher_data:
-    :param game_specific:
     :param progress_update:
     :return:
     """
     menu_mod = patcher_data["menu_mod"]
-    user_preferences = EchoesUserPreferences.from_json(patcher_data["user_preferences"])
-    default_items = patcher_data["default_items"]
-    unvisited_room_names = patcher_data["unvisited_room_names"]
-    teleporter_sounds = patcher_data["teleporter_sounds"]
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if menu_mod else 100)
@@ -268,8 +176,7 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, game_specific, user_preferences, default_items,
-                              unvisited_room_names, teleporter_sounds)
+    dol_patcher.apply_patches(game_root, DolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:
