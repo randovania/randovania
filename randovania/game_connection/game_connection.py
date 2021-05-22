@@ -1,3 +1,4 @@
+import copy
 from typing import List, Dict, Any, Tuple
 
 from PySide2.QtCore import QTimer, Signal, QObject
@@ -53,8 +54,10 @@ class GameConnection(QObject, ConnectionBase):
 
     def _notify_status(self):
         new_status = self.current_status
-        if self._last_status != (new_status, self.backend):
-            self._last_status = (new_status, self.backend)
+        inventory = self.backend.get_current_inventory()
+
+        if self._last_status != (new_status, self.backend, inventory):
+            self._last_status = (new_status, self.backend, copy.copy(inventory))
             self.Updated.emit()
 
     @property

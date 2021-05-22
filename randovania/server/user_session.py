@@ -140,3 +140,22 @@ def setup_app(sio: ServerApp):
     sio.on("login_with_guest", login_with_guest)
     sio.on("restore_user_session", restore_user_session)
     sio.on("logout", logout)
+
+    @sio.app.route("/login")
+    def browser_login_with_discord():
+        return sio.discord.create_session()
+
+    @sio.app.route("/login_callback")
+    def browser_discord_login_callback():
+        sio.discord.callback()
+        discord_user = sio.discord.fetch_user()
+
+        user: User = User.get(discord_id=discord_user.id)
+        if user is None:
+            return "Unknown user", 404
+
+        return flask.redirect(flask.url_for("browser_me"))
+
+    @sio.admin_route("/me")
+    def browser_me(user: User):
+        return f"Hello {user.name}. Admin? {user.admin}"
