@@ -26,7 +26,7 @@ def test_try_randomize_elevators(seed_number: int,
     # Setup
     rng = Random(seed_number)
     teleporters = [
-        Teleporter(world.world_asset_id, area.area_asset_id, node.teleporter_instance_id)
+        node.teleporter
         for world in echoes_game_description.world_list.worlds
         for area in world.areas
         for node in area.nodes
@@ -51,7 +51,6 @@ def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators
     rng = MagicMock()
     elevator_a = MagicMock()
     elevator_b = MagicMock()
-    database = MagicMock()
     mock_try_randomize_elevators.return_value = [
         elevator_a, elevator_b
     ]
@@ -62,8 +61,8 @@ def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators
     # Assert
     mock_try_randomize_elevators.assert_called_once_with(rng, (elevator_a, elevator_b))
     assert result == {
-        elevator_a.instance_id: elevator_a.connected_elevator.area_location,
-        elevator_b.instance_id: elevator_b.connected_elevator.area_location,
+        elevator_a.teleporter: elevator_a.connected_elevator.area_location,
+        elevator_b.teleporter: elevator_b.connected_elevator.area_location,
     }
 
 
@@ -81,31 +80,31 @@ def test_two_way_elevator_connections_unchecked():
 
     # Assert
     assert result == {
-        0: AreaLocation(4, 4),
-        1: AreaLocation(2, 2),
-        2: AreaLocation(1, 1),
-        3: AreaLocation(5, 5),
-        4: AreaLocation(0, 0),
-        5: AreaLocation(3, 3),
+        Teleporter(0, 0, 0): AreaLocation(4, 4),
+        Teleporter(1, 1, 1): AreaLocation(2, 2),
+        Teleporter(2, 2, 2): AreaLocation(1, 1),
+        Teleporter(3, 3, 3): AreaLocation(5, 5),
+        Teleporter(4, 4, 4): AreaLocation(0, 0),
+        Teleporter(5, 5, 5): AreaLocation(3, 3),
     }
 
 
 @pytest.mark.parametrize(["replacement", "expected"], [
     (False, {
-        0: AreaLocation(1, 1),
-        1: AreaLocation(2, 2),
-        2: AreaLocation(3, 3),
-        3: AreaLocation(5, 5),
-        4: AreaLocation(0, 0),
-        5: AreaLocation(4, 4),
+        Teleporter(0, 0, 0): AreaLocation(1, 1),
+        Teleporter(1, 1, 1): AreaLocation(2, 2),
+        Teleporter(2, 2, 2): AreaLocation(3, 3),
+        Teleporter(3, 3, 3): AreaLocation(5, 5),
+        Teleporter(4, 4, 4): AreaLocation(0, 0),
+        Teleporter(5, 5, 5): AreaLocation(4, 4),
     }),
     (True, {
-        0: AreaLocation(2, 2),
-        1: AreaLocation(3, 3),
-        2: AreaLocation(4, 4),
-        3: AreaLocation(2, 2),
-        4: AreaLocation(5, 5),
-        5: AreaLocation(3, 3),
+        Teleporter(0, 0, 0): AreaLocation(2, 2),
+        Teleporter(1, 1, 1): AreaLocation(3, 3),
+        Teleporter(2, 2, 2): AreaLocation(4, 4),
+        Teleporter(3, 3, 3): AreaLocation(2, 2),
+        Teleporter(4, 4, 4): AreaLocation(5, 5),
+        Teleporter(5, 5, 5): AreaLocation(3, 3),
     }),
 ])
 def test_one_way_elevator_connections(echoes_game_description, replacement, expected):

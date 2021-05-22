@@ -14,10 +14,11 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
-    ResourceLock
+    ResourceLock, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -32,7 +33,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
     params=[
         {},
         {"starting_item": "Morph Ball"},
-        {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
+        {"elevator": [Teleporter(1006255871, 1660916974, 1572998), "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
@@ -100,9 +101,9 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         data["starting_items"][item_name] = 1
 
     if request.param.get("elevator"):
-        elevator_id, elevator_source = request.param.get("elevator")
+        teleporter, elevator_source = request.param.get("elevator")
         elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection[elevator_id] = game.starting_location
+        elevator_connection[teleporter] = game.starting_location
 
         patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
         data["elevators"][elevator_source] = "Temple Grounds/Landing Site"
@@ -172,7 +173,10 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
 
     pickup = PickupEntry(
         name=name,
-        model_index=26,
+        model=PickupModel(
+            game=RandovaniaGame.PRIME3,
+            name="HyperMissile",
+        ),
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
         progression=(

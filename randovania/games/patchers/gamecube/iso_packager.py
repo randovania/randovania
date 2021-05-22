@@ -8,7 +8,7 @@ except ImportError:
     nod = None
 
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 def _disc_unpack_process(output_pipe,

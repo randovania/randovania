@@ -9,6 +9,7 @@ from cryptography.fernet import Fernet
 from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
+from randovania.games.patcher_provider import PatcherProvider
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
@@ -20,6 +21,7 @@ class ServerApp:
     metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
+    patcher_provider: PatcherProvider
 
     def __init__(self, app: flask.Flask):
         self.app = app
@@ -29,6 +31,15 @@ class ServerApp:
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
+        self.patcher_provider = PatcherProvider(None)
+
+        # import playhouse.migrate
+        # from randovania.server import database
+        # migrator = playhouse.migrate.SqliteMigrator(database.db)
+        # with database.db.atomic():
+        #     playhouse.migrate.migrate(
+        #         migrator.add_column("gamesession", "dev_features", database.GameSession.dev_features)
+        #     )
 
     def get_server(self) -> socketio.Server:
         return self.sio.server

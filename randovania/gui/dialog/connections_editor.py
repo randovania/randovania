@@ -14,7 +14,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.interface_common.enum_lib import iterate_enum
+from randovania.lib.enum_lib import iterate_enum
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,

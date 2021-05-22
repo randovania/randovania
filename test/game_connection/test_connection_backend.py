@@ -9,6 +9,7 @@ from randovania.game_connection.connection_backend import ConnectionBackend, Mem
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher
 
 
@@ -162,6 +163,7 @@ async def test_update_magic_item_collected_location(backend, mocker):
 
     # Assert
     mock_item_patch.assert_called_once_with(backend.patches.powerup_functions,
+                                            RandovaniaGame.PRIME2,
                                             backend.game.resource_database.multiworld_magic_item.index,
                                             -10)
     backend._emit_location_collected.assert_awaited_once_with(9)
@@ -196,6 +198,7 @@ async def test_update_magic_item_give_pickup(backend, mocker, on_cooldown):
         backend._execute_remote_patches.assert_not_awaited()
     else:
         mock_item_patch.assert_called_once_with(backend.patches.powerup_functions,
+                                                RandovaniaGame.PRIME2,
                                                 backend.game.resource_database.multiworld_magic_item.index)
         backend._patches_for_pickup.assert_awaited_once_with(*backend._permanent_pickups[0])
         backend._execute_remote_patches.assert_awaited_once_with(
@@ -224,7 +227,9 @@ async def test_patches_for_pickup(backend, mocker):
     patches, message = await backend._patches_for_pickup("Someone", pickup)
 
     # Assert
-    mock_item_patch.assert_called_once_with(backend.patches.powerup_functions, db.energy_tank.index,
+    mock_item_patch.assert_called_once_with(backend.patches.powerup_functions,
+                                            RandovaniaGame.PRIME2,
+                                            db.energy_tank.index,
                                             db.energy_tank.max_capacity)
     assert patches == [mock_item_patch.return_value]
     assert message == "Received Pickup from Someone."

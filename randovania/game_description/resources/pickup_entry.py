@@ -5,6 +5,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, ResourceQuantity, \
     CurrentResources
+from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)
@@ -40,9 +41,15 @@ class ConditionalResources:
 
 
 @dataclass(frozen=True)
+class PickupModel:
+    game: RandovaniaGame
+    name: str
+
+
+@dataclass(frozen=True)
 class PickupEntry:
     name: str
-    model_index: int
+    model: PickupModel
     item_category: ItemCategory
     broad_category: ItemCategory
     progression: ResourceGainTuple

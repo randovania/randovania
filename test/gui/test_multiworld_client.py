@@ -5,7 +5,9 @@ import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.games.game import RandovaniaGame
+from randovania.gui import multiworld_client
 from randovania.gui.multiworld_client import MultiworldClient, Data
 
 
@@ -68,24 +70,25 @@ async def test_on_location_collected(client, tmpdir, exists):
 
 
 @pytest.mark.asyncio
-async def test_refresh_received_pickups(client):
-    results = [
+async def test_refresh_received_pickups(client, corruption_game_description, mocker):
+    db = corruption_game_description.resource_database
+
+    results = RandovaniaGame.PRIME3, [
         ("Message A", b"bytesA"),
         ("Message B", b"bytesB"),
         ("Message C", b"bytesC"),
     ]
-
     client.network_client.game_session_request_pickups = AsyncMock(return_value=results)
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    client._decode_pickup = MagicMock(side_effect=pickups)
+    mock_decode = mocker.patch("randovania.gui.multiworld_client._decode_pickup", side_effect=pickups)
 
     # Run
     await client.refresh_received_pickups()
 
     # Assert
     assert client._received_pickups == list(zip(["Message A", "Message B", "Message C"], pickups))
-    client._decode_pickup.assert_has_calls([call(b"bytesA"), call(b"bytesB"), call(b"bytesC")])
+    mock_decode.assert_has_calls([call(b"bytesA", db), call(b"bytesB", db), call(b"bytesC", db)])
 
 
 @pytest.mark.asyncio
@@ -103,10 +106,14 @@ async def test_on_game_updated(client, tmpdir):
 
 
 def test_decode_pickup(client, echoes_resource_database):
-    data = b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\x08@\x0e'
+    data = (b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\xcc\x08\x8a\xdc\xca\xe4\xce'
+            b'\xf2\xa8\xe4\xc2\xdc\xe6\xcc\xca\xe4\x9a\xde\xc8\xea\xd8\xcaB\x00p')
     expected_pickup = PickupEntry(
         name="The Name",
-        model_index=0,
+        model=PickupModel(
+            game=RandovaniaGame.PRIME2,
+            name="EnergyTransferModule",
+        ),
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.MOVEMENT,
         progression=tuple(),
@@ -118,7 +125,7 @@ def test_decode_pickup(client, echoes_resource_database):
     # assert new_data == data
 
     # Run
-    pickup = client._decode_pickup(data)
+    pickup = multiworld_client._decode_pickup(data, echoes_resource_database)
 
     # Assert
     assert pickup == expected_pickup
@@ -152,7 +159,7 @@ async def test_notify_collect_locations(client, tmpdir):
 async def test_lock_file_on_init(skip_qtbot, tmpdir):
     # Setup
     network_client = MagicMock()
-    network_client.game_session_request_pickups = AsyncMock(return_value=[])
+    network_client.game_session_request_pickups = AsyncMock(return_value=(RandovaniaGame.PRIME1, []))
     network_client.session_self_update = AsyncMock()
     game_connection = MagicMock()
     game_connection.backend.lock_identifier = str(tmpdir.join("my-lock"))

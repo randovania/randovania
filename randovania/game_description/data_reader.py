@@ -3,7 +3,6 @@ from typing import List, Callable, TypeVar, Tuple, Dict
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
-from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
@@ -20,6 +19,7 @@ from randovania.game_description.resources.search import MissingResource, find_r
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -167,32 +167,6 @@ def read_dock_weakness_database(data: Dict,
         portal=portal_types)
 
 
-def read_beam_configuration(data: Dict, resource_database: ResourceDatabase,
-                            ) -> EchoesBeamConfiguration:
-    return EchoesBeamConfiguration(
-        item=resource_database.get_item(data["item_index"]),
-        ammo_a=resource_database.get_item(data["ammo_a"]) if data["ammo_a"] is not None else None,
-        ammo_b=resource_database.get_item(data["ammo_b"]) if data["ammo_b"] is not None else None,
-        uncharged_cost=data["uncharged_cost"],
-        charged_cost=data["charged_cost"],
-        combo_missile_cost=data["combo_missile_cost"],
-        combo_ammo_cost=data["combo_ammo_cost"],
-    )
-
-
-def read_game_specific(data: Dict, resource_database: ResourceDatabase,
-                       ) -> EchoesGameSpecific:
-    return EchoesGameSpecific(
-        energy_per_tank=data["energy_per_tank"],
-        safe_zone_heal_per_second=data["safe_zone_heal_per_second"],
-        beam_configurations=tuple(
-            read_beam_configuration(beam, resource_database)
-            for beam in data["beam_configurations"]
-        ),
-        dangerous_energy_tank=data["dangerous_energy_tank"],
-    )
-
-
 def location_from_json(location: Dict[str, float]) -> NodeLocation:
     return NodeLocation(location["x"], location["y"], location["z"])
 
@@ -201,6 +175,8 @@ class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     generic_index: int = -1
+    current_world: int
+    current_area: int
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -251,7 +227,8 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-                return TeleporterNode(name, heal, location, self.generic_index, instance_id,
+                return TeleporterNode(name, heal, location, self.generic_index,
+                                      Teleporter(self.current_world, self.current_area, instance_id),
                                       AreaLocation(destination_world_asset_id, destination_area_asset_id),
                                       data["scan_asset_id"],
                                       data["keep_name_when_vanilla"],
@@ -298,6 +275,7 @@ class WorldReader:
             raise Exception(f"In node {name}, got error: {e}")
 
     def read_area(self, data: Dict) -> Area:
+        self.current_area = data["asset_id"]
         nodes = read_array(data["nodes"], self.read_node)
         nodes_by_name = {node.name: node for node in nodes}
 
@@ -328,6 +306,7 @@ class WorldReader:
         return read_array(data, self.read_area)
 
     def read_world(self, data: Dict) -> World:
+        self.current_world = data["asset_id"]
         return World(data["name"], data["dark_name"], data["asset_id"],
                      self.read_area_list(data["areas"]))
 
@@ -342,9 +321,10 @@ def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[s
     }
 
 
-def read_resource_database(data: Dict) -> ResourceDatabase:
+def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase:
     item = read_array(data["items"], read_item_resource_info)
     db = ResourceDatabase(
+        game_enum=game,
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
         trick=read_array(data["tricks"], read_trick_resource_info),
@@ -370,12 +350,8 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
     game = RandovaniaGame(data["game"])
 
-    resource_database = read_resource_database(data["resource_database"])
+    resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
-    if game == RandovaniaGame.PRIME2:
-        game_specific = read_game_specific(data["game_specific"], resource_database)
-    else:
-        game_specific = None
 
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
@@ -387,7 +363,6 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     return world_reader, GameDescription(
         game=game,
         resource_database=resource_database,
-        game_specific=game_specific,
         dock_weakness_database=dock_weakness_database,
         world_list=world_list,
         victory_condition=victory_condition,

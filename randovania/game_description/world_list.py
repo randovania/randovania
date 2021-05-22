@@ -136,7 +136,7 @@ class WorldList:
         return self.resolve_dock_connection(world, connection)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node:
-        connection = patches.elevator_connection.get(node.teleporter_instance_id, node.default_connection)
+        connection = patches.elevator_connection.get(node.teleporter, node.default_connection)
         return self.resolve_teleporter_connection(connection)
 
     def resolve_teleporter_connection(self, connection: AreaLocation) -> Node:

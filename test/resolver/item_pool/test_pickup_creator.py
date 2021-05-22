@@ -6,7 +6,7 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
-    ResourceLock
+    ResourceLock, PickupModel
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.major_item_state import MajorItemState
@@ -25,7 +25,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
         name="The Item",
         item_category=ItemCategory.MORPH_BALL,
         broad_category=ItemCategory.MORPH_BALL_RELATED,
-        model_index=1337,
+        model_name="SuperModel",
         progression=(10, 15, 18),
         ammo_index=(40, 42),
         required=False,
@@ -59,7 +59,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
     # Assert
     assert result == PickupEntry(
         name="The Item",
-        model_index=1337,
+        model=PickupModel(echoes_resource_database.game_enum, "SuperModel"),
         progression=(
             (item_a, 1),
             (item_b, 1),
@@ -111,7 +111,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             (missile, ammo_quantity),
             (echoes_resource_database.item_percentage, 1),
         ),
-        model_index=24,
+        model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
         item_category=ItemCategory.MISSILE,
         broad_category=ItemCategory.MISSILE_RELATED,
         resource_lock=ResourceLock(
@@ -164,7 +164,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
             (missile, ammo_quantity),
             (echoes_resource_database.item_percentage, 1),
         ),
-        model_index=25,
+        model=PickupModel(echoes_resource_database.game_enum, "SeekerLauncher"),
         item_category=ItemCategory.MISSILE,
         broad_category=ItemCategory.MISSILE_RELATED,
         respects_lock=ammo_requires_major_item,
@@ -190,7 +190,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
         broad_category=ItemCategory.ETM,
         unlocked_by=73,
         temporary=71,
-        models=(10, 20),
+        model_name="AmmoModel",
     )
     ammo_count = [75, 150]
 
@@ -201,7 +201,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
     # Assert
     assert result == PickupEntry(
         name="The Item",
-        model_index=10,
+        model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         progression=tuple(),
         extra_resources=(
             (ammo_a, ammo_count[0]),

@@ -6,9 +6,10 @@ from randovania.game_description.assignment import PickupAssignment, PickupTarge
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision, Hint, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime.echoes_items import USELESS_PICKUP_MODEL
 from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeFormatter
@@ -95,7 +96,10 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
             pickup=PickupEntry(
                 name="Energy Transfer Module",
                 progression=tuple(),
-                model_index=USELESS_PICKUP_MODEL,
+                model=PickupModel(
+                    game=RandovaniaGame.PRIME2,
+                    name="EnergyTransferModule",
+                ),
                 item_category=ItemCategory.ETM,
                 broad_category=ItemCategory.ETM,
             ),

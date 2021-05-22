@@ -1,10 +1,10 @@
 from PySide2 import QtWidgets
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.node import PickupNode
-from randovania.games.prime import default_data
-from randovania.games.prime.gollop_corruption_patcher import layout_string_for_items
+from randovania.games.game import RandovaniaGame
+from randovania.games.patchers.gollop_corruption_patcher import layout_string_for_items
 from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 from randovania.gui.lib import common_qt_lib
 
@@ -25,7 +25,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
-        self.game_description = data_reader.decode_data(default_data.decode_default_prime3())
+        self.game_description = default_database.game_description_for(RandovaniaGame.PRIME3)
         item_database = default_database.default_prime3_item_database()
         world_list = self.game_description.world_list
         self._index_to_combo = {}

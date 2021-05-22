@@ -43,26 +43,37 @@ def _prompt_user_for_file(window: QMainWindow,
     return Path(open_result[0])
 
 
-def prompt_user_for_input_iso(window: QMainWindow) -> Optional[Path]:
+def prompt_user_for_vanilla_input_file(window: QMainWindow, extensions: typing.List[str]) -> Optional[Path]:
     """
-    Shows an QFileDialog asking the user for a vanilla Game ISO
+    Shows an QFileDialog asking the user for a vanilla game file
     :param window:
+    :param extensions:
     :return: A string if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Select the vanilla Game ISO.", filter="*.iso")
+    return _prompt_user_for_file(
+        window,
+        caption="Select the vanilla game {}.".format("/".join(extensions)),
+        filter=";".join(f"*.{ext}" for ext in extensions),
+    )
 
 
-def prompt_user_for_output_iso(window: QMainWindow,
-                               default_name: str = "Randomized.iso") -> Optional[Path]:
+def prompt_user_for_output_file(window: QMainWindow,
+                                default_name: str,
+                                extensions: typing.List[str]) -> Optional[Path]:
     """
-    Shows an QFileDialog asking the user where to place the output ISO
+    Shows an QFileDialog asking the user where to place the output file
     :param window:
     :param default_name: Name of a file that will be offered by default in the UI.
+    :param extensions:
     :return: A string if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Where to place the Randomized Game ISO.",
-                                 dir=default_name,
-                                 filter="*.iso", new_file=True)
+    return _prompt_user_for_file(
+        window,
+        caption="Where to place the Randomized game file.",
+        dir=default_name,
+        filter=";".join(f"*.{ext}" for ext in extensions),
+        new_file=True,
+    )
 
 
 def prompt_user_for_output_game_log(window: QMainWindow, default_name: str) -> Optional[Path]:
