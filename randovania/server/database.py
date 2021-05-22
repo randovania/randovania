@@ -5,6 +5,7 @@ from typing import Iterator, List, Optional, Callable, Any
 
 import peewee
 
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
@@ -123,14 +124,18 @@ class GameSession(BaseModel):
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
             receiver: int = action.receiver_row
+            provider_location_index = PickupIndex(action.provider_location_index)
             time = datetime.datetime.fromisoformat(action.time)
-            target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
+            game_db = default_database.game_description_for(description.permalink.get_preset(provider).game)
+            target = description.all_patches[provider].pickup_assignment[provider_location_index]
 
-            message = (f"{location_to_name[provider]} found {target.pickup.name} "
-                       f"for {location_to_name[receiver]}.")
+            location = game_db.world_list.node_from_pickup_index(provider_location_index)
 
             return {
-                "message": message,
+                "provider": location_to_name[provider],
+                "receiver": location_to_name[receiver],
+                "pickup": target.pickup.name,
+                "location": game_db.world_list.node_name(location, with_world=True),
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
