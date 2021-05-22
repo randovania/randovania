@@ -1,10 +1,9 @@
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
-from randovania.interface_common.options import Options
 
 
 class PatcherProvider:
-    def __init__(self, options: Options):
+    def __init__(self):
         from randovania.games.patchers import claris_patcher
         from randovania.games.patchers import randomprime_patcher
         self._patchers = {
