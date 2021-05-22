@@ -188,7 +188,8 @@ class RandomprimePatcher(Patcher):
         preset = description.permalink.get_preset(players_config.player_index)
         configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
-
+        
+        scan_visor = db.resource_database.get_item_by_name("Scan Visor")
         useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
                                       players_config.player_index)
 
@@ -250,7 +251,7 @@ class RandomprimePatcher(Patcher):
 
                 "nonvariaHeatDamage": True,
                 "staggered_suit_damage": True,
-                "autoEnabledElevators": False,
+                "autoEnabledElevators": patches.starting_items.get(scan_visor, 0) == 0,
 
                 "startingItems": {
                     name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
