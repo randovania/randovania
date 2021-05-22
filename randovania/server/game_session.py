@@ -5,11 +5,12 @@ import logging
 import typing
 from typing import Optional, List, Tuple
 
+import flask
 import flask_socketio
 import peewee
 
 from randovania.bitpacking import bitpacking
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -634,3 +635,60 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_request_pickups", game_session_request_pickups)
     sio.on("game_session_self_update", game_session_self_update)
+
+    @sio.admin_route("/sessions")
+    def admin_sessions(user):
+        lines = []
+        for session in GameSession.select().order_by(GameSession.creation_date):
+            lines.append("<tr><td><a href='{}'>{}</a></td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                flask.url_for('admin_session', session_id=session.id),
+                session.name,
+                session.creator.name,
+                session.creation_date,
+                session.state,
+                len(session.players),
+            ))
+
+        return ("<table border='1'>"
+                "<tr><th>Name</th><th>Creator</th><th>Creation Date</th><th>State</th><th>Num Players</th></tr>"
+                "{}</table>").format("".join(lines))
+
+    @sio.admin_route("/session/<session_id>")
+    def admin_session(user, session_id):
+        session: GameSession = GameSession.get_by_id(session_id)
+
+        rows = []
+        presets = session.all_presets
+
+        for player in session.players:
+            player = typing.cast(GameSessionMembership, player)
+            if player.is_observer:
+                rows.append([
+                    player.effective_name,
+                    "Observer",
+                    "",
+                ])
+            else:
+                preset = presets[player.row]
+                db = default_database.resource_database_for(preset.game)
+
+                inventory = []
+                for item in json.loads(player.inventory):
+                    if item["amount"] + item["capacity"] > 0:
+                        inventory.append("{} x{}/{}".format(
+                            db.get_item(item["index"]).long_name,
+                            item["amount"], item["capacity"]
+                        ))
+
+                rows.append([
+                    player.effective_name,
+                    preset.name,
+                    ", ".join(inventory),
+                ])
+
+        header = ["Name", "Preset", "Inventory"]
+
+        return "<table border='1'><tr>{}</tr>{}</table>".format(
+            "".join(f"<th>{h}</th>" for h in header),
+            "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
+        )

@@ -9,7 +9,8 @@ import pytest
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources, PickupModel
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
@@ -380,7 +381,7 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
         'game_session_update',
         {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [], 'actions': [],
          'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None,
-         'allowed_games': ['prime2'],},
+         'allowed_games': ['prime2'], },
         room='game-session-1')
 
 
@@ -826,6 +827,7 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
     mock_layout.return_value.shareable_hash = "ABCDEFG"
     mock_layout.return_value.permalink.spoiler = True
     mock_layout.return_value.permalink.as_base64_str = "<permalink>"
+    mock_layout.return_value.permalink.get_preset.return_value.game = RandovaniaGame.PRIME2
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
@@ -868,7 +870,10 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "presets": [],
         "actions": [
             {
-                "message": "Other found The Pickup for The Name.",
+                "location": "Temple Grounds/Hive Chamber A/Pickup (Missile)",
+                "pickup": "The Pickup",
+                "provider": "Other",
+                "receiver": "The Name",
                 "time": "2020-05-02T10:20:00+00:00",
             }
         ],

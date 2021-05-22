@@ -53,13 +53,19 @@ class PlayerSessionEntry:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionAction:
-    message: str
+    provider: str
+    receiver: str
+    pickup: str
+    location: str
     time: datetime.datetime
 
     @classmethod
     def from_json(cls, data) -> "GameSessionAction":
         return GameSessionAction(
-            message=data["message"],
+            provider=data["provider"],
+            receiver=data["receiver"],
+            pickup=data["pickup"],
+            location=data["location"],
             time=datetime.datetime.fromisoformat(data["time"]),
         )
 

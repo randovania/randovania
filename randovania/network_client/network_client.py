@@ -55,7 +55,6 @@ class NetworkClient:
     _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
-    _last_self_update: Any = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -293,7 +292,6 @@ class NetworkClient:
             await self.session_admin_player(self._current_user.id, SessionAdminUserAction.KICK, None)
         await self._emit_with_result("disconnect_game_session", self._current_game_session.id)
         self._current_game_session = None
-        self._last_self_update = None
 
     async def session_admin_global(self, action: SessionAdminGlobalAction, arg):
         return await self._emit_with_result("game_session_admin_session",
@@ -313,10 +311,8 @@ class NetworkClient:
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
 
-        if self._last_self_update != state_string:
-            await self._emit_with_result("game_session_self_update",
-                                         (self._current_game_session.id, inventory_json, state_string))
-            self._last_self_update = state_string
+        await self._emit_with_result("game_session_self_update",
+                                     (self._current_game_session.id, inventory_json, state_string))
 
     @property
     def current_user(self) -> Optional[User]:

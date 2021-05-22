@@ -710,8 +710,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.history_table_widget.horizontalHeader().setVisible(True)
         self.history_table_widget.setRowCount(len(self._game_session.actions))
         for i, action in enumerate(self._game_session.actions):
-            self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
-            self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+            self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.provider))
+            self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.receiver))
+            self.history_table_widget.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
+            self.history_table_widget.setItem(i, 3, QtWidgets.QTableWidgetItem(action.location))
+            self.history_table_widget.setItem(i, 4, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
         if autoscroll:
             self.history_table_widget.scrollToBottom()
 
