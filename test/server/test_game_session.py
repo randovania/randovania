@@ -870,7 +870,7 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "presets": [],
         "actions": [
             {
-                "location": "Temple Grounds/Hive Chamber A/Pickup (Missile)",
+                "location": "PickupIndex 0",
                 "pickup": "The Pickup",
                 "provider": "Other",
                 "receiver": "The Name",

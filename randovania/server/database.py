@@ -126,16 +126,13 @@ class GameSession(BaseModel):
             receiver: int = action.receiver_row
             provider_location_index = PickupIndex(action.provider_location_index)
             time = datetime.datetime.fromisoformat(action.time)
-            game_db = default_database.game_description_for(description.permalink.get_preset(provider).game)
             target = description.all_patches[provider].pickup_assignment[provider_location_index]
-
-            location = game_db.world_list.node_from_pickup_index(provider_location_index)
 
             return {
                 "provider": location_to_name[provider],
                 "receiver": location_to_name[receiver],
                 "pickup": target.pickup.name,
-                "location": game_db.world_list.node_name(location, with_world=True),
+                "location": str(provider_location_index),
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
