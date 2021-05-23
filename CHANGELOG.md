@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The session history in multiworld now has different columns for the players involved, pickup and where the pickup was. It's also possible to sort the table by any of these fields. 
 
-
 ### Logic Database Changes
 
 -   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
@@ -27,9 +26,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
 
+-   Added: Method of climbing the Sand Processing bomb slot with a Slope Jump for Bombless Bomb Slots (Advanced and above).
+
+-   Added: Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
+
 -   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
+
+-   Changed: Reaching the portal in Hydrodynamo Shaft with Air Underwater and Screw Attack is now Hypermode (from Expert).
+
+-   Changed: Reaching the pickup in Dark Torvus Arena with a Roll Jump is now Hypermode (from Expert).
+
+-   Changed: Trial Grounds, reaching the door:
+    - From the portal with Space Jump and a Slope Jump is now Beginner (from Intermediate).
+    - From the left safe zone with a Dash is now Intermediate (from Expert) and without anything is now Advanced (from Expert).
 
 ## [2.6.1] - 2021-05-05
 
