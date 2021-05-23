@@ -5,7 +5,9 @@ from typing import Iterator, List, Optional, Callable, Any
 
 import peewee
 
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
@@ -17,6 +19,7 @@ db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
 class BaseModel(peewee.Model):
     class Meta:
         database = db
+        legacy_table_names = False
 
 
 class EnumField(peewee.CharField):
@@ -39,6 +42,7 @@ class EnumField(peewee.CharField):
 class User(BaseModel):
     discord_id = peewee.IntegerField(index=True, null=True)
     name = peewee.CharField()
+    admin = peewee.BooleanField(default=False)
 
     @classmethod
     def get_by_id(cls, pk) -> "User":
@@ -70,6 +74,7 @@ class GameSession(BaseModel):
     creator = peewee.ForeignKeyField(User)
     creation_date = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress = peewee.ForeignKeyField(User, null=True)
+    dev_features = peewee.CharField(null=True)
 
     @property
     def all_presets(self) -> List[Preset]:
@@ -119,14 +124,18 @@ class GameSession(BaseModel):
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
             receiver: int = action.receiver_row
+            provider_location_index = PickupIndex(action.provider_location_index)
             time = datetime.datetime.fromisoformat(action.time)
-            target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
+            game_db = default_database.game_description_for(description.permalink.get_preset(provider).game)
+            target = description.all_patches[provider].pickup_assignment[provider_location_index]
 
-            message = (f"{location_to_name[provider]} found {target.pickup.name} "
-                       f"for {location_to_name[receiver]}.")
+            location = game_db.world_list.node_from_pickup_index(provider_location_index)
 
             return {
-                "message": message,
+                "provider": location_to_name[provider],
+                "receiver": location_to_name[receiver],
+                "pickup": target.pickup.name,
+                "location": game_db.world_list.node_name(location, with_world=True),
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
@@ -144,6 +153,10 @@ class GameSession(BaseModel):
                 "seed_hash": None,
                 "permalink": None,
             }
+
+        games = [RandovaniaGame.PRIME2]
+        if "prime1" in (self.dev_features or ""):
+            games.append(RandovaniaGame.PRIME1)
 
         return {
             "id": self.id,
@@ -165,6 +178,7 @@ class GameSession(BaseModel):
             **game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
+            "allowed_games": [game.value for game in games],
         }
 
     def reset_layout_description(self):

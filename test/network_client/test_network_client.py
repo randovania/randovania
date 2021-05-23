@@ -107,7 +107,6 @@ async def test_leave_game_session(client: NetworkClient, permanent: bool):
     client._current_game_session.id = 1234
     client._current_user = MagicMock()
     client._current_user.id = 5678
-    client._last_self_update = "foobar"
 
     # Run
     await client.leave_game_session(permanent)
@@ -120,4 +119,3 @@ async def test_leave_game_session(client: NetworkClient, permanent: bool):
     client._emit_with_result.assert_has_awaits(calls)
 
     assert client._current_game_session is None
-    assert client._last_self_update is None

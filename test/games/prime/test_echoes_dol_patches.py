@@ -1,9 +1,11 @@
 import pytest
 
 from randovania.dol_patching.dol_file import DolHeader, Section
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_dol_patches, echoes_dol_versions
 from randovania.games.prime.echoes_dol_patches import StartingBeamVisorAddresses
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
 
 DOLS = [
     (DolHeader(sections=(Section(offset=256, base_address=2147496192, size=1344),
@@ -86,7 +88,7 @@ def test_apply_game_options_patch(dol_file):
                        )
 
 
-def test_apply_beam_cost_patch(dol_file, echoes_game_description):
+def test_apply_beam_cost_patch(dol_file, default_echoes_preset):
     patch_addresses = echoes_dol_patches.BeamCostAddresses(
         uncharged_cost=0x2000,
         charged_cost=0x2010,
@@ -97,12 +99,12 @@ def test_apply_beam_cost_patch(dol_file, echoes_game_description):
         gun_get_player=0x4000,
         get_item_amount=0x5000,
     )
-    game_specific = echoes_game_description.game_specific
+    beam_configuration = default_echoes_preset.configuration.beam_configuration
 
     # Run
     dol_file.set_editable(True)
     with dol_file:
-        echoes_dol_patches.apply_beam_cost_patch(patch_addresses, game_specific, dol_file)
+        echoes_dol_patches.apply_beam_cost_patch(patch_addresses, beam_configuration, dol_file)
 
     # Assert
     results = dol_file.dol_path.read_bytes()[0x100:]
@@ -218,7 +220,7 @@ def test_apply_safe_zone_heal_patch(dol_file, echoes_game_description):
     # Run
     dol_file.set_editable(True)
     with dol_file:
-        echoes_dol_patches.apply_safe_zone_heal_patch(addresses, sda2_base, echoes_game_description.game_specific,
+        echoes_dol_patches.apply_safe_zone_heal_patch(addresses, sda2_base, 1.0,
                                                       dol_file)
 
     # Assert

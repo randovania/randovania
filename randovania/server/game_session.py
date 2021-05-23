@@ -5,17 +5,17 @@ import logging
 import typing
 from typing import Optional, List, Tuple
 
+import flask
 import flask_socketio
 import peewee
 
 from randovania.bitpacking import bitpacking
-from randovania.game_description import data_reader
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
@@ -161,8 +161,8 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
-    if preset.game != RandovaniaGame.PRIME2:
-        raise InvalidAction("Only Prime 2 presets allowed.")
+    # if preset.game != RandovaniaGame.PRIME2:
+    #     raise InvalidAction("Only Prime 2 presets allowed.")
 
     try:
         with database.db.atomic():
@@ -433,13 +433,16 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         for member in GameSessionMembership.non_observer_members(session):
             player_names[member.row] = member.effective_name
 
+        layout_description = session.layout_description
         players_config = PlayersConfiguration(
             player_index=membership.row,
             player_names=player_names,
         )
-        return patcher_file.create_patcher_file(session.layout_description,
-                                                players_config,
-                                                cosmetic_patches)
+        preset = layout_description.permalink.get_preset(players_config.player_index)
+        patcher = sio.patcher_provider.patcher_for_game(preset.game)
+        return patcher.create_patch_data(session.layout_description,
+                                         players_config,
+                                         cosmetic_patches)
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME
@@ -540,8 +543,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
-    game_data = description.permalink.get_preset(player).configuration.game_data
-    return data_reader.read_resource_database(game_data["resource_database"])
+    return default_database.resource_database_for(description.permalink.get_preset(player).game)
 
 
 def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> Optional[PickupTarget]:
@@ -557,11 +559,11 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
     if session.state == GameSessionState.SETUP:
         logger().info(f"Session {session_id}, Row {your_membership.row} "
                       f"requested pickups, but session is setup.")
-        return []
+        return None
 
     if your_membership.is_observer:
         logger().info(f"Session {session_id}, {current_user.name} requested pickups, but is an observer.")
-        return []
+        return None
 
     description = session.layout_description
     row_to_member_name = {
@@ -587,9 +589,12 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
             })
 
     logger().info(f"Session {session_id}, Row {your_membership.row} "
-                  f"requested pickups, returning {len(result)} elements.")
+                  f"requested pickups, returning {len(result)} elements for {resource_database.game_enum.value}.")
 
-    return result
+    return {
+        "game": resource_database.game_enum.value,
+        "pickups": result,
+    }
 
 
 def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, game_connection_state: str):
@@ -630,3 +635,60 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_request_pickups", game_session_request_pickups)
     sio.on("game_session_self_update", game_session_self_update)
+
+    @sio.admin_route("/sessions")
+    def admin_sessions(user):
+        lines = []
+        for session in GameSession.select().order_by(GameSession.creation_date):
+            lines.append("<tr><td><a href='{}'>{}</a></td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                flask.url_for('admin_session', session_id=session.id),
+                session.name,
+                session.creator.name,
+                session.creation_date,
+                session.state,
+                len(session.players),
+            ))
+
+        return ("<table border='1'>"
+                "<tr><th>Name</th><th>Creator</th><th>Creation Date</th><th>State</th><th>Num Players</th></tr>"
+                "{}</table>").format("".join(lines))
+
+    @sio.admin_route("/session/<session_id>")
+    def admin_session(user, session_id):
+        session: GameSession = GameSession.get_by_id(session_id)
+
+        rows = []
+        presets = session.all_presets
+
+        for player in session.players:
+            player = typing.cast(GameSessionMembership, player)
+            if player.is_observer:
+                rows.append([
+                    player.effective_name,
+                    "Observer",
+                    "",
+                ])
+            else:
+                preset = presets[player.row]
+                db = default_database.resource_database_for(preset.game)
+
+                inventory = []
+                for item in json.loads(player.inventory):
+                    if item["amount"] + item["capacity"] > 0:
+                        inventory.append("{} x{}/{}".format(
+                            db.get_item(item["index"]).long_name,
+                            item["amount"], item["capacity"]
+                        ))
+
+                rows.append([
+                    player.effective_name,
+                    preset.name,
+                    ", ".join(inventory),
+                ])
+
+        header = ["Name", "Preset", "Inventory"]
+
+        return "<table border='1'><tr>{}</tr>{}</table>".format(
+            "".join(f"<th>{h}</th>" for h in header),
+            "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
+        )

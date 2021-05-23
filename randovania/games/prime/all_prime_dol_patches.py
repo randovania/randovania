@@ -7,7 +7,6 @@ from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.game import RandovaniaGame
 
 
@@ -58,7 +57,7 @@ _remote_execution_max_byte_count = 296
 def remote_execution_patch_start() -> List[BaseInstruction]:
     return_code = remote_execution_patch_end()
     intro = [
-        # setup stack
+        # se(r1tup stack
         stwu(r1, -(_remote_execution_stack_size - 4), r1),
         mfspr(r0, LR),
         stw(r0, _remote_execution_stack_size, r1),
@@ -110,6 +109,7 @@ def remote_execution_patch_end() -> List[BaseInstruction]:
 
 
 def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List[BaseInstruction]:
+    # r31 = CStateManager
     return [
         # setup CHUDMemoParms
         lis(r5, 0x4100),  # 8.0f
@@ -134,22 +134,39 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List
     ]
 
 
-def adjust_item_amount_and_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int,
-                                          ) -> List[BaseInstruction]:
-    return [
-        *increment_item_capacity_patch(patch_addresses, item_id, delta),
+def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, state_mgr: GeneralRegister = r31):
+    if game == RandovaniaGame.PRIME1:
+        return [
+            lwz(target_register, 0x8b8, state_mgr),
+            lwz(target_register, 0, target_register),
+        ]
+    elif game == RandovaniaGame.PRIME2:
+        return [
+            lwz(target_register, 0x150c, state_mgr),
+        ]
+    else:
+        raise ValueError(f"Unsupported game {game}")
 
-        lwz(r3, 0x150c, r31),
+
+def adjust_item_amount_and_capacity_patch(
+        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
+) -> List[BaseInstruction]:
+    # r31 = CStateManager
+    return [
+        *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
+
+        *_load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, abs(delta)),
         bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
     ]
 
 
-def increment_item_capacity_patch(patch_addresses: PowerupFunctionsAddresses, item_id: int, delta: int = 1
-                                  ) -> List[BaseInstruction]:
+def increment_item_capacity_patch(
+        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
+) -> List[BaseInstruction]:
     return [
-        lwz(r3, 0x150c, r31),
+        *_load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, delta),
         bl(patch_addresses.add_power_up),
@@ -186,12 +203,12 @@ def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
     return body_address, body_bytes
 
 
-def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
+def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, energy_per_tank: int,
                                      dol_file: DolFile):
     """
     Patches the base health capacity and the energy tank capacity with matching values.
     """
-    tank_capacity = float(game_specific.energy_per_tank)
+    tank_capacity = float(energy_per_tank)
 
     dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
     dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))

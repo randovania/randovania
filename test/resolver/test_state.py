@@ -1,42 +1,33 @@
-import dataclasses
 from unittest.mock import Mock
 
 import pytest
 
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
-    ResourceLock
+from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import state
+from randovania.resolver.state import StateGameData
 
 
-@pytest.fixture(name="database")
-def _database() -> ResourceDatabase:
-    return Mock(energy_tank=ItemResourceInfo(42, "Energy Tank", "EnergyTank", 14, None),
-                item_percentage=ItemResourceInfo(47, "Item Percentage", "Percentage", 255, None))
-
-
-@pytest.fixture(name="patches")
-def _patches(empty_patches) -> GamePatches:
-    return dataclasses.replace(
-        empty_patches,
-        game_specific=EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=(),
-                                         dangerous_energy_tank=False)
+@pytest.fixture(name="state_game_data")
+def _state_game_data() -> StateGameData:
+    return StateGameData(
+        Mock(energy_tank=ItemResourceInfo(42, "Energy Tank", "EnergyTank", 14, None),
+             item_percentage=ItemResourceInfo(47, "Item Percentage", "Percentage", 255, None)),
+        None,
+        100
     )
 
 
-def test_collected_pickup_indices(database, patches):
+def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
     resources = {
         ItemResourceInfo(1, "A", "A", 50, None): 5,
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
-    s = state.State(resources, (), 99, None, patches, None, database, None)
+    s = state.State(resources, (), 99, None, empty_patches, None, state_game_data)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -45,9 +36,9 @@ def test_collected_pickup_indices(database, patches):
     assert indices == [PickupIndex(1), PickupIndex(15)]
 
 
-def test_add_pickup_to_state(database, patches):
+def test_add_pickup_to_state(state_game_data, empty_patches):
     # Starting State
-    s = state.State({}, (), 99, None, patches, None, database, None)
+    s = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
@@ -68,10 +59,10 @@ def test_add_pickup_to_state(database, patches):
     }
 
 
-def test_assign_pickup_to_starting_items(patches, database):
+def test_assign_pickup_to_starting_items(empty_patches, state_game_data):
     # Setup
 
-    starting = state.State({}, (), 99, None, patches, None, database, None)
+    starting = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
@@ -80,7 +71,7 @@ def test_assign_pickup_to_starting_items(patches, database):
                         (resource_a, 5),
                     ),
                     extra_resources=(
-                        (database.item_percentage, 1),
+                        (state_game_data.resource_database.item_percentage, 1),
                     ),
                     unlocks_resource=True,
                     resource_lock=ResourceLock(resource_a, resource_a, resource_b),
@@ -94,9 +85,9 @@ def test_assign_pickup_to_starting_items(patches, database):
     assert final.resources == {resource_a: 5, resource_b: 0}
 
 
-def test_state_with_pickup(database, patches):
+def test_state_with_pickup(state_game_data, empty_patches):
     # Setup
-    starting = state.State({}, (), 99, None, patches, None, database, None)
+    starting = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,

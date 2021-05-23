@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
+from randovania.games import binary_data
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import binary_data
 
 
 def test_simple_round_trip():
@@ -23,12 +23,6 @@ def test_simple_round_trip():
             "versions": [],
             "misc": [],
             "requirement_template": {},
-        },
-        "game_specific": {
-            "energy_per_tank": 100,
-            "safe_zone_heal_per_second": 1.0,
-            "beam_configurations": [],
-            "dangerous_energy_tank": True,
         },
         "starting_location": {
             "world_asset_id": 1006255871,

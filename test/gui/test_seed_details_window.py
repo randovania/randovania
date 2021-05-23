@@ -2,33 +2,52 @@ import collections
 
 import pytest
 from PySide2 import QtWidgets, QtCore
-from mock import MagicMock, AsyncMock, call
+from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.seed_details_window import SeedDetailsWindow
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
 @pytest.mark.asyncio
 async def test_export_iso(skip_qtbot, mocker):
     # Setup
+    mock_input_dialog = mocker.patch("randovania.gui.seed_details_window.GameInputDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
 
     options = MagicMock()
     options.output_directory = None
 
-    window = SeedDetailsWindow(None, options)
+    window_manager = MagicMock()
+    patcher_provider = window_manager.patcher_provider
+    patcher = patcher_provider.patcher_for_game.return_value
+    patcher.is_busy = False
+
+    window = SeedDetailsWindow(window_manager, options)
     window.layout_description = MagicMock()
     window._player_names = {}
-    window.run_in_background_async = AsyncMock()
+
+    players_config = PlayersConfiguration(
+        player_index=window.current_player_index,
+        player_names=window._player_names,
+    )
 
     # Run
     await window._export_iso()
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    window.run_in_background_async.assert_awaited_once()
+    patcher.create_patch_data.assert_called_once_with(window.layout_description, players_config,
+                                                      options.cosmetic_patches)
+    patcher.patch_game.assert_called_once_with(
+        mock_input_dialog.return_value.input_file,
+        mock_input_dialog.return_value.output_file,
+        patcher.create_patch_data.return_value,
+        window._options.game_files_path,
+        progress_update=ANY,
+    )
 
 
 def test_update_layout_description_no_spoiler(skip_qtbot, mocker):

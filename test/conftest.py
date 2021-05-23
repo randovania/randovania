@@ -5,13 +5,16 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import randovania.games.patchers.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
+from randovania.games import default_data
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
@@ -46,6 +49,11 @@ def default_preset(preset_manager) -> Preset:
 
 
 @pytest.fixture()
+def default_echoes_preset(preset_manager) -> Preset:
+    return preset_manager.default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
+
+
+@pytest.fixture()
 def default_layout_configuration(preset_manager) -> EchoesConfiguration:
     return preset_manager.default_preset.get_preset().configuration
 
@@ -62,7 +70,7 @@ def echoes_item_database() -> ItemDatabase:
 
 @pytest.fixture()
 def echoes_game_data() -> dict:
-    return default_data.decode_default_prime2()
+    return default_data.read_json_then_binary(RandovaniaGame.PRIME2)[1]
 
 
 @pytest.fixture()
@@ -73,7 +81,7 @@ def echoes_game_description(echoes_game_data) -> GameDescription:
 
 @pytest.fixture()
 def corruption_game_data() -> dict:
-    return default_data.decode_default_prime3()
+    return default_data.read_json_then_binary(RandovaniaGame.PRIME3)[1]
 
 
 @pytest.fixture()
@@ -84,7 +92,23 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 
 @pytest.fixture()
 def randomizer_data() -> dict:
-    return default_data.decode_randomizer_data()
+    return randovania.games.patchers.claris_patcher.decode_randomizer_data()
+
+
+@pytest.fixture()
+def blank_pickup() -> PickupEntry:
+    return PickupEntry(
+        name="Blank Pickup",
+        model=PickupModel(
+            game=RandovaniaGame.PRIME2,
+            name="EnergyTransferModule",
+        ),
+        item_category=ItemCategory.SUIT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
+        progression=(),
+        resource_lock=None,
+        unlocks_resource=False,
+    )
 
 
 @pytest.fixture()
@@ -106,7 +130,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches(0, {}, {}, {}, {}, {}, {}, None, {}, None)
+    return GamePatches(0, {}, {}, {}, {}, {}, {}, None, {})
 
 
 def pytest_addoption(parser):

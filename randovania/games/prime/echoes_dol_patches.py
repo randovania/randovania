@@ -7,10 +7,10 @@ from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description import default_database
-from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.layout.beam_configuration import BeamConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -116,8 +116,8 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
 
         body = [
             lwz(r5, 0x774, r30),  # r5 = get current beam
-            addi(r5, r5, 0x1),    # current_beam += 1
-            mtspr(CTR, r5),       # count_register = current_beam
+            addi(r5, r5, 0x1),  # current_beam += 1
+            mtspr(CTR, r5),  # count_register = current_beam
         ]
 
         for beam_index, beam_ammo_types in enumerate(ammo_types):
@@ -127,8 +127,8 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
 
             if beam_ammo_types[index] == -1:
                 instructions.extend([
-                    li(r3, 0),        # No ammo type, so load result
-                    b("_end"),           # and return
+                    li(r3, 0),  # No ammo type, so load result
+                    b("_end"),  # and return
                 ])
             else:
                 instructions.extend([
@@ -149,15 +149,15 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
 
     get_uncharged_cost = [
         custom_ppc.load_unsigned_32bit(r4, symbols["BeamIdToChargedShotAmmoCost"]),
-        lwz(r5, 0x774, r30),             # r5 = get current beam
+        lwz(r5, 0x774, r30),  # r5 = get current beam
         rlwinm(r5, r5, 0x2, 0x0, 0x1d),  # r5 *= 4
-        lwzx(r4, r4, r5),                # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
+        lwzx(r4, r4, r5),  # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
     ]
     compare_count_to_cost = [
         cmpw(0, r3, r4),
         bge(3 * 4, relative=True),  # if ammoCount_3 >= ammoCost_r4, goto
-        li(r3, 1),                  # Not enough ammo, load true
-        b("_end"),                  # and return
+        li(r3, 1),  # Not enough ammo, load true
+        b("_end"),  # and return
     ]
 
     return [
@@ -179,12 +179,12 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
 
         # check ammo type 1
         *get_beam_ammo_amount(0),  # r3 = ammo amount
-        *get_uncharged_cost,     # r4 = uncharged_cost
+        *get_uncharged_cost,  # r4 = uncharged_cost
         *compare_count_to_cost,
 
         # check ammo type 2
         *get_beam_ammo_amount(1),  # r3 = ammo amount
-        *get_uncharged_cost,     # r4 = uncharged_cost
+        *get_uncharged_cost,  # r4 = uncharged_cost
         *compare_count_to_cost,
 
         # All ammo types for this beam are fine!
@@ -201,7 +201,7 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
     ]
 
 
-def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: EchoesGameSpecific,
+def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration: BeamConfiguration,
                           dol_file: DolFile):
     uncharged_costs = []
     charged_costs = []
@@ -209,14 +209,14 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
     missile_costs = []
     ammo_types = []
 
-    for beam_config in game_specific.beam_configurations:
+    for beam_config in beam_configuration.all_beams:
         uncharged_costs.append(beam_config.uncharged_cost)
         charged_costs.append(beam_config.charged_cost)
         combo_costs.append(beam_config.combo_ammo_cost)
         missile_costs.append(beam_config.combo_missile_cost)
         ammo_types.append((
-            beam_config.ammo_a.index if beam_config.ammo_a is not None else -1,
-            beam_config.ammo_b.index if beam_config.ammo_b is not None else -1,
+            beam_config.ammo_a,
+            beam_config.ammo_b,
         ))
 
     # The following patch also changes the fact that the game doesn't check if there's enough ammo for Power Beam
@@ -224,15 +224,15 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
     ammo_type_patch_offset = 0x40
     offset_to_body_end = 0xB4
     ammo_type_patch = [
-        lwz(r10, 0x774, r25),      # r10 = get current beam
-        rlwinm(r10, r10, 0x2, 0x0, 0x1d),        # r10 *= 4
+        lwz(r10, 0x774, r25),  # r10 = get current beam
+        rlwinm(r10, r10, 0x2, 0x0, 0x1d),  # r10 *= 4
 
-        lwzx(r0, r3, r10),                       # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
+        lwzx(r0, r3, r10),  # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
         stw(r0, 0x0, r29),  # *outBeamAmmoCost = r0
 
         lwz(r10, 0x774, r25),  # r10 = get current beam
         addi(r10, r10, 0x1),  # r10 = r10 + 1
-        mtspr(CTR, r10),      # count_register = r10
+        mtspr(CTR, r10),  # count_register = r10
 
         # Power Beam
         bdnz("dark_beam"),  # if (--count_register > 0) goto
@@ -290,9 +290,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ech
 
 def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
                                sda2_base: int,
-                               game_specific: EchoesGameSpecific,
+                               heal_per_second: float,
                                dol_file: DolFile):
-    heal_per_second = game_specific.safe_zone_heal_per_second
     offset = patch_addresses.heal_per_frame_constant - sda2_base
 
     dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))

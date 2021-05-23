@@ -9,7 +9,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item import item_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
+from randovania.games import default_data
 
 
 def default_prime2_game_description() -> GameDescription:
@@ -18,7 +18,7 @@ def default_prime2_game_description() -> GameDescription:
 
 @functools.lru_cache()
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
-    return read_resource_database(default_data.read_json_then_binary(game)[1]["resource_database"])
+    return read_resource_database(game, default_data.read_json_then_binary(game)[1]["resource_database"])
 
 
 def game_description_for(game: RandovaniaGame) -> GameDescription:

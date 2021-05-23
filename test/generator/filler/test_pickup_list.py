@@ -10,7 +10,8 @@ def test_requirement_lists_without_satisfied_resources(echoes_game_description):
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
 
     state = bootstrap.calculate_starting_state(echoes_game_description,
-                                               echoes_game_description.create_game_patches())
+                                               echoes_game_description.create_game_patches(),
+                                               100)
     state.resources[item("Seeker Launcher")] = 1
     state.resources[item("Space Jump Boots")] = 1
     uncollected_resources = []

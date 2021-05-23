@@ -5,6 +5,7 @@ import pytest
 from randovania.game_description.data_reader import WorldReader
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.search import MissingResource
+from randovania.games.game import RandovaniaGame
 
 
 def test_copy_worlds(echoes_game_description):
@@ -31,12 +32,13 @@ def test_invalid_node_type():
 
 def test_area_with_invalid_connections():
     # Setup
-    db = ResourceDatabase([], [], [], [], [], [], {}, 0, 0, 0)
+    db = ResourceDatabase(RandovaniaGame.PRIME2, [], [], [], [], [], [], {}, 0, 0, 0)
     reader = WorldReader(db, None)
 
     with pytest.raises(MissingResource) as e:
         reader.read_area({
             "name": "Broken Area",
+            "asset_id": 1234,
             "nodes": [
                 {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
                 {"name": "Broken", "heal": True, "coordinates": None, "node_type": "generic", "connections": {

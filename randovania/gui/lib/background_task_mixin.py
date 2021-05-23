@@ -7,7 +7,8 @@ from typing import Optional
 
 from PySide2.QtCore import Signal
 
-from randovania.games.prime import claris_randomizer
+import randovania.games.patchers.csharp_subprocess
+from randovania.games.patchers import claris_randomizer
 
 
 class BackgroundTaskMixin:
@@ -17,7 +18,7 @@ class BackgroundTaskMixin:
     _background_thread: Optional[threading.Thread] = None
 
     def _start_thread_for(self, target):
-        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
+        randovania.games.patchers.csharp_subprocess.IO_LOOP = asyncio.get_event_loop()
         self._background_thread = threading.Thread(target=target)
         self._background_thread.start()
 

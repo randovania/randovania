@@ -2,6 +2,7 @@ import dataclasses
 import datetime
 from typing import List, Dict, Optional
 
+from randovania.games.game import RandovaniaGame
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
@@ -52,13 +53,19 @@ class PlayerSessionEntry:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionAction:
-    message: str
+    provider: str
+    receiver: str
+    pickup: str
+    location: str
     time: datetime.datetime
 
     @classmethod
     def from_json(cls, data) -> "GameSessionAction":
         return GameSessionAction(
-            message=data["message"],
+            provider=data["provider"],
+            receiver=data["receiver"],
+            pickup=data["pickup"],
+            location=data["location"],
             time=datetime.datetime.fromisoformat(data["time"]),
         )
 
@@ -76,6 +83,7 @@ class GameSessionEntry:
     permalink: Optional[str]
     state: GameSessionState
     generation_in_progress: Optional[int]
+    allowed_games: List[RandovaniaGame]
 
     @property
     def num_admins(self) -> int:
@@ -106,6 +114,7 @@ class GameSessionEntry:
             permalink=data["permalink"],
             state=GameSessionState(data["state"]),
             generation_in_progress=data["generation_in_progress"],
+            allowed_games=[RandovaniaGame(game) for game in data["allowed_games"]],
         )
 
 

@@ -9,7 +9,8 @@ import pytest
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
@@ -83,6 +84,7 @@ def test_create_game_session(clean_database, preset_manager):
         'word_hash': None,
         'permalink': None,
         'generation_in_progress': None,
+        'allowed_games': ['prime2'],
     }
 
 
@@ -121,6 +123,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'word_hash': None,
         'permalink': None,
         'generation_in_progress': None,
+        'allowed_games': ['prime2'],
     }
 
 
@@ -142,7 +145,7 @@ def test_game_session_request_pickups_not_in_game(flask_app, clean_database):
     result = game_session.game_session_request_pickups(sio, 1)
 
     # Assert
-    assert result == []
+    assert result is None
 
 
 def test_game_session_request_pickups_observer(flask_app, clean_database):
@@ -158,7 +161,7 @@ def test_game_session_request_pickups_observer(flask_app, clean_database):
     result = game_session.game_session_request_pickups(sio, 1)
 
     # Assert
-    assert result == []
+    assert result is None
 
 
 @pytest.fixture(name="two_player_session")
@@ -188,7 +191,8 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
-    pickup = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
+    pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
+                         ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                          progression=((echoes_resource_database.item[0], 1),))
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
@@ -199,7 +203,10 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == [{'provider_name': 'Other Name', 'pickup': 'C?#$nLBI'}]
+    assert result == {
+        "game": "prime2",
+        "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
+    }
 
 
 @patch("flask_socketio.emit", autospec=True)
@@ -373,7 +380,8 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     mock_emit.assert_called_once_with(
         'game_session_update',
         {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [], 'actions': [],
-         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None},
+         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None,
+         'allowed_games': ['prime2'], },
         room='game-session-1')
 
 
@@ -398,10 +406,8 @@ def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_ses
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_player_patcher_file(mock_layout_description: PropertyMock,
-                                                mock_create_patcher_file: MagicMock,
                                                 flask_app,
                                                 clean_database):
     user1 = database.User.create(id=1234, name="The Name")
@@ -414,6 +420,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
+    patcher = sio.patcher_provider.patcher_for_game.return_value
 
     cosmetic = CosmeticPatches(open_map=False)
 
@@ -422,7 +429,11 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         result = game_session.game_session_admin_player(sio, 1, 1234, "create_patcher_file", cosmetic.as_json)
 
     # Assert
-    mock_create_patcher_file.assert_called_once_with(
+    mock_layout_description.return_value.permalink.get_preset.assert_called_once_with(2)
+    sio.patcher_provider.patcher_for_game.assert_called_once_with(
+        mock_layout_description.return_value.permalink.get_preset.return_value.game
+    )
+    patcher.create_patch_data.assert_called_once_with(
         mock_layout_description.return_value,
         PlayersConfiguration(2, {
             0: "Player 1",
@@ -431,7 +442,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         }),
         cosmetic
     )
-    assert result is mock_create_patcher_file.return_value
+    assert result is patcher.create_patch_data.return_value
 
 
 def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):
@@ -816,6 +827,7 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
     mock_layout.return_value.shareable_hash = "ABCDEFG"
     mock_layout.return_value.permalink.spoiler = True
     mock_layout.return_value.permalink.as_base64_str = "<permalink>"
+    mock_layout.return_value.permalink.get_preset.return_value.game = RandovaniaGame.PRIME2
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
@@ -858,7 +870,10 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "presets": [],
         "actions": [
             {
-                "message": "Other found The Pickup for The Name.",
+                "location": "Temple Grounds/Hive Chamber A/Pickup (Missile)",
+                "pickup": "The Pickup",
+                "provider": "Other",
+                "receiver": "The Name",
                 "time": "2020-05-02T10:20:00+00:00",
             }
         ],
@@ -867,4 +882,5 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "seed_hash": "ABCDEFG",
         "permalink": "<permalink>",
         "generation_in_progress": None,
+        'allowed_games': ['prime2'],
     }
