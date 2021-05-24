@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Trial Grounds, reaching the door:
     - From the portal with Space Jump and a Slope Jump is now Beginner (from Intermediate).
     - From the left safe zone with a Dash is now Intermediate (from Expert) and without anything is now Advanced (from Expert).
+	
+-	Changed: Mine Shaft, Opening the Seeker Lock without Seekers is now Advanced (From Expert).
 
 ## [2.6.1] - 2021-05-05
 
