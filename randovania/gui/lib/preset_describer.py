@@ -12,7 +12,7 @@ from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
-from randovania.layout.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 
 def _bool_to_str(b: bool) -> str:
@@ -405,7 +405,7 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
 
     qol_changes = []
     if configuration.vault_ledge_door_unlocked:
-        qol_changes.append("Vault ledge door unlock")
+        qol_changes.append("Vault ledge door unlocked")
     if configuration.elevators.skip_final_bosses:
         qol_changes.append("Final bosses removed")
 
@@ -415,13 +415,8 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
     if not template_strings["Game Changes"]:
         template_strings.pop("Game Changes")
 
-    # Sky Temple Keys
-    # if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-    #     template_strings["Items"].append("Sky Temple Keys at all bosses")
-    # elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-    #     template_strings["Items"].append("Sky Temple Keys at all guardians")
-    # else:
-    #     template_strings["Items"].append(f"{configuration.sky_temple_keys.num_keys} Artifacts shuffled")
+    # Artifacts
+    template_strings["Items"].append(f"{configuration.artifacts.num_keys} Artifacts shuffled")
 
     # Item Model
     if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:

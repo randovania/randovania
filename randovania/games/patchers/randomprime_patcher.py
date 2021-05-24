@@ -28,7 +28,7 @@ from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 _STARTING_ITEM_NAME_TO_INDEX = {
