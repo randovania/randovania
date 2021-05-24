@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   **Major** - Metroid Prime 1 is now fully supported, including multiworld!
+
 -   **Major** - Presets are now presented in a tree view, with custom presets being nested under another one. They're also saved separately from Randovania data.
 
 -   Added: Auto tracker now supports Prime 1.

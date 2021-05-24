@@ -8,7 +8,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
 from randovania.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -29,7 +29,7 @@ class Preset(BitPackValue):
     description: str
     base_preset_uuid: Optional[uuid.UUID]
     game: RandovaniaGame
-    configuration: Union[EchoesConfiguration, CorruptionConfiguration]
+    configuration: Union[PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration]
 
     @property
     def as_json(self) -> dict:
