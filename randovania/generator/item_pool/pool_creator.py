@@ -1,4 +1,5 @@
-from typing import Tuple
+import typing
+from typing import Tuple, Callable, Dict
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -12,12 +13,39 @@ from randovania.generator.item_pool.energy_cells import add_energy_cells
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.layout.base_configuration import BaseConfiguration
+from randovania.layout.corruption_configuration import CorruptionConfiguration
+from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     base_results.pickups.extend(extension.pickups)
     base_results.assignment.update(extension.assignment)
     add_resources_into_another(base_results.initial_resources, extension.initial_resources)
+
+
+def prime1_specific_pool(results: PoolResults, configuration: PrimeConfiguration, db: ResourceDatabase):
+    _extend_pool_results(results, add_artifacts(db, configuration.artifacts))
+
+
+def echoes_specific_pool(results: PoolResults, configuration: EchoesConfiguration, db: ResourceDatabase):
+    # Adding Dark Temple Keys to pool
+    _extend_pool_results(results, add_dark_temple_keys(db))
+
+    # Adding Sky Temple Keys to pool
+    _extend_pool_results(results, add_sky_temple_key_distribution_logic(db, configuration.sky_temple_keys))
+
+
+def corruption_specific_pool(results: PoolResults, configuration: CorruptionConfiguration, db: ResourceDatabase):
+    # Adding Energy Cells to pool
+    _extend_pool_results(results, add_energy_cells(db))
+
+
+_GAME_SPECIFIC = typing.cast(Dict[RandovaniaGame, Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]], {
+    RandovaniaGame.PRIME1: prime1_specific_pool,
+    RandovaniaGame.PRIME2: echoes_specific_pool,
+    RandovaniaGame.PRIME3: corruption_specific_pool,
+})
 
 
 def calculate_pool_results(layout_configuration: BaseConfiguration,
@@ -42,21 +70,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
                                          layout_configuration.ammo_configuration,
                                          layout_configuration.major_items_configuration.calculate_provided_ammo()))
 
-    if layout_configuration.game == RandovaniaGame.PRIME2:
-        # Adding Dark Temple Keys to pool
-        _extend_pool_results(base_results, add_dark_temple_keys(resource_database))
-
-        # Adding Sky Temple Keys to pool
-        _extend_pool_results(base_results,
-                             add_sky_temple_key_distribution_logic(resource_database,
-                                                                   layout_configuration.sky_temple_keys))
-
-    elif layout_configuration.game == RandovaniaGame.PRIME3:
-        # Adding Energy Cells to pool
-        _extend_pool_results(base_results, add_energy_cells(resource_database))
-
-    elif layout_configuration.game == RandovaniaGame.PRIME1:
-        _extend_pool_results(base_results, add_artifacts(resource_database))
+    _GAME_SPECIFIC[layout_configuration.game](base_results, layout_configuration, resource_database)
 
     return base_results
 

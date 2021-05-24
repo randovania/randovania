@@ -416,7 +416,7 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         template_strings.pop("Game Changes")
 
     # Artifacts
-    template_strings["Items"].append(f"{configuration.artifacts.num_keys} Artifacts shuffled")
+    template_strings["Items"].append(f"{configuration.artifacts.num_artifacts} Artifacts shuffled")
 
     # Item Model
     if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
