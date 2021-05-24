@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Changed: Opening the Seeker Lock without Seekers in Plain of Dark Worship is now Expert (From Hypermode).
 
+-	Changed: Reaching Wind Chamber Gateway Door from Wind Chamber Tunnel with a Boost Jump is now Hypermode (From Expert).
+
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
