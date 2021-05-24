@@ -29,7 +29,7 @@ class Preset(BitPackValue):
     description: str
     base_preset_uuid: Optional[uuid.UUID]
     game: RandovaniaGame
-    configuration: Union[EchoesConfiguration, CorruptionConfiguration]
+    configuration: Union[PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration]
 
     @property
     def as_json(self) -> dict:
