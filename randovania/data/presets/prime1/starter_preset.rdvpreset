@@ -1,10 +1,10 @@
 {
     "schema_version": 10,
-    "uuid": "5682c9ef-d447-4327-b473-ba1216d83439",
-    "name": "Corruption Preset",
-    "description": "Corruption lol",
+    "uuid": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
+    "name": "Starter Preset",
+    "description": "This preset unlocks things in the world and changes suits behavior in order to improve world navigation and remove certain items being obsoleted by others.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
     "base_preset_uuid": null,
-    "game": "prime3",
+    "game": "prime1",
     "configuration": {
         "trick_level": {
             "minimal_logic": false,
@@ -12,8 +12,8 @@
         },
         "starting_location": [
             {
-                "world_asset_id": 13921744762140409337,
-                "area_asset_id": 15622764306970326849
+                "world_asset_id": 972217896,
+                "area_asset_id": 2993688902
             }
         ],
         "available_locations": {
@@ -23,7 +23,7 @@
         "major_items_configuration": {
             "items_state": {
                 "Charge Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Power Beam": {
                     "num_included_in_starting_items": 1
@@ -31,30 +31,19 @@
                 "Plasma Beam": {
                     "num_shuffled_pickups": 1
                 },
-                "Nova Beam": {
+                "Ice Beam": {
                     "num_shuffled_pickups": 1
                 },
-                "Progressive Beam": {},
+                "Wave Beam": {
+                    "num_shuffled_pickups": 1
+                },
                 "Missile Launcher": {
                     "num_shuffled_pickups": 1,
                     "included_ammo": [
                         5
                     ]
                 },
-                "Ice Missile": {
-                    "num_shuffled_pickups": 1
-                },
-                "Seeker Missile": {
-                    "num_shuffled_pickups": 1
-                },
-                "Progressive Missile": {},
-                "Grapple Lasso": {
-                    "num_shuffled_pickups": 1
-                },
-                "Grapple Swing": {
-                    "num_shuffled_pickups": 1
-                },
-                "Grapple Voltage": {
+                "Grapple Beam": {
                     "num_shuffled_pickups": 1
                 },
                 "Combat Visor": {
@@ -63,56 +52,59 @@
                 "Scan Visor": {
                     "num_included_in_starting_items": 1
                 },
-                "Command Visor": {
+                "Thermal Visor": {
                     "num_shuffled_pickups": 1
                 },
                 "X-Ray Visor": {
                     "num_shuffled_pickups": 1
                 },
                 "Space Jump Boots": {
-                    "num_included_in_starting_items": 1
-                },
-                "Screw Attack": {
-                    "num_shuffled_pickups": 1
-                },
-                "Hazard Shield": {
                     "num_shuffled_pickups": 1
                 },
                 "Energy Tank": {
                     "num_shuffled_pickups": 14
                 },
                 "Morph Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
-                "Morph Ball Bombs": {
-                    "num_included_in_starting_items": 1
+                "Morph Ball Bomb": {
+                    "num_shuffled_pickups": 1
                 },
                 "Boost Ball": {
                     "num_shuffled_pickups": 1
                 },
+                "Power Bomb": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        4
+                    ]
+                },
                 "Spider Ball": {
                     "num_shuffled_pickups": 1
                 },
-                "Hypermode": {
+                "Power Suit": {
+                    "num_included_in_starting_items": 1
+                },
+                "Varia Suit": {
                     "num_shuffled_pickups": 1
                 },
-                "Hyper Missile": {
+                "Gravity Suit": {
                     "num_shuffled_pickups": 1
                 },
-                "Hyper Ball": {
+                "Phazon Suit": {
                     "num_shuffled_pickups": 1
                 },
-                "Hyper Grapple": {
+                "Super Missile": {
                     "num_shuffled_pickups": 1
                 },
-                "Ship Grapple": {
+                "Wavebuster": {
                     "num_shuffled_pickups": 1
                 },
-                "Ship Missile": {
-                    "num_shuffled_pickups": 1,
-                    "included_ammo": [
-                        3
-                    ]
+                "Ice Spreader": {
+                    "num_shuffled_pickups": 1
+                },
+                "Flamethrower": {
+                    "num_shuffled_pickups": 1
                 }
             },
             "default_items": {},
@@ -122,7 +114,7 @@
         "ammo_configuration": {
             "maximum_ammo": {
                 "4": 250,
-                "45": 11
+                "7": 8
             },
             "items_state": {
                 "Missile Expansion": {
@@ -130,9 +122,9 @@
                     "pickup_count": 49,
                     "requires_major_item": true
                 },
-                "Ship Missile Expansion": {
+                "Power Bomb Expansion": {
                     "variance": 0,
-                    "pickup_count": 8,
+                    "pickup_count": 4,
                     "requires_major_item": true
                 }
             }
@@ -149,6 +141,13 @@
             "allow_unvisited_room_names": true
         },
         "energy_per_tank": 100,
-        "dangerous_energy_tank": false
+        "artifacts": 12,
+        "heat_damage": 10.0,
+        "heat_protection_only_varia": true,
+        "progressive_damage_reduction": true,
+        "qol_logical": true,
+        "qol_game_breaking": true,
+        "qol_minor_cutscenes": false,
+        "qol_major_cutscenes": false
     }
 }

@@ -12,7 +12,7 @@ from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
-from randovania.layout.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 
 def _bool_to_str(b: bool) -> str:
@@ -22,7 +22,7 @@ def _bool_to_str(b: bool) -> str:
         return "No"
 
 
-_ECHOES_TEMPLATE_STRINGS = {
+_BASE_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
         "Randomization Mode: {randomization_mode}",
@@ -35,7 +35,6 @@ _ECHOES_TEMPLATE_STRINGS = {
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
-        "Translator Gates: {translator_gates}",
     ],
     "Difficulty": [
         "Damage Strictness: {damage_strictness}",
@@ -67,38 +66,11 @@ _CORRUPTION_TEMPLATE_STRINGS = {
     ],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
-        "1 HP Mode: {dangerous_energy_tank}",
         "Damage Strictness: {damage_strictness}",
         "Pickup Model: {pickup_model}",
     ],
 }
 
-_PRIME_TEMPLATE_STRINGS = {
-    "Item Placement": [
-        "Trick Level: {trick_level}",
-        "Randomization Mode: {randomization_mode}",
-        "Random Starting Items: {random_starting_items}",
-    ],
-    "Items": [
-        "Starting Items: {starting_items}",
-        "Item Pool: {item_pool}",
-        "Item Pool Size: {item_pool_size}",
-    ],
-    "Gameplay": [
-        "Starting Location: {starting_location}",
-        "Elevators: {elevators}",
-    ],
-    "Game Changes": [
-        "Missiles needs Launcher: {missile_launcher_required}",
-        "Power Bomb needs Main: {main_pb_required}",
-        "Final bosses included? {include_final_bosses}",
-    ],
-    "Difficulty": [
-        "Energy Tank: {energy_tank}",
-        "Damage Strictness: {damage_strictness}",
-        "Pickup Model: {pickup_model}",
-    ],
-}
 _EXPECTED_ITEMS = {
     RandovaniaGame.PRIME1: {
         "Scan Visor",
@@ -264,7 +236,7 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
 def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
-    template_strings = copy.deepcopy(_ECHOES_TEMPLATE_STRINGS)
+    template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
 
     format_params = {}
 
@@ -308,10 +280,9 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
         if translator_config == configuration.translator_configuration:
             translator_gates = name
             break
+    template_strings["Gameplay"].append(f"Translator Gates: {translator_gates}")
 
-    format_params["translator_gates"] = translator_gates
-    format_params["hints"] = "Yes"
-
+    # Elevators
     if not configuration.elevators.is_vanilla:
         template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.description()}")
 
@@ -367,7 +338,6 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     major_items = configuration.major_items_configuration
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
-                     "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
                      "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
                      "elevators": configuration.elevators.description(),
                      "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
@@ -387,15 +357,26 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     return format_params
 
 
-def _prime_format_params(configuration: PrimeConfiguration) -> dict:
+def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
+    item_database = default_database.item_database_for_game(configuration.game)
+    template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
 
-    format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
-                     "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
-                     "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
-                     "elevators": configuration.elevators.description()
-                     }
+    format_params = {}
 
+    # Difficulty
+    if configuration.heat_damage != 10.0:
+        template_strings["Difficulty"].append("Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage))
+
+    if configuration.energy_per_tank != 100:
+        template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
+
+    # Gameplay
+
+    if not configuration.elevators.is_vanilla:
+        template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.description()}")
+
+    # Game Changes
     missile_launcher_required = True
     main_pb_required = True
     for ammo, state in configuration.ammo_configuration.items_state.items():
@@ -404,10 +385,40 @@ def _prime_format_params(configuration: PrimeConfiguration) -> dict:
         elif ammo.name == "Power Bomb Expansion":
             main_pb_required = state.requires_major_item
 
-    format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
-    format_params["main_pb_required"] = _bool_to_str(main_pb_required)
+    required_messages = []
+    if missile_launcher_required:
+        required_messages.append("Missiles needs Launcher")
+    if main_pb_required:
+        required_messages.append("Power Bomb needs Main")
+    if configuration.heat_protection_only_varia:
+        required_messages.append("Varia-only heat protection")
+    if configuration.progressive_damage_reduction:
+        required_messages.append("Progressive suit damage reduction")
 
-    return format_params
+    if required_messages:
+        template_strings["Game Changes"].append(", ".join(required_messages))
+
+    qol_changes = []
+    if configuration.vault_ledge_door_unlocked:
+        qol_changes.append("Vault ledge door unlocked")
+    if configuration.elevators.skip_final_bosses:
+        qol_changes.append("Final bosses removed")
+
+    if qol_changes:
+        template_strings["Game Changes"].append(", ".join(qol_changes))
+
+    if not template_strings["Game Changes"]:
+        template_strings.pop("Game Changes")
+
+    # Artifacts
+    template_strings["Items"].append(f"{configuration.artifacts.num_artifacts} Artifacts shuffled")
+
+    # Item Model
+    if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
+        template_strings["Difficulty"].append(f"Pickup: {configuration.pickup_model_style.long_name} "
+                                              f"({configuration.pickup_model_data_source.long_name})")
+
+    return template_strings, format_params
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
@@ -425,8 +436,8 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
         format_params.update(_corruption_format_params(configuration))
 
     elif preset.game == RandovaniaGame.PRIME1:
-        template_strings = copy.deepcopy(_PRIME_TEMPLATE_STRINGS)
-        format_params.update(_prime_format_params(configuration))
+        template_strings, params = _prime_format_params(configuration)
+        format_params.update(params)
 
     if configuration.multi_pickup_placement:
         template_strings["Item Placement"].append("Multi-pickup placement")

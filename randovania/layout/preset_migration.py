@@ -291,6 +291,9 @@ def _migrate_v9(preset: dict) -> dict:
     base_preset_name = preset.pop("base_preset_name")
     preset["base_preset_uuid"] = _name_to_uuid.get(base_preset_name, str(uuid.uuid4()))
 
+    if preset["game"] != "prime2":
+        preset["configuration"].pop("dangerous_energy_tank")
+
     return preset
 
 

@@ -20,10 +20,10 @@ from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWi
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -338,8 +338,11 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
             except InvalidPreset as e:
                 logging.exception(f"Invalid preset for {preset.name}")
-                description = (f"Preset {preset.name} can't be used as it contains the following error:"
-                               f"\n{e.original_exception}")
+                description = (
+                    f"Preset {preset.name} can't be used as it contains the following error:"
+                    f"\n{e.original_exception}\n"
+                    f"\nPlease open edit the preset file with id {preset.uuid} manually or delete this preset."
+                )
 
         self.window.create_preset_description.setText(description)
         for btn in [self.window.create_generate_button, self.window.create_generate_race_button]:
