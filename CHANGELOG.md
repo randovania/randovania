@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
 
+-	Added: Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
+
 -   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
