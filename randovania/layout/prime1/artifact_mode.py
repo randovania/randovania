@@ -19,5 +19,5 @@ class LayoutArtifactMode(BitPackEnum, Enum):
     TWELVE = 12
 
     @property
-    def num_keys(self):
+    def num_artifacts(self):
         return self.value
