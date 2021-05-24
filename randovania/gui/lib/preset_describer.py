@@ -73,6 +73,7 @@ _CORRUPTION_TEMPLATE_STRINGS = {
 
 _EXPECTED_ITEMS = {
     RandovaniaGame.PRIME1: {
+        "Combat Visor",
         "Scan Visor",
         "Power Beam"
     },
@@ -399,10 +400,14 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         template_strings["Game Changes"].append(", ".join(required_messages))
 
     qol_changes = []
-    if configuration.vault_ledge_door_unlocked:
-        qol_changes.append("Vault ledge door unlocked")
-    if configuration.elevators.skip_final_bosses:
-        qol_changes.append("Final bosses removed")
+    for flag, message in ((configuration.qol_logical, "Logical QOL"),
+                          (configuration.qol_game_breaking, "Game Breaking QOL"),
+                          (configuration.qol_minor_cutscenes, "Minor Cutscenes QOL"),
+                          (configuration.qol_major_cutscenes, "Major Cutscenes QOL"),
+                          (configuration.elevators.skip_final_bosses, "Final bosses removed"),
+                          ):
+        if flag:
+            qol_changes.append(message)
 
     if qol_changes:
         template_strings["Game Changes"].append(", ".join(qol_changes))

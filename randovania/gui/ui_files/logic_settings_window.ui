@@ -445,16 +445,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="0" colspan="3">
-               <widget class="QLabel" name="energy_tank_capacity_description">
-                <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.&lt;/p&gt;&lt;p&gt;While logic will respect this value, only the original value (100) has been tested.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="2">
                <widget class="QSpinBox" name="energy_tank_capacity_spin_box">
                 <property name="suffix">
@@ -465,6 +455,30 @@
                 </property>
                 <property name="maximum">
                  <number>1000</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="3">
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="3">
+               <widget class="QLabel" name="energy_tank_capacity_description">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.&lt;/p&gt;&lt;p&gt;While logic will respect this value, only the original value (100) has been tested.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="energy_tank_capacity_label">
+                <property name="text">
+                 <string>Energy per tank</string>
                 </property>
                </widget>
               </item>
@@ -484,17 +498,10 @@
                 </property>
                </spacer>
               </item>
-              <item row="3" column="0" colspan="3">
-               <widget class="Line" name="line">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="energy_tank_capacity_label">
+              <item row="5" column="0" colspan="2">
+               <widget class="QCheckBox" name="progressive_damage_reduction_check">
                 <property name="text">
-                 <string>Energy per tank</string>
+                 <string>Damage reduction depends on how many suits you have, not which</string>
                 </property>
                </widget>
               </item>
@@ -647,6 +654,55 @@
             </widget>
            </item>
            <item>
+            <widget class="QGroupBox" name="heated_damage_box">
+             <property name="title">
+              <string>Heated rooms</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0" colspan="2">
+               <widget class="QLabel" name="heated_damage_description">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in heated rooms, when you don't have proper protection.&lt;/p&gt;&lt;p&gt;Logic always use the default value for checking, so higher values may cause impossible games.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QCheckBox" name="heated_damage_varia_check">
+                <property name="text">
+                 <string>Only Varia Suit provides heat protection, instead of all suits.</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="heated_damage_label">
+                <property name="text">
+                 <string>Heated damage rate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="heated_damage_spin">
+                <property name="suffix">
+                 <string> energy/s</string>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
             <spacer name="energy_tank_spacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -687,9 +743,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-20</y>
-                <width>741</width>
-                <height>643</height>
+                <y>0</y>
+                <width>383</width>
+                <height>881</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="elevator_layout">
@@ -902,8 +958,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>76</width>
-                <height>16</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="starting_locations_layout">
