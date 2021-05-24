@@ -148,8 +148,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
-        self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
         if self.game_enum == RandovaniaGame.PRIME2:
+            self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
             self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
             self.varia_suit_spin_box.setValue(config.varia_suit_damage)

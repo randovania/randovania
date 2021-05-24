@@ -76,13 +76,14 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-@pytest.mark.parametrize(("preset_name", "ignore_events", "ignore_pickups"), [
-    ("Starter Preset", {91}, set()),  # Echoes
-    ("Corruption Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
-    ("Prime Preset", {33}, set())  # Prime
+@pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
+    (RandovaniaGame.PRIME2, "Starter Preset", {91}, set()),  # Echoes
+    (RandovaniaGame.PRIME3, "Starter Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
+    (RandovaniaGame.PRIME1, "Starter Preset", {33}, set())  # Prime
 ])
-def test_database_collectable(preset_manager, preset_name, ignore_events, ignore_pickups):
-    game, initial_state, permalink = run_bootstrap(preset_manager.included_preset_with_name(preset_name).get_preset())
+def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):
+    game, initial_state, permalink = run_bootstrap(
+        preset_manager.included_preset_with(game_enum, preset_name).get_preset())
     all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)

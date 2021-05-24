@@ -2,6 +2,7 @@ import json
 import os
 from unittest.mock import MagicMock, ANY
 
+import randovania
 from randovania.games.patchers.randomprime_patcher import RandomprimePatcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -23,24 +24,59 @@ def test_create_patch_data(test_files_dir):
     # Assert
     assert data == {
         'seed': 1499122484,
-        'preferences': {'skipHudmenus': True, 'obfuscateItems': False, 'mapDefaultState': None,
-                        'artifactHintBehavior': None, 'trilogyDiscPath': None, 'keepFmvs': True,
-                        'quickplay': False, 'quiet': False},
+        'preferences': {
+            'artifactHintBehavior': None,
+            'mapDefaultState': 'visible',
+            'obfuscateItems': False,
+            'qolCosmetic': True,
+            'qolGameBreaking': True,
+            'qolLogical': True,
+            'qolMajorCutscenes': False,
+            'qolMinorCutscenes': False,
+            'quickplay': False,
+            'quiet': False,
+            'trilogyDiscPath': None,
+        },
         'gameConfig': {
-            'startingRoom': 'Tallon Overworld:Landing Site', 'startingMemo': '5 Missiles',
-            'nonvariaHeatDamage': True, 'staggered_suit_damage': True,
+            'artifactHints': None,
             'autoEnabledElevators': False,
-            'startingItems': {'powerBeam': True, 'ice': False, 'wave': False, 'plasma': False,
-                              'missiles': 5, 'scanVisor': True, 'bombs': False, 'powerBombs': 0,
-                              'flamethrower': False, 'thermalVisor': False, 'charge': False,
-                              'superMissile': False, 'grapple': False, 'xray': False,
-                              'iceSpreader': False, 'spaceJump': True, 'morphBall': True,
-                              'boostBall': False, 'spiderBall': False, 'gravitySuit': False,
-                              'variaSuit': False, 'phazonSuit': False, 'energyTanks': 0,
-                              'wavebuster': False}, 'etankCapacity': 110,
-            'mainMenuMessage': 'Culling Chamber Staging',
-            'gameBanner': {'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - ALKZLIJL'}},
+            'creditsString': None,
+            'etankCapacity': 110,
+            'gameBanner': {'description': 'Seed Hash: Culling Chamber Staging',
+                           'gameName': 'Metroid Prime: Randomizer',
+                           'gameNameFull': 'Metroid Prime: Randomizer - ALKZLIJL'},
+            'heatDamagePerSec': 10.0,
+            'mainMenuMessage': f'{randovania.VERSION}\nCulling Chamber Staging',
+            'nonvariaHeatDamage': True,
+            'staggeredSuitDamage': True,
+            'startingItems': {
+                'bombs': False,
+                'boostBall': False,
+                'charge': False,
+                'energyTanks': 0,
+                'flamethrower': False,
+                'grapple': False,
+                'gravitySuit': False,
+                'ice': False,
+                'iceSpreader': False,
+                'missiles': 5,
+                'morphBall': True,
+                'phazonSuit': False,
+                'plasma': False,
+                'powerBeam': True,
+                'powerBombs': 0,
+                'scanVisor': True,
+                'spaceJump': True,
+                'spiderBall': False,
+                'superMissile': False,
+                'thermalVisor': False,
+                'variaSuit': False,
+                'wave': False,
+                'wavebuster': False,
+                'xray': False,
+            },
+            'startingMemo': '5 Missiles',
+            'startingRoom': 'Tallon Overworld:Landing Site'},
         'levelData': {
             'Impact Crater': {'transports': {}, 'rooms': {}},
             'Phendrana Drifts': {

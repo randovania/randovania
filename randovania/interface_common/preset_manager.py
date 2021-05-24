@@ -105,9 +105,9 @@ class PresetManager:
         os.remove(path)
         _commit(f"Remove preset '{preset.name}'", path, self._data_dir.parent, True)
 
-    def included_preset_with_name(self, preset_name: str) -> Optional[VersionedPreset]:
+    def included_preset_with(self, game: RandovaniaGame, name: str) -> Optional[VersionedPreset]:
         for preset in self.included_presets.values():
-            if preset.name == preset_name:
+            if preset.game == game and preset.name == name:
                 return preset
 
         return None

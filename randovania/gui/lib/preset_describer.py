@@ -66,7 +66,6 @@ _CORRUPTION_TEMPLATE_STRINGS = {
     ],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
-        "1 HP Mode: {dangerous_energy_tank}",
         "Damage Strictness: {damage_strictness}",
         "Pickup Model: {pickup_model}",
     ],
@@ -339,7 +338,6 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     major_items = configuration.major_items_configuration
 
     format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
-                     "dangerous_energy_tank": _bool_to_str(configuration.dangerous_energy_tank),
                      "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
                      "elevators": configuration.elevators.description(),
                      "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
@@ -367,14 +365,11 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
     format_params = {}
 
     # Difficulty
-    # if configuration.heat_damage != (6, 1.2):
-    #     template_strings["Difficulty"].append("Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage))
+    if configuration.heat_damage != 10.0:
+        template_strings["Difficulty"].append("Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage))
 
     if configuration.energy_per_tank != 100:
         template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
-
-    if configuration.dangerous_energy_tank:
-        template_strings["Difficulty"].append("1-HP Mode")
 
     # Gameplay
 
