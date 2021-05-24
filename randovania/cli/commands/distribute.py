@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
+from randovania.games.game import RandovaniaGame
 from randovania.resolver import debug
 
 
@@ -15,7 +16,7 @@ def distribute_command_logic(args):
         from randovania.interface_common.preset_manager import PresetManager
 
         preset_manager = PresetManager(None)
-        preset = preset_manager.included_preset_with_name(args_.preset_name).get_preset()
+        preset = preset_manager.included_preset_with(RandovaniaGame(args_.game), args_.preset_name).get_preset()
 
         return Permalink(
             args_.seed_number,
@@ -65,6 +66,8 @@ def add_distribute_command(sub_parsers):
     group.add_argument("--permalink", type=str, help="The permalink to use")
     group.add_argument("--preset-name", type=str, help="The name of the preset to use")
 
+    parser.add_argument("--game", choices=[game.value for game in RandovaniaGame],
+                        required=True, help="The name of the game of the preset to use.")
     parser.add_argument("--seed-number", type=int, default=0, help="If using a preset, the seed number. Defaults to 0.")
     parser.add_argument("--player-count", type=int, default=1,
                         help="If using a preset, the number of players. Defaults to 1.")

@@ -11,6 +11,7 @@ from typing import Optional, List, Union
 
 import py_randomprime
 
+import randovania
 from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
@@ -233,15 +234,26 @@ class RandomprimePatcher(Patcher):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
+        if cosmetic_patches.open_map:
+            map_default_state = "visible"
+        else:
+            map_default_state = "default"
+
+        # credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
+
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
-                "skipHudmenus": cosmetic_patches.disable_hud_popup,
+                "qolGameBreaking": configuration.qol_game_breaking,
+                "qolCosmetic": cosmetic_patches.disable_hud_popup,
+                "qolLogical": configuration.qol_logical,
+                "qolMinorCutscenes": configuration.qol_minor_cutscenes,
+                "qolMajorCutscenes": configuration.qol_major_cutscenes,
+
                 "obfuscateItems": False,
-                "mapDefaultState": None,
+                "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
                 "trilogyDiscPath": None,
-                "keepFmvs": False,
                 "quickplay": False,
                 "quiet": False,
             },
@@ -249,8 +261,9 @@ class RandomprimePatcher(Patcher):
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
                 "startingMemo": starting_memo,
 
-                "nonvariaHeatDamage": True,
-                "staggered_suit_damage": True,
+                "nonvariaHeatDamage": configuration.heat_protection_only_varia,
+                "staggeredSuitDamage": configuration.progressive_damage_reduction,
+                "heatDamagePerSec": configuration.heat_damage,
                 "autoEnabledElevators": patches.starting_items.get(scan_visor, 0) == 0,
 
                 "startingItems": {
@@ -259,12 +272,16 @@ class RandomprimePatcher(Patcher):
                 },
 
                 "etankCapacity": configuration.energy_per_tank,
-                "mainMenuMessage": description.shareable_word_hash,
 
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",
                     "gameNameFull": "Metroid Prime: Randomizer - {}".format(description.shareable_hash),
+                    "description": "Seed Hash: {}".format(description.shareable_word_hash),
                 },
+                "mainMenuMessage": "{}\n{}".format(randovania.VERSION, description.shareable_word_hash),
+
+                "creditsString": None,
+                "artifactHints": None,
             },
             "levelData": world_data,
         }
