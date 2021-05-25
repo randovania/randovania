@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, ANY
 
 import pytest
 
@@ -10,9 +10,7 @@ from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -451,6 +449,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
                                mock_item_create_hints: MagicMock,
                                mock_logbook_title_string_patches: MagicMock,
                                stk_mode: SkyTempleKeyHintMode,
+                               mocker,
                                ):
     # Setup
     game = MagicMock()
@@ -461,14 +460,17 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     mock_stk_hide_hints.return_value = ["hide", "hints"]
     player_config = PlayersConfiguration(0, {0: "you"})
     mock_logbook_title_string_patches.return_values = []
+    mock_area_namer: MagicMock = mocker.patch("randovania.games.prime.patcher_file_lib.hint_lib.AreaNamer")
 
     # Run
-    result = claris_patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
-                                                        game,
-                                                        all_patches,
-                                                        player_config,
-                                                        rng,
-                                                        )
+    result = claris_patcher_file._create_string_patches(
+        HintConfiguration(sky_temple_keys=stk_mode),
+        game,
+        all_patches,
+        {0: RandovaniaGame.PRIME2},
+        player_config,
+        rng,
+    )
 
     # Assert
     expected_result = ["item", "hints"]
@@ -481,9 +483,11 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
         expected_result.extend(["hide", "hints"])
 
     else:
-        mock_stk_create_hints.assert_called_once_with(all_patches, player_config, game.world_list,
+        mock_stk_create_hints.assert_called_once_with(all_patches, player_config, game.resource_database,
+                                                      {0: mock_area_namer.return_value},
                                                       stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
         mock_stk_hide_hints.assert_not_called()
+        mock_area_namer.assert_called_once_with(ANY)
         expected_result.extend(["show", "hints"])
 
     assert result == expected_result

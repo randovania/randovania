@@ -1,7 +1,8 @@
 import asyncio
+import copy
 from typing import Optional, Tuple, Callable, FrozenSet
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
@@ -173,7 +174,7 @@ async def resolve(configuration: EchoesConfiguration,
     if status_update is None:
         status_update = _quiet_print
 
-    game = data_reader.decode_data(configuration.game_data)
+    game = copy.deepcopy(default_database.game_description_for(configuration.game))
     event_pickup.replace_with_event_pickups(game)
 
     new_game, starting_state = logic_bootstrap(configuration, game, patches)

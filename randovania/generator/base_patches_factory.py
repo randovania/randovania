@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from random import Random
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
@@ -26,23 +26,23 @@ class MissingRng(Exception):
     pass
 
 
-def add_elevator_connections_to_patches(layout_configuration: EchoesConfiguration,
+def add_elevator_connections_to_patches(configuration: EchoesConfiguration,
                                         rng: Random,
                                         patches: GamePatches) -> GamePatches:
     """
-    :param layout_configuration:
+    :param configuration:
     :param rng:
     :param patches:
     :return:
     """
     elevator_connection = copy.copy(patches.elevator_connection)
-    elevators = layout_configuration.elevators
+    elevators = configuration.elevators
 
     if not elevators.is_vanilla:
         if rng is None:
             raise MissingRng("Elevator")
 
-        world_list = data_reader.decode_data(layout_configuration.game_data).world_list
+        world_list = default_database.game_description_for(configuration.game).world_list
         elevator_db = elevator_distributor.create_elevator_database(
             world_list, elevators.editable_teleporters)
 

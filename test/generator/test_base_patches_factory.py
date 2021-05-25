@@ -20,12 +20,11 @@ from randovania.layout.translator_configuration import LayoutTranslatorRequireme
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])
-def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
+def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
-    game = data_reader.decode_data(echoes_game_data)
-    expected = dataclasses.replace(game.create_game_patches())
+    expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
         expected.elevator_connection[Teleporter(0x3bfa3eff, 0x87d35ee4, 0x82a008b)] = AreaLocation(1006255871,
                                                                                                    1393588666)
@@ -38,18 +37,18 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
     result = base_patches_factory.add_elevator_connections_to_patches(
         config,
         Random(0),
-        game.create_game_patches())
+        echoes_game_description.create_game_patches())
 
     # Assert
     assert result == expected
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])
-def test_add_elevator_connections_to_patches_random(echoes_game_data,
+def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
-    game = data_reader.decode_data(echoes_game_data)
+    game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
         elevators=dataclasses.replace(
