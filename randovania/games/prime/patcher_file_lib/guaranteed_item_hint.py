@@ -49,10 +49,9 @@ def hint_text_if_items_are_starting(
 def create_guaranteed_hints_for_resources(
         all_patches: Dict[int, GamePatches],
         players_config: PlayersConfiguration,
-        resource_database: ResourceDatabase,
         area_namers: Dict[int, hint_lib.AreaNamer],
         hide_area: bool,
-        item_indices: List[int],
+        items: List[ItemResourceInfo],
 ) -> Dict[ItemResourceInfo, str]:
     """
     Creates a hint for where each of the given resources for the given player can be found, across all players.
@@ -61,13 +60,11 @@ def create_guaranteed_hints_for_resources(
 
     :param all_patches:
     :param players_config:
-    :param resource_database: Resource database for the current player
     :param area_namers: Area namer for all players in the LayoutDescription
     :param hide_area: Should the area of the location be hidden?
-    :param item_indices: The item resources to hint
+    :param items: The item resources to hint
     :return:
     """
-    items = [resource_database.get_item(index) for index in item_indices]
     resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.player_index)
     locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.player_index)
 

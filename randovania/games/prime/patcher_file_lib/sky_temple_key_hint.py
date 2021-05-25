@@ -26,7 +26,7 @@ def _sky_temple_key_name(key_number: int) -> str:
 def create_hints(all_patches: Dict[int, GamePatches],
                  players_config: PlayersConfiguration,
                  resource_database: ResourceDatabase,
-                 area_namer: Dict[int, hint_lib.AreaNamer],
+                 area_namers: Dict[int, hint_lib.AreaNamer],
                  hide_area: bool,
                  ) -> list:
     """
@@ -35,12 +35,13 @@ def create_hints(all_patches: Dict[int, GamePatches],
     :param all_patches:
     :param players_config:
     :param resource_database:
-    :param area_namer:
+    :param area_namers:
     :param hide_area: Should the hint include only the world?
     :return:
     """
     resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-        all_patches, players_config, resource_database, area_namer, hide_area, echoes_items.SKY_TEMPLE_KEY_ITEMS,
+        all_patches, players_config, area_namers, hide_area,
+        [resource_database.get_item(index) for index in echoes_items.SKY_TEMPLE_KEY_ITEMS],
     )
     return [
         hint_lib.create_simple_logbook_hint(
