@@ -10,7 +10,6 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, Pick
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.echoes_items import USELESS_PICKUP_MODEL
 from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeFormatter
 from randovania.games.prime.patcher_file_lib.hint_lib import Determiner

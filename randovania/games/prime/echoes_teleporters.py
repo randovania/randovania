@@ -75,8 +75,8 @@ def elevator_area_name(world_list: WorldList,
                        area_location: AreaLocation,
                        include_world_name: bool,
                        ) -> str:
-    if area_location.area_asset_id in randovania.games.prime.echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS:
-        return randovania.games.prime.echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
+    if area_location.area_asset_id in CUSTOM_NAMES_FOR_ELEVATORS:
+        return CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
 
     else:
         world = world_list.world_by_area_location(area_location)
