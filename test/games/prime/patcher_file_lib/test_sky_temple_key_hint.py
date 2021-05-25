@@ -6,6 +6,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
+from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -43,6 +44,7 @@ def make_useless_stk_hint(key_number: int) -> List[str]:
 def test_create_hints_all_placed(hide_area: bool, multiworld: bool,
                                  empty_patches, echoes_game_description):
     # Setup
+    hint_creator = LocationHintCreator(echoes_game_description.world_list, None, None)
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
     patches = empty_patches.assign_new_pickups([
         (PickupIndex(17 + key),
@@ -76,9 +78,12 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool,
     ]
 
     # Run
-    result = sky_temple_key_hint.create_hints({0: patches, 1: other_patches} if multiworld else {0: patches},
-                                              players_config,
-                                              echoes_game_description.world_list, hide_area)
+    result = sky_temple_key_hint.create_hints(
+        {0: patches, 1: other_patches} if multiworld else {0: patches},
+        players_config,
+        echoes_game_description.resource_database,
+        {0: hint_creator, 1: hint_creator} if multiworld else {0: hint_creator},
+        hide_area)
 
     # Assert
     assert result == expected
@@ -87,9 +92,10 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool,
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
 def test_create_hints_all_starting(hide_area: bool, multiworld: bool,
-                                 empty_patches, echoes_game_description):
+                                   empty_patches, echoes_game_description):
     # Setup
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
+    area_namer = {0: None, 1: None} if multiworld else {0: None}
     patches = empty_patches.assign_extra_initial_items({
         echoes_game_description.resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key]): 1
         for key in range(9)
@@ -117,8 +123,8 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool,
     ]
 
     # Run
-    result = sky_temple_key_hint.create_hints({0: patches}, players_config,
-                                              echoes_game_description.world_list, hide_area)
+    result = sky_temple_key_hint.create_hints({0: patches}, players_config, echoes_game_description.resource_database,
+                                              area_namer, hide_area)
 
     # Assert
     assert result == expected

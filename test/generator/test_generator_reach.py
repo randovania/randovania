@@ -4,7 +4,7 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
@@ -35,7 +35,7 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
-    game = data_reader.decode_data(preset.configuration.game_data)
+    game = default_database.game_description_for(preset.game)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,

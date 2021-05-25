@@ -7,7 +7,7 @@ from typing import Optional, List, Dict, Tuple
 from randovania.dol_patching import assembler
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -163,7 +163,7 @@ class ConnectionBackend(ConnectionBase):
     def game(self) -> GameDescription:
         game_enum = self.patches.game
         if game_enum not in self._games:
-            self._games[game_enum] = data_reader.decode_data(default_data.read_json_then_binary(game_enum)[1])
+            self._games[game_enum] = default_database.game_description_for(game_enum)
         return self._games[game_enum]
 
     async def _identify_game(self) -> bool:
@@ -350,6 +350,9 @@ class ConnectionBackend(ConnectionBase):
         self._permanent_pickups = pickups
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
+        if self.patches.game == RandovaniaGame.PRIME1:
+            message = "&just=center;" + message
+
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
         encoded_message = message.encode("utf-16_be")[:self.patches.string_display.max_message_size - overhead_size]
 

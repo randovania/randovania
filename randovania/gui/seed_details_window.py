@@ -359,7 +359,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 pickup.pickup.name
                 for pickup in patches.pickup_assignment.values()
             }
-            game_description = data_reader.decode_data(preset.configuration.game_data)
+            game_description = default_database.game_description_for(preset.game)
             self._create_pickup_spoilers(game_description)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 

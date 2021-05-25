@@ -43,8 +43,8 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                          "target": 50}]},
     ],
     name="patches_with_data")
-def _patches_with_data(request, echoes_game_data, echoes_item_database):
-    game = data_reader.decode_data(echoes_game_data)
+def _patches_with_data(request, echoes_game_description, echoes_item_database):
+    game = echoes_game_description
 
     data = {
         "starting_location": "Temple Grounds/Landing Site",
@@ -133,11 +133,11 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
     return data, patches
 
 
-def test_encode(patches_with_data, echoes_game_data):
+def test_encode(patches_with_data):
     expected, patches = patches_with_data
 
     # Run
-    encoded = game_patches_serializer.serialize_single(0, 1, patches, echoes_game_data)
+    encoded = game_patches_serializer.serialize_single(0, 1, patches, RandovaniaGame.PRIME2)
 
     # Assert
     for key, value in expected["locations"].items():
@@ -199,7 +199,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
 
 
 @pytest.mark.asyncio
-async def test_round_trip_generated_patches(echoes_game_data, default_preset):
+async def test_round_trip_generated_patches(default_preset):
     # Setup
     preset = dataclasses.replace(
         default_preset,
@@ -210,7 +210,7 @@ async def test_round_trip_generated_patches(echoes_game_data, default_preset):
             trick_level=TrickLevelConfiguration(
                 minimal_logic=True,
                 specific_levels={},
-                game=RandovaniaGame.PRIME2,
+                game=default_preset.game,
             )
         )
     )
@@ -227,7 +227,7 @@ async def test_round_trip_generated_patches(echoes_game_data, default_preset):
     all_patches = description.all_patches
 
     # Run
-    encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})
+    encoded = game_patches_serializer.serialize(all_patches, {0: default_preset.game})
     decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
 
     # Assert

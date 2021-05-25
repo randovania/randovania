@@ -23,8 +23,8 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
-from randovania.games.prime import prime1_elevators, all_prime_dol_patches
-from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names
+from randovania.games.prime import prime1_elevators, all_prime_dol_patches, prime_items
+from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -190,6 +190,11 @@ class RandomprimePatcher(Patcher):
         configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
 
+        area_namers = {
+            index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
+            for index, player_preset in description.permalink.presets.items()
+        }
+
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
         useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
                                       players_config.player_index)
@@ -241,6 +246,15 @@ class RandomprimePatcher(Patcher):
 
         # credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
 
+        resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            description.all_patches, players_config, area_namers, False,
+            [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
+        )
+        artifact_hints = {
+            resource.long_name.split("Artifact of ")[1]: text
+            for resource, text in resulting_hints.items()
+        }
+
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
@@ -281,7 +295,7 @@ class RandomprimePatcher(Patcher):
                 "mainMenuMessage": "{}\n{}".format(randovania.VERSION, description.shareable_word_hash),
 
                 "creditsString": None,
-                "artifactHints": None,
+                "artifactHints": artifact_hints,
             },
             "levelData": world_data,
         }

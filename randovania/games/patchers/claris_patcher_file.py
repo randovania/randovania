@@ -1,9 +1,9 @@
 import dataclasses
 from random import Random
-from typing import Dict, Iterator
+from typing import Dict, Iterator, List
 
 import randovania
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
@@ -20,7 +20,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
 from randovania.games.prime.dol_patcher import DolPatchesData
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, hint_lib
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -264,6 +264,7 @@ def _logbook_title_string_patches():
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
                            all_patches: Dict[int, GamePatches],
+                           all_game_enums: Dict[int, RandovaniaGame],
                            players_config: PlayersConfiguration,
                            rng: Random,
                            ) -> list:
@@ -271,7 +272,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     :param hint_config:
     :param game:
-    :param patches:
+    :param all_patches:
     :return:
     """
     patches = all_patches[players_config.player_index]
@@ -287,8 +288,11 @@ def _create_string_patches(hint_config: HintConfiguration,
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         string_patches.extend(sky_temple_key_hint.hide_hints())
     else:
-        string_patches.extend(sky_temple_key_hint.create_hints(all_patches, players_config, game.world_list,
-                                                               stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
+        string_patches.extend(sky_temple_key_hint.create_hints(
+            all_patches, players_config, game.resource_database,
+            {index: hint_lib.AreaNamer(default_database.game_description_for(game_enum).world_list)
+             for index, game_enum in all_game_enums.items()},
+            stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
 
     # Elevator Scans
     string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
@@ -361,11 +365,12 @@ def create_patcher_file(description: LayoutDescription,
     :return:
     """
     preset = description.permalink.get_preset(players_config.player_index)
+    all_game_enums = {index: preset.game for index, preset in description.permalink.presets.items()}
     configuration = preset.configuration
     patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.seed_number)
 
-    game = data_reader.decode_data(configuration.game_data)
+    game = default_database.game_description_for(RandovaniaGame.PRIME2)
 
     result = {}
     _add_header_data_to_result(description, result)
@@ -403,7 +408,7 @@ def create_patcher_file(description: LayoutDescription,
 
     # Scan hints
     result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,
-                                                      players_config, rng)
+                                                      all_game_enums, players_config, rng)
 
     # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state

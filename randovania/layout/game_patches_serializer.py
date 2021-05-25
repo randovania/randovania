@@ -2,7 +2,7 @@ import collections
 import re
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
@@ -16,6 +16,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.echoes_configuration import EchoesConfiguration
 
@@ -73,16 +74,16 @@ def _find_gate_with_name(gate_name: str) -> TranslatorGate:
     raise ValueError("Unknown gate name: {}".format(gate_name))
 
 
-def serialize_single(player_index: int, num_players: int, patches: GamePatches, game_data: dict) -> dict:
+def serialize_single(player_index: int, num_players: int, patches: GamePatches, game_enum: RandovaniaGame) -> dict:
     """
     Encodes a given GamePatches into a JSON-serializable dict.
     :param player_index:
     :param num_players:
     :param patches:
-    :param game_data:
+    :param game_enum:
     :return:
     """
-    game = data_reader.decode_data(game_data)
+    game = default_database.game_description_for(game_enum)
     world_list = game.world_list
 
     result = {
@@ -231,7 +232,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 def decode(game_modifications: List[dict],
            layout_configurations: Dict[int, EchoesConfiguration],
            ) -> Dict[int, GamePatches]:
-    all_games = {index: data_reader.decode_data(configuration.game_data)
+    all_games = {index: default_database.game_description_for(configuration.game)
                  for index, configuration in layout_configurations.items()}
     all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)
                  for index, configuration in layout_configurations.items()}
@@ -241,8 +242,8 @@ def decode(game_modifications: List[dict],
     }
 
 
-def serialize(all_patches: Dict[int, GamePatches], all_game_data: Dict[int, dict]) -> List[dict]:
+def serialize(all_patches: Dict[int, GamePatches], all_games: Dict[int, RandovaniaGame]) -> List[dict]:
     return [
-        serialize_single(index, len(all_patches), patches, all_game_data[index])
+        serialize_single(index, len(all_patches), patches, all_games[index])
         for index, patches in all_patches.items()
     ]

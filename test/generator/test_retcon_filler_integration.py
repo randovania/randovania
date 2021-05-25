@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 import randovania.generator.filler.player_state
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
 from randovania.generator.filler.filler_configuration import FillerConfiguration
@@ -59,7 +59,7 @@ def test_retcon_filler_integration(default_layout_configuration):
     rng = Random("fixed-seed!")
     status_update = MagicMock()
 
-    game = data_reader.decode_data(layout_configuration.game_data)
+    game = default_database.game_description_for(layout_configuration.game)
     patches = game.create_game_patches()
     available_pickups = game.pickup_database.all_useful_pickups
 
