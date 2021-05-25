@@ -122,7 +122,7 @@ class LayoutDescription:
             cached_result = game_patches_serializer.serialize(
                 self.all_patches,
                 {
-                    index: preset.configuration.game_data
+                    index: preset.game
                     for index, preset in self.permalink.presets.items()
                 })
             object.__setattr__(self, "__cached_serialized_patches", cached_result)
