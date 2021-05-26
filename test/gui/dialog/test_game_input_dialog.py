@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from PySide2 import QtCore
 
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
+from randovania.games.game import RandovaniaGame
 
 
 def test_on_output_file_button_exists(skip_qtbot, tmpdir, mocker):
@@ -14,7 +15,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmpdir, mocker):
     temp_path = Path(tmpdir)
     options = MagicMock()
     options.output_directory = None
-    window = GameInputDialog(options, patcher, "MyHash", True)
+    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     mock_prompt.return_value = temp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -35,7 +36,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     patcher = MagicMock()
     options = MagicMock()
     options.output_directory = None
-    window = GameInputDialog(options, patcher, "MyHash", True)
+    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     mock_prompt.return_value = None
 
     # Run
