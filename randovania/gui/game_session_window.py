@@ -1040,6 +1040,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         with options:
             options.output_directory = output_file.parent
+            if game == RandovaniaGame.PRIME1:
+                options.prime_input_file = input_file
 
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                      options.cosmetic_patches.as_json)

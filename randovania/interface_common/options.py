@@ -60,6 +60,7 @@ _SERIALIZER_FOR_FIELD = {
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
     "tracker_theme": Serializer(lambda it: it.value, TrackerTheme),
+    "prime_input_file": Serializer(str, Path)
 }
 
 
@@ -99,6 +100,7 @@ class Options:
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
     _tracker_theme: Optional[TrackerTheme] = None
+    _prime_input_file: Optional[Path] = None
 
     def __init__(self, data_dir: Path, user_dir: Optional[Path] = None):
         self._data_dir = data_dir
@@ -276,6 +278,14 @@ class Options:
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
         self._edit_field("output_directory", value)
+
+    @property
+    def prime_input_file(self) -> Optional[Path]:
+        return self._prime_input_file
+
+    @prime_input_file.setter
+    def prime_input_file(self, value: Optional[Path]):
+        self._edit_field("prime_input_file", value)
 
     @property
     def auto_save_spoiler(self) -> bool:

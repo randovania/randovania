@@ -207,6 +207,8 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         with options:
             options.output_directory = output_file.parent
             options.auto_save_spoiler = auto_save_spoiler
+            if game == RandovaniaGame.PRIME1:
+                options.prime_input_file = input_file
 
         patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
 

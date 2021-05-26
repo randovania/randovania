@@ -53,6 +53,9 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False
 
+        if game == RandovaniaGame.PRIME1 and options.prime_input_file is not None:
+            self.input_file_edit.setText(str(options.prime_input_file))
+
         if options.output_directory is not None:
             self.output_file_edit.setText(str(options.output_directory.joinpath(self.default_output_name)))
 
