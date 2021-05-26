@@ -4,6 +4,7 @@ from typing import Optional
 from PySide2.QtWidgets import QMessageBox, QDialog
 
 from randovania.games.patcher import Patcher
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options
@@ -16,7 +17,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     _prompt_input_file: bool
     _current_lock_state: bool = True
 
-    def __init__(self, options: Options, patcher: Patcher, word_hash: str, spoiler: bool):
+    def __init__(self, options: Options, patcher: Patcher, word_hash: str, spoiler: bool, game: RandovaniaGame):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -26,6 +27,12 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.patcher = patcher
         self.default_output_name = patcher.default_output_file(word_hash)
         self.check_extracted_game()
+        
+        description_text = "<html><head/><body><p>In order to create the randomized game, an ISO file of {} for the Nintendo Gamecube is necessary.</p>".format(game.long_name)
+        if not patcher.uses_input_file_directly:
+            description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
+        description_text += "</body></html>"
+        self.description_label.setText(description_text)
 
         # Input
         self.input_file_edit.textChanged.connect(self._validate_input_file)
