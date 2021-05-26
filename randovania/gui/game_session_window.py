@@ -1029,7 +1029,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 "Error: Unable to save multiple ISOs at the same time,"
                 "another window is saving an ISO right now.")
 
-        dialog = GameInputDialog(options, patcher, self._game_session.word_hash, False)
+        dialog = GameInputDialog(options, patcher, self._game_session.word_hash, False, game)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:
