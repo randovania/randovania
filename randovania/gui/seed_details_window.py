@@ -191,7 +191,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
-        dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler)
+        dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler, game)
         result = await async_dialog.execute_dialog(dialog)
         if result != QDialog.Accepted:
             return
