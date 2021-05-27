@@ -1,4 +1,4 @@
-from typing import List, NamedTuple, Dict
+from typing import List, NamedTuple, Dict, Optional
 
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
@@ -20,7 +20,7 @@ class ResourceDatabase(NamedTuple):
     misc: List[SimpleResourceInfo]
     requirement_template: Dict[str, "Requirement"]
     energy_tank_item_index: int
-    item_percentage_index: int
+    item_percentage_index: Optional[int]
     multiworld_magic_item_index: int
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
@@ -51,8 +51,9 @@ class ResourceDatabase(NamedTuple):
         return search.find_resource_info_with_long_name(self.item, name)
 
     @property
-    def item_percentage(self) -> ItemResourceInfo:
-        return self.get_by_type_and_index(ResourceType.ITEM, self.item_percentage_index)
+    def item_percentage(self) -> Optional[ItemResourceInfo]:
+        if self.item_percentage_index is not None:
+            return self.get_by_type_and_index(ResourceType.ITEM, self.item_percentage_index)
 
     @property
     def energy_tank(self) -> ItemResourceInfo:
