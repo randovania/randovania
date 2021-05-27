@@ -35,7 +35,7 @@ def create_major_item(item: MajorItem,
         (resource_database.get_item(ammo_index), ammo_count)
         for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo)
     ]
-    if include_percentage:
+    if include_percentage and resource_database.item_percentage is not None:
         extra_resources.append((resource_database.item_percentage, 1))
 
     def _create_resources(base_resource: Optional[int]) -> ResourceQuantity:
@@ -79,7 +79,9 @@ def create_ammo_expansion(ammo: Ammo,
     """
     resources = [(resource_database.get_item(item), count)
                  for item, count in zip(ammo.items, ammo_count)]
-    resources.append((resource_database.item_percentage, 1))
+
+    if resource_database.item_percentage is not None:
+        resources.append((resource_database.item_percentage, 1))
 
     return PickupEntry(
         name=ammo.name,
@@ -173,9 +175,6 @@ def create_artifact(artifact_index: int,
         name=prime_items.ARTIFACT_NAMES[artifact_index],
         progression=(
             (resource_database.get_item(prime_items.ARTIFACT_ITEMS[artifact_index]), 1),
-        ),
-        extra_resources=(
-            (resource_database.item_percentage, 1),
         ),
         model=PickupModel(
             game=resource_database.game_enum,

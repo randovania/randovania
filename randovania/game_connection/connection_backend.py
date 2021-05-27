@@ -333,7 +333,8 @@ class ConnectionBackend(ConnectionBase):
                                                resources_to_give)
 
         # Ignore item% for received items
-        resources_to_give.pop(self.game.resource_database.item_percentage, None)
+        if self.game.resource_database.item_percentage is not None:
+            resources_to_give.pop(self.game.resource_database.item_percentage, None)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
 
