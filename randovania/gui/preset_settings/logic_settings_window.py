@@ -33,8 +33,7 @@ from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatche
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.lib.enum_lib import iterate_enum
+from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
@@ -42,8 +41,10 @@ from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
 from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.lib.enum_lib import iterate_enum
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -92,7 +93,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
-        if self.game_enum == RandovaniaGame.PRIME2:
+        if self.game_enum == RandovaniaGame.PRIME1:
+            self._extra_tabs.append(PresetPrimeGoal(editor))
+
+        elif self.game_enum == RandovaniaGame.PRIME2:
             self._extra_tabs.append(PresetEchoesGoal(editor))
             self._extra_tabs.append(PresetEchoesHints(editor))
             self._extra_tabs.append(PresetEchoesTranslators(editor))
