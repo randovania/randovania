@@ -165,7 +165,8 @@ class State:
             pickup.resource_gain(self.resources, force_lock=True))
 
         # Make sure there's no item percentage on starting items
-        pickup_resources.pop(self.resource_database.item_percentage, None)
+        if self.resource_database.item_percentage is not None:
+            pickup_resources.pop(self.resource_database.item_percentage, None)
 
         new_resources = copy.copy(self.resources)
         add_resources_into_another(new_resources, pickup_resources)
