@@ -179,17 +179,17 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = layout.permalink.get_preset(self.current_player_index).configuration.game
-        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
+        
+        if game == RandovaniaGame.PRIME3:
+            return await self._show_dialog_for_prime3_layout()
 
+        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
         if patcher.is_busy:
             return await async_dialog.message_box(
                 self, QtWidgets.QMessageBox.Critical,
                 "Can't save ISO",
                 "Error: Unable to save multiple ISOs at the same time,"
                 "another window is saving an ISO right now.")
-
-        if game == RandovaniaGame.PRIME3:
-            return await self._show_dialog_for_prime3_layout()
 
         dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler, game)
         result = await async_dialog.execute_dialog(dialog)
