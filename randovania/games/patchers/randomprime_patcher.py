@@ -245,6 +245,10 @@ class RandomprimePatcher(Patcher):
             map_default_state = "default"
 
         # credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
+        present_artifacts = [
+            db.resource_database.get_item(index)
+            for index in prime_items.ARTIFACT_ITEMS[:configuration.artifacts.num_artifacts]
+        ]
 
         resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             description.all_patches, players_config, area_namers, False,
@@ -286,6 +290,9 @@ class RandomprimePatcher(Patcher):
                 },
 
                 "etankCapacity": configuration.energy_per_tank,
+                "itemMaxCapacity": {
+                    "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
+                },
 
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",
@@ -296,6 +303,10 @@ class RandomprimePatcher(Patcher):
 
                 "creditsString": None,
                 "artifactHints": artifact_hints,
+                "artifactTempleLayerOverrides": {
+                    artifact.long_name: True
+                    for artifact in present_artifacts
+                },
             },
             "levelData": world_data,
         }
