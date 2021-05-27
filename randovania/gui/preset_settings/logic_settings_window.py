@@ -34,6 +34,7 @@ from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTr
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
+from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
@@ -95,6 +96,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         if self.game_enum == RandovaniaGame.PRIME1:
             self._extra_tabs.append(PresetPrimeGoal(editor))
+            self._extra_tabs.append(PresetPrimePatches(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME2:
             self._extra_tabs.append(PresetEchoesGoal(editor))
