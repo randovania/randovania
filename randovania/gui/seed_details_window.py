@@ -179,7 +179,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = layout.permalink.get_preset(self.current_player_index).configuration.game
-        
+
         if game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
