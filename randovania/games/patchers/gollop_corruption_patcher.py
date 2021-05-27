@@ -214,6 +214,8 @@ def starting_items_for(resources: CurrentResources) -> str:
         for item, capacity in resources.items()
         if isinstance(item, ItemResourceInfo)
     }
+    # Don't give corrupted hypermode
+    capacity_by_short_name["HyperModeOriginal"] = 1
 
     result_values = [
         capacity_by_short_name.get(STARTING_ITEMS_NAME_ALIAS.get(item, item), 0)
