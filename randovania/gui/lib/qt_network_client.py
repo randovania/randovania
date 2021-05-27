@@ -7,7 +7,6 @@ from typing import Optional, Set
 import pypresence
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QWidget
-from cryptography.fernet import Fernet
 
 import randovania
 from randovania.gui.lib import async_dialog
@@ -78,6 +77,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         if "guest_secret" not in self.configuration:
             raise RuntimeError("Missing guest configuration for Randovania")
 
+        from cryptography.fernet import Fernet
         fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
         login_request = fernet.encrypt(json.dumps({
             "name": name,
