@@ -1011,7 +1011,7 @@
     "worlds": [
         {
             "name": "Impact Crater",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 3241871825,
             "areas": [
                 {
@@ -2061,7 +2061,7 @@
         },
         {
             "name": "Phendrana Drifts",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 2831049361,
             "areas": [
                 {
@@ -8494,7 +8494,7 @@
         },
         {
             "name": "Frigate Orpheon",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 361692695,
             "areas": [
                 {
@@ -10189,7 +10189,7 @@
         },
         {
             "name": "Magmoor Caverns",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 1056449404,
             "areas": [
                 {
@@ -16594,7 +16594,7 @@
         },
         {
             "name": "Phazon Mines",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 2980859237,
             "areas": [
                 {
@@ -23524,8 +23524,32 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Fungal Hall Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 7,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -23545,47 +23569,29 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Phazon Mining Tunnel": {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
+                                            "type": "and",
                                             "data": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 12,
+                                                        "index": 15,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 12,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": [
                                                         {
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 0,
-                                                                "amount": 1,
+                                                                "index": 12,
+                                                                "amount": 2,
                                                                 "negate": false
                                                             }
                                                         },
@@ -23593,10 +23599,66 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 0,
-                                                                "index": 5,
+                                                                "index": 12,
                                                                 "amount": 1,
                                                                 "negate": false
                                                             }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 12,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 0,
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 0,
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -23612,7 +23674,7 @@
         },
         {
             "name": "Tallon Overworld",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 972217896,
             "areas": [
                 {
@@ -29397,7 +29459,7 @@
         },
         {
             "name": "Chozo Ruins",
-            "dark_name": null,
+            "dark_name": "",
             "asset_id": 2214002543,
             "areas": [
                 {
