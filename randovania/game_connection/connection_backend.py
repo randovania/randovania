@@ -294,9 +294,9 @@ class ConnectionBackend(ConnectionBase):
             ))
 
         if patches:
-            await self._execute_remote_patches(patches, message)
+            await self.execute_remote_patches(patches, message)
 
-    async def _execute_remote_patches(self, patches: List[List[assembler.BaseInstruction]], message: Optional[str]):
+    async def execute_remote_patches(self, patches: List[List[assembler.BaseInstruction]], message: Optional[str]):
         memory_operations = []
 
         if message is not None:

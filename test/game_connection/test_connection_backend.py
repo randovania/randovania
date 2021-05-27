@@ -136,14 +136,14 @@ async def test_update_magic_item_nothing(backend):
         backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)
     }
     backend._emit_location_collected = AsyncMock()
-    backend._execute_remote_patches = AsyncMock()
+    backend.execute_remote_patches = AsyncMock()
 
     # Run
     await backend._update_magic_item()
 
     # Assert
     backend._emit_location_collected.assert_not_awaited()
-    backend._execute_remote_patches.assert_not_awaited()
+    backend.execute_remote_patches.assert_not_awaited()
 
 
 @pytest.mark.asyncio
@@ -156,7 +156,7 @@ async def test_update_magic_item_collected_location(backend, mocker):
         backend.game.resource_database.multiworld_magic_item: InventoryItem(10, 10)
     }
     backend._emit_location_collected = AsyncMock()
-    backend._execute_remote_patches = AsyncMock()
+    backend.execute_remote_patches = AsyncMock()
 
     # Run
     await backend._update_magic_item()
@@ -167,7 +167,7 @@ async def test_update_magic_item_collected_location(backend, mocker):
                                             backend.game.resource_database.multiworld_magic_item.index,
                                             -10)
     backend._emit_location_collected.assert_awaited_once_with(9)
-    backend._execute_remote_patches.assert_awaited_once_with([mock_item_patch.return_value], None)
+    backend.execute_remote_patches.assert_awaited_once_with([mock_item_patch.return_value], None)
 
 
 @pytest.mark.parametrize("on_cooldown", [False, True])
@@ -178,7 +178,7 @@ async def test_update_magic_item_give_pickup(backend, mocker, on_cooldown):
         "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     backend._emit_location_collected = AsyncMock()
-    backend._execute_remote_patches = AsyncMock()
+    backend.execute_remote_patches = AsyncMock()
     pickup_patches = MagicMock()
     backend._patches_for_pickup = AsyncMock(return_value=([pickup_patches, pickup_patches], "The Message"))
 
@@ -195,13 +195,13 @@ async def test_update_magic_item_give_pickup(backend, mocker, on_cooldown):
     # Assert
     backend._emit_location_collected.assert_not_awaited()
     if on_cooldown:
-        backend._execute_remote_patches.assert_not_awaited()
+        backend.execute_remote_patches.assert_not_awaited()
     else:
         mock_item_patch.assert_called_once_with(backend.patches.powerup_functions,
                                                 RandovaniaGame.PRIME2,
                                                 backend.game.resource_database.multiworld_magic_item.index)
         backend._patches_for_pickup.assert_awaited_once_with(*backend._permanent_pickups[0])
-        backend._execute_remote_patches.assert_awaited_once_with(
+        backend.execute_remote_patches.assert_awaited_once_with(
             [pickup_patches, pickup_patches, mock_item_patch.return_value], "The Message")
 
 
@@ -269,7 +269,7 @@ async def test_execute_remote_patches(backend, mocker, has_message):
     ]
 
     # Run
-    await backend._execute_remote_patches(patches, message)
+    await backend.execute_remote_patches(patches, message)
 
     # Assert
     mock_remote_execute.assert_called_once_with(backend.patches.string_display, instructions)
