@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: A second theme for the auto tracker for Echoes, which uses images of the in game models. Thanks MaskedKirby.
 
+-   Changed: Pickup visibility method is now configured in the Item Pool tab.
+
 -   Changed: Multiworld connection is slightly more conservative when giving items.
 
 -   Changed: The session history in multiworld now has different columns for the players involved, pickup and where the pickup was. It's also possible to sort the table by any of these fields. 
