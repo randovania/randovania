@@ -8,6 +8,7 @@ from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime import prime_items
 
 
 @dataclasses.dataclass(frozen=True)
@@ -152,24 +153,94 @@ def adjust_item_amount_and_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
 ) -> List[BaseInstruction]:
     # r31 = CStateManager
-    return [
-        *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
+    if game == RandovaniaGame.PRIME1 and item_id in prime_items.ARTIFACT_ITEMS:
+        return increment_item_capacity_patch(patch_addresses, game, item_id, delta)
 
-        *_load_player_state(game, r3, r31),
-        li(r4, item_id),
-        li(r5, abs(delta)),
-        bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
+    if delta >= 0:
+        return [
+            *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
+            *adjust_item_amount_patch(patch_addresses, game, item_id, delta),
+        ]
+    else:
+        return [
+            *adjust_item_amount_patch(patch_addresses, game, item_id, delta),
+            *increment_item_capacity_patch(patch_addresses, game, item_id, delta),
+        ]
+
+
+def set_artifact_layer_active_patch(layer_id: int, active: bool):
+    # g_GameState->StateForWorld(0x39F2DE28)->GetLayerState()->SetLayerActive(templeAreaIndex, artifactLayer, true)
+    result = []
+
+    for_another_world = [
+        # Get the LayerState via the CGameState
+        lwz(r3, -0x5f80, r13),  # get g_GameState
+        # r4 already have the asset id
+        bl(0x801d39d8),  # CGameState::StateForWorld
+        lwz(r3, 0x14, r3),  # worldState->layerState
     ]
+
+    result.extend([
+        # Get the LayerState of current world. We'll overwrite if it's another world, it's just 1 instruction bigger
+        lwz(r3, 0x8c8, r31),  # mgr->worldLayerState
+
+        # Tallon Overworld asset id
+        custom_ppc.load_unsigned_32bit(r4, 0x39f2de28),
+
+        # Load current asset id in r5
+        lwz(r5, 0x850, r31),  # mgr->world
+        lwz(r5, 0x8, r5),  # world->mlvlId
+
+        cmpw(0, r4, r5),  # compare asset ids
+        beq(4 + assembler.byte_count(for_another_world), relative=True),
+        *for_another_world,
+        lwz(r3, 0x0, r3),
+
+        # Set layer
+        li(r4, 16),  # Artifact Layer
+        stw(r4, 0x10, r1),
+
+        # Set layer
+        li(r5, layer_id),  # Artifact Layer
+        stw(r5, 0x14, r1),
+
+        # Make the layer change via SetLayerActive
+        addi(r4, r1, 0x10),
+        addi(r5, r1, 0x14),
+        li(r6, int(active)),
+        bl(0x802342c0),  # CWorldLayerState::SetLayerActive
+    ])
+
+    return result
 
 
 def increment_item_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
 ) -> List[BaseInstruction]:
-    return [
+    result = [
         *_load_player_state(game, r3, r31),
         li(r4, item_id),
         li(r5, delta),
         bl(patch_addresses.add_power_up),
+    ]
+    if game == RandovaniaGame.PRIME1 and item_id in prime_items.ARTIFACT_ITEMS:
+        if item_id > 29:
+            layer_id = item_id - 28
+        else:
+            layer_id = 24  # Truth layer
+        result.extend(set_artifact_layer_active_patch(layer_id, True))
+
+    return result
+
+
+def adjust_item_amount_patch(
+        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
+) -> List[BaseInstruction]:
+    return [
+        *_load_player_state(game, r3, r31),
+        li(r4, item_id),
+        li(r5, abs(delta)),
+        bl(patch_addresses.incr_pickup if delta >= 0 else patch_addresses.decr_pickup),
     ]
 
 

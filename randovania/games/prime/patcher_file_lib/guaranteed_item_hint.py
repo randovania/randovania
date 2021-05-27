@@ -4,7 +4,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
