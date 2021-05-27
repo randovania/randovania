@@ -26,6 +26,7 @@ from randovania.gui.preset_settings.item_configuration_widget import ItemConfigu
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
+from randovania.layout.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
@@ -63,7 +64,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
+        self._setup_general_widgets()
         self._register_random_starting_events()
         self._create_categories_boxes(item_database, size_policy)
         self._create_customizable_default_items(item_database)
@@ -92,6 +93,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             split_ammo.on_preset_changed(preset, self._ammo_pickup_widgets)
 
         # General
+        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(layout.pickup_model_style))
+        self.pickup_data_source_combo.setCurrentIndex(
+            self.pickup_data_source_combo.findData(layout.pickup_model_data_source))
+        self.pickup_data_source_combo.setEnabled(layout.pickup_model_style != PickupModelStyle.ALL_VISIBLE)
+
         self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
 
         # Random Starting Items
@@ -197,6 +203,29 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
 
     # General
+
+    def _setup_general_widgets(self):
+        # Item Data
+        for i, value in enumerate(PickupModelStyle):
+            self.pickup_model_combo.setItemData(i, value)
+        for i, value in enumerate(PickupModelDataSource):
+            self.pickup_data_source_combo.setItemData(i, value)
+
+        # TODO: implement the LOCATION data source
+        self.pickup_data_source_combo.removeItem(self.pickup_data_source_combo.findData(PickupModelDataSource.LOCATION))
+        self.pickup_model_combo.currentIndexChanged.connect(
+            self._persist_enum(self.pickup_model_combo, "pickup_model_style"))
+        self.pickup_data_source_combo.currentIndexChanged.connect(
+            self._persist_enum(self.pickup_data_source_combo, "pickup_model_data_source"))
+
+        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
+
+    def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
+        def persist(index: int):
+            with self._editor as options:
+                options.set_configuration_field(attribute_name, combo.itemData(index))
+
+        return persist
 
     def _persist_multi_pickup_placement(self, value: bool):
         with self._editor as editor:
