@@ -95,6 +95,21 @@ def test_create_patch_data(test_files_dir):
                          "&push;&main-color=#d4cc33;Echoes&pop;'s "
                          '&push;&main-color=#FF3333;Ing Hive '
                          '- Culling Chamber&pop;.'},
+
+            'artifactTempleLayerOverrides': {
+                'Artifact of Chozo': True,
+                'Artifact of Elder': True,
+                'Artifact of Lifegiver': True,
+                'Artifact of Nature': True,
+                'Artifact of Newborn': True,
+                'Artifact of Spirit': True,
+                'Artifact of Strength': True,
+                'Artifact of Sun': True,
+                'Artifact of Truth': True,
+                'Artifact of Warrior': True,
+                'Artifact of Wild': True,
+                'Artifact of World': True,
+            },
             'autoEnabledElevators': False,
             'creditsString': None,
             'etankCapacity': 110,
@@ -102,6 +117,7 @@ def test_create_patch_data(test_files_dir):
                            'gameName': 'Metroid Prime: Randomizer',
                            'gameNameFull': 'Metroid Prime: Randomizer - ALKZLIJL'},
             'heatDamagePerSec': 10.0,
+            'itemMaxCapacity': {'Unknown Item 1': 65536},
             'mainMenuMessage': f'{randovania.VERSION}\nCulling Chamber Staging',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
