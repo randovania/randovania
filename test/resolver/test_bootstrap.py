@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.game import RandovaniaGame
 from randovania.layout.teleporters import TeleporterShuffleMode
 from randovania.resolver import bootstrap
 
@@ -13,6 +14,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
                                           ):
     # Setup
     configuration = MagicMock()
+    configuration.game = RandovaniaGame.PRIME2
     configuration.elevators.is_vanilla = vanilla_elevators
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 16)
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 17)

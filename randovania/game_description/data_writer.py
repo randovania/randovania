@@ -159,7 +159,7 @@ def write_resource_database(resource_database: ResourceDatabase):
                 "index": resource.index,
                 "reductions": [
                     {
-                        "index": reduction.inventory_item.index,
+                        "index": reduction.inventory_item.index if reduction.inventory_item is not None else None,
                         "multiplier": reduction.damage_multiplier
                     }
                     for reduction in reductions

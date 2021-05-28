@@ -1,5 +1,5 @@
 import dataclasses
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Callable
 
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageReduction
@@ -29,7 +29,7 @@ class ResourceDatabase:
     energy_tank_item_index: int
     item_percentage_index: Optional[int]
     multiworld_magic_item_index: int
-    base_damage_reduction = default_base_damage_reduction
+    base_damage_reduction: Callable[["ResourceDatabase", CurrentResources], float] = default_base_damage_reduction
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
@@ -72,10 +72,10 @@ class ResourceDatabase:
         return self.get_item(self.multiworld_magic_item_index)
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: CurrentResources):
-        multiplier = self.base_damage_reduction(current_resources)
+        multiplier = self.base_damage_reduction(self, current_resources)
 
         for reduction in self.damage_reductions.get(resource, []):
-            if current_resources.get(reduction.inventory_item, 0) > 0:
+            if reduction.inventory_item is None or current_resources.get(reduction.inventory_item, 0) > 0:
                 multiplier *= reduction.damage_multiplier
 
         return multiplier

@@ -54,7 +54,8 @@ def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> L
 # Damage
 
 def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageReduction:
-    return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM),
+    return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM)
+                           if data["index"] is not None else None,
                            data["multiplier"])
 
 
