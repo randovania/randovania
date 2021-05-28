@@ -286,7 +286,7 @@ class ResourceRequirement(Requirement):
 
     def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
-            return ceil(self.resource.damage_reduction(current_resources) * self.amount)
+            return ceil(database.get_damage_reduction(self.resource, current_resources) * self.amount)
         else:
             return 0
 

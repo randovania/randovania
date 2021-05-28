@@ -7,7 +7,6 @@ from randovania.game_description.node import Node, GenericNode, DockNode, Pickup
     TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate
-from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -116,21 +115,6 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     }
 
 
-def write_damage_resource(resource: DamageResourceInfo) -> dict:
-    return {
-        "index": resource.index,
-        "long_name": resource.long_name,
-        "short_name": resource.short_name,
-        "reductions": [
-            {
-                "index": reduction.inventory_item.index,
-                "multiplier": reduction.damage_multiplier
-            }
-            for reduction in resource.reductions
-        ]
-    }
-
-
 X = TypeVar('X')
 
 
@@ -166,13 +150,26 @@ def write_resource_database(resource_database: ResourceDatabase):
         "multiworld_magic_item_index": resource_database.multiworld_magic_item_index,
         "events": write_array(resource_database.event, write_simple_resource),
         "tricks": write_array(resource_database.trick, write_trick_resource),
-        "damage": write_array(resource_database.damage, write_damage_resource),
+        "damage": write_array(resource_database.damage, write_simple_resource),
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
         "requirement_template": {
             name: write_requirement(requirement)
             for name, requirement in resource_database.requirement_template.items()
-        }
+        },
+        "damage_reductions": [
+            {
+                "index": resource.index,
+                "reductions": [
+                    {
+                        "index": reduction.inventory_item.index,
+                        "multiplier": reduction.damage_multiplier
+                    }
+                    for reduction in reductions
+                ]
+            }
+            for resource, reductions in resource_database.damage_reductions.items()
+        ]
     }
 
 
