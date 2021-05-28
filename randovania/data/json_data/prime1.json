@@ -318,9 +318,6 @@
                 "extra": null
             }
         ],
-        "energy_tank_item_index": 24,
-        "item_percentage_index": 1001,
-        "multiworld_magic_item_index": 25,
         "events": [
             {
                 "index": 1,
@@ -639,117 +636,33 @@
         "damage": [
             {
                 "index": 1,
-                "long_name": "Normal",
-                "short_name": "Damage",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.5
-                    }
-                ]
+                "long_name": "Normal Damage",
+                "short_name": "Damage"
             },
             {
                 "index": 2,
-                "long_name": "Poisoned Water",
-                "short_name": "RuinsWater",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.5
-                    }
-                ]
+                "long_name": "Poisoned Water Damage",
+                "short_name": "RuinsWater"
             },
             {
                 "index": 3,
-                "long_name": "Phazon",
-                "short_name": "Phazon",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.0
-                    }
-                ]
+                "long_name": "Phazon Damage",
+                "short_name": "Phazon"
             },
             {
                 "index": 4,
-                "long_name": "Poison Gas",
-                "short_name": "MinesGas",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.5
-                    }
-                ]
+                "long_name": "Poison Gas Damage",
+                "short_name": "MinesGas"
             },
             {
                 "index": 5,
-                "long_name": "Heated Rooms",
-                "short_name": "HeatDamage1",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.0
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.0
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.0
-                    }
-                ]
+                "long_name": "Heated Rooms Damage",
+                "short_name": "HeatDamage1"
             },
             {
                 "index": 6,
-                "long_name": "Lava",
-                "short_name": "HeatDamage2",
-                "reductions": [
-                    {
-                        "index": 21,
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "index": 22,
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "index": 23,
-                        "multiplier": 0.5
-                    }
-                ]
+                "long_name": "Lava Damage",
+                "short_name": "HeatDamage2"
             }
         ],
         "versions": [
@@ -890,7 +803,55 @@
                     }
                 ]
             }
-        }
+        },
+        "damage_reductions": [
+            {
+                "index": 1,
+                "reductions": [
+                    {
+                        "index": 21,
+                        "multiplier": 0.800000011920929
+                    },
+                    {
+                        "index": 22,
+                        "multiplier": 0.8999999761581421
+                    },
+                    {
+                        "index": 23,
+                        "multiplier": 0.5
+                    }
+                ]
+            },
+            {
+                "index": 5,
+                "reductions": [
+                    {
+                        "index": 21,
+                        "multiplier": 0.0
+                    },
+                    {
+                        "index": 22,
+                        "multiplier": 0.0
+                    },
+                    {
+                        "index": 23,
+                        "multiplier": 0.0
+                    }
+                ]
+            },
+            {
+                "index": 3,
+                "reductions": [
+                    {
+                        "index": 23,
+                        "multiplier": 0.0
+                    }
+                ]
+            }
+        ],
+        "energy_tank_item_index": 24,
+        "item_percentage_index": 1001,
+        "multiworld_magic_item_index": 25
     },
     "starting_location": {
         "world_asset_id": 972217896,

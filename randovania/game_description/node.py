@@ -9,6 +9,7 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -53,11 +54,11 @@ class ResourceNode(Node):
         raise NotImplementedError
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         raise NotImplementedError
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         raise NotImplementedError
 
 
@@ -119,11 +120,11 @@ class PickupNode(ResourceNode):
         return self.pickup_index
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         return current_resources.get(self.pickup_index, 0) == 0
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         yield self.pickup_index, 1
 
         target = patches.pickup_assignment.get(self.pickup_index)
@@ -147,12 +148,12 @@ class EventNode(ResourceNode):
     def resource(self) -> ResourceInfo:
         return self.event
 
-    def can_collect(self, patches: GamePatches, current_resources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+    def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         return current_resources.get(self.event, 0) == 0
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         yield self.event, 1
 
 
@@ -174,12 +175,13 @@ class TranslatorGateNode(ResourceNode):
         return self.gate
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         """
         Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
         :param patches:
         :param current_resources:
         :param all_nodes:
+        :param database:
         :return:
         """
         if current_resources.get(self.gate, 0) != 0:
@@ -188,7 +190,7 @@ class TranslatorGateNode(ResourceNode):
         return current_resources.get(self.scan_visor, 0) > 0 and current_resources.get(translator, 0) > 0
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         yield self.gate, 1
 
 
@@ -247,12 +249,13 @@ class LogbookNode(ResourceNode):
         return LogbookAsset(self.string_asset_id)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         """
         Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
         :param patches:
         :param current_resources:
         :param all_nodes:
+        :param database:
         :return:
         """
         if current_resources.get(self.resource(), 0) != 0:
@@ -267,7 +270,7 @@ class LogbookNode(ResourceNode):
             return True
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         yield self.resource(), 1
 
 
@@ -287,12 +290,13 @@ class PlayerShipNode(ResourceNode):
         return SimpleResourceInfo(self.index, f"Ship Node {self.index}", f"Ship{self.index}", ResourceType.SHIP_NODE)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                    all_nodes: Tuple[Node, ...]) -> bool:
+                    all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
         """
         Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
         :param patches:
         :param current_resources:
         :param all_nodes:
+        :param database:
         :return:
         """
         if current_resources.get(self.item_to_summon, 0) == 0 and current_resources.get(self.resource(), 0) == 0:
@@ -301,11 +305,11 @@ class PlayerShipNode(ResourceNode):
         return any(
             current_resources.get(node.resource(), 0) == 0
             for node in all_nodes
-            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0)
+            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0, database)
         )
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
-                                 all_nodes: Tuple[Node, ...]) -> ResourceGain:
+                                 all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
         for node in all_nodes:
-            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0):
+            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0, database):
                 yield node.resource(), 1

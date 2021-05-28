@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: A second theme for the auto tracker for Echoes, which uses images of the in game models. Thanks MaskedKirby.
 
+-   Changed: Customizing Dark Aether damage is not considered by logic.
+
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
 
 -   Changed: Multiworld connection is slightly more conservative when giving items.

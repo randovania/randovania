@@ -159,7 +159,8 @@ ConstructTrickResourceInfo = _build_resource_info(
     description=CString("utf8"),
 )
 
-ConstructDamageResourceInfo = _build_resource_info(
+ConstructDamageReductions = Struct(
+    index=VarInt,
     reductions=PrefixedArray(VarInt, Struct(
         index=VarInt,
         multiplier=Float32b,
@@ -194,15 +195,16 @@ ConstructDockWeakness = Struct(
 
 ConstructResourceDatabase = Struct(
     items=PrefixedArray(VarInt, ConstructItemResourceInfo),
+    events=PrefixedArray(VarInt, ConstructResourceInfo),
+    tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
+    damage=PrefixedArray(VarInt, ConstructResourceInfo),
+    versions=PrefixedArray(VarInt, ConstructResourceInfo),
+    misc=PrefixedArray(VarInt, ConstructResourceInfo),
+    requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement)),
+    damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=VarInt,
     item_percentage_index=OptionalValue(VarInt),
     multiworld_magic_item_index=VarInt,
-    events=PrefixedArray(VarInt, ConstructResourceInfo),
-    tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
-    damage=PrefixedArray(VarInt, ConstructDamageResourceInfo),
-    versions=PrefixedArray(VarInt, ConstructResourceInfo),
-    misc=PrefixedArray(VarInt, ConstructResourceInfo),
-    requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
 )
 
 ConstructEchoesBeamConfiguration = Struct(

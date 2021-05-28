@@ -23,6 +23,7 @@ def test_simple_round_trip():
             "versions": [],
             "misc": [],
             "requirement_template": {},
+            "damage_reductions": [],
         },
         "starting_location": {
             "world_asset_id": 1006255871,
@@ -137,6 +138,9 @@ def test_full_data_encode_is_equal():
 
     comparable_json = _comparable_dict(json_database)
     comparable_binary = _comparable_dict(decoded_database)
+    for a, b in zip(comparable_json, comparable_binary):
+        assert a == b
+
     assert comparable_json == comparable_binary
 
 
@@ -195,6 +199,7 @@ def test_encode_resource_database():
                 "data": []
             }
         },
+        "damage_reductions": [],
     }
     resource_database["requirement_template"] = list(resource_database["requirement_template"].items())
 
@@ -202,4 +207,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x01\x00\x00'

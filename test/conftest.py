@@ -59,6 +59,11 @@ def default_layout_configuration(preset_manager) -> EchoesConfiguration:
 
 
 @pytest.fixture()
+def prime1_resource_database() -> ResourceDatabase:
+    return default_database.resource_database_for(RandovaniaGame.PRIME1)
+
+
+@pytest.fixture()
 def echoes_resource_database() -> ResourceDatabase:
     return default_database.resource_database_for(RandovaniaGame.PRIME2)
 

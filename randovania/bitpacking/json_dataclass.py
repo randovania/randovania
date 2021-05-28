@@ -11,6 +11,9 @@ def _handle_optional(type_):
     return type_
 
 
+T = typing.TypeVar("T")
+
+
 class JsonDataclass:
     @property
     def as_json(self) -> dict:
@@ -31,7 +34,7 @@ class JsonDataclass:
         return {}
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra) -> "JsonDataclass":
+    def from_json(cls: typing.Type[T], json_dict: dict, **extra) -> T:
         extra_args = cls.json_extra_arguments()
         extra_args.update(extra)
 
