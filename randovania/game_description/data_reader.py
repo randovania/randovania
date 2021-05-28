@@ -8,7 +8,7 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
-from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
+from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -59,17 +59,16 @@ def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageRe
 
 
 def read_damage_reductions(data: List[Dict], items: List[ItemResourceInfo]) -> Tuple[DamageReduction, ...]:
-    return tuple(read_array(data, lambda info: read_damage_reduction(info, items)))
+    return tuple(read_damage_reduction(info, items) for info in data)
 
 
-def read_damage_resource_info(data: Dict, items: List[ItemResourceInfo]) -> DamageResourceInfo:
-    return DamageResourceInfo(data["index"], data["long_name"],
-                              data["short_name"],
-                              read_damage_reductions(data["reductions"], items))
-
-
-def read_damage_resource_info_array(data: List[Dict], items: List[ItemResourceInfo]) -> List[DamageResourceInfo]:
-    return read_array(data, lambda info: read_damage_resource_info(info, items))
+def read_resource_reductions_dict(data: List[Dict], db: ResourceDatabase,
+                                  ) -> Dict[SimpleResourceInfo, List[DamageReduction]]:
+    return {
+        db.get_by_type_and_index(ResourceType.DAMAGE, item["index"]): read_damage_reductions(item["reductions"],
+                                                                                             db.item)
+        for item in data
+    }
 
 
 # Requirement
@@ -328,15 +327,17 @@ def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
         trick=read_array(data["tricks"], read_trick_resource_info),
-        damage=read_damage_resource_info_array(data["damage"], item),
+        damage=read_resource_info_array(data["damage"], ResourceType.DAMAGE),
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
         requirement_template={},
+        damage_reductions={},
         energy_tank_item_index=data["energy_tank_item_index"],
         item_percentage_index=data["item_percentage_index"],
         multiworld_magic_item_index=data["multiworld_magic_item_index"]
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
+    db.damage_reductions.update(read_resource_reductions_dict(data["damage_reductions"], db))
     return db
 
 

@@ -31,6 +31,7 @@ def _database() -> ResourceDatabase:
             SimpleResourceInfo(1, "Impossible", "Impossible", ResourceType.MISC),
         ],
         requirement_template={},
+        damage_reductions={},
         energy_tank_item_index=0,
         item_percentage_index=0,
         multiworld_magic_item_index=0
@@ -429,7 +430,7 @@ def test_requirement_template_nested(database):
     assert hash(use_a) != hash(use_b)
 
 
-def _json_req(amount: int, index: int = 1, resource_type: int = 3):
+def _json_req(amount: int, index: int = 2, resource_type: int = 3):
     return {"type": "resource", "data": {"type": resource_type, "index": index, "amount": amount, "negate": False}}
 
 
