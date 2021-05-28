@@ -239,7 +239,7 @@ class RandomprimePatcher(Patcher):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
-        if cosmetic_patches.open_map:
+        if cosmetic_patches.open_map and configuration.elevators.is_vanilla:
             map_default_state = "visible"
         else:
             map_default_state = "default"
@@ -254,10 +254,6 @@ class RandomprimePatcher(Patcher):
             description.all_patches, players_config, area_namers, False,
             [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
         )
-        artifact_hints = {
-            resource.long_name.split("Artifact of ")[1]: text
-            for resource, text in resulting_hints.items()
-        }
 
         return {
             "seed": description.permalink.seed_number,
@@ -299,10 +295,13 @@ class RandomprimePatcher(Patcher):
                     "gameNameFull": "Metroid Prime: Randomizer - {}".format(description.shareable_hash),
                     "description": "Seed Hash: {}".format(description.shareable_word_hash),
                 },
-                "mainMenuMessage": "{}\n{}".format(randovania.VERSION, description.shareable_word_hash),
+                "mainMenuMessage": "Randovania v{}\n{}".format(randovania.VERSION, description.shareable_word_hash),
 
                 "creditsString": None,
-                "artifactHints": artifact_hints,
+                "artifactHints": {
+                    artifact.long_name: text
+                    for artifact, text in resulting_hints.items()
+                },
                 "artifactTempleLayerOverrides": {
                     artifact.long_name: True
                     for artifact in present_artifacts
@@ -316,7 +315,6 @@ class RandomprimePatcher(Patcher):
         if input_file is None:
             raise ValueError("Missing input file")
 
-        db = default_database.game_description_for(RandovaniaGame.PRIME1)
         new_config = copy.copy(patch_data)
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
@@ -329,15 +327,9 @@ class RandomprimePatcher(Patcher):
             py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
         )
 
-        magic_item = db.resource_database.multiworld_magic_item
-
         with IsoDolEditor.open_iso(output_file) as dol_editor:
             dol_editor = typing.cast(IsoDolEditor, dol_editor)
             dol_editor.symbols = py_randomprime.rust.get_mp1_symbols("0-00")
-
-            # Change the max capacity
-            dol_editor.write(0x803cd6c0 + magic_item.index * 4,
-                             struct.pack(">L", magic_item.max_capacity))
 
             # Apply remote execution patch
             dol_editor.write_instructions(
