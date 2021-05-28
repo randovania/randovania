@@ -330,7 +330,8 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
                            ) -> float:
     if potential_reach.game.victory_condition.satisfied(potential_reach.state.resources,
-                                                        potential_reach.state.energy):
+                                                        potential_reach.state.energy,
+                                                        potential_reach.state.resource_database):
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected

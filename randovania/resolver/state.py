@@ -114,13 +114,14 @@ class State:
         :return:
         """
 
-        if not node.can_collect(self.patches, self.resources, self.world_list.all_nodes):
+        if not node.can_collect(self.patches, self.resources, self.world_list.all_nodes, self.resource_database):
             raise ValueError(
                 "Trying to collect an uncollectable node'{}'".format(node))
 
         new_resources = copy.copy(self.resources)
         add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources,
-                                                                             self.world_list.all_nodes),
+                                                                             self.world_list.all_nodes,
+                                                                             self.resource_database),
                                                new_resources)
 
         energy = new_energy

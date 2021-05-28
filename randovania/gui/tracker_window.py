@@ -333,7 +333,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         target_node = world_list.resolve_dock_node(node, state.patches)
                         dock_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
                                                                         node.default_dock_weakness)
-                        if dock_weakness.requirement.satisfied(state.resources, state.energy):
+                        if dock_weakness.requirement.satisfied(state.resources, state.energy, state.resource_database):
                             nearby_areas.add(world_list.nodes_to_area(target_node))
                     except IndexError as e:
                         print(f"For {node.name} in {area.name}, received {e}")
@@ -401,7 +401,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources, all_nodes))
+                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources, all_nodes,
+                                                                            state.resource_database))
                         node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
@@ -725,7 +726,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         for node in self._collected_nodes:
             add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources,
-                                                                                 all_nodes),
+                                                                                 all_nodes, state.resource_database),
                                                    state.resources)
 
         return state

@@ -11,19 +11,20 @@ MAX_DAMAGE = 9999999
 
 
 class Requirement:
-    def damage(self, current_resources: CurrentResources) -> int:
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         raise NotImplementedError()
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError()
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           ) -> "Requirement":
+                           database: ResourceDatabase) -> "Requirement":
         """
         Creates a new Requirement that does not contain reference to resources in static_resources.
         For those that contains a reference, they're replaced with Trivial when satisfied and Impossible otherwise.
         :param static_resources:
         :param damage_multiplier: All damage requirements have their value multiplied by this.
+        :param database:
         """
         raise NotImplementedError()
 
@@ -68,25 +69,25 @@ class RequirementAnd(Requirement):
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
 
-    def damage(self, current_resources: CurrentResources) -> int:
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         result = 0
         for item in self.items:
-            if item.satisfied(current_resources, MAX_DAMAGE):
-                result += item.damage(current_resources)
+            if item.satisfied(current_resources, MAX_DAMAGE, database):
+                result += item.damage(current_resources, database)
             else:
                 return MAX_DAMAGE
         return result
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         return all(
-            item.satisfied(current_resources, current_energy)
+            item.satisfied(current_resources, current_energy, database)
             for item in self.items
         )
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           ) -> Requirement:
+                           database: ResourceDatabase) -> Requirement:
         return RequirementAnd(
-            item.patch_requirements(static_resources, damage_multiplier) for item in self.items
+            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
         )
 
     def simplify(self) -> Requirement:
@@ -140,26 +141,26 @@ class RequirementOr(Requirement):
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
 
-    def damage(self, current_resources: CurrentResources) -> int:
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         try:
             return min(
-                item.damage(current_resources)
+                item.damage(current_resources, database)
                 for item in self.items
-                if item.satisfied(current_resources, MAX_DAMAGE)
+                if item.satisfied(current_resources, MAX_DAMAGE, database)
             )
         except ValueError:
             return MAX_DAMAGE
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         return any(
-            item.satisfied(current_resources, current_energy)
+            item.satisfied(current_resources, current_energy, database)
             for item in self.items
         )
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           ) -> Requirement:
+                           database: ResourceDatabase) -> Requirement:
         return RequirementOr(
-            item.patch_requirements(static_resources, damage_multiplier) for item in self.items
+            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
         )
 
     def simplify(self) -> Requirement:
@@ -283,19 +284,19 @@ class ResourceRequirement(Requirement):
     def is_damage(self) -> bool:
         return self.resource.resource_type == ResourceType.DAMAGE
 
-    def damage(self, current_resources: CurrentResources) -> int:
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
             return ceil(self.resource.damage_reduction(current_resources) * self.amount)
         else:
             return 0
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
 
         if self.is_damage:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
 
-            return current_energy > self.damage(current_resources)
+            return current_energy > self.damage(current_resources, database)
 
         has_amount = current_resources.get(self.resource, 0) >= self.amount
         if self.negate:
@@ -336,9 +337,9 @@ class ResourceRequirement(Requirement):
         )
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           ) -> Requirement:
+                           database: ResourceDatabase) -> Requirement:
         if static_resources.get(self.resource) is not None:
-            if self.satisfied(static_resources, 0):
+            if self.satisfied(static_resources, 0, database):
                 return Requirement.trivial()
             else:
                 return Requirement.impossible()
@@ -372,15 +373,15 @@ class RequirementTemplate(Requirement):
     def template_requirement(self) -> Requirement:
         return self.database.requirement_template[self.template_name]
 
-    def damage(self, current_resources: CurrentResources) -> int:
-        return self.template_requirement.damage(current_resources)
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+        return self.template_requirement.damage(current_resources, database)
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
-        return self.template_requirement.satisfied(current_resources, current_energy)
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+        return self.template_requirement.satisfied(current_resources, current_energy, database)
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           ) -> Requirement:
-        return self.template_requirement.patch_requirements(static_resources, damage_multiplier)
+                           database: ResourceDatabase) -> Requirement:
+        return self.template_requirement.patch_requirements(static_resources, damage_multiplier, database)
 
     def simplify(self) -> Requirement:
         return self
@@ -433,20 +434,21 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         """
         A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
         In particular, an empty RequirementList is considered satisfied.
         :param current_resources:
         :param current_energy:
+        :param database:
         :return:
         """
 
         energy = current_energy
         for requirement in self.values():
-            if requirement.satisfied(current_resources, current_energy):
+            if requirement.satisfied(current_resources, current_energy, database):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
-                    energy -= requirement.damage(current_resources)
+                    energy -= requirement.damage(current_resources, database)
             else:
                 return False
         return True
@@ -541,16 +543,17 @@ class RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
         :param current_resources:
         :param current_energy:
+        :param database:
         :return:
         """
         return any(
-            requirement_list.satisfied(current_resources, current_energy)
+            requirement_list.satisfied(current_resources, current_energy, database)
             for requirement_list in self.alternatives)
 
     def union(self, other: "RequirementSet") -> "RequirementSet":
