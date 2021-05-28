@@ -430,7 +430,7 @@ def test_requirement_template_nested(database):
     assert hash(use_a) != hash(use_b)
 
 
-def _json_req(amount: int, index: int = 2, resource_type: int = 3):
+def _json_req(amount: int, index: int = 1, resource_type: int = 3):
     return {"type": "resource", "data": {"type": resource_type, "index": index, "amount": amount, "negate": False}}
 
 
@@ -470,3 +470,17 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
     }
 
     assert req.damage(resources, echoes_resource_database) == damage
+
+
+def test_simple_echoes_damage(echoes_resource_database):
+    db = echoes_resource_database
+    req = ResourceRequirement(
+        db.get_by_type_and_index(ResourceType.DAMAGE, 2),
+        50, False,
+    )
+    d_suit = db.get_item_by_name("Dark Suit")
+    l_suit = db.get_item_by_name("Light Suit")
+
+    assert req.damage({}, db) == 50
+    assert req.damage({d_suit: 1}, db) == 11
+    assert req.damage({l_suit: 1}, db) == 0

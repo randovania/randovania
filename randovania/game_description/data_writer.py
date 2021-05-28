@@ -145,9 +145,6 @@ def write_resource_database(resource_database: ResourceDatabase):
 
     return {
         "items": write_array(resource_database.item, write_item_resource),
-        "energy_tank_item_index": resource_database.energy_tank_item_index,
-        "item_percentage_index": resource_database.item_percentage_index,
-        "multiworld_magic_item_index": resource_database.multiworld_magic_item_index,
         "events": write_array(resource_database.event, write_simple_resource),
         "tricks": write_array(resource_database.trick, write_trick_resource),
         "damage": write_array(resource_database.damage, write_simple_resource),
@@ -169,7 +166,10 @@ def write_resource_database(resource_database: ResourceDatabase):
                 ]
             }
             for resource, reductions in resource_database.damage_reductions.items()
-        ]
+        ],
+        "energy_tank_item_index": resource_database.energy_tank_item_index,
+        "item_percentage_index": resource_database.item_percentage_index,
+        "multiworld_magic_item_index": resource_database.multiworld_magic_item_index,
     }
 
 
