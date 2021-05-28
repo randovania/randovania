@@ -1,16 +1,19 @@
 import copy
+import dataclasses
 from typing import Tuple
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PlayerShipNode
+from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.preset import AnyGameConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
@@ -110,7 +113,8 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches, energy
 
     if isinstance(starting_node, PlayerShipNode):
         add_resource_gain_to_current_resources(
-            starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes),
+            starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes,
+                                                   game.resource_database),
             initial_resources,
         )
 
@@ -148,15 +152,17 @@ def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentRe
     }
 
 
-def misc_resources_for_configuration(configuration: EchoesConfiguration,
+def misc_resources_for_configuration(configuration: AnyGameConfiguration,
                                      resource_database: ResourceDatabase) -> CurrentResources:
-    enabled_resources = {
-        # Allow Vanilla X
-        19, 20, 21, 22, 23, 24, 25
-    }
-    if configuration.elevators.is_vanilla:
-        # Vanilla Great Temple Emerald Translator Gate
-        enabled_resources.add(18)
+    enabled_resources = {}
+    if configuration.game == RandovaniaGame.PRIME2:
+        enabled_resources = {
+            # Allow Vanilla X
+            19, 20, 21, 22, 23, 24, 25
+        }
+        if configuration.elevators.is_vanilla:
+            # Vanilla Great Temple Emerald Translator Gate
+            enabled_resources.add(18)
 
     return {
         resource: 1 if resource.index in enabled_resources else 0
@@ -164,7 +170,63 @@ def misc_resources_for_configuration(configuration: EchoesConfiguration,
     }
 
 
-def logic_bootstrap(configuration: EchoesConfiguration,
+def prime1_progressive_damage_reduction(db: ResourceDatabase, current_resources: CurrentResources):
+    num_suits = sum(current_resources.get(db.get_item_by_name(suit), 0)
+                    for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"])
+    if num_suits >= 3:
+        return 0.5
+    elif num_suits == 2:
+        return 0.8
+    elif num_suits == 1:
+        return 0.9
+    else:
+        return 1
+
+
+def prime1_absolute_damage_reduction(db: ResourceDatabase, current_resources: CurrentResources):
+    if current_resources.get(db.get_item_by_name("Phazon Suit"), 0) > 0:
+        return 0.5
+    elif current_resources.get(db.get_item_by_name("Gravity Suit"), 0) > 0:
+        return 0.8
+    elif current_resources.get(db.get_item_by_name("Varia Suit"), 0) > 0:
+        return 0.9
+    else:
+        return 1
+
+
+def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfiguration) -> ResourceDatabase:
+    base_damage_reduction = db.base_damage_reduction
+    damage_reductions = copy.copy(db.damage_reductions)
+
+    if configuration.game == RandovaniaGame.PRIME1:
+        reductions = [
+            DamageReduction(None, configuration.heat_damage / 10.0),
+        ]
+        suits = [db.get_item_by_name("Varia Suit")]
+        if not configuration.heat_protection_only_varia:
+            suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
+
+        reductions.extend([
+            DamageReduction(suit, 0)
+            for suit in suits
+        ])
+        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 5)] = reductions
+        if configuration.progressive_damage_reduction:
+            base_damage_reduction = prime1_progressive_damage_reduction
+        else:
+            base_damage_reduction = prime1_absolute_damage_reduction
+
+    elif configuration.game == RandovaniaGame.PRIME2:
+        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 2)] = [
+            DamageReduction(None, configuration.varia_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
+        ]
+
+    return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction)
+
+
+def logic_bootstrap(configuration: AnyGameConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
                     ) -> Tuple[GameDescription, State]:
@@ -176,6 +238,7 @@ def logic_bootstrap(configuration: EchoesConfiguration,
     :return:
     """
     game = copy.deepcopy(game)
+    game.resource_database = patch_resource_database(game.resource_database, configuration)
     starting_state = calculate_starting_state(game, patches, configuration.energy_per_tank)
 
     if configuration.trick_level.minimal_logic:

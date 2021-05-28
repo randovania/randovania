@@ -8,9 +8,9 @@ from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
-from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -73,7 +73,7 @@ class GameDescription:
         self.world_list = world_list
 
     def patch_requirements(self, resources, damage_multiplier: float):
-        self.world_list.patch_requirements(resources, damage_multiplier)
+        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
         self._dangerous_resources = None
 
     def create_game_patches(self) -> GamePatches:
@@ -95,9 +95,11 @@ class GameDescription:
         return self._dangerous_resources
 
 
-def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
+def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
     yield database.energy_tank
-    yield from (reduction.inventory_item for reduction in resource.reductions)
+    for reduction in database.damage_reductions.get(resource, []):
+        if reduction.inventory_item is not None:
+            yield reduction.inventory_item
 
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
@@ -110,13 +112,13 @@ def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequire
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(resources, energy):
+            if not requirement_list.satisfied(resources, energy, database):
 
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(resources, energy):
-                        if isinstance(individual.resource, DamageResourceInfo):
+                    if not individual.negate and not individual.satisfied(resources, energy, database):
+                        if individual.is_damage:
                             yield from _resources_for_damage(individual.resource, database)
                         else:
                             yield individual.resource

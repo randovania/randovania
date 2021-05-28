@@ -48,7 +48,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
             damage.append(individual)
             continue
 
-        if individual.satisfied(state.resources, state.energy):
+        if individual.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
         if individual.resource.resource_type != ResourceType.ITEM:
@@ -61,7 +61,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
     if not possible:
         return
 
-    sum_damage = sum(req.damage(state.resources) for req in damage)
+    sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
     if state.energy < sum_damage:
         tank_count = (sum_damage - state.energy) // state.game_data.energy_per_tank
         yield items + [ResourceRequirement(state.resource_database.energy_tank, tank_count + 1, False)]
@@ -109,7 +109,7 @@ def pickups_to_solve_list(pickup_pool: List[PickupEntry],
     pickups_for_this = list(pickup_pool)
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(resources, state.energy):
+        if individual.satisfied(resources, state.energy, state.resource_database):
             continue
 
         # FIXME: this picks Dark Beam to provide Dark Ammo
@@ -124,10 +124,10 @@ def pickups_to_solve_list(pickup_pool: List[PickupEntry],
                 pickups_for_this.remove(pickup)
                 resource_info.add_resources_into_another(resources, new_resources)
 
-            if individual.satisfied(resources, state.energy):
+            if individual.satisfied(resources, state.energy, state.resource_database):
                 break
 
-        if not individual.satisfied(resources, state.energy):
+        if not individual.satisfied(resources, state.energy, state.resource_database):
             return None
 
     return pickups

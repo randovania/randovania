@@ -49,6 +49,7 @@ class ResolverReach:
                         initial_state: State) -> "ResolverReach":
 
         checked_nodes: Dict[Node, int] = {}
+        database = initial_state.resource_database
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
@@ -87,14 +88,15 @@ class ResolverReach:
                     requirement = RequirementAnd([requirement, requirement_to_leave])
 
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirement.satisfied(initial_state.resources, energy)
+                satisfied = requirement.satisfied(initial_state.resources, energy, database)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
-                                                                                  energy)
+                                                                                  energy,
+                                                                                  initial_state.resource_database)
 
                 if satisfied:
-                    nodes_to_check[target_node] = energy - requirement.damage(initial_state.resources)
+                    nodes_to_check[target_node] = energy - requirement.damage(initial_state.resources, database)
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
                 elif target_node:
@@ -122,7 +124,7 @@ class ResolverReach:
 
         for node in self.collectable_resource_nodes(state):
             additional_requirements = self._logic.get_additional_requirements(node)
-            if additional_requirements.satisfied(state.resources, self._energy_at_node[node]):
+            if additional_requirements.satisfied(state.resources, self._energy_at_node[node], state.resource_database):
                 yield node, self._energy_at_node[node]
             else:
                 debug.log_skip_action_missing_requirement(node, self._logic.game,
@@ -142,7 +144,8 @@ class ResolverReach:
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
             for resource, amount in action.resource_gain_on_collect(state.patches, state.resources,
-                                                                    self._logic.game.world_list.all_nodes):
+                                                                    self._logic.game.world_list.all_nodes,
+                                                                    state.resource_database):
                 if resource in interesting_resources:
                     yield action, energy
                     break
@@ -153,5 +156,6 @@ class ResolverReach:
             if not node.is_resource_node:
                 continue
             node = typing.cast(ResourceNode, node)
-            if node.can_collect(state.patches, state.resources, self._logic.game.world_list.all_nodes):
+            if node.can_collect(state.patches, state.resources, self._logic.game.world_list.all_nodes,
+                                state.resource_database):
                 yield node

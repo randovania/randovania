@@ -24,7 +24,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
         if item.negate:
             return None
 
-        if item.satisfied(state.resources, state.energy):
+        if item.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
         if item.resource not in dangerous_resources:
@@ -60,7 +60,8 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     if any(resource in dangerous_resources
-           for resource in action.resource_gain_on_collect(state.patches, state.resources, all_nodes)):
+           for resource in action.resource_gain_on_collect(state.patches, state.resources, all_nodes,
+                                                           state.resource_database)):
         return False
 
     if isinstance(action, EventNode):
@@ -94,7 +95,7 @@ async def _inner_advance_depth(state: State,
     :return:
     """
 
-    if logic.game.victory_condition.satisfied(state.resources, state.energy):
+    if logic.game.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something

@@ -9,6 +9,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
@@ -210,13 +211,15 @@ class WorldList:
         yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float) -> None:
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           database: ResourceDatabase) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
         All damage requirements are multiplied by the given multiplier.
         :param static_resources:
         :param damage_multiplier:
+        :param database:
         :return:
         """
         for world in self.worlds:
@@ -226,10 +229,12 @@ class WorldList:
                         requirement = node.default_dock_weakness.requirement
                         object.__setattr__(node.default_dock_weakness, "requirement",
                                            requirement.patch_requirements(static_resources,
-                                                                          damage_multiplier).simplify())
+                                                                          damage_multiplier,
+                                                                          database).simplify())
                 for connections in area.connections.values():
                     for target, value in connections.items():
-                        connections[target] = value.patch_requirements(static_resources, damage_multiplier).simplify()
+                        connections[target] = value.patch_requirements(
+                            static_resources, damage_multiplier, database).simplify()
 
     def teleporter_to_node(self, teleporter: Teleporter) -> TeleporterNode:
         area = self.area_by_area_location(teleporter.area_location)
