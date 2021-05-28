@@ -110,7 +110,8 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches, energy
 
     if isinstance(starting_node, PlayerShipNode):
         add_resource_gain_to_current_resources(
-            starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes),
+            starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes,
+                                                   game.resource_database),
             initial_resources,
         )
 

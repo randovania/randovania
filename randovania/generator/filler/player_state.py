@@ -101,7 +101,9 @@ class PlayerState:
         ]
 
     def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.reach.state.resources, self.reach.state.energy)
+        return self.game.victory_condition.satisfied(self.reach.state.resources,
+                                                     self.reach.state.energy,
+                                                     self.reach.state.resource_database)
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
         self.num_assigned_pickups += 1

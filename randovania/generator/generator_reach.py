@@ -40,7 +40,8 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def filter_collectable(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
+        if resource_node.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes,
+                                     reach.state.resource_database):
             yield resource_node
 
 
@@ -122,7 +123,7 @@ class GeneratorReach:
             if extra_requirement is not None:
                 requirement = RequirementAnd([requirement, extra_requirement])
 
-            satisfied = requirement.satisfied(self._state.resources, self._state.energy)
+            satisfied = requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database)
             yield target_node, requirement, satisfied
 
     def _expand_graph(self, paths_to_check: List[GraphPath]):
@@ -275,7 +276,7 @@ class GeneratorReach:
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirement in self._unreachable_paths.items():
-            if requirement.satisfied(self._state.resources, self._state.energy):
+            if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
                 from_node, to_node = edge
                 paths_to_check.append(GraphPath(from_node, to_node, requirement))
                 edges_to_remove.append(edge)
@@ -289,7 +290,8 @@ class GeneratorReach:
         all_nodes = self.game.world_list.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes)
+            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes,
+                                                                    self.state.resource_database)
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)
@@ -300,7 +302,7 @@ class GeneratorReach:
                 # FIXME: don't convert to set!
                 dangerous = requirement.as_set.dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
-                    if not requirement.satisfied(new_state.resources, new_state.energy):
+                    if not requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
@@ -319,7 +321,8 @@ class GeneratorReach:
         for (_, node), requirement in self._unreachable_paths.items():
             if self.is_reachable_node(node):
                 continue
-            requirements = requirement.patch_requirements(self.state.resources, 1).simplify().as_set
+            requirements = requirement.patch_requirements(
+                self.state.resources, 1, self.state.resource_database).simplify().as_set
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
@@ -372,7 +375,8 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.state.patches, reach.state.resources, reach.game.world_list.all_nodes):
+            if action.can_collect(reach.state.patches, reach.state.resources,
+                                  reach.game.world_list.all_nodes, reach.state.resource_database):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 

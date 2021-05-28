@@ -64,11 +64,11 @@ def make_single_set(id_req: Tuple[SimpleResourceInfo, ResourceRequirement]) -> R
 
 
 def test_empty_requirement_set_satisfied():
-    assert not RequirementSet([]).satisfied({}, 99)
+    assert not RequirementSet([]).satisfied({}, 99, None)
 
 
 def test_empty_requirement_list_satisfied():
-    assert RequirementList([]).satisfied({}, 99)
+    assert RequirementList([]).satisfied({}, 99, None)
 
 
 def test_simplify_requirement_set_static():
@@ -80,9 +80,9 @@ def test_simplify_requirement_set_static():
         RequirementAnd([id_req_b]),
     ])
 
-    simple_1 = the_set.patch_requirements({res_a: 0, res_b: 0}, 1)
-    simple_2 = the_set.patch_requirements({res_a: 0, res_b: 1}, 1)
-    simple_3 = the_set.patch_requirements({res_a: 1, res_b: 1}, 1)
+    simple_1 = the_set.patch_requirements({res_a: 0, res_b: 0}, 1, None)
+    simple_2 = the_set.patch_requirements({res_a: 0, res_b: 1}, 1, None)
+    simple_3 = the_set.patch_requirements({res_a: 1, res_b: 1}, 1, None)
 
     assert simple_1.as_set.alternatives == frozenset()
     assert simple_2.as_set.alternatives == frozenset([RequirementList([])])
@@ -251,11 +251,11 @@ def test_impossible_requirement_as_set():
 
 
 def test_impossible_requirement_satisfied():
-    assert not Requirement.impossible().satisfied({}, 99)
+    assert not Requirement.impossible().satisfied({}, 99, None)
 
 
 def test_impossible_requirement_damage():
-    assert Requirement.impossible().damage({}) == MAX_DAMAGE
+    assert Requirement.impossible().damage({}, None) == MAX_DAMAGE
 
 
 def test_impossible_requirement_str():
@@ -267,11 +267,11 @@ def test_trivial_requirement_as_set():
 
 
 def test_trivial_requirement_satisfied():
-    assert Requirement.trivial().satisfied({}, 99)
+    assert Requirement.trivial().satisfied({}, 99, None)
 
 
 def test_trivial_requirement_damage():
-    assert Requirement.trivial().damage({}) == 0
+    assert Requirement.trivial().damage({}, None) == 0
 
 
 def test_trivial_requirement_str():
@@ -468,4 +468,4 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
         for item in items
     }
 
-    assert req.damage(resources) == damage
+    assert req.damage(resources, echoes_resource_database) == damage

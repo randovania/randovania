@@ -73,7 +73,7 @@ class GameDescription:
         self.world_list = world_list
 
     def patch_requirements(self, resources, damage_multiplier: float):
-        self.world_list.patch_requirements(resources, damage_multiplier)
+        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
         self._dangerous_resources = None
 
     def create_game_patches(self) -> GamePatches:
@@ -110,12 +110,12 @@ def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequire
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(resources, energy):
+            if not requirement_list.satisfied(resources, energy, database):
 
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(resources, energy):
+                    if not individual.negate and not individual.satisfied(resources, energy, database):
                         if isinstance(individual.resource, DamageResourceInfo):
                             yield from _resources_for_damage(individual.resource, database)
                         else:
