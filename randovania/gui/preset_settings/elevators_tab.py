@@ -68,8 +68,6 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             """)
 
         elif self.game_enum == RandovaniaGame.PRIME3:
-            self.patches_tab_widget.setTabText(self.patches_tab_widget.indexOf(self.elevator_tab),
-                                               "Teleporters")
             self.elevators_description_label.setText(
                 self.elevators_description_label.text().replace("elevator", "teleporter")
             )
@@ -77,6 +75,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
     @property
     def uses_patches_tab(self) -> bool:
         return True
+
+    @property
+    def tab_title(self):
+        if self.game_enum == RandovaniaGame.PRIME3:
+            return "Teleporters"
+        return self.windowTitle()
 
     @property
     def game_enum(self):
