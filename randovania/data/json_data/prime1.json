@@ -526,7 +526,7 @@
             },
             {
                 "index": 43,
-                "long_name": "Metroid Prime Essence",
+                "long_name": "Credits",
                 "short_name": "Event43"
             },
             {
@@ -989,7 +989,7 @@
     "worlds": [
         {
             "name": "Impact Crater",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 3241871825,
             "areas": [
                 {
@@ -1944,7 +1944,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Event - Metroid Prime Essence": {
+                                "Teleporter to Credits": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -2021,11 +2021,16 @@
                             }
                         },
                         {
-                            "name": "Event - Metroid Prime Essence",
+                            "name": "Teleporter to Credits",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 43,
+                            "node_type": "teleporter",
+                            "destination_world_asset_id": 332894565,
+                            "destination_area_asset_id": 3031702600,
+                            "teleporter_instance_id": 721282,
+                            "scan_asset_id": null,
+                            "keep_name_when_vanilla": false,
+                            "editable": false,
                             "connections": {
                                 "Dock to Subchamber Five": {
                                     "type": "and",
@@ -2039,7 +2044,7 @@
         },
         {
             "name": "Phendrana Drifts",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 2831049361,
             "areas": [
                 {
@@ -10813,7 +10818,7 @@
         },
         {
             "name": "Frigate Orpheon",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 361692695,
             "areas": [
                 {
@@ -12508,7 +12513,7 @@
         },
         {
             "name": "Magmoor Caverns",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 1056449404,
             "areas": [
                 {
@@ -18913,7 +18918,7 @@
         },
         {
             "name": "Phazon Mines",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 2980859237,
             "areas": [
                 {
@@ -26067,7 +26072,7 @@
         },
         {
             "name": "Tallon Overworld",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 972217896,
             "areas": [
                 {
@@ -31852,7 +31857,7 @@
         },
         {
             "name": "Chozo Ruins",
-            "dark_name": "",
+            "dark_name": null,
             "asset_id": 2214002543,
             "areas": [
                 {
@@ -40745,6 +40750,30 @@
                                     "data": []
                                 }
                             }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "End of Game",
+            "dark_name": null,
+            "asset_id": 332894565,
+            "areas": [
+                {
+                    "name": "Credits",
+                    "in_dark_aether": false,
+                    "asset_id": 3031702600,
+                    "default_node_index": 0,
+                    "valid_starting_location": false,
+                    "nodes": [
+                        {
+                            "name": "Event - Credits",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 43,
+                            "connections": {}
                         }
                     ]
                 }
