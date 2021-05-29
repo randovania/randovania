@@ -1,8 +1,11 @@
 import dataclasses
 import json
-from typing import Dict, List, Union, Tuple
+import logging
+from pathlib import Path
+from typing import Dict, List, Union, Optional
 
 import PySide2
+from PySide2 import QtWidgets
 from PySide2.QtCore import QTimer, Signal, Qt
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QMainWindow, QLabel, QSpacerItem, QSizePolicy, QActionGroup
@@ -22,11 +25,10 @@ from randovania.gui.lib.clickable_label import ClickableLabel
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
 from randovania.interface_common.options import Options
-from randovania.interface_common.tracker_theme import TrackerTheme
 
 
-def path_for(game: RandovaniaGame, theme: TrackerTheme):
-    return get_data_path().joinpath(f"gui_assets/tracker/{game.value}-{theme.value}.json")
+def path_for(name: str):
+    return get_data_path().joinpath(f"gui_assets/tracker", name)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -39,7 +41,9 @@ class Element:
 class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     _hooked = False
     _base_address: int
-    _last_tracker_config: Tuple[RandovaniaGame, TrackerTheme] = None
+    trackers: Dict[str, str]
+    _current_tracker_game: RandovaniaGame = None
+    _current_tracker_name: str = None
     give_item_signal = Signal(PickupEntry)
 
     def __init__(self, game_connection: GameConnection, options: Options):
@@ -49,19 +53,23 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         self.options = options
         common_qt_lib.set_default_window_icon(self)
 
-        self._action_to_theme = {
-            self.action_theme_2d_style: TrackerTheme.CLASSIC,
-            self.action_theme_game_icons: TrackerTheme.GAME,
-        }
+        with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
+            self.trackers = json.load(trackers_file)["trackers"]
 
+        self._action_to_name = {}
         theme_group = QActionGroup(self)
-        for action, theme in self._action_to_theme.items():
+        for name in self.trackers.keys():
+            action = QtWidgets.QAction(self.menu_tracker)
+            action.setText(name)
+            action.setCheckable(True)
+            action.setChecked(name == options.selected_tracker)
+            action.triggered.connect(self._on_action_select_tracker)
+            self.menu_tracker.addAction(action)
+            self._action_to_name[action] = name
             theme_group.addAction(action)
-            action.setChecked(theme == options.tracker_theme)
-            action.triggered.connect(self._on_action_theme)
 
         self._tracker_elements: List[Element] = []
-        self.create_tracker(RandovaniaGame.PRIME2)
+        self.create_tracker()
 
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
                                                          self.game_connection, options)
@@ -81,11 +89,10 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         super().hideEvent(event)
 
     @property
-    def theme(self) -> TrackerTheme:
-        for action, theme in self._action_to_theme.items():
+    def selected_tracker(self) -> Optional[str]:
+        for action, name in self._action_to_name.items():
             if action.isChecked():
-                return theme
-        return TrackerTheme.default()
+                return name
 
     def _update_tracker_from_hook(self, inventory: Dict[ItemResourceInfo, InventoryItem]):
         for element in self._tracker_elements:
@@ -107,10 +114,10 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                     max_capacity=max_capacity,
                 ))
 
-    def _on_action_theme(self):
+    def _on_action_select_tracker(self):
         with self.options as options:
-            options.tracker_theme = self.theme
-        self.create_tracker(self._last_tracker_config[0])
+            options.selected_tracker = self.selected_tracker
+        self.create_tracker()
 
     @asyncSlot()
     async def _on_timer_update(self):
@@ -118,14 +125,16 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             current_status = self.game_connection.current_status
             if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,
                                       GameConnectionStatus.WrongGame}:
-                self.create_tracker(self.game_connection.backend.patches.game)
                 self.force_update_button.setEnabled(True)
             else:
                 self.force_update_button.setEnabled(False)
 
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
-                inventory = self.game_connection.get_current_inventory()
-                self._update_tracker_from_hook(inventory)
+                if self.game_connection.backend.patches.game == self._current_tracker_game:
+                    inventory = self.game_connection.get_current_inventory()
+                    self._update_tracker_from_hook(inventory)
+                else:
+                    self.connection_status_label.setText(f"{self.game_connection.backend.name}: Wrong Game")
         finally:
             self._update_timer.start()
 
@@ -135,25 +144,26 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         self._tracker_elements.clear()
 
-    def create_tracker(self, game_enum: RandovaniaGame):
-        effective_theme = self.theme
-        if not path_for(game_enum, effective_theme).is_file():
-            effective_theme = TrackerTheme.CLASSIC
-
-        if (game_enum, effective_theme) == self._last_tracker_config:
+    def create_tracker(self):
+        tracker_name = self.selected_tracker
+        if tracker_name == self._current_tracker_name or tracker_name is None:
             return
+
         self.delete_tracker()
 
-        resource_database = default_database.resource_database_for(game_enum)
-
-        with path_for(game_enum, effective_theme).open("r") as tracker_details_file:
+        with path_for(self.trackers[tracker_name]).open("r") as tracker_details_file:
             tracker_details = json.load(tracker_details_file)
+
+        game_enum = RandovaniaGame(tracker_details["game"])
+        resource_database = default_database.resource_database_for(game_enum)
 
         for element in tracker_details["elements"]:
             text_template = ""
 
             if "image_path" in element:
                 image_path = get_data_path().joinpath(element["image_path"])
+                if not image_path.exists():
+                    logging.error("Tracker asset not found: %s", image_path)
                 pixmap = QPixmap(str(image_path))
 
                 label = ClickableLabel(self.inventory_group, paint_with_opacity(pixmap, 0.3),
@@ -179,9 +189,11 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
                                       self.inventory_layout.columnCount())
+
+        self._current_tracker_game = game_enum
         self._update_tracker_from_hook({})
 
-        self._last_tracker_config = (game_enum, effective_theme)
+        self._current_tracker_name = tracker_name
 
     @asyncSlot()
     async def on_force_update_button(self):

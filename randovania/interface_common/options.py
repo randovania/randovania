@@ -10,7 +10,6 @@ from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.interface_common.tracker_theme import TrackerTheme
 
 T = TypeVar("T")
 
@@ -59,7 +58,7 @@ _SERIALIZER_FOR_FIELD = {
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
-    "tracker_theme": Serializer(lambda it: it.value, TrackerTheme),
+    "selected_tracker": Serializer(identity, str),
 }
 
 
@@ -98,7 +97,7 @@ class Options:
     _displayed_alerts: Optional[Set[InfoAlert]] = None
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
-    _tracker_theme: Optional[TrackerTheme] = None
+    _selected_tracker: Optional[str] = None
 
     def __init__(self, data_dir: Path, user_dir: Optional[Path] = None):
         self._data_dir = data_dir
@@ -227,7 +226,7 @@ class Options:
         self._dark_mode = None
         self._game_backend = None
         self._nintendont_ip = None
-        self._tracker_theme = None
+        self._selected_tracker = None
 
     # Files paths
     @property
@@ -326,12 +325,12 @@ class Options:
         self._edit_field("nintendont_ip", value)
 
     @property
-    def tracker_theme(self) -> TrackerTheme:
-        return _return_with_default(self._tracker_theme, TrackerTheme.default)
+    def selected_tracker(self) -> str:
+        return self._selected_tracker
 
-    @tracker_theme.setter
-    def tracker_theme(self, value: TrackerTheme):
-        self._edit_field("tracker_theme", value)
+    @selected_tracker.setter
+    def selected_tracker(self, value: str):
+        self._edit_field("selected_tracker", value)
 
     @property
     def displayed_alerts(self):
