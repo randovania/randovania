@@ -211,6 +211,9 @@ class RandomprimePatcher(Patcher):
         )
         world_data = {}
         for world in db.world_list.worlds:
+            if world.name == "End of Game":
+                continue
+
             world_data[world.name] = {
                 "transports": {},
                 "rooms": {}

@@ -93,12 +93,12 @@ def test_create_patch_data(test_files_dir):
             'autoEnabledElevators': False,
             'creditsString': None,
             'etankCapacity': 110,
-            'gameBanner': {'description': 'Seed Hash: Culling Chamber Staging',
+            'gameBanner': {'description': 'Seed Hash: Worship Key Sunburst',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - ALKZLIJL'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - MV523B5D'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nCulling Chamber Staging',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nWorship Key Sunburst',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
@@ -130,7 +130,12 @@ def test_create_patch_data(test_files_dir):
             'startingMemo': '5 Missiles',
             'startingRoom': 'Tallon Overworld:Landing Site'},
         'levelData': {
-            'Impact Crater': {'transports': {}, 'rooms': {}},
+            'Impact Crater': {
+                'rooms': {},
+                'transports': {
+                    'Crater Entry Point': 'Artifact Temple',
+                },
+            },
             'Phendrana Drifts': {
                 'transports': {
                     'Phendrana Drifts North\x00(Phendrana Shorelines)': 'Tallon Overworld East\x00(Frigate Crash Site)',
@@ -484,6 +489,7 @@ def test_create_patch_data(test_files_dir):
                          'hudmemoText': 'Sent Energy Tank to Echoes!',
                          'count': 90, 'respawn': False}]}}},
             'Tallon Overworld': {'transports': {
+                'Artifact Temple': 'Crater Entry Point',
                 'Tallon Overworld North\x00(Tallon Canyon)': 'Chozo Ruins East\x00(Reflecting Pool, Save Station)',
                 'Tallon Overworld East\x00(Frigate Crash Site)': 'Phendrana Drifts North\x00(Phendrana Shorelines)',
                 'Tallon Overworld West\x00(Root Cave)': 'Magmoor Caverns North\x00(Lava Lake)',
