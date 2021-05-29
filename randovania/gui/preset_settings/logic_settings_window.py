@@ -1,28 +1,24 @@
 import collections
-import copy
 import dataclasses
 import functools
 import re
-from typing import Dict, Optional, List, Callable, FrozenSet
+from typing import Dict, Optional, List
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
-import randovania.games.prime.echoes_teleporters
 from randovania.game_description import default_database
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.node import PickupNode, TeleporterNode
+from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
@@ -31,19 +27,19 @@ from randovania.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
 from randovania.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
 from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
+from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
 from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
+from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.damage_strictness import LayoutDamageStrictness
 from randovania.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
 from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
@@ -65,20 +61,13 @@ def _update_options_by_value(options: Options, combo: QComboBox, new_index: int)
         setattr(options, combo.options_field_name, combo.currentData())
 
 
-class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
+class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
     _extra_tabs: List[PresetTab]
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
-    _elevator_source_for_location: Dict[Teleporter, QtWidgets.QCheckBox]
-    _elevator_source_destination: Dict[Teleporter, Optional[Teleporter]]
-    _elevator_target_for_world: Dict[str, QtWidgets.QCheckBox]
-    _elevator_target_for_area: Dict[int, QtWidgets.QCheckBox]
-    _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[TrickResourceInfo, QtWidgets.QSlider]
     _editor: PresetEditor
     world_list: WorldList
-    _during_batch_check_update: bool = False
 
     def __init__(self, window_manager: Optional[WindowManager], editor: PresetEditor):
         super().__init__()
@@ -87,12 +76,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._editor = editor
         self._window_manager = window_manager
+        self.during_batch_check_update = False
         self._extra_tabs = []
 
         self.game_enum = editor.game
         self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
+
+        self._extra_tabs.append(PresetElevators(editor, self.game_description))
+        self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
 
         if self.game_enum == RandovaniaGame.PRIME1:
             self._extra_tabs.append(PresetPrimeGoal(editor))
@@ -120,14 +113,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
         self.setup_damage_elements()
-        self.setup_elevator_elements()
-        self.setup_starting_area_elements()
         self.setup_location_pool_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
 
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
@@ -168,21 +157,15 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)
 
-        # Elevator
-        self.on_preset_changed_elevators(preset)
-
-        # Starting Area
-        self.on_preset_changed_starting_area(preset)
-
         # Location Pool
         available_locations = config.available_locations
         set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
 
-        self._during_batch_check_update = True
+        self.during_batch_check_update = True
         for node, check in self._location_pool_for_node.items():
             check.setChecked(node.pickup_index not in available_locations.excluded_indices)
             check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
-        self._during_batch_check_update = False
+        self.during_batch_check_update = False
 
     def _edit_name(self, value: str):
         with self._editor as editor:
@@ -401,338 +384,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
 
-    # Area List
-
-    def _areas_by_world_from_locations(self, all_area_locations: List[AreaLocation]):
-        worlds = []
-        areas_by_world = {}
-
-        for location in all_area_locations:
-            world = self.game_description.world_list.world_by_asset_id(location.world_asset_id)
-            if world.world_asset_id not in areas_by_world:
-                worlds.append(world)
-                areas_by_world[world.world_asset_id] = []
-
-            areas_by_world[world.world_asset_id].append(world.area_by_asset_id(location.area_asset_id))
-
-        return worlds, areas_by_world
-
-    def _create_area_list_selection(self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout,
-                                    all_area_locations: List[AreaLocation],
-                                    on_check: Callable[[List[AreaLocation], bool], None],
-                                    ):
-        world_to_group = {}
-        checks_for_world = {}
-        checks_for_area = {}
-
-        worlds, areas_by_world = self._areas_by_world_from_locations(all_area_locations)
-        worlds.sort(key=lambda it: it.name)
-
-        def _on_check_area(c, _):
-            if not self._during_batch_check_update:
-                on_check([c.area_location], c.isChecked())
-
-        def _on_check_world(c, _):
-            if not self._during_batch_check_update:
-                world_list = self.game_description.world_list
-                w = world_list.world_by_asset_id(c.world_asset_id)
-                world_areas = [world_list.area_to_area_location(a)
-                               for a in w.areas if c.is_dark_world == a.in_dark_aether
-                               if a.area_asset_id in checks_for_area]
-                on_check(world_areas, c.isChecked())
-
-        for row, world in enumerate(worlds):
-            for column, is_dark_world in enumerate(dark_world_flags(world)):
-                group_box = QGroupBox(parent)
-                world_check = QtWidgets.QCheckBox(group_box)
-                world_check.setText(world.correct_name(is_dark_world))
-                world_check.world_asset_id = world.world_asset_id
-                world_check.is_dark_world = is_dark_world
-                world_check.stateChanged.connect(functools.partial(_on_check_world, world_check))
-                world_check.setTristate(True)
-                vertical_layout = QVBoxLayout(group_box)
-                vertical_layout.setContentsMargins(8, 4, 8, 4)
-                vertical_layout.setSpacing(2)
-                vertical_layout.setAlignment(QtCore.Qt.AlignTop)
-                separator = QtWidgets.QFrame()
-                separator.setFrameShape(QtWidgets.QFrame.HLine)
-                separator.setFrameShadow(QtWidgets.QFrame.Sunken)
-                group_box.vertical_layout = vertical_layout
-                group_box.vertical_layout.addWidget(world_check)
-                group_box.vertical_layout.addWidget(separator)
-
-                world_to_group[world.correct_name(is_dark_world)] = group_box
-                layout.addWidget(group_box, row, column)
-                checks_for_world[world.correct_name(is_dark_world)] = world_check
-
-        for world in worlds:
-            for area in sorted(areas_by_world[world.world_asset_id], key=lambda a: a.name):
-                group_box = world_to_group[world.correct_name(area.in_dark_aether)]
-                check = QtWidgets.QCheckBox(group_box)
-                check.setText(area.name)
-                check.area_location = AreaLocation(world.world_asset_id, area.area_asset_id)
-                check.stateChanged.connect(functools.partial(_on_check_area, check))
-                group_box.vertical_layout.addWidget(check)
-                checks_for_area[area.area_asset_id] = check
-
-        return checks_for_world, checks_for_area
-
-    def _update_area_list(self, areas_to_check: FrozenSet[AreaLocation],
-                          invert_check: bool,
-                          location_for_world: Dict[str, QtWidgets.QCheckBox],
-                          location_for_area: Dict[int, QtWidgets.QCheckBox],
-                          ):
-        self._during_batch_check_update = True
-        for world in self.game_description.world_list.worlds:
-            for is_dark_world in dark_world_flags(world):
-                all_areas = True
-                no_areas = True
-                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
-                correct_name = world.correct_name(is_dark_world)
-                if correct_name not in location_for_world:
-                    continue
-
-                for area in areas:
-                    if area.area_asset_id in location_for_area:
-                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in areas_to_check
-                        if invert_check:
-                            is_checked = not is_checked
-
-                        if is_checked:
-                            no_areas = False
-                        else:
-                            all_areas = False
-                        location_for_area[area.area_asset_id].setChecked(is_checked)
-                if all_areas:
-                    location_for_world[correct_name].setCheckState(Qt.Checked)
-                elif no_areas:
-                    location_for_world[correct_name].setCheckState(Qt.Unchecked)
-                else:
-                    location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
-        self._during_batch_check_update = False
-
     # Elevator
-    def _create_check_for_source_elevator(self, location: Teleporter):
-        area = self.game_description.world_list.area_by_area_location(location.area_location)
-        name = randovania.games.prime.echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
-        if name is None:
-            name = self.game_description.world_list.area_name(area)
-
-        check = QtWidgets.QCheckBox(self.elevators_source_group)
-        check.setText(name)
-        check.area_location = location
-        signal_handling.on_checked(check, functools.partial(self._on_elevator_source_check_changed, location))
-        return check
-
-    def _create_source_elevators(self):
-        row = 0
-
-        custom_weights = {}
-        if self.game_enum == RandovaniaGame.PRIME2:
-            custom_weights = {
-                2252328306: 0,  # Great Temple
-                1119434212: 1,  # Agon Wastes
-                1039999561: 2,  # Torvus Bog
-                464164546: 3,  # Sanctuary Fortress
-                1006255871: 5,  # Temple Grounds
-            }
-        locations = TeleporterList.areas_list(self.game_enum)
-        areas: Dict[Teleporter, Area] = {
-            loc: self.game_description.world_list.area_by_area_location(loc.area_location)
-            for loc in locations
-        }
-        checks: Dict[Teleporter, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_elevator(loc) for loc in locations
-        }
-        self._elevator_source_for_location = copy.copy(checks)
-        self._elevator_source_destination = {}
-
-        for location in sorted(locations,
-                               key=lambda loc: (custom_weights.get(loc.world_asset_id, 0),
-                                                checks[loc].text())):
-            if location not in checks:
-                continue
-
-            self.elevators_source_layout.addWidget(checks.pop(location), row, 1)
-
-            other_locations = [
-                node.default_connection
-                for node in areas[location].nodes
-                if isinstance(node, TeleporterNode) and node.teleporter == location
-            ]
-            assert len(other_locations) == 1
-            teleporters_in_target = [
-                node.teleporter
-                for node in self.game_description.world_list.area_by_area_location(other_locations[0]).nodes
-                if isinstance(node, TeleporterNode)
-            ]
-            assert teleporters_in_target
-            other_loc = teleporters_in_target[0]
-
-            self._elevator_source_destination[location] = None
-
-            if other_loc in checks:
-                self.elevators_source_layout.addWidget(checks.pop(other_loc), row, 2)
-                self._elevator_source_destination[location] = other_loc
-
-            row += 1
-
-    def setup_elevator_elements(self):
-        for value in iterate_enum(TeleporterShuffleMode):
-            self.elevators_combo.addItem(value.long_name, value)
-        self.elevators_combo.currentIndexChanged.connect(self._update_elevator_mode)
-        signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
-        signal_handling.on_checked(self.elevators_allow_unvisited_names_check, self._update_allow_unvisited_names)
-
-        # Elevator Source
-        self._create_source_elevators()
-
-        # Elevator Target
-        self._elevator_target_for_world, self._elevator_target_for_area = self._create_area_list_selection(
-            self.elevators_target_group,
-            self.elevators_target_layout,
-            TeleporterTargetList.areas_list(self.game_enum),
-            self._on_elevator_target_check_changed,
-        )
-
-        if self.game_enum == RandovaniaGame.PRIME3:
-            self.patches_tab_widget.setTabText(self.patches_tab_widget.indexOf(self.elevator_tab),
-                                               "Teleporters")
-            self.elevators_description_label.setText(
-                self.elevators_description_label.text().replace("elevator", "teleporter")
-            )
-
-    def _update_elevator_mode(self):
-        with self._editor as editor:
-            editor.layout_configuration_elevators = dataclasses.replace(
-                editor.layout_configuration_elevators,
-                mode=self.elevators_combo.currentData(),
-            )
-
-    def _update_require_final_bosses(self, checked: bool):
-        with self._editor as editor:
-            editor.layout_configuration_elevators = dataclasses.replace(
-                editor.layout_configuration_elevators,
-                skip_final_bosses=checked,
-            )
-
-    def _update_allow_unvisited_names(self, checked: bool):
-        with self._editor as editor:
-            editor.layout_configuration_elevators = dataclasses.replace(
-                editor.layout_configuration_elevators,
-                allow_unvisited_room_names=checked,
-            )
-
-    def _on_elevator_source_check_changed(self, location: Teleporter, checked: bool):
-        with self._editor as editor:
-            config = editor.layout_configuration_elevators
-            editor.layout_configuration_elevators = dataclasses.replace(
-                config,
-                excluded_teleporters=config.excluded_teleporters.ensure_has_location(location, not checked),
-            )
-
-    def _on_elevator_target_check_changed(self, world_areas, checked: bool):
-        with self._editor as editor:
-            config = editor.layout_configuration_elevators
-            editor.layout_configuration_elevators = dataclasses.replace(
-                config,
-                excluded_targets=config.excluded_targets.ensure_has_locations(world_areas, not checked),
-            )
-
-    def on_preset_changed_elevators(self, preset: Preset):
-        config = preset.configuration
-
-        set_combo_with_value(self.elevators_combo, config.elevators.mode)
-        can_shuffle_target = config.elevators.mode not in (TeleporterShuffleMode.VANILLA,
-                                                           TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-                                                           TeleporterShuffleMode.TWO_WAY_UNCHECKED)
-        static_areas = set(
-            teleporter
-            for teleporter in config.elevators.static_teleporters.keys()
-        )
-
-        for origin, destination in self._elevator_source_destination.items():
-            origin_check = self._elevator_source_for_location[origin]
-            dest_check = self._elevator_source_for_location.get(destination)
-
-            is_locked = origin in static_areas
-            if not can_shuffle_target:
-                is_locked = is_locked or destination in static_areas
-
-            origin_check.setEnabled(not config.elevators.is_vanilla and not is_locked)
-            origin_check.setChecked(origin not in config.elevators.excluded_teleporters.locations and not is_locked)
-
-            origin_check.setToolTip("The destination for this teleporter is locked due to other settings."
-                                    if is_locked else "")
-
-            if dest_check is None:
-                if not can_shuffle_target:
-                    origin_check.setEnabled(False)
-                continue
-
-            dest_check.setEnabled(can_shuffle_target and destination not in static_areas)
-            if can_shuffle_target:
-                dest_check.setChecked(destination not in config.elevators.excluded_teleporters.locations
-                                      and destination not in static_areas)
-            else:
-                dest_check.setChecked(origin_check.isChecked())
-
-        self.elevators_target_group.setEnabled(config.elevators.has_shuffled_target)
-        self.skip_final_bosses_check.setChecked(config.elevators.skip_final_bosses)
-        self.elevators_allow_unvisited_names_check.setChecked(config.elevators.allow_unvisited_room_names)
-        self._update_area_list(
-            config.elevators.excluded_targets.locations,
-            True,
-            self._elevator_target_for_world,
-            self._elevator_target_for_area,
-        )
-
-    # Starting Area
-    def setup_starting_area_elements(self):
-        self._starting_location_for_world, self._starting_location_for_area = self._create_area_list_selection(
-            self.starting_locations_contents,
-            self.starting_locations_layout,
-            StartingLocationList.areas_list(self.game_enum),
-            self._on_starting_area_check_changed,
-        )
-        self.starting_area_quick_fill_ship.clicked.connect(self._starting_location_on_select_ship)
-        self.starting_area_quick_fill_save_station.clicked.connect(self._starting_location_on_select_save_station)
-
-    def _on_starting_area_check_changed(self, world_areas, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field(
-                "starting_location",
-                editor.configuration.starting_location.ensure_has_locations(world_areas, checked)
-            )
-
-    def _starting_location_on_select_ship(self):
-        with self._editor as editor:
-            editor.set_configuration_field(
-                "starting_location",
-                editor.configuration.starting_location.with_elements(
-                    [self.game_description.starting_location],
-                    self.game_enum,
-                )
-            )
-
-    def _starting_location_on_select_save_station(self):
-        world_list = self.game_description.world_list
-        save_stations = [world_list.node_to_area_location(node)
-                         for node in world_list.all_nodes if node.name == "Save Station"]
-
-        with self._editor as editor:
-            editor.set_configuration_field(
-                "starting_location",
-                editor.configuration.starting_location.with_elements(save_stations, self.game_enum)
-            )
-
-    def on_preset_changed_starting_area(self, preset: Preset):
-        self._update_area_list(
-            preset.configuration.starting_location.locations,
-            False,
-            self._starting_location_for_world,
-            self._starting_location_for_area,
-        )
 
     # Location Pool
     def setup_location_pool_elements(self):
@@ -796,7 +448,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 editor.available_locations, randomization_mode=self.randomization_mode_combo.currentData())
 
     def _on_check_location(self, check: QtWidgets.QCheckBox, _):
-        if self._during_batch_check_update:
+        if self.during_batch_check_update:
             return
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(check.node.pickup_index,
