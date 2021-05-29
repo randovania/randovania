@@ -248,6 +248,10 @@ class RandomprimePatcher(Patcher):
             map_default_state = "default"
 
         # credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
+        artifacts = [
+            db.resource_database.get_item(index)
+            for index in prime_items.ARTIFACT_ITEMS
+        ]
         present_artifacts = [
             db.resource_database.get_item(index)
             for index in prime_items.ARTIFACT_ITEMS[:configuration.artifacts.num_artifacts]
@@ -306,8 +310,8 @@ class RandomprimePatcher(Patcher):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: True
-                    for artifact in present_artifacts
+                    artifact.long_name: patches.starting_items.get(artifact, 0) == 0
+                    for artifact in artifacts
                 },
             },
             "levelData": world_data,

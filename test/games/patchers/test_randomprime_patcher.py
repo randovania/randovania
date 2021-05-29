@@ -59,9 +59,7 @@ def test_create_patch_data(test_files_dir):
                 'Artifact of Strength': '&push;&main-color=#FF6705B3;Artifact of Strength&pop; is located in '
                                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
                                         '&push;&main-color=#FF3333;Agon Wastes - Storage D&pop;.',
-                'Artifact of Sun': '&push;&main-color=#FF6705B3;Artifact of Sun&pop; is located in '
-                                   "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                   '&push;&main-color=#FF3333;Agon Wastes - Command Center&pop;.',
+                'Artifact of Sun': '&push;&main-color=#FF6705B3;Artifact of Sun&pop; has no need to be located.',
                 'Artifact of Truth': '&push;&main-color=#FF6705B3;Artifact of Truth&pop; is located in '
                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
                                      '&push;&main-color=#FF3333;Agon Wastes - Mining Station Access&pop;.',
@@ -84,7 +82,7 @@ def test_create_patch_data(test_files_dir):
                 'Artifact of Newborn': True,
                 'Artifact of Spirit': True,
                 'Artifact of Strength': True,
-                'Artifact of Sun': True,
+                'Artifact of Sun': False,
                 'Artifact of Truth': True,
                 'Artifact of Warrior': True,
                 'Artifact of Wild': True,
@@ -93,12 +91,12 @@ def test_create_patch_data(test_files_dir):
             'autoEnabledElevators': False,
             'creditsString': None,
             'etankCapacity': 110,
-            'gameBanner': {'description': 'Seed Hash: Worship Key Sunburst',
+            'gameBanner': {'description': 'Seed Hash: Feeding Serenity Gateway',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - MV523B5D'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - A5KIQRWE'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nWorship Key Sunburst',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nFeeding Serenity Gateway',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
@@ -127,7 +125,7 @@ def test_create_patch_data(test_files_dir):
                 'wavebuster': False,
                 'xray': False,
             },
-            'startingMemo': '5 Missiles',
+            'startingMemo': '5 Missiles, Artifact of Sun',
             'startingRoom': 'Tallon Overworld:Landing Site'},
         'levelData': {
             'Impact Crater': {
