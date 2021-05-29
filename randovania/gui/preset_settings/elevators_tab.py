@@ -53,7 +53,21 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             self._on_elevator_target_check_changed,
         )
 
-        if self.game_enum == RandovaniaGame.PRIME3:
+        if self.game_enum != RandovaniaGame.PRIME2:
+            self.elevators_help_sound_bug_label.setVisible(False)
+            self.elevators_allow_unvisited_names_check.setVisible(False)
+            self.elevators_line_3.setVisible(False)
+            self.elevators_help_list_label.setVisible(False)
+
+        if self.game_enum == RandovaniaGame.PRIME1:
+            self.skip_final_bosses_check.setText("Go directly to credits from Artifact Temple")
+            self.skip_final_bosses_label.setText("""<html><head/><body>
+            <p>Change the teleport in Artifact Temple to go directly to the credits, skipping the final bosses.</p>
+            <p>This changes the requirements to <span style=" font-weight:600;">not need the final bosses</span>,
+            turning certain items optional such as Plasma Beam.</p></body></html>
+            """)
+
+        elif self.game_enum == RandovaniaGame.PRIME3:
             self.patches_tab_widget.setTabText(self.patches_tab_widget.indexOf(self.elevator_tab),
                                                "Teleporters")
             self.elevators_description_label.setText(
@@ -74,11 +88,14 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         name = None
         if self.game_enum == RandovaniaGame.PRIME1:
             name = prime1_elevators.CUSTOM_NAMES.get(location.area_location)
+
         elif self.game_enum == RandovaniaGame.PRIME2:
             name = echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
 
         if name is None:
             name = self.game_description.world_list.area_name(area)
+
+        name = name.replace("\0", " ")
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)
