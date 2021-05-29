@@ -19,14 +19,13 @@ def test_create_patch_data(test_files_dir):
 
     # Run
     data = patcher.create_patch_data(description, players_config, cosmetic_patches)
-    print(data)
 
     # Assert
     assert data == {
         'seed': 1499122484,
         'preferences': {
             'artifactHintBehavior': None,
-            'mapDefaultState': 'visible',
+            'mapDefaultState': 'default',
             'obfuscateItems': False,
             'qolCosmetic': True,
             'qolGameBreaking': True,
@@ -39,62 +38,43 @@ def test_create_patch_data(test_files_dir):
         },
         'gameConfig': {
             'artifactHints': {
-                'Chozo': '&push;&main-color=#FF6705B3;Artifact '
-                         'of Chozo&pop; is located in '
-                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                         '&push;&main-color=#FF3333;Dark '
-                         'Agon Wastes - Ing Cache 1&pop;.',
-                'Elder': '&push;&main-color=#FF6705B3;Artifact '
-                         'of Elder&pop; is located in '
-                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                         '&push;&main-color=#FF3333;Agon '
-                         'Wastes - Sand Cache&pop;.',
-                'Lifegiver': '&push;&main-color=#FF6705B3;Artifact of Lifegiver&pop; is located in '
-                             "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                             '&push;&main-color=#FF3333;Temple Grounds - Storage Cavern B&pop;.',
-                'Nature': '&push;&main-color=#FF6705B3;Artifact of Nature&pop; is located in '
-                          "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                          '&push;&main-color=#FF3333;Sanctuary Fortress - Hall of Combat Mastery&pop;.',
-                'Newborn': '&push;&main-color=#FF6705B3;Artifact of Newborn&pop; is located in '
-                           "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                           '&push;&main-color=#FF3333;Great Temple - Transport A Access&pop;.',
-                'Spirit': '&push;&main-color=#FF6705B3;Artifact of Spirit&pop; is located in '
-                          "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                          '&push;&main-color=#FF3333;Temple '
-                          'Grounds - Transport to Agon '
-                          'Wastes&pop;.',
-                'Strength': '&push;&main-color=#FF6705B3;Artifact '
-                            'of Strength&pop; is located in '
-                            "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                            '&push;&main-color=#FF3333;Agon '
-                            'Wastes - Storage D&pop;.',
-                'Sun': '&push;&main-color=#FF6705B3;Artifact '
-                       'of Sun&pop; is located in '
-                       "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                       '&push;&main-color=#FF3333;Agon '
-                       'Wastes - Command Center&pop;.',
-                'Truth': '&push;&main-color=#FF6705B3;Artifact '
-                         'of Truth&pop; is located in '
-                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                         '&push;&main-color=#FF3333;Agon '
-                         'Wastes - Mining Station '
-                         'Access&pop;.',
-                'Warrior': '&push;&main-color=#FF6705B3;Artifact '
-                           'of Warrior&pop; is located in '
-                           "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                           '&push;&main-color=#FF3333;Agon '
-                           'Wastes - Portal Access A&pop;.',
-                'Wild': '&push;&main-color=#FF6705B3;Artifact '
-                        'of Wild&pop; is located in '
-                        "&push;&main-color=#d4cc33;Prime&pop;'s "
-                        '&push;&main-color=#FF3333;Tallon '
-                        'Overworld - Transport Tunnel '
-                        'B&pop;.',
-                'World': '&push;&main-color=#FF6705B3;Artifact '
-                         'of World&pop; is located in '
-                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                         '&push;&main-color=#FF3333;Ing Hive '
-                         '- Culling Chamber&pop;.'},
+                'Artifact of Chozo': '&push;&main-color=#FF6705B3;Artifact of Chozo&pop; is located in '
+                                     "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                     "&push;&main-color=#FF3333;Dark Agon Wastes - Ing Cache 1&pop;.",
+                'Artifact of Elder': '&push;&main-color=#FF6705B3;Artifact of Elder&pop; is located in '
+                                     "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                     '&push;&main-color=#FF3333;Agon Wastes - Sand Cache&pop;.',
+                'Artifact of Lifegiver': '&push;&main-color=#FF6705B3;Artifact of Lifegiver&pop; is located in '
+                                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                         '&push;&main-color=#FF3333;Temple Grounds - Storage Cavern B&pop;.',
+                'Artifact of Nature': '&push;&main-color=#FF6705B3;Artifact of Nature&pop; is located in '
+                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                      '&push;&main-color=#FF3333;Sanctuary Fortress - Hall of Combat Mastery&pop;.',
+                'Artifact of Newborn': '&push;&main-color=#FF6705B3;Artifact of Newborn&pop; is located in '
+                                       "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                       '&push;&main-color=#FF3333;Great Temple - Transport A Access&pop;.',
+                'Artifact of Spirit': '&push;&main-color=#FF6705B3;Artifact of Spirit&pop; is located in '
+                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                      '&push;&main-color=#FF3333;Temple Grounds - Transport to Agon Wastes&pop;.',
+                'Artifact of Strength': '&push;&main-color=#FF6705B3;Artifact of Strength&pop; is located in '
+                                        "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                        '&push;&main-color=#FF3333;Agon Wastes - Storage D&pop;.',
+                'Artifact of Sun': '&push;&main-color=#FF6705B3;Artifact of Sun&pop; is located in '
+                                   "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                   '&push;&main-color=#FF3333;Agon Wastes - Command Center&pop;.',
+                'Artifact of Truth': '&push;&main-color=#FF6705B3;Artifact of Truth&pop; is located in '
+                                     "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                     '&push;&main-color=#FF3333;Agon Wastes - Mining Station Access&pop;.',
+                'Artifact of Warrior': '&push;&main-color=#FF6705B3;Artifact of Warrior&pop; is located in '
+                                       "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                       '&push;&main-color=#FF3333;Agon Wastes - Portal Access A&pop;.',
+                'Artifact of Wild': '&push;&main-color=#FF6705B3;Artifact of Wild&pop; is located in '
+                                    "&push;&main-color=#d4cc33;Prime&pop;'s "
+                                    '&push;&main-color=#FF3333;Tallon Overworld - Transport Tunnel B&pop;.',
+                'Artifact of World': '&push;&main-color=#FF6705B3;Artifact of World&pop; is located in '
+                                     "&push;&main-color=#d4cc33;Echoes&pop;'s "
+                                     '&push;&main-color=#FF3333;Ing Hive - Culling Chamber&pop;.'
+            },
 
             'artifactTempleLayerOverrides': {
                 'Artifact of Chozo': True,
@@ -118,7 +98,7 @@ def test_create_patch_data(test_files_dir):
                            'gameNameFull': 'Metroid Prime: Randomizer - ALKZLIJL'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'{randovania.VERSION}\nCulling Chamber Staging',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nCulling Chamber Staging',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
