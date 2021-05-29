@@ -3,7 +3,7 @@ from typing import Dict
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
-from randovania.gui.generated.starting_area_tab_ui import Ui_StartingAreaTab
+from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -11,7 +11,7 @@ from randovania.layout.base_configuration import StartingLocationList
 from randovania.layout.preset import Preset
 
 
-class PresetStartingArea(PresetTab, Ui_StartingAreaTab, AreaListHelper):
+class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
     _editor: PresetEditor
 
     _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
