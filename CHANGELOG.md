@@ -8,13 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   **Major** - Metroid Prime 1 is now fully supported, including multiworld!
+-   **Major** - Metroid Prime 1 is now fully supported, including multiworld and auto tracker!
 
 -   **Major** - Presets are now presented in a tree view, with custom presets being nested under another one. They're also saved separately from Randovania data.
 
--   Added: Auto tracker now supports Prime 1.
-
--   Added: A second theme for the auto tracker for Echoes, which uses images of the in game models. Thanks MaskedKirby.
+-   **Major** - The auto tracker now have support for different layouts, with their own assets and game support. New themes with icons similar to the game were also added, provided by MaskedKirby.
 
 -   Changed: Customizing Dark Aether damage is not considered by logic.
 
