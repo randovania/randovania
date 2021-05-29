@@ -6,6 +6,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PlayerShipNode
+from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
@@ -197,20 +198,20 @@ def prime1_absolute_damage_reduction(db: ResourceDatabase, current_resources: Cu
 def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfiguration) -> ResourceDatabase:
     base_damage_reduction = db.base_damage_reduction
     damage_reductions = copy.copy(db.damage_reductions)
+    requirement_template = copy.copy(db.requirement_template)
 
     if configuration.game == RandovaniaGame.PRIME1:
-        reductions = [
-            DamageReduction(None, configuration.heat_damage / 10.0),
-        ]
         suits = [db.get_item_by_name("Varia Suit")]
-        if not configuration.heat_protection_only_varia:
+        if configuration.heat_protection_only_varia:
+            requirement_template["Heat-Resisting Suit"] = ResourceRequirement(db.get_item_by_name("Varia Suit"),
+                                                                              1, False)
+        else:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 
-        reductions.extend([
-            DamageReduction(suit, 0)
-            for suit in suits
-        ])
+        reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
+        reductions.extend([DamageReduction(suit, 0) for suit in suits])
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 5)] = reductions
+
         if configuration.progressive_damage_reduction:
             base_damage_reduction = prime1_progressive_damage_reduction
         else:
@@ -223,7 +224,8 @@ def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfigur
             DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
         ]
 
-    return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction)
+    return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction,
+                               requirement_template=requirement_template)
 
 
 def logic_bootstrap(configuration: AnyGameConfiguration,
