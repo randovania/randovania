@@ -22,4 +22,6 @@ CUSTOM_NAMES = {
     AreaLocation(2214002543, 2199318005): 'Chozo Ruins North\0(Sun Tower)',  # 1572903
     AreaLocation(2214002543, 2784651681): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',  # 4063276
     AreaLocation(2214002543, 594418447): 'Chozo Ruins South\0(Reflecting Pool, Far End)',  # 4128808
+
+    AreaLocation(0x13d79165, 0xb4b41c48): 'Credits',
 }
