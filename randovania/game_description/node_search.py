@@ -2,12 +2,12 @@ from typing import Dict, Optional
 
 import networkx
 
-from randovania.game_description.area import Area
+from randovania.game_description.world.area import Area
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 
 
 def distances_to_node(world_list: WorldList, starting_node: Node,

@@ -1,9 +1,9 @@
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
 
-from randovania.game_description.area import Area
-from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate
@@ -12,8 +12,8 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:

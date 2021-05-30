@@ -6,10 +6,10 @@ from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.node import TeleporterNode
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 

@@ -7,7 +7,7 @@ from typing import List, Optional, Dict
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.world import World
+from randovania.game_description.world.world import World
 
 
 @dataclasses.dataclass(frozen=True)

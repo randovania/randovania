@@ -4,19 +4,19 @@ from typing import Dict, Iterator
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode
+from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
 from randovania.games.prime.dol_patcher import DolPatchesData

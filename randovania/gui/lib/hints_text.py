@@ -2,7 +2,7 @@ from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import LogbookNode, LoreType
+from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
 

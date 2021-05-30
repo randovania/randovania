@@ -13,7 +13,7 @@ from typing import Dict, Tuple, Optional, List, Iterable, Set
 import tqdm as tqdm
 
 from randovania.game_description.default_database import game_description_for
-from randovania.game_description.node import PickupNode, LogbookNode
+from randovania.game_description.world.node import PickupNode, LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 

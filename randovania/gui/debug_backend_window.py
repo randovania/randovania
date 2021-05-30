@@ -8,7 +8,7 @@ from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _echoes_powerup_offset
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import dol_patcher
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow

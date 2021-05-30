@@ -1,7 +1,7 @@
 from typing import Iterator, Dict
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import ResourceNode
+from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.generator.filler.filler_library import UncollectedState, find_node_with_resource

@@ -1,4 +1,4 @@
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 
 CUSTOM_NAMES = {
     AreaLocation(3241871825, 2472970646): 'Crater Entry Point',  # 2818083

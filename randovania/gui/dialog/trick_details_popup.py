@@ -2,9 +2,9 @@ import re
 
 from PySide2.QtWidgets import QDialog, QWidget
 
-from randovania.game_description.area import Area
+from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import DockNode
+from randovania.game_description.world.node import DockNode
 from randovania.game_description.requirements import RequirementList, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
