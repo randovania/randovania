@@ -18,7 +18,7 @@ from randovania.generator.filler.pickup_list import get_pickups_that_solves_unre
     get_pickups_with_interesting_resources, interesting_resources_for_reach
 from randovania.generator.generator_reach import advance_reach_with_possible_unsafe_resources, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach
-from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.state import State
 

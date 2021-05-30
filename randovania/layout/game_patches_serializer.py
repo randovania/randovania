@@ -2,7 +2,7 @@ import collections
 import re
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
@@ -18,7 +18,7 @@ from randovania.game_description.teleporter import Teleporter
 from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 

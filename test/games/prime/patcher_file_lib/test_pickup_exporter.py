@@ -15,8 +15,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
 def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):

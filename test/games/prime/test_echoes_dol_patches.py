@@ -1,11 +1,9 @@
 import pytest
 
 from randovania.dol_patching.dol_file import DolHeader, Section
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_dol_patches, echoes_dol_versions
 from randovania.games.prime.echoes_dol_patches import StartingBeamVisorAddresses
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
-from randovania.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
 
 DOLS = [
     (DolHeader(sections=(Section(offset=256, base_address=2147496192, size=1344),

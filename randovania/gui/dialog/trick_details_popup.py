@@ -11,7 +11,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def _has_trick(alternative: RequirementList) -> bool:

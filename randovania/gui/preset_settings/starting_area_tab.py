@@ -7,7 +7,7 @@ from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingAr
 from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base_configuration import StartingLocationList
+from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.preset import Preset
 
 

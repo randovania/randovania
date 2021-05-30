@@ -5,7 +5,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
-from randovania.layout.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
+from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
     TeleporterTargetList
 
 

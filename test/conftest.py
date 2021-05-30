@@ -16,7 +16,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
 
 

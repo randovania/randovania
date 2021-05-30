@@ -1,9 +1,9 @@
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.prime1.artifact_mode import LayoutArtifactMode
-from randovania.layout.teleporters import TeleporterConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @dataclasses.dataclass(frozen=True)

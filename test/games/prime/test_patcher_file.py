@@ -22,11 +22,11 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.layout.prime2.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.pickup_model import PickupModelStyle
-from randovania.layout.teleporters import TeleporterShuffleMode
+from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 def test_add_header_data_to_result():

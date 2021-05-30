@@ -11,7 +11,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
-from randovania.layout import location_list
+from randovania.layout.lib import location_list
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):

@@ -1,7 +1,7 @@
 from PySide2 import QtCore
 
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 
 
 def test_state_no_changes(skip_qtbot, echoes_item_database, echoes_resource_database):

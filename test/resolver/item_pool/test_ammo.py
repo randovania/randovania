@@ -4,7 +4,7 @@ import randovania.generator.item_pool.ammo
 import randovania.generator.item_pool.pickup_creator
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.layout.ammo_state import AmmoState
+from randovania.layout.base.ammo_state import AmmoState
 
 
 @pytest.mark.parametrize(["per_pickup", "total_pickup", "included"], [

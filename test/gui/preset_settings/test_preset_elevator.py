@@ -7,7 +7,7 @@ from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.teleporters import TeleporterTargetList
+from randovania.layout.lib.teleporters import TeleporterTargetList
 
 
 @pytest.mark.parametrize("game", [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])

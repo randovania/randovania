@@ -6,8 +6,8 @@ from typing import Optional, List, Iterator, Tuple, Union, Type, Dict
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
-from randovania.layout.corruption_configuration import CorruptionConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 

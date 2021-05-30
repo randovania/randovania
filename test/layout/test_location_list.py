@@ -6,7 +6,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
-from randovania.layout.location_list import LocationList
+from randovania.layout.lib.location_list import LocationList
 
 
 @pytest.fixture(
@@ -27,7 +27,7 @@ def _location_with_data(request, mocker, echoes_game_description):
          for area in world.areas
          if area.valid_starting_location), 15))
 
-    mocker.patch("randovania.layout.location_list.LocationList.areas_list",
+    mocker.patch("randovania.layout.lib.location_list.LocationList.areas_list",
                  return_value=list(sorted(areas)))
     return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.PRIME2)
 

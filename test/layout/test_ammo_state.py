@@ -2,7 +2,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.layout.ammo_state import AmmoState
+from randovania.layout.base.ammo_state import AmmoState
 
 
 @pytest.fixture(

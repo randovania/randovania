@@ -6,9 +6,8 @@ import pytest
 from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.ammo_configuration import AmmoConfiguration
 
 
 @pytest.fixture(

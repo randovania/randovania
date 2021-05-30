@@ -4,7 +4,6 @@ from unittest.mock import MagicMock, patch, call, ANY
 
 import pytest
 
-from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
@@ -15,8 +14,8 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
-from randovania.layout.teleporters import TeleporterShuffleMode
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])

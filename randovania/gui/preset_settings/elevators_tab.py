@@ -17,7 +17,7 @@ from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.layout.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
+from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
 from randovania.lib import enum_lib
 
 

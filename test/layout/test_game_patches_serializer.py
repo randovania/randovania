@@ -23,9 +23,9 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.permalink import Permalink
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 

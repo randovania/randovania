@@ -4,7 +4,7 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
@@ -24,11 +24,11 @@ from randovania.generator.generator_reach import (
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach,
     advance_reach_with_possible_unsafe_resources, collectable_resource_nodes)
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.base_configuration import StartingLocationList
+from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.trick_level import LayoutTrickLevel
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver import bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
