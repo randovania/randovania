@@ -1,15 +1,18 @@
+import copy
 import dataclasses
 import json
 import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any, Set, List
+from typing import Optional, TypeVar, Callable, Any, Set, List, Dict
 
 from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
+from randovania.layout import game_to_class
+from randovania.layout.game_to_class import AnyCosmeticPatches
 
 T = TypeVar("T")
 
@@ -46,15 +49,63 @@ def decode_alerts(data: List[str]):
     return result
 
 
+def decode_if_not_none(value, decoder):
+    if value is not None:
+        return decoder(value)
+    else:
+        return None
+
+
+@dataclasses.dataclass(frozen=True)
+class PerGameOptions:
+    cosmetic_patches: AnyCosmeticPatches
+    input_path: Optional[Path] = None
+    output_directory: Optional[Path] = None
+
+    @property
+    def as_json(self):
+        return {
+            "cosmetic_patches": self.cosmetic_patches.as_json,
+            "input_path": str(self.input_path) if self.input_path is not None else None,
+            "output_directory": str(self.output_directory) if self.output_directory is not None else None,
+        }
+
+    @classmethod
+    def default_for_game(cls, game: RandovaniaGame) -> "PerGameOptions":
+        return cls(cosmetic_patches=game_to_class.GAME_TO_COSMETIC[game]())
+
+    @classmethod
+    def from_json(cls, value, game: RandovaniaGame) -> "PerGameOptions":
+        cosmetic_patches = game_to_class.GAME_TO_COSMETIC[game].from_json(value["cosmetic_patches"])
+        return PerGameOptions(
+            cosmetic_patches=cosmetic_patches,
+            input_path=decode_if_not_none(value["input_path"], Path),
+            output_directory=decode_if_not_none(value["output_directory"], Path),
+        )
+
+
+def serialize_per_game_dict(val: Dict[RandovaniaGame, PerGameOptions]) -> dict:
+    return {
+        key.value: value.as_json
+        for key, value in val.items()
+    }
+
+
+def decode_per_game_dict(val: dict) -> Dict[RandovaniaGame, PerGameOptions]:
+    return {
+        RandovaniaGame(key): PerGameOptions.from_json(value, game=RandovaniaGame(key))
+        for key, value in val.items()
+    }
+
+
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
-    "output_directory": Serializer(str, Path),
     "selected_preset_uuid": Serializer(str, uuid.UUID),
-    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json),
+    "per_game_options": Serializer(serialize_per_game_dict, decode_per_game_dict),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
@@ -91,9 +142,8 @@ class Options:
     _advanced_timeout_during_generation: Optional[bool] = None
     _auto_save_spoiler: Optional[bool] = None
     _dark_mode: Optional[bool] = None
-    _output_directory: Optional[Path] = None
     _selected_preset_uuid: Optional[uuid.UUID] = None
-    _cosmetic_patches: Optional[CosmeticPatches] = None
+    _per_game_options: Optional[Dict[RandovaniaGame, PerGameOptions]] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
@@ -221,7 +271,7 @@ class Options:
         self._advanced_validate_seed_after = None
         self._advanced_timeout_during_generation = None
         self._auto_save_spoiler = None
-        self._cosmetic_patches = None
+        self._per_game_options = None
         self._displayed_alerts = None
         self._dark_mode = None
         self._game_backend = None
@@ -229,10 +279,6 @@ class Options:
         self._selected_tracker = None
 
     # Files paths
-    @property
-    def backup_files_path(self) -> Path:
-        return self._data_dir.joinpath("backup")
-
     @property
     def game_files_path(self) -> Path:
         return self._data_dir.joinpath("internal_copies")
@@ -269,14 +315,6 @@ class Options:
             self._last_changelog_displayed = str(value)
 
     @property
-    def output_directory(self) -> Optional[Path]:
-        return self._output_directory
-
-    @output_directory.setter
-    def output_directory(self, value: Optional[Path]):
-        self._edit_field("output_directory", value)
-
-    @property
     def auto_save_spoiler(self) -> bool:
         return _return_with_default(self._auto_save_spoiler, lambda: False)
 
@@ -299,14 +337,6 @@ class Options:
     @selected_preset_uuid.setter
     def selected_preset_uuid(self, value: uuid.UUID):
         self._edit_field("selected_preset_uuid", value)
-
-    @property
-    def cosmetic_patches(self) -> CosmeticPatches:
-        return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
-
-    @cosmetic_patches.setter
-    def cosmetic_patches(self, value: CosmeticPatches):
-        self._edit_field("cosmetic_patches", value)
 
     @property
     def game_backend(self) -> GameBackendChoice:
@@ -350,6 +380,26 @@ class Options:
             alerts.add(value)
             with self:
                 self.displayed_alerts = alerts
+
+    @property
+    def per_game_options(self):
+        return _return_with_default(self._per_game_options, lambda: {})
+
+    @per_game_options.setter
+    def per_game_options(self, value):
+        self._edit_field("per_game_options", value)
+
+    def options_for_game(self, game: RandovaniaGame) -> PerGameOptions:
+        return self.per_game_options.get(game, PerGameOptions.default_for_game(game))
+
+    def set_options_for_game(self, game: RandovaniaGame, per_game: PerGameOptions):
+        per_game_options = copy.copy(self.per_game_options)
+        per_game_options[game] = per_game
+        self.per_game_options = per_game_options
+
+    @property
+    def cosmetic_patches(self):
+        return None
 
     # Advanced
 

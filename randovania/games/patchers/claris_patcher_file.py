@@ -4,17 +4,17 @@ from typing import Dict, Iterator
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -22,13 +22,13 @@ from randovania.games.prime import echoes_teleporters
 from randovania.games.prime.dol_patcher import DolPatchesData
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, hint_lib
 from randovania.generator.item_pool import pickup_creator
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
-from randovania.layout.prime2.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.layout.prime2.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -353,7 +353,7 @@ def _get_model_mapping(randomizer_data: dict):
 
 def create_patcher_file(description: LayoutDescription,
                         players_config: PlayersConfiguration,
-                        cosmetic_patches: CosmeticPatches,
+                        cosmetic_patches: EchoesCosmeticPatches,
                         randomizer_data: dict,
                         ) -> dict:
     """
@@ -460,7 +460,7 @@ def create_patcher_file(description: LayoutDescription,
     return result
 
 
-def _create_pickup_list(cosmetic_patches: CosmeticPatches, configuration: BaseConfiguration, game: GameDescription,
+def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: BaseConfiguration, game: GameDescription,
                         patches: GamePatches, players_config: PlayersConfiguration, randomizer_data: dict,
                         rng: Random):
     useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),

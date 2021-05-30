@@ -196,6 +196,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if result != QDialog.Accepted:
             return
 
+        dialog.save_options()
         input_file = dialog.input_file
         output_file = dialog.output_file
         auto_save_spoiler = dialog.auto_save_spoiler
@@ -204,11 +205,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             player_names=self._player_names,
         )
 
-        with options:
-            options.output_directory = output_file.parent
-            options.auto_save_spoiler = auto_save_spoiler
-
-        patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
+        patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
 
         def work(progress_update: ProgressUpdateCallable):
             patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,

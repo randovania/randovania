@@ -4,8 +4,8 @@ from functools import partial
 from PySide2.QtWidgets import QDialog, QWidget, QCheckBox, QSlider, QLabel
 
 from randovania.gui.generated.echoes_user_preferences_dialog_ui import Ui_EchoesUserPreferencesDialog
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences, SoundMode
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
 
 def update_label_with_slider(label: QLabel, slider: QSlider):
@@ -19,9 +19,9 @@ def update_label_with_slider(label: QLabel, slider: QSlider):
 
 class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
     preferences: EchoesUserPreferences
-    cosmetic_patches: CosmeticPatches
+    cosmetic_patches: BaseCosmeticPatches
 
-    def __init__(self, parent: QWidget, current: CosmeticPatches):
+    def __init__(self, parent: QWidget, current: BaseCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
         self.cosmetic_patches = current
@@ -66,7 +66,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         self.cancel_button.clicked.connect(self.reject)
         self.reset_button.clicked.connect(self.reset)
 
-    def on_new_cosmetic_patches(self, patches: CosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: BaseCosmeticPatches):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
         self.open_map_check.setChecked(patches.open_map)
@@ -133,4 +133,4 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         )
 
     def reset(self):
-        self.on_new_cosmetic_patches(CosmeticPatches())
+        self.on_new_cosmetic_patches(BaseCosmeticPatches())

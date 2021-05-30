@@ -16,7 +16,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
@@ -427,7 +427,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         membership.save()
 
     elif action == SessionAdminUserAction.CREATE_PATCHER_FILE:
-        cosmetic_patches = CosmeticPatches.from_json(arg)
+        cosmetic_patches = BaseCosmeticPatches.from_json(arg)
         player_names = {i: f"Player {i + 1}" for i in range(session.num_rows)}
 
         for member in GameSessionMembership.non_observer_members(session):
