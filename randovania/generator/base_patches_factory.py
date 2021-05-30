@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from random import Random
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
@@ -17,9 +17,9 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.lib.enum_lib import iterate_enum
-from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 
 
 class MissingRng(Exception):

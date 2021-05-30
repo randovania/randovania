@@ -1,9 +1,9 @@
 import dataclasses
 from random import Random
-from typing import Dict, Iterator, List
+from typing import Dict, Iterator
 
 import randovania
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
@@ -24,11 +24,11 @@ from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_na
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.teleporters import TeleporterShuffleMode
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192

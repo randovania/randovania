@@ -15,8 +15,8 @@ from randovania.generator import base_patches_factory
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset

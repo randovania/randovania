@@ -20,7 +20,7 @@ from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import should_have_hint, UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
 
 T = TypeVar("T")

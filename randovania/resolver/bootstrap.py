@@ -13,10 +13,10 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset import AnyGameConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
 
 _items_to_not_add_in_minimal_logic = {

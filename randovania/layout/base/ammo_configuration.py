@@ -3,15 +3,14 @@ from dataclasses import dataclass
 from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.games.game import RandovaniaGame
-from randovania.layout.ammo_state import AmmoState
+from randovania.layout.base.ammo_state import AmmoState
 
 
 @dataclass(frozen=True)
-class AmmoConfiguration(BitPackValue):
+class AmmoConfiguration(bitpacking.BitPackValue):
     maximum_ammo: Dict[int, int]
     items_state: Dict[Ammo, AmmoState]
 
@@ -34,7 +33,7 @@ class AmmoConfiguration(BitPackValue):
                 yield from this.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+    def bit_pack_unpack(cls, decoder: bitpacking.BitPackDecoder, metadata):
         default: AmmoConfiguration = metadata["reference"]
 
         # Maximum Ammo

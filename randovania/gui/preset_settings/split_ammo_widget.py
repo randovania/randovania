@@ -5,7 +5,7 @@ from PySide2.QtCore import Qt
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.ammo_state import AmmoState
+from randovania.layout.base.ammo_state import AmmoState
 from randovania.layout.preset import Preset
 
 

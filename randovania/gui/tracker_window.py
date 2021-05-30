@@ -32,10 +32,10 @@ from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
-from randovania.layout import translator_configuration
-from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.prime2 import translator_configuration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach

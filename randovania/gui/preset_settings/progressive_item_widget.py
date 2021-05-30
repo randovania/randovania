@@ -5,7 +5,7 @@ from PySide2.QtCore import Qt
 
 from randovania.game_description.item.major_item import MajorItem
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
 
 

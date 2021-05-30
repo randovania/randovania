@@ -9,7 +9,7 @@ from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import corruption_items, echoes_items
 from randovania.games.prime import prime_items
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 
 
 def create_major_item(item: MajorItem,

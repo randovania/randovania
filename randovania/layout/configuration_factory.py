@@ -3,7 +3,7 @@ from typing import Dict
 
 from randovania import get_data_path
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 
 
 def _raw_translator_configurations(data: dict) -> Dict[TranslatorGate, LayoutTranslatorRequirement]:

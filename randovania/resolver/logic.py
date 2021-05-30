@@ -3,7 +3,7 @@ from typing import Dict
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node
 from randovania.game_description.requirements import RequirementSet
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 
 class Logic:

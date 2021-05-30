@@ -6,6 +6,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description.resources.pickup_index import PickupIndex
 
+# FIXME: hardcoded index list
 _ALL_INDICES = list(range(119))
 
 

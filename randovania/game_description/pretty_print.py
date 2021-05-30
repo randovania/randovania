@@ -10,7 +10,7 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.lib.enum_lib import iterate_enum
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:

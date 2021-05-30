@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QComboBox
 from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.beam_configuration import BeamAmmoConfiguration
+from randovania.layout.prime2.beam_configuration import BeamAmmoConfiguration
 from randovania.layout.preset import Preset
 
 _BEAMS = {
