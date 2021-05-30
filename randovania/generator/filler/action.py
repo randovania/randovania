@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from randovania.game_description.node import ResourceNode
+from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 
 Action = Union[ResourceNode, Tuple[PickupEntry, ...]]

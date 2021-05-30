@@ -5,12 +5,12 @@ from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.corruption_configuration import CorruptionConfiguration
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
-from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.pickup_model import PickupModelStyle
+from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
+from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
+from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 

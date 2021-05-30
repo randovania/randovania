@@ -4,7 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 T = TypeVar("T")
 

@@ -268,7 +268,7 @@ def list_paths_with_resource_command(sub_parsers):
 
 
 def pickups_per_area_command_logic(args):
-    from randovania.game_description.node import PickupNode
+    from randovania.game_description.world.node import PickupNode
     gd = load_game_description(args)
 
     for world in gd.world_list.worlds:

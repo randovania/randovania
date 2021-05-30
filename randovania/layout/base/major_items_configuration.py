@@ -8,7 +8,7 @@ from randovania.game_description import default_database
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 
 RANDOM_STARTING_ITEMS_LIMIT = 31
 

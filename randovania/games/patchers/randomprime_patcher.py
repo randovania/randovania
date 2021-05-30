@@ -15,21 +15,21 @@ import randovania
 from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
-from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.node import PickupNode, TeleporterNode
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
 from randovania.games.prime import prime1_elevators, all_prime_dol_patches, prime_items
 from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib
 from randovania.generator.item_pool import pickup_creator
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 _STARTING_ITEM_NAME_TO_INDEX = {
@@ -183,7 +183,7 @@ class RandomprimePatcher(Patcher):
         return ["iso"]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                          cosmetic_patches: CosmeticPatches):
+                          cosmetic_patches: PrimeCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.PRIME1)
         preset = description.permalink.get_preset(players_config.player_index)
@@ -266,7 +266,7 @@ class RandomprimePatcher(Patcher):
             "seed": description.permalink.seed_number,
             "preferences": {
                 "qolGameBreaking": configuration.qol_game_breaking,
-                "qolCosmetic": cosmetic_patches.disable_hud_popup,
+                "qolCosmetic": cosmetic_patches.qol_cosmetic,
                 "qolLogical": configuration.qol_logical,
                 "qolMinorCutscenes": configuration.qol_minor_cutscenes,
                 "qolMajorCutscenes": configuration.qol_major_cutscenes,

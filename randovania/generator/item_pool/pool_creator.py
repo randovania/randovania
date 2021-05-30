@@ -12,9 +12,9 @@ from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.generator.item_pool.energy_cells import add_energy_cells
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
-from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.corruption_configuration import CorruptionConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 
 

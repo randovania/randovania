@@ -4,7 +4,7 @@ from randovania.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.preset import Preset
 
 

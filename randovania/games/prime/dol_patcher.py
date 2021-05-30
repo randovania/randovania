@@ -7,7 +7,7 @@ from randovania.dol_patching.dol_version import find_version_for_dol
 from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches, prime1_dol_versions
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 from randovania.games.prime.echoes_dol_patches import EchoesDolVersion, BeamConfiguration
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
 
 ALL_VERSIONS_PATCHES = echoes_dol_versions.ALL_VERSIONS + prime1_dol_versions.ALL_VERSIONS
 

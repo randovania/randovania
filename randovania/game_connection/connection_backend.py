@@ -7,14 +7,13 @@ from typing import Optional, List, Dict, Tuple
 from randovania.dol_patching import assembler
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
-from randovania.game_description.world import World
-from randovania.games import default_data
+from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, all_prime_dol_patches
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion

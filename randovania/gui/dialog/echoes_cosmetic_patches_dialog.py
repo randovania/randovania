@@ -1,11 +1,12 @@
 import dataclasses
 from functools import partial
 
-from PySide2.QtWidgets import QDialog, QWidget, QCheckBox, QSlider, QLabel
+from PySide2.QtWidgets import QWidget, QCheckBox, QSlider, QLabel
 
-from randovania.gui.generated.echoes_user_preferences_dialog_ui import Ui_EchoesUserPreferencesDialog
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences, SoundMode
+from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
 
 def update_label_with_slider(label: QLabel, slider: QSlider):
@@ -17,14 +18,14 @@ def update_label_with_slider(label: QLabel, slider: QSlider):
         label.setText(str(slider.value()))
 
 
-class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
+class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPatchesDialog):
     preferences: EchoesUserPreferences
-    cosmetic_patches: CosmeticPatches
+    _cosmetic_patches: EchoesCosmeticPatches
 
-    def __init__(self, parent: QWidget, current: CosmeticPatches):
+    def __init__(self, parent: QWidget, current: EchoesCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
-        self.cosmetic_patches = current
+        self._cosmetic_patches = current
 
         self.field_to_slider_mapping = {
             "screen_brightness": self.screen_brightness_slider,
@@ -46,6 +47,10 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
             self.sound_mode_combo.addItem(sound_mode.name, sound_mode)
 
         self.on_new_cosmetic_patches(current)
+        self.connect_signals()
+
+    def connect_signals(self):
+        super().connect_signals()
 
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("disable_hud_popup"))
         self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
@@ -62,11 +67,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         for field_name, check in self.field_to_check_mapping.items():
             check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
-        self.accept_button.clicked.connect(self.accept)
-        self.cancel_button.clicked.connect(self.reject)
-        self.reset_button.clicked.connect(self.reset)
-
-    def on_new_cosmetic_patches(self, patches: CosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
         self.open_map_check.setChecked(patches.open_map)
@@ -95,21 +96,25 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self.cosmetic_patches = dataclasses.replace(
-                self.cosmetic_patches,
+            self._cosmetic_patches = dataclasses.replace(
+                self._cosmetic_patches,
                 **{attribute_name: bool(value)}
             )
 
         return persist
 
     @property
-    def preferences(self):
-        return self.cosmetic_patches.user_preferences
+    def cosmetic_patches(self) -> EchoesCosmeticPatches:
+        return self._cosmetic_patches
+
+    @property
+    def preferences(self) -> EchoesUserPreferences:
+        return self._cosmetic_patches.user_preferences
 
     @preferences.setter
-    def preferences(self, value):
-        self.cosmetic_patches = dataclasses.replace(
-            self.cosmetic_patches,
+    def preferences(self, value: EchoesUserPreferences):
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
             user_preferences=value,
         )
 
@@ -133,4 +138,4 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
         )
 
     def reset(self):
-        self.on_new_cosmetic_patches(CosmeticPatches())
+        self.on_new_cosmetic_patches(EchoesCosmeticPatches())

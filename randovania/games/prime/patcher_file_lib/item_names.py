@@ -3,8 +3,7 @@ from typing import List
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.generator.item_pool.pool_creator import calculate_pool_results
-from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',

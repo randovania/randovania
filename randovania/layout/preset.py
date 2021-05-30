@@ -1,26 +1,16 @@
 import dataclasses
 import json
 import uuid
-from typing import Optional, List, Iterator, Tuple, Union, Type, Dict
+from typing import Optional, List, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
-from randovania.layout.corruption_configuration import CorruptionConfiguration
-from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
+from randovania.layout.game_to_class import AnyGameConfiguration, GAME_TO_CONFIGURATION
 
 
 def _dictionary_byte_hash(data: dict) -> int:
     return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
-
-
-AnyGameConfiguration = Union[PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration]
-_game_to_config: Dict[RandovaniaGame, Type[AnyGameConfiguration]] = {
-    RandovaniaGame.PRIME1: PrimeConfiguration,
-    RandovaniaGame.PRIME2: EchoesConfiguration,
-    RandovaniaGame.PRIME3: CorruptionConfiguration,
-}
 
 
 @dataclasses.dataclass(frozen=True)
@@ -52,7 +42,7 @@ class Preset(BitPackValue):
             description=value["description"],
             base_preset_uuid=uuid.UUID(value["base_preset_uuid"]) if value["base_preset_uuid"] is not None else None,
             game=game,
-            configuration=_game_to_config[game].from_json(value["configuration"]),
+            configuration=GAME_TO_CONFIGURATION[game].from_json(value["configuration"]),
         )
 
     def dangerous_settings(self) -> List[str]:

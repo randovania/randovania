@@ -5,11 +5,11 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base_configuration import BaseConfiguration
-from randovania.layout.beam_configuration import BeamConfiguration
-from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.teleporters import TeleporterConfiguration
-from randovania.layout.translator_configuration import TranslatorConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.prime2.beam_configuration import BeamConfiguration
+from randovania.layout.prime2.hint_configuration import HintConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
+from randovania.layout.prime2.translator_configuration import TranslatorConfiguration
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):

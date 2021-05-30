@@ -2,7 +2,7 @@ import copy
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, ResourceNode, PickupNode
+from randovania.game_description.world.node import Node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, Requirement, RequirementAnd, \
     ResourceRequirement
 from randovania.generator import graph as graph_module

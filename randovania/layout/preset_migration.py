@@ -7,7 +7,7 @@ from typing import Optional, Dict
 import aiofiles
 import slugify
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
