@@ -67,7 +67,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Unknown Item 2": 27,
 
 
-def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
+def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails, debug_pickups: bool) -> dict:
     if detail.model.game == RandovaniaGame.PRIME1:
         model_name = detail.model.name
     else:
@@ -83,11 +83,18 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
+    scan_text = detail.scan_text
+    hud_text = detail.hud_text[0]
+
+    if debug_pickups:
+        scan_text = f"Location {detail.index.index} - {scan_text}"
+        hud_text = f"Location {detail.index.index} - {hud_text}"
+
     return {
         "type": pickup_type,
         "model": model_name,
-        "scanText": detail.scan_text,
-        "hudmemoText": detail.hud_text[0],
+        "scanText": scan_text,
+        "hudmemoText": hud_text,
         "count": count,
         "respawn": False
     }
@@ -223,7 +230,7 @@ class RandomprimePatcher(Patcher):
                 if pickup_indices:
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
-                            prime1_pickup_details_to_patcher(pickup_list[index.index])
+                            prime1_pickup_details_to_patcher(pickup_list[index.index], cosmetic_patches.debug_pickups)
                             for index in pickup_indices
                         ],
                     }
@@ -252,11 +259,6 @@ class RandomprimePatcher(Patcher):
             db.resource_database.get_item(index)
             for index in prime_items.ARTIFACT_ITEMS
         ]
-        present_artifacts = [
-            db.resource_database.get_item(index)
-            for index in prime_items.ARTIFACT_ITEMS[:configuration.artifacts.num_artifacts]
-        ]
-
         resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             description.all_patches, players_config, area_namers, False,
             [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
