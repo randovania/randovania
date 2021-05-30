@@ -23,10 +23,12 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
 
         self.qol_cosmetic_check.stateChanged.connect(self._persist_option_then_notify("qol_cosmetic"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.debug_locations_check.stateChanged.connect(self._persist_option_then_notify("debug_pickups"))
 
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches):
         self.qol_cosmetic_check.setChecked(patches.qol_cosmetic)
         self.open_map_check.setChecked(patches.open_map)
+        self.debug_locations_check.setChecked(patches.debug_pickups)
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
