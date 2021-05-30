@@ -9,7 +9,7 @@ from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.prime2.beam_configuration import BeamConfiguration
 
 

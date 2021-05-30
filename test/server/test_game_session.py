@@ -11,7 +11,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
@@ -422,7 +422,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     sio.get_current_user.return_value = user1
     patcher = sio.patcher_provider.patcher_for_game.return_value
 
-    cosmetic = CosmeticPatches(open_map=False)
+    cosmetic = BaseCosmeticPatches(open_map=False)
 
     # Run
     with flask_app.test_request_context():

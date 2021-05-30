@@ -14,7 +14,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset import AnyGameConfiguration
+from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData

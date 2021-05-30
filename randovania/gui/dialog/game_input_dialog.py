@@ -1,10 +1,11 @@
+import dataclasses
 from pathlib import Path
 from typing import Optional
 
 from PySide2.QtWidgets import QMessageBox, QDialog
 
-from randovania.games.patcher import Patcher
 from randovania.games.game import RandovaniaGame
+from randovania.games.patcher import Patcher
 from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options
@@ -14,6 +15,8 @@ _VALID_GAME_TEXT = "(internal game copy)"
 
 class GameInputDialog(QDialog, Ui_GameInputDialog):
     _options: Options
+    _has_spoiler: bool
+    _game: RandovaniaGame
     _prompt_input_file: bool
     _current_lock_state: bool = True
 
@@ -23,12 +26,17 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         common_qt_lib.set_default_window_icon(self)
 
         self._options = options
+        self._has_spoiler = spoiler
+        self._game = game
 
         self.patcher = patcher
         self.default_output_name = patcher.default_output_file(word_hash)
         self.check_extracted_game()
-        
-        description_text = "<html><head/><body><p>In order to create the randomized game, an ISO file of {} for the Nintendo Gamecube is necessary.</p>".format(game.long_name)
+
+        per_game = options.options_for_game(self._game)
+
+        description_text = "<html><head/><body><p>In order to create the randomized game, an ISO file of {} for the Nintendo Gamecube is necessary.</p>".format(
+            game.long_name)
         if not patcher.uses_input_file_directly:
             description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
         description_text += "</body></html>"
@@ -53,11 +61,26 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False
 
-        if options.output_directory is not None:
-            self.output_file_edit.setText(str(options.output_directory.joinpath(self.default_output_name)))
+        if self._prompt_input_file and per_game.input_path is not None:
+            self.input_file_edit.setText(str(per_game.input_path))
+
+        if per_game.output_directory is not None:
+            self.output_file_edit.setText(str(per_game.output_directory.joinpath(self.default_output_name)))
 
         self._validate_input_file()
         self._validate_output_file()
+
+    def save_options(self):
+        with self._options as options:
+            if self._has_spoiler:
+                options.auto_save_spoiler = self.auto_save_spoiler
+
+            per_game = options.options_for_game(self._game)
+            per_game_changes = {"output_directory": self.output_file.parent}
+            if self._prompt_input_file:
+                per_game_changes["input_path"] = self.input_file
+
+            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
 
     # Getters
     @property

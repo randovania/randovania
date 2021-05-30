@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 13
+_CURRENT_OPTIONS_FILE_VERSION = 14
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -21,9 +21,50 @@ def _convert_v12(options: dict) -> dict:
     return options
 
 
+def _convert_v13(options: dict) -> dict:
+    cosmetic_patches = options.pop("cosmetic_patches", None)
+    output_directory = options.pop("output_directory", None)
+
+    if cosmetic_patches is not None or output_directory is not None:
+        if cosmetic_patches is None:
+            cosmetic_patches = {
+                "disable_hud_popup": True,
+                "speed_up_credits": True,
+                "open_map": True,
+                "unvisited_room_names": True,
+                "pickup_markers": True,
+                "teleporter_sounds": True,
+                "user_preferences": {
+                    "sound_mode": 1,
+                    "screen_brightness": 4,
+                    "screen_x_offset": 0,
+                    "screen_y_offset": 0,
+                    "screen_stretch": 0,
+                    "sfx_volume": 105,
+                    "music_volume": 79,
+                    "hud_alpha": 255,
+                    "helmet_alpha": 255,
+                    "hud_lag": False,
+                    "invert_y_axis": False,
+                    "rumble": True,
+                    "hint_system": False
+                }
+            }
+        options["per_game_options"] = {
+            "prime2": {
+                "cosmetic_patches": cosmetic_patches,
+                "input_path": None,
+                "output_directory": output_directory,
+            }
+        }
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
     12: _convert_v12,
+    13: _convert_v13,
 }
 
 

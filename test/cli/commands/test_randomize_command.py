@@ -2,7 +2,7 @@ import pytest
 from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -28,7 +28,7 @@ def test_randomize_command_logic(mocker, with_permalink):
     layout_description.permalink.player_count = 4
     layout_description.permalink.get_preset = MagicMock(return_value=preset)
 
-    cosmetic_patches = CosmeticPatches(
+    cosmetic_patches = BaseCosmeticPatches(
         disable_hud_popup=args.disable_hud_popup,
         speed_up_credits=args.speed_up_credits)
     players_config = PlayersConfiguration(

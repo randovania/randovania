@@ -990,6 +990,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             raise RuntimeError(f"Unknown session state: {state}")
 
+    @property
+    def current_player_game(self) -> Optional[RandovaniaGame]:
+        membership = self.current_player_membership
+        if membership.is_observer:
+            return None
+        return self._game_session.presets[membership.row].game
+
     @asyncSlot()
     @handle_network_errors
     async def save_iso(self):
@@ -1019,7 +1026,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                            "It can be found in the main Randovania window → Help → Multiworld")
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
-        game = self._game_session.presets[membership.row].game
+        game = self.current_player_game
         patcher = self._window_manager.patcher_provider.patcher_for_game(game)
 
         if patcher.is_busy:
@@ -1035,6 +1042,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if result != QtWidgets.QDialog.Accepted:
             return
 
+        dialog.save_options()
         input_file = dialog.input_file
         output_file = dialog.output_file
 
@@ -1042,7 +1050,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             options.output_directory = output_file.parent
 
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
-                                                     options.cosmetic_patches.as_json)
+                                                     options.options_for_game(game).cosmetic_patches.as_json)
 
         def work(progress_update: ProgressUpdateCallable):
             patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,

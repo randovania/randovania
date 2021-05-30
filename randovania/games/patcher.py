@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, List
 
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
@@ -56,7 +56,7 @@ class Patcher(ABC):
         raise NotImplementedError()
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                          cosmetic_patches: CosmeticPatches) -> dict:
+                          cosmetic_patches: BaseCosmeticPatches) -> dict:
         """
         Creates a JSON serializable dict that can be used to patch the game.
         Intended to be ran on the server for multiworld.

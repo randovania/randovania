@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, ANY
 
 import randovania
 from randovania.games.patchers.randomprime_patcher import RandomprimePatcher
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
@@ -15,7 +15,7 @@ def test_create_patch_data(test_files_dir):
     description = LayoutDescription.from_file(file)
     patcher = RandomprimePatcher()
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
-    cosmetic_patches = CosmeticPatches()
+    cosmetic_patches = BaseCosmeticPatches()
 
     # Run
     data = patcher.create_patch_data(description, players_config, cosmetic_patches)

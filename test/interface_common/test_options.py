@@ -33,12 +33,18 @@ def test_migrate_from_v11(option):
 
     # Assert
     expected_data = {
-        "cosmetic_patches": {
-            "disable_hud_popup": True,
-            "speed_up_credits": True,
-            "open_map": True,
-            "pickup_markers": True,
-            "unvisited_room_names": True
+        "per_game_options": {
+            "prime2": {
+                "cosmetic_patches": {
+                    "disable_hud_popup": True,
+                    "speed_up_credits": True,
+                    "open_map": True,
+                    "pickup_markers": True,
+                    "unvisited_room_names": True
+                },
+                'input_path': None,
+                'output_directory': None,
+            },
         }
     }
     assert new_data == expected_data
@@ -65,12 +71,12 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
                                    option: Options):
     # Setup
     settings_changed = MagicMock()
-    option._output_directory = Path("start")
+    option._dark_mode = False
     option.on_options_changed = settings_changed
 
     # Run
     with option:
-        option.output_directory = Path("end")
+        option.dark_mode = True
 
     # Assert
     mock_save_to_disk.assert_called_once_with(option)
@@ -81,11 +87,11 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
 def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
                                                  option: Options):
     # Setup
-    option._output_directory = Path("start")
+    option._dark_mode = False
 
     # Run
     with option:
-        option.output_directory = Path("end")
+        option.dark_mode = True
         with option:
             pass
 
@@ -96,7 +102,7 @@ def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
 def test_changing_field_without_context_manager_should_error(option: Options):
     # Run
     with pytest.raises(AssertionError) as exception:
-        option.output_directory = Path("start")
+        option.dark_mode = True
 
     # Assert
     assert str(exception.value) == "Attempting to edit an Options, but it wasn't made editable"
@@ -171,24 +177,24 @@ def test_serialize_fields(option: Options):
 def test_edit_during_options_changed(tmpdir):
     # Setup
     option = Options(Path(tmpdir))
-    option._output_directory = Path("start")
+    option._selected_tracker = "start"
 
     def on_changed():
         with option:
-            option.output_directory = Path("final")
+            option.selected_tracker = "final"
 
     option.on_options_changed = on_changed
 
     # Run
     with option:
-        option.output_directory = Path("middle")
+        option.selected_tracker = "middle"
 
     second_option = Options(Path(tmpdir))
     second_option.load_from_disk()
 
     # Assert
-    assert option.output_directory == Path("final")
-    assert option.output_directory == second_option.output_directory
+    assert option.selected_tracker == "final"
+    assert option.selected_tracker == second_option.selected_tracker
 
 
 @pytest.mark.parametrize("ignore_decode_errors", [False, True])

@@ -9,9 +9,10 @@ from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import game_workdir
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.lib import status_update_lib
 
 
@@ -57,7 +58,7 @@ class ClarisPatcher(Patcher):
         return ["iso"]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                          cosmetic_patches: CosmeticPatches):
+                          cosmetic_patches: EchoesCosmeticPatches):
         return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches,
                                                        decode_randomizer_data())
 
