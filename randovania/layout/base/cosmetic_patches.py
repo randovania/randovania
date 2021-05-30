@@ -10,3 +10,7 @@ class BaseCosmeticPatches(JsonDataclass):
     @classmethod
     def default(cls) -> "BaseCosmeticPatches":
         return cls()
+
+    @classmethod
+    def game(cls):
+        raise NotImplementedError()

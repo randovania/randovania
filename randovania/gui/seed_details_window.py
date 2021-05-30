@@ -1,4 +1,5 @@
 import collections
+import dataclasses
 import logging
 import traceback
 from functools import partial
@@ -12,11 +13,11 @@ from qasync import asyncSlot
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.patcher_file_lib import item_names
-from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
+from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib
@@ -27,8 +28,8 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 def _unique(iterable):
@@ -166,6 +167,10 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         QApplication.clipboard().setText(commands)
         await async_dialog.execute_dialog(message_box)
 
+    @property
+    def current_player_game(self) -> RandovaniaGame:
+        return self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
+
     @asyncSlot()
     async def _export_iso(self):
         layout = self.layout_description
@@ -178,8 +183,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                            "It can be found in the main Randovania window → Help → FAQ")
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
-        game = layout.permalink.get_preset(self.current_player_index).configuration.game
-
+        game = self.current_player_game
         if game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
@@ -433,11 +437,15 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             button.row.label.setVisible(visible)
 
     def _open_user_preferences_dialog(self):
-        dialog = EchoesUserPreferencesDialog(self, self._options.cosmetic_patches)
+        game = self.current_player_game
+        per_game_options = self._options.options_for_game(game)
+
+        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
-        if result == QDialog.Accepted:
+        if result == QtWidgets.QDialog.Accepted:
             with self._options as options:
-                options.cosmetic_patches = dialog.cosmetic_patches
+                options.set_options_for_game(game, dataclasses.replace(per_game_options,
+                                                                       cosmetic_patches=dialog.cosmetic_patches))
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value)

@@ -1,5 +1,4 @@
-from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
@@ -7,7 +6,7 @@ from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferenc
 def test_change_sound_mode(skip_qtbot):
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(sound_mode=SoundMode.MONO))
 
-    dialog = EchoesUserPreferencesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
 
     dialog.sound_mode_combo.setCurrentIndex(2)
@@ -18,7 +17,7 @@ def test_change_sound_mode(skip_qtbot):
 def test_change_sfx_volume(skip_qtbot):
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(sfx_volume=15))
 
-    dialog = EchoesUserPreferencesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
 
     dialog.sfx_volume_slider.setValue(50)
@@ -29,7 +28,7 @@ def test_change_sfx_volume(skip_qtbot):
 def test_change_hud_lag(skip_qtbot):
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(hud_lag=False))
 
-    dialog = EchoesUserPreferencesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
 
     dialog.hud_lag_check.setChecked(True)

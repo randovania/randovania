@@ -1,6 +1,7 @@
 import dataclasses
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
 
@@ -18,3 +19,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     @classmethod
     def default(cls) -> "EchoesCosmeticPatches":
         return cls()
+
+    @classmethod
+    def game(cls):
+        return RandovaniaGame.PRIME2
