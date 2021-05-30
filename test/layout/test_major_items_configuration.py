@@ -7,7 +7,7 @@ from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 
 
 def _create_config_for(game: RandovaniaGame, replace: dict):

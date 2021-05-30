@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from randovania.layout.layout_description import LayoutDescription, CURRENT_DESCRIPTION_SCHEMA_VERSION
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)

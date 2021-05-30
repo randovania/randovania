@@ -4,7 +4,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
-from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState
 
 
 @pytest.fixture(

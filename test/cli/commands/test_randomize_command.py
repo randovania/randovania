@@ -2,13 +2,20 @@ import pytest
 from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.games.game import RandovaniaGame
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 
 
+@pytest.mark.parametrize(["game", "cosmetic_class"], [
+    (RandovaniaGame.PRIME1, PrimeCosmeticPatches),
+    (RandovaniaGame.PRIME2, EchoesCosmeticPatches),
+])
 @pytest.mark.parametrize("with_permalink", [False, True])
-def test_randomize_command_logic(mocker, with_permalink):
+def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
     mock_from_str = mocker.patch("randovania.layout.permalink.Permalink.from_str")
     mock_from_file = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
@@ -25,12 +32,10 @@ def test_randomize_command_logic(mocker, with_permalink):
         args.permalink = None
 
     preset = MagicMock()
+    preset.game = game
     layout_description.permalink.player_count = 4
     layout_description.permalink.get_preset = MagicMock(return_value=preset)
 
-    cosmetic_patches = CosmeticPatches(
-        disable_hud_popup=args.disable_hud_popup,
-        speed_up_credits=args.speed_up_credits)
     players_config = PlayersConfiguration(
         args.player_index,
         {
@@ -47,7 +52,7 @@ def test_randomize_command_logic(mocker, with_permalink):
     # Assert
     mock_provider_for.assert_called_once_with(preset.game)
 
-    patcher.create_patch_data.assert_called_once_with(layout_description, players_config, cosmetic_patches)
+    patcher.create_patch_data.assert_called_once_with(layout_description, players_config, cosmetic_class())
     patcher.patch_game.assert_called_once_with(args.input_file, args.output_file,
                                                patcher.create_patch_data.return_value,
                                                Options.with_default_data_dir().game_files_path,

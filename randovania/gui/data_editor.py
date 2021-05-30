@@ -10,10 +10,10 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, Q
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print
-from randovania.game_description.area import Area
-from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.world import World
+from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
 from randovania.gui.dialog.connections_editor import ConnectionsEditor

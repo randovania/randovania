@@ -26,11 +26,11 @@ from randovania.gui.preset_settings.item_configuration_widget import ItemConfigu
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
-from randovania.layout.pickup_model import PickupModelDataSource, PickupModelStyle
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.ammo_state import AmmoState
-from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState
+from randovania.layout.base.ammo_state import AmmoState
+from randovania.layout.base.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration
 

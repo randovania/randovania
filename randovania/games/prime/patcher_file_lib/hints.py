@@ -3,8 +3,8 @@ from typing import Dict
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
-from randovania.game_description.node import LogbookNode
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_formatters import LocationFormatter, GuardianFormatter, \
     TemplatedFormatter, RelativeAreaFormatter
 from randovania.games.prime.patcher_file_lib.hint_lib import create_simple_logbook_hint

@@ -7,8 +7,8 @@ from PySide2.QtWidgets import QDialog
 from mock import AsyncMock, patch, ANY
 
 import randovania.game_description.pretty_print
-from randovania.game_description import data_reader, data_writer
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description import data_reader
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
 

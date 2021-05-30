@@ -1,7 +1,6 @@
 from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.preset import Preset
 
 

@@ -25,7 +25,7 @@ from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """

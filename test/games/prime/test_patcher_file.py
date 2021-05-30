@@ -7,7 +7,7 @@ import pytest
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
@@ -15,18 +15,19 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.games.patchers import claris_patcher_file
 from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator, pool_creator
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.layout.prime2.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.pickup_model import PickupModelStyle
-from randovania.layout.teleporters import TeleporterShuffleMode
+from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 def test_add_header_data_to_result():
@@ -498,7 +499,7 @@ def test_create_claris_patcher_file(test_files_dir, randomizer_data):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
     preset = description.permalink.get_preset(player_index)
-    cosmetic_patches = CosmeticPatches()
+    cosmetic_patches = EchoesCosmeticPatches()
 
     # Run
     result = claris_patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),

@@ -1,11 +1,13 @@
 import dataclasses
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.game import RandovaniaGame
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
 
 
 @dataclasses.dataclass(frozen=True)
-class CosmeticPatches(JsonDataclass):
+class EchoesCosmeticPatches(BaseCosmeticPatches):
     disable_hud_popup: bool = True
     speed_up_credits: bool = True
     open_map: bool = True
@@ -15,5 +17,9 @@ class CosmeticPatches(JsonDataclass):
     user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
 
     @classmethod
-    def default(cls) -> "CosmeticPatches":
+    def default(cls) -> "EchoesCosmeticPatches":
         return cls()
+
+    @classmethod
+    def game(cls):
+        return RandovaniaGame.PRIME2

@@ -2,7 +2,7 @@ import dataclasses
 from typing import FrozenSet
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.base.available_locations import RandomizationMode
 
 
 @dataclasses.dataclass(frozen=True)

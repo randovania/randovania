@@ -4,8 +4,8 @@ from typing import Iterator, Tuple, FrozenSet, List, Callable, TypeVar, Type
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 
 

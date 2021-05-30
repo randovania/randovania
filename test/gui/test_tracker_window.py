@@ -6,8 +6,8 @@ from pathlib import Path
 import pytest
 
 from randovania.gui import tracker_window
-from randovania.layout.teleporters import TeleporterShuffleMode
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.fixture(params=[{},

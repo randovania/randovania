@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 @pytest.fixture(name="editor")

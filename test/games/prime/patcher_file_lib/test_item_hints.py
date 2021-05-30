@@ -4,17 +4,15 @@ from unittest.mock import MagicMock
 import pytest
 
 import randovania.games.prime.patcher_file_lib.hints
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair, \
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import LogbookNode, PickupNode
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter

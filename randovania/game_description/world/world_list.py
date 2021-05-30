@@ -1,18 +1,18 @@
 import copy
 import re
-from typing import List, Dict, Iterator, Tuple, Iterable, Optional
+from typing import List, Dict, Iterator, Tuple, Iterable
 
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockConnection
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world import World
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world import World
 
 
 class WorldList:

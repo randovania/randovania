@@ -5,8 +5,7 @@ from unittest.mock import patch, MagicMock, ANY
 import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 

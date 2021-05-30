@@ -5,7 +5,7 @@ import dolphin_memory_engine
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.world import World
+from randovania.game_description.world.world import World
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000

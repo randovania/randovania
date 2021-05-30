@@ -4,11 +4,11 @@ from unittest.mock import MagicMock
 import pytest
 
 import randovania.generator.filler.player_state
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
 from randovania.generator.filler.filler_configuration import FillerConfiguration
-from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import logic_bootstrap
 
 

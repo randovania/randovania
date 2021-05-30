@@ -4,19 +4,19 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import data_reader, default_database
-from randovania.game_description.area import Area
-from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description import default_database
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import ResourceNode, GenericNode, TranslatorGateNode
+from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.generator.generator_reach import (
@@ -24,11 +24,11 @@ from randovania.generator.generator_reach import (
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach,
     advance_reach_with_possible_unsafe_resources, collectable_resource_nodes)
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.base_configuration import StartingLocationList
+from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.trick_level import LayoutTrickLevel
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver import bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData

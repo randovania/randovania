@@ -8,8 +8,8 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
@@ -18,7 +18,7 @@ from randovania.generator.filler.pickup_list import get_pickups_that_solves_unre
     get_pickups_with_interesting_resources, interesting_resources_for_reach
 from randovania.generator.generator_reach import advance_reach_with_possible_unsafe_resources, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach
-from randovania.layout.available_locations import RandomizationMode
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.state import State
 

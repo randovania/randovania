@@ -3,14 +3,14 @@ import uuid
 from typing import Optional, Callable, Union
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.corruption_configuration import CorruptionConfiguration
-from randovania.layout.damage_strictness import LayoutDamageStrictness
-from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset import Preset
-from randovania.layout.teleporters import TeleporterConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 class PresetEditor:

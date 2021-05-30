@@ -1,12 +1,12 @@
 import typing
 
 from randovania.game_description import node_search
-from randovania.game_description.area import Area
+from randovania.game_description.world.area import Area
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision, RelativeDataArea, HintRelativeAreaName
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import hint_lib
 
 

@@ -1,6 +1,5 @@
-import randovania
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.world_list import WorldList
 
 CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple

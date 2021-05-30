@@ -16,26 +16,26 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world import World
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
-from randovania.layout import translator_configuration
-from randovania.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.teleporters import TeleporterShuffleMode
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.prime2 import translator_configuration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach

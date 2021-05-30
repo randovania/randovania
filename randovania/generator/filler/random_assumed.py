@@ -4,7 +4,7 @@ from typing import Tuple, Iterator, Callable
 
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, PickupNode
+from randovania.game_description.world.node import Node, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes
 from randovania.generator.generator_reach import advance_reach_with_possible_unsafe_resources, \
