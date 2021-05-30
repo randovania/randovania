@@ -34,9 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
 
--	Added: Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
+-   Added: Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
 
--	Added: Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
+-   Added: Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
 
 -   Added: Method of reaching the pickup in Watch Station with Space Jump, Screw Attack, and Single Room OoB (Expert and above).
 
@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Reaching the Windchamber Gateway Door from Windchamber Tunnel with a Boost Jump is now Hypermode (From Expert).
 
--   Changed: Reaching the Energy Tank in Medidation Vista with a Boost Jump is now Expert (From Advanced).
+-   Changed: Reaching the pickup in Medidation Vista with a Boost Jump is now Expert (From Advanced).
 
 ## [2.6.1] - 2021-05-05
 
