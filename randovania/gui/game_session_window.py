@@ -13,7 +13,8 @@ from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
+from randovania.gui import game_specific_gui
+from randovania.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
@@ -1128,11 +1129,18 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.progress_bar.setRange(0, 0)
 
     def _open_user_preferences_dialog(self):
-        dialog = EchoesUserPreferencesDialog(self, self._options.cosmetic_patches)
+        game = self.current_player_game
+        if game is None:
+            raise ValueError("_open_user_preferences_dialog called for observer")
+
+        per_game_options = self._options.options_for_game(game)
+
+        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
         if result == QtWidgets.QDialog.Accepted:
             with self._options as options:
-                options.cosmetic_patches = dialog.cosmetic_patches
+                options.set_options_for_game(game, dataclasses.replace(per_game_options,
+                                                                       cosmetic_patches=dialog.cosmetic_patches))
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         self.server_connection_button.setEnabled(state == ConnectionState.Disconnected)

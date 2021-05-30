@@ -397,10 +397,6 @@ class Options:
         per_game_options[game] = per_game
         self.per_game_options = per_game_options
 
-    @property
-    def cosmetic_patches(self):
-        return None
-
     # Advanced
 
     @property
