@@ -8,6 +8,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.prime3.corruption_cosmetic_patches import CorruptionCosmeticPatches
 
 
 @pytest.mark.asyncio
@@ -95,7 +96,9 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     mock_clipboard: MagicMock = mocker.patch("PySide2.QtWidgets.QApplication.clipboard")
 
-    window = SeedDetailsWindow(None, MagicMock())
+    options = MagicMock()
+    options.options_for_game.return_value.cosmetic_patches = CorruptionCosmeticPatches()
+    window = SeedDetailsWindow(None, options)
     window.player_index_combo.addItem("Current", 0)
     skip_qtbot.addWidget(window)
 
