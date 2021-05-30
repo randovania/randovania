@@ -22,6 +22,7 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.layout.prime2.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.base.major_item_state import MajorItemState
@@ -498,7 +499,7 @@ def test_create_claris_patcher_file(test_files_dir, randomizer_data):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
     preset = description.permalink.get_preset(player_index)
-    cosmetic_patches = BaseCosmeticPatches()
+    cosmetic_patches = EchoesCosmeticPatches()
 
     # Run
     result = claris_patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),

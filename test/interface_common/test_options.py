@@ -219,8 +219,12 @@ def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text(
         json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
-            "cosmetic_patches": {
-                "pickup_model_style": "invalid-value"
+            "per_game_options": {
+                "prime2": {
+                    "cosmetic_patches": {
+                        "pickup_model_style": "invalid-value"
+                    }
+                }
             }
         })),
         "utf-8")

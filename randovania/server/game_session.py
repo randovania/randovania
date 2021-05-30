@@ -16,9 +16,11 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.layout import game_to_class
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.game_to_class import AnyCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -427,7 +429,6 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         membership.save()
 
     elif action == SessionAdminUserAction.CREATE_PATCHER_FILE:
-        cosmetic_patches = BaseCosmeticPatches.from_json(arg)
         player_names = {i: f"Player {i + 1}" for i in range(session.num_rows)}
 
         for member in GameSessionMembership.non_observer_members(session):
@@ -439,7 +440,9 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             player_names=player_names,
         )
         preset = layout_description.permalink.get_preset(players_config.player_index)
+        cosmetic_patches = game_to_class.GAME_TO_COSMETIC[preset.game].from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
+
         return patcher.create_patch_data(session.layout_description,
                                          players_config,
                                          cosmetic_patches)

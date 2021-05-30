@@ -35,7 +35,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
     patcher = MagicMock()
     options = MagicMock()
-    options.output_directory = None
+    options.options_for_game.return_value.output_directory = None
     window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     mock_prompt.return_value = None
 
