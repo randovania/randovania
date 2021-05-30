@@ -1,4 +1,5 @@
 import collections
+import copy
 import dataclasses
 import logging
 import traceback
@@ -140,25 +141,37 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     async def _show_dialog_for_prime3_layout(self):
         from randovania.games.patchers import gollop_corruption_patcher
 
+        cosmetic = self._options.options_for_game(RandovaniaGame.PRIME3).cosmetic_patches
+        preset = self.layout_description.permalink.get_preset(self.current_player_index)
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.PRIME3)
 
-        item_names = []
+        pickup_names = []
         for index in range(game.world_list.num_pickup_nodes):
             p_index = PickupIndex(index)
             if p_index in patches.pickup_assignment:
                 name = patches.pickup_assignment[p_index].pickup.name
             else:
                 name = "Missile Expansion"
-            item_names.append(name)
+            pickup_names.append(name)
 
-        layout_string = gollop_corruption_patcher.layout_string_for_items(item_names)
+        layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
         starting_location = patches.starting_location
+
+        suit_type = game.resource_database.get_item_by_name("Suit Type")
+        starting_items = copy.copy(patches.starting_items)
+        starting_items[suit_type] = starting_items.get(suit_type, 0) + cosmetic.player_suit.value
+        if preset.configuration.start_with_corrupted_hypermode:
+            hypermode_original = 0
+        else:
+            hypermode_original = 1
 
         commands = "\n".join([
             f'set seed="{layout_string}"',
-            f'set "starting_items={gollop_corruption_patcher.starting_items_for(patches.starting_items)}"',
+            f'set "starting_items={gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)}"',
             f'set "starting_location={gollop_corruption_patcher.starting_location_for(starting_location)}"',
+            f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
+            f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
         ])
         message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Commands for patcher",
                                             commands)

@@ -9,6 +9,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 class CorruptionConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    start_with_corrupted_hypermode: bool = False
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

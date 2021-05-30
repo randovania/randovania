@@ -208,14 +208,13 @@ def starting_location_for(location: AreaLocation) -> str:
     return f"custom {location.world_asset_id:x} {location.area_asset_id:x}"
 
 
-def starting_items_for(resources: CurrentResources) -> str:
+def starting_items_for(resources: CurrentResources, hypermode_original: int) -> str:
     capacity_by_short_name = {
         item.short_name: capacity
         for item, capacity in resources.items()
         if isinstance(item, ItemResourceInfo)
     }
-    # Don't give corrupted hypermode
-    capacity_by_short_name["HyperModeOriginal"] = 1
+    capacity_by_short_name["HyperModeOriginal"] = hypermode_original
 
     result_values = [
         capacity_by_short_name.get(STARTING_ITEMS_NAME_ALIAS.get(item, item), 0)
