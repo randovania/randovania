@@ -1,14 +1,14 @@
 from random import Random
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import LogbookNode
+from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex

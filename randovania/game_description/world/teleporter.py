@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 
 
 @dataclass(frozen=True, order=True)

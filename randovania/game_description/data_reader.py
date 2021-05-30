@@ -1,10 +1,10 @@
 from typing import List, Callable, TypeVar, Tuple, Dict
 
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
@@ -19,9 +19,9 @@ from randovania.game_description.resources.search import MissingResource, find_r
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')

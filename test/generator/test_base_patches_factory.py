@@ -4,14 +4,14 @@ from unittest.mock import MagicMock, patch, call, ANY
 
 import pytest
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.layout.lib.teleporters import TeleporterShuffleMode

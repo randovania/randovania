@@ -9,11 +9,11 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
 from randovania.game_description import default_database
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow

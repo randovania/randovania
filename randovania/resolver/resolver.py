@@ -4,7 +4,7 @@ from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode, ResourceNode, EventNode, Node
+from randovania.game_description.world.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration

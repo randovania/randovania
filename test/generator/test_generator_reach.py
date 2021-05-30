@@ -5,18 +5,18 @@ from typing import Tuple, List
 import pytest
 
 from randovania.game_description import default_database
-from randovania.game_description.area import Area
-from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import ResourceNode, GenericNode, TranslatorGateNode
+from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.generator.generator_reach import (

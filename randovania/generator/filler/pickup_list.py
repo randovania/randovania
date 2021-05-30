@@ -3,7 +3,7 @@ import itertools
 from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
-from randovania.game_description.node import ResourceNode
+from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.requirements import RequirementList, ResourceRequirement, RequirementSet
 from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.pickup_entry import PickupEntry

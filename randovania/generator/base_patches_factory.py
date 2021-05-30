@@ -3,17 +3,17 @@ import dataclasses
 from random import Random
 
 from randovania.game_description import default_database
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
-from randovania.game_description.node import LogbookNode, LoreType
+from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.lib.enum_lib import iterate_enum

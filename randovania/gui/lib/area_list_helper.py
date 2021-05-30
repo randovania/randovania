@@ -3,9 +3,9 @@ from typing import List, Callable, FrozenSet, Dict
 
 from PySide2 import QtWidgets, QtCore
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world import World
+from randovania.game_description.world.world import World
 
 
 def dark_world_flags(world: World):

@@ -1,7 +1,7 @@
 import hashlib
 from typing import List
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import CurrentResources
 

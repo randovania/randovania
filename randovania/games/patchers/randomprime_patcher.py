@@ -15,12 +15,12 @@ import randovania
 from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.node import PickupNode, TeleporterNode
+from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
 from randovania.games.prime import prime1_elevators, all_prime_dol_patches, prime_items

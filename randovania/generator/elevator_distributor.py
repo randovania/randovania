@@ -3,11 +3,11 @@ from collections import defaultdict
 from random import Random
 from typing import List, Dict, Optional, Tuple
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_patches import ElevatorConnection
-from randovania.game_description.node import TeleporterNode
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world_list import WorldList
 
 
 class ElevatorHelper:

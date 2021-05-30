@@ -2,9 +2,9 @@ from typing import Dict
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintDarkTemple
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources import resource_info
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib import hint_lib
 

@@ -1,14 +1,14 @@
 from typing import Union, Iterator, Tuple, TextIO
 
-from randovania.game_description.area import Area
-from randovania.game_description.dock import DockType
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockType
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, TranslatorGateNode, \
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, TranslatorGateNode, \
     LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, RequirementOr, \
     RequirementTemplate, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.lib.enum_lib import iterate_enum
 from randovania.layout.base.trick_level import LayoutTrickLevel
 

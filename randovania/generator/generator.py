@@ -10,7 +10,7 @@ from randovania.game_description.assignment import PickupAssignment, PickupTarge
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.generator import base_patches_factory
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults

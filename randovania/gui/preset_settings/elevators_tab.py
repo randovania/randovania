@@ -5,10 +5,10 @@ from typing import Dict, Optional
 
 from PySide2 import QtWidgets, QtCore
 
-from randovania.game_description.area import Area
+from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import TeleporterNode
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters, prime1_elevators
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators

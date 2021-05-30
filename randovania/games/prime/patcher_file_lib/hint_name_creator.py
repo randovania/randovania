@@ -3,7 +3,7 @@ from typing import Dict, List
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType, Hint, HintLocationPrecision
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.games.prime.patcher_file_lib.hint_formatters import LocationFormatter
 from randovania.games.prime.patcher_file_lib.hint_lib import AreaNamer

@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, PropertyMock
 
-from randovania.game_description.node import EventNode
+from randovania.game_description.world.node import EventNode
 from randovania.resolver.resolver_reach import ResolverReach
 
 

@@ -5,7 +5,7 @@ from typing import Tuple
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PlayerShipNode
+from randovania.game_description.world.node import PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase

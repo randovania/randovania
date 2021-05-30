@@ -2,8 +2,8 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
     TeleporterTargetList
