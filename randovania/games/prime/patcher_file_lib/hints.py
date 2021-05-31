@@ -5,6 +5,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
+from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.games.prime.patcher_file_lib.hint_formatters import LocationFormatter, GuardianFormatter, \
     TemplatedFormatter, RelativeAreaFormatter
 from randovania.games.prime.patcher_file_lib.hint_lib import create_simple_logbook_hint
@@ -41,6 +42,7 @@ _JOKE_HINTS = [
 def create_hints(all_patches: Dict[int, GamePatches],
                  players_config: PlayersConfiguration,
                  world_list: WorldList,
+                 area_namers: Dict[int, hint_lib.AreaNamer],
                  rng: Random,
                  ) -> list:
     """
@@ -48,23 +50,25 @@ def create_hints(all_patches: Dict[int, GamePatches],
     :param all_patches:
     :param players_config:
     :param world_list:
+    :param area_namers:
     :param rng:
     :return:
     """
 
-    hint_name_creator = LocationHintCreator(world_list, rng, _JOKE_HINTS)
+    hint_name_creator = LocationHintCreator(world_list, area_namers, rng, _JOKE_HINTS)
+    this_area_namer = area_namers[players_config.player_index]
     patches = all_patches[players_config.player_index]
 
     location_formatters: Dict[HintLocationPrecision, LocationFormatter] = {
         HintLocationPrecision.KEYBEARER: TemplatedFormatter(
-            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", hint_name_creator),
+            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", this_area_namer),
         HintLocationPrecision.GUARDIAN: GuardianFormatter(),
         HintLocationPrecision.LIGHT_SUIT_LOCATION: TemplatedFormatter(
-            "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.", hint_name_creator),
+            "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.", this_area_namer),
         HintLocationPrecision.DETAILED: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
-                                                           hint_name_creator),
+                                                           this_area_namer),
         HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
-                                                             hint_name_creator),
+                                                             this_area_namer),
         HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches),
         HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config),
     }
