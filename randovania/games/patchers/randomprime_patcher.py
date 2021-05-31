@@ -1,6 +1,7 @@
 import contextlib
 import copy
 import json
+import math
 import mmap
 import os
 import struct
@@ -16,6 +17,7 @@ from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_location import AreaLocation
@@ -24,7 +26,9 @@ from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
 from randovania.games.prime import prime1_elevators, all_prime_dol_patches, prime_items
-from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib
+from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
+    credits_spoiler
+from randovania.games.prime.patcher_file_lib.hint_lib import TextColor
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -254,7 +258,23 @@ class RandomprimePatcher(Patcher):
         else:
             map_default_state = "default"
 
-        # credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
+        major_name_order = {
+            pickup.name: index
+            for index, pickup in enumerate(configuration.major_items_configuration.items_state.keys())
+        }
+
+        def sort_pickup(p: PickupEntry):
+            return major_name_order.get(p.name, math.inf), p.name
+
+        major_pickups_spoiler = credits_spoiler.locations_for_major_pickups_and_keys(description.all_patches, players_config,
+                                                                                     area_namers)
+        credits_lines = [
+            "{}: {}".format(hint_lib.color_text(TextColor.TEAL, pickup.name), ", ".join(major_pickups_spoiler[pickup]))
+            for pickup in sorted(major_pickups_spoiler.keys(), key=sort_pickup)
+        ]
+        credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n"
+        credits_string += "\n\n".join(credits_lines)
+
         artifacts = [
             db.resource_database.get_item(index)
             for index in prime_items.ARTIFACT_ITEMS
@@ -306,7 +326,7 @@ class RandomprimePatcher(Patcher):
                 },
                 "mainMenuMessage": "Randovania v{}\n{}".format(randovania.VERSION, description.shareable_word_hash),
 
-                "creditsString": None,
+                "creditsString": credits_string,
                 "artifactHints": {
                     artifact.long_name: text
                     for artifact, text in resulting_hints.items()
