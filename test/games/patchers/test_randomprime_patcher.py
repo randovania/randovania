@@ -89,7 +89,93 @@ def test_create_patch_data(test_files_dir):
                 'Artifact of World': True,
             },
             'autoEnabledElevators': False,
-            'creditsString': None,
+            'creditsString': (
+                "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;"
+                
+                "\n\n&push;&main-color=#33ffd6;Charge Beam&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Sanctuary Fortress - Sanctuary Energy Controller"
+                
+                "\n\n&push;&main-color=#33ffd6;Wave Beam&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Torvus Bog - Great Bridge"
+                
+                "\n\n&push;&main-color=#33ffd6;Ice Beam&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Temple Grounds - Temple Assembly Site"
+                
+                "\n\n&push;&main-color=#33ffd6;Plasma Beam&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Root Cave"
+                
+                "\n\n&push;&main-color=#33ffd6;Grapple Beam&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Dark Agon Wastes - Junction Site"
+                
+                "\n\n&push;&main-color=#33ffd6;Thermal Visor&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Torvus Bog - Torvus Energy Controller"
+                
+                "\n\n&push;&main-color=#33ffd6;X-Ray Visor&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Alcove"
+                
+                "\n\n&push;&main-color=#33ffd6;Boost Ball&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Life Grove"
+                
+                "\n\n&push;&main-color=#33ffd6;Spider Ball&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Phazon Mines - Storage Depot A"
+                
+                "\n\n&push;&main-color=#33ffd6;Power Bomb&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Chozo Ruins - Main Plaza"
+                
+                "\n\n&push;&main-color=#33ffd6;Varia Suit&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Landing Site"
+                
+                "\n\n&push;&main-color=#33ffd6;Gravity Suit&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Great Temple - Transport B Access"
+                
+                "\n\n&push;&main-color=#33ffd6;Phazon Suit&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Cargo Freight Lift to Deck Gamma"
+                
+                "\n\n&push;&main-color=#33ffd6;Super Missile&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Temple Grounds - Windchamber Gateway"
+                
+                "\n\n&push;&main-color=#33ffd6;Wavebuster&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Chozo Ruins - Sunchamber"
+                
+                "\n\n&push;&main-color=#33ffd6;Ice Spreader&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Agon Wastes - Sandcanyon"
+                
+                "\n\n&push;&main-color=#33ffd6;Flamethrower&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Torvus Bog - Training Chamber"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Chozo&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Dark Agon Wastes - Ing Cache 1"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Elder&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Agon Wastes - Sand Cache"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Lifegiver&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Temple Grounds - Storage Cavern B"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Nature&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Sanctuary Fortress - Hall of Combat Mastery"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Newborn&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Great Temple - Transport A Access"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Spirit&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Temple Grounds - Transport to Agon Wastes"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Strength&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Agon Wastes - Storage D"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Truth&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Agon Wastes - Mining Station Access"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Warrior&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Agon Wastes - Portal Access A"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of Wild&pop;: "
+                "&push;&main-color=#d4cc33;Prime&pop;'s Tallon Overworld - Transport Tunnel B"
+
+                "\n\n&push;&main-color=#33ffd6;Artifact of World&pop;: "
+                "&push;&main-color=#d4cc33;Echoes&pop;'s Ing Hive - Culling Chamber"
+            ),
             'etankCapacity': 110,
             'gameBanner': {'description': 'Seed Hash: Launcher Caretaker Power',
                            'gameName': 'Metroid Prime: Randomizer',
