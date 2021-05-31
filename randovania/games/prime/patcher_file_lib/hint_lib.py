@@ -1,9 +1,9 @@
 from enum import Enum
 from typing import Dict
 
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

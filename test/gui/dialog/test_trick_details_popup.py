@@ -2,11 +2,10 @@ from unittest.mock import MagicMock
 
 from PySide2.QtWidgets import QWidget
 
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog import trick_details_popup
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def test_click_on_link(echoes_game_description,

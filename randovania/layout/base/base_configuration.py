@@ -4,15 +4,15 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
-from randovania.layout import location_list
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.damage_strictness import LayoutDamageStrictness
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.games.game import RandovaniaGame
+from randovania.layout.lib import location_list
+from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 class StartingLocationList(location_list.LocationList):

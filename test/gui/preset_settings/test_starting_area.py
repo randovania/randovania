@@ -8,7 +8,7 @@ from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base_configuration import StartingLocationList
+from randovania.layout.base.base_configuration import StartingLocationList
 
 
 @pytest.mark.parametrize("game", [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])

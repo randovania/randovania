@@ -52,10 +52,6 @@ class Ammo:
             result["unlocked_by"] = self.unlocked_by
         return result
 
-    @property
-    def model_index(self):
-        return self.models[0]
-
     def create_resource_lock(self, resource_database: ResourceDatabase) -> Optional[ResourceLock]:
         if self.unlocked_by is not None:
             return ResourceLock(

@@ -2,17 +2,17 @@
 import copy
 from typing import Iterator, FrozenSet, Dict, Optional
 
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import TeleporterNode
+from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
 

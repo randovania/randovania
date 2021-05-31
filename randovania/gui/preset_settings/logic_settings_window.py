@@ -9,11 +9,11 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
 
 from randovania.game_description import default_database
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world import World
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
@@ -35,12 +35,12 @@ from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.available_locations import RandomizationMode
-from randovania.layout.damage_strictness import LayoutDamageStrictness
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 

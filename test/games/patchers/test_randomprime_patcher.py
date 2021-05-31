@@ -4,9 +4,9 @@ from unittest.mock import MagicMock, ANY
 
 import randovania
 from randovania.games.patchers.randomprime_patcher import RandomprimePatcher
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 
 
 def test_create_patch_data(test_files_dir):
@@ -15,7 +15,7 @@ def test_create_patch_data(test_files_dir):
     description = LayoutDescription.from_file(file)
     patcher = RandomprimePatcher()
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
-    cosmetic_patches = CosmeticPatches()
+    cosmetic_patches = PrimeCosmeticPatches()
 
     # Run
     data = patcher.create_patch_data(description, players_config, cosmetic_patches)
@@ -91,12 +91,12 @@ def test_create_patch_data(test_files_dir):
             'autoEnabledElevators': False,
             'creditsString': None,
             'etankCapacity': 110,
-            'gameBanner': {'description': 'Seed Hash: Feeding Serenity Gateway',
+            'gameBanner': {'description': 'Seed Hash: Launcher Caretaker Power',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - A5KIQRWE'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - Z2OYS7HX'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nFeeding Serenity Gateway',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nLauncher Caretaker Power',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
@@ -144,7 +144,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False},
@@ -178,7 +178,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False},
@@ -194,7 +194,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -203,7 +203,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -230,7 +230,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -248,7 +248,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -257,7 +257,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -309,7 +309,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False},
@@ -325,7 +325,7 @@ def test_create_patch_data(test_files_dir):
                             {
                                 'type': 'Missile',
                                 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!',
                                 'count': 5,
                                 'respawn': False}]},
@@ -365,7 +365,7 @@ def test_create_patch_data(test_files_dir):
                              'count': 1, 'respawn': False}]},
                     'Transport Tunnel A': {
                         'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False}]},
                     'Warrior Shrine': {
@@ -389,7 +389,7 @@ def test_create_patch_data(test_files_dir):
                                      'hudmemoText': 'Sent Missile Expansion to Echoes!', 'count': 99,
                                      'respawn': False}]}, 'Magmoor Workstation': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!', 'count': 5, 'respawn': False}]}}},
             'Phazon Mines': {
                 'transports': {
@@ -400,7 +400,7 @@ def test_create_patch_data(test_files_dir):
                         'pickups': [
                             {
                                 'type': 'Missile', 'model': 'Missile',
-                                'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                 'hudmemoText': 'Missile Expansion acquired!', 'count': 5,
                                 'respawn': False}]},
                     'Security Access A': {
@@ -439,17 +439,17 @@ def test_create_patch_data(test_files_dir):
                          'count': 80, 'respawn': False}]},
                     'Ventilation Shaft': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
                          'count': 5, 'respawn': False}]},
                     'Phazon Processing Center': {'pickups': [
                         {'type': 'Power Bomb', 'model': 'Power Bomb Expansion',
-                         'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percent',
+                         'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb',
                          'hudmemoText': 'Power Bomb Expansion acquired!',
                          'count': 1, 'respawn': False}]},
                     'Processing Center Access': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
                          'count': 5, 'respawn': False}]},
                     'Elite Quarters': {
@@ -478,7 +478,7 @@ def test_create_patch_data(test_files_dir):
                                      'count': 88, 'respawn': False}]},
                     'Phazon Mining Tunnel': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
                          'count': 5, 'respawn': False}]},
                     'Fungal Hall Access': {'pickups': [
@@ -507,7 +507,7 @@ def test_create_patch_data(test_files_dir):
                      'hudmemoText': 'Sent Emerald Translator to Echoes!',
                      'count': 61, 'respawn': False}]}, 'Overgrown Cavern': {
                     'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                 'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                 'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                  'hudmemoText': 'Missile Expansion acquired!',
                                  'count': 5, 'respawn': False}]}, 'Root Cave': {
                     'pickups': [{'type': 'Plasma Beam', 'model': 'Plasma Beam',
@@ -542,7 +542,7 @@ def test_create_patch_data(test_files_dir):
                          'count': 68, 'respawn': False}]},
                     'Hydro Access Tunnel': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
                          'count': 5, 'respawn': False}]},
                     'Great Tree Chamber': {'pickups': [
@@ -560,7 +560,7 @@ def test_create_patch_data(test_files_dir):
                                      'hudmemoText': 'Boost Ball acquired!',
                                      'count': 1, 'respawn': False},
                                     {'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False}]}}},
             'Chozo Ruins': {'transports': {
@@ -568,21 +568,26 @@ def test_create_patch_data(test_files_dir):
                 'Chozo Ruins North\x00(Sun Tower)': 'Tallon Overworld South\x00(Great Tree Hall, Lower)',
                 'Chozo Ruins East\x00(Reflecting Pool, Save Station)': 'Tallon Overworld North\x00(Tallon Canyon)',
                 'Chozo Ruins South\x00(Reflecting Pool, Far End)': 'Magmoor Caverns South\x00(Magmoor Workstation, Debris)'},
-                'rooms': {'Main Plaza': {'pickups': [
-                    {'type': 'Power Bomb', 'model': 'Power Bomb Expansion',
-                     'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percent',
-                     'hudmemoText': 'Power Bomb Expansion acquired!', 'count': 1,
-                     'respawn': False}, {'type': 'Missile', 'model': 'Missile',
-                                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
-                                         'hudmemoText': 'Missile Expansion acquired!',
-                                         'count': 5, 'respawn': False},
-                    {'type': 'Power Bomb', 'model': 'Power Bomb',
-                     'scanText': 'Your Power Bomb',
-                     'hudmemoText': 'Power Bomb acquired!', 'count': 4,
-                     'respawn': False}, {'type': 'Missile', 'model': 'Missile',
-                                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
-                                         'hudmemoText': 'Missile Expansion acquired!',
-                                         'count': 5, 'respawn': False}]},
+                'rooms': {
+                    'Main Plaza': {
+                        'pickups': [
+                            {'type': 'Power Bomb', 'model': 'Power Bomb Expansion',
+                             'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb',
+                             'hudmemoText': 'Power Bomb Expansion acquired!', 'count': 1,
+                             'respawn': False},
+                            {'type': 'Power Bomb', 'model': 'Power Bomb',
+                             'scanText': 'Your Power Bomb',
+                             'hudmemoText': 'Power Bomb acquired!', 'count': 4,
+                             'respawn': False},
+                            {'type': 'Missile', 'model': 'Missile',
+                             'scanText': 'Your Missile Expansion. Provides 5 Missiles',
+                             'hudmemoText': 'Missile Expansion acquired!',
+                             'count': 5, 'respawn': False},
+                            {'type': 'Missile', 'model': 'Missile',
+                             'scanText': 'Your Missile Expansion. Provides 5 Missiles',
+                             'hudmemoText': 'Missile Expansion acquired!',
+                             'count': 5, 'respawn': False}
+                        ]},
                     'Ruined Fountain': {'pickups': [
                         {'type': 'Unknown Item 1', 'model': 'Nothing',
                          'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
@@ -610,7 +615,7 @@ def test_create_patch_data(test_files_dir):
                          'hudmemoText': 'Sent Energy Tank to Echoes!',
                          'count': 10, 'respawn': False}]}, 'Ruined Nursery': {
                         'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False}]},
                     'Training Chamber Access': {'pickups': [
@@ -633,7 +638,7 @@ def test_create_patch_data(test_files_dir):
                                      'count': 15, 'respawn': False}]},
                     'Ruined Gallery': {'pickups': [
                         {'type': 'Missile', 'model': 'Missile',
-                         'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
                          'count': 5, 'respawn': False},
                         {'type': 'Unknown Item 1', 'model': 'Nothing',
@@ -646,7 +651,7 @@ def test_create_patch_data(test_files_dir):
                          'hudmemoText': 'Sent Missile Expansion to Echoes!',
                          'count': 18, 'respawn': False}]}, 'Gathering Hall': {
                         'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False}]}, 'Hive Totem': {
                         'pickups': [{'type': 'Unknown Item 1', 'model': 'Nothing',
@@ -654,7 +659,7 @@ def test_create_patch_data(test_files_dir):
                                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
                                      'count': 20, 'respawn': False}]}, 'Sunchamber': {
                         'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False},
                                     {'type': 'Wavebuster', 'model': 'Wavebuster',
@@ -679,11 +684,11 @@ def test_create_patch_data(test_files_dir):
                                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
                                      'count': 26, 'respawn': False},
                                     {'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False}]}, 'Burn Dome': {
                         'pickups': [{'type': 'Missile', 'model': 'Missile',
-                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles and 1 Item Percent',
+                                     'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                                      'hudmemoText': 'Missile Expansion acquired!',
                                      'count': 5, 'respawn': False},
                                     {'type': 'Unknown Item 1', 'model': 'Nothing',

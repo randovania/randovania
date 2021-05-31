@@ -3,15 +3,15 @@ import dataclasses
 from dataclasses import dataclass
 from typing import Dict, Tuple, Iterator
 
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
-from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.world.dock import DockWeakness, DockConnection
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.teleporter import Teleporter
+from randovania.game_description.world.teleporter import Teleporter
 
 
 ElevatorConnection = Dict[Teleporter, AreaLocation]

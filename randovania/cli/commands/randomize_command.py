@@ -2,6 +2,8 @@ import asyncio
 from argparse import ArgumentParser
 from pathlib import Path
 
+from randovania.layout import game_to_class
+
 
 def randomize_command_logic(args):
     return asyncio.run(randomize_command_logic_async(args))
@@ -10,7 +12,7 @@ def randomize_command_logic(args):
 async def randomize_command_logic_async(args):
     from randovania.games.patcher_provider import PatcherProvider
     from randovania.generator import generator
-    from randovania.interface_common.cosmetic_patches import CosmeticPatches
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.permalink import Permalink
@@ -30,10 +32,6 @@ async def randomize_command_logic_async(args):
     else:
         layout_description = LayoutDescription.from_file(args.log_file)
 
-    cosmetic_patches = CosmeticPatches(
-        disable_hud_popup=args.disable_hud_popup,
-        speed_up_credits=args.speed_up_credits)
-
     players_config = PlayersConfiguration(args.player_index,
                                           {i: f"Player {i + 1}"
                                            for i in range(layout_description.permalink.player_count)})
@@ -41,6 +39,7 @@ async def randomize_command_logic_async(args):
 
     game_files_path = Options.with_default_data_dir().game_files_path
     patcher_provider = PatcherProvider()
+    cosmetic_patches = game_to_class.GAME_TO_COSMETIC[preset.game].default()
     patcher = patcher_provider.patcher_for_game(preset.game)
 
     patch_data = patcher.create_patch_data(layout_description, players_config, cosmetic_patches)
@@ -57,9 +56,6 @@ def add_randomize_command(sub_parsers):
     group.add_argument("--permalink", type=str, help="The permalink to use")
     group.add_argument("--log-file", type=Path, help="A seed log file to use")
 
-    parser.add_argument("--disable-hud-popup", action="store_true", help="Remove the HUD popup", default=False)
-    parser.add_argument("--speed-up-credits", action="store_true", help="Speeds ups the credits sequence",
-                        default=False)
     parser.add_argument("--verbose", action="store_true", help="Prints progress",
                         default=False)
     parser.add_argument("--player-index", type=int, default=0,

@@ -8,14 +8,14 @@ from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _echoes_powerup_offset
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.node import PickupNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import dol_patcher
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.lib import enum_lib
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
 
 
@@ -175,7 +175,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         else:
             patcher_data = await network_client.session_admin_player(user.id,
                                                                      SessionAdminUserAction.CREATE_PATCHER_FILE,
-                                                                     CosmeticPatches().as_json)
+                                                                     BaseCosmeticPatches().as_json)
             names = {
                 pickup["pickup_index"]: "{}: {}".format(index_to_name[pickup["pickup_index"]],
                                                         pickup["hud_text"][0])

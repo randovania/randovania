@@ -11,9 +11,10 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
@@ -421,8 +422,9 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     patcher = sio.patcher_provider.patcher_for_game.return_value
+    mock_layout_description.return_value.permalink.get_preset.return_value.game = RandovaniaGame.PRIME2
 
-    cosmetic = CosmeticPatches(open_map=False)
+    cosmetic = EchoesCosmeticPatches(open_map=False)
 
     # Run
     with flask_app.test_request_context():
@@ -430,9 +432,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
 
     # Assert
     mock_layout_description.return_value.permalink.get_preset.assert_called_once_with(2)
-    sio.patcher_provider.patcher_for_game.assert_called_once_with(
-        mock_layout_description.return_value.permalink.get_preset.return_value.game
-    )
+    sio.patcher_provider.patcher_for_game.assert_called_once_with(RandovaniaGame.PRIME2)
     patcher.create_patch_data.assert_called_once_with(
         mock_layout_description.return_value,
         PlayersConfiguration(2, {

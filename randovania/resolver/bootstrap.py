@@ -5,7 +5,7 @@ from typing import Tuple
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PlayerShipNode
+from randovania.game_description.world.node import PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -13,10 +13,10 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset import AnyGameConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.game_to_class import AnyGameConfiguration
+from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
 
 _items_to_not_add_in_minimal_logic = {

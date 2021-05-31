@@ -13,7 +13,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
 from randovania.games.prime.patcher_file_lib import item_names
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalResources]:

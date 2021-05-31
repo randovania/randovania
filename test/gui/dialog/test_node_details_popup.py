@@ -1,6 +1,6 @@
 import pytest
 
-from randovania.game_description.node import GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+from randovania.game_description.world.node import GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, PlayerShipNode
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 

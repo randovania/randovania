@@ -1,4 +1,6 @@
 import collections
+import copy
+import dataclasses
 import logging
 import traceback
 from functools import partial
@@ -10,13 +12,13 @@ from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPus
     QApplication, QDialog, QAction, QMenu
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.patcher_file_lib import item_names
-from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
+from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib
@@ -27,8 +29,8 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 def _unique(iterable):
@@ -139,25 +141,37 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     async def _show_dialog_for_prime3_layout(self):
         from randovania.games.patchers import gollop_corruption_patcher
 
+        cosmetic = self._options.options_for_game(RandovaniaGame.PRIME3).cosmetic_patches
+        preset = self.layout_description.permalink.get_preset(self.current_player_index)
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.PRIME3)
 
-        item_names = []
+        pickup_names = []
         for index in range(game.world_list.num_pickup_nodes):
             p_index = PickupIndex(index)
             if p_index in patches.pickup_assignment:
                 name = patches.pickup_assignment[p_index].pickup.name
             else:
                 name = "Missile Expansion"
-            item_names.append(name)
+            pickup_names.append(name)
 
-        layout_string = gollop_corruption_patcher.layout_string_for_items(item_names)
+        layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
         starting_location = patches.starting_location
+
+        suit_type = game.resource_database.get_item_by_name("Suit Type")
+        starting_items = copy.copy(patches.starting_items)
+        starting_items[suit_type] = starting_items.get(suit_type, 0) + cosmetic.player_suit.value
+        if preset.configuration.start_with_corrupted_hypermode:
+            hypermode_original = 0
+        else:
+            hypermode_original = 1
 
         commands = "\n".join([
             f'set seed="{layout_string}"',
-            f'set "starting_items={gollop_corruption_patcher.starting_items_for(patches.starting_items)}"',
+            f'set "starting_items={gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)}"',
             f'set "starting_location={gollop_corruption_patcher.starting_location_for(starting_location)}"',
+            f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
+            f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
         ])
         message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Commands for patcher",
                                             commands)
@@ -165,6 +179,10 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         message_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
         QApplication.clipboard().setText(commands)
         await async_dialog.execute_dialog(message_box)
+
+    @property
+    def current_player_game(self) -> RandovaniaGame:
+        return self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
 
     @asyncSlot()
     async def _export_iso(self):
@@ -178,8 +196,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                            "It can be found in the main Randovania window → Help → FAQ")
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
-        game = layout.permalink.get_preset(self.current_player_index).configuration.game
-
+        game = self.current_player_game
         if game == RandovaniaGame.PRIME3:
             return await self._show_dialog_for_prime3_layout()
 
@@ -196,6 +213,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if result != QDialog.Accepted:
             return
 
+        dialog.save_options()
         input_file = dialog.input_file
         output_file = dialog.output_file
         auto_save_spoiler = dialog.auto_save_spoiler
@@ -204,11 +222,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             player_names=self._player_names,
         )
 
-        with options:
-            options.output_directory = output_file.parent
-            options.auto_save_spoiler = auto_save_spoiler
-
-        patch_data = patcher.create_patch_data(layout, players_config, options.cosmetic_patches)
+        patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
 
         def work(progress_update: ProgressUpdateCallable):
             patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
@@ -436,11 +450,15 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             button.row.label.setVisible(visible)
 
     def _open_user_preferences_dialog(self):
-        dialog = EchoesUserPreferencesDialog(self, self._options.cosmetic_patches)
+        game = self.current_player_game
+        per_game_options = self._options.options_for_game(game)
+
+        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
-        if result == QDialog.Accepted:
+        if result == QtWidgets.QDialog.Accepted:
             with self._options as options:
-                options.cosmetic_patches = dialog.cosmetic_patches
+                options.set_options_for_game(game, dataclasses.replace(per_game_options,
+                                                                       cosmetic_patches=dialog.cosmetic_patches))
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value)

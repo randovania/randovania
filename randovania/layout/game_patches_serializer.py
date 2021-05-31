@@ -2,23 +2,23 @@ import collections
 import re
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader, default_database
-from randovania.game_description.area import Area
-from randovania.game_description.area_location import AreaLocation
+from randovania.game_description import default_database
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import Hint
-from randovania.game_description.node import PickupNode, TeleporterNode
+from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.teleporter import Teleporter
-from randovania.game_description.world_list import WorldList
+from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 

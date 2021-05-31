@@ -2,7 +2,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.layout.translator_configuration import TranslatorConfiguration
+from randovania.layout.prime2.translator_configuration import TranslatorConfiguration
 
 
 @pytest.fixture(

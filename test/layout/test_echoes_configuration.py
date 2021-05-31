@@ -8,18 +8,18 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.available_locations import AvailableLocationsConfiguration
-from randovania.layout.base_configuration import StartingLocationList
-from randovania.layout.beam_configuration import BeamConfiguration
-from randovania.layout.damage_strictness import LayoutDamageStrictness
-from randovania.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.pickup_model import PickupModelStyle
-from randovania.layout.teleporters import TeleporterConfiguration
-from randovania.layout.translator_configuration import TranslatorConfiguration
-from randovania.layout.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+from randovania.layout.base.base_configuration import StartingLocationList
+from randovania.layout.prime2.beam_configuration import BeamConfiguration
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.prime2.hint_configuration import HintConfiguration
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.lib.teleporters import TeleporterConfiguration
+from randovania.layout.prime2.translator_configuration import TranslatorConfiguration
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 T = TypeVar("T")
 
