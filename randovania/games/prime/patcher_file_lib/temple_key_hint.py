@@ -37,7 +37,7 @@ def create_temple_key_hint(all_patches: Dict[int, GamePatches],
 
     for options in locations_for_items.values():
         for player, location in options:
-            all_world_names.add(area_namers[player].location_name(location, hide_area=True, color=False))
+            all_world_names.add(area_namers[player].location_name(location, hide_area=True, color=None))
             break
 
     temple_name = hint_lib.color_text(hint_lib.TextColor.ITEM, _TEMPLE_NAMES[temple_index])
