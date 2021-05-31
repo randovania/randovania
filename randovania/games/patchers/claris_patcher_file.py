@@ -277,10 +277,12 @@ def _create_string_patches(hint_config: HintConfiguration,
     """
     patches = all_patches[players_config.player_index]
     string_patches = []
+    area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(game_enum).world_list)
+                   for index, game_enum in all_game_enums.items()}
 
     # Location Hints
     string_patches.extend(
-        hints.create_hints(all_patches, players_config, game.world_list, rng)
+        hints.create_hints(all_patches, players_config, game.world_list, area_namers, rng)
     )
 
     # Sky Temple Keys
@@ -290,8 +292,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     else:
         string_patches.extend(sky_temple_key_hint.create_hints(
             all_patches, players_config, game.resource_database,
-            {index: hint_lib.AreaNamer(default_database.game_description_for(game_enum).world_list)
-             for index, game_enum in all_game_enums.items()},
+            area_namers,
             stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
 
     # Elevator Scans
@@ -460,7 +461,8 @@ def create_patcher_file(description: LayoutDescription,
     return result
 
 
-def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: BaseConfiguration, game: GameDescription,
+def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: BaseConfiguration,
+                        game: GameDescription,
                         patches: GamePatches, players_config: PlayersConfiguration, randomizer_data: dict,
                         rng: Random):
     useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),
