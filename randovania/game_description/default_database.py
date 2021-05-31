@@ -22,6 +22,10 @@ def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
 
 
 def game_description_for(game: RandovaniaGame) -> GameDescription:
+    """
+
+    :rtype: object
+    """
     return data_reader.decode_data(default_data.read_json_then_binary(game)[1])
 
 

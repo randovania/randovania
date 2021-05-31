@@ -6,17 +6,20 @@ from randovania.game_description.hint import HintType, Hint, HintLocationPrecisi
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import hint_lib
 from randovania.games.prime.patcher_file_lib.hint_formatters import LocationFormatter
-from randovania.games.prime.patcher_file_lib.hint_lib import AreaNamer
 from randovania.games.prime.patcher_file_lib.item_hints import create_pickup_hint
 from randovania.games.prime.patcher_file_lib.temple_key_hint import create_temple_key_hint
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-class LocationHintCreator(AreaNamer):
+class LocationHintCreator:
+    world_list: WorldList
+    area_namers: Dict[int, hint_lib.AreaNamer]
     joke_hints: List[str]
 
-    def __init__(self, world_list: WorldList, rng: Random, base_joke_hints: List[str]):
-        super().__init__(world_list)
+    def __init__(self, world_list: WorldList, area_namers: Dict[int, hint_lib.AreaNamer],
+                 rng: Random, base_joke_hints: List[str]):
+        self.world_list = world_list
+        self.area_namers = area_namers
         self.rng = rng
         self.base_joke_hints = base_joke_hints
         self.joke_hints = []
@@ -36,7 +39,7 @@ class LocationHintCreator(AreaNamer):
             return hint_lib.color_text(hint_lib.TextColor.JOKE, self.create_joke_hint())
 
         elif hint.hint_type == HintType.RED_TEMPLE_KEY_SET:
-            return create_temple_key_hint(all_patches, players_config.player_index, hint.dark_temple, self.world_list)
+            return create_temple_key_hint(all_patches, players_config.player_index, hint.dark_temple, self.area_namers)
 
         else:
             assert hint.hint_type == HintType.LOCATION

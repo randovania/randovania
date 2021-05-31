@@ -39,11 +39,11 @@ class AreaNamer:
             if isinstance(node, PickupNode)
         }
 
-    def location_name(self, pickup_index: PickupIndex, hide_area: bool) -> str:
-        return color_text(
-            TextColor.LOCATION,
-            self.node_name(self.index_to_node[pickup_index], hide_area)
-        )
+    def location_name(self, pickup_index: PickupIndex, hide_area: bool, color: bool = True) -> str:
+        result = self.node_name(self.index_to_node[pickup_index], hide_area)
+        if color:
+            return color_text(TextColor.LOCATION, result)
+        return result
 
     def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
         if hide_area:

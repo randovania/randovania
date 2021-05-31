@@ -9,7 +9,6 @@ from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import game_workdir
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
