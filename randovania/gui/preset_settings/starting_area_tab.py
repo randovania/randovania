@@ -3,6 +3,7 @@ from typing import Dict
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -37,6 +38,10 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
     @property
     def uses_patches_tab(self) -> bool:
         return True
+
+    @property
+    def game_enum(self) -> RandovaniaGame:
+        return self.game_description.game
 
     def _on_starting_area_check_changed(self, world_areas, checked: bool):
         with self._editor as editor:
