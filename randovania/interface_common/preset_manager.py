@@ -30,9 +30,9 @@ def read_preset_list() -> List[Path]:
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
     author = "randovania <nobody@example.com>"
     if remove:
-        dulwich.porcelain.remove(repository, file_path)
+        dulwich.porcelain.remove(repository, [file_path])
     else:
-        dulwich.porcelain.add(repository, file_path)
+        dulwich.porcelain.add(repository, [file_path])
     dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
                              author=author, committer=author)
 
