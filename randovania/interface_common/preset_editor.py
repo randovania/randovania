@@ -5,6 +5,7 @@ from typing import Optional, Callable, Union
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
@@ -22,7 +23,7 @@ class PresetEditor:
     _uuid: uuid.UUID
     _base_preset_uuid: uuid.UUID
     _game: RandovaniaGame
-    _configuration: Union[EchoesConfiguration, CorruptionConfiguration]
+    _configuration: AnyGameConfiguration
 
     def __init__(self, initial_preset: Preset):
         if initial_preset.base_preset_uuid is None:
@@ -81,7 +82,7 @@ class PresetEditor:
         return self._game
 
     @property
-    def configuration(self) -> Union[EchoesConfiguration, CorruptionConfiguration]:
+    def configuration(self) -> AnyGameConfiguration:
         return self._configuration
 
     # Access to fields inside PatcherConfiguration
