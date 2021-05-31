@@ -115,6 +115,9 @@ class LayoutDescription:
         with json_path.open("r") as open_file:
             return cls.from_json_dict(json.load(open_file))
 
+    def get_preset(self, player_index: int):
+        return self.permalink.get_preset(player_index)
+
     @property
     def _serialized_patches(self):
         cached_result = object.__getattribute__(self, "__cached_serialized_patches")

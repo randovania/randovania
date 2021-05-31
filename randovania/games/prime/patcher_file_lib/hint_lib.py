@@ -1,8 +1,8 @@
 from enum import Enum
-from typing import Dict
+from typing import Dict, Optional
 
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -13,6 +13,7 @@ class TextColor(Enum):
     JOKE = "#45F731"
     LOCATION = "#FF3333"
     PLAYER = "#d4cc33"
+    TEAL = "#33ffd6"
 
 
 def color_text(color: TextColor, text: str):
@@ -39,10 +40,11 @@ class AreaNamer:
             if isinstance(node, PickupNode)
         }
 
-    def location_name(self, pickup_index: PickupIndex, hide_area: bool, color: bool = True) -> str:
+    def location_name(self, pickup_index: PickupIndex, hide_area: bool,
+                      color: Optional[TextColor] = TextColor.LOCATION) -> str:
         result = self.node_name(self.index_to_node[pickup_index], hide_area)
-        if color:
-            return color_text(TextColor.LOCATION, result)
+        if color is not None:
+            return color_text(color, result)
         return result
 
     def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
@@ -71,8 +73,9 @@ class Determiner:
             return self.s
 
 
-def player_determiner(players_config: PlayersConfiguration, player: int) -> Determiner:
+def player_determiner(players_config: PlayersConfiguration, player: int,
+                      color: TextColor = TextColor.PLAYER) -> Determiner:
     return Determiner(
-        "{}'s ".format(color_text(TextColor.PLAYER, players_config.player_names[player])),
+        "{}'s ".format(color_text(color, players_config.player_names[player])),
         False
     )
