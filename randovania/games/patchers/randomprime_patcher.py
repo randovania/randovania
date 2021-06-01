@@ -67,12 +67,33 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Health Refill": 26,
 # "Unknown Item 2": 27,
 
+_MODEL_MAPPING = {
+    (RandovaniaGame.PRIME2, "ChargeBeam INCOMPLETE"): "Charge Beam",
+    (RandovaniaGame.PRIME2, "SuperMissile"): "Super Missile",
+    (RandovaniaGame.PRIME2, "ScanVisor INCOMPLETE"): "Scan Visor",
+    (RandovaniaGame.PRIME2, "VariaSuit INCOMPLETE"): "Varia Suit",
+    (RandovaniaGame.PRIME2, "DarkSuit"): "Varia Suit",
+    (RandovaniaGame.PRIME2, "LightSuit"): "Varia Suit",
+    (RandovaniaGame.PRIME2, "MorphBall INCOMPLETE"): "Morph Ball",
+    (RandovaniaGame.PRIME2, "MorphBallBomb"): "Morph Ball Bomb",
+    (RandovaniaGame.PRIME2, "BoostBall"): "Boost Ball",
+    (RandovaniaGame.PRIME2, "SpiderBall"): "Spider Ball",
+    (RandovaniaGame.PRIME2, "PowerBomb"): "Power Bomb",
+    (RandovaniaGame.PRIME2, "PowerBombExpansion"): "Power Bomb Expansion",
+    (RandovaniaGame.PRIME2, "MissileExpansion"): "Missile",
+    (RandovaniaGame.PRIME2, "MissileExpansionPrime1"): "Missile",
+    (RandovaniaGame.PRIME2, "MissileLauncher"): "Missile",
+    (RandovaniaGame.PRIME2, "GrappleBeam"): "Grapple Beam",
+    (RandovaniaGame.PRIME2, "SpaceJumpBoots"): "Space Jump Boots",
+    (RandovaniaGame.PRIME2, "EnergyTank"): "Energy Tank",
+}
+
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails, debug_pickups: bool) -> dict:
     if detail.model.game == RandovaniaGame.PRIME1:
         model_name = detail.model.name
     else:
-        model_name = "Nothing"
+        model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
 
     pickup_type = "Nothing"
     count = 0
