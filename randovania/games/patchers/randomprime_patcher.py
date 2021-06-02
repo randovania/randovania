@@ -307,12 +307,12 @@ class RandomprimePatcher(Patcher):
                     "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
                 },
 
-                "mainPlazaDoor": configuration.qol_logical,
-                "backwardsFrigate": configuration.qol_logical,
-                "backwardsLabs": configuration.qol_logical,
-                "backwardsUpperMines": configuration.qol_logical,
-                "backwardsLowerMines": configuration.qol_logical,
-                "phazonEliteWithoutDynamo": configuration.qol_logical,
+                "mainPlazaDoor": configuration.main_plaza_door,
+                "backwardsFrigate": configuration.backwards_frigate,
+                "backwardsLabs": configuration.backwards_labs,
+                "backwardsUpperMines": configuration.backwards_upper_mines,
+                "backwardsLowerMines": configuration.backwards_lower_mines,
+                "phazonEliteWithoutDynamo": configuration.phazon_elite_without_dynamo,
 
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",

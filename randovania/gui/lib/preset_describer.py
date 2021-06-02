@@ -377,6 +377,9 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
     if not configuration.elevators.is_vanilla:
         template_strings["Gameplay"].append(f"Elevators: {configuration.elevators.description()}")
 
+    if configuration.allow_underwater_movement_without_gravity:
+        template_strings["Gameplay"].append("Underwater movement without Gravity allowed")
+
     # Game Changes
     missile_launcher_required = True
     main_pb_required = True
@@ -400,7 +403,12 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         template_strings["Game Changes"].append(", ".join(required_messages))
 
     qol_changes = []
-    for flag, message in ((configuration.qol_logical, "Logical QOL"),
+    for flag, message in ((configuration.main_plaza_door, "Main Plaza Vault Door"),
+                          (configuration.backwards_frigate, "Backwards Frigate"),
+                          (configuration.backwards_labs, "Backwards Labs"),
+                          (configuration.backwards_upper_mines, "Backwards Upper Mines"),
+                          (configuration.backwards_lower_mines, "Backwards Lower Mines"),
+                          (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
                           (configuration.qol_game_breaking, "Game Breaking QOL"),
                           (configuration.qol_minor_cutscenes, "Minor Cutscenes QOL"),
                           (configuration.qol_major_cutscenes, "Major Cutscenes QOL"),
@@ -411,6 +419,9 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
 
     if qol_changes:
         template_strings["Game Changes"].append(", ".join(qol_changes))
+
+    if configuration.small_samus:
+        template_strings["Game Changes"].append("Small Samus")
 
     if not template_strings["Game Changes"]:
         template_strings.pop("Game Changes")

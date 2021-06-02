@@ -5,18 +5,18 @@ from typing import Tuple
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.node import PlayerShipNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.resolver.state import State, StateGameData
 
 _items_to_not_add_in_minimal_logic = {
@@ -155,8 +155,22 @@ def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentRe
 
 def misc_resources_for_configuration(configuration: AnyGameConfiguration,
                                      resource_database: ResourceDatabase) -> CurrentResources:
-    enabled_resources = {}
-    if configuration.game == RandovaniaGame.PRIME2:
+    enabled_resources = set()
+    if configuration.game == RandovaniaGame.PRIME1:
+        logical_patches = {
+            "allow_underwater_movement_without_gravity": 0,
+            "main_plaza_door": 1,
+            "backwards_frigate": 2,
+            "backwards_labs": 3,
+            "backwards_upper_mines": 4,
+            "backwards_lower_mines": 5,
+            "phazon_elite_without_dynamo": 6,
+        }
+        for name, index in logical_patches.items():
+            if getattr(configuration, name):
+                enabled_resources.add(index)
+
+    elif configuration.game == RandovaniaGame.PRIME2:
         enabled_resources = {
             # Allow Vanilla X
             19, 20, 21, 22, 23, 24, 25
