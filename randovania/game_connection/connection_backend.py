@@ -23,6 +23,21 @@ class MemoryOperationException(Exception):
     pass
 
 
+def format_received_item(item_name: str, player_name: str) -> str:
+    special = {
+        "Locked Power Bomb Expansion": ("Received Power Bomb Expansion from {provider_name}, "
+                                        "but the main Power Bomb is required to use it."),
+        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}, "
+                                     "but the Missile Launcher is required to use it."),
+        "Locked Seeker Launcher": ("Received Seeker Launcher from {provider_name}, "
+                                   "but the Missile Launcher is required to use it."),
+    }
+
+    generic = "Received {item_name} from {provider_name}."
+
+    return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
+
+
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
     address: int
@@ -314,7 +329,7 @@ class ConnectionBackend(ConnectionBase):
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
         await self._perform_memory_operations(memory_operations)
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry):
+    def _resources_to_give_for_pickup(self, pickup: PickupEntry):
         inventory_resources: CurrentResources = {
             item: inv_item.capacity
             for item, inv_item in self._inventory.items()
@@ -326,8 +341,16 @@ class ConnectionBackend(ConnectionBase):
             item_name = pickup.name
 
         resources_to_give = {}
-        add_resource_gain_to_current_resources(conditional.resources, inventory_resources)
-        add_resource_gain_to_current_resources(conditional.resources, resources_to_give)
+
+        if pickup.respects_lock and not pickup.unlocks_resource and (
+                pickup.resource_lock is not None and inventory_resources.get(pickup.resource_lock.locked_by, 0) == 0):
+            pickup_resources = list(pickup.resource_lock.convert_gain(conditional.resources))
+            item_name = f"Locked {item_name}"
+        else:
+            pickup_resources = conditional.resources
+
+        add_resource_gain_to_current_resources(pickup_resources, inventory_resources)
+        add_resource_gain_to_current_resources(pickup_resources, resources_to_give)
         add_resource_gain_to_current_resources(pickup.conversion_resource_gain(inventory_resources),
                                                resources_to_give)
 
@@ -335,8 +358,12 @@ class ConnectionBackend(ConnectionBase):
         if self.game.resource_database.item_percentage is not None:
             resources_to_give.pop(self.game.resource_database.item_percentage, None)
 
-        self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
+        return item_name, resources_to_give
 
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry):
+        item_name, resources_to_give = self._resources_to_give_for_pickup(pickup)
+
+        self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
         patches = [
             all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                 self.patches.powerup_functions, self.game.game,
@@ -344,7 +371,7 @@ class ConnectionBackend(ConnectionBase):
             )
             for item, delta in resources_to_give.items()
         ]
-        return patches, f"Received {item_name} from {provider_name}."
+        return patches, format_received_item(item_name, provider_name)
 
     def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
         self._permanent_pickups = pickups
