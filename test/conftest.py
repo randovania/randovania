@@ -20,82 +20,80 @@ from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_files_dir() -> Path:
     return Path(__file__).parent.joinpath("test_files")
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def echo_tool(request, test_files_dir) -> Path:
     if request.config.option.skip_echo_tool:
         pytest.skip()
     return test_files_dir.joinpath("echo_tool.py")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def simple_data(test_files_dir: Path) -> dict:
     with test_files_dir.joinpath("small_game_data.json").open("r") as small_game_data:
         return json.load(small_game_data)
 
 
 @pytest.fixture()
-def preset_manager(tmpdir) -> PresetManager:
-    return PresetManager(Path(tmpdir.join("presets")))
+def preset_manager(tmp_path) -> PresetManager:
+    return PresetManager(tmp_path.joinpath("presets"))
 
 
-@pytest.fixture()
-def default_preset(preset_manager) -> Preset:
-    return preset_manager.default_preset.get_preset()
+@pytest.fixture(scope="session")
+def default_preset() -> Preset:
+    return PresetManager(None).default_preset.get_preset()
 
 
-@pytest.fixture()
-def default_echoes_preset(preset_manager) -> Preset:
-    return preset_manager.default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
+@pytest.fixture(scope="session")
+def default_echoes_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
 
 
-@pytest.fixture()
-def default_layout_configuration(preset_manager) -> EchoesConfiguration:
-    return preset_manager.default_preset.get_preset().configuration
+@pytest.fixture(scope="session")
+def default_layout_configuration() -> EchoesConfiguration:
+    return PresetManager(None).default_preset.get_preset().configuration
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def prime1_resource_database() -> ResourceDatabase:
     return default_database.resource_database_for(RandovaniaGame.PRIME1)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def echoes_resource_database() -> ResourceDatabase:
     return default_database.resource_database_for(RandovaniaGame.PRIME2)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def echoes_item_database() -> ItemDatabase:
     return default_database.item_database_for_game(RandovaniaGame.PRIME2)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def echoes_game_data() -> dict:
     return default_data.read_json_then_binary(RandovaniaGame.PRIME2)[1]
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def echoes_game_description(echoes_game_data) -> GameDescription:
-    from randovania.game_description import data_reader
-    return data_reader.decode_data(echoes_game_data)
+    return default_database.game_description_for(RandovaniaGame.PRIME2)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def corruption_game_data() -> dict:
     return default_data.read_json_then_binary(RandovaniaGame.PRIME3)[1]
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def corruption_game_description(corruption_game_data) -> GameDescription:
-    from randovania.game_description import data_reader
-    return data_reader.decode_data(corruption_game_data)
+    return default_database.game_description_for(RandovaniaGame.PRIME3)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return randovania.games.patchers.claris_patcher.decode_randomizer_data()
 
