@@ -181,7 +181,7 @@ def test_create_patch_data(test_files_dir):
             "backwardsFrigate": True,
             "backwardsLabs": True,
             "backwardsUpperMines": True,
-            "backwardsLowerMines": True,
+            "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
             'gameBanner': {'description': 'Seed Hash: Launcher Caretaker Power',
