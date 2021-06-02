@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
-    <height>666</height>
+    <width>503</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,239 +34,283 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QGroupBox" name="qol_group">
-      <property name="title">
-       <string>Quality of life</string>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="description_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to improve the game experience, many quality of life changes are provided separated in 5 different groups.&lt;/p&gt;&lt;p&gt;For in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/multiworld/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Logical changes</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QLabel" name="qol_logical_label">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>70</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Logic always assume these are disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="main_plaza_door_check">
-            <property name="text">
-             <string>Main Plaza Vault Door</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="main_plaza_door_label">
-            <property name="text">
-             <string>Allow access to Vault from Main Plaza</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="backwards_frigate_check">
-            <property name="text">
-             <string>Backwards Frigate</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="backwards_frigate_label">
-            <property name="text">
-             <string>Power door in Main Ventilation Shaft Section B when approached from behind</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="backwards_labs_check">
-            <property name="text">
-             <string>Backwards Labs</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="backwards_labs_label">
-            <property name="text">
-             <string>Scan through barrier of Research Lab Hydra when approached from deep labs</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="backwards_upper_mines_check">
-            <property name="text">
-             <string>Backwards Upper Mines</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="backwards_upper_mines_label">
-            <property name="text">
-             <string>Disable Main Quarry barrier automatically when approached from Mine Security Station</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="backwards_lower_mines_check">
-            <property name="text">
-             <string>Backwards Lower Mines</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="backwards_lower_mines_label">
-            <property name="text">
-             <string>Remove PCA locks and allow passing through lower mines scan barriers from the back</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="phazon_elite_without_dynamo_check">
-            <property name="text">
-             <string>Phazon Elite without Dynamo</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="phazon_elite_without_dynamo_label">
-            <property name="text">
-             <string>Removes the Central Dynamo item requirement for activating the Phazon Elite boss fight</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="qol_game_breaking_check">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Game Breaking</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qol_game_breaking_label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fixes softlocks and wrong room spawn points. Reverts changes made in later game versions.&lt;br/&gt;Logic always assume this is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="qol_cosmetic_check">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Cosmetic</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qol_cosmetic_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove or change things that only affect real time, not in-game time.&lt;br/&gt;This group is controlled by an user preference and changing it does not affect the permalink.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="qol_minor_cutscenes_check">
-         <property name="text">
-          <string>Minor Cutscenes</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qol_minor_cutscenes_label">
-         <property name="text">
-          <string>Removes cutscenes that don't affect the game too much when removed.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="qol_major_cutscenes_check">
-         <property name="text">
-          <string>Major Cutscenes</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qol_major_cutscenes_label">
-         <property name="text">
-          <string>Allows you to continue playing the game while cutscenes happen.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>487</width>
+         <height>748</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="qol_group">
+          <property name="title">
+           <string>Quality of life</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="description_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to improve the game experience, many quality of life changes are provided separated in 5 different groups.&lt;/p&gt;&lt;p&gt;For in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/multiworld/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>Logical changes</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QLabel" name="qol_logical_label">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Logic always assume these are disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="main_plaza_door_check">
+                <property name="text">
+                 <string>Main Plaza Vault Door</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="main_plaza_door_label">
+                <property name="text">
+                 <string>Allow access to Vault from Main Plaza</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="backwards_frigate_check">
+                <property name="text">
+                 <string>Backwards Frigate</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="backwards_frigate_label">
+                <property name="text">
+                 <string>Power door in Main Ventilation Shaft Section B when approached from behind</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="backwards_labs_check">
+                <property name="text">
+                 <string>Backwards Labs</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="backwards_labs_label">
+                <property name="text">
+                 <string>Scan through barrier of Research Lab Hydra when approached from deep labs</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="backwards_upper_mines_check">
+                <property name="text">
+                 <string>Backwards Upper Mines</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="backwards_upper_mines_label">
+                <property name="text">
+                 <string>Disable Main Quarry barrier automatically when approached from Mine Security Station</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="backwards_lower_mines_check">
+                <property name="text">
+                 <string>Backwards Lower Mines</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="backwards_lower_mines_label">
+                <property name="text">
+                 <string>Remove PCA locks and allow passing through lower mines scan barriers from the back</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="phazon_elite_without_dynamo_check">
+                <property name="text">
+                 <string>Phazon Elite without Dynamo</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="phazon_elite_without_dynamo_label">
+                <property name="text">
+                 <string>Removes the Central Dynamo item requirement for activating the Phazon Elite boss fight</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="qol_game_breaking_check">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Game Breaking</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_game_breaking_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fixes softlocks and wrong room spawn points. Reverts changes made in later game versions.&lt;br/&gt;Logic always assume this is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="qol_cosmetic_check">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Cosmetic</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_cosmetic_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove or change things that only affect real time, not in-game time.&lt;br/&gt;This group is controlled by an user preference and changing it does not affect the permalink.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="qol_minor_cutscenes_check">
+             <property name="text">
+              <string>Minor Cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_minor_cutscenes_label">
+             <property name="text">
+              <string>Removes cutscenes that don't affect the game too much when removed.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="qol_major_cutscenes_check">
+             <property name="text">
+              <string>Major Cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_major_cutscenes_label">
+             <property name="text">
+              <string>Allows you to continue playing the game while cutscenes happen.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="small_samus_group">
+          <property name="title">
+           <string>Small Samus</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QCheckBox" name="small_samus_check">
+             <property name="text">
+              <string>Enable Small Samus</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="small_samus_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, Samus is scaled to 30% of her normal size. Expect to be able to fit in many places you weren't before, but also fall down in a lot of holes you didn't before.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
