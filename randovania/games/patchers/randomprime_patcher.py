@@ -289,7 +289,6 @@ class RandomprimePatcher(Patcher):
             "preferences": {
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
-                "qolLogical": configuration.qol_logical,
                 "qolMinorCutscenes": configuration.qol_minor_cutscenes,
                 "qolMajorCutscenes": configuration.qol_major_cutscenes,
 
@@ -318,6 +317,13 @@ class RandomprimePatcher(Patcher):
                 "itemMaxCapacity": {
                     "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
                 },
+
+                "mainPlazaDoor": configuration.qol_logical,
+                "backwardsFrigate": configuration.qol_logical,
+                "backwardsLabs": configuration.qol_logical,
+                "backwardsUpperMines": configuration.qol_logical,
+                "backwardsLowerMines": configuration.qol_logical,
+                "phazonEliteWithoutDynamo": configuration.qol_logical,
 
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",
