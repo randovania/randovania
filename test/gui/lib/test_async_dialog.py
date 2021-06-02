@@ -10,7 +10,7 @@ async def test_execute_execute_dialog(skip_qtbot, status):
     class CustomDialog(QtWidgets.QDialog):
         def show(self):
             self.done(status)
-            super().show()
+            # super().show()
 
     diag = CustomDialog()
     result = await async_dialog.execute_dialog(diag)

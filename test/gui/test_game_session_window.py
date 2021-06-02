@@ -296,6 +296,7 @@ async def test_check_dangerous_presets(window, mocker):
 
 @pytest.mark.asyncio
 async def test_copy_permalink(window, mocker):
+    mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     game_session = MagicMock()
     game_session.permalink = "<permalink>"
@@ -308,6 +309,7 @@ async def test_copy_permalink(window, mocker):
     # Assert
     execute_dialog.assert_awaited_once()
     assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
+    mock_set_clipboard.assert_called_once_with("<permalink>")
 
 
 @pytest.mark.asyncio
