@@ -1,7 +1,6 @@
 import contextlib
 import copy
 import json
-import math
 import mmap
 import os
 import struct
@@ -17,7 +16,6 @@ from randovania.dol_patching.assembler import ppc
 from randovania.dol_patching.dol_file import DolHeader, DolEditor
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_location import AreaLocation
@@ -257,27 +255,14 @@ class RandomprimePatcher(Patcher):
         else:
             map_default_state = "default"
 
-        major_name_order = {
-            pickup.name: index
-            for index, pickup in enumerate(configuration.major_items_configuration.items_state.keys())
-        }
-
-        def sort_pickup(p: PickupEntry):
-            return major_name_order.get(p.name, math.inf), p.name
-
-        major_pickups_spoiler = credits_spoiler.locations_for_major_pickups_and_keys(description.all_patches,
-                                                                                     players_config,
-                                                                                     area_namers)
-
-        credits_lines = [
-            "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;\n{}".format(
-                pickup.name,
-                "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
-            )
-            for pickup in sorted(major_pickups_spoiler.keys(), key=sort_pickup)
-        ]
-        credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n"
-        credits_string += "\n\n".join(credits_lines)
+        credits_string = credits_spoiler.prime_trilogy_credits(
+            configuration.major_items_configuration,
+            description.all_patches,
+            players_config,
+            area_namers,
+            "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
+            "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
+        )
 
         artifacts = [
             db.resource_database.get_item(index)
