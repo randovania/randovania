@@ -4,12 +4,13 @@ from PySide2.QtCore import Qt
 _current_dark_theme = None
 
 
-def set_dark_theme(active: bool):
+def set_dark_theme(active: bool, app: QtWidgets.QApplication = None):
     global _current_dark_theme
     if _current_dark_theme == active:
         return
 
-    app: QtWidgets.QApplication = QtWidgets.QApplication.instance()
+    if app is None:
+        app = QtWidgets.QApplication.instance()
     new_palette = QtGui.QPalette(app.palette())
 
     import qdarkstyle
