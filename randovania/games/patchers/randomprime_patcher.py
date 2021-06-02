@@ -28,7 +28,6 @@ from randovania.games.patcher import Patcher
 from randovania.games.prime import prime1_elevators, all_prime_dol_patches, prime_items
 from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
     credits_spoiler
-from randovania.games.prime.patcher_file_lib.hint_lib import TextColor
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -266,10 +265,15 @@ class RandomprimePatcher(Patcher):
         def sort_pickup(p: PickupEntry):
             return major_name_order.get(p.name, math.inf), p.name
 
-        major_pickups_spoiler = credits_spoiler.locations_for_major_pickups_and_keys(description.all_patches, players_config,
+        major_pickups_spoiler = credits_spoiler.locations_for_major_pickups_and_keys(description.all_patches,
+                                                                                     players_config,
                                                                                      area_namers)
+
         credits_lines = [
-            "{}: {}".format(hint_lib.color_text(TextColor.TEAL, pickup.name), ", ".join(major_pickups_spoiler[pickup]))
+            "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;\n{}".format(
+                pickup.name,
+                "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
+            )
             for pickup in sorted(major_pickups_spoiler.keys(), key=sort_pickup)
         ]
         credits_string = "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n"
