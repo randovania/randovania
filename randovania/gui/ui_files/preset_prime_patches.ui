@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>457</height>
+    <width>479</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,118 @@
          <property name="openExternalLinks">
           <bool>true</bool>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Logical changes</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="qol_logical_label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Logic always assume these are disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="main_plaza_door_check">
+            <property name="text">
+             <string>Main Plaza Vault Door</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="main_plaza_door_label">
+            <property name="text">
+             <string>Allow access to Vault from Main Plaza</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="backwards_frigate_check">
+            <property name="text">
+             <string>Backwards Frigate</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="backwards_frigate_label">
+            <property name="text">
+             <string>Power door in Main Ventilation Shaft Section B when approached from behind</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="backwards_labs_check">
+            <property name="text">
+             <string>Backwards Labs</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="backwards_labs_label">
+            <property name="text">
+             <string>Scan through barrier of Research Lab Hydra when approached from deep labs</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="backwards_upper_mines_check">
+            <property name="text">
+             <string>Backwards Upper Mines</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="backwards_upper_mines_label">
+            <property name="text">
+             <string>Disable Main Quarry barrier automatically when approached from Mine Security Station</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="backwards_lower_mines_check">
+            <property name="text">
+             <string>Backwards Lower Mines</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="backwards_lower_mines_label">
+            <property name="text">
+             <string>Remove PCA locks and allow passing through lower mines scan barriers from the back</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="phazon_elite_without_dynamo_check">
+            <property name="text">
+             <string>Phazon Elite without Dynamo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="phazon_elite_without_dynamo_label">
+            <property name="text">
+             <string>Removes the Central Dynamo item requirement for activating the Phazon Elite boss fight</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -114,32 +226,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="qol_logical_check">
-         <property name="text">
-          <string>Logical</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="qol_logical_label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These changes opens up new paths and ways to navigate the world.&lt;br/&gt;Logic always assume this is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="qol_minor_cutscenes_check">
          <property name="text">
           <string>Minor Cutscenes</string>
@@ -167,21 +253,21 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
-    </item>
-    <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>
