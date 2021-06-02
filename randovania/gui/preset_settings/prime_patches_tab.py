@@ -18,6 +18,7 @@ _FIELDS = [
     "qol_game_breaking",
     "qol_minor_cutscenes",
     "qol_major_cutscenes",
+    "small_samus",
 ]
 
 
