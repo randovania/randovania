@@ -1084,7 +1084,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setWindowTitle("Session permalink")
         dialog.setLabelText("Permalink:")
         dialog.setTextValue(permalink_str)
-        QtWidgets.QApplication.clipboard().setText(permalink_str)
+        common_qt_lib.set_clipboard(permalink_str)
         await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()

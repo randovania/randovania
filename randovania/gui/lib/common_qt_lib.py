@@ -184,3 +184,8 @@ def show_install_visual_cpp_redist():
         "Please install the latest "
         f"<a href='{download_url}'>Microsoft Visual C++ Redistributable</a>.<br /><br />"
         f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.")
+
+
+def set_clipboard(text: str):
+    from PySide2 import QtWidgets
+    QtWidgets.QApplication.clipboard().setText(text)
