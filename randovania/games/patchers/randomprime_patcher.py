@@ -273,6 +273,13 @@ class RandomprimePatcher(Patcher):
             [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
         )
 
+        # Tweaks
+        ctwk_config = {}
+        if configuration.small_samus:
+            ctwk_config["playerSize"] = 0.3
+            ctwk_config["morphBallSize"] = 0.3
+            ctwk_config["easyLavaEscape"] = True
+
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
@@ -331,6 +338,7 @@ class RandomprimePatcher(Patcher):
                     for artifact in artifacts
                 },
             },
+            "tweaks": ctwk_config,
             "levelData": world_data,
         }
 

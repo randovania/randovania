@@ -165,6 +165,7 @@ def misc_resources_for_configuration(configuration: AnyGameConfiguration,
             "backwards_upper_mines": 4,
             "backwards_lower_mines": 5,
             "phazon_elite_without_dynamo": 6,
+            "small_samus": 7,
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
