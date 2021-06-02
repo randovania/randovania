@@ -461,15 +461,14 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     mock_stk_hide_hints.return_value = ["hide", "hints"]
     player_config = PlayersConfiguration(0, {0: "you"})
     mock_logbook_title_string_patches.return_values = []
-    mock_area_namer: MagicMock = mocker.patch("randovania.games.prime.patcher_file_lib.hint_lib.AreaNamer")
-    area_namers = {0: mock_area_namer.return_value}
+    area_namers = MagicMock()
 
     # Run
     result = claris_patcher_file._create_string_patches(
         HintConfiguration(sky_temple_keys=stk_mode),
         game,
         all_patches,
-        {0: RandovaniaGame.PRIME2},
+        area_namers,
         player_config,
         rng,
     )
@@ -488,7 +487,6 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
         mock_stk_create_hints.assert_called_once_with(all_patches, player_config, game.resource_database,
                                                       area_namers, stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
         mock_stk_hide_hints.assert_not_called()
-        mock_area_namer.assert_called_once_with(ANY)
         expected_result.extend(["show", "hints"])
 
     assert result == expected_result
@@ -524,7 +522,7 @@ def test_create_claris_patcher_file(test_files_dir, randomizer_data):
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
         "warp_to_start": preset.configuration.warp_to_start,
-        "speed_up_credits": cosmetic_patches.speed_up_credits,
+        "credits_length": 75 if cosmetic_patches.speed_up_credits else 259,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
