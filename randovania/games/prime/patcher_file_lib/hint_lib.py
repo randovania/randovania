@@ -13,7 +13,6 @@ class TextColor(Enum):
     JOKE = "#45F731"
     LOCATION = "#FF3333"
     PLAYER = "#d4cc33"
-    TEAL = "#33ffd6"
 
 
 def color_text(color: TextColor, text: str):
