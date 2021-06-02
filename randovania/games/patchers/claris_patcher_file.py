@@ -335,7 +335,24 @@ def _get_model_mapping(randomizer_data: dict):
         "BeamAmmoExpansion": 0,
     }
     return EchoesModelNameMapping(
-        other_game={},
+        other_game={
+            PickupModel(RandovaniaGame.PRIME1, "Charge Beam"): "ChargeBeam INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Super Missile"): "SuperMissile",
+            PickupModel(RandovaniaGame.PRIME1, "Scan Visor"): "ScanVisor INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Varia Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Gravity Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Phazon Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
+            PickupModel(RandovaniaGame.PRIME1, "Morph Ball Bomb"): "MorphBallBomb",
+            PickupModel(RandovaniaGame.PRIME1, "Boost Ball"): "BoostBall",
+            PickupModel(RandovaniaGame.PRIME1, "Spider Ball"): "SpiderBall",
+            PickupModel(RandovaniaGame.PRIME1, "Power Bomb"): "PowerBomb",
+            PickupModel(RandovaniaGame.PRIME1, "Power Bomb Expansion"): "PowerBombExpansion",
+            PickupModel(RandovaniaGame.PRIME1, "Missile"): "MissileExpansionPrime1",
+            PickupModel(RandovaniaGame.PRIME1, "Grapple Beam"): "GrappleBeam",
+            PickupModel(RandovaniaGame.PRIME1, "Space Jump Boots"): "SpaceJumpBoots",
+            PickupModel(RandovaniaGame.PRIME1, "Energy Tank"): "EnergyTank",
+        },
         index={
             entry["Name"]: entry["Index"]
             for entry in randomizer_data["ModelData"]
