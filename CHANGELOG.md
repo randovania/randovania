@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   **Major** - The auto tracker now have support for different layouts, with their own assets and game support. New themes with icons similar to the game were also added, provided by MaskedKirby.
 
+-   Added: Credits in Metroid Prime 2 now contains a list of where all non-expansions were placed, including possibly other player's for a multiworld. The credits now takes 75 seconds instead of 60 to accomodate this.
+
 -   Changed: Customizing Dark Aether damage is not considered by logic.
 
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
@@ -22,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The session history in multiworld now has different columns for the players involved, pickup and where the pickup was. It's also possible to sort the table by any of these fields. 
 
-### Logic Database Changes
+### Metroid Prime 2 - Logic Database Changes
 
 -   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
 
