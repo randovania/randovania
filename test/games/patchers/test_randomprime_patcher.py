@@ -29,7 +29,6 @@ def test_create_patch_data(test_files_dir):
             'obfuscateItems': False,
             'qolCosmetic': True,
             'qolGameBreaking': True,
-            'qolLogical': True,
             'qolMajorCutscenes': False,
             'qolMinorCutscenes': False,
             'quickplay': False,
@@ -177,6 +176,14 @@ def test_create_patch_data(test_files_dir):
                 "&push;&main-color=#d4cc33;Echoes&pop;'s Ing Hive - Culling Chamber"
             ),
             'etankCapacity': 110,
+
+            "mainPlazaDoor": True,
+            "backwardsFrigate": True,
+            "backwardsLabs": True,
+            "backwardsUpperMines": True,
+            "backwardsLowerMines": True,
+            "phazonEliteWithoutDynamo": True,
+
             'gameBanner': {'description': 'Seed Hash: Launcher Caretaker Power',
                            'gameName': 'Metroid Prime: Randomizer',
                            'gameNameFull': 'Metroid Prime: Randomizer - Z2OYS7HX'},
