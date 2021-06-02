@@ -14,7 +14,16 @@ class PrimeConfiguration(BaseConfiguration):
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     heat_protection_only_varia: bool
     progressive_damage_reduction: bool
-    qol_logical: bool
+    allow_underwater_movement_without_gravity: bool
+    small_samus: bool
+
+    main_plaza_door: bool
+    backwards_frigate: bool
+    backwards_labs: bool
+    backwards_upper_mines: bool
+    backwards_lower_mines: bool
+    phazon_elite_without_dynamo: bool
+
     qol_game_breaking: bool
     qol_minor_cutscenes: bool
     qol_major_cutscenes: bool

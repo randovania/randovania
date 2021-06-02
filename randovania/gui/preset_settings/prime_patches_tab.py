@@ -1,3 +1,5 @@
+import typing
+
 from PySide2 import QtWidgets
 
 from randovania.gui.generated.preset_prime_patches_ui import Ui_PresetPrimePatches
@@ -5,6 +7,18 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
+
+_FIELDS = [
+    "main_plaza_door",
+    "backwards_frigate",
+    "backwards_labs",
+    "backwards_upper_mines",
+    "backwards_lower_mines",
+    "phazon_elite_without_dynamo",
+    "qol_game_breaking",
+    "qol_minor_cutscenes",
+    "qol_major_cutscenes",
+]
 
 
 class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
@@ -18,10 +32,8 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
         self.description_label.setText(self.description_label.text().replace("color:#0000ff;", ""))
 
         # Signals
-        self._add_persist_option(self.qol_game_breaking_check, "qol_game_breaking")
-        self._add_persist_option(self.qol_logical_check, "qol_logical")
-        self._add_persist_option(self.qol_major_cutscenes_check, "qol_major_cutscenes")
-        self._add_persist_option(self.qol_minor_cutscenes_check, "qol_minor_cutscenes")
+        for f in _FIELDS:
+            self._add_persist_option(getattr(self, f"{f}_check"), f)
 
     @property
     def uses_patches_tab(self) -> bool:
@@ -36,7 +48,5 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
-        self.qol_game_breaking_check.setChecked(config.qol_game_breaking)
-        self.qol_logical_check.setChecked(config.qol_logical)
-        self.qol_major_cutscenes_check.setChecked(config.qol_major_cutscenes)
-        self.qol_minor_cutscenes_check.setChecked(config.qol_minor_cutscenes)
+        for f in _FIELDS:
+            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
