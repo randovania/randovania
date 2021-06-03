@@ -79,7 +79,7 @@ def _create_default_template_requirement(resource_database: ResourceDatabase) ->
         break
     if template_name is None:
         raise RuntimeError("No templates?!")
-    return RequirementTemplate(resource_database, template_name)
+    return RequirementTemplate(template_name)
 
 
 class ResourceRequirementEditor:
@@ -222,10 +222,7 @@ class TemplateRequirementEditor:
 
     @property
     def current_requirement(self) -> RequirementTemplate:
-        return RequirementTemplate(
-            self.resource_database,
-            self.template_name_combo.currentText(),
-        )
+        return RequirementTemplate(self.template_name_combo.currentText())
 
 
 class RequirementEditor:

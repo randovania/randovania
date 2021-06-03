@@ -102,7 +102,8 @@ class ResolverReach:
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    requirements_by_node[target_node].update(requirement.as_set.alternatives)
+                    requirements_by_node[target_node].update(
+                        requirement.as_set(initial_state.resource_database).alternatives)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node in set(reach_nodes.keys()).intersection(requirements_by_node.keys()):
@@ -136,7 +137,7 @@ class ResolverReach:
                             ) -> Iterator[Tuple[ResourceNode, int]]:
 
         interesting_resources = calculate_interesting_resources(
-            self._satisfiable_requirements.union(victory_condition.as_set.alternatives),
+            self._satisfiable_requirements.union(victory_condition.as_set(state.resource_database).alternatives),
             state.resources,
             state.energy,
             state.resource_database)

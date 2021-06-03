@@ -300,7 +300,7 @@ class GeneratorReach:
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
                 # FIXME: don't convert to set!
-                dangerous = requirement.as_set.dangerous_resources
+                dangerous = requirement.as_set(self.game.resource_database).dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
                     if not requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
                         edges_to_remove.append((source, target))
@@ -322,11 +322,11 @@ class GeneratorReach:
             if self.is_reachable_node(node):
                 continue
             requirements = requirement.patch_requirements(
-                self.state.resources, 1, self.state.resource_database).simplify().as_set
+                self.state.resources, 1, self.state.resource_database).simplify().as_set(self.state.resource_database)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
-                results[node] = requirement.as_set
+                results[node] = requirement.as_set(self.state.resource_database)
         return results
 
 
