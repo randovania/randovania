@@ -19,8 +19,8 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
     set_a: Requirement = MagicMock()
     set_b: Requirement = MagicMock()
 
-    set_a.as_set.dangerous_resources = danger_a
-    set_b.as_set.dangerous_resources = danger_b
+    set_a.as_set.return_value.dangerous_resources = danger_a
+    set_b.as_set.return_value.dangerous_resources = danger_b
 
     n1: Node = "n1"
     n2: Node = "n2"
@@ -45,7 +45,7 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
     )
 
     # Run
-    result = game_description._calculate_dangerous_resources_in_areas([area_a, area_b])
+    result = game_description._calculate_dangerous_resources_in_areas([area_a, area_b], None)
 
     # Assert
     assert set(result) == set(expected_result)

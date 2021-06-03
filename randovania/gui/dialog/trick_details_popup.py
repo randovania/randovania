@@ -2,6 +2,7 @@ import re
 
 from PySide2.QtWidgets import QDialog, QWidget
 
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import DockNode
@@ -21,6 +22,7 @@ def _has_trick(alternative: RequirementList) -> bool:
 def _area_uses_trick(area: Area,
                      trick: TrickResourceInfo,
                      level: LayoutTrickLevel,
+                     database: ResourceDatabase,
                      ) -> bool:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
@@ -32,7 +34,7 @@ def _area_uses_trick(area: Area,
 
     def _uses_trick(requirements: Requirement) -> bool:
         return any(individual.resource == trick and individual.amount == level.as_number
-                   for individual in requirements.as_set.all_individual)
+                   for individual in requirements.as_set(database).all_individual)
 
     for node in area.nodes:
         if isinstance(node, DockNode):
@@ -77,7 +79,7 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
             (world, area)
             for world in game_description.world_list.worlds
             for area in world.areas
-            if _area_uses_trick(area, trick, level)
+            if _area_uses_trick(area, trick, level, self._game_description.resource_database)
         ]
 
         if areas_to_show:

@@ -37,7 +37,7 @@ def test_pretty_print_requirement_array_combinable(mock_print_requirement: Magic
 
     array = RequirementAnd([
         ResourceRequirement(echoes_resource_database.item[0], 1, False),
-        RequirementTemplate(echoes_resource_database, "Shoot Sunburst"),
+        RequirementTemplate("Shoot Sunburst"),
     ])
 
     # Run
