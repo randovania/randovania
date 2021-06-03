@@ -8,7 +8,7 @@ from randovania.game_description.world.node import PickupNode, ResourceNode, Eve
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
-from randovania.resolver import debug, event_pickup
+from randovania.resolver import debug, event_pickup, bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.event_pickup import EventPickupNode
 from randovania.resolver.logic import Logic
@@ -175,12 +175,16 @@ async def resolve(configuration: EchoesConfiguration,
     if status_update is None:
         status_update = _quiet_print
 
-    game = copy.deepcopy(default_database.game_description_for(configuration.game))
+    game = default_database.game_description_for(configuration.game).make_mutable_copy()
+    game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
     event_pickup.replace_with_event_pickups(game)
 
-    new_game, starting_state = logic_bootstrap(configuration, game, patches)
+    new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
     logic = Logic(new_game, configuration)
     starting_state.resources["add_self_as_requirement_to_resources"] = 1
     debug.log_resolve_start()
+
+    for name, req in new_game.resource_database.requirement_template.items():
+        print(name, req)
 
     return await advance_depth(starting_state, logic, status_update)

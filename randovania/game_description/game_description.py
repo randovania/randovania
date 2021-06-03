@@ -39,6 +39,7 @@ class GameDescription:
     initial_states: Dict[str, ResourceGainTuple]
     _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
     world_list: WorldList
+    mutable: bool = False
 
     def __deepcopy__(self, memodict):
         new_game = GameDescription(
@@ -73,6 +74,9 @@ class GameDescription:
         self.world_list = world_list
 
     def patch_requirements(self, resources, damage_multiplier: float):
+        if not self.mutable:
+            raise ValueError("self is not mutable")
+
         self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
         self._dangerous_resources = None
 
@@ -93,6 +97,11 @@ class GameDescription:
                 _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
                 _calculate_dangerous_resources_in_db(self.dock_weakness_database))
         return self._dangerous_resources
+
+    def make_mutable_copy(self) -> "GameDescription":
+        result = copy.deepcopy(self)
+        result.mutable = True
+        return result
 
 
 def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
