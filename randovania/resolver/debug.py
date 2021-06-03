@@ -74,7 +74,7 @@ def log_checking_satisfiable_actions():
 
 def log_rollback(state: "State", has_action, possible_action: bool):
     global _current_indent
-    if _DEBUG_LEVEL > 1:
+    if _DEBUG_LEVEL > 0:
         print("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
             _indent(),
             n(state.node, world_list=state.world_list),
