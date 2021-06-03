@@ -19,7 +19,7 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.resolver.state import State, StateGameData
 
-_items_to_not_add_in_minimal_logic = {
+_echoes_items_to_not_add_in_minimal_logic = {
     # Dark Visor
     10,
 
@@ -41,17 +41,20 @@ _items_to_not_add_in_minimal_logic = {
     29, 30, 31, 101, 102, 103, 104, 105, 106
 }
 
-_minimal_logic_custom_item_count = {
-    # Energy Tank
-    42: 14,
-    # Power Bomb
-    43: 10,
-    # Missile
-    44: 100,
-    # Dark Ammo
-    45: 100,
-    # Light Ammo
-    46: 100
+minimal_logic_custom_item_count = {
+    RandovaniaGame.PRIME1: {},
+    RandovaniaGame.PRIME2: {
+        # Energy Tank
+        42: 14,
+        # Power Bomb
+        43: 10,
+        # Missile
+        44: 100,
+        # Dark Ammo
+        45: 100,
+        # Light Ammo
+        46: 100
+    },
 }
 
 _events_for_vanilla_item_loss_from_ship = {
@@ -87,25 +90,31 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
                                          resource_database: ResourceDatabase,
                                          major_items: MajorItemsConfiguration,
                                          ) -> None:
-    # TODO: this function assumes we're talking about Echoes
-    for event in resource_database.event:
+    items_to_skip = set()
+    events_to_skip = set()
+    custom_item_count = minimal_logic_custom_item_count.get(resource_database.game_enum, {})
+
+    if resource_database.game_enum == RandovaniaGame.PRIME2:
+        item_db = default_database.item_database_for_game(RandovaniaGame.PRIME2)
+
+        items_to_skip = copy.copy(_echoes_items_to_not_add_in_minimal_logic)
+        if major_items.items_state[item_db.major_items["Progressive Grapple"]].num_shuffled_pickups == 0:
+            items_to_skip.remove(23)
+        if major_items.items_state[item_db.major_items["Progressive Suit"]].num_shuffled_pickups == 0:
+            items_to_skip.remove(13)
+
         # Ignoring these events:
         # Dark Samus 3 and 4 (93), otherwise we're done automatically (TODO: get this from database)
         # Chykka (28), otherwise we can't collect Dark Visor
-        if event.index not in {28, 93}:
+        events_to_skip = {28, 93}
+
+    for event in resource_database.event:
+        if event.index not in events_to_skip:
             resources[event] = 1
-
-    item_db = default_database.item_database_for_game(RandovaniaGame.PRIME2)
-
-    items_to_skip = copy.copy(_items_to_not_add_in_minimal_logic)
-    if major_items.items_state[item_db.major_items["Progressive Grapple"]].num_shuffled_pickups == 0:
-        items_to_skip.remove(23)
-    if major_items.items_state[item_db.major_items["Progressive Suit"]].num_shuffled_pickups == 0:
-        items_to_skip.remove(13)
 
     for item in resource_database.item:
         if item.index not in items_to_skip:
-            resources[item] = _minimal_logic_custom_item_count.get(item.index, 1)
+            resources[item] = custom_item_count.get(item.index, 1)
 
 
 def calculate_starting_state(game: GameDescription, patches: GamePatches, energy_per_tank: int) -> "State":
