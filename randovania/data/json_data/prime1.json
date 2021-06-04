@@ -38469,7 +38469,7 @@
                                         }
                                     ]
                                 },
-                                "Pickup (Missile Expansion Grapple Ledge)": {
+                                "Grapple Ledge": {
                                     "type": "or",
                                     "data": [
                                         {
@@ -38767,7 +38767,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Missile Expansion Grapple Ledge)": {
+                                "Grapple Ledge": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -38823,7 +38823,7 @@
                                                                             "data": {
                                                                                 "type": 2,
                                                                                 "index": 0,
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -38837,7 +38837,7 @@
                                                                             "data": {
                                                                                 "type": 2,
                                                                                 "index": 0,
-                                                                                "amount": 4,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -38846,7 +38846,7 @@
                                                                             "data": {
                                                                                 "type": 2,
                                                                                 "index": 8,
-                                                                                "amount": 4,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -38935,6 +38935,43 @@
                             "pickup_index": 1,
                             "major_location": false,
                             "connections": {
+                                "Grapple Ledge": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Locked Door Ledge",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Ruins Entrance": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Plaza Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 5,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Grapple Ledge",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
                                 "Dock to Ruins Entrance": {
                                     "type": "and",
                                     "data": []
@@ -38955,13 +38992,50 @@
                                             "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 12,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 12,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 15,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 6,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 8,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 },
                                                 {
                                                     "type": "and",
@@ -39020,18 +39094,9 @@
                                                         {
                                                             "type": "resource",
                                                             "data": {
-                                                                "type": 0,
-                                                                "index": 5,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
                                                                 "type": 2,
                                                                 "index": 8,
-                                                                "amount": 5,
+                                                                "amount": 3,
                                                                 "negate": false
                                                             }
                                                         },
@@ -39039,8 +39104,8 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 0,
-                                                                "amount": 4,
+                                                                "index": 3,
+                                                                "amount": 2,
                                                                 "negate": false
                                                             }
                                                         }
@@ -39049,31 +39114,69 @@
                                             ]
                                         }
                                     ]
-                                }
-                            }
-                        },
-                        {
-                            "name": "Locked Door Ledge",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Ruins Entrance": {
+                                },
+                                "Pickup (Missile Expansion Grapple Ledge)": {
                                     "type": "and",
                                     "data": []
                                 },
-                                "Dock to Plaza Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 5,
-                                        "index": 1,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Pickup (Energy Tank)": {
+                                "Locked Door Ledge": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 18,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 3,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 8,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
