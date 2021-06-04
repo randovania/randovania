@@ -25,7 +25,7 @@ def _process_connections(game: GameDescription, process: Callable[[Requirement, 
 
 def difficulties_for_trick(game: GameDescription, trick: TrickResourceInfo) -> Set[LayoutTrickLevel]:
     def process(req: Requirement, result: Set[LayoutTrickLevel]):
-        for resource_requirement in req.iterate_resource_requirements():
+        for resource_requirement in req.iterate_resource_requirements(game.resource_database):
             if resource_requirement.resource == trick:
                 result.add(LayoutTrickLevel.from_number(resource_requirement.amount))
 
@@ -34,7 +34,7 @@ def difficulties_for_trick(game: GameDescription, trick: TrickResourceInfo) -> S
 
 def used_tricks(game: GameDescription) -> Set[TrickResourceInfo]:
     def process(req: Requirement, result: Set[TrickResourceInfo]):
-        for resource_requirement in req.iterate_resource_requirements():
+        for resource_requirement in req.iterate_resource_requirements(game.resource_database):
             if resource_requirement.resource.resource_type == ResourceType.TRICK:
                 result.add(resource_requirement.resource)
 

@@ -39,8 +39,7 @@ class Requirement:
         """
         raise NotImplementedError()
 
-    @property
-    def as_set(self) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         raise NotImplementedError()
 
     @classmethod
@@ -58,7 +57,7 @@ class Requirement:
     def __lt__(self, other: "Requirement"):
         return str(self) < str(other)
 
-    def iterate_resource_requirements(self):
+    def iterate_resource_requirements(self, database: ResourceDatabase):
         raise NotImplementedError()
 
 
@@ -100,11 +99,10 @@ class RequirementAnd(Requirement):
 
         return RequirementAnd(new_items)
 
-    @property
-    def as_set(self) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         result = RequirementSet.trivial()
         for item in self.items:
-            result = result.union(item.as_set)
+            result = result.union(item.as_set(database))
         return result
 
     @property
@@ -129,9 +127,9 @@ class RequirementAnd(Requirement):
         else:
             return "Trivial"
 
-    def iterate_resource_requirements(self):
+    def iterate_resource_requirements(self, database: ResourceDatabase):
         for item in self.items:
-            yield from item.iterate_resource_requirements()
+            yield from item.iterate_resource_requirements(database)
 
 
 class RequirementOr(Requirement):
@@ -209,11 +207,10 @@ class RequirementOr(Requirement):
 
         return RequirementOr(final_items)
 
-    @property
-    def as_set(self) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         alternatives = set()
         for item in self.items:
-            alternatives |= item.as_set.alternatives
+            alternatives |= item.as_set(database).alternatives
         return RequirementSet(alternatives)
 
     @property
@@ -238,9 +235,9 @@ class RequirementOr(Requirement):
         else:
             return "Impossible"
 
-    def iterate_resource_requirements(self):
+    def iterate_resource_requirements(self, database: ResourceDatabase):
         for item in self.items:
-            yield from item.iterate_resource_requirements()
+            yield from item.iterate_resource_requirements(database)
 
 
 def _expand_items(items: Tuple[Requirement, ...],
@@ -349,46 +346,41 @@ class ResourceRequirement(Requirement):
             else:
                 return self
 
-    @property
-    def as_set(self) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         return RequirementSet([
             RequirementList([
                 self
             ])
         ])
 
-    def iterate_resource_requirements(self):
+    def iterate_resource_requirements(self, database: ResourceDatabase):
         yield self
 
 
 class RequirementTemplate(Requirement):
-    database: ResourceDatabase
     template_name: str
 
-    def __init__(self, database: ResourceDatabase, template_name: str):
-        self.database = database
+    def __init__(self, template_name: str):
         self.template_name = template_name
 
-    @property
-    def template_requirement(self) -> Requirement:
-        return self.database.requirement_template[self.template_name]
+    def template_requirement(self, database: ResourceDatabase) -> Requirement:
+        return database.requirement_template[self.template_name]
 
     def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
-        return self.template_requirement.damage(current_resources, database)
+        return self.template_requirement(database).damage(current_resources, database)
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
-        return self.template_requirement.satisfied(current_resources, current_energy, database)
+        return self.template_requirement(database).satisfied(current_resources, current_energy, database)
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
-        return self.template_requirement.patch_requirements(static_resources, damage_multiplier, database)
+        return self.template_requirement(database).patch_requirements(static_resources, damage_multiplier, database)
 
     def simplify(self) -> Requirement:
         return self
 
-    @property
-    def as_set(self) -> "RequirementSet":
-        return self.template_requirement.as_set
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
+        return self.template_requirement(database).as_set(database)
 
     def __eq__(self, other):
         return isinstance(other, RequirementTemplate) and self.template_name == other.template_name
@@ -399,8 +391,8 @@ class RequirementTemplate(Requirement):
     def __str__(self) -> str:
         return self.template_name
 
-    def iterate_resource_requirements(self):
-        yield from self.template_requirement.iterate_resource_requirements()
+    def iterate_resource_requirements(self, database: ResourceDatabase):
+        yield from self.template_requirement(database).iterate_resource_requirements(database)
 
 
 class RequirementList:
