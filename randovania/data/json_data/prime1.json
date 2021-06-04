@@ -5860,32 +5860,22 @@
                             "dock_weakness_index": 2,
                             "connections": {
                                 "Dock to Observatory Access": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 20,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 20,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Research Lab Hydra Barrier Lowered": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -5905,13 +5895,31 @@
                             "dock_weakness_index": 2,
                             "connections": {
                                 "Dock to Hydra Lab Entryway": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 20,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Research Lab Hydra Barrier Lowered": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 20,
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 3,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -5919,13 +5927,8 @@
                                     ]
                                 },
                                 "Pickup (Missile)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Super Missile"
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Shoot Super Missile"
                                 }
                             }
                         },
