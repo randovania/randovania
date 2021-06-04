@@ -5860,32 +5860,22 @@
                             "dock_weakness_index": 2,
                             "connections": {
                                 "Dock to Observatory Access": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 20,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 20,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Research Lab Hydra Barrier Lowered": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -5905,13 +5895,31 @@
                             "dock_weakness_index": 2,
                             "connections": {
                                 "Dock to Hydra Lab Entryway": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 20,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Research Lab Hydra Barrier Lowered": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 20,
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 3,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -5919,13 +5927,8 @@
                                     ]
                                 },
                                 "Pickup (Missile)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Super Missile"
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Shoot Super Missile"
                                 }
                             }
                         },
@@ -24926,18 +24929,13 @@
                                     "data": []
                                 },
                                 "Crane Platform": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 12,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 12,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -25026,32 +25024,22 @@
                                     ]
                                 },
                                 "Dock to Security Access A": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 23,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 23,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Main Quarry Barrier Deactivated": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Crane Platform": {
                                     "type": "or",
@@ -25145,6 +25133,15 @@
                                             "data": {
                                                 "type": 1,
                                                 "index": 23,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 4,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -26739,13 +26736,27 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 25,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 25,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 5,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -26878,18 +26889,13 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Research Access": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 24,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 24,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Dock to Security Access B": {
                                     "type": "and",
@@ -26927,7 +26933,7 @@
                                                             "data": {
                                                                 "type": 2,
                                                                 "index": 15,
-                                                                "amount": 1,
+                                                                "amount": 3,
                                                                 "negate": false
                                                             }
                                                         },
@@ -27305,32 +27311,22 @@
                                     "data": []
                                 },
                                 "Dock to Ventilation Shaft": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 26,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Elite Control Barriers Lowered": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -27350,18 +27346,13 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Elite Control Access": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 26,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -28516,6 +28507,15 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -28537,32 +28537,22 @@
                             "dock_weakness_index": 3,
                             "connections": {
                                 "Dock to Phazon Processing Center": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Processing Center Access Barrier Opened": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Pickup (Energy Tank)": {
                                     "type": "and",
@@ -34480,6 +34470,15 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 },
@@ -38387,29 +38386,6 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Dock to Plaza Access": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 3,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
                                 "Pickup (Missile Expansion Half Pipe)": {
                                     "type": "or",
                                     "data": [
@@ -38488,6 +38464,29 @@
                                             ]
                                         }
                                     ]
+                                },
+                                "Locked Door Ledge": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -38548,11 +38547,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 8,
                             "connections": {
-                                "Dock to Ruins Entrance": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Energy Tank)": {
+                                "Locked Door Ledge": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -38703,7 +38698,7 @@
                             "pickup_index": 3,
                             "major_location": false,
                             "connections": {
-                                "Dock to Plaza Access": {
+                                "Locked Door Ledge": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -38859,6 +38854,31 @@
                                             ]
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Locked Door Ledge",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Ruins Entrance": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Plaza Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 5,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }

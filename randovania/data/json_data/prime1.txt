@@ -862,6 +862,8 @@ Asset id: 1139067941
   * Wave Door to Observatory Access/Dock to Research Lab Hydra
   > Dock to Hydra Lab Entryway
       After Research Lab Hydra Barrier
+  > Event - Research Lab Hydra Barrier Lowered
+      Scan Visor and Enabled Backwards Labs
   > Pickup (Missile)
       Shoot Super Missile
 
@@ -3347,7 +3349,7 @@ Asset id: 1681720207
 > Dock to Security Access A; Heals? False
   * Ice Door to Security Access A/Dock to Main Quarry
   > Dock to Quarry Access
-      After Main Quarry Barrier
+      After Main Quarry Barrier or Enabled Backwards Upper Mines
 
 > Pickup (Missile); Heals? False
   * Pickup 73; Major Location? False
@@ -3592,7 +3594,9 @@ Asset id: 2325199700
 > Dock to Security Access B; Heals? False; Spawn Point
   * Ice Door to Security Access B/Dock to Elite Research
   > Pickup (Artifact of Warrior)
-      Power Bomb and Morph Ball and After Invisible Drone
+      All of the following:
+          Power Bomb and Morph Ball
+          After Invisible Drone or Enabled Phazon Elite without Dynamo
   > Top Floor
       All of the following:
           Scan Visor
@@ -3624,7 +3628,7 @@ Asset id: 2325199700
       All of the following:
           Scan Visor and Morph Ball
           Any of the following:
-              Morph Ball Bomb and Spinners without Boost (Beginner)
+              Morph Ball Bomb and Spinners without Boost (Advanced)
               All of the following:
                   Boost Ball
                   Any of the following:
@@ -3838,7 +3842,7 @@ Asset id: 3983402811
 > Dock to Phazon Processing Center; Heals? False
   * Plasma Door to Phazon Processing Center/Dock to Processing Center Access
   > Dock to Elite Quarters
-      After Processing Center Access Barrier
+      After Processing Center Access Barrier or Enabled Backwards Lower Mines
 
 > Dock to Elite Quarters; Heals? False; Spawn Point
   * Plasma Door to Elite Quarters/Dock to Processing Center Access
@@ -4776,7 +4780,7 @@ Asset id: 2949963832
 > Dock to Main Ventilation Shaft Section C; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section C/Dock to Main Ventilation Shaft Section B
   > Dock to Main Ventilation Shaft Section A
-      After Main Ventilation Shaft Section B Conduit
+      After Main Ventilation Shaft Section B Conduit or Enabled Backwards Frigate
   > Event - Main Ventilation Shaft Section B Conduit Activated
       All of the following:
           Wave Beam
@@ -5373,8 +5377,6 @@ Asset id: 3587029001
       Trivial
   > Dock to Nursery Access
       Trivial
-  > Dock to Plaza Access
-      Space Jump Boots and L-Jump (Beginner)
   > Pickup (Missile Expansion Half Pipe)
       Any of the following:
           All of the following:
@@ -5383,6 +5385,8 @@ Asset id: 3587029001
                   Boost Ball
                   Morph Ball Bomb and Complex Bomb Jump (Advanced)
           Space Jump Boots and Slope Jump (Beginner)
+  > Locked Door Ledge
+      Space Jump Boots and L-Jump (Beginner)
 
 > Dock to Ruined Shrine Access; Heals? False
   * Missile Blast Shield to Ruined Shrine Access/Dock to Main Plaza
@@ -5396,9 +5400,7 @@ Asset id: 3587029001
 
 > Dock to Plaza Access; Heals? False
   * Permanently Locked to Plaza Access/Dock to Main Plaza
-  > Dock to Ruins Entrance
-      Trivial
-  > Pickup (Energy Tank)
+  > Locked Door Ledge
       Trivial
 
 > Morph Ball Door to Piston Tunnel; Heals? False
@@ -5419,7 +5421,7 @@ Asset id: 3587029001
 
 > Pickup (Energy Tank); Heals? True
   * Pickup 3; Major Location? False
-  > Dock to Plaza Access
+  > Locked Door Ledge
       Trivial
 
 > Pickup (Missile Expansion Half Pipe); Heals? False
@@ -5447,6 +5449,14 @@ Asset id: 3587029001
                       Standable Terrain (Advanced)
                       Scan Visor and Combat/Scan Dash (Beginner)
               Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Hypermode)
+
+> Locked Door Ledge; Heals? False
+  > Dock to Ruins Entrance
+      Trivial
+  > Dock to Plaza Access
+      Enabled Main Plaza Vault Door
+  > Pickup (Energy Tank)
+      Trivial
 
 ----------------
 Ruined Fountain Access
