@@ -26742,13 +26742,27 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 25,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 25,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 5,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -26881,18 +26895,13 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Research Access": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 24,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 24,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Dock to Security Access B": {
                                     "type": "and",
@@ -26930,7 +26939,7 @@
                                                             "data": {
                                                                 "type": 2,
                                                                 "index": 15,
-                                                                "amount": 1,
+                                                                "amount": 3,
                                                                 "negate": false
                                                             }
                                                         },
@@ -27308,32 +27317,22 @@
                                     "data": []
                                 },
                                 "Dock to Ventilation Shaft": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 26,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Elite Control Barriers Lowered": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -27353,18 +27352,13 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Elite Control Access": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 26,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 26,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
