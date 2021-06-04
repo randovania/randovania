@@ -12636,18 +12636,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Elevator to Chozo Ruins - Transport to Magmoor Caverns North": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -13146,7 +13141,7 @@
                                                                     "data": {
                                                                         "type": 2,
                                                                         "index": 0,
-                                                                        "amount": 1,
+                                                                        "amount": 2,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -13226,29 +13221,6 @@
                                                                                         "type": 3,
                                                                                         "index": 5,
                                                                                         "amount": 120,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": [
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 3,
-                                                                                        "index": 5,
-                                                                                        "amount": 145,
-                                                                                        "negate": false
-                                                                                    }
-                                                                                },
-                                                                                {
-                                                                                    "type": "resource",
-                                                                                    "data": {
-                                                                                        "type": 3,
-                                                                                        "index": 6,
-                                                                                        "amount": 10,
                                                                                         "negate": false
                                                                                     }
                                                                                 }
@@ -19555,18 +19527,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Elevator - Transport to Magmoor Caverns West": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21504,15 +21471,6 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 3,
-                                                "index": 5,
-                                                "amount": 151,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
                                             "type": "and",
                                             "data": [
                                                 {
@@ -21525,13 +21483,59 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 5,
-                                                        "amount": 95,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 120,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 99,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -21541,18 +21545,78 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 16,
-                                                        "amount": 1,
+                                                        "type": 3,
+                                                        "index": 6,
+                                                        "amount": 45,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 100,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 65,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 18,
-                                                        "amount": 1,
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -21560,10 +21624,65 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 3,
-                                                        "index": 5,
-                                                        "amount": 87,
+                                                        "index": 6,
+                                                        "amount": 40,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 99,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 59,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -21590,15 +21709,6 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 3,
-                                                "index": 5,
-                                                "amount": 163,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
                                             "type": "and",
                                             "data": [
                                                 {
@@ -21611,13 +21721,59 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 5,
-                                                        "amount": 107,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 120,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 99,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -21627,18 +21783,78 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 16,
-                                                        "amount": 1,
+                                                        "type": 3,
+                                                        "index": 6,
+                                                        "amount": 45,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 100,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 65,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 18,
-                                                        "amount": 1,
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -21646,10 +21862,65 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 3,
-                                                        "index": 5,
-                                                        "amount": 97,
+                                                        "index": 6,
+                                                        "amount": 40,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 99,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 59,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -21707,18 +21978,13 @@
                                     "data": []
                                 },
                                 "Elevator to Tallon Overworld - Transport to Magmoor Caverns East": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21789,13 +22055,59 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 3,
-                                                        "index": 5,
-                                                        "amount": 65,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 100,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 65,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -21857,24 +22169,6 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 5,
-                                                                "amount": 85,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "template",
-                                                            "data": "Heat-Resisting Suit"
-                                                        }
-                                                    ]
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 2,
@@ -21882,6 +22176,61 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 185,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 85,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -21898,6 +22247,15 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 8,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
                                                     "type": "or",
                                                     "data": [
                                                         {
@@ -21905,13 +22263,50 @@
                                                             "data": "Heat-Resisting Suit"
                                                         },
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 5,
-                                                                "amount": 80,
-                                                                "negate": false
-                                                            }
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 160,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 80,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -22016,6 +22411,61 @@
                                                                                         "amount": 95,
                                                                                         "negate": false
                                                                                     }
+                                                                                },
+                                                                                {
+                                                                                    "type": "or",
+                                                                                    "data": [
+                                                                                        {
+                                                                                            "type": "template",
+                                                                                            "data": "Heat-Resisting Suit"
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "and",
+                                                                                            "data": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 2,
+                                                                                                        "index": 17,
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 3,
+                                                                                                        "index": 5,
+                                                                                                        "amount": 125,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "and",
+                                                                                            "data": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 2,
+                                                                                                        "index": 17,
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 3,
+                                                                                                        "index": 5,
+                                                                                                        "amount": 75,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
                                                                                 }
                                                                             ]
                                                                         },
@@ -22036,7 +22486,71 @@
                                                                                     "data": {
                                                                                         "type": 3,
                                                                                         "index": 6,
-                                                                                        "amount": 130,
+                                                                                        "amount": 200,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "or",
+                                                                                    "data": [
+                                                                                        {
+                                                                                            "type": "template",
+                                                                                            "data": "Heat-Resisting Suit"
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "and",
+                                                                                            "data": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 2,
+                                                                                                        "index": 17,
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 3,
+                                                                                                        "index": 5,
+                                                                                                        "amount": 150,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "and",
+                                                                                            "data": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 2,
+                                                                                                        "index": 17,
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 3,
+                                                                                                        "index": 5,
+                                                                                                        "amount": 99,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 2,
+                                                                                        "index": 3,
+                                                                                        "amount": 3,
                                                                                         "negate": false
                                                                                     }
                                                                                 }
@@ -22066,17 +22580,54 @@
                                                     "type": "or",
                                                     "data": [
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 5,
-                                                                "amount": 85,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
                                                             "type": "template",
                                                             "data": "Heat-Resisting Suit"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 125,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 17,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 5,
+                                                                        "amount": 85,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 },
@@ -22163,13 +22714,50 @@
                                                                             "data": "Heat-Resisting Suit"
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 3,
-                                                                                "index": 5,
-                                                                                "amount": 85,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 2,
+                                                                                        "index": 17,
+                                                                                        "amount": 2,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 5,
+                                                                                        "amount": 135,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 2,
+                                                                                        "index": 17,
+                                                                                        "amount": 3,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 5,
+                                                                                        "amount": 85,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     ]
                                                                 }
@@ -22191,17 +22779,54 @@
                                                                     "type": "or",
                                                                     "data": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 3,
-                                                                                "index": 5,
-                                                                                "amount": 95,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
                                                                             "type": "template",
                                                                             "data": "Heat-Resisting Suit"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 2,
+                                                                                        "index": 17,
+                                                                                        "amount": 3,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 5,
+                                                                                        "amount": 145,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 2,
+                                                                                        "index": 17,
+                                                                                        "amount": 4,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 5,
+                                                                                        "amount": 95,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     ]
                                                                 }
@@ -22299,18 +22924,13 @@
                                                             }
                                                         },
                                                         {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 4,
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
-                                                                }
-                                                            ]
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 4,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -22528,18 +23148,13 @@
                                                             }
                                                         },
                                                         {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 4,
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
-                                                                }
-                                                            ]
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 4,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -22951,18 +23566,13 @@
                                                     "type": "or",
                                                     "data": [
                                                         {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 15,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                }
-                                                            ]
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
                                                         },
                                                         {
                                                             "type": "and",
@@ -23084,7 +23694,7 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to North Core Tunnel": {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
@@ -23092,6 +23702,15 @@
                                                 "type": 1,
                                                 "index": 22,
                                                 "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 11,
+                                                "amount": 4,
                                                 "negate": false
                                             }
                                         }
@@ -23142,18 +23761,13 @@
                                                     "type": "or",
                                                     "data": [
                                                         {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 15,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                }
-                                                            ]
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
                                                         },
                                                         {
                                                             "type": "and",
@@ -23431,36 +24045,27 @@
                                                             }
                                                         },
                                                         {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 7,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 18,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 19,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 19,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 7,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -23777,30 +24382,25 @@
                                                             }
                                                         },
                                                         {
-                                                            "type": "and",
+                                                            "type": "or",
                                                             "data": [
                                                                 {
-                                                                    "type": "or",
-                                                                    "data": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 0,
-                                                                                "index": 9,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 2,
-                                                                                "index": 4,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 9,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 4,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -23863,18 +24463,8 @@
                             "major_location": false,
                             "connections": {
                                 "Dock to South Core Tunnel": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -24043,18 +24633,13 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Elevator - Transport to Magmoor Caverns South": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -24105,18 +24690,13 @@
                                     "data": []
                                 },
                                 "Elevator - Transport to Magmoor Caverns South": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
