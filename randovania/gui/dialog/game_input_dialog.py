@@ -123,7 +123,14 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
     def _on_input_file_button(self):
         if self._prompt_input_file:
-            input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, self.patcher.valid_input_file_types)
+            existing_file = None
+            if self.input_file.is_file():
+                existing_file = self.input_file
+            elif self.input_file_edit.text() and self.input_file.parent.is_dir():
+                existing_file = self.input_file.parent
+
+            input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, self.patcher.valid_input_file_types,
+                                                                          existing_file=existing_file)
             if input_file is not None:
                 self.input_file_edit.setText(str(input_file.absolute()))
         else:
@@ -140,7 +147,11 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self._update_accept_button()
 
     def _on_output_file_button(self):
-        output_file = common_qt_lib.prompt_user_for_output_file(self, self.default_output_name,
+        suggested_name = self.default_output_name
+        if self.output_file_edit.text() and self.output_file.parent.is_dir():
+            suggested_name = str(self.output_file.parent.joinpath(suggested_name))
+
+        output_file = common_qt_lib.prompt_user_for_output_file(self, suggested_name,
                                                                 self.patcher.valid_output_file_types)
         if output_file is None:
             return
