@@ -102,7 +102,7 @@ def read_requirement_or(data: Dict,
 
 
 def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -> RequirementTemplate:
-    return RequirementTemplate(resource_database, data["data"])
+    return RequirementTemplate(data["data"])
 
 
 def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Requirement:

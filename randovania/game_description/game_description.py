@@ -1,32 +1,39 @@
 """Classes that describes the raw data of a game world."""
 import copy
-from typing import Iterator, FrozenSet, Dict, Optional
+import typing
+from typing import Iterator, FrozenSet, Dict, Optional, List
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
 
-def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[ResourceInfo]:
+def _calculate_dangerous_resources_in_db(
+        db: DockWeaknessDatabase,
+        database: ResourceDatabase,
+) -> Iterator[ResourceInfo]:
     for list_by_type in db:
-        for dock_weakness in list_by_type:
-            yield from dock_weakness.requirement.as_set.dangerous_resources
+        for dock_weakness in typing.cast(List[DockWeakness], list_by_type):
+            yield from dock_weakness.requirement.as_set(database).dangerous_resources
 
 
-def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[ResourceInfo]:
+def _calculate_dangerous_resources_in_areas(
+        areas: Iterator[Area],
+        database: ResourceDatabase,
+) -> Iterator[ResourceInfo]:
     for area in areas:
         for node in area.nodes:
             for requirement in area.connections[node].values():
-                yield from requirement.as_set.dangerous_resources
+                yield from requirement.as_set(database).dangerous_resources
 
 
 class GameDescription:
@@ -39,6 +46,7 @@ class GameDescription:
     initial_states: Dict[str, ResourceGainTuple]
     _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
     world_list: WorldList
+    mutable: bool = False
 
     def __deepcopy__(self, memodict):
         new_game = GameDescription(
@@ -73,6 +81,9 @@ class GameDescription:
         self.world_list = world_list
 
     def patch_requirements(self, resources, damage_multiplier: float):
+        if not self.mutable:
+            raise ValueError("self is not mutable")
+
         self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
         self._dangerous_resources = None
 
@@ -90,9 +101,14 @@ class GameDescription:
     def dangerous_resources(self) -> FrozenSet[ResourceInfo]:
         if self._dangerous_resources is None:
             self._dangerous_resources = frozenset(
-                _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
-                _calculate_dangerous_resources_in_db(self.dock_weakness_database))
+                _calculate_dangerous_resources_in_areas(self.world_list.all_areas, self.resource_database)) | frozenset(
+                _calculate_dangerous_resources_in_db(self.dock_weakness_database, self.resource_database))
         return self._dangerous_resources
+
+    def make_mutable_copy(self) -> "GameDescription":
+        result = copy.deepcopy(self)
+        result.mutable = True
+        return result
 
 
 def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:

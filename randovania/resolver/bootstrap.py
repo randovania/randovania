@@ -263,8 +263,9 @@ def logic_bootstrap(configuration: AnyGameConfiguration,
     :param patches:
     :return:
     """
-    game = copy.deepcopy(game)
-    game.resource_database = patch_resource_database(game.resource_database, configuration)
+    if not game.mutable:
+        raise ValueError("Running logic_bootstrap with non-mutable game")
+
     starting_state = calculate_starting_state(game, patches, configuration.energy_per_tank)
 
     if configuration.trick_level.minimal_logic:

@@ -5,16 +5,16 @@ from typing import Tuple, List
 import pytest
 
 from randovania.game_description import default_database
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockWeaknessDatabase
+from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -25,24 +25,24 @@ from randovania.generator.generator_reach import (
     advance_reach_with_possible_unsafe_resources, collectable_resource_nodes)
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.base_configuration import StartingLocationList
-from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.resolver import bootstrap
-from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
-    game = default_database.game_description_for(preset.game)
+    game = default_database.game_description_for(preset.game).make_mutable_copy()
+    game.resource_database = bootstrap.patch_resource_database(game.resource_database, preset.configuration)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
         presets={0: preset},
     )
     patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
-    _, state = logic_bootstrap(preset.configuration, game, patches)
+    _, state = bootstrap.logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
 
@@ -77,8 +77,8 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 @pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
-    (RandovaniaGame.PRIME2, "Starter Preset", {91}, set()),  # Echoes
-    (RandovaniaGame.PRIME3, "Starter Preset", {1, 146, 147, 148}, {0, 1, 2}),  # Corruption
+    (RandovaniaGame.PRIME2, "Starter Preset", {91, 92, 97}, set()),  # Echoes
+    (RandovaniaGame.PRIME3, "Starter Preset", {1, 146, 147, 148, 154}, {0, 1, 2}),  # Corruption
     (RandovaniaGame.PRIME1, "Starter Preset", {33}, set())  # Prime
 ])
 def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):

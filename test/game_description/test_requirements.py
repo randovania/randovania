@@ -85,9 +85,9 @@ def test_simplify_requirement_set_static():
     simple_2 = the_set.patch_requirements({res_a: 0, res_b: 1}, 1, None)
     simple_3 = the_set.patch_requirements({res_a: 1, res_b: 1}, 1, None)
 
-    assert simple_1.as_set.alternatives == frozenset()
-    assert simple_2.as_set.alternatives == frozenset([RequirementList([])])
-    assert simple_3.as_set.alternatives == frozenset([RequirementList([])])
+    assert simple_1.as_set(None).alternatives == frozenset()
+    assert simple_2.as_set(None).alternatives == frozenset([RequirementList([])])
+    assert simple_3.as_set(None).alternatives == frozenset([RequirementList([])])
 
 
 def test_prevent_redundant():
@@ -179,7 +179,7 @@ def test_requirement_as_set_1():
         RequirementOr([_req("B"), _req("C")]),
         RequirementOr([_req("D"), _req("E")]),
     ])
-    assert req.as_set == RequirementSet([
+    assert req.as_set(None) == RequirementSet([
         RequirementList([_req("A"), _req("B"), _req("D")]),
         RequirementList([_req("A"), _req("B"), _req("E")]),
         RequirementList([_req("A"), _req("C"), _req("D")]),
@@ -192,7 +192,7 @@ def test_requirement_as_set_2():
         Requirement.trivial(),
         _req("A"),
     ])
-    assert req.as_set == RequirementSet([
+    assert req.as_set(None) == RequirementSet([
         RequirementList([_req("A")]),
     ])
 
@@ -202,7 +202,7 @@ def test_requirement_as_set_3():
         Requirement.impossible(),
         _req("A"),
     ])
-    assert req.as_set == RequirementSet([
+    assert req.as_set(None) == RequirementSet([
         RequirementList([_req("A")]),
     ])
 
@@ -213,7 +213,7 @@ def test_requirement_as_set_4():
         _req("A"),
         Requirement.trivial(),
     ])
-    assert req.as_set == RequirementSet([
+    assert req.as_set(None) == RequirementSet([
         RequirementList([]),
     ])
 
@@ -224,7 +224,7 @@ def test_requirement_as_set_5():
         _req("B"),
         _req("C"),
     ])
-    assert req.as_set == RequirementSet([
+    assert req.as_set(None) == RequirementSet([
         RequirementList([_req("A"), _req("B"), _req("C")]),
     ])
 
@@ -248,7 +248,7 @@ def test_requirement_or_str():
 
 
 def test_impossible_requirement_as_set():
-    assert Requirement.impossible().as_set == RequirementSet.impossible()
+    assert Requirement.impossible().as_set(None) == RequirementSet.impossible()
 
 
 def test_impossible_requirement_satisfied():
@@ -264,7 +264,7 @@ def test_impossible_requirement_str():
 
 
 def test_trivial_requirement_as_set():
-    assert Requirement.trivial().as_set == RequirementSet.trivial()
+    assert Requirement.trivial().as_set(None) == RequirementSet.trivial()
 
 
 def test_trivial_requirement_satisfied():
@@ -395,16 +395,16 @@ def test_trivial_requirement_str():
 def test_simplified_requirement(original, expected):
     simplified = original.simplify()
     assert simplified == expected
-    assert simplified.as_set == expected.as_set
+    assert simplified.as_set(None) == expected.as_set(None)
 
 
 def test_requirement_template(database):
     # Setup
     database.requirement_template["Use A"] = _make_req("A")[1]
-    use_a = RequirementTemplate(database, "Use A")
+    use_a = RequirementTemplate("Use A")
 
     # Run
-    as_set = use_a.as_set
+    as_set = use_a.as_set(database)
 
     # Assert
     assert as_set == make_single_set(_make_req("A"))
@@ -413,14 +413,14 @@ def test_requirement_template(database):
 
 def test_requirement_template_nested(database):
     # Setup
-    use_a = RequirementTemplate(database, "Use A")
-    use_b = RequirementTemplate(database, "Use B")
+    use_a = RequirementTemplate("Use A")
+    use_b = RequirementTemplate("Use B")
 
     database.requirement_template["Use A"] = _req("A")
     database.requirement_template["Use B"] = RequirementOr([use_a, _req("B")])
 
     # Run
-    as_set = use_b.as_set
+    as_set = use_b.as_set(database)
 
     # Assert
     assert as_set == RequirementSet([

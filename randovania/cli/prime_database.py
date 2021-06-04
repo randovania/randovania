@@ -169,7 +169,7 @@ def _list_paths_with_resource(game,
 
         for source, connection in area.connections.items():
             for target, requirement in connection.items():
-                for alternative in requirement.as_set.alternatives:
+                for alternative in requirement.as_set(game.resource_database).alternatives:
                     individual = alternative.get(resource)
                     if individual is None:
                         continue
@@ -202,7 +202,7 @@ def list_paths_with_dangerous_logic(args):
 
         for source, connection in area.connections.items():
             for target, requirement in connection.items():
-                for alternative in requirement.as_set.alternatives:
+                for alternative in requirement.as_set(game.resource_database).alternatives:
                     for individual in alternative.values():
                         if individual.negate:
                             area_had_resource = True
