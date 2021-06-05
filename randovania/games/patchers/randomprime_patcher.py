@@ -1,9 +1,6 @@
-import contextlib
 import copy
 import json
-import mmap
 import os
-import struct
 import typing
 from pathlib import Path
 from random import Random
@@ -12,8 +9,7 @@ from typing import Optional, List, Union
 import py_randomprime
 
 import randovania
-from randovania.dol_patching.assembler import ppc
-from randovania.dol_patching.dol_file import DolHeader, DolEditor
+from randovania.dol_patching import assembler
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -59,7 +55,6 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "energyTanks": 24,
     "wavebuster": 28
 }
-
 
 # "Power Suit": 20,
 # "Combat Visor": 17,
@@ -137,44 +132,6 @@ def _name_for_location(world_list: WorldList, location: AreaLocation) -> str:
         return prime1_elevators.CUSTOM_NAMES[location]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
-
-
-class IsoDolEditor(DolEditor):
-    iso_file: typing.BinaryIO
-    iso_mm: mmap.mmap
-    dol_offset: int
-
-    @classmethod
-    @contextlib.contextmanager
-    def open_iso(cls, output_file: Path):
-        import nod
-        result = nod.open_disc_from_image(os.fspath(output_file))
-        if result is None:
-            raise ValueError("Unable to read the recently written iso?")
-
-        disc, _ = result
-        dol_bytes = disc.get_data_partition().get_dol()
-        dol_header = DolHeader.from_bytes(dol_bytes)
-
-        with output_file.open("r+b") as out_iso:
-            mm = mmap.mmap(out_iso.fileno(), 0, access=mmap.ACCESS_WRITE)
-            dol_offset = mm.rfind(dol_bytes)
-            if dol_offset < 0:
-                raise ValueError("Unable to find dol in ISO")
-
-            editor = IsoDolEditor(dol_header)
-            editor.iso_file = out_iso
-            editor.iso_mm = mm
-            editor.dol_offset = dol_offset
-            yield editor
-
-    def _seek_and_read(self, seek: int, size: int):
-        self.iso_mm.seek(self.dol_offset + seek)
-        return self.iso_mm.read(size)
-
-    def _seek_and_write(self, seek: int, data: bytes):
-        self.iso_mm.seek(self.dol_offset + seek)
-        self.iso_mm.write(data)
 
 
 class RandomprimePatcher(Patcher):
@@ -324,6 +281,7 @@ class RandomprimePatcher(Patcher):
                 "staggeredSuitDamage": configuration.progressive_damage_reduction,
                 "heatDamagePerSec": configuration.heat_damage,
                 "autoEnabledElevators": patches.starting_items.get(scan_visor, 0) == 0,
+                "multiworldDolPatches": True,
 
                 "startingItems": {
                     name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
@@ -368,9 +326,20 @@ class RandomprimePatcher(Patcher):
         if input_file is None:
             raise ValueError("Missing input file")
 
+        symbols = py_randomprime.symbols_for_file(input_file)
+
         new_config = copy.copy(patch_data)
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
+        new_config["gameConfig"]["updateHintStateReplacement"] = list(
+            assembler.assemble_instructions(
+                symbols["UpdateHintState__13CStateManagerFf"],
+                [
+                    *all_prime_dol_patches.remote_execution_patch_start(),
+                    *all_prime_dol_patches.remote_execution_patch_end(),
+                ],
+                symbols=symbols)
+        )
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         Path("patcher.json").write_text(patch_as_str)
@@ -379,25 +348,3 @@ class RandomprimePatcher(Patcher):
             patch_as_str,
             py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
         )
-
-        with IsoDolEditor.open_iso(output_file) as dol_editor:
-            dol_editor = typing.cast(IsoDolEditor, dol_editor)
-            dol_editor.symbols = py_randomprime.rust.get_mp1_symbols("0-00")
-
-            # Apply remote execution patch
-            dol_editor.write_instructions(
-                "UpdateHintState__13CStateManagerFf",
-                [
-                    *all_prime_dol_patches.remote_execution_patch_start(),
-                    *all_prime_dol_patches.remote_execution_patch_end(),
-                ]
-            )
-
-            # IncrPickUp's switch array for UnknownItem1 to actually give stuff
-            dol_editor.write(0x803DAD94, struct.pack(">L", 0x80091c54))
-
-            # Remove DecrPickUp checks for the correct item types
-            dol_editor.write_instructions(
-                ("DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei", 5 * 4),
-                [ppc.nop()] * 7,
-            )
