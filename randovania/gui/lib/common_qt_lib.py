@@ -43,16 +43,19 @@ def _prompt_user_for_file(window: QMainWindow,
     return Path(open_result[0])
 
 
-def prompt_user_for_vanilla_input_file(window: QMainWindow, extensions: typing.List[str]) -> Optional[Path]:
+def prompt_user_for_vanilla_input_file(window: QMainWindow, extensions: typing.List[str],
+                                       existing_file: Optional[Path] = None) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a vanilla game file
     :param window:
     :param extensions:
+    :param existing_file: An existing file to pre-fill with.
     :return: A string if the user selected a file, None otherwise
     """
     return _prompt_user_for_file(
         window,
         caption="Select the vanilla game {}.".format("/".join(extensions)),
+        dir=str(existing_file) if existing_file is not None else None,
         filter=";".join(f"*.{ext}" for ext in extensions),
     )
 
