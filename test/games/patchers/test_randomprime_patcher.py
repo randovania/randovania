@@ -848,12 +848,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Launcher Caretaker Power',
+            'gameBanner': {'description': 'Seed Hash: Caretaker Lumigek Skiff',
                            'gameName': 'Metroid Prime: Randomizer',
                            'gameNameFull': 'Metroid Prime: Randomizer - Z2OYS7HX'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nLauncher Caretaker Power',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nCaretaker Lumigek Skiff',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
