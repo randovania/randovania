@@ -70,16 +70,16 @@ CUSTOM_NAMES_FOR_ELEVATORS = {
 # Teleporter(0x1baa96c2, 0x5d3a0001, 0x41010a): "Aerie",  # 4260106
 
 
-def elevator_area_name(world_list: WorldList,
-                       area_location: AreaLocation,
-                       include_world_name: bool,
-                       ) -> str:
+def elevator_area_name(
+        world_list: WorldList,
+        area_location: AreaLocation,
+        include_world_name: bool,
+) -> str:
     if area_location.area_asset_id in CUSTOM_NAMES_FOR_ELEVATORS:
         return CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
 
     else:
-        world = world_list.world_by_area_location(area_location)
-        area = world.area_by_asset_id(area_location.area_asset_id)
+        area = world_list.area_by_area_location(area_location)
         if include_world_name:
             return world_list.area_name(area)
         else:
