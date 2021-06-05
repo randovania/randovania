@@ -151,9 +151,9 @@ class GameSession(BaseModel):
                 "permalink": None,
             }
 
-        games = [RandovaniaGame.PRIME2]
-        if "prime1" in (self.dev_features or ""):
-            games.append(RandovaniaGame.PRIME1)
+        games = [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2]
+        if "prime3" in (self.dev_features or ""):
+            games.append(RandovaniaGame.PRIME3)
 
         return {
             "id": self.id,
