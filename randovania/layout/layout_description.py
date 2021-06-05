@@ -1,5 +1,6 @@
 import base64
 import hashlib
+import itertools
 import json
 import re
 import typing
@@ -11,15 +12,19 @@ from typing import Tuple, Dict
 
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
+from randovania.games.game import RandovaniaGame
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset_migration import VersionedPreset
 
 
 @lru_cache(maxsize=1)
-def _shareable_hash_words():
+def _shareable_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
-        return json.load(hash_words_file)
+        return {
+            RandovaniaGame(key): words
+            for key, words in json.load(hash_words_file).items()
+        }
 
 
 CURRENT_DESCRIPTION_SCHEMA_VERSION = 4
@@ -165,7 +170,23 @@ class LayoutDescription:
     @property
     def shareable_word_hash(self) -> str:
         rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
-        return " ".join(rng.sample(_shareable_hash_words(), 3))
+        words = _shareable_hash_words()
+        all_games = [preset.game for preset in self.permalink.presets.values()]
+        games_left = []
+
+        selected_words = []
+        for _ in range(3):
+            if not games_left:
+                games_left = list(all_games)
+            selected_game = rng.choice(games_left)
+            games_left = [game for game in games_left if game != selected_game]
+
+            game_word_list = words.get(selected_game, [])
+            if not game_word_list:
+                game_word_list = list(itertools.chain.from_iterable(words.values()))
+            selected_words.append(rng.choice(game_word_list))
+
+        return " ".join(selected_words)
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
