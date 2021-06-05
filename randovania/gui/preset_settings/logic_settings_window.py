@@ -205,8 +205,12 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         self._slider_for_trick = {}
 
         tricks_in_use = used_tricks(self.game_description)
-
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+
+        if self.game_enum != RandovaniaGame.PRIME2:
+            for w in [self.trick_level_line_1, self.trick_level_minimal_logic_check,
+                      self.trick_level_minimal_logic_label]:
+                w.setVisible(False)
 
         self._create_difficulty_details_row()
 
