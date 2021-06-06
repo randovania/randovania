@@ -342,7 +342,7 @@ def _get_model_mapping(randomizer_data: dict):
             PickupModel(RandovaniaGame.PRIME1, "Varia Suit"): "VariaSuit INCOMPLETE",
             PickupModel(RandovaniaGame.PRIME1, "Gravity Suit"): "VariaSuit INCOMPLETE",
             PickupModel(RandovaniaGame.PRIME1, "Phazon Suit"): "VariaSuit INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
+            # PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
             PickupModel(RandovaniaGame.PRIME1, "Morph Ball Bomb"): "MorphBallBomb",
             PickupModel(RandovaniaGame.PRIME1, "Boost Ball"): "BoostBall",
             PickupModel(RandovaniaGame.PRIME1, "Spider Ball"): "SpiderBall",
