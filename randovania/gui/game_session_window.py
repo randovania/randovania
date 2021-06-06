@@ -839,7 +839,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                        f"\n{warnings}\n"
                        "\nDo you want to continue?")
             result = await async_dialog.warning(self, "Dangerous preset", message, QMessageBox.Yes | QMessageBox.No)
-            if result == QMessageBox.No:
+            if result != QMessageBox.Yes:
                 return False
 
         return True
