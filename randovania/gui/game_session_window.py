@@ -450,7 +450,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if old_preset.base_preset_uuid is None:
             old_preset = old_preset.fork()
         editor = PresetEditor(old_preset)
-        self._logic_settings_window = LogicSettingsWindow(None, editor)
+        self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
         self._logic_settings_window._game_session_row = row
 
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
