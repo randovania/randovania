@@ -4,11 +4,12 @@ import functools
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
+from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
-from randovania.gui.lib import trick_lib
+from randovania.gui.lib import trick_lib, signal_handling
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -28,7 +29,9 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self._window_manager = window_manager
 
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.trick_level_minimal_logic_check.stateChanged.connect(self._on_trick_level_minimal_logic_check)
+        signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
+        signal_handling.on_checked(self.underwater_abuse_check, self._on_underwater_abuse_check)
+        self.underwater_abuse_label.linkActivated.connect(self._on_click_link_underwater_details)
 
         self.trick_difficulties_layout = QtWidgets.QGridLayout()
         self._slider_for_trick = {}
@@ -36,9 +39,15 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         tricks_in_use = trick_lib.used_tricks(self.game_description)
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
+        self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.PRIME3)
+        self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
+
         if self.game_enum != RandovaniaGame.PRIME2:
-            for w in [self.trick_level_line_1, self.trick_level_minimal_logic_check,
-                      self.trick_level_minimal_logic_label]:
+            for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
+                w.setVisible(False)
+
+        if self.game_enum != RandovaniaGame.PRIME1:
+            for w in [self.underwater_abuse_check, self.underwater_abuse_label]:
                 w.setVisible(False)
 
         self._create_difficulty_details_row()
@@ -114,6 +123,9 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
             slider.setEnabled(not trick_level_configuration.minimal_logic)
 
+        if self.game_enum == RandovaniaGame.PRIME1:
+            self.underwater_abuse_check.setChecked(preset.configuration.allow_underwater_movement_without_gravity)
+
     def _create_difficulty_details_row(self):
         row = 1
 
@@ -150,13 +162,28 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
                     )
                 )
 
-    def _on_trick_level_minimal_logic_check(self, state: int):
+    def _on_trick_level_minimal_logic_check(self, state: bool):
         with self._editor as options:
             options.set_configuration_field(
                 "trick_level",
                 dataclasses.replace(options.configuration.trick_level,
-                                    minimal_logic=bool(state))
+                                    minimal_logic=state)
             )
+
+    def _on_underwater_abuse_check(self, state: bool):
+        with self._editor as options:
+            options.set_configuration_field(
+                "allow_underwater_movement_without_gravity",
+                state,
+            )
+
+    def _on_click_link_underwater_details(self, link: str):
+        self._exec_trick_details(ResourceDetailsPopup(
+            self,
+            self._window_manager,
+            self.game_description,
+            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0),
+        ))
 
     def _exec_trick_details(self, popup: TrickDetailsPopup):
         self._trick_details_popup = popup
