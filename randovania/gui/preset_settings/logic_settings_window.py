@@ -15,8 +15,7 @@ from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
-from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.gui.lib.area_list_helper import AreaListHelper
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
@@ -28,6 +27,7 @@ from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
+from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
 from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
@@ -36,8 +36,6 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.preset import Preset
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -53,7 +51,7 @@ def dark_world_flags(world: World):
         yield True
 
 
-class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
+class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _extra_tabs: List[PresetTab]
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
@@ -77,6 +75,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         self.resource_database = self.game_description.resource_database
 
         if self.game_enum == RandovaniaGame.PRIME1:
+            self._extra_tabs.append(PresetPatcherEnergy(editor, self.game_enum))
             self._extra_tabs.append(PresetElevators(editor, self.game_description))
             self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
             self._extra_tabs.append(PresetLogicDamage(editor))
@@ -86,6 +85,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             self._extra_tabs.append(PresetItemPool(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME2:
+            self._extra_tabs.append(PresetPatcherEnergy(editor, self.game_enum))
             self._extra_tabs.append(PresetElevators(editor, self.game_description))
             self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
             self._extra_tabs.append(PresetLogicDamage(editor))
@@ -98,6 +98,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             self._extra_tabs.append(PresetItemPool(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME3:
+            self._extra_tabs.append(PresetPatcherEnergy(editor, self.game_enum))
             self._extra_tabs.append(PresetElevators(editor, self.game_description))
             self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
             self._extra_tabs.append(PresetLogicDamage(editor))
@@ -116,7 +117,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
-        self.setup_damage_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
@@ -129,9 +129,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         for extra_tab in self._extra_tabs:
             extra_tab.on_preset_changed(preset)
 
-        # Variables
-        config = preset.configuration
-
         # Title
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
 
@@ -143,21 +140,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             assert self._slider_for_trick[trick] is slider
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
             slider.setEnabled(not trick_level_configuration.minimal_logic)
-
-        # Damage
-        self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
-
-        if self.game_enum == RandovaniaGame.PRIME2:
-            self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
-            self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
-            self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
-            self.varia_suit_spin_box.setValue(config.varia_suit_damage)
-            self.dark_suit_spin_box.setValue(config.dark_suit_damage)
-
-        elif self.game_enum == RandovaniaGame.PRIME1:
-            self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
-            self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
-            self.heated_damage_spin.setValue(config.heat_damage)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
@@ -292,82 +274,3 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             trick,
             self._editor.configuration.trick_level.level_for_trick(trick),
         ))
-
-    # Damage strictness
-    def setup_damage_elements(self):
-
-        def _persist_float(attribute_name: str):
-            def persist(value: float):
-                with self._editor as options:
-                    options.set_configuration_field(attribute_name, value)
-
-            return persist
-
-        self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
-        signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
-
-        if self.game_enum == RandovaniaGame.PRIME2:
-            config_fields = {
-                field.name: field
-                for field in dataclasses.fields(EchoesConfiguration)
-            }
-            self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
-            self.varia_suit_spin_box.setMaximum(config_fields["varia_suit_damage"].metadata["max"])
-            self.dark_suit_spin_box.setMinimum(config_fields["dark_suit_damage"].metadata["min"])
-            self.dark_suit_spin_box.setMaximum(config_fields["dark_suit_damage"].metadata["max"])
-
-            signal_handling.on_checked(self.safe_zone_logic_heal_check, self._persist_safe_zone_logic_heal)
-            self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
-            self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
-            self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
-        else:
-            self.dark_aether_box.setVisible(False)
-            self.safe_zone_box.setVisible(False)
-
-        if self.game_enum == RandovaniaGame.PRIME1:
-            config_fields = {
-                field.name: field
-                for field in dataclasses.fields(PrimeConfiguration)
-            }
-            self.heated_damage_spin.setMinimum(config_fields["heat_damage"].metadata["min"])
-            self.heated_damage_spin.setMaximum(config_fields["heat_damage"].metadata["max"])
-
-            signal_handling.on_checked(self.progressive_damage_reduction_check, self._persist_progressive_damage)
-            signal_handling.on_checked(self.heated_damage_varia_check, self._persist_heat_protection_only_varia)
-            self.heated_damage_spin.valueChanged.connect(_persist_float("heat_damage"))
-
-        else:
-            self.progressive_damage_reduction_check.setVisible(False)
-            self.heated_damage_box.setVisible(False)
-
-    def _persist_tank_capacity(self):
-        with self._editor as editor:
-            editor.set_configuration_field("energy_per_tank", int(self.energy_tank_capacity_spin_box.value()))
-
-    def _persist_safe_zone_regen(self):
-        with self._editor as editor:
-            safe_zone = dataclasses.replace(
-                editor.configuration.safe_zone,
-                heal_per_second=self.safe_zone_regen_spin.value()
-            )
-            editor.set_configuration_field("safe_zone", safe_zone)
-
-    def _persist_safe_zone_logic_heal(self, checked: bool):
-        with self._editor as editor:
-            safe_zone = dataclasses.replace(
-                editor.configuration.safe_zone,
-                fully_heal=checked
-            )
-            editor.set_configuration_field("safe_zone", safe_zone)
-
-    def _persist_progressive_damage(self, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("progressive_damage_reduction", checked)
-
-    def _persist_heat_protection_only_varia(self, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("heat_protection_only_varia", checked)
-
-    def _persist_dangerous_tank(self, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("dangerous_energy_tank", checked)
