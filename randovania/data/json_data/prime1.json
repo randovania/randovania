@@ -35262,27 +35262,6 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Main Ventilation Shaft Section C": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Dock to Main Ventilation Shaft Section C",
-                            "heal": false,
-                            "coordinates": {
-                                "x": 26.960155487060547,
-                                "y": 0.7240632474422455,
-                                "z": -0.36160048842430115
-                            },
-                            "node_type": "dock",
-                            "dock_index": 1,
-                            "connected_area_asset_id": 1578034578,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to Main Ventilation Shaft Section A": {
                                     "type": "or",
                                     "data": [
                                         {
@@ -35304,6 +35283,91 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Event - Main Ventilation Shaft Section B Conduit Activated": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 18,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Dock to Main Ventilation Shaft Section C",
+                            "heal": false,
+                            "coordinates": {
+                                "x": 26.960155487060547,
+                                "y": 0.7240632474422455,
+                                "z": -0.36160048842430115
+                            },
+                            "node_type": "dock",
+                            "dock_index": 1,
+                            "connected_area_asset_id": 1578034578,
+                            "connected_dock_index": 0,
+                            "dock_type": 0,
+                            "dock_weakness_index": 0,
+                            "connections": {
+                                "Dock to Main Ventilation Shaft Section A": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 36,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Main Ventilation Shaft Section B Conduit Activated": {
                                     "type": "and",
