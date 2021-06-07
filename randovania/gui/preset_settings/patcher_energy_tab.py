@@ -3,7 +3,6 @@ import dataclasses
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -11,7 +10,7 @@ from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 
-class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy, AreaListHelper):
+class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor, game_enum: RandovaniaGame):
