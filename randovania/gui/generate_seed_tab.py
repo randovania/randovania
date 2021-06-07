@@ -86,10 +86,10 @@ class PresetMenu(QtWidgets.QMenu):
     def set_preset(self, preset: Optional[VersionedPreset]):
         self.preset = preset
 
-        for p in [self.action_customize, self.action_delete, self.action_history, self.action_export]:
+        for p in [self.action_delete, self.action_history, self.action_export]:
             p.setEnabled(preset is not None and preset.base_preset_uuid is not None)
 
-        for p in [self.action_duplicate, self.action_map_tracker]:
+        for p in [self.action_customize, self.action_duplicate, self.action_map_tracker]:
             p.setEnabled(preset is not None)
 
 
@@ -194,8 +194,10 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
             self._logic_settings_window.raise_()
             return
 
-        old_preset = self._current_preset_data
-        editor = PresetEditor(old_preset.get_preset())
+        old_preset = self._current_preset_data.get_preset()
+        if old_preset.base_preset_uuid is None:
+            old_preset = old_preset.fork()
+        editor = PresetEditor(old_preset)
         self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
 
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
