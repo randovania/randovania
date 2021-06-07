@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetTrickLevel</class>
+ <widget class="QMainWindow" name="PresetTrickLevel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>539</width>
+    <height>516</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Trick Level</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="trick_level_scroll">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="trick_level_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>539</width>
+         <height>516</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="trick_level_layout">
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="logic_description_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Randovania has rules in place which guarantees that the game is completable regardless of the modifications made to the game. Here you can also configure which kind of game knowledge or skill it expects you to have, allowing for even more varied games.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;No matter the level, it is always possible to softlock when you enter a room or area that you're unable to leave. For example, vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam, Torvus Bog without Super Missile.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;However, it may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="trick_level_line_1">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="trick_level_minimal_logic_check">
+          <property name="text">
+           <string>Use minimal logic instead</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="trick_level_minimal_logic_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will only check that Screw Attack, Dark Visor and Light Suit won't all be behind Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="underwater_abuse_check">
+          <property name="text">
+           <string>Allow abuse of underwater movement without Gravity Suit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="underwater_abuse_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Movement while not having Gravity Suit has different physics, which causes different item requirements. &lt;a href=&quot;resource-details://misc/gravity&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click here&lt;/span&gt;&lt;/a&gt; to see which rooms are affectec.&lt;/p&gt;&lt;p&gt;Enabling this option adds these alternatives to logic. Be careful that this means collecting Gravity Suit can cause items to be permanently inacessible!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="trick_level_line_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="trick_level_help_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you want to tweak the knowledge or skill needed expected in a game, you can configure the level used for each of the tweaks listed below by moving the slider to the apropriate level.&lt;/p&gt;&lt;p&gt;Press the ? button to see which rooms use that trick on the selected level.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
