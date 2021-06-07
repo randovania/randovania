@@ -17,7 +17,6 @@ from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.area_list_helper import AreaListHelper
-from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
@@ -28,13 +27,13 @@ from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTr
 from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
+from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
 from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
@@ -52,11 +51,6 @@ def dark_world_flags(world: World):
     yield False
     if world.dark_name is not None:
         yield True
-
-
-def _update_options_by_value(options: Options, combo: QComboBox, new_index: int):
-    with options:
-        setattr(options, combo.options_field_name, combo.currentData())
 
 
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
@@ -82,25 +76,36 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
-        self._extra_tabs.append(PresetElevators(editor, self.game_description))
-        self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
-
         if self.game_enum == RandovaniaGame.PRIME1:
+            self._extra_tabs.append(PresetElevators(editor, self.game_description))
+            self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
+            self._extra_tabs.append(PresetLogicDamage(editor))
             self._extra_tabs.append(PresetPrimeGoal(editor))
             self._extra_tabs.append(PresetPrimePatches(editor))
+            self._extra_tabs.append(PresetLocationPool(editor, self.game_description))
+            self._extra_tabs.append(PresetItemPool(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME2:
+            self._extra_tabs.append(PresetElevators(editor, self.game_description))
+            self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
+            self._extra_tabs.append(PresetLogicDamage(editor))
             self._extra_tabs.append(PresetEchoesGoal(editor))
             self._extra_tabs.append(PresetEchoesHints(editor))
             self._extra_tabs.append(PresetEchoesTranslators(editor))
             self._extra_tabs.append(PresetEchoesBeamConfiguration(editor))
             self._extra_tabs.append(PresetEchoesPatches(editor))
+            self._extra_tabs.append(PresetLocationPool(editor, self.game_description))
+            self._extra_tabs.append(PresetItemPool(editor))
 
         elif self.game_enum == RandovaniaGame.PRIME3:
-            pass
+            self._extra_tabs.append(PresetElevators(editor, self.game_description))
+            self._extra_tabs.append(PresetStartingArea(editor, self.game_description))
+            self._extra_tabs.append(PresetLogicDamage(editor))
+            self._extra_tabs.append(PresetLocationPool(editor, self.game_description))
+            self._extra_tabs.append(PresetItemPool(editor))
 
-        self._extra_tabs.append(PresetLocationPool(editor, self.game_description))
-        self._extra_tabs.append(PresetItemPool(editor))
+        else:
+            raise ValueError(f"Unknown game: {self.game_enum}")
 
         for extra_tab in self._extra_tabs:
             if extra_tab.uses_patches_tab:
@@ -140,7 +145,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             slider.setEnabled(not trick_level_configuration.minimal_logic)
 
         # Damage
-        set_combo_with_value(self.damage_strictness_combo, config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum == RandovaniaGame.PRIME2:
@@ -291,14 +295,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
 
     # Damage strictness
     def setup_damage_elements(self):
-        self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
-        self.damage_strictness_combo.setItemData(1, LayoutDamageStrictness.MEDIUM)
-        self.damage_strictness_combo.setItemData(2, LayoutDamageStrictness.LENIENT)
-
-        self.damage_strictness_combo.options_field_name = "layout_configuration_damage_strictness"
-        self.damage_strictness_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
-                                                                                   self._editor,
-                                                                                   self.damage_strictness_combo))
 
         def _persist_float(attribute_name: str):
             def persist(value: float):
