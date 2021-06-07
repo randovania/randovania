@@ -1,17 +1,15 @@
-import collections
 import dataclasses
 import functools
-import re
 from typing import Dict, Optional, List
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QComboBox, QDialog, QGroupBox, QVBoxLayout
+from PySide2.QtWidgets import QComboBox, QDialog
 
 from randovania.game_description import default_database
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -29,18 +27,18 @@ from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatche
 from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
 from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
 from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -101,6 +99,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         elif self.game_enum == RandovaniaGame.PRIME3:
             pass
 
+        self._extra_tabs.append(PresetLocationPool(editor, self.game_description))
         self._extra_tabs.append(PresetItemPool(editor))
 
         for extra_tab in self._extra_tabs:
@@ -113,7 +112,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
         self.setup_damage_elements()
-        self.setup_location_pool_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
@@ -156,16 +154,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)
-
-        # Location Pool
-        available_locations = config.available_locations
-        set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
-
-        self.during_batch_check_update = True
-        for node, check in self._location_pool_for_node.items():
-            check.setChecked(node.pickup_index not in available_locations.excluded_indices)
-            check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
-        self.during_batch_check_update = False
 
     def _edit_name(self, value: str):
         with self._editor as editor:
@@ -387,73 +375,3 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow, AreaListHelper):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
-
-    # Elevator
-
-    # Location Pool
-    def setup_location_pool_elements(self):
-        self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
-        self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
-        self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
-
-        vertical_layouts = [
-            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
-            QtWidgets.QVBoxLayout(self.excluded_locations_area_contents),
-        ]
-        for layout in vertical_layouts:
-            self.excluded_locations_area_layout.addLayout(layout)
-
-        world_list = self.game_description.world_list
-        self._location_pool_for_node = {}
-
-        nodes_by_world = collections.defaultdict(list)
-        node_names = {}
-        pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
-
-        for world in world_list.worlds:
-            for is_dark_world in dark_world_flags(world):
-                for area in world.areas:
-                    if area.in_dark_aether != is_dark_world:
-                        continue
-                    for node in area.nodes:
-                        if isinstance(node, PickupNode):
-                            nodes_by_world[world.correct_name(is_dark_world)].append(node)
-                            match = pickup_match.match(node.name)
-                            if match is not None:
-                                node_name = match.group(1)
-                            else:
-                                node_name = node.name
-                            node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
-
-        for i, world_name in enumerate(sorted(nodes_by_world.keys())):
-            group_box = QGroupBox(self.excluded_locations_area_contents)
-            group_box.setTitle(world_name)
-            vertical_layout = QVBoxLayout(group_box)
-            vertical_layout.setContentsMargins(8, 4, 8, 4)
-            vertical_layout.setSpacing(2)
-            group_box.vertical_layout = vertical_layout
-            vertical_layouts[i % len(vertical_layouts)].addWidget(group_box)
-
-            for node in sorted(nodes_by_world[world_name], key=node_names.get):
-                check = QtWidgets.QCheckBox(group_box)
-                check.setText(node_names[node])
-                check.node = node
-                check.stateChanged.connect(functools.partial(self._on_check_location, check))
-                group_box.vertical_layout.addWidget(check)
-                self._location_pool_for_node[node] = check
-
-        for layout in vertical_layouts:
-            layout.addSpacerItem(
-                QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
-
-    def _on_update_randomization_mode(self):
-        with self._editor as editor:
-            editor.available_locations = dataclasses.replace(
-                editor.available_locations, randomization_mode=self.randomization_mode_combo.currentData())
-
-    def _on_check_location(self, check: QtWidgets.QCheckBox, _):
-        if self.during_batch_check_update:
-            return
-        with self._editor as editor:
-            editor.available_locations = editor.available_locations.ensure_index(check.node.pickup_index,
-                                                                                 not check.isChecked())
