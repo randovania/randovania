@@ -98,6 +98,11 @@ def randomizer_data() -> dict:
     return randovania.games.patchers.claris_patcher.decode_randomizer_data()
 
 
+@pytest.fixture(params=RandovaniaGame)
+def game_enum(request) -> RandovaniaGame:
+    return request.param
+
+
 @pytest.fixture()
 def blank_pickup() -> PickupEntry:
     return PickupEntry(
