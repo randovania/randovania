@@ -31,9 +31,6 @@ class BaseGraph:
     def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
         raise NotImplementedError()
 
-    def single_source_dijkstra_path(self, source: int):
-        raise NotImplementedError()
-
     def strongly_connected_components(self) -> Iterator[Set[int]]:
         raise NotImplementedError()
 
@@ -116,10 +113,6 @@ class RandovaniaGraph(BaseGraph):
                     paths[u] = paths[v] + [u]
 
         return dist, paths
-
-    def single_source_dijkstra_path(self, source: int):
-        length, path = self.multi_source_dijkstra({source}, weight=lambda s, t, req: 1)
-        return path
 
     def strongly_connected_components(self) -> Iterator[Set[int]]:
         preorder = {}
