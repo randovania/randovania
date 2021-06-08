@@ -9,4 +9,5 @@ Action = Union[ResourceNode, Tuple[PickupEntry, ...]]
 def action_name(action: Action) -> str:
     if isinstance(action, tuple):
         return "[{}]".format(", ".join(a.name for a in action))
-    return action.name
+    else:
+        return f"({type(action).__name__}) {action.name}"
