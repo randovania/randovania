@@ -2,11 +2,12 @@ from typing import Iterator, TypeVar, Dict, Any, Set, NamedTuple
 
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.world.node import Node, PickupNode, ResourceNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes
+from randovania.game_description.world.node import Node, PickupNode, ResourceNode
+from randovania.generator import reach_lib
+from randovania.generator.generator_reach import GeneratorReach
 
 
 def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
@@ -50,7 +51,7 @@ class UncollectedState(NamedTuple):
         return UncollectedState(
             _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
             _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
-            set(collectable_resource_nodes(reach.connected_nodes, reach))
+            set(reach_lib.collectable_resource_nodes(reach.connected_nodes, reach))
         )
 
     def __sub__(self, other: "UncollectedState") -> "UncollectedState":
