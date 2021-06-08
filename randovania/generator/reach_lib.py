@@ -1,5 +1,5 @@
 import copy
-from typing import Iterator, List, Set
+from typing import Iterator, List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, ResourceNode, PickupNode
@@ -125,14 +125,6 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
     # We couldn't improve this reach, so just return it
     return previous_reach
-
-
-def pickup_nodes_that_can_reach(pickup_nodes: Iterator[PickupNode],
-                                reach: GeneratorReach,
-                                safe_nodes: Set[Node]) -> Iterator[PickupNode]:
-    for pickup_node in pickup_nodes:
-        if pickup_node in safe_nodes or set(reach.shortest_path_from(pickup_node).keys()).intersection(safe_nodes):
-            yield pickup_node
 
 
 def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> GeneratorReach:
