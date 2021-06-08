@@ -145,6 +145,8 @@ class LayoutDescription:
                 "version": self.version,
                 "permalink": self.permalink.as_base64_str,
                 "seed": self.permalink.seed_number,
+                "hash": self.shareable_hash,
+                "word_hash": self.shareable_word_hash,
                 "presets": [
                     VersionedPreset.with_preset(preset).as_json
                     for preset in self.permalink.presets.values()
