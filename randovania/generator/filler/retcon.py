@@ -12,13 +12,13 @@ from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action, action_name
 from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint, UncollectedState, \
     find_node_with_resource
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.generator_reach import GeneratorReach, advance_reach_with_possible_unsafe_resources, \
-    advance_to_with_reach_copy
+from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.random_lib import select_element_with_weight
 
@@ -32,7 +32,7 @@ WeightedLocations = Dict[Tuple["PlayerState", PickupIndex], float]
 def _calculate_reach_for_progression(reach: GeneratorReach,
                                      progressions: Iterator[PickupEntry],
                                      ) -> GeneratorReach:
-    return advance_to_with_reach_copy(reach, reach.state.assign_pickups_resources(progressions))
+    return reach_lib.advance_to_with_reach_copy(reach, reach.state.assign_pickups_resources(progressions))
 
 
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
@@ -123,7 +123,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
         else:
             weight = _calculate_weights_for(
-                advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
+                reach_lib.advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
                 current_uncollected)
 
         actions_weights[action] = weight
@@ -131,7 +131,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
     if debug.debug_level() > 1:
         for action, weight in actions_weights.items():
-            print("({}) {} - {}".format(type(action).__name__, action_name(action), weight))
+            print("{} - {}".format(action_name(action), weight))
 
     return actions_weights
 
@@ -195,9 +195,9 @@ def retcon_playthrough_filler(rng: Random,
                 actions_log.append(log_entry)
                 debug.debug_print(f"* {log_entry}")
 
-                # TODO: this item is potentially dangerous and we should remove the invalidated paths
+            # TODO: this item is potentially dangerous and we should remove the invalidated paths
                 current_player.pickups_left.remove(new_pickup)
-                current_player.num_actions += 1
+            current_player.num_actions += 1
 
             count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states)
             last_message = "{} items left.".format(count_pickups_left)
@@ -211,7 +211,7 @@ def retcon_playthrough_filler(rng: Random,
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
             current_player.reach.act_on(action)
 
-        current_player.reach = advance_reach_with_possible_unsafe_resources(current_player.reach)
+        current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
         current_player.update_for_new_state()
 
     all_patches = {player_state: player_state.reach.state.patches for player_state in player_states}
@@ -329,9 +329,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
 def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
                            ) -> float:
-    if potential_reach.game.victory_condition.satisfied(potential_reach.state.resources,
-                                                        potential_reach.state.energy,
-                                                        potential_reach.state.resource_database):
+    if potential_reach.victory_condition_satisfied():
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
