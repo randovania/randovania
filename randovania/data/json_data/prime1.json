@@ -39930,7 +39930,7 @@
                                                             "data": {
                                                                 "type": 2,
                                                                 "index": 6,
-                                                                "amount": 4,
+                                                                "amount": 5,
                                                                 "negate": false
                                                             }
                                                         }
@@ -44207,8 +44207,41 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Sunchamber": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 7,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 8,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         }
