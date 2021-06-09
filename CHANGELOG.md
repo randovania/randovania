@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Credits in Metroid Prime 2 now contains a list of where all non-expansions were placed, including possibly other player's for a multiworld. The credits now takes 75 seconds instead of 60 to accomodate this.
 
--   Changed: Customizing Dark Aether damage is not considered by logic.
+-   Changed: Customizing Dark Aether damage is now considered by logic.
 
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
 
@@ -46,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method of reaching the pickup in Watch Station with Space Jump, Screw Attack, and Single Room OoB (Expert and above).
 
+-   Added: Alpha Blogg now has proper requirements for multiple difficulties.
+
 -   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
@@ -66,6 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Reaching the pickup in Medidation Vista with a Boost Jump is now Expert (From Advanced).
 
+-   Changed: Quadraxis and Boost Guardian now have proper health and item requirements with tricks disabled.
+
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
@@ -75,7 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Changing starting location to Ship or Save Stations now works again.
 
 -   Fixed: Torvus Gate elevator is now properly hidden instead of Dark Torvus Ammo Station.
-
 
 ## [2.6.0] - 2021-05-02
 
