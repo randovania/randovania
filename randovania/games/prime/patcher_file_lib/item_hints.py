@@ -22,6 +22,8 @@ _DET_AN = [
     "Emerald Translator",
     "Energy Transfer Module",
     "Energy Tank",
+    "Ice Beam",
+    "Ice Spreader"
 ]
 
 _DET_NULL = []
