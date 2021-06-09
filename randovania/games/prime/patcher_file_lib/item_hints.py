@@ -23,7 +23,8 @@ _DET_AN = [
     "Energy Transfer Module",
     "Energy Tank",
     "Ice Beam",
-    "Ice Spreader"
+    "Ice Spreader",
+    "X-Ray Visor"
 ]
 
 _DET_NULL = []
