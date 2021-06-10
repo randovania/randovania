@@ -91,7 +91,7 @@ def test_pretty_description_minimal_logic():
 @pytest.mark.parametrize(["levels", "expected"], [
     ({}, "All at Disabled"),
     ({i: LayoutTrickLevel.HYPERMODE for i in ["Dash", "BombJump", "Movement", "BSJ"]},
-     "20 at Disabled, 4 at Hypermode"),
+     "21 at Disabled, 4 at Hypermode"),
     ({"Dash": LayoutTrickLevel.HYPERMODE, "BombJump": LayoutTrickLevel.HYPERMODE,
       "AirUnderwater": LayoutTrickLevel.ADVANCED},
      "21 at Disabled, 1 at Advanced, 2 at Hypermode"),
