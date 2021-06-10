@@ -14,6 +14,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -30,7 +31,7 @@ def _create_resource_name_combo(resource_database: ResourceDatabase,
     :return:
     """
 
-    resource_name_combo = QComboBox(parent)
+    resource_name_combo = ScrollProtectedComboBox(parent)
 
     for resource in sorted(resource_database.get_by_type(resource_type), key=lambda x: x.long_name):
         resource_name_combo.addItem(resource.long_name, resource)
@@ -48,7 +49,7 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
     :param parent:
     :return:
     """
-    resource_type_combo = QComboBox(parent)
+    resource_type_combo = ScrollProtectedComboBox(parent)
 
     for resource_type in iterate_enum(ResourceType):
         try:
@@ -100,7 +101,7 @@ class ResourceRequirementEditor:
                                                                item.resource,
                                                                self.parent)
 
-        self.negate_combo = QComboBox(parent)
+        self.negate_combo = ScrollProtectedComboBox(parent)
         self.negate_combo.addItem("≥", False)
         self.negate_combo.addItem("<", True)
         self.negate_combo.setCurrentIndex(int(item.negate))
