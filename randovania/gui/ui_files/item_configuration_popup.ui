@@ -60,7 +60,7 @@
     </widget>
    </item>
    <item row="0" column="5">
-    <widget class="QSpinBox" name="shuffled_spinbox">
+    <widget class="ScrollProtectedSpinBox" name="shuffled_spinbox">
      <property name="minimum">
       <number>1</number>
      </property>
@@ -84,7 +84,7 @@
     </widget>
    </item>
    <item row="1" column="4" colspan="2">
-    <widget class="QSpinBox" name="provided_ammo_spinbox"/>
+    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
    </item>
    <item row="1" column="0" colspan="4">
     <widget class="QLabel" name="provided_ammo_label">
@@ -105,6 +105,13 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

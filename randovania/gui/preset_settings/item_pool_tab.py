@@ -4,10 +4,7 @@ import functools
 from functools import partial
 from typing import Dict, Tuple, List
 
-from PySide2 import QtWidgets
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QLabel, QGroupBox, QGridLayout, QSizePolicy, QSpinBox, \
-    QCheckBox
+from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
@@ -22,16 +19,17 @@ from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
-from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
-from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.ammo_state import AmmoState
 from randovania.layout.base.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.layout.preset import Preset
+from randovania.lib.enum_lib import iterate_enum
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion}, for a total of {total}."
@@ -41,10 +39,11 @@ _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("Each expansion will provide exactly {per
 
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
-    _boxes_for_category: Dict[ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, ItemConfigurationWidget]]]
+    _boxes_for_category: Dict[ItemCategory, Tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
+                                                  Dict[MajorItem, ItemConfigurationWidget]]]
     _default_items: Dict[ItemCategory, QtWidgets.QComboBox]
 
-    _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
+    _ammo_maximum_spinboxes: Dict[int, List[QtWidgets.QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
     _progressive_widgets: List[ProgressiveItemWidget]
     _split_ammo_widgets: List[SplitAmmoWidget]
@@ -54,8 +53,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self.setupUi(self)
 
         self._editor = editor
-        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.item_pool_layout.setAlignment(Qt.AlignTop)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self.item_pool_layout.setAlignment(QtCore.Qt.AlignTop)
 
         # Relevant Items
         self.game = editor.game
@@ -338,12 +337,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         all_categories = list(iterate_enum(ItemCategory))
         for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = QGroupBox(self.scroll_area_contents)
+            category_box = QtWidgets.QGroupBox(self.scroll_area_contents)
             category_box.setTitle(major_item_category.long_name)
             category_box.setSizePolicy(size_policy)
             category_box.setObjectName(f"category_box {major_item_category}")
 
-            category_layout = QGridLayout(category_box)
+            category_layout = QtWidgets.QGridLayout(category_box)
             category_layout.setObjectName(f"category_layout {major_item_category}")
 
             self.item_pool_layout.addWidget(category_box)
@@ -359,7 +358,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             label.setText(f"Default {category.long_name}")
             layout.addWidget(label, 0, 0)
 
-            combo = QtWidgets.QComboBox(parent)
+            combo = ScrollProtectedComboBox(parent)
             for item in possibilities:
                 combo.addItem(item.name, item)
             combo.currentIndexChanged.connect(partial(self._on_default_item_updated, category, combo))
@@ -400,16 +399,16 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_energy_tank_box(self):
         category_box, category_layout, _ = self._boxes_for_category[ItemCategory.ENERGY_TANK]
 
-        starting_label = QLabel(category_box)
+        starting_label = QtWidgets.QLabel(category_box)
         starting_label.setText("Starting Quantity")
 
-        shuffled_label = QLabel(category_box)
+        shuffled_label = QtWidgets.QLabel(category_box)
         shuffled_label.setText("Shuffled Quantity")
 
-        self.energy_tank_starting_spinbox = QSpinBox(category_box)
+        self.energy_tank_starting_spinbox = ScrollProtectedSpinBox(category_box)
         self.energy_tank_starting_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
         self.energy_tank_starting_spinbox.valueChanged.connect(self._on_update_starting_energy_tank)
-        self.energy_tank_shuffled_spinbox = QSpinBox(category_box)
+        self.energy_tank_shuffled_spinbox = ScrollProtectedSpinBox(category_box)
         self.energy_tank_shuffled_spinbox.setMaximum(DEFAULT_MAXIMUM_SHUFFLED[-1])
         self.energy_tank_shuffled_spinbox.valueChanged.connect(self._on_update_shuffled_energy_tank)
 
@@ -458,20 +457,20 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         for ammo in item_database.ammo.values():
             category_box, category_layout, _ = self._boxes_for_category[broad_to_category[ammo.broad_category]]
 
-            pickup_box = QGroupBox(category_box)
+            pickup_box = QtWidgets.QGroupBox(category_box)
             pickup_box.setSizePolicy(size_policy)
             pickup_box.setTitle(ammo.name + "s")
-            layout = QGridLayout(pickup_box)
+            layout = QtWidgets.QGridLayout(pickup_box)
             layout.setObjectName(f"{ammo.name} Box Layout")
             current_row = 0
 
             for ammo_item in ammo.items:
                 item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
 
-                target_count_label = QLabel(pickup_box)
+                target_count_label = QtWidgets.QLabel(pickup_box)
                 target_count_label.setText(f"{item.long_name} Target" if len(ammo.items) > 1 else "Target count")
 
-                maximum_spinbox = QSpinBox(pickup_box)
+                maximum_spinbox = ScrollProtectedSpinBox(pickup_box)
                 maximum_spinbox.setMaximum(ammo.maximum)
                 maximum_spinbox.valueChanged.connect(partial(self._on_update_ammo_maximum_spinbox, ammo_item))
                 self._ammo_maximum_spinboxes[ammo_item].append(maximum_spinbox)
@@ -480,11 +479,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 layout.addWidget(maximum_spinbox, current_row, 1)
                 current_row += 1
 
-            count_label = QLabel(pickup_box)
+            count_label = QtWidgets.QLabel(pickup_box)
             count_label.setText("Pickup Count")
             count_label.setToolTip("How many instances of this expansion should be placed.")
 
-            pickup_spinbox = QSpinBox(pickup_box)
+            pickup_spinbox = ScrollProtectedSpinBox(pickup_box)
             pickup_spinbox.setMaximum(AmmoState.maximum_pickup_count())
             pickup_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_spinbox, ammo))
 
@@ -493,7 +492,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             current_row += 1
 
             if ammo.temporary:
-                require_major_item_check = QCheckBox(pickup_box)
+                require_major_item_check = QtWidgets.QCheckBox(pickup_box)
                 require_major_item_check.setText("Requires the major item to work?")
                 require_major_item_check.stateChanged.connect(partial(self._on_update_ammo_require_major_item, ammo))
                 layout.addWidget(require_major_item_check, current_row, 0, 1, 2)
@@ -501,7 +500,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             else:
                 require_major_item_check = None
 
-            expected_count = QLabel(pickup_box)
+            expected_count = QtWidgets.QLabel(pickup_box)
             expected_count.setWordWrap(True)
             expected_count.setText(_EXPECTED_COUNT_TEXT_TEMPLATE)
             expected_count.setToolTip("Some expansions may provide 1 extra, even with no variance, if the total count "

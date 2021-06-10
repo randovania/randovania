@@ -16,14 +16,14 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
-from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -31,10 +31,10 @@ from randovania.games.prime import echoes_teleporters
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.custom_spin_box import CustomSpinBox
+from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.prime2 import translator_configuration
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
-from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
@@ -103,7 +103,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # UI tools
     _asset_id_to_item: Dict[int, QTreeWidgetItem]
     _node_to_item: Dict[Node, QTreeWidgetItem]
-    _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, CustomSpinBox]]
+    _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, QtWidgets.QComboBox]]
     _during_setup = False
 
     def __init__(self, persistence_path: Path, layout_configuration: EchoesConfiguration):
@@ -624,7 +624,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         label.setText(pickup.name)
         parent_layout.addWidget(label, row, 0)
 
-        spin_bix = CustomSpinBox(parent_widget)
+        spin_bix = ScrollProtectedSpinBox(parent_widget)
         spin_bix.setMaximumWidth(50)
         spin_bix.setMaximum(quantity)
         spin_bix.valueChanged.connect(functools.partial(self._change_item_quantity, pickup, False))

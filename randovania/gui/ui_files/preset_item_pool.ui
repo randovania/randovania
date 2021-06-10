@@ -50,6 +50,9 @@
       <property name="lineWidth">
        <number>0</number>
       </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -125,7 +128,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QComboBox" name="pickup_model_combo">
+            <widget class="ScrollProtectedComboBox" name="pickup_model_combo">
              <item>
               <property name="text">
                <string>Use correct item model, scan and name</string>
@@ -156,7 +159,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="pickup_data_source_combo">
+            <widget class="ScrollProtectedComboBox" name="pickup_data_source_combo">
              <item>
               <property name="text">
                <string>Energy Transfer Module/Nothing's data</string>
@@ -184,7 +187,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="2" column="1">
-            <widget class="QSpinBox" name="maximum_starting_spinbox">
+            <widget class="ScrollProtectedSpinBox" name="maximum_starting_spinbox">
              <property name="maximum">
               <number>30</number>
              </property>
@@ -208,7 +211,7 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="minimum_starting_spinbox">
+            <widget class="ScrollProtectedSpinBox" name="minimum_starting_spinbox">
              <property name="maximum">
               <number>30</number>
              </property>
@@ -235,6 +238,18 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ScrollProtectedComboBox</class>
+   <extends>QComboBox</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
