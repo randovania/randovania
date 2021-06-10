@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The ISO prompt dialog now remembers your last used vanilla ISO, for when you delete the internal copy. When opening the file pickers, these start now with the paths from the input fields.
 
+-   Changed: Many Spin/Combo boxes no longer react to the mouse wheel when not focused.
+
 -   Fixed: Closing the dangerous settings warning via the X button is now properly recognized as "don't continue".
 
 ### Metroid Prime 2 - Logic Database Changes
