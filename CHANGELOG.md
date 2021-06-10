@@ -52,6 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Alpha Blogg now has proper requirements for multiple difficulties.
 
+-   Added: Method of Bomb Slots without Bombs in Sanctuary Fortress/Ing Hive - Controller Access/Hive Controller Access without Space Jump (Expert and above).
+
 -   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
 -   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
@@ -73,6 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Reaching the pickup in Medidation Vista with a Boost Jump is now Expert (From Advanced).
 
 -   Changed: Quadraxis and Boost Guardian now have proper health and item requirements with tricks disabled.
+
+-   Changed: Bomb Slots without Bombs for Controller Access rooms are now Advanced (from Expert).
 
 ## [2.6.1] - 2021-05-05
 
