@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2 - Logic Database Changes
 
--   **Major** - New trick added "Suitless Ingclaw/Ingstorm"
+-   **Major** - "Suitless Ingclaw/Ingstorm" trick added to cover traversing rooms with either Ingclaw Vapor or Ingstorm.
 
 -   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
 
