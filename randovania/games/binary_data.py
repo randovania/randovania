@@ -207,23 +207,6 @@ ConstructResourceDatabase = Struct(
     multiworld_magic_item_index=VarInt,
 )
 
-ConstructEchoesBeamConfiguration = Struct(
-    item_index=VarInt,
-    ammo_a=OptionalValue(Byte),
-    ammo_b=OptionalValue(Byte),
-    uncharged_cost=Byte,
-    charged_cost=Byte,
-    combo_missile_cost=Byte,
-    combo_ammo_cost=Byte,
-)
-
-ConstructEchoesGameSpecific = Struct(
-    energy_per_tank=VarInt,
-    safe_zone_heal_per_second=Float32b,
-    beam_configurations=PrefixedArray(VarInt, ConstructEchoesBeamConfiguration),
-    dangerous_energy_tank=Flag,
-)
-
 ConstructResourceGain = Struct(
     resource_type=Byte,
     resource_index=VarInt,
