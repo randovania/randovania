@@ -94,7 +94,7 @@ def test_pretty_description_minimal_logic():
      "21 at Disabled, 4 at Hypermode"),
     ({"Dash": LayoutTrickLevel.HYPERMODE, "BombJump": LayoutTrickLevel.HYPERMODE,
       "AirUnderwater": LayoutTrickLevel.ADVANCED},
-     "21 at Disabled, 1 at Advanced, 2 at Hypermode"),
+     "22 at Disabled, 1 at Advanced, 2 at Hypermode"),
 ])
 def test_pretty_description_tricks_echoes(levels, expected):
     config = TrickLevelConfiguration(False, levels, RandovaniaGame.PRIME2)
