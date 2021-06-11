@@ -46,7 +46,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
 
--   Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
+-   Great Bridge: 
+    - Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
+    - Method of reaching Abandoned Worksite and Torvus Map Station doors from Temple Access Dark door with Boost Ball and Boost Jump (Advanced and above).
+    - Method of reaching the pickup with Screw Attack and Single Room Out of Bounds (Expert and above).
 
 -   Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
 
@@ -55,6 +58,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Alpha Blogg now has proper requirements for multiple difficulties.
 
 -   Method of Bomb Slots without Bombs in Sanctuary Fortress/Ing Hive - Controller Access/Hive Controller Access without Space Jump (Expert and above).
+
+-   Methods of crossing Torvus Bog - Fortress Transport Access with Gravity Boost or Bombs (No Tricks/Advanced and above).
 
 #### Changed
 
