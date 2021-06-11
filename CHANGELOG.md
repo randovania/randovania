@@ -34,45 +34,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   **Major** - "Suitless Ingclaw/Ingstorm" trick added to cover traversing rooms with either Ingclaw Vapor or Ingstorm.
 
--   Added: Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
+#### Added
 
--   Added: Method of bypassing the breakable glass in Sand Processing from Main Reactor with Space Jump and Screw Attack (Expert and above).
+-   Method of getting over the gate in Mining Station A in reverse with Space Jump and Screw Attack (Expert and above).
 
--   Added: Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
+-   Method of bypassing the breakable glass in Sand Processing from Main Reactor with Space Jump and Screw Attack (Expert and above).
 
--   Added: Method of climbing the Sand Processing bomb slot with a Slope Jump for Bombless Bomb Slots (Advanced and above).
+-   Method of climbing to the top level of Main Gyro Chamber with Space Jump, Screw Attack, and Bombs, and no Scan Visor (Advanced and above).
 
--   Added: Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
+-   Method of climbing the Sand Processing bomb slot with a Slope Jump for Bombless Bomb Slots (Advanced and above).
 
--   Added: Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
+-   Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
 
--   Added: Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
+-   Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
 
--   Added: Method of reaching the pickup in Watch Station with Space Jump, Screw Attack, and Single Room OoB (Expert and above).
+-   Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
 
--   Added: Alpha Blogg now has proper requirements for multiple difficulties.
+-   Method of reaching the pickup in Watch Station with Space Jump, Screw Attack, and Single Room OoB (Expert and above).
 
--   Changed: Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
+-   Alpha Blogg now has proper requirements for multiple difficulties.
 
--   Changed: Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
+-   Method of Bomb Slots without Bombs in Sanctuary Fortress/Ing Hive - Controller Access/Hive Controller Access without Space Jump (Expert and above).
 
--   Changed: Reaching the portal in Hydrodynamo Shaft with Air Underwater and Screw Attack is now Hypermode (from Expert).
+#### Changed
 
--   Changed: Reaching the pickup in Dark Torvus Arena with a Roll Jump is now Hypermode (from Expert).
+-   Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
 
--   Changed: Trial Grounds, reaching the door:
+-   Reaching the pickup in Path of Roots with only Bombs is now Expert (from Hypermode).
+
+-   Reaching the portal in Hydrodynamo Shaft with Air Underwater and Screw Attack is now Hypermode (from Expert).
+
+-   Reaching the pickup in Dark Torvus Arena with a Roll Jump is now Hypermode (from Expert).
+
+-   Trial Grounds, reaching the door:
     - From the portal with Space Jump and a Slope Jump is now Beginner (from Intermediate).
     - From the left safe zone with a Dash is now Intermediate (from Expert) and without anything is now Advanced (from Expert).
 	
--   Changed: Opening the Seeker Lock without Seekers in Mine Shaft is now Advanced (From Expert)
+-   Opening the Seeker Lock without Seekers in Mine Shaft is now Advanced (From Expert)
 
--   Changed: Opening the Seeker Lock without Seekers in Plain of Dark Worship is now Expert (From Hypermode).
+-   Opening the Seeker Lock without Seekers in Plain of Dark Worship is now Expert (From Hypermode).
 
--   Changed: Reaching the Windchamber Gateway Door from Windchamber Tunnel with a Boost Jump is now Hypermode (From Expert).
+-   Reaching the Windchamber Gateway Door from Windchamber Tunnel with a Boost Jump is now Hypermode (From Expert).
 
--   Changed: Reaching the pickup in Medidation Vista with a Boost Jump is now Expert (From Advanced).
+-   Reaching the pickup in Medidation Vista with a Boost Jump is now Expert (From Advanced).
 
--   Changed: Quadraxis and Boost Guardian now have proper health and item requirements with tricks disabled.
+-   Quadraxis and Boost Guardian now have proper health and item requirements with tricks disabled.
+
+-   Activating Controller Access rooms Bomb Slots without Bombs is now Advanced (from Expert).
+
+-   Reaching the Abandoned Worksite/Brooding Ground door from the bridge in Dark/Forgotten Bridge with an Extended Dash is now Hypermode (from Expert).
 
 ## [2.6.1] - 2021-05-05
 
