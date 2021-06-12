@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Credits in Metroid Prime 2 now contains a list of where all non-expansions were placed, including possibly other player's for a multiworld. The credits now takes 75 seconds instead of 60 to accomodate this.
 
+-   Added: Button to export the presets used in a game file.
+
 -   Changed: Customizing Dark Aether damage is now considered by logic.
 
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
