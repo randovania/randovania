@@ -30,6 +30,7 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
@@ -93,6 +94,10 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._action_copy_permalink.setText("Copy Permalink")
         self._tool_button_menu.addAction(self._action_copy_permalink)
 
+        self._action_export_preset = QAction(self)
+        self._action_export_preset.setText("Export current player's preset")
+        self._tool_button_menu.addAction(self._action_export_preset)
+
         self._action_open_dolphin = QAction(self)
         self._action_open_dolphin.setText("Open Dolphin Hook")
         self._tool_button_menu.addAction(self._action_open_dolphin)
@@ -103,6 +108,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
+        self._action_export_preset.triggered.connect(self._export_preset)
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.player_index_combo.activated.connect(self._update_current_player)
@@ -137,6 +143,12 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
+
+    def _export_preset(self):
+        preset = self.layout_description.permalink.get_preset(self.current_player_index)
+        output_path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
+        if output_path is not None:
+            VersionedPreset.with_preset(preset).save_to_file(output_path)
 
     async def _show_dialog_for_prime3_layout(self):
         from randovania.games.patchers import gollop_corruption_patcher
