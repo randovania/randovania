@@ -158,7 +158,7 @@ class RandomprimePatcher(Patcher):
         pass
 
     def default_output_file(self, seed_hash: str) -> str:
-        return "Prime Randomizer - {}.iso".format(seed_hash)
+        return "Prime Randomizer - {}".format(seed_hash)
 
     @property
     def valid_input_file_types(self) -> List[str]:
@@ -166,7 +166,7 @@ class RandomprimePatcher(Patcher):
 
     @property
     def valid_output_file_types(self) -> List[str]:
-        return ["iso"]
+        return ["iso", "ciso", "gcz"]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: PrimeCosmeticPatches):
