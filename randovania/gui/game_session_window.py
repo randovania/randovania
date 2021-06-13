@@ -18,7 +18,7 @@ from randovania.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticP
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
-from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
+from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -1030,13 +1030,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         game = self.current_player_game
         patcher = self._window_manager.patcher_provider.patcher_for_game(game)
 
-        if patcher.is_busy:
-            return await async_dialog.message_box(
-                self, QtWidgets.QMessageBox.Critical,
-                "Can't save ISO",
-                "Error: Unable to save multiple ISOs at the same time,"
-                "another window is saving an ISO right now.")
-
         dialog = GameInputDialog(options, patcher, self._game_session.word_hash, False, game)
         result = await async_dialog.execute_dialog(dialog)
 
@@ -1044,22 +1037,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         dialog.save_options()
-        input_file = dialog.input_file
-        output_file = dialog.output_file
-
-        with options:
-            options.output_directory = output_file.parent
-
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                      options.options_for_game(game).cosmetic_patches.as_json)
-
-        def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data, options.internal_copies_path,
-                               progress_update=progress_update)
-
-            progress_update(f"Finished!", 1)
-
-        self.run_in_background_thread(work, "Exporting...")
+        await game_exporter.export_game(
+            patcher=patcher,
+            input_dialog=dialog,
+            patch_data=patch_data,
+            internal_copies_path=options.internal_copies_path,
+            layout_for_spoiler=None,
+            background=self,
+            progress_update_signal=self.progress_update_signal,
+        )
 
     @asyncSlot()
     @handle_network_errors

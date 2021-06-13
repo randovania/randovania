@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 from randovania.games.patchers import claris_randomizer
+from randovania.games.patchers.exceptions import ExportFailure
 from randovania.layout.layout_description import LayoutDescription
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
@@ -82,7 +83,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
     mock_process_command.side_effect = side_effect
 
     # Run
-    with pytest.raises(RuntimeError) as error:
+    with pytest.raises(ExportFailure) as error:
         claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert
@@ -92,7 +93,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
         call("line 2"),
         call("post line"),
     ])
-    assert str(error.value) == "External tool did not send '{}'. Did something happen?".format(finish_string)
+    assert str(error.value) == "External tool did not send '{}'.".format(finish_string)
 
 
 @patch("randovania.games.patchers.claris_randomizer.validate_game_files_path", autospec=True)
