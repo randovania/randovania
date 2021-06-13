@@ -82,7 +82,13 @@ def _base_args(game_root: Path,
     ]
 
 
-_ECHOES_PAKS = tuple(["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)])
+_ECHOES_PAKS = tuple(
+    [
+        "MiscData.pak",
+        "FrontEnd.pak",
+        "LogBook.pak",
+    ]
+    + ["Metroid{}.pak".format(i) for i in range(1, 6)])
 
 
 def restore_pak_backups(
