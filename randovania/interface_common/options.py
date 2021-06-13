@@ -82,7 +82,7 @@ class PerGameOptions:
         return PerGameOptions(
             cosmetic_patches=cosmetic_patches,
             input_path=decode_if_not_none(value["input_path"], Path),
-            output_format=decode_if_not_none(value["output_format"], str),
+            output_format=value["output_format"],
             output_directory=decode_if_not_none(value["output_directory"], Path),
         )
 
