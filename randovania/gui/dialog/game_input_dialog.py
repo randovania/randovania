@@ -121,7 +121,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     # Checks
     def check_extracted_game(self):
         self._prompt_input_file = (self.patcher.uses_input_file_directly or
-                                   not self.patcher.has_internal_copy(self._options.game_files_path))
+                                   not self.patcher.has_internal_copy(self._options.internal_copies_path))
         self.input_file_edit.setEnabled(self._prompt_input_file)
 
         if self._prompt_input_file:
@@ -153,7 +153,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             if input_file is not None:
                 self.input_file_edit.setText(str(input_file.absolute()))
         else:
-            self.patcher.delete_internal_copy(self._options.game_files_path)
+            self.patcher.delete_internal_copy(self._options.internal_copies_path)
             self.input_file_edit.setText("")
             self.check_extracted_game()
 
