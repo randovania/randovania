@@ -82,11 +82,16 @@ class ClarisPatcher(Patcher):
                 unpack_updaters[1]
             )
         else:
-            claris_randomizer.restore_pak_backups(
-                contents_files_path,
-                backup_files_path,
-                updaters[0]
-            )
+            try:
+                claris_randomizer.restore_pak_backups(
+                    contents_files_path,
+                    backup_files_path,
+                    updaters[0]
+                )
+            except FileNotFoundError:
+                raise RuntimeError(
+                    "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
+                    "a clean game ISO.")
 
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
