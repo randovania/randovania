@@ -7,6 +7,7 @@ from PySide2 import QtWidgets
 from PySide2.QtCore import Signal
 
 from randovania.games.patcher import Patcher
+from randovania.games.patchers.exceptions import ExportFailure
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -48,12 +49,21 @@ async def export_game(
     except Exception as e:
         logging.exception("Unable to export game")
 
-        progress_update_signal.emit(f"Unable to export game: {e}", None)
-        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
-                                    "Unable to export game",
-                                    str(e),
-                                    QtWidgets.QMessageBox.Ok)
+        message = str(e)
+        detailed = None
+        if isinstance(e, ExportFailure):
+            detailed = e.detailed_text()
+        elif e.__traceback__ is not None:
+            detailed = "".join(traceback.format_tb(e.__traceback__))
+
+        progress_update_signal.emit(f"Unable to export game: {message}", None)
+        box = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Critical,
+            "Unable to export game",
+            message + " Press show 'Show Details' for more information.",
+            QtWidgets.QMessageBox.Ok,
+        )
         common_qt_lib.set_default_window_icon(box)
-        if e.__traceback__ is not None:
-            box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
+        if detailed is not None:
+            box.setDetailedText(detailed)
         await async_dialog.execute_dialog(box)
