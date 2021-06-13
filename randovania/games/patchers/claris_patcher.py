@@ -63,20 +63,29 @@ class ClarisPatcher(Patcher):
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
-        num_updaters = 2
-        if input_file is not None:
-            num_updaters += 1
-        updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
+        updaters = status_update_lib.split_progress_update(progress_update, 3)
 
         contents_files_path = internal_copies_path.joinpath("prime2", "contents")
         backup_files_path = internal_copies_path.joinpath("prime2", "vanilla")
 
         if input_file is not None:
+            unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
             self.delete_internal_copy(internal_copies_path)
             iso_packager.unpack_iso(
                 iso=input_file,
                 game_files_path=contents_files_path,
-                progress_update=updaters[0],
+                progress_update=unpack_updaters[0],
+            )
+            claris_randomizer.create_pak_backups(
+                contents_files_path,
+                backup_files_path,
+                unpack_updaters[1]
+            )
+        else:
+            claris_randomizer.restore_pak_backups(
+                contents_files_path,
+                backup_files_path,
+                updaters[0]
             )
 
         # Apply patcher
@@ -86,15 +95,14 @@ class ClarisPatcher(Patcher):
         )
         claris_randomizer.apply_patcher_file(
             contents_files_path,
-            backup_files_path,
             patch_data,
-            updaters[-2])
+            updaters[1])
 
         # Pack ISO
         iso_packager.pack_iso(
             iso=output_file,
             game_files_path=contents_files_path,
-            progress_update=updaters[-1],
+            progress_update=updaters[2],
         )
 
 
