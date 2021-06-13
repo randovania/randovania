@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Button to export the presets used in a game file.
 
+-   Added: Add text description to unusual items in the Item Pool tab.
+
 -   Changed: Customizing Dark Aether damage is now considered by logic.
 
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
