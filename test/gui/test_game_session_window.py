@@ -441,11 +441,6 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     patcher = patcher_provider.patcher_for_game.return_value
     patcher.is_busy = False
 
-    def run_in_background_thread(work, *args):
-        work(MagicMock())
-
-    window.run_in_background_thread = MagicMock(side_effect=run_in_background_thread)
-
     # Run
     await window.save_iso()
 
