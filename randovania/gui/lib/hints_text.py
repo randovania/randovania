@@ -4,7 +4,61 @@ from randovania.game_description import default_database
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
+from randovania.generator.item_pool import pickup_creator
+
+
+def prime1_hint_text():
+    db = default_database.resource_database_for(RandovaniaGame.PRIME1)
+    artifact = pickup_creator.create_artifact(0, db)
+
+    result = [(
+        "Artifact",
+        artifact.item_category,
+        artifact.broad_category,
+    )]
+    return result
+
+
+def prime2_hint_text():
+    db = default_database.resource_database_for(RandovaniaGame.PRIME2)
+
+    result = []
+
+    for temple in range(3):
+        key = pickup_creator.create_dark_temple_key(0, temple, db)
+        result.append((
+            key.name.replace(" 1", "").strip(),
+            key.item_category,
+            key.broad_category,
+        ))
+
+    key = pickup_creator.create_sky_temple_key(0, db)
+    result.append((
+        "Sky Temple Key",
+        key.item_category,
+        key.broad_category,
+    ))
+
+    return result
+
+
+def prime3_hint_text():
+    db = default_database.resource_database_for(RandovaniaGame.PRIME3)
+    cell = pickup_creator.create_energy_cell(0, db)
+
+    result = [(
+        "Energy Cell",
+        cell.item_category,
+        cell.broad_category,
+    )]
+    return result
+
+
+_GAME_SPECIFIC = {
+    RandovaniaGame.PRIME1: prime1_hint_text,
+    RandovaniaGame.PRIME2: prime2_hint_text,
+    RandovaniaGame.PRIME3: prime3_hint_text,
+}
 
 
 def update_hints_text(game: RandovaniaGame,
@@ -22,20 +76,12 @@ def update_hints_text(game: RandovaniaGame,
             item.broad_category.hint_details[1],
         ))
 
-    if game == RandovaniaGame.PRIME2:
-        for dark_temple_key in DARK_TEMPLE_KEY_NAMES:
-            rows.append((
-                dark_temple_key.format("").strip(),
-                ItemCategory.TEMPLE_KEY.hint_details[1],
-                ItemCategory.TEMPLE_KEY.general_details[1],
-                ItemCategory.KEY.hint_details[1],
-            ))
-
+    for name, item_category, broad_category in _GAME_SPECIFIC[game]():
         rows.append((
-            "Sky Temple Key",
-            ItemCategory.SKY_TEMPLE_KEY.hint_details[1],
-            ItemCategory.SKY_TEMPLE_KEY.general_details[1],
-            ItemCategory.KEY.hint_details[1],
+            name,
+            item_category.hint_details[1],
+            item_category.general_details[1],
+            broad_category.hint_details[1],
         ))
 
     for item in item_database.ammo.values():
@@ -46,6 +92,7 @@ def update_hints_text(game: RandovaniaGame,
             item.broad_category.hint_details[1],
         ))
 
+    hint_item_names_tree_widget.setSortingEnabled(False)
     hint_item_names_tree_widget.setRowCount(len(rows))
     for i, elements in enumerate(rows):
         for j, element in enumerate(elements):
@@ -53,6 +100,8 @@ def update_hints_text(game: RandovaniaGame,
 
     for i in range(4):
         hint_item_names_tree_widget.resizeColumnToContents(i)
+
+    hint_item_names_tree_widget.setSortingEnabled(True)
 
 
 def update_hint_locations(game: RandovaniaGame,
