@@ -237,7 +237,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
 
         def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
+            patcher.patch_game(input_file, output_file, patch_data, options.internal_copies_path,
                                progress_update=progress_update)
 
             if has_spoiler and auto_save_spoiler:

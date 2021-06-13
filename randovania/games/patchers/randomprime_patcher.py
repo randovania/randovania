@@ -322,7 +322,7 @@ class RandomprimePatcher(Patcher):
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
-                   game_files_path: Path, progress_update: ProgressUpdateCallable):
+                   internal_copies_path: Path, progress_update: ProgressUpdateCallable):
         if input_file is None:
             raise ValueError("Missing input file")
 
