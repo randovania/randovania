@@ -44,6 +44,7 @@ def test_migrate_from_v11(option):
                 },
                 'input_path': None,
                 'output_directory': None,
+                'output_format': None,
             },
         }
     }
