@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Closing the dangerous settings warning via the X button is now properly recognized as "don't continue".
 
+-   Fixed: Hint Item Names no longer breaks if you swap games while the table is sorted.
+
+-   Fixed: Hint Item Names now properly list Artifacts and Energy Cells.
+
 ### Metroid Prime 2 - Logic Database Changes
 
 -   **Major** - "Suitless Ingclaw/Ingstorm" trick added to cover traversing rooms with either Ingclaw Vapor or Ingstorm.
