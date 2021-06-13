@@ -21,7 +21,7 @@ from randovania.games.prime.patcher_file_lib import item_names
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib
+from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
@@ -226,39 +226,21 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             return
 
         dialog.save_options()
-        input_file = dialog.input_file
-        output_file = dialog.output_file
-        auto_save_spoiler = dialog.auto_save_spoiler
         players_config = PlayersConfiguration(
             player_index=self.current_player_index,
             player_names=self._player_names,
         )
 
         patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
-
-        def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data, options.internal_copies_path,
-                               progress_update=progress_update)
-
-            if has_spoiler and auto_save_spoiler:
-                layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
-
-            progress_update(f"Finished!", 1)
-
-        try:
-            await self.run_in_background_async(work, "Exporting...")
-        except Exception as e:
-            logging.exception("Unable to export ISO")
-
-            self.progress_update_signal.emit(f"Unable to export ISO: {e}", None)
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
-                                        "Unable to export ISO",
-                                        str(e),
-                                        QtWidgets.QMessageBox.Ok)
-            common_qt_lib.set_default_window_icon(box)
-            if e.__traceback__ is not None:
-                box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
-            await async_dialog.execute_dialog(box)
+        await game_exporter.export_game(
+            patcher=patcher,
+            input_dialog=dialog,
+            patch_data=patch_data,
+            internal_copies_path=options.internal_copies_path,
+            layout_for_spoiler=layout,
+            background=self,
+            progress_update_signal=self.progress_update_signal,
+        )
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
