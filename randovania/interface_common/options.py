@@ -283,7 +283,7 @@ class Options:
 
     # Files paths
     @property
-    def game_files_path(self) -> Path:
+    def internal_copies_path(self) -> Path:
         return self._data_dir.joinpath("internal_copies")
 
     @property

@@ -55,7 +55,7 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
     patcher.create_patch_data.assert_called_once_with(layout_description, players_config, cosmetic_class())
     patcher.patch_game.assert_called_once_with(args.input_file, args.output_file,
                                                patcher.create_patch_data.return_value,
-                                               Options.with_default_data_dir().game_files_path,
+                                               Options.with_default_data_dir().internal_copies_path,
                                                ANY)
 
     if with_permalink:
