@@ -64,7 +64,9 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
             self.state = self._create_state(num_included_in_starting_items=1)
         else:
             if self._item.warning is not None:
-                self.item_name_label.setToolTip(self._item.warning)
+                self.warning_label.setText(self._item.warning)
+            else:
+                self.warning_label.setVisible(False)
             self.state = starting_state
 
     @property
