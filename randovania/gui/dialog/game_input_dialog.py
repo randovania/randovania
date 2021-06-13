@@ -2,7 +2,7 @@ import dataclasses
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtWidgets import QMessageBox, QDialog
+from PySide2.QtWidgets import QMessageBox, QDialog, QLabel, QRadioButton, QGroupBox
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.patcher import Patcher
@@ -19,6 +19,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     _game: RandovaniaGame
     _prompt_input_file: bool
     _current_lock_state: bool = True
+    _selected_output_format: str
 
     def __init__(self, options: Options, patcher: Patcher, word_hash: str, spoiler: bool, game: RandovaniaGame):
         super().__init__()
@@ -50,6 +51,23 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.output_file_edit.textChanged.connect(self._validate_output_file)
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
+        # Output format
+        if per_game.output_format is not None:
+            self._selected_output_format = per_game.output_format
+        else:
+            self._selected_output_format = patcher.valid_output_file_types[0]
+        if len(patcher.valid_output_file_types) > 1:
+            layout = self.output_format_layout
+            output_label = QLabel()
+            output_label.setText("Output Format")
+            layout.addWidget(output_label)
+            for filetype in patcher.valid_output_file_types:
+                radio = QRadioButton("." + filetype, self)
+                if filetype == self._selected_output_format:
+                    radio.setChecked(True)
+                radio.toggled.connect(self._on_output_format_changed)
+                layout.addWidget(radio)
+
         # Spoiler
         self.auto_save_spoiler_check.setEnabled(spoiler)
         self.auto_save_spoiler_check.setChecked(options.auto_save_spoiler)
@@ -65,7 +83,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_directory is not None:
-            self.output_file_edit.setText(str(per_game.output_directory.joinpath(self.default_output_name)))
+            self.output_file_edit.setText(str(per_game.output_directory.joinpath("{}.{}".format(self.default_output_name, self._selected_output_format))))
 
         self._validate_input_file()
         self._validate_output_file()
@@ -77,6 +95,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
             per_game = options.options_for_game(self._game)
             per_game_changes = {"output_directory": self.output_file.parent}
+            per_game_changes["output_format"] = self._selected_output_format
             if self._prompt_input_file:
                 per_game_changes["input_path"] = self.input_file
 
@@ -147,7 +166,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self._update_accept_button()
 
     def _on_output_file_button(self):
-        suggested_name = self.default_output_name
+        suggested_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
         if self.output_file_edit.text() and self.output_file.parent.is_dir():
             suggested_name = str(self.output_file.parent.joinpath(suggested_name))
 
@@ -168,3 +187,12 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             return
 
         self.output_file_edit.setText(str(output_file))
+
+    def _on_output_format_changed(self):
+        button = self.sender()
+        if button.isChecked():
+            self._selected_output_format = button.text()[1:]
+            current_filename = Path(self.output_file_edit.text())
+            if str(current_filename) != '.':
+                self.output_file_edit.setText(str(current_filename.with_suffix('.' + self._selected_output_format)))
+                self._validate_output_file()

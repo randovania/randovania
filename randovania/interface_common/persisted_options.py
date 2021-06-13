@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 14
+_CURRENT_OPTIONS_FILE_VERSION = 15
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -55,8 +55,16 @@ def _convert_v13(options: dict) -> dict:
                 "cosmetic_patches": cosmetic_patches,
                 "input_path": None,
                 "output_directory": output_directory,
+                "output_format": None,
             }
         }
+
+    return options
+
+
+def _convert_v14(options: dict) -> dict:
+    for game in options["per_game_options"]:
+        options["per_game_options"][game]["output_format"] = None
 
     return options
 
@@ -65,6 +73,7 @@ _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
     12: _convert_v12,
     13: _convert_v13,
+    14: _convert_v14,
 }
 
 

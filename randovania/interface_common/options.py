@@ -61,6 +61,7 @@ class PerGameOptions:
     cosmetic_patches: AnyCosmeticPatches
     input_path: Optional[Path] = None
     output_directory: Optional[Path] = None
+    output_format: Optional[str] = None
 
     @property
     def as_json(self):
@@ -68,6 +69,7 @@ class PerGameOptions:
             "cosmetic_patches": self.cosmetic_patches.as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,
+            "output_format": self.output_format if self.output_format is not None else None,
         }
 
     @classmethod
@@ -80,6 +82,7 @@ class PerGameOptions:
         return PerGameOptions(
             cosmetic_patches=cosmetic_patches,
             input_path=decode_if_not_none(value["input_path"], Path),
+            output_format=decode_if_not_none(value["output_format"], str),
             output_directory=decode_if_not_none(value["output_directory"], Path),
         )
 
