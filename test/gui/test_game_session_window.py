@@ -456,7 +456,7 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
         mock_input_dialog.return_value.input_file,
         mock_input_dialog.return_value.output_file,
         window.network_client.session_admin_player.return_value,
-        window._options.game_files_path,
+        window._options.internal_copies_path,
         progress_update=ANY,
     )
 

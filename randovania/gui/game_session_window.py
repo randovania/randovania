@@ -1054,7 +1054,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                      options.options_for_game(game).cosmetic_patches.as_json)
 
         def work(progress_update: ProgressUpdateCallable):
-            patcher.patch_game(input_file, output_file, patch_data, options.game_files_path,
+            patcher.patch_game(input_file, output_file, patch_data, options.internal_copies_path,
                                progress_update=progress_update)
 
             progress_update(f"Finished!", 1)
