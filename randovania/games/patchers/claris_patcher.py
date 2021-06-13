@@ -46,7 +46,7 @@ class ClarisPatcher(Patcher):
             shutil.rmtree(internal_copies_path)
 
     def default_output_file(self, seed_hash: str) -> str:
-        return "Echoes Randomizer - {}.iso".format(seed_hash)
+        return "Echoes Randomizer - {}".format(seed_hash)
 
     @property
     def valid_input_file_types(self) -> List[str]:
