@@ -1030,13 +1030,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         game = self.current_player_game
         patcher = self._window_manager.patcher_provider.patcher_for_game(game)
 
-        if patcher.is_busy:
-            return await async_dialog.message_box(
-                self, QtWidgets.QMessageBox.Critical,
-                "Can't save ISO",
-                "Error: Unable to save multiple ISOs at the same time,"
-                "another window is saving an ISO right now.")
-
         dialog = GameInputDialog(options, patcher, self._game_session.word_hash, False, game)
         result = await async_dialog.execute_dialog(dialog)
 

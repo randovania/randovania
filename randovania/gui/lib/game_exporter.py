@@ -27,6 +27,13 @@ async def export_game(
     output_file = input_dialog.output_file
     auto_save_spoiler = input_dialog.auto_save_spoiler
 
+    if patcher.is_busy:
+        return await async_dialog.message_box(
+            None, QtWidgets.QMessageBox.Critical,
+            "Can't export game",
+            "Error: Unable to export multiple games at the same time and "
+            "another window is exporting a game right now.")
+
     def work(progress_update: ProgressUpdateCallable):
         patcher.patch_game(input_file, output_file, patch_data, internal_copies_path,
                            progress_update=progress_update)
