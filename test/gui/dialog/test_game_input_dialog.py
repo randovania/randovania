@@ -26,6 +26,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     patcher.default_output_file.return_value = "MyHashGame.iso"
     options = MagicMock()
     options.options_for_game.return_value.output_directory = output_directory
+    options.options_for_game.return_value.output_format = "iso"
     window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
@@ -34,7 +35,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
 
     # Assert
     patcher.default_output_file.assert_called_once_with("MyHash")
-    mock_prompt.assert_called_once_with(window, expected_default_name,
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
                                         patcher.valid_output_file_types)
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
     assert tmp_path.joinpath("foo").is_dir()
@@ -47,6 +48,8 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     patcher = MagicMock()
     options = MagicMock()
     options.options_for_game.return_value.output_directory = None
+    options.options_for_game.return_value.output_format = "iso"
+    patcher.default_output_file.return_value = "Echoes Randomizer - MyHash"
     window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     mock_prompt.return_value = None
 
@@ -55,7 +58,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
     # Assert
     patcher.default_output_file.assert_called_once_with("MyHash")
-    mock_prompt.assert_called_once_with(window, patcher.default_output_file.return_value,
+    mock_prompt.assert_called_once_with(window, patcher.default_output_file.return_value + ".iso",
                                         patcher.valid_output_file_types)
     assert window.output_file_edit.text() == ""
 
@@ -63,6 +66,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
     patcher = MagicMock()
+    patcher.valid_output_file_types = ["iso"]
     window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
     window.output_file_edit.setText("somewhere/game.iso")
 

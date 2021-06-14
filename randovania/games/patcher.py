@@ -65,13 +65,13 @@ class Patcher(ABC):
         raise NotImplementedError()
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
-                   game_files_path: Path, progress_update: ProgressUpdateCallable):
+                   internal_copies_path: Path, progress_update: ProgressUpdateCallable):
         """
         Invokes the necessary tools to patch the game.
         :param input_file: Vanilla copy of the game. Required if uses_input_file_directly or has_internal_copy is False.
         :param output_file: Where a modified copy of the game is placed.
         :param patch_data: Data created by create_patch_data.
-        :param game_files_path:
+        :param internal_copies_path: Path to where all internal copies are stored.
         :param progress_update: Pushes updates as slow operations are done.
         :return: None
         """
