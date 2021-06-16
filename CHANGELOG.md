@@ -69,6 +69,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Methods of crossing Torvus Bog - Fortress Transport Access with Gravity Boost or Bombs (No Tricks/Advanced and above).
 
+-   Method of traversing Vault without Space Jump or Screw Attack using Extended Dashes (Advanced and above).
+
+-   Method of reaching Windchamber Gateway item with only Scan Visor using Extended Dashes (Expert and above).
+
+-   Method of reaching Kinetic Orb Cannon in Gathering Hall using Extended Dashes (Expert and above).
+
 #### Changed
 
 -   Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
@@ -96,6 +102,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Activating Controller Access rooms Bomb Slots without Bombs is now Advanced (from Expert).
 
 -   Reaching the Abandoned Worksite/Brooding Ground door from the bridge in Dark/Forgotten Bridge with an Extended Dash is now Hypermode (from Expert).
+
+-   The initial Terminal Fall Abuses in Vault from the scan portal are separate from the final and are now Advanced (from Expert).
+
+-   Catacombs NSJ dash to Transit Tunnel South has been modified to account for Scan Visor, with the original difficulty being raised to Advanced (from Intermediate).
+
+-   Undertemple Shaft NSJ dash from bottom to top of cannon is now Intermediate (from Advanced).
+
+-   Simplified logic in Profane Path, Morph Ball is no longer required to reach the portal from the echo lock safe zone using the scan dash method.
+
+-   Various Standable Terrain tricks (Dark Agon - Portal Site, Temple Grounds - Sacred Path) have been lowered to Beginner/Intermediate (from Advanced). This is to
+    attempt to fix an old database limitation from before tricks had their own difficulty levels. 
+
+-   The dashes in Gathering Hall from Transit Tunnel South/West to the Kinetic Orb Cannon are now Intermediate (from Advanced).
+
+-   The Bomb Space Jump NSJ to reach Abandoned Worksite in Great Bridge is now Expert (from Hypermode).
+
+-   The dash to reach the portal in Aerial Training Site from Central Hive Transport West is now Hypermode (from Expert).
+
+-   The dash to leave Hive Temple after Quadraxis via Security Station is now Hypermode (from Expert).
+
+-   The dashes in Command Center (top level) and Accursed Lake without Space Jump are now Beginner (from Intermediate).
+
+-   The dash in Mining Station A to reach Temple Access without Space Jump or Missiles is now Advanced (from Intermediate).
+
+-   The dashes in Trial Grounds to Dark Transit Station without Space Jump are now Advanced (from Intermediate).
+
+-   The dashes in Undertemple Shaft to reach Sacrificial Chamber Tunnel (and back) are now Advanced (from Intermediate). 
+
+-   The dash in Hall of Combat Mastery to reach the upper area after the glass is now Advanced (from Intermediate).
 
 ## [2.6.1] - 2021-05-05
 
