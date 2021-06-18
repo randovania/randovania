@@ -2,15 +2,15 @@ import copy
 import re
 from typing import List, Dict, Iterator, Tuple, Iterable
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements import Requirement, RequirementAnd
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockConnection, DockLockType
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
 
@@ -165,15 +165,25 @@ class WorldList:
         :return: Generator of pairs Node + Requirement for going to that node
         """
         if isinstance(node, DockNode):
-            # TODO: respect is_blast_shield: if already opened once, no requirement needed.
-            # Includes opening form behind with different criteria
             try:
                 target_node = self.resolve_dock_node(node, patches)
                 original_area = self.nodes_to_area(node)
-                dock_weakness = patches.dock_weakness.get((original_area.area_asset_id, node.dock_index),
-                                                          node.default_dock_weakness)
+                target_area = self.nodes_to_area(target_node)
 
-                yield target_node, dock_weakness.requirement
+                forward_weakness = patches.dock_weakness.get((original_area.area_asset_id, node.dock_index),
+                                                             node.default_dock_weakness)
+                requirement = forward_weakness.requirement
+
+                # TODO: only add requirement if the blast shield has not been destroyed yet
+
+                if isinstance(target_node, DockNode):
+                    # TODO: Target node is expected to be a dock. Should this error?
+                    back_weakness = patches.dock_weakness.get((target_area.area_asset_id, target_node.dock_index),
+                                                              target_node.default_dock_weakness)
+                    if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
+                        requirement = RequirementAnd([requirement, back_weakness.requirement])
+
+                yield target_node, requirement
             except IndexError:
                 # TODO: fix data to not having docks pointing to nothing
                 yield None, Requirement.impossible()
