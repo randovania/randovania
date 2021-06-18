@@ -148,7 +148,7 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
     for dock_type in iterate_enum(DockType):
         output.write(f"\n> {dock_type}")
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
-            output.write(f"\n  * ({weakness.index}) {weakness.name}; Blast Shield? {weakness.is_blast_shield}\n")
+            output.write(f"\n  * ({weakness.index}) {weakness.name}; Lock type: {weakness.lock_type.name}\n")
             for level, text in pretty_print_requirement(weakness.requirement):
                 output.write("      {}{}\n".format("    " * level, text))
 

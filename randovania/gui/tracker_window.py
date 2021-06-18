@@ -18,11 +18,13 @@ from matplotlib.figure import Figure
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.requirements import RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
@@ -188,7 +190,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 starting_location = AreaLocation.from_json(previous_state["starting_location"])
 
             elevators: Dict[Teleporter, Optional[AreaLocation]] = {
-                Teleporter.from_json(item["teleporter"]): AreaLocation.from_json(item["data"]) if item["data"] is not None else None
+                Teleporter.from_json(item["teleporter"]): AreaLocation.from_json(item["data"]) if item[
+                                                                                                      "data"] is not None else None
                 for item in previous_state["elevators"]
             }
             if self.layout_configuration.game == RandovaniaGame.PRIME2:
@@ -327,14 +330,24 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     continue
 
                 if isinstance(node, DockNode):
-                    # TODO: respect is_blast_shield: if already opened once, no requirement needed.
-                    # Includes opening form behind with different criteria
                     try:
                         target_node = world_list.resolve_dock_node(node, state.patches)
-                        dock_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
-                                                                        node.default_dock_weakness)
-                        if dock_weakness.requirement.satisfied(state.resources, state.energy, state.resource_database):
+                        forward_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
+                                                                           node.default_dock_weakness)
+                        requirement = forward_weakness.requirement
+                        # TODO: only add requirement if the blast shield has not been destroyed yet
+
+                        if isinstance(target_node, DockNode):
+                            # TODO: Target node is expected to be a dock. Should this error?
+                            back_weakness = state.patches.dock_weakness.get(
+                                (world_list.nodes_to_area(target_node).area_asset_id, target_node.dock_index),
+                                target_node.default_dock_weakness)
+                            if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
+                                requirement = RequirementAnd([requirement, back_weakness.requirement])
+
+                        if requirement.satisfied(state.resources, state.energy, state.resource_database):
                             nearby_areas.add(world_list.nodes_to_area(target_node))
+
                     except IndexError as e:
                         print(f"For {node.name} in {area.name}, received {e}")
                         continue

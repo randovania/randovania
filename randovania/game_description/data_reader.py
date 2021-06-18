@@ -2,7 +2,8 @@ from typing import List, Callable, TypeVar, Tuple, Dict
 
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
+from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
+    DockLockType
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
@@ -145,7 +146,7 @@ def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> 
 def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_type: DockType) -> DockWeakness:
     return DockWeakness(item["index"],
                         item["name"],
-                        item["is_blast_door"],
+                        DockLockType(item["lock_type"]),
                         read_requirement(item["requirement"], resource_database),
                         dock_type)
 
@@ -162,7 +163,8 @@ def read_dock_weakness_database(data: Dict,
         door=door_types,
         morph_ball=morph_ball_types,
         other=[
-            DockWeakness(0, "Other Door", False, Requirement.trivial(), DockType.OTHER)
+            DockWeakness(0, "Other Door", DockLockType.FRONT_ALWAYS_BACK_FREE, Requirement.trivial(),
+                         DockType.OTHER)
         ],
         portal=portal_types)
 
