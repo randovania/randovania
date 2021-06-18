@@ -63,8 +63,8 @@ def _convert_v13(options: dict) -> dict:
 
 
 def _convert_v14(options: dict) -> dict:
-    for game in options["per_game_options"]:
-        options["per_game_options"][game]["output_format"] = None
+    for game_options in options.get("per_game_options", {}).values():
+        game_options["output_format"] = None
 
     return options
 
