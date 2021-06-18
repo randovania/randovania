@@ -13,11 +13,18 @@ class DockType(Enum):
     PORTAL = 3
 
 
+@unique
+class DockLockType(Enum):
+    FRONT_ALWAYS_BACK_FREE = 0
+    FRONT_BLAST_BACK_FREE_UNLOCK = 1
+    FRONT_BLAST_BACK_BLAST = 2
+
+
 @dataclass(frozen=True, order=True)
 class DockWeakness:
     index: int
     name: str
-    is_blast_shield: bool
+    lock_type: DockLockType
     requirement: Requirement
     dock_type: DockType
 

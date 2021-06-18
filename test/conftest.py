@@ -13,11 +13,11 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.preset import Preset
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 
 @pytest.fixture(scope="session")
@@ -30,12 +30,6 @@ def echo_tool(request, test_files_dir) -> Path:
     if request.config.option.skip_echo_tool:
         pytest.skip()
     return test_files_dir.joinpath("echo_tool.py")
-
-
-@pytest.fixture(scope="session")
-def simple_data(test_files_dir: Path) -> dict:
-    with test_files_dir.joinpath("small_game_data.json").open("r") as small_game_data:
-        return json.load(small_game_data)
 
 
 @pytest.fixture()
