@@ -6,6 +6,7 @@ import construct
 from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
                        Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b)
 
+from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
@@ -189,7 +190,7 @@ requirement_type_map["or"] = PrefixedArray(VarInt, ConstructRequirement)
 ConstructDockWeakness = Struct(
     index=VarInt,
     name=CString("utf8"),
-    is_blast_door=Flag,
+    lock_type=VarInt,
     requirement=ConstructRequirement,
 )
 
@@ -213,7 +214,7 @@ ConstructResourceGain = Struct(
     amount=VarInt,
 )
 
-ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
+ConstructLoreType = construct.Enum(Byte, **{enum_value.value: i for i, enum_value in enumerate(LoreType)})
 
 ConstructNodeCoordinates = Struct(
     x=Float64b,
@@ -236,7 +237,6 @@ ConstructNode = Struct(
                 connected_dock_index=Byte,
                 dock_type=Byte,
                 dock_weakness_index=VarInt,
-                _=Const(b"\x00\x00\x00"),
             ),
             "pickup": Struct(
                 pickup_index=VarInt,
