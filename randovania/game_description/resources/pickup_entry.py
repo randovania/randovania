@@ -78,6 +78,11 @@ class PickupEntry:
                 raise ValueError(f"{i}-th progression has {progression[1]} quantity, "
                                  f"higher than max for {progression[0]}")
 
+        for resource, quantity in self.extra_resources:
+            if isinstance(resource, ItemResourceInfo):
+                if quantity > resource.max_capacity:
+                    raise ValueError(f"Attempt to give {quantity} of {resource.long_name}, more than max capacity")
+
     def __hash__(self):
         return hash(self.name)
 
