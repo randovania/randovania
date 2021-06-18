@@ -179,7 +179,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
     return {
         "index": dock_weakness.index,
         "name": dock_weakness.name,
-        "is_blast_door": dock_weakness.is_blast_shield,
+        "lock_type": dock_weakness.lock_type.value,
         "requirement": write_requirement(dock_weakness.requirement)
     }
 
