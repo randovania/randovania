@@ -18,8 +18,8 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
     item_a = echoes_resource_database.get_item(10)
     item_b = echoes_resource_database.get_item(15)
     item_c = echoes_resource_database.get_item(18)
-    ammo_a = echoes_resource_database.get_item(40)
-    ammo_b = echoes_resource_database.get_item(42)
+    ammo_a = echoes_resource_database.get_item(42)
+    ammo_b = echoes_resource_database.get_item(45)
 
     major_item = MajorItem(
         name="The Item",
@@ -27,7 +27,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
         broad_category=ItemCategory.MORPH_BALL_RELATED,
         model_name="SuperModel",
         progression=(10, 15, 18),
-        ammo_index=(40, 42),
+        ammo_index=(42, 45),
         required=False,
         original_index=None,
         probability_offset=5,
@@ -180,19 +180,19 @@ def test_create_seeker_launcher(ammo_quantity: int,
 def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_database):
     # Setup
     primary_a = echoes_resource_database.get_item(73)
-    ammo_a = echoes_resource_database.get_item(40)
+    ammo_a = echoes_resource_database.get_item(42)
     temporary_a = echoes_resource_database.get_item(71)
 
     ammo = Ammo(
         name="The Item",
         maximum=100,
-        items=(40,),
+        items=(42,),
         broad_category=ItemCategory.ETM,
         unlocked_by=73,
         temporary=71,
         model_name="AmmoModel",
     )
-    ammo_count = [75, 150]
+    ammo_count = [11, 150]
 
     # Run
     result = randovania.generator.item_pool.pickup_creator.create_ammo_expansion(
