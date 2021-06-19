@@ -75,6 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Method of reaching Kinetic Orb Cannon in Gathering Hall using Extended Dashes (Expert and above).
 
+-   Method of reaching Temple Security Access with an Extended Dash (Hypermode).
+
+-   Method of grabbing the Watch Station item without Screw Attack using Single Room Out of Bounds (Hypermode).
+
 #### Changed
 
 -   Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
@@ -131,6 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   The dashes in Undertemple Shaft to reach Sacrificial Chamber Tunnel (and back) are now Advanced (from Intermediate). 
 
 -   The dash in Hall of Combat Mastery to reach the upper area after the glass is now Advanced (from Intermediate).
+
+-   The Watch Station item via out of bounds now requires Room Randomizer to be off (maybe this could be extended to other oob tricks?).
 
 ## [2.6.1] - 2021-05-05
 
