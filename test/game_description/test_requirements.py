@@ -6,6 +6,7 @@ import pytest
 from randovania.game_description import data_reader
 from randovania.game_description.requirements import ResourceRequirement, RequirementList, RequirementSet, \
     RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
+from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -484,3 +485,62 @@ def test_simple_echoes_damage(echoes_resource_database):
     assert req.damage({}, db) == 50
     assert req.damage({d_suit: 1}, db) == 11
     assert req.damage({l_suit: 1}, db) == 0
+
+
+def test_requirement_list_constructor(echoes_resource_database):
+    def item(name):
+        return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
+
+    req_list = RequirementList([
+        ResourceRequirement(item("Dark Visor"), 1, False),
+        ResourceRequirement(item("Missile"), 5, False),
+        ResourceRequirement(item("Seeker Launcher"), 1, False),
+    ])
+    extract = [(req.resource.long_name, req.amount) for req in req_list.items]
+
+    assert sorted(extract) == [
+        ("Dark Visor", 1),
+        ("Missile", 5),
+        ("Seeker Launcher", 1),
+    ]
+
+
+def test_requirement_set_constructor(echoes_resource_database):
+    def item(name):
+        return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
+
+    req_set = RequirementSet([
+        RequirementList([
+            ResourceRequirement(item("Dark Visor"), 1, False),
+            ResourceRequirement(item("Missile"), 5, False),
+            ResourceRequirement(item("Seeker Launcher"), 1, False),
+        ]),
+        RequirementList([
+            ResourceRequirement(item("Screw Attack"), 1, False),
+            ResourceRequirement(item("Space Jump Boots"), 1, False),
+        ]),
+        RequirementList([
+            ResourceRequirement(item("Power Bomb"), 1, False),
+            ResourceRequirement(item("Boost Ball"), 1, False),
+        ]),
+    ])
+    extract = [
+        sorted((req.resource.long_name, req.amount) for req in req_list.items)
+        for req_list in req_set.alternatives
+    ]
+
+    assert sorted(extract) == [
+        [
+            ("Boost Ball", 1),
+            ("Power Bomb", 1),
+        ],
+        [
+            ("Dark Visor", 1),
+            ("Missile", 5),
+            ("Seeker Launcher", 1),
+        ],
+        [
+            ("Screw Attack", 1),
+            ("Space Jump Boots", 1),
+        ],
+    ]
