@@ -409,8 +409,9 @@ class RequirementList:
         return isinstance(
             other, RequirementList) and self.items == other.items
 
-    def __lt__(self, other: "RequirementList"):
-        return self.items < other.items
+    @property
+    def as_stable_sort_tuple(self):
+        return len(self.items), sorted(self.items)
 
     def __hash__(self) -> int:
         if self._cached_hash is None:
@@ -491,7 +492,7 @@ class RequirementSet:
         self.alternatives = frozenset(
             requirement
             for requirement in input_set
-            if not any(other < requirement for other in input_set)
+            if not any(other.items < requirement.items for other in input_set)
         )
 
     def __deepcopy__(self, memodict):
