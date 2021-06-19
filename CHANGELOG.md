@@ -75,6 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Method of reaching Kinetic Orb Cannon in Gathering Hall using Extended Dashes (Expert and above).
 
+-   Method of reaching the pickup in Accursed Lake with a dash (Advanced and above).
+
 #### Changed
 
 -   Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
@@ -109,7 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Undertemple Shaft NSJ dash from bottom to top of cannon is now Intermediate (from Advanced).
 
--   Simplified logic in Profane Path, Morph Ball is no longer required to reach the portal from the echo lock safe zone using the scan dash method.
+-   Morph Ball is no longer required to reach the portal from the Echo Gate in Profane Path Scan Dash method.
 
 -   Various Standable Terrain tricks (Dark Agon - Portal Site, Temple Grounds - Sacred Path) have been lowered to Beginner/Intermediate (from Advanced). This is to
     attempt to fix an old database limitation from before tricks had their own difficulty levels. 
