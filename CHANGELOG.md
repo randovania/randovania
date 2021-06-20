@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Add text description to unusual items in the Item Pool tab.
 
+-   Added: New Help tab with information on how to read the Data Visualizer.
+
 -   Changed: Customizing Dark Aether damage is now considered by logic.
 
 -   Changed: Pickup visibility method is now configured in the Item Pool tab.
