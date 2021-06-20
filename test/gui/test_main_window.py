@@ -82,8 +82,7 @@ async def test_drop_event_preset(default_main_window):
 
     # Assert
     default_main_window.generate_seed_tab.import_preset_file(Path("/my/path.rdvpreset"))
-    assert default_main_window.main_tab_widget.currentWidget() == default_main_window.welcome_tab
-    assert default_main_window.welcome_tab_widget.currentWidget() == default_main_window.tab_create_seed
+    assert default_main_window.main_tab_widget.currentWidget() == default_main_window.tab_create_seed
 
 
 @pytest.mark.asyncio
