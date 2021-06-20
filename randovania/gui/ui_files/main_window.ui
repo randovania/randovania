@@ -26,19 +26,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QVBoxLayout" name="main_layout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>4</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
@@ -61,72 +49,12 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item row="0" column="0" colspan="3">
-         <widget class="QLabel" name="intro_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Randovania {version}, a randomizer for Metroid Prime and Metroid Prime 2: Echoes.&lt;/p&gt;&lt;p&gt;Here you will be able to randomize many aspects of either game, while still being ensured it's possible to finish without any trick or glitch! What can be randomized?&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All 100 pickups (including the 4 translators), 9 temple keys, 9 Sky Temple keys and the Energy Transfer Module, for a total of 119 pickups.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The destination of all elevators.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The translator necessary for opening the Translator Gates.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The location you start the game in as well as the items you start with.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;So have fun and start randomizing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QPushButton" name="open_faq_button">
-          <property name="text">
-           <string>Open FAQ</string>
-          </property>
-         </widget>
-        </item>
         <item row="5" column="2">
          <widget class="QPushButton" name="open_database_viewer_button">
           <property name="text">
            <string>Open Database Viewer</string>
           </property>
          </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="intro_play_now_button">
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Play Now</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0" colspan="3">
-         <widget class="QLabel" name="help_offer_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;hr/&gt;&lt;p&gt;Want to learn more about the randomizer?&lt;/p&gt;&lt;p&gt;Check out the &lt;span style=&quot; font-weight:600;&quot;&gt;FAQ &lt;/span&gt;for surprising behaviour of the game.&lt;br/&gt;Check the Database to check what's required to progress in each room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <spacer name="intro_top_spacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>30</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="1" column="1">
          <spacer name="intro_vertical_spacer">
@@ -153,6 +81,78 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="3" column="1">
+         <spacer name="intro_top_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>30</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="5" column="0">
+         <widget class="QPushButton" name="open_faq_button">
+          <property name="text">
+           <string>Open FAQ</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="QLabel" name="help_offer_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;hr/&gt;&lt;p&gt;Want to learn more about the randomizer?&lt;/p&gt;&lt;p&gt;Check out the &lt;span style=&quot; font-weight:600;&quot;&gt;FAQ &lt;/span&gt;for surprising behaviour of the game.&lt;br/&gt;Check the Database to check what's required to progress in each room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="intro_play_now_button">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Play Now</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="intro_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Randovania {version}, a randomizer for Metroid Prime and Metroid Prime 2: Echoes.&lt;/p&gt;&lt;p&gt;Here you will be able to randomize many aspects of either game, while still being ensured it's possible to finish without any trick or glitch! What can be randomized?&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All 100 pickups (including the 4 translators), 9 temple keys, 9 Sky Temple keys and the Energy Transfer Module, for a total of 119 pickups.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The destination of all elevators.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The translator necessary for opening the Translator Gates.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The location you start the game in as well as the items you start with.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;So have fun and start randomizing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="margin">
+           <number>7</number>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
+          <property name="openExternalLinks">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -555,8 +555,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>310</width>
-             <height>430</height>
+             <width>301</width>
+             <height>416</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="create_scroll_area_layout">
@@ -652,7 +652,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>614</width>
+                 <width>596</width>
                  <height>608</height>
                 </rect>
                </property>
@@ -703,8 +703,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>631</width>
-                 <height>485</height>
+                 <width>613</width>
+                 <height>471</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="multiworld_scroll_contents_layout">
@@ -754,8 +754,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>125</width>
-                 <height>3065</height>
+                 <width>596</width>
+                 <height>725</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="differences_scroll_layout_2">
@@ -865,8 +865,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>89</width>
-                 <height>411</height>
+                 <width>613</width>
+                 <height>471</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -952,8 +952,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>89</width>
-                 <height>385</height>
+                 <width>613</width>
+                 <height>471</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -1015,15 +1015,72 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>631</width>
-                 <height>485</height>
+                 <width>613</width>
+                 <height>471</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="tracker_scroll_area_layout">
                 <item>
                  <widget class="QLabel" name="tracker_label">
                   <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania includes a simple &amp;quot;map&amp;quot; tracker, accessible via right-clicking the preset you want to use in the &lt;span style=&quot; font-weight:600;&quot;&gt;Generate Game&lt;/span&gt; menu.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;data/gui_assets/tracker-open.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;This tracker uses the logic and game modifications configuration from the current permalink. It shows where you can go depending on where you are in the game, as well as which items you've picked up and events you've triggered.&lt;/p&gt;&lt;p&gt;To use the tracker, simply select the items on the left that you have. This will open up new locations on the right side. Click events and pickups as you progress for more locations to show up. If you make a mistake, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Actions&lt;/span&gt; tab to undo the latest action you made.&lt;/p&gt;&lt;p&gt;If you randomized the elevators, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Elevators&lt;/span&gt; tab to configure how the elevators are setup. If you shuffled the translator gates in Prime 2, you can configure those as well via the &lt;span style=&quot; font-weight:600;&quot;&gt;Translator Gate&lt;/span&gt; tab.&lt;/p&gt;&lt;p&gt;Random starting location is also accounted for if enabled for your settings, so make sure you set the correct starting room when opening the tracker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania includes a simple &amp;quot;map&amp;quot; tracker.&lt;/p&gt;&lt;p&gt;To open, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Generate Game&lt;/span&gt; tab and right-click the preset under the game you will use to generate a seed.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;data/gui_assets/tracker-open.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;The tracker uses the logic and game modifications configuration from the selected preset. It shows where you can go depending on where you are in the game, as well as which items you've picked up and events you've triggered.&lt;/p&gt;&lt;p&gt;To use the tracker, simply select the items on the left that you have. This will open up new locations on the right side. Click events and pickups as you progress for more locations to show up. If you make a mistake, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Actions&lt;/span&gt; tab to undo the latest action you made.&lt;/p&gt;&lt;p&gt;If you randomized the elevators, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Elevators&lt;/span&gt; tab to configure how the elevators are setup. If you shuffled the translator gates in Prime 2, you can configure those as well via the &lt;span style=&quot; font-weight:600;&quot;&gt;Translator Gate&lt;/span&gt; tab.&lt;/p&gt;&lt;p&gt;Random starting location is also accounted for if enabled for your settings, so make sure you set the correct starting room when opening the tracker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="database_viewer_tab">
+           <attribute name="title">
+            <string>Database Viewer</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QScrollArea" name="database_viewer_scroll_area">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="database_viewer_scroll_area_contents">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>596</width>
+                 <height>702</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
+                </property>
+                <property name="leftMargin">
+                 <number>9</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="database_viewer_label">
+                  <property name="text">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania has an extensive database with many tricks and paths that are configurable in a given preset. This is where all the logic is stored and determines what is required of a player in a seed given certain trick difficulties.&lt;/p&gt;&lt;p&gt;To open the database, click the &lt;span style=&quot; font-weight:600;&quot;&gt;Open&lt;/span&gt; menu and select a game from the dropdown. From here you can view each individual trick or click the &lt;span style=&quot; font-weight:600;&quot;&gt;Data Visualizer&lt;/span&gt; option.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;data/gui_assets/database-open.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;Using the database might take some time to get used to, but it is highly recommended to get familiar with it in case you need to figure out what tricks you might want to play with and how to get from point A to point B.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;How to Read the Database&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;data/gui_assets/database-example.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;The left dropdown lists the areas for the respective game, and the right dropdown is the list of rooms in the area selected.&lt;/p&gt;&lt;p&gt;Once you have a room selected, click a Node from the &lt;span style=&quot; font-style:italic;&quot;&gt;Nodes&lt;/span&gt; box. This is your starting point.&lt;/p&gt;&lt;p&gt;In the &lt;span style=&quot; font-style:italic;&quot;&gt;Connections&lt;/span&gt; box, select a node from the dropdown menu. These are your destinations. This is where you can view what tricks are required on a path from node to node. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;List of Nodes&lt;/span&gt;&lt;/p&gt;&lt;p&gt;These are the relevant locations in a room. These include:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Doors&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Blast Shields&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Elevators (Prime 1/2)&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Teleporters (Prime 3)&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Portals (Prime 2)&lt;/li&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pickups&lt;/li&gt;&lt;/ul&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Events&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Helper Nodes: general nodes that other nodes link up for database simplification)&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Node Info&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This box tells important information about a specific node.&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Door/Blast Shield/Portal: Mentions what is needed to open it and what room it connects to.&lt;/li&gt;&lt;/ul&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Elevator/Telporter: Mentions what room it connects to.&lt;/li&gt;&lt;/ul&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pickup: Mentions what number it is and if it's a major item or not.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Events: Specific one-time events that must be completed in order to progress on certain paths.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1350,7 +1407,7 @@ p, li { white-space: pre-wrap; }
   <customwidget>
    <class>PresetTreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>randovania/gui/lib/preset_tree_widget.h</header>
+   <header location="global">randovania/gui/lib/preset_tree_widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
