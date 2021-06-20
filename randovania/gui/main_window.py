@@ -194,8 +194,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 return
 
             elif path.suffix == f".{VersionedPreset.file_extension()}":
-                self.main_tab_widget.setCurrentWidget(self.welcome_tab)
-                self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed)
+                self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
                 self.generate_seed_tab.import_preset_file(path)
                 return
 
