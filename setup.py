@@ -78,6 +78,7 @@ setup(
         'aiofiles',
         'dulwich>=0.20',
         'py_randomprime>=0.3.6',
+        'retro-data-structures>=0.6.0',
     ],
     extras_require={
         "gui": [
@@ -88,7 +89,7 @@ setup(
             'dolphin-memory-engine>=1.0.2',
             'markdown',
             'matplotlib>=3.3.3',
-            'nod>=1.3',
+            'nod>=1.5',
             'pid>=3.0.0',
             'pypresence',
             'qdarkstyle',
