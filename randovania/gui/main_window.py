@@ -114,7 +114,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.GameDetailsSignal.connect(self._open_game_details)
         self.InitPostShowSignal.connect(self.initialize_post_show)
 
-        self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
+        self.intro_play_now_button.clicked.connect(lambda: self.main_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
         self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
                                                                  RandovaniaGame.PRIME2))
@@ -130,7 +130,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
         self.browse_racetime_button.clicked.connect(self._browse_racetime)
         self.create_new_seed_button.clicked.connect(
-            lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
         for action, game in ((self.menu_action_prime_1_data_visualizer, RandovaniaGame.PRIME1),
