@@ -63,7 +63,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Method of Crossing Grand Windchamber (both ways) Without Space Jump using Extended Dash (Hypermode).
 
--   Method of reaching the pickup in Watch Station with Space Jump, Screw Attack, and Single Room OoB (Expert and above).
+-   Method of reaching the pickup in Watch Station:
+    - With Space Jump, Screw Attack, and Single Room OoB (Expert and above).
+    - With only Space Jump and Single Room OoB (Hypermode)
 
 -   Alpha Blogg now has proper requirements for multiple difficulties.
 
@@ -78,6 +80,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Method of reaching Kinetic Orb Cannon in Gathering Hall using Extended Dashes (Expert and above).
 
 -   Method of reaching the pickup in Accursed Lake with a dash (Advanced and above).
+
+-   Method of reaching Temple Security Access from the portal in Aerial Training Site with an Extended Dash (Hypermode).
+
+-   Method of reaching the pickup in Mining Plaza with an Extended Dash (Hypermode).
 
 #### Changed
 
