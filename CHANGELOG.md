@@ -142,6 +142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   The dash in Hall of Combat Mastery to reach the upper area after the glass is now Advanced (from Intermediate).
 
+-   Fixed: Added Space Jump to the logical paths for Watch Station and Mining Plaza without Screw Attack.
+
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
