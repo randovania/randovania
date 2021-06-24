@@ -182,8 +182,8 @@ def misc_resources_for_configuration(configuration: AnyGameConfiguration,
 
     elif configuration.game == RandovaniaGame.PRIME2:
         enabled_resources = {
-            # Allow Vanilla X
-            19, 20, 21, 22, 23, 24, 25
+            # Enabled Safe Zone = 2, Allow Vanilla X = 19 to 25
+            2, 19, 20, 21, 22, 23, 24, 25
         }
         if configuration.elevators.is_vanilla:
             # Vanilla Great Temple Emerald Translator Gate
