@@ -423,9 +423,12 @@ class RequirementList:
 
     def __str__(self) -> str:
         if self.items:
-            return ", ".join(map(str, sorted(self.items)))
+            return ", ".join(sorted(map(str, self.items)))
         else:
             return "Trivial"
+
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase):
+        return sum(requirement.damage(current_resources, database) for requirement in self.values())
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
         """
