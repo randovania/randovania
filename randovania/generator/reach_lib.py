@@ -1,5 +1,5 @@
 import copy
-from typing import Iterator, List, Set
+from typing import Iterator, List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, ResourceNode, PickupNode
@@ -41,15 +41,12 @@ def _filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
 
 
 def _get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
-    generator = _filter_reachable(
+    yield from _filter_reachable(
         _filter_out_dangerous_actions(
-            collectable_resource_nodes(reach.nodes, reach),
+            collectable_resource_nodes(reach.safe_nodes, reach),
             reach.game),
         reach
     )
-    for node in generator:
-        if reach.is_safe_node(node):
-            yield node
 
 
 def collectable_resource_nodes(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
@@ -85,8 +82,9 @@ def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -
     :param initial_state:
     :return:
     """
-    from randovania.generator.old_generator_reach import OldGeneratorReach
-    reach = OldGeneratorReach.reach_from_state(game, initial_state)
+    from randovania.generator.old_generator_reach import OldGeneratorReach as GR
+    # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
+    reach = GR.reach_from_state(game, initial_state)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
@@ -127,14 +125,6 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
     # We couldn't improve this reach, so just return it
     return previous_reach
-
-
-def pickup_nodes_that_can_reach(pickup_nodes: Iterator[PickupNode],
-                                reach: GeneratorReach,
-                                safe_nodes: Set[Node]) -> Iterator[PickupNode]:
-    for pickup_node in pickup_nodes:
-        if pickup_node in safe_nodes or set(reach.shortest_path_from(pickup_node).keys()).intersection(safe_nodes):
-            yield pickup_node
 
 
 def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> GeneratorReach:

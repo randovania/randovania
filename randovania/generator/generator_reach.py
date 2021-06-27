@@ -66,9 +66,6 @@ class GeneratorReach:
     def is_safe_node(self, node: Node) -> bool:
         raise NotImplementedError()
 
-    def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
-        raise NotImplementedError()
-
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         raise NotImplementedError()
 

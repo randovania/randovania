@@ -89,7 +89,7 @@ class OldGeneratorReach(GeneratorReach):
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
-    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, bool]]:
+    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
         extra_requirement = _extra_requirement_for_node(self._game, node)
         requirement_to_leave = node.requirement_to_leave(self._state.patches, self._state.resources)
 
@@ -103,8 +103,7 @@ class OldGeneratorReach(GeneratorReach):
             if extra_requirement is not None:
                 requirement = RequirementAnd([requirement, extra_requirement])
 
-            satisfied = requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database)
-            yield target_node, requirement.as_set(self._state.resource_database), satisfied
+            yield target_node, requirement.as_set(self._state.resource_database)
 
     def _expand_graph(self, paths_to_check: List[GraphPath]):
         # print("!! _expand_graph", len(paths_to_check))
@@ -119,8 +118,8 @@ class OldGeneratorReach(GeneratorReach):
             # print(">>> will check starting at", self.game.world_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
-            for target_node, requirement, satisfied in self._potential_nodes_from(path.node):
-                if satisfied:
+            for target_node, requirement in self._potential_nodes_from(path.node):
+                if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
                     # print("* Queue path to", self.game.world_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
@@ -293,12 +292,6 @@ class OldGeneratorReach(GeneratorReach):
                 self._digraph.remove_edge(*edge)
 
         self.advance_to(new_state)
-
-    def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
-        if node.index in self._digraph:
-            return self._digraph.single_source_dijkstra_path(node.index)
-        else:
-            return {}
 
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}
