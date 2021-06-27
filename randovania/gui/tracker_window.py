@@ -319,7 +319,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         world_list = self.game_description.world_list
         state = self.state_for_current_configuration()
 
-        world = self.graph_map_world_combo.currentData()
+        world: World = self.graph_map_world_combo.currentData()
         for area in world.areas:
             g.add_node(area)
 
