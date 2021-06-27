@@ -3,12 +3,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from randovania.game_description.requirements.requirement_list import RequirementList
+
+if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.resolver.state import State
 
 
@@ -75,5 +77,5 @@ class GeneratorReach:
     def is_safe_node(self, node: Node) -> bool:
         raise NotImplementedError
 
-    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
+    def unsatisfied_requirement_list(self) -> Iterator[RequirementList]:
         raise NotImplementedError

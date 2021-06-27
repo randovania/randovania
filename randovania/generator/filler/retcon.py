@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType
-from randovania.generator import reach_lib
+from randovania.generator import path_generator_reach, reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
@@ -225,6 +225,8 @@ def retcon_playthrough_filler(rng: Random,
     actions_log = []
 
     while True:
+        path_generator_reach.PATH_GENERATOR_DEBUG = False
+
         all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
         current_player = _get_next_player(rng, player_states, all_locations_weighted)
         if current_player is None:
@@ -232,6 +234,8 @@ def retcon_playthrough_filler(rng: Random,
 
         weighted_actions = weighted_potential_actions(current_player, action_report, all_locations_weighted)
         action = select_weighted_action(rng, weighted_actions)
+
+        path_generator_reach.PATH_GENERATOR_DEBUG = True
 
         new_resources, new_pickups = action.split_pickups()
         new_pickups.sort()

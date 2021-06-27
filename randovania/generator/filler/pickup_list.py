@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import itertools
 from typing import TYPE_CHECKING
 
 from randovania.game_description import game_description
 from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
@@ -27,10 +25,7 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollect
 
 
 def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
-    satisfiable_requirements: frozenset[RequirementList] = frozenset(itertools.chain.from_iterable(
-        requirements.alternatives
-        for requirements in reach.unreachable_nodes_with_requirements().values()
-    ))
+    satisfiable_requirements: frozenset[RequirementList] = frozenset(reach.unsatisfied_requirement_list())
     return game_description.calculate_interesting_resources(
         satisfiable_requirements,
         reach.state.resources,
@@ -80,7 +75,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
 
 
 def _requirement_lists_without_satisfied_resources(state: State,
-                                                   possible_sets: list[RequirementSet],
+                                                   possible_lists: list[RequirementList],
                                                    uncollected_resources: set[ResourceInfo],
                                                    ) -> set[RequirementList]:
     seen_lists = set()
@@ -91,15 +86,14 @@ def _requirement_lists_without_satisfied_resources(state: State,
         if items_tuple not in result:
             result.add(items_tuple)
 
-    for requirements in possible_sets:
+    for alternative in possible_lists:
         # Maybe should first recreate `requirements` by removing the satisfied items or the ones that can't be
-        for alternative in requirements.alternatives:
-            if alternative in seen_lists:
-                continue
-            seen_lists.add(alternative)
+        if alternative in seen_lists:
+            continue
+        seen_lists.add(alternative)
 
-            for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
-                _add_items(items)
+        for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
+            _add_items(items)
 
     if debug.debug_level() > 2:
         print(">> All requirement lists:")
@@ -157,8 +151,8 @@ def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
     If single_set is set, all possible_sets are combined into a single one.
     """
     state = reach.state
-    possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
-    possible_sets.append(reach.game.victory_condition.as_set(reach.game.resource_database))
+    possible_lists = list(reach.unsatisfied_requirement_list())
+    possible_lists.extend(reach.game.victory_condition.as_set(reach.game.resource_database).alternatives)
     context = reach.node_context()
 
     uncollected_resources = set()
@@ -166,13 +160,7 @@ def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
         for resource, _ in node.resource_gain_on_collect(context):
             uncollected_resources.add(resource)
 
-    if single_set:
-        desired_lists = []
-        for req_set in possible_sets:
-            desired_lists.extend(req_set.alternatives)
-        possible_sets = [RequirementSet(desired_lists)]
-
-    all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
+    all_lists = _requirement_lists_without_satisfied_resources(state, possible_lists, uncollected_resources)
 
     result = []
     for requirement_list in sorted(all_lists, key=lambda it: it.as_stable_sort_tuple):

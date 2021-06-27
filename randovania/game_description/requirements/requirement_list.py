@@ -130,5 +130,22 @@ class RequirementList:
             for key, req in self._items.items()
         )
 
+    def contains(self, other: RequirementList) -> bool:
+        """True if every ResourceRequirement in other is also present in self."""
+
+        # Code flow that doesn't use bitmask
+        # return all(key in self._items for key in other._items.keys())
+
+        if self._bitmask & other._bitmask != other._bitmask:
+            return False
+        else:
+            return all(_key_hash(it) in self._items for it in other._extra)
+
+    def has_items_not_in(self, other: RequirementList) -> bool:
+        """True if at least one ResourceRequirement in self is not present in the other."""
+        return any(
+            key not in other._items for key in self._items.keys()
+        )
+
 
 SatisfiableRequirements = frozenset[RequirementList]

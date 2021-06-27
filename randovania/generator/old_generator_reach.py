@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.resolver.state import State
 
 
@@ -314,7 +315,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self.advance_to(new_state)
 
-    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
+    def unsatisfied_requirement_list(self) -> Iterator[RequirementList]:
         results = {}
         for (_, node_index), requirement in self._unreachable_paths.items():
             node = self.all_nodes[node_index]
@@ -325,7 +326,9 @@ class OldGeneratorReach(GeneratorReach):
                 results[node] = results[node].expand_alternatives(requirements)
             else:
                 results[node] = requirement
-        return results
+
+        for requirement in results.values():
+            yield from requirement.alternatives
 
     def victory_condition_satisfied(self):
         return self.game.victory_condition.satisfied(self.state.resources,
