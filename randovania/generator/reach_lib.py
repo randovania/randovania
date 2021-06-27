@@ -83,7 +83,7 @@ def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -
     :return:
     """
     from randovania.generator.old_generator_reach import OldGeneratorReach as GR
-    # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
+    # from randovania.generator.path_generator_reach import PathGeneratorReach as GR
     reach = GR.reach_from_state(game, initial_state)
     collect_all_safe_resources_in_reach(reach)
     return reach
