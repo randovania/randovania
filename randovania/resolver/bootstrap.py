@@ -181,13 +181,30 @@ def misc_resources_for_configuration(configuration: AnyGameConfiguration,
                 enabled_resources.add(index)
 
     elif configuration.game == RandovaniaGame.PRIME2:
-        enabled_resources = {
-            # Enabled Safe Zone = 2, Allow Vanilla X = 19 to 25
-            2, 19, 20, 21, 22, 23, 24, 25
+        enabled_resources = set()
+        allow_vanilla = {
+            "allow_jumping_on_dark_water": 1,
+            "allow_vanilla_dark_beam": 19,
+            "allow_vanilla_light_beam": 20,
+            "allow_vanilla_seeker_launcher": 21,
+            "allow_vanilla_echo_visor": 22,
+            "allow_vanilla_dark_visor": 27,
+            "allow_vanilla_screw_attack": 23,
+            "allow_vanilla_gravity_boost": 24,
+            "allow_vanilla_boost_ball": 25,
+            "allow_vanilla_spider_ball": 26,
         }
+        for name, index in allow_vanilla.items():
+            if getattr(configuration, name):
+                enabled_resources.add(index)
+
         if configuration.elevators.is_vanilla:
             # Vanilla Great Temple Emerald Translator Gate
             enabled_resources.add(18)
+
+        if configuration.safe_zone.prevents_dark_aether:
+            # Safe Zone
+            enabled_resources.add(2)
 
     return {
         resource: 1 if resource.index in enabled_resources else 0
