@@ -309,6 +309,22 @@ def _migrate_v10(preset: dict) -> dict:
             cutscenes = "original"
         preset["configuration"]["qol_cutscenes"] = cutscenes
 
+    elif preset["game"] == "prime2":
+        preset["configuration"]["allow_jumping_on_dark_water"] = False
+        fields = [
+            "allow_vanilla_dark_beam",
+            "allow_vanilla_light_beam",
+            "allow_vanilla_seeker_launcher",
+            "allow_vanilla_echo_visor",
+            "allow_vanilla_dark_visor",
+            "allow_vanilla_screw_attack",
+            "allow_vanilla_gravity_boost",
+            "allow_vanilla_boost_ball",
+            "allow_vanilla_spider_ball",
+        ]
+        for f in fields:
+            preset["configuration"][f] = True
+
     return preset
 
 

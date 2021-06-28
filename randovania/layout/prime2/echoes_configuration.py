@@ -63,6 +63,17 @@ class EchoesConfiguration(BaseConfiguration):
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
 
+    allow_jumping_on_dark_water: bool
+    allow_vanilla_dark_beam: bool
+    allow_vanilla_light_beam: bool
+    allow_vanilla_seeker_launcher: bool
+    allow_vanilla_echo_visor: bool
+    allow_vanilla_dark_visor: bool
+    allow_vanilla_screw_attack: bool
+    allow_vanilla_gravity_boost: bool
+    allow_vanilla_boost_ball: bool
+    allow_vanilla_spider_ball: bool
+
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.PRIME2
