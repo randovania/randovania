@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-55</y>
+         <y>-80</y>
          <width>487</width>
-         <height>778</height>
+         <height>826</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -233,31 +233,38 @@
              </property>
             </widget>
            </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="cutscene_group">
+          <property name="title">
+           <string>Cutscene removal mode</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QCheckBox" name="qol_minor_cutscenes_check">
-             <property name="text">
-              <string>Minor Cutscenes</string>
-             </property>
+            <widget class="QComboBox" name="cutscene_combo">
+             <item>
+              <property name="text">
+               <string>Original</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Minor</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Major</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="qol_minor_cutscenes_label">
+            <widget class="QLabel" name="cutscene_label">
              <property name="text">
-              <string>Removes cutscenes that don't affect the game too much when removed.</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="qol_major_cutscenes_check">
-             <property name="text">
-              <string>Major Cutscenes</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="qol_major_cutscenes_label">
-             <property name="text">
-              <string>Allows you to continue playing the game while cutscenes happen.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original&lt;/span&gt;: No changes to the cutscenes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Minor&lt;/span&gt;: Removes cutscenes that don't affect the game too much when removed.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Major&lt;/span&gt;: Allows you to continue playing the game while cutscenes happen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
