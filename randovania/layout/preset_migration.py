@@ -11,7 +11,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 10
+CURRENT_PRESET_VERSION = 11
 
 
 class InvalidPreset(Exception):
@@ -297,6 +297,37 @@ def _migrate_v9(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v10(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        major = preset["configuration"].pop("qol_major_cutscenes")
+        minor = preset["configuration"].pop("qol_minor_cutscenes")
+        if major:
+            cutscenes = "major"
+        elif minor:
+            cutscenes = "minor"
+        else:
+            cutscenes = "original"
+        preset["configuration"]["qol_cutscenes"] = cutscenes
+
+    elif preset["game"] == "prime2":
+        preset["configuration"]["allow_jumping_on_dark_water"] = False
+        fields = [
+            "allow_vanilla_dark_beam",
+            "allow_vanilla_light_beam",
+            "allow_vanilla_seeker_launcher",
+            "allow_vanilla_echo_visor",
+            "allow_vanilla_dark_visor",
+            "allow_vanilla_screw_attack",
+            "allow_vanilla_gravity_boost",
+            "allow_vanilla_boost_ball",
+            "allow_vanilla_spider_ball",
+        ]
+        for f in fields:
+            preset["configuration"][f] = True
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -306,7 +337,8 @@ _MIGRATIONS = {
     6: _migrate_v6,
     7: _migrate_v7,
     8: _migrate_v8,
-    9: _migrate_v9
+    9: _migrate_v9,
+    10: _migrate_v10,
 }
 
 

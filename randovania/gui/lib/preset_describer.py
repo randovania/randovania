@@ -6,13 +6,13 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
+from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
+from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
 
 
 def _bool_to_str(b: bool) -> str:
@@ -398,9 +398,19 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         required_messages.append("Varia-only heat protection")
     if configuration.progressive_damage_reduction:
         required_messages.append("Progressive suit damage reduction")
+    if configuration.elevators.skip_final_bosses:
+        required_messages.append("Final bosses removed")
 
     if required_messages:
         template_strings["Game Changes"].append(", ".join(required_messages))
+
+    if configuration.qol_cutscenes == LayoutCutsceneMode.MAJOR:
+        template_strings["Game Changes"].append("Major cutscene removal")
+    elif configuration.qol_cutscenes == LayoutCutsceneMode.MINOR:
+        template_strings["Game Changes"].append("Minor cutscene removal")
+
+    if configuration.small_samus:
+        template_strings["Game Changes"].append("Small Samus")
 
     qol_changes = []
     for flag, message in ((configuration.main_plaza_door, "Main Plaza Vault Door"),
@@ -410,18 +420,12 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
                           (configuration.backwards_lower_mines, "Backwards Lower Mines"),
                           (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
                           (configuration.qol_game_breaking, "Game Breaking QOL"),
-                          (configuration.qol_minor_cutscenes, "Minor Cutscenes QOL"),
-                          (configuration.qol_major_cutscenes, "Major Cutscenes QOL"),
-                          (configuration.elevators.skip_final_bosses, "Final bosses removed"),
                           ):
         if flag:
             qol_changes.append(message)
 
     if qol_changes:
-        template_strings["Game Changes"].append(", ".join(qol_changes))
-
-    if configuration.small_samus:
-        template_strings["Game Changes"].append("Small Samus")
+        template_strings["Quality of Life"] = [", ".join(qol_changes)]
 
     if not template_strings["Game Changes"]:
         template_strings.pop("Game Changes")

@@ -25,7 +25,7 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names,
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
 from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
@@ -263,8 +263,8 @@ class RandomprimePatcher(Patcher):
             "preferences": {
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
-                "qolMinorCutscenes": configuration.qol_minor_cutscenes,
-                "qolMajorCutscenes": configuration.qol_major_cutscenes,
+                "qolMinorCutscenes": configuration.qol_cutscenes != LayoutCutsceneMode.ORIGINAL,
+                "qolMajorCutscenes": configuration.qol_cutscenes == LayoutCutsceneMode.MAJOR,
 
                 "obfuscateItems": False,
                 "mapDefaultState": map_default_state,

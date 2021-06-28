@@ -1,9 +1,17 @@
 import dataclasses
+from enum import Enum
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.prime1.artifact_mode import LayoutArtifactMode
 from randovania.layout.lib.teleporters import TeleporterConfiguration
+
+
+class LayoutCutsceneMode(BitPackEnum, Enum):
+    ORIGINAL = "original"
+    MINOR = "minor"
+    MAJOR = "major"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -25,8 +33,7 @@ class PrimeConfiguration(BaseConfiguration):
     phazon_elite_without_dynamo: bool
 
     qol_game_breaking: bool
-    qol_minor_cutscenes: bool
-    qol_major_cutscenes: bool
+    qol_cutscenes: LayoutCutsceneMode
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
