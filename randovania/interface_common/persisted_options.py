@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 15
+_CURRENT_OPTIONS_FILE_VERSION = 16
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -69,13 +69,24 @@ def _convert_v14(options: dict) -> dict:
     return options
 
 
+def _convert_v15(options: dict) -> dict:
+    per_game_options = options.get("per_game_options", {})
+    if "prime1" in per_game_options and "cosmetic_patches" in per_game_options["prime1"]:
+        per_game_options["prime1"]["cosmetic_patches"].pop("debug_pickups", None)
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
     12: _convert_v12,
     13: _convert_v13,
     14: _convert_v14,
+    15: _convert_v15,
 }
 
+
+# debug_locations_check
 
 def get_persisted_options_from_data(persisted_data: dict) -> dict:
     version = persisted_data.get("version", 0)
