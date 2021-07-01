@@ -39,6 +39,6 @@ def additional_starting_items(layout_configuration: BaseConfiguration,
 
     return [
         add_quantity_to_resource(resource_user_friendly_name(item), quantity)
-        for item, quantity in starting_items.items()
+        for item, quantity in sorted(starting_items.items(), key=lambda a: resource_user_friendly_name(a[0]))
         if 0 < quantity != initial_items.get(item, 0)
     ]
