@@ -882,7 +882,7 @@ def test_create_patch_data(test_files_dir):
                 'wavebuster': False,
                 'xray': False,
             },
-            'startingMemo': '5 Missiles, Artifact of Sun',
+            'startingMemo': 'Artifact of Sun, 5 Missiles',
             'startingRoom': 'Tallon Overworld:Landing Site'},
         "tweaks": {},
         'levelData': {
