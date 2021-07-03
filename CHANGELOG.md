@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Multiworld connection is slightly more conservative when giving items.
 
+-   Changed: Updated the Multiworld Nintendont for hopefully more stability.
+
 -   Changed: The session history in multiworld now has different columns for the players involved, pickup and where the pickup was. It's also possible to sort the table by any of these fields.
 
 -   Changed: The ISO prompt dialog now remembers your last used vanilla ISO, for when you delete the internal copy. When opening the file pickers, these start now with the paths from the input fields.
