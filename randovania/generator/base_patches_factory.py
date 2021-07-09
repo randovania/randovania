@@ -197,7 +197,7 @@ def create_base_patches(configuration: EchoesConfiguration,
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
-    if configuration.game == RandovaniaGame.PRIME2:
+    if configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         patches = patches.assign_gate_assignment(
             gate_assignment_for_configuration(configuration, game.resource_database, rng))
 
@@ -206,7 +206,7 @@ def create_base_patches(configuration: EchoesConfiguration,
         starting_location_for_configuration(configuration, game, rng))
 
     # Hints
-    if rng is not None and configuration.game == RandovaniaGame.PRIME2:
+    if rng is not None and configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         patches = add_echoes_default_hints_to_patches(rng, patches, game.world_list,
                                                       num_joke=2, is_multiworld=is_multiworld)
 

@@ -22,4 +22,4 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
 
     @classmethod
     def game(cls):
-        return RandovaniaGame.PRIME2
+        return RandovaniaGame.METROID_PRIME_ECHOES

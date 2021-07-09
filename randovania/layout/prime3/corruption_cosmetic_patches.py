@@ -25,4 +25,4 @@ class CorruptionCosmeticPatches(BaseCosmeticPatches):
 
     @classmethod
     def game(cls):
-        return RandovaniaGame.PRIME3
+        return RandovaniaGame.METROID_PRIME_CORRUPTION

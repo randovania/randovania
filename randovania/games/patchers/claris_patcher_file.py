@@ -336,22 +336,22 @@ def _get_model_mapping(randomizer_data: dict):
     }
     return EchoesModelNameMapping(
         other_game={
-            PickupModel(RandovaniaGame.PRIME1, "Charge Beam"): "ChargeBeam INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Super Missile"): "SuperMissile",
-            PickupModel(RandovaniaGame.PRIME1, "Scan Visor"): "ScanVisor INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Varia Suit"): "VariaSuit INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Gravity Suit"): "VariaSuit INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Phazon Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Charge Beam"): "ChargeBeam INCOMPLETE",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Super Missile"): "SuperMissile",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Scan Visor"): "ScanVisor INCOMPLETE",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Varia Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Gravity Suit"): "VariaSuit INCOMPLETE",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Phazon Suit"): "VariaSuit INCOMPLETE",
             # PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
-            PickupModel(RandovaniaGame.PRIME1, "Morph Ball Bomb"): "MorphBallBomb",
-            PickupModel(RandovaniaGame.PRIME1, "Boost Ball"): "BoostBall",
-            PickupModel(RandovaniaGame.PRIME1, "Spider Ball"): "SpiderBall",
-            PickupModel(RandovaniaGame.PRIME1, "Power Bomb"): "PowerBomb",
-            PickupModel(RandovaniaGame.PRIME1, "Power Bomb Expansion"): "PowerBombExpansion",
-            PickupModel(RandovaniaGame.PRIME1, "Missile"): "MissileExpansionPrime1",
-            PickupModel(RandovaniaGame.PRIME1, "Grapple Beam"): "GrappleBeam",
-            PickupModel(RandovaniaGame.PRIME1, "Space Jump Boots"): "SpaceJumpBoots",
-            PickupModel(RandovaniaGame.PRIME1, "Energy Tank"): "EnergyTank",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"): "MorphBallBomb",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Boost Ball"): "BoostBall",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Spider Ball"): "SpiderBall",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb"): "PowerBomb",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb Expansion"): "PowerBombExpansion",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Missile"): "MissileExpansionPrime1",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Grapple Beam"): "GrappleBeam",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Space Jump Boots"): "SpaceJumpBoots",
+            PickupModel(RandovaniaGame.METROID_PRIME, "Energy Tank"): "EnergyTank",
         },
         index={
             entry["Name"]: entry["Index"]
@@ -388,7 +388,7 @@ def create_patcher_file(description: LayoutDescription,
     area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
                    for index, preset in description.permalink.presets.items()}
 
-    game = default_database.game_description_for(RandovaniaGame.PRIME2)
+    game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     result = {}
     _add_header_data_to_result(description, result)
@@ -546,7 +546,7 @@ def _create_pickup_resources_for(resources: ResourceGain):
 
 def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails,
                                      rng: Random, mapping: EchoesModelNameMapping) -> dict:
-    if details.model.game == RandovaniaGame.PRIME2:
+    if details.model.game == RandovaniaGame.METROID_PRIME_ECHOES:
         model_name = details.model.name
     else:
         # TODO: for Prime 1 and 3 items that exist in prime 3, lets use these for now.

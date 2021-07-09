@@ -37,4 +37,4 @@ class PrimeConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.PRIME1
+        return RandovaniaGame.METROID_PRIME

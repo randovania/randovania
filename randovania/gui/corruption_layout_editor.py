@@ -25,8 +25,8 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
-        self.game_description = default_database.game_description_for(RandovaniaGame.PRIME3)
-        item_database = default_database.default_prime3_item_database()
+        self.game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
+        item_database = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
         world_list = self.game_description.world_list
         self._index_to_combo = {}
 

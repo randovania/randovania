@@ -11,9 +11,9 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.game_to_class import AnyCosmeticPatches
 
 COSMETIC_DIALOG_FOR_GAME = {
-    RandovaniaGame.PRIME1: PrimeCosmeticPatchesDialog,
-    RandovaniaGame.PRIME2: EchoesCosmeticPatchesDialog,
-    RandovaniaGame.PRIME3: CorruptionCosmeticPatchesDialog,
+    RandovaniaGame.METROID_PRIME: PrimeCosmeticPatchesDialog,
+    RandovaniaGame.METROID_PRIME_ECHOES: EchoesCosmeticPatchesDialog,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: CorruptionCosmeticPatchesDialog,
 }
 
 
@@ -107,9 +107,9 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
 
 TAB_PROVIDER_FOR_GAME = {
-    RandovaniaGame.PRIME1: prime1_preset_tabs,
-    RandovaniaGame.PRIME2: prime2_preset_tabs,
-    RandovaniaGame.PRIME3: prime3_preset_tabs,
+    RandovaniaGame.METROID_PRIME: prime1_preset_tabs,
+    RandovaniaGame.METROID_PRIME_ECHOES: prime2_preset_tabs,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: prime3_preset_tabs,
 }
 
 

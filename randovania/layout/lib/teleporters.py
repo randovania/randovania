@@ -74,10 +74,10 @@ class TeleporterList(location_list.LocationList):
 
 
 def _valid_teleporter_target(area: Area, game: RandovaniaGame):
-    if game == RandovaniaGame.PRIME1 and area.area_asset_id == 3031702600:
+    if game == RandovaniaGame.METROID_PRIME and area.area_asset_id == 3031702600:
         return True
 
-    if game == RandovaniaGame.PRIME2 and area.area_asset_id == 1393588666:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES and area.area_asset_id == 1393588666:
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
@@ -123,9 +123,9 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     def static_teleporters(self) -> Dict[Teleporter, AreaLocation]:
         static = {}
         if self.skip_final_bosses:
-            if self.game == RandovaniaGame.PRIME1:
+            if self.game == RandovaniaGame.METROID_PRIME:
                 static[Teleporter(972217896, 597223686, 1049306)] = AreaLocation(0x13d79165, 0xb4b41c48)
-            elif self.game == RandovaniaGame.PRIME2:
+            elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 static[Teleporter(1006255871, 2278776548, 136970379)] = AreaLocation(1006255871, 1393588666)
             else:
                 raise ValueError(f"Unsupported skip_final_bosses and {self.game}")

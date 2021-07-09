@@ -380,7 +380,7 @@ async def run_filler(rng: Random,
     for player_state, patches in filler_result.items():
         game = player_state.game
 
-        if game.game == RandovaniaGame.PRIME2:
+        if game.game == RandovaniaGame.METROID_PRIME_ECHOES:
             # Since we haven't added expansions yet, these hints will always be for items added by the filler.
             full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
                                                        player_state.scan_asset_initial_pickups)

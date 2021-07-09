@@ -76,7 +76,7 @@ class EchoesConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.PRIME2
+        return RandovaniaGame.METROID_PRIME_ECHOES
 
     def dangerous_settings(self) -> List[str]:
         result = super().dangerous_settings()

@@ -30,7 +30,7 @@ def create_temple_key_hint(all_patches: Dict[int, GamePatches],
     temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG,
                     HintDarkTemple.SANCTUARY_FORTRESS].index(temple)
 
-    db = default_database.resource_database_for(RandovaniaGame.PRIME2)
+    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
     items = [db.get_item(index) for index in echoes_items.DARK_TEMPLE_KEY_ITEMS[temple_index]]
 
     locations_for_items = guaranteed_item_hint.find_locations_that_gives_items(items, all_patches, player_index)

@@ -296,7 +296,7 @@ def create_subparsers(sub_parsers):
         "--game",
         type=str,
         choices=[game.value for game in iterate_enum(RandovaniaGame)],
-        default=RandovaniaGame.PRIME2.value,
+        default=RandovaniaGame.METROID_PRIME_ECHOES.value,
         help="Use the included database for the given game.",
     )
     group.add_argument(

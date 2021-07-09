@@ -194,7 +194,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                                                                       "data"] is not None else None
                 for item in previous_state["elevators"]
             }
-            if self.layout_configuration.game == RandovaniaGame.PRIME2:
+            if self.layout_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 translator_gates = {
                     TranslatorGate(int(gate)): (resource_db.get_item(item)
                                                 if item is not None
@@ -552,7 +552,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         resource_db = self.game_description.resource_database
         self._translator_gate_to_combo = {}
 
-        if self.layout_configuration.game != RandovaniaGame.PRIME2:
+        if self.layout_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
             return
 
         gates = {

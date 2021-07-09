@@ -269,7 +269,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         all_progressive = []
 
-        if self.game == RandovaniaGame.PRIME2:
+        if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
             all_progressive.append((
                 "Progressive Suit",
                 ("Dark Suit", "Light Suit"),
@@ -278,7 +278,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 "Progressive Grapple",
                 ("Grapple Beam", "Screw Attack"),
             ))
-        elif self.game == RandovaniaGame.PRIME3:
+        elif self.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
             all_progressive.append((
                 "Progressive Missile",
                 ("Ice Missile", "Seeker Missile"),
@@ -306,7 +306,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         self._split_ammo_widgets = []
 
-        if self.game == RandovaniaGame.PRIME2:
+        if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
             beam_ammo = SplitAmmoWidget(
                 parent, self._editor,
                 unified_ammo=item_database.ammo["Beam Ammo Expansion"],
