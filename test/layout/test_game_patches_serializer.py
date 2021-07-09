@@ -137,7 +137,7 @@ def test_encode(patches_with_data):
     expected, patches = patches_with_data
 
     # Run
-    encoded = game_patches_serializer.serialize_single(0, 1, patches, RandovaniaGame.PRIME2)
+    encoded = game_patches_serializer.serialize_single(0, 1, patches, RandovaniaGame.METROID_PRIME_ECHOES)
 
     # Assert
     for key, value in expected["locations"].items():
@@ -174,7 +174,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     pickup = PickupEntry(
         name=name,
         model=PickupModel(
-            game=RandovaniaGame.PRIME3,
+            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
         item_category=ItemCategory.TEMPLE_KEY,

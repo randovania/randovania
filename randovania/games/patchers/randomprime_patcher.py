@@ -63,29 +63,29 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Unknown Item 2": 27,
 
 _MODEL_MAPPING = {
-    (RandovaniaGame.PRIME2, "ChargeBeam INCOMPLETE"): "Charge Beam",
-    (RandovaniaGame.PRIME2, "SuperMissile"): "Super Missile",
-    (RandovaniaGame.PRIME2, "ScanVisor INCOMPLETE"): "Scan Visor",
-    (RandovaniaGame.PRIME2, "VariaSuit INCOMPLETE"): "Varia Suit",
-    (RandovaniaGame.PRIME2, "DarkSuit"): "Varia Suit",
-    (RandovaniaGame.PRIME2, "LightSuit"): "Varia Suit",
-    (RandovaniaGame.PRIME2, "MorphBall INCOMPLETE"): "Morph Ball",
-    (RandovaniaGame.PRIME2, "MorphBallBomb"): "Morph Ball Bomb",
-    (RandovaniaGame.PRIME2, "BoostBall"): "Boost Ball",
-    (RandovaniaGame.PRIME2, "SpiderBall"): "Spider Ball",
-    (RandovaniaGame.PRIME2, "PowerBomb"): "Power Bomb",
-    (RandovaniaGame.PRIME2, "PowerBombExpansion"): "Power Bomb Expansion",
-    (RandovaniaGame.PRIME2, "MissileExpansion"): "Missile",
-    (RandovaniaGame.PRIME2, "MissileExpansionPrime1"): "Missile",
-    (RandovaniaGame.PRIME2, "MissileLauncher"): "Missile",
-    (RandovaniaGame.PRIME2, "GrappleBeam"): "Grapple Beam",
-    (RandovaniaGame.PRIME2, "SpaceJumpBoots"): "Space Jump Boots",
-    (RandovaniaGame.PRIME2, "EnergyTank"): "Energy Tank",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): "Super Missile",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "ScanVisor INCOMPLETE"): "Scan Visor",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "VariaSuit INCOMPLETE"): "Varia Suit",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "DarkSuit"): "Varia Suit",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "LightSuit"): "Varia Suit",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "MorphBall INCOMPLETE"): "Morph Ball",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "MorphBallBomb"): "Morph Ball Bomb",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "BoostBall"): "Boost Ball",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "SpiderBall"): "Spider Ball",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "PowerBomb"): "Power Bomb",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "PowerBombExpansion"): "Power Bomb Expansion",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileExpansion"): "Missile",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileExpansionPrime1"): "Missile",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileLauncher"): "Missile",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "GrappleBeam"): "Grapple Beam",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "SpaceJumpBoots"): "Space Jump Boots",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTank"): "Energy Tank",
 }
 
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
-    if detail.model.game == RandovaniaGame.PRIME1:
+    if detail.model.game == RandovaniaGame.METROID_PRIME:
         model_name = detail.model.name
     else:
         model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
@@ -167,7 +167,7 @@ class RandomprimePatcher(Patcher):
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: PrimeCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
-        db = default_database.game_description_for(RandovaniaGame.PRIME1)
+        db = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
         preset = description.permalink.get_preset(players_config.player_index)
         configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)

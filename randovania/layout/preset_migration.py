@@ -396,7 +396,7 @@ class VersionedPreset:
             return self._preset.configuration.game
 
         if self.data["schema_version"] < 6:
-            return RandovaniaGame.PRIME2
+            return RandovaniaGame.METROID_PRIME_ECHOES
 
         return RandovaniaGame(self.data["game"])
 

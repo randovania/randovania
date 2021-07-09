@@ -12,7 +12,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])
+@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION])
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
@@ -32,7 +32,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
 
 def test_starting_location_world_select(skip_qtbot, preset_manager):
     # Setup
-    base = preset_manager.default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
+    base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
     preset = dataclasses.replace(base,
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)

@@ -39,14 +39,14 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         tricks_in_use = trick_lib.used_tricks(self.game_description)
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
-        self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.PRIME3)
+        self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
 
-        if self.game_enum != RandovaniaGame.PRIME2:
+        if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
             for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
                 w.setVisible(False)
 
-        if self.game_enum != RandovaniaGame.PRIME1:
+        if self.game_enum != RandovaniaGame.METROID_PRIME:
             for w in [self.underwater_abuse_check, self.underwater_abuse_label]:
                 w.setVisible(False)
 
@@ -123,7 +123,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
             slider.setEnabled(not trick_level_configuration.minimal_logic)
 
-        if self.game_enum == RandovaniaGame.PRIME1:
+        if self.game_enum == RandovaniaGame.METROID_PRIME:
             self.underwater_abuse_check.setChecked(preset.configuration.allow_underwater_movement_without_gravity)
 
     def _create_difficulty_details_row(self):

@@ -351,7 +351,7 @@ class EchoesDolVersion(BasePrimeDolVersion):
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
-    resource_database = default_database.game_description_for(RandovaniaGame.PRIME2).resource_database
+    resource_database = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).resource_database
 
     dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
 

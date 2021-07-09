@@ -4,9 +4,9 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 
 
 class RandovaniaGame(BitPackEnum, Enum):
-    PRIME1 = "prime1"
-    PRIME2 = "prime2"
-    PRIME3 = "prime3"
+    METROID_PRIME = "prime1"
+    METROID_PRIME_ECHOES = "prime2"
+    METROID_PRIME_CORRUPTION = "prime3"
 
     @property
     def short_name(self) -> str:
@@ -18,13 +18,13 @@ class RandovaniaGame(BitPackEnum, Enum):
 
 
 SHORT_NAME = {
-    RandovaniaGame.PRIME1: "Prime",
-    RandovaniaGame.PRIME2: "Echoes",
-    RandovaniaGame.PRIME3: "Corruption"
+    RandovaniaGame.METROID_PRIME: "Prime",
+    RandovaniaGame.METROID_PRIME_ECHOES: "Echoes",
+    RandovaniaGame.METROID_PRIME_CORRUPTION: "Corruption"
 }
 
 LONG_NAME = {
-    RandovaniaGame.PRIME1: "Metroid Prime",
-    RandovaniaGame.PRIME2: "Metroid Prime 2: Echoes",
-    RandovaniaGame.PRIME3: "Metroid Prime 3: Corruption"
+    RandovaniaGame.METROID_PRIME: "Metroid Prime",
+    RandovaniaGame.METROID_PRIME_ECHOES: "Metroid Prime 2: Echoes",
+    RandovaniaGame.METROID_PRIME_CORRUPTION: "Metroid Prime 3: Corruption"
 }

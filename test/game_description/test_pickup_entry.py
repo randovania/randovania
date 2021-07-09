@@ -13,7 +13,7 @@ def test_extra_resources_maximum():
     with pytest.raises(ValueError, match=msg):
         PickupEntry(
             name="broken",
-            model=PickupModel(RandovaniaGame.PRIME2, "Nothing"),
+            model=PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "Nothing"),
             item_category=ItemCategory.ETM,
             broad_category=ItemCategory.MISSILE,
             progression=(),

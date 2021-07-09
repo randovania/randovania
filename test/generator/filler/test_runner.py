@@ -120,7 +120,7 @@ def _make_pickup(item_category: ItemCategory):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
         item_category=item_category,

@@ -11,8 +11,8 @@ from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatch
 
 
 @pytest.mark.parametrize(["game", "cosmetic_class"], [
-    (RandovaniaGame.PRIME1, PrimeCosmeticPatches),
-    (RandovaniaGame.PRIME2, EchoesCosmeticPatches),
+    (RandovaniaGame.METROID_PRIME, PrimeCosmeticPatches),
+    (RandovaniaGame.METROID_PRIME_ECHOES, EchoesCosmeticPatches),
 ])
 @pytest.mark.parametrize("with_permalink", [False, True])
 def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):

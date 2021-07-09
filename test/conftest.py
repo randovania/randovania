@@ -44,7 +44,7 @@ def default_preset() -> Preset:
 
 @pytest.fixture(scope="session")
 def default_echoes_preset() -> Preset:
-    return PresetManager(None).default_preset_for_game(RandovaniaGame.PRIME2).get_preset()
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
 
 
 @pytest.fixture(scope="session")
@@ -54,37 +54,37 @@ def default_layout_configuration() -> EchoesConfiguration:
 
 @pytest.fixture(scope="session")
 def prime1_resource_database() -> ResourceDatabase:
-    return default_database.resource_database_for(RandovaniaGame.PRIME1)
+    return default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
 
 
 @pytest.fixture(scope="session")
 def echoes_resource_database() -> ResourceDatabase:
-    return default_database.resource_database_for(RandovaniaGame.PRIME2)
+    return default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
 
 @pytest.fixture(scope="session")
 def echoes_item_database() -> ItemDatabase:
-    return default_database.item_database_for_game(RandovaniaGame.PRIME2)
+    return default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
 
 
 @pytest.fixture(scope="session")
 def echoes_game_data() -> dict:
-    return default_data.read_json_then_binary(RandovaniaGame.PRIME2)[1]
+    return default_data.read_json_then_binary(RandovaniaGame.METROID_PRIME_ECHOES)[1]
 
 
 @pytest.fixture(scope="session")
 def echoes_game_description(echoes_game_data) -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.PRIME2)
+    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
 
 @pytest.fixture(scope="session")
 def corruption_game_data() -> dict:
-    return default_data.read_json_then_binary(RandovaniaGame.PRIME3)[1]
+    return default_data.read_json_then_binary(RandovaniaGame.METROID_PRIME_CORRUPTION)[1]
 
 
 @pytest.fixture(scope="session")
 def corruption_game_description(corruption_game_data) -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.PRIME3)
+    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
 
 @pytest.fixture(scope="session")
@@ -102,7 +102,7 @@ def blank_pickup() -> PickupEntry:
     return PickupEntry(
         name="Blank Pickup",
         model=PickupModel(
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
         item_category=ItemCategory.SUIT,

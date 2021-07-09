@@ -422,7 +422,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     patcher = sio.patcher_provider.patcher_for_game.return_value
-    mock_layout_description.return_value.permalink.get_preset.return_value.game = RandovaniaGame.PRIME2
+    mock_layout_description.return_value.permalink.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
 
     cosmetic = EchoesCosmeticPatches(open_map=False)
 
@@ -432,7 +432,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
 
     # Assert
     mock_layout_description.return_value.permalink.get_preset.assert_called_once_with(2)
-    sio.patcher_provider.patcher_for_game.assert_called_once_with(RandovaniaGame.PRIME2)
+    sio.patcher_provider.patcher_for_game.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES)
     patcher.create_patch_data.assert_called_once_with(
         mock_layout_description.return_value,
         PlayersConfiguration(2, {
@@ -827,7 +827,7 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
     mock_layout.return_value.shareable_hash = "ABCDEFG"
     mock_layout.return_value.permalink.spoiler = True
     mock_layout.return_value.permalink.as_base64_str = "<permalink>"
-    mock_layout.return_value.permalink.get_preset.return_value.game = RandovaniaGame.PRIME2
+    mock_layout.return_value.permalink.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")

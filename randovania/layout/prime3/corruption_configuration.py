@@ -13,4 +13,4 @@ class CorruptionConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.PRIME3
+        return RandovaniaGame.METROID_PRIME_CORRUPTION

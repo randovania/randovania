@@ -94,7 +94,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
     useless_model = PickupModel(
-        game=RandovaniaGame.PRIME2,
+        game=RandovaniaGame.METROID_PRIME_ECHOES,
         name="EnergyTransferModule",
     )
 
@@ -193,7 +193,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
-    useless_model = PickupModel(game=RandovaniaGame.PRIME3, name="Useless")
+    useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
     pickup_a = PickupEntry("A", model_1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY, progression=tuple())
     pickup_b = PickupEntry("B", model_2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,

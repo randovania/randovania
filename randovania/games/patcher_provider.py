@@ -7,8 +7,8 @@ class PatcherProvider:
         from randovania.games.patchers import claris_patcher
         from randovania.games.patchers import randomprime_patcher
         self._patchers = {
-            RandovaniaGame.PRIME1: randomprime_patcher.RandomprimePatcher(),
-            RandovaniaGame.PRIME2: claris_patcher.ClarisPatcher(),
+            RandovaniaGame.METROID_PRIME: randomprime_patcher.RandomprimePatcher(),
+            RandovaniaGame.METROID_PRIME_ECHOES: claris_patcher.ClarisPatcher(),
         }
 
     def patcher_for_game(self, game: RandovaniaGame) -> Patcher:

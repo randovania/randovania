@@ -117,7 +117,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.intro_play_now_button.clicked.connect(lambda: self.main_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
         self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
-                                                                 RandovaniaGame.PRIME2))
+                                                                 RandovaniaGame.METROID_PRIME_ECHOES))
 
         for game in RandovaniaGame:
             self.hint_item_names_game_combo.addItem(game.long_name, game)
@@ -133,14 +133,14 @@ class MainWindow(WindowManager, Ui_MainWindow):
             lambda: self.main_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
-        for action, game in ((self.menu_action_prime_1_data_visualizer, RandovaniaGame.PRIME1),
-                             (self.menu_action_prime_2_data_visualizer, RandovaniaGame.PRIME2),
-                             (self.menu_action_prime_3_data_visualizer, RandovaniaGame.PRIME3)):
+        for action, game in ((self.menu_action_prime_1_data_visualizer, RandovaniaGame.METROID_PRIME),
+                             (self.menu_action_prime_2_data_visualizer, RandovaniaGame.METROID_PRIME_ECHOES),
+                             (self.menu_action_prime_3_data_visualizer, RandovaniaGame.METROID_PRIME_CORRUPTION)):
             action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
 
-        for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.PRIME1),
-                             (self.menu_action_edit_prime_2, RandovaniaGame.PRIME2),
-                             (self.menu_action_edit_prime_3, RandovaniaGame.PRIME3)):
+        for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.METROID_PRIME),
+                             (self.menu_action_edit_prime_2, RandovaniaGame.METROID_PRIME_ECHOES),
+                             (self.menu_action_edit_prime_3, RandovaniaGame.METROID_PRIME_CORRUPTION)):
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
 
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
@@ -378,7 +378,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     def open_data_visualizer_at(self,
                                 world_name: Optional[str],
                                 area_name: Optional[str],
-                                game: RandovaniaGame = RandovaniaGame.PRIME2,
+                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
                                 ):
         from randovania.gui.data_editor import DataEditorWindow
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
@@ -458,15 +458,15 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _create_trick_details_prime_1(self):
         self.menu_prime_1_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_1)
-        self._setup_difficulties_menu(RandovaniaGame.PRIME1, self.menu_prime_1_trick_details)
+        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME, self.menu_prime_1_trick_details)
 
     def _create_trick_details_prime_2(self):
         self.menu_prime_2_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_2)
-        self._setup_difficulties_menu(RandovaniaGame.PRIME2, self.menu_prime_2_trick_details)
+        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME_ECHOES, self.menu_prime_2_trick_details)
 
     def _create_trick_details_prime_3(self):
         self.menu_prime_3_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_3)
-        self._setup_difficulties_menu(RandovaniaGame.PRIME3, self.menu_prime_3_trick_details)
+        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME_CORRUPTION, self.menu_prime_3_trick_details)
 
     def _setup_difficulties_menu(self, game: RandovaniaGame, menu: QtWidgets.QMenu):
         from randovania.game_description import default_database

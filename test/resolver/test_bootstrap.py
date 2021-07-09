@@ -13,7 +13,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
                                           ):
     # Setup
     configuration = MagicMock()
-    configuration.game = RandovaniaGame.PRIME2
+    configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     configuration.elevators.is_vanilla = vanilla_elevators
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 16)
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 17)
