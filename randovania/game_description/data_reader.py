@@ -1,12 +1,8 @@
+import json
+from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
-    DockLockType
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction
@@ -20,6 +16,12 @@ from randovania.game_description.resources.search import MissingResource, find_r
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
+    DockLockType
+from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -377,3 +379,16 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
 
 def decode_data(data: Dict) -> GameDescription:
     return decode_data_with_world_reader(data)[1]
+
+
+def read_split_file(dir_path: Path):
+    with dir_path.joinpath("header.json").open(encoding="utf-8") as meta_file:
+        data = json.load(meta_file)
+
+    worlds = data.pop("worlds")
+    data["worlds"] = []
+    for world_file_name in worlds:
+        with dir_path.joinpath(world_file_name).open(encoding="utf-8") as world_file:
+            data["worlds"].append(json.load(world_file))
+
+    return data

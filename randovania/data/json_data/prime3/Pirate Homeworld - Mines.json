@@ -1,0 +1,1568 @@
+{
+    "name": "Pirate Homeworld - Mines",
+    "dark_name": null,
+    "asset_id": 15932695450594384879,
+    "areas": [
+        {
+            "name": "Transit Station 4-B\nLeads to Command Center",
+            "in_dark_aether": false,
+            "asset_id": 4566937761378320542,
+            "default_node_index": 2,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Save Station",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 34.45944595336914,
+                        "y": 24.476375579833984,
+                        "z": 2.423776313662529
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 7677627888152439345,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Quarry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Phazon Quarry",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 56.09955978393555,
+                        "y": -8.50014591217041,
+                        "z": 7.499999761581421
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Train to Command Center - Transit Station 4-A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Train to Command Center - Transit Station 4-A",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 12520185503864049660,
+                    "teleporter_instance_id": 131408,
+                    "scan_asset_id": 10585155416642007825,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Phazon Quarry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Phazon Quarry",
+            "in_dark_aether": false,
+            "asset_id": 1516173575710242674,
+            "default_node_index": 2,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Mine Lift",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2.5001459560880903,
+                        "y": -21.4802188873291,
+                        "z": 17.499999523162842
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2328629671991442460,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Drill Shaft 2",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 26.1,
+                        "y": 11.12,
+                        "z": 17.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 7923701740032492696,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 119,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 121,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Event - Balcony Barrier": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Event - Drill Wall (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 26,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 4-B\nLeads to Command Center",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -36.09955978393555,
+                        "y": 32.11948776245117,
+                        "z": 2.500001953674314
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 4566937761378320542,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Mine Lift": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 120,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 119,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Screw Attack (Space Jump)"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 4,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 16,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 14,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Door to Drill Shaft 2": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 121,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 119,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 119,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Drill Halfpipe": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 26,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Drill Wall (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 26,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Pirate Fight": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Energy Cell)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 93,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Drill Shaft 2": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 94,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Drill Halfpipe",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 120,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Balcony Barrier",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 121,
+                    "connections": {
+                        "Pickup (Energy Cell)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Drill Wall (Lower)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 119,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Drill Wall (Upper)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 119,
+                    "connections": {
+                        "Door to Drill Shaft 2": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Pirate Fight",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 26,
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Drill Shaft 2",
+            "in_dark_aether": false,
+            "asset_id": 7923701740032492696,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Phazon Quarry",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -50.0,
+                        "y": 88.0,
+                        "z": 54.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Main Cavern": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 124,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 2,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Main Cavern",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.0,
+                        "y": 133.0,
+                        "z": 68.50000762939453
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Quarry": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 124,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Destroy Drill": {
+                            "type": "template",
+                            "data": "Shoot Phazite (X-Ray and Nova)"
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Destroy Drill",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 124,
+                    "connections": {
+                        "Door to Main Cavern": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Mine Lift",
+            "in_dark_aether": false,
+            "asset_id": 2328629671991442460,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Phazon Quarry",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.099707245826721,
+                        "y": 25.400583267211914,
+                        "z": 54.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Harvesting": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 122,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Open Shaft": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 34,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 33,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Phazon Harvesting",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12.5,
+                        "y": -18.90043830871582,
+                        "z": 2.499999023162843
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 17076000080045116679,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Quarry": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 122,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Open Shaft",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 122,
+                    "connections": {
+                        "Door to Phazon Harvesting": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Phazon Harvesting",
+            "in_dark_aether": false,
+            "asset_id": 17076000080045116679,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Mine Lift",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -35.0,
+                        "y": 41.09955978393555,
+                        "z": 2.5000014768371557
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2328629671991442460,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Drill Shaft 1": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 86,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 16,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 250,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 86,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 4,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 16,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 450,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 3,
+                                                                                "index": 1,
+                                                                                "amount": 250,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Walkway Destroyed": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Drill Shaft 1",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.0,
+                        "y": 31.099557876586914,
+                        "z": 53.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 15941114407882664050,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Mine Lift": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (No Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 11,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Walkway Destroyed",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 86,
+                    "connections": {
+                        "Door to Mine Lift": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Drill Shaft 1",
+            "in_dark_aether": false,
+            "asset_id": 15941114407882664050,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Phazon Harvesting",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 57.0,
+                        "y": -1.0,
+                        "z": -2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 17076000080045116679,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Main Cavern": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 11,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Main Cavern",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 57.09955978393555,
+                        "y": 74.8008804321289,
+                        "z": 12.500001907348633
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Harvesting": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Landing Site Charlie",
+            "in_dark_aether": false,
+            "asset_id": 65874966404189819,
+            "default_node_index": 2,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Phazon Mine Entry",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.849468231201172,
+                        "y": -55.00000762939453,
+                        "z": 2.6500957310199738
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 6948986767748104139,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Clean Landing Site": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 10,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 33,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 16,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Samus Ship": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 125,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Clean Landing Site",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 125,
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 125,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Main Cavern",
+            "in_dark_aether": false,
+            "asset_id": 3558406334082684652,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Drill Shaft 1",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20.0,
+                        "y": -56.09955978393555,
+                        "z": 2.499998046325686
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 15941114407882664050,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Drill Shaft 2",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -36.09955978393555,
+                        "y": 0.0,
+                        "z": 2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 7923701740032492696,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 123,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Phazon Mine Entry",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25.0,
+                        "y": 51.1,
+                        "z": 0.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 6948986767748104139,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Drill Shaft 1": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Door to Drill Shaft 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 123,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Nova Beam)": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Event - Phazite Wall": {
+                            "type": "template",
+                            "data": "Shoot Phazite (X-Ray and Nova)"
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Nova Beam)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 95,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "template",
+                            "data": "Shoot Phazite (X-Ray and Nova)"
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Phazite Wall",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 123,
+                    "connections": {
+                        "Door to Phazon Mine Entry": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Save Station",
+            "in_dark_aether": false,
+            "asset_id": 7677627888152439345,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 4-B\nLeads to Command Center",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10.540555953979492,
+                        "y": -20.0,
+                        "z": 2.4999997500000006
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4566937761378320542,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Save Station",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Transit Station 4-B\nLeads to Command Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Phazon Mine Entry",
+            "in_dark_aether": false,
+            "asset_id": 6948986767748104139,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site Charlie",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 59.13724899291992,
+                        "y": -6.977910995483398,
+                        "z": 7.999999761581421
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 65874966404189819,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Main Cavern": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Main Cavern",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.53,
+                        "y": -42.51,
+                        "z": 0.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Landing Site Charlie": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 14,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 9,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 96,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Main Cavern": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

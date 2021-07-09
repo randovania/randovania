@@ -1,0 +1,830 @@
+{
+    "name": "Phaaze",
+    "dark_name": null,
+    "asset_id": 5406397194789083955,
+    "areas": [
+        {
+            "name": "!!00_phaaze_warpin",
+            "in_dark_aether": false,
+            "asset_id": 10309111007900712142,
+            "default_node_index": null,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 87.5,
+                        "y": -2.5,
+                        "z": 0.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 9591507280945991101,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Landing Site",
+            "in_dark_aether": false,
+            "asset_id": 9591507280945991101,
+            "default_node_index": 2,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Entry Canyon",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 34.0,
+                        "y": 30.0,
+                        "z": 2.500000976837157
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16693130533792098749,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Dock to !!00_phaaze_warpin",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -82.5,
+                        "y": 2.5,
+                        "z": 0.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 10309111007900712142,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 112,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Entry Canyon": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cavern Alpha",
+            "in_dark_aether": false,
+            "asset_id": 2524100126595327996,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Cavern Beta Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -30.0,
+                        "y": -22.500001907348633,
+                        "z": 37.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 11059908001917152736,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Entry Canyon": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Entry Canyon",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 45.0,
+                        "y": -35.0,
+                        "z": 7.499998569488525
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 16693130533792098749,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Cavern Beta Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 4,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 37,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Metroid Cavern",
+            "in_dark_aether": false,
+            "asset_id": 13173135756493471533,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Hatcher Shaft",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -99.99999237060547,
+                        "y": 21.0,
+                        "z": 2.740589067339897
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4527454355992305941,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Door to Drop Shaft",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -29.999993324279785,
+                        "y": 41.0,
+                        "z": 37.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 7243778186809121670,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Hatcher Shaft": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Hatcher Tunnel",
+            "in_dark_aether": false,
+            "asset_id": 6465463941126605608,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Hatcher Shaft",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4527454355992305941,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Genesis Chamber": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Genesis Chamber",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.000004768371582,
+                        "y": 34.00001525878906,
+                        "z": -166.17819213867188
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 5543768504991159971,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Genesis Chamber",
+            "in_dark_aether": false,
+            "asset_id": 5543768504991159971,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Dock to Sanctum (Dark Samus)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 1.9073486328125e-06,
+                        "z": -48.35383605957031
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13423174227721576677,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Door to Hatcher Tunnel",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -65.46446990966797,
+                        "y": -3.5355417728424072,
+                        "z": 55.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 6465463941126605608,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Sanctum (Dark Samus)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cavern Beta Access",
+            "in_dark_aether": false,
+            "asset_id": 11059908001917152736,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Cavern Alpha",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2524100126595327996,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Cavern Beta": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 38,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Cavern Beta",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13.01439094543457,
+                        "y": -0.00861200038343668,
+                        "z": -28.82178497314453
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 11291149967944563303,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Drop Shaft",
+            "in_dark_aether": false,
+            "asset_id": 7243778186809121670,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Cavern Beta",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 11291149967944563303,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Metroid Cavern": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 38,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Metroid Cavern",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -48.99998474121094,
+                        "z": -305.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 13173135756493471533,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Hatcher Shaft",
+            "in_dark_aether": false,
+            "asset_id": 4527454355992305941,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Metroid Cavern",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -12.46444320678711,
+                        "z": 2.4999995000000013
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13173135756493471533,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Hatcher Tunnel": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Hatcher Tunnel",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1.0013580322265625e-05,
+                        "y": 50.0000114440918,
+                        "z": -166.17819213867188
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 6465463941126605608,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Sanctum (Dark Samus)",
+            "in_dark_aether": false,
+            "asset_id": 13423174227721576677,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Dock to Genesis Chamber",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -5.7220458984375e-06,
+                        "z": 147.61480712890625
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 5543768504991159971,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Dark Samus": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Dock to Sanctum (Aurora Unit 313)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -355.0,
+                        "y": 4.76837158203125e-07,
+                        "z": -2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 17351725518036616530,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Event - Dark Samus",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 18,
+                    "connections": {
+                        "Dock to Sanctum (Aurora Unit 313)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Entry Canyon",
+            "in_dark_aether": false,
+            "asset_id": 16693130533792098749,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -34.678306579589844,
+                        "y": -8.976594924926758,
+                        "z": 25.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 9591507280945991101,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Cavern Alpha": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 39,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Cavern Alpha",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4.336080014705658,
+                        "y": -6.467977046966553,
+                        "z": -143.67820739746094
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 2524100126595327996,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            ]
+        },
+        {
+            "name": "Cavern Beta",
+            "in_dark_aether": false,
+            "asset_id": 11291149967944563303,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Cavern Beta Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15.000000476837158,
+                        "y": 45.0,
+                        "z": 17.500003814697266
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 11059908001917152736,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Drop Shaft": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 4,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 37,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Drop Shaft",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9.5367431640625e-07,
+                        "y": -30.9999942779541,
+                        "z": -1.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 7243778186809121670,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Cavern Beta Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 4,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 37,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Sanctum (Aurora Unit 313)",
+            "in_dark_aether": false,
+            "asset_id": 17351725518036616530,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Dock to Sanctum (Dark Samus)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 355.0,
+                        "y": 4.76837158203125e-07,
+                        "z": -2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13423174227721576677,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Aurora Unit 313": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 7,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Aurora Unit 313",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 19,
+                    "connections": {
+                        "Leave Phaaze": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Leave Phaaze",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 13921744762140409337,
+                    "destination_area_asset_id": 15622764306970326849,
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": true,
+                    "editable": false,
+                    "connections": {}
+                }
+            ]
+        }
+    ]
+}
