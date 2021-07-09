@@ -153,10 +153,10 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     async def _show_dialog_for_prime3_layout(self):
         from randovania.games.patchers import gollop_corruption_patcher
 
-        cosmetic = self._options.options_for_game(RandovaniaGame.PRIME3).cosmetic_patches
+        cosmetic = self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches
         preset = self.layout_description.permalink.get_preset(self.current_player_index)
         patches = self.layout_description.all_patches[self.current_player_index]
-        game = default_database.game_description_for(RandovaniaGame.PRIME3)
+        game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
         pickup_names = []
         for index in range(game.world_list.num_pickup_nodes):
@@ -209,7 +209,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = self.current_player_game
-        if game == RandovaniaGame.PRIME3:
+        if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
             return await self._show_dialog_for_prime3_layout()
 
         patcher = self._window_manager.patcher_provider.patcher_for_game(game)

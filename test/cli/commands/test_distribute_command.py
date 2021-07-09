@@ -19,7 +19,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     args = MagicMock()
     args.output_file = Path("asdfasdf/qwerqwerqwer/zxcvzxcv.json")
     args.no_retry = no_retry
-    args.game = RandovaniaGame.PRIME2.value
+    args.game = RandovaniaGame.METROID_PRIME_ECHOES.value
     args.preset_name = preset_name
     args.seed_number = 0
     extra_args = {}
@@ -30,7 +30,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
         permalink = mock_from_str.return_value
     else:
         args.permalink = None
-        preset = preset_manager.included_preset_with(RandovaniaGame.PRIME2, preset_name).get_preset()
+        preset = preset_manager.included_preset_with(RandovaniaGame.METROID_PRIME_ECHOES, preset_name).get_preset()
         permalink = Permalink(0, True, {0: preset})
 
     # Run

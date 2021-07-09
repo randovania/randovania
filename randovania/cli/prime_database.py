@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
+from randovania.game_description import default_database, data_reader
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
@@ -136,23 +137,24 @@ def view_area_command(sub_parsers):
     parser.set_defaults(func=view_area_command_logic)
 
 
-def export_areas_command_logic(args):
+def update_human_readable_logic(args):
     from randovania.game_description import pretty_print
-    gd = load_game_description(args)
-    output_file: Path = args.output_file
+    game = RandovaniaGame(args.game)
 
-    with output_file.open("w", encoding="utf-8") as output:
-        pretty_print.write_human_readable_world_list(gd, output)
+    path, data = default_data.read_json_then_binary(game)
+    gd = data_reader.decode_data(data)
+
+    path.with_suffix("").mkdir(parents=True, exist_ok=True)
+    pretty_print.write_human_readable_game(gd, path.with_suffix(""))
 
 
-def export_areas_command(sub_parsers):
+def update_human_readable(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "export-human-readable",
-        help="Export a text file with all areas and their requirements",
+        "update-human-readable",
+        help="Update the human readable versions",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    parser.add_argument("output_file", type=Path)
-    parser.set_defaults(func=export_areas_command_logic)
+    parser.set_defaults(func=update_human_readable_logic)
 
 
 def _list_paths_with_resource(game,
@@ -296,7 +298,7 @@ def create_subparsers(sub_parsers):
         "--game",
         type=str,
         choices=[game.value for game in iterate_enum(RandovaniaGame)],
-        default=RandovaniaGame.PRIME2.value,
+        default=RandovaniaGame.METROID_PRIME_ECHOES.value,
         help="Use the included database for the given game.",
     )
     group.add_argument(
@@ -308,7 +310,7 @@ def create_subparsers(sub_parsers):
     sub_parsers = parser.add_subparsers(dest="database_command")
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
-    export_areas_command(sub_parsers)
+    update_human_readable(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
     pickups_per_area_command(sub_parsers)

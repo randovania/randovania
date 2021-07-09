@@ -12,14 +12,14 @@ from randovania.layout.base.ammo_configuration import AmmoConfiguration
 
 @pytest.fixture(
     params=[
-        {"game": RandovaniaGame.PRIME2, "encoded": b'\x00\x00', "items_state": {}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x80\x00', "maximum_ammo": {"45": 20}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'\x08\xc8\x00',
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x00\x00', "items_state": {}},
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'"\x80\x00', "maximum_ammo": {"45": 20}},
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x08\xc8\x00',
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
-        {"game": RandovaniaGame.PRIME2, "encoded": b'"\x88\xc8\x00', "maximum_ammo": {"45": 20},
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'"\x88\xc8\x00', "maximum_ammo": {"45": 20},
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
-        {"game": RandovaniaGame.PRIME3, "encoded": b'\x00', "items_state": {}},
-        {"game": RandovaniaGame.PRIME3, "encoded": b'\x99\x00', "maximum_ammo": {"4": 50}},
+        {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x00', "items_state": {}},
+        {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x99\x00', "maximum_ammo": {"4": 50}},
     ],
     name="config_with_data")
 def _config_with_data(request):

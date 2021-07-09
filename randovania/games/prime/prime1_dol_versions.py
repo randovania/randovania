@@ -5,7 +5,7 @@ from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
 
 ALL_VERSIONS = [
     Prime1DolVersion(
-        game=RandovaniaGame.PRIME1,
+        game=RandovaniaGame.METROID_PRIME,
         description="GC NTSC 0-00",
         build_string_address=0x803cc588,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.088 10/29/2002 2:21:25",

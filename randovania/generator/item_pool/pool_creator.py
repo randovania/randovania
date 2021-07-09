@@ -42,9 +42,9 @@ def corruption_specific_pool(results: PoolResults, configuration: CorruptionConf
 
 
 _GAME_SPECIFIC = typing.cast(Dict[RandovaniaGame, Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]], {
-    RandovaniaGame.PRIME1: prime1_specific_pool,
-    RandovaniaGame.PRIME2: echoes_specific_pool,
-    RandovaniaGame.PRIME3: corruption_specific_pool,
+    RandovaniaGame.METROID_PRIME: prime1_specific_pool,
+    RandovaniaGame.METROID_PRIME_ECHOES: echoes_specific_pool,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: corruption_specific_pool,
 })
 
 

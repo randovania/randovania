@@ -17,7 +17,7 @@ from randovania.games.game import RandovaniaGame
 @pytest.fixture(name="database")
 def _database() -> ResourceDatabase:
     return ResourceDatabase(
-        game_enum=RandovaniaGame.PRIME2,
+        game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
             ItemResourceInfo(0, "A", "A", 1, None),
             ItemResourceInfo(1, "B", "B", 1, None),

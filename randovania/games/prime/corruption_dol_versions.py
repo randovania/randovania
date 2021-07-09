@@ -5,7 +5,7 @@ from randovania.games.prime.corruption_dol_patches import CorruptionDolVersion
 
 ALL_VERSIONS = [
     CorruptionDolVersion(
-        game=RandovaniaGame.PRIME3,
+        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
         description="Wii NTSC",
         build_string_address=0x805822b0,
         build_string=b"!#$MetroidBuildInfo!#$2007/07/27 13:13 Build v3.436 (MP3)",

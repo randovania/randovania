@@ -29,7 +29,7 @@ def _location_with_data(request, mocker, echoes_game_description):
 
     mocker.patch("randovania.layout.lib.location_list.LocationList.areas_list",
                  return_value=list(sorted(areas)))
-    return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.PRIME2)
+    return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.METROID_PRIME_ECHOES)
 
 
 def test_decode(location_with_data):
@@ -39,7 +39,7 @@ def test_decode(location_with_data):
     # Run
     decoder = BitPackDecoder(data)
     result = LocationList.bit_pack_unpack(
-        decoder, {"reference": LocationList.with_elements([], RandovaniaGame.PRIME2)})
+        decoder, {"reference": LocationList.with_elements([], RandovaniaGame.METROID_PRIME_ECHOES)})
 
     # Assert
     assert result == expected

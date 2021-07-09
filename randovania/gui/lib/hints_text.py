@@ -8,7 +8,7 @@ from randovania.generator.item_pool import pickup_creator
 
 
 def prime1_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.PRIME1)
+    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
     artifact = pickup_creator.create_artifact(0, db)
 
     result = [(
@@ -20,7 +20,7 @@ def prime1_hint_text():
 
 
 def prime2_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.PRIME2)
+    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     result = []
 
@@ -43,7 +43,7 @@ def prime2_hint_text():
 
 
 def prime3_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.PRIME3)
+    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
     cell = pickup_creator.create_energy_cell(0, db)
 
     result = [(
@@ -55,9 +55,9 @@ def prime3_hint_text():
 
 
 _GAME_SPECIFIC = {
-    RandovaniaGame.PRIME1: prime1_hint_text,
-    RandovaniaGame.PRIME2: prime2_hint_text,
-    RandovaniaGame.PRIME3: prime3_hint_text,
+    RandovaniaGame.METROID_PRIME: prime1_hint_text,
+    RandovaniaGame.METROID_PRIME_ECHOES: prime2_hint_text,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: prime3_hint_text,
 }
 
 

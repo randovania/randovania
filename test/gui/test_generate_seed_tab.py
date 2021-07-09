@@ -57,7 +57,7 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
         tab._add_new_preset.assert_called_once()
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])
+@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION])
 def test_on_options_changed_select_preset(tab, preset_manager, game):
     preset = preset_manager.default_preset_for_game(game)
 

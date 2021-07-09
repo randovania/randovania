@@ -42,7 +42,7 @@ def _a(world, area, instance_id=None):
     ],
     name="with_data")
 def _with_data(request):
-    game = RandovaniaGame.PRIME2
+    game = RandovaniaGame.METROID_PRIME_ECHOES
     reference = TeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,

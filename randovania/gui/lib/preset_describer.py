@@ -72,19 +72,19 @@ _CORRUPTION_TEMPLATE_STRINGS = {
 }
 
 _EXPECTED_ITEMS = {
-    RandovaniaGame.PRIME1: {
+    RandovaniaGame.METROID_PRIME: {
         "Combat Visor",
         "Scan Visor",
         "Power Beam"
     },
-    RandovaniaGame.PRIME2: {
+    RandovaniaGame.METROID_PRIME_ECHOES: {
         "Combat Visor",
         "Scan Visor",
         "Morph Ball",
         "Power Beam",
         "Charge Beam",
     },
-    RandovaniaGame.PRIME3: {
+    RandovaniaGame.METROID_PRIME_CORRUPTION: {
         "Scan Visor",
         "Morph Ball",
         "Morph Ball Bombs",
@@ -141,7 +141,7 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
     item_pool = []
 
     unexpected_items = _EXPECTED_ITEMS[game] | _CUSTOM_ITEMS
-    if game == RandovaniaGame.PRIME2:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         if has_shuffled_item(configuration, "Progressive Grapple"):
             unexpected_items.add("Grapple Beam")
             unexpected_items.add("Screw Attack")
@@ -154,7 +154,7 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
         else:
             unexpected_items.add("Progressive Suit")
 
-    elif game == RandovaniaGame.PRIME3:
+    elif game == RandovaniaGame.METROID_PRIME_CORRUPTION:
         if has_shuffled_item(configuration, "Progressive Beam"):
             unexpected_items.add("Plasma Beam")
             unexpected_items.add("Nova Beam")
@@ -447,15 +447,15 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params = _format_params_base(configuration)
 
     template_strings = None
-    if preset.game == RandovaniaGame.PRIME2:
+    if preset.game == RandovaniaGame.METROID_PRIME_ECHOES:
         template_strings, params = _echoes_format_params(configuration)
         format_params.update(params)
 
-    elif preset.game == RandovaniaGame.PRIME3:
+    elif preset.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
         template_strings = copy.deepcopy(_CORRUPTION_TEMPLATE_STRINGS)
         format_params.update(_corruption_format_params(configuration))
 
-    elif preset.game == RandovaniaGame.PRIME1:
+    elif preset.game == RandovaniaGame.METROID_PRIME:
         template_strings, params = _prime_format_params(configuration)
         format_params.update(params)
 

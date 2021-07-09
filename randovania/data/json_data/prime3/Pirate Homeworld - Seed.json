@@ -1,0 +1,280 @@
+{
+    "name": "Pirate Homeworld - Seed",
+    "dark_name": null,
+    "asset_id": 16039522250714156185,
+    "areas": [
+        {
+            "name": "Landing Site Delta",
+            "in_dark_aether": false,
+            "asset_id": 9593588872354674734,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Core Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1.4750239849090576,
+                        "y": 47.19825744628906,
+                        "z": 25.59420394897461
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 15118031102725025016,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 111,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Core Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 12,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 0,
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Core Access",
+            "in_dark_aether": false,
+            "asset_id": 15118031102725025016,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site Delta",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.0,
+                        "y": -59.0,
+                        "z": 37.999996185302734
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 9593588872354674734,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Pirate Homeworld Leviathan Core": {
+                            "type": "template",
+                            "data": "Shoot Phazite (X-Ray and Nova)"
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Pirate Homeworld Leviathan Core",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -19.086795806884766,
+                        "y": 58.0,
+                        "z": 30.500000953674316
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 4585599704880367469,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Landing Site Delta": {
+                            "type": "template",
+                            "data": "Shoot Phazite (X-Ray and Nova)"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pirate Homeworld Leviathan Core",
+            "in_dark_aether": false,
+            "asset_id": 4585599704880367469,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Core Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.062248945236206055,
+                        "y": -73.00301361083984,
+                        "z": 14.500009536743164
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 15118031102725025016,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Omega Ridley": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Teleporter to Pirate Homeworld",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 124.49,
+                        "z": 0.0
+                    },
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 4408585131827753141,
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": true,
+                    "editable": false,
+                    "connections": {}
+                },
+                {
+                    "name": "Pickup (Hyper Grapple)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 99,
+                    "major_location": true,
+                    "connections": {
+                        "Teleporter to Pirate Homeworld": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 39,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Omega Ridley",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 13,
+                    "connections": {
+                        "Pickup (Hyper Grapple)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -45,7 +45,7 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
     ],
     name="prime2_data")
 def _prime2_data(request):
-    return (request.param["encoded"], *_create_config_for(RandovaniaGame.PRIME2, request.param["replace"]))
+    return (request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"]))
 
 
 @pytest.fixture(
@@ -54,7 +54,7 @@ def _prime2_data(request):
     ],
     name="prime3_data")
 def _prime3_data(request):
-    return (request.param["encoded"], *_create_config_for(RandovaniaGame.PRIME3, request.param["replace"]))
+    return (request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
 
 
 def test_decode_prime2(prime2_data):

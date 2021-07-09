@@ -75,7 +75,7 @@ def test_create_remote_execution_body(string_display: all_prime_dol_patches.Stri
     # Run
     patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(string_display, [
         *all_prime_dol_patches.call_display_hud_patch(string_display),
-        *all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.PRIME2, 3, 12),
+        *all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.METROID_PRIME_ECHOES, 3, 12),
     ])
 
     # Assert
@@ -124,7 +124,7 @@ def test_call_display_hud_patch(string_display: all_prime_dol_patches.StringDisp
 
 def test_give_item_patch(powerup_address: all_prime_dol_patches.PowerupFunctionsAddresses):
     # Run
-    patch = all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.PRIME2, 10, 5)
+    patch = all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.METROID_PRIME_ECHOES, 10, 5)
     data = bytes(assembler.assemble_instructions(0x80008020, patch))
 
     # Assert
@@ -133,7 +133,7 @@ def test_give_item_patch(powerup_address: all_prime_dol_patches.PowerupFunctions
 
 
 def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
-    game = RandovaniaGame.PRIME2
+    game = RandovaniaGame.METROID_PRIME_ECHOES
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,
@@ -174,7 +174,7 @@ def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
 
 
 def test_apply_reverse_energy_tank_heal_patch_inactive(dol_file):
-    game = RandovaniaGame.PRIME2
+    game = RandovaniaGame.METROID_PRIME_ECHOES
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,

@@ -52,7 +52,7 @@ async def test_look_for_permalinks(mocker):
     permalink_1.player_count = 2
 
     preset = MagicMock()
-    preset.game = RandovaniaGame.PRIME2
+    preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     permalink_2 = MagicMock()
     permalink_2.player_count = 1
     permalink_2.get_preset.return_value = preset

@@ -22,7 +22,7 @@ def _configuration_with_data(request, mocker, echoes_game_description):
     tricks = echoes_game_description.resource_database.trick[:14]
     mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
     return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"],
-                                                                       game=RandovaniaGame.PRIME2)
+                                                                       game=RandovaniaGame.METROID_PRIME_ECHOES)
 
 
 def test_decode(configuration_with_data):
@@ -32,7 +32,7 @@ def test_decode(configuration_with_data):
     # Run
     decoder = BitPackDecoder(data)
     result = TrickLevelConfiguration.bit_pack_unpack(decoder, {
-        "reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2),
+        "reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES),
     })
 
     # Assert
@@ -54,7 +54,7 @@ def test_encode(configuration_with_data):
 
 def test_encode_no_tricks_are_removed():
     from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "disabled"}},
-                                                  game=RandovaniaGame.PRIME2)
+                                                  game=RandovaniaGame.METROID_PRIME_ECHOES)
 
     encoded = bitpacking._pack_encode_results([
         (value_argument, value_format)
@@ -65,14 +65,14 @@ def test_encode_no_tricks_are_removed():
 
     decoder = BitPackDecoder(encoded)
     decoded = TrickLevelConfiguration.bit_pack_unpack(
-        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2), })
+        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES), })
 
     assert decoded.specific_levels == {}
 
 
 def test_set_level_for_trick_remove(echoes_resource_database):
     trick = echoes_resource_database.trick[0]
-    config = TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2)
+    config = TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES)
 
     assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
 
@@ -84,7 +84,7 @@ def test_set_level_for_trick_remove(echoes_resource_database):
 
 
 def test_pretty_description_minimal_logic():
-    config = TrickLevelConfiguration(True, {}, RandovaniaGame.PRIME2)
+    config = TrickLevelConfiguration(True, {}, RandovaniaGame.METROID_PRIME_ECHOES)
     assert config.pretty_description == "Minimal Logic"
 
 
@@ -97,6 +97,6 @@ def test_pretty_description_minimal_logic():
      "22 at Disabled, 1 at Advanced, 2 at Hypermode"),
 ])
 def test_pretty_description_tricks_echoes(levels, expected):
-    config = TrickLevelConfiguration(False, levels, RandovaniaGame.PRIME2)
+    config = TrickLevelConfiguration(False, levels, RandovaniaGame.METROID_PRIME_ECHOES)
     assert config.pretty_description == expected
 

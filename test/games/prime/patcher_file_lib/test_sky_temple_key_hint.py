@@ -45,8 +45,8 @@ def make_useless_stk_hint(key_number: int) -> List[str]:
 @pytest.mark.parametrize("hide_area", [False, True])
 def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patches):
     # Setup
-    prime_game = default_database.game_description_for(RandovaniaGame.PRIME1)
-    echoes_game = default_database.game_description_for(RandovaniaGame.PRIME2)
+    prime_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
+    echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
     area_namers = {

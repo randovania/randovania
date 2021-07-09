@@ -227,7 +227,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     rng = MagicMock()
     game = MagicMock()
     layout_configuration = MagicMock()
-    layout_configuration.game = RandovaniaGame.PRIME2
+    layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     mock_replace: MagicMock = mocker.patch("dataclasses.replace")
     is_multiworld = MagicMock()
 

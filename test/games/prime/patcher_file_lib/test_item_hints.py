@@ -153,8 +153,8 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
 
 def test_create_hints_item_dark_temple_keys_cross_game(empty_patches, blank_pickup):
     # Setup
-    prime_game = default_database.game_description_for(RandovaniaGame.PRIME1)
-    echoes_game = default_database.game_description_for(RandovaniaGame.PRIME2)
+    prime_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
+    echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     players_config = PlayersConfiguration(
         player_index=0,
         player_names={0: "Player 1",

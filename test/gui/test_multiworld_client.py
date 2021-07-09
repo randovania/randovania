@@ -73,7 +73,7 @@ async def test_on_location_collected(client, tmpdir, exists):
 async def test_refresh_received_pickups(client, corruption_game_description, mocker):
     db = corruption_game_description.resource_database
 
-    results = RandovaniaGame.PRIME3, [
+    results = RandovaniaGame.METROID_PRIME_CORRUPTION, [
         ("Message A", b"bytesA"),
         ("Message B", b"bytesB"),
         ("Message C", b"bytesC"),
@@ -111,7 +111,7 @@ def test_decode_pickup(client, echoes_resource_database):
     expected_pickup = PickupEntry(
         name="The Name",
         model=PickupModel(
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
         item_category=ItemCategory.MOVEMENT,
@@ -159,7 +159,7 @@ async def test_notify_collect_locations(client, tmpdir):
 async def test_lock_file_on_init(skip_qtbot, tmpdir):
     # Setup
     network_client = MagicMock()
-    network_client.game_session_request_pickups = AsyncMock(return_value=(RandovaniaGame.PRIME1, []))
+    network_client.game_session_request_pickups = AsyncMock(return_value=(RandovaniaGame.METROID_PRIME, []))
     network_client.session_self_update = AsyncMock()
     game_connection = MagicMock()
     game_connection.backend.lock_identifier = str(tmpdir.join("my-lock"))

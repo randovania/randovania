@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QDialog
 from mock import AsyncMock, patch, ANY
 
 import randovania.game_description.pretty_print
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
@@ -84,11 +84,14 @@ async def test_open_edit_connection(mock_apply_edit_connections,
         mock_apply_edit_connections.assert_not_called()
 
 
-def test_create_node_and_save(tmpdir,
+def test_create_node_and_save(tmp_path,
                               echoes_game_data,
                               skip_qtbot):
     # Setup
-    db_path = Path(tmpdir.join("game.json"))
+    tmp_path.joinpath("test-game", "game").mkdir(parents=True)
+    tmp_path.joinpath("human-readable").mkdir()
+
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
 
     window = DataEditorWindow(echoes_game_data, db_path, True, True)
     skip_qtbot.addWidget(window)
@@ -98,11 +101,15 @@ def test_create_node_and_save(tmpdir,
     window._save_as_internal_database()
 
     # Assert
-    with db_path.open() as data_file:
-        exported_data = json.load(data_file)
+    exported_data = data_reader.read_split_file(db_path)
     exported_game = data_reader.decode_data(exported_data)
 
-    output = io.StringIO()
-    randovania.game_description.pretty_print.write_human_readable_world_list(exported_game, output)
+    pretty_print.write_human_readable_game(exported_game, tmp_path.joinpath("human-readable"))
+    new_files = {f.name: f.read_text("utf-8")
+                 for f in tmp_path.joinpath("human-readable").glob("*.txt")}
 
-    assert Path(tmpdir.join("game.txt")).read_text("utf-8") == output.getvalue()
+    existing_files = {f.name: f.read_text("utf-8")
+                      for f in tmp_path.joinpath("test-game", "game").glob("*.txt")}
+
+    assert list(new_files.keys()) == list(existing_files.keys())
+    assert new_files == existing_files

@@ -6,7 +6,7 @@ from randovania.games.prime.echoes_dol_patches import BeamCostAddresses, SafeZon
 
 ALL_VERSIONS = [
     EchoesDolVersion(
-        game=RandovaniaGame.PRIME2,
+        game=RandovaniaGame.METROID_PRIME_ECHOES,
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
@@ -64,7 +64,7 @@ ALL_VERSIONS = [
         powerup_should_persist=0x803a743c,
     ),
     EchoesDolVersion(
-        game=RandovaniaGame.PRIME2,
+        game=RandovaniaGame.METROID_PRIME_ECHOES,
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",

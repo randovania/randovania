@@ -207,7 +207,7 @@ class ConnectionBackend(ConnectionBase):
 
         player_vtable = 0
         try:
-            if self.patches.game == RandovaniaGame.PRIME1:
+            if self.patches.game == RandovaniaGame.METROID_PRIME:
                 mlvl_offset = 0x84
                 cplayer_offset = 0x84c
             else:
@@ -244,7 +244,7 @@ class ConnectionBackend(ConnectionBase):
         return self._inventory
 
     async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
-        if self.patches.game == RandovaniaGame.PRIME1:
+        if self.patches.game == RandovaniaGame.METROID_PRIME:
             offset_func = _prime1_powerup_offset
             player_state_pointer = int.from_bytes(await self._perform_single_memory_operations(MemoryOperation(
                 address=self.patches.cstate_manager_global + 0x8b8,
@@ -377,7 +377,7 @@ class ConnectionBackend(ConnectionBase):
         self._permanent_pickups = pickups
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
-        if self.patches.game == RandovaniaGame.PRIME1:
+        if self.patches.game == RandovaniaGame.METROID_PRIME:
             message = "&just=center;" + message
 
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes

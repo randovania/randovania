@@ -10,7 +10,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterTargetList
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2, RandovaniaGame.PRIME3])
+@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION])
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
@@ -26,4 +26,4 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Assert
     num_areas = len(TeleporterTargetList.areas_list(preset.game))
     assert len(window._elevator_target_for_area) == num_areas
-    assert window.tab_title == "Teleporters" if preset.game == RandovaniaGame.PRIME3 else "Elevators"
+    assert window.tab_title == "Teleporters" if preset.game == RandovaniaGame.METROID_PRIME_CORRUPTION else "Elevators"

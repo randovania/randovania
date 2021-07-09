@@ -426,7 +426,7 @@ def test_run_validated_hud_text(randomizer_data):
         ],
         conversion=[],
         model=PickupModel(
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
     )

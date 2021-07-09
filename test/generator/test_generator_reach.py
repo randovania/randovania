@@ -78,9 +78,9 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 @pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
-    (RandovaniaGame.PRIME2, "Starter Preset", {91, 92, 97}, set()),  # Echoes
-    (RandovaniaGame.PRIME3, "Starter Preset", {1, 146, 147, 148, 154}, {0, 1, 2}),  # Corruption
-    (RandovaniaGame.PRIME1, "Starter Preset", {33}, set())  # Prime
+    (RandovaniaGame.METROID_PRIME_ECHOES, "Starter Preset", {91, 92, 97}, set()),  # Echoes
+    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset", {1, 146, 147, 148, 154}, {0, 1, 2}),  # Corruption
+    (RandovaniaGame.METROID_PRIME, "Starter Preset", {33}, set())  # Prime
 ])
 def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(
@@ -160,7 +160,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ])
     ])
-    game = GameDescription(RandovaniaGame.PRIME2, DockWeaknessDatabase([], [], [], []),
+    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, Requirement.impossible(),
                            None, {}, world_list)
 
@@ -207,7 +207,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
                                             game=default_layout_configuration.game),
         starting_location=StartingLocationList.with_elements(
             [game.starting_location],
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
         )
     )
     patches = base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,

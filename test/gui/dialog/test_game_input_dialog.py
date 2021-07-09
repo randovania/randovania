@@ -27,7 +27,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     options = MagicMock()
     options.options_for_game.return_value.output_directory = output_directory
     options.options_for_game.return_value.output_format = "iso"
-    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
+    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.METROID_PRIME_ECHOES)
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -50,7 +50,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     options.options_for_game.return_value.output_directory = None
     options.options_for_game.return_value.output_format = "iso"
     patcher.default_output_file.return_value = "Echoes Randomizer - MyHash"
-    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
+    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.METROID_PRIME_ECHOES)
     mock_prompt.return_value = None
 
     # Run
@@ -67,11 +67,11 @@ def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
     patcher = MagicMock()
     patcher.valid_output_file_types = ["iso"]
-    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.PRIME2)
+    window = GameInputDialog(options, patcher, "MyHash", True, RandovaniaGame.METROID_PRIME_ECHOES)
     window.output_file_edit.setText("somewhere/game.iso")
 
     # Run
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.PRIME2).output_directory == Path("somewhere")
+    assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).output_directory == Path("somewhere")
