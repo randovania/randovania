@@ -29,7 +29,7 @@ class WindowManager(QMainWindow):
         raise NotImplemented()
 
     def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],
-                                game: RandovaniaGame = RandovaniaGame.PRIME2):
+                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES):
         raise NotImplemented()
 
     def open_game_details(self, layout: LayoutDescription):

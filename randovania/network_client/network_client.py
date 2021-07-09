@@ -264,7 +264,7 @@ class NetworkClient:
     async def game_session_request_pickups(self) -> Tuple[RandovaniaGame, List[Tuple[str, bytes]]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
         if data is None:
-            return RandovaniaGame.PRIME2, []
+            return RandovaniaGame.METROID_PRIME_ECHOES, []
 
         return RandovaniaGame(data["game"]), [
             (item["provider_name"], base64.b85decode(item["pickup"]))

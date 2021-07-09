@@ -1,0 +1,451 @@
+----------------
+Docking Bay 5
+Asset id: 15622764306970326849
+> Door to Hangar A Access; Heals? False
+  * Normal Door to Hangar A Access/Door to Docking Bay 5
+  > Samus Ship
+      Trivial
+
+> Pickup (Energy Cell); Heals? False
+  * Pickup 11; Major Location? False
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True; Spawn Point
+  * Player Ship (Unlocked by Trivial)
+  > Door to Hangar A Access
+      After Docking Bay 5 Gate
+  > Pickup (Energy Cell)
+      Trivial
+  > Event - Docking Bay 5 Gate
+      Energy Cells Total
+
+> Event - Docking Bay 5 Gate; Heals? False
+  * Event Docking Bay 5 Gate
+  > Samus Ship
+      Trivial
+
+----------------
+Hangar A Access
+Asset id: 5398996635579069682
+> Door to Docking Bay 5; Heals? False; Spawn Point
+  * Normal Door to Docking Bay 5/Door to Hangar A Access
+  > Door to Repair Bay
+      Any of the following:
+          Grapple Swing or Use Screw Attack (Space Jump)
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate)
+
+> Door to Repair Bay; Heals? False
+  * Normal Door to Repair Bay/Door to Hangar A Access
+  > Door to Docking Bay 5
+      Grapple Swing or Use Screw Attack (Space Jump)
+
+----------------
+Repair Bay
+Asset id: 10896162079835248148
+> Door to Hangar A Access; Heals? False; Spawn Point
+  * Normal Door to Hangar A Access/Door to Repair Bay
+  > Door to Stairwell
+      Any of the following:
+          Charge Beam or Missile or Enter Hypermode or Use Screw Attack (Space Jump)
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Boost Ball
+  > Door to Security Station
+      Space Jump Boots
+
+> Door to Stairwell; Heals? False
+  * Normal Door to Stairwell/Door to Repair Bay
+  > Door to Hangar A Access
+      Trivial
+
+> Door to Security Station; Heals? False
+  * Normal Door to Security Station/Door to Repair Bay
+  > Door to Hangar A Access
+      Trivial
+
+----------------
+Junction A
+Asset id: 7652878551953536007
+> Door to Port Observation Deck; Heals? False; Spawn Point
+  * Normal Door to Port Observation Deck/Door to Junction A
+  > Door to Munitions Locker
+      Trivial
+
+> Door to Munitions Locker; Heals? False
+  * Normal Door to Munitions Locker/Door to Junction A
+  > Door to Port Observation Deck
+      Trivial
+  > Door to Aurora Access
+      Trivial
+
+> Door to Aurora Access; Heals? False
+  * Nova Door to Aurora Access/Door to Junction A
+  > Door to Munitions Locker
+      Trivial
+
+----------------
+Security Access
+Asset id: 2123213449889105147
+> Door to MedLab Alpha; Heals? False
+  * Normal Door to MedLab Alpha/Door to Security Access
+  > Door to Security Station
+      Trivial
+
+> Door to Security Station; Heals? False; Spawn Point
+  * Normal Door to Security Station/Door to Security Access
+  > Door to MedLab Alpha
+      Trivial
+  > Door to Auxiliary Lift
+      Trivial
+
+> Door to Auxiliary Lift; Heals? False
+  * Normal Door to Auxiliary Lift/Door to Security Access
+  > Door to Security Station
+      Trivial
+
+> Morph Ball Door to MedLab Alpha; Heals? False
+  * Morph Ball Door to MedLab Alpha/Morph Ball Door to Security Access
+  > Door to Security Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  Any of the following:
+                      Boost Ball
+                      Hyper Ball and Enter Hypermode
+
+----------------
+Aurora Chamber
+Asset id: 6410596230384865511
+> Door to Aurora Access; Heals? False; Spawn Point
+  * Normal Door to Aurora Access/Door to Aurora Chamber
+  > Door to Control Room Access
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              After Metroid Hatcher (Valhalla)
+              Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Morph Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+                  Morph Ball Bomb or Boost Ball
+  > Event - Metroid Hatcher
+      All of the following:
+          Charge Beam or Missile
+          Any of the following:
+              Grapple Lasso
+              All of the following:
+                  Nova Beam
+                  X-Ray Visor or Invisible Objects (Intermediate)
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 5 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
+
+> Door to Control Room Access; Heals? False
+  * Normal Door to Control Room Access/Door to Aurora Chamber
+  > Door to Aurora Access
+      Trivial
+
+> Event - Metroid Hatcher; Heals? False
+  * Event Metroid Hatcher (Valhalla)
+  > Door to Aurora Access
+      Trivial
+
+----------------
+Stairwell
+Asset id: 7569990525320728426
+> Door to Weapons Cache; Heals? False
+  * Normal Door to Weapons Cache/Door to Stairwell
+  > Door to Repair Bay
+      Trivial
+
+> Door to Repair Bay; Heals? False; Spawn Point
+  * Normal Door to Repair Bay/Door to Stairwell
+  > Door to Weapons Cache
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              After Stairwell Ramps
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Bomb/Spring Space Jump (Beginner)
+                      Screw Attack and Slope Jump (Beginner)
+  > Event - Stairwell Ramps
+      All of the following:
+          Plasma Beam
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 3 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Auxiliary Lift Elevator and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Xenoresearch Lab Tunnel Opened
+                      Energy Cells Total ≥ 6 and Before Metroid Hatcher (Valhalla) and Before Port Observation Deck Door Lock
+                      All of the following:
+                          Energy Cells Total ≥ 7
+                          Before Metroid Hatcher (Valhalla) or Before Xenoresearch Lab Tunnel Opened
+
+> Event - Stairwell Ramps; Heals? False
+  * Event Stairwell Ramps
+  > Door to Repair Bay
+      Trivial
+
+----------------
+Weapons Cache
+Asset id: 13634659891990625058
+> Door to Stairwell; Heals? False; Spawn Point
+  * Normal Door to Stairwell/Door to Weapons Cache
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 12; Major Location? False
+  > Door to Stairwell
+      Trivial
+
+----------------
+Munitions Locker
+Asset id: 7265233133801437908
+> Door to Junction A; Heals? False; Spawn Point
+  * Normal Door to Junction A/Door to Munitions Locker
+  > Pickup (Energy Tank)
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 13; Major Location? False
+  > Door to Junction A
+      Trivial
+
+----------------
+Xenoresearch Lab
+Asset id: 6078741217337776665
+> Door to Port Observation Deck; Heals? False; Spawn Point
+  * Normal Door to Port Observation Deck/Door to Xenoresearch Lab
+  > Inner Area
+      Missile
+
+> Morph Ball Door to Ventilation Shaft; Heals? False
+  * Morph Ball Door to Ventilation Shaft/Morph Ball Door to Xenoresearch Lab
+  > Inner Area
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+
+> Event - Tunnel Opened; Heals? False
+  * Event Xenoresearch Lab Tunnel Opened
+  > Inner Area
+      Trivial
+
+> Inner Area; Heals? False
+  > Door to Port Observation Deck
+      Missile and Space Jump Boots
+  > Morph Ball Door to Ventilation Shaft
+      Morph Ball and After Xenoresearch Lab Tunnel Opened
+  > Event - Tunnel Opened
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 9
+              All of the following:
+                  Enabled Skipping Energy Cells
+                  Any of the following:
+                      Energy Cells Total ≥ 4 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps and Before Port Observation Deck Door Lock
+                      Energy Cells Total ≥ 5 and Before Metroid Hatcher (Valhalla) and Before Stairwell Ramps
+                      All of the following:
+                          Before Metroid Hatcher (Valhalla) or Before Stairwell Ramps
+                          Any of the following:
+                              Energy Cells Total ≥ 7
+                              Energy Cells Total ≥ 6 and Before Port Observation Deck Door Lock
+
+----------------
+Ventilation Shaft
+Asset id: 2774000464172079912
+> Morph Ball Door to MedLab Alpha; Heals? False
+  * Morph Ball Door to MedLab Alpha/Morph Ball Door to Ventilation Shaft
+
+> Morph Ball Door to Xenoresearch Lab; Heals? False; Spawn Point
+  * Morph Ball Door to Xenoresearch Lab/Morph Ball Door to Ventilation Shaft
+  > Morph Ball Door to MedLab Alpha
+      Morph Ball
+
+----------------
+MedLab Alpha
+Asset id: 4052690289582601366
+> Morph Ball Door to Security Access; Heals? False
+  * Morph Ball Door to Security Access/Morph Ball Door to MedLab Alpha
+  > Pickup (Ship Missile Expansion)
+      Morph Ball Bomb and Morph Ball
+
+> Door to Security Access; Heals? False; Spawn Point
+  * Morph Ball Door to Security Access/Door to MedLab Alpha
+  > Pickup (Missile Expansion)
+      Missile ≥ 3 and Grapple Lasso and Morph Ball
+
+> Morph Ball Door to Ventilation Shaft; Heals? False
+  * Morph Ball Door to Ventilation Shaft/Morph Ball Door to MedLab Alpha
+  > Pickup (Ship Missile Expansion)
+      Morph Ball
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 14; Major Location? False
+  > Door to Security Access
+      Trivial
+
+> Pickup (Ship Missile Expansion); Heals? False
+  * Pickup 15; Major Location? False
+  > Morph Ball Door to Security Access
+      Morph Ball Bomb and Morph Ball
+  > Morph Ball Door to Ventilation Shaft
+      Morph Ball
+
+----------------
+Security Station
+Asset id: 7055596259548820837
+> Door to Security Access; Heals? False
+  * Normal Door to Security Access/Door to Security Station
+  > Door to Repair Bay
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Charge Beam or Missile ≥ 2 or Morph Ball Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  Screw Attack or Boost Ball
+
+> Door to Repair Bay; Heals? False; Spawn Point
+  * Normal Door to Repair Bay/Door to Security Station
+  > Door to Security Access
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Charge Beam or Missile ≥ 2 or Morph Ball Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  Screw Attack or Boost Ball
+
+----------------
+Auxiliary Lift
+Asset id: 17479488334200413695
+> Door to Port Observation Deck; Heals? False
+  * Normal Door to Port Observation Deck/Door to Auxiliary Lift
+  > Door to Security Access
+      After Auxiliary Lift Elevator
+  > Pickup (Missile Expansion)
+      Morph Ball
+
+> Door to Security Access; Heals? False; Spawn Point
+  * Normal Door to Security Access/Door to Auxiliary Lift
+  > Door to Port Observation Deck
+      After Auxiliary Lift Elevator
+  > Event - Activate Elevator
+      All of the following:
+          Grapple Lasso
+          Any of the following:
+              Energy Cells Total ≥ 4
+              Energy Cells Total ≥ 2 and Before Stairwell Ramps and Enabled Skipping Energy Cells
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 16; Major Location? False
+  > Door to Port Observation Deck
+      Trivial
+
+> Event - Activate Elevator; Heals? False
+  * Event Auxiliary Lift Elevator
+  > Door to Security Access
+      Trivial
+
+----------------
+Aurora Access
+Asset id: 1129937930833845921
+> Door to Junction A; Heals? False; Spawn Point
+  * Nova Door to Junction A/Door to Aurora Access
+  > Door to Aurora Chamber
+      Trivial
+
+> Door to Aurora Chamber; Heals? False
+  * Normal Door to Aurora Chamber/Door to Aurora Access
+  > Door to Junction A
+      Trivial
+
+----------------
+Control Room
+Asset id: 1605782415930376157
+> Door to Control Room Access; Heals? False; Spawn Point
+  * Normal Door to Control Room Access/Door to Control Room
+  > Event - Valhalla Leviathan Code
+      X-Ray Visor and Use Grapple Voltage (Lasso and Voltage)
+
+> Event - Valhalla Leviathan Code; Heals? False
+  * Event Valhalla Levithan Code
+  > Door to Control Room Access
+      Trivial
+
+----------------
+Port Observation Deck
+Asset id: 13201618045565515280
+> Door to Xenoresearch Lab; Heals? False
+  * Normal Door to Xenoresearch Lab/Door to Port Observation Deck
+  > Room Center
+      After Port Observation Deck Seeker Wall
+
+> Door to Junction A; Heals? False
+  * Normal Door to Junction A/Door to Port Observation Deck
+  > Room Center
+      Trivial
+
+> Door to Auxiliary Lift; Heals? False
+  * Normal Door to Auxiliary Lift/Door to Port Observation Deck
+  > Room Center
+      Morph Ball
+
+> Event - Energy Cell Door Lock; Heals? False
+  * Event Port Observation Deck Door Lock
+  > Room Center
+      Trivial
+
+> Event - Seeker Wall; Heals? False
+  * Event Port Observation Deck Seeker Wall
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Spawn Point
+  > Door to Xenoresearch Lab
+      After Port Observation Deck Seeker Wall
+  > Door to Junction A
+      After Port Observation Deck Door Lock
+  > Door to Auxiliary Lift
+      Morph Ball
+  > Event - Energy Cell Door Lock
+      Any of the following:
+          Energy Cells Total ≥ 7
+          All of the following:
+              Enabled Skipping Energy Cells
+              Any of the following:
+                  Energy Cells Total ≥ 3 and Before Xenoresearch Lab Tunnel Opened and Before Stairwell Ramps
+                  All of the following:
+                      Energy Cells Total ≥ 5
+                      Before Xenoresearch Lab Tunnel Opened or Before Stairwell Ramps
+  > Event - Seeker Wall
+      Missile ≥ 4 and Seeker Missile
+
+----------------
+Control Room Access
+Asset id: 16574561510686353296
+> Door to Aurora Chamber; Heals? False
+  * Normal Door to Aurora Chamber/Door to Control Room Access
+  > Door to Control Room
+      Trivial
+
+> Door to Control Room; Heals? False; Spawn Point
+  * Normal Door to Control Room/Door to Control Room Access
+  > Door to Aurora Chamber
+      Trivial
+

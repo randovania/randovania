@@ -1,0 +1,378 @@
+{
+    "name": "Bryyo - Seed",
+    "dark_name": null,
+    "asset_id": 14806081023590793725,
+    "areas": [
+        {
+            "name": "Landing Site Delta",
+            "in_dark_aether": false,
+            "asset_id": 12972775391902806082,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Core Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1.4750239849090576,
+                        "y": 47.19825744628906,
+                        "z": 25.59420394897461
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2952866055994706679,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (No Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 57,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 45,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    },
+                    "connections": {
+                        "Door to Core Access": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (No Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Core Access",
+            "in_dark_aether": false,
+            "asset_id": 2952866055994706679,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site Delta",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.086798906326294,
+                        "y": -58.0,
+                        "z": 28.999998092651367
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 12972775391902806082,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Bryyo Leviathan Core": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 4,
+                                        "amount": 2,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Bryyo Leviathan Core",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18.0,
+                        "y": 59.0,
+                        "z": 21.500001907348633
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 9708827741160794862,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Landing Site Delta": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Bryyo Leviathan Core",
+            "in_dark_aether": false,
+            "asset_id": 9708827741160794862,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Core Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.062248945236206055,
+                        "y": -73.00301361083984,
+                        "z": 14.500009536743164
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2952866055994706679,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Mogenar": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Teleporter to Bryyo Cliffside",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 85.0,
+                        "z": 75.0
+                    },
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 11458735609143269013,
+                    "destination_area_asset_id": 2349002151496990705,
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": true,
+                    "editable": false,
+                    "connections": {}
+                },
+                {
+                    "name": "Pickup (Hyper Ball)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 98,
+                    "major_location": true,
+                    "connections": {
+                        "Teleporter to Bryyo Cliffside": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 38,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Mogenar",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 5,
+                    "connections": {
+                        "Pickup (Hyper Ball)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

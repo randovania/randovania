@@ -29,7 +29,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
         signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
 
-        if self.game_enum == RandovaniaGame.PRIME2:
+        if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
             config_fields = {
                 field.name: field
                 for field in dataclasses.fields(EchoesConfiguration)
@@ -47,7 +47,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.dark_aether_box.setVisible(False)
             self.safe_zone_box.setVisible(False)
 
-        if self.game_enum == RandovaniaGame.PRIME1:
+        if self.game_enum == RandovaniaGame.METROID_PRIME:
             config_fields = {
                 field.name: field
                 for field in dataclasses.fields(PrimeConfiguration)
@@ -71,14 +71,14 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         config = preset.configuration
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
-        if self.game_enum == RandovaniaGame.PRIME2:
+        if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
             self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
             self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
             self.varia_suit_spin_box.setValue(config.varia_suit_damage)
             self.dark_suit_spin_box.setValue(config.dark_suit_damage)
 
-        elif self.game_enum == RandovaniaGame.PRIME1:
+        elif self.game_enum == RandovaniaGame.METROID_PRIME:
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)

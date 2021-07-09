@@ -12,13 +12,13 @@ AnyGameConfiguration = Union[PrimeConfiguration, EchoesConfiguration, Corruption
 AnyCosmeticPatches = Union[PrimeCosmeticPatches, EchoesCosmeticPatches, CorruptionCosmeticPatches]
 
 GAME_TO_CONFIGURATION: Dict[RandovaniaGame, Type[AnyGameConfiguration]] = {
-    RandovaniaGame.PRIME1: PrimeConfiguration,
-    RandovaniaGame.PRIME2: EchoesConfiguration,
-    RandovaniaGame.PRIME3: CorruptionConfiguration,
+    RandovaniaGame.METROID_PRIME: PrimeConfiguration,
+    RandovaniaGame.METROID_PRIME_ECHOES: EchoesConfiguration,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: CorruptionConfiguration,
 }
 
 GAME_TO_COSMETIC: Dict[RandovaniaGame, Type[AnyCosmeticPatches]] = {
-    RandovaniaGame.PRIME1: PrimeCosmeticPatches,
-    RandovaniaGame.PRIME2: EchoesCosmeticPatches,
-    RandovaniaGame.PRIME3: CorruptionCosmeticPatches,
+    RandovaniaGame.METROID_PRIME: PrimeCosmeticPatches,
+    RandovaniaGame.METROID_PRIME_ECHOES: EchoesCosmeticPatches,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: CorruptionCosmeticPatches,
 }

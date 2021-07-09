@@ -1,0 +1,311 @@
+----------------
+Transit Station 4-B
+Leads to Command Center
+Asset id: 4566937761378320542
+> Door to Save Station; Heals? False
+  * Normal Door to Save Station/Door to Transit Station 4-B
+Leads to Command Center
+  > Door to Phazon Quarry
+      Trivial
+
+> Door to Phazon Quarry; Heals? False
+  * Normal Door to Phazon Quarry/Door to Transit Station 4-B
+Leads to Command Center
+  > Door to Save Station
+      Trivial
+  > Train to Command Center - Transit Station 4-A
+      Scan Visor
+
+> Train to Command Center - Transit Station 4-A; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Transit Station 4-A
+Leads to Mining Site
+  > Door to Phazon Quarry
+      Trivial
+
+----------------
+Phazon Quarry
+Asset id: 1516173575710242674
+> Door to Mine Lift; Heals? False
+  * Normal Door to Mine Lift/Door to Phazon Quarry
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+> Door to Drill Shaft 2; Heals? False
+  * Nova Door to Drill Shaft 2/Door to Phazon Quarry
+  > Door to Transit Station 4-B
+Leads to Command Center
+      After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
+  > Event - Balcony Barrier
+      Trivial
+  > Event - Drill Wall (Upper)
+      After Phazon Quarry Pirate Fight
+
+> Door to Transit Station 4-B
+Leads to Command Center; Heals? False; Spawn Point
+  * Normal Door to Transit Station 4-B
+Leads to Command Center/Door to Phazon Quarry
+  > Door to Mine Lift
+      All of the following:
+          After Phazon Quarry Drill Halfpipe
+          Any of the following:
+              Morph Ball and Boost Ball
+              All of the following:
+                  After Phazon Quarry Drill Wall
+                  Any of the following:
+                      Movement (Beginner) and Use Screw Attack (Space Jump)
+                      Screw Attack and Screw Attack at Z-Axis (Intermediate) and Bomb Jump/Spring Space Jump (Beginner)
+  > Door to Drill Shaft 2
+      All of the following:
+          After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
+          Any of the following:
+              Space Jump Boots
+              Morph Ball and Bomb/Spring Space Jump (Intermediate)
+  > Pickup (Missile Expansion)
+      All of the following:
+          After Phazon Quarry Drill Wall
+          Space Jump Boots or Bomb Jump/Spring Space Jump (Beginner)
+  > Event - Drill Halfpipe
+      After Phazon Quarry Pirate Fight
+  > Event - Drill Wall (Lower)
+      After Phazon Quarry Pirate Fight
+  > Event - Pirate Fight
+      Trivial
+
+> Pickup (Energy Cell); Heals? False
+  * Pickup 93; Major Location? False
+  > Door to Drill Shaft 2
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 94; Major Location? False
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+> Event - Drill Halfpipe; Heals? False
+  * Event Phazon Quarry Drill Halfpipe
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+> Event - Balcony Barrier; Heals? False
+  * Event Phazon Quarry Balcony Barrier
+  > Pickup (Energy Cell)
+      Trivial
+
+> Event - Drill Wall (Lower); Heals? False
+  * Event Phazon Quarry Drill Wall
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+> Event - Drill Wall (Upper); Heals? False
+  * Event Phazon Quarry Drill Wall
+  > Door to Drill Shaft 2
+      Trivial
+
+> Event - Pirate Fight; Heals? False
+  * Event Phazon Quarry Pirate Fight
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+----------------
+Drill Shaft 2
+Asset id: 7923701740032492696
+> Door to Phazon Quarry; Heals? False
+  * Nova Door to Phazon Quarry/Door to Drill Shaft 2
+  > Door to Main Cavern
+      All of the following:
+          After Drill Shaft 2 Destroy Drill
+          Space Jump Boots or Slope Jump (Intermediate)
+
+> Door to Main Cavern; Heals? False; Spawn Point
+  * Normal Door to Main Cavern/Door to Drill Shaft 2
+  > Door to Phazon Quarry
+      After Drill Shaft 2 Destroy Drill
+  > Event - Destroy Drill
+      Shoot Phazite (X-Ray and Nova)
+
+> Event - Destroy Drill; Heals? False
+  * Event Drill Shaft 2 Destroy Drill
+  > Door to Main Cavern
+      Trivial
+
+----------------
+Mine Lift
+Asset id: 2328629671991442460
+> Door to Phazon Quarry; Heals? False; Spawn Point
+  * Normal Door to Phazon Quarry/Door to Mine Lift
+  > Door to Phazon Harvesting
+      After Mine Lift Open Floors
+  > Event - Open Shaft
+      All of the following:
+          Grapple Lasso and Morph Ball and Boost Ball and Spider Ball
+          Hazards without Hazard Shield (Beginner) or Hazard Shield
+
+> Door to Phazon Harvesting; Heals? False
+  * Normal Door to Phazon Harvesting/Door to Mine Lift
+  > Door to Phazon Quarry
+      All of the following:
+          After Mine Lift Open Floors and Use Screw Attack (Space Jump)
+          Any of the following:
+              Hazard Shield
+              Hazards without Hazard Shield (Beginner) and Damage ≥ 50
+
+> Event - Open Shaft; Heals? False
+  * Event Mine Lift Open Floors
+  > Door to Phazon Harvesting
+      Trivial
+
+----------------
+Phazon Harvesting
+Asset id: 17076000080045116679
+> Door to Mine Lift; Heals? False; Spawn Point
+  * Normal Door to Mine Lift/Door to Phazon Harvesting
+  > Door to Drill Shaft 1
+      Any of the following:
+          All of the following:
+              Space Jump Boots and After Phazon Harvesting Walkway Destroyed
+              Any of the following:
+                  Hazard Shield
+                  Hazards without Hazard Shield (Beginner) and Damage ≥ 250
+          All of the following:
+              Before Phazon Harvesting Walkway Destroyed and Movement (Advanced) and Bomb Jump/Spring Space Jump (Beginner)
+              Any of the following:
+                  Hazard Shield
+                  All of the following:
+                      Hazards without Hazard Shield (Advanced)
+                      Any of the following:
+                          Damage ≥ 450
+                          Boost Ball and Damage ≥ 250
+  > Event - Walkway Destroyed
+      Trivial
+
+> Door to Drill Shaft 1; Heals? False
+  * Normal Door to Drill Shaft 1/Door to Phazon Harvesting
+  > Door to Mine Lift
+      All of the following:
+          Hazards without Hazard Shield (Beginner) or Hazard Shield
+          Any of the following:
+              Space Jump Boots
+              Terminal Fall Abuse (Beginner) and Use Screw Attack (No Space Jump)
+
+> Event - Walkway Destroyed; Heals? False
+  * Event Phazon Harvesting Walkway Destroyed
+  > Door to Mine Lift
+      Trivial
+
+----------------
+Drill Shaft 1
+Asset id: 15941114407882664050
+> Door to Phazon Harvesting; Heals? False; Spawn Point
+  * Normal Door to Phazon Harvesting/Door to Drill Shaft 1
+  > Door to Main Cavern
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+
+> Door to Main Cavern; Heals? False
+  * Normal Door to Main Cavern/Door to Drill Shaft 1
+  > Door to Phazon Harvesting
+      Trivial
+
+----------------
+Landing Site Charlie
+Asset id: 65874966404189819
+> Door to Phazon Mine Entry; Heals? False
+  * Normal Door to Phazon Mine Entry/Door to Landing Site Charlie
+  > Event - Clean Landing Site
+      All of the following:
+          Plasma Beam
+          Any of the following:
+              Charge Beam or Missile or Enter Hypermode
+              All of the following:
+                  Morph Ball
+                  Morph Ball Bomb or Screw Attack or Boost Ball
+  > Samus Ship
+      After Landing Site Charlie Cleanup
+
+> Event - Clean Landing Site; Heals? False
+  * Event Landing Site Charlie Cleanup
+  > Door to Phazon Mine Entry
+      Trivial
+
+> Samus Ship; Heals? True; Spawn Point
+  * Player Ship (Unlocked by After Landing Site Charlie Cleanup)
+  > Door to Phazon Mine Entry
+      Trivial
+
+----------------
+Main Cavern
+Asset id: 3558406334082684652
+> Door to Drill Shaft 1; Heals? False; Spawn Point
+  * Normal Door to Drill Shaft 1/Door to Main Cavern
+  > Door to Phazon Mine Entry
+      Trivial
+
+> Door to Drill Shaft 2; Heals? False
+  * Normal Door to Drill Shaft 2/Door to Main Cavern
+  > Door to Phazon Mine Entry
+      After Main Cavern Phazite Wall
+
+> Door to Phazon Mine Entry; Heals? False
+  * Nova Door to Phazon Mine Entry/Door to Main Cavern
+  > Door to Drill Shaft 1
+      Trivial
+  > Door to Drill Shaft 2
+      After Main Cavern Phazite Wall
+  > Pickup (Nova Beam)
+      Trivial
+  > Event - Phazite Wall
+      Shoot Phazite (X-Ray and Nova)
+
+> Pickup (Nova Beam); Heals? False
+  * Pickup 95; Major Location? True
+  > Door to Phazon Mine Entry
+      Shoot Phazite (X-Ray and Nova)
+
+> Event - Phazite Wall; Heals? False
+  * Event Main Cavern Phazite Wall
+  > Door to Phazon Mine Entry
+      Trivial
+
+----------------
+Save Station
+Asset id: 7677627888152439345
+> Door to Transit Station 4-B
+Leads to Command Center; Heals? False
+  * Normal Door to Transit Station 4-B
+Leads to Command Center/Door to Save Station
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point
+  > Door to Transit Station 4-B
+Leads to Command Center
+      Trivial
+
+----------------
+Phazon Mine Entry
+Asset id: 6948986767748104139
+> Door to Landing Site Charlie; Heals? False
+  * Normal Door to Landing Site Charlie/Door to Phazon Mine Entry
+  > Door to Main Cavern
+      Trivial
+
+> Door to Main Cavern; Heals? False; Spawn Point
+  * Nova Door to Main Cavern/Door to Phazon Mine Entry
+  > Door to Landing Site Charlie
+      Trivial
+  > Pickup (Missile Expansion)
+      All of the following:
+          Nova Beam
+          X-Ray Visor or Invisible Objects (Beginner)
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 96; Major Location? False
+  > Door to Main Cavern
+      Trivial
+

@@ -1,16 +1,19 @@
+import re
+from pathlib import Path
 from typing import Union, Iterator, Tuple, TextIO
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockType
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, TranslatorGateNode, \
-    LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, RequirementOr, \
     RequirementTemplate, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockType
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, \
+    TranslatorGateNode, \
+    LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world_list import WorldList
-from randovania.lib.enum_lib import iterate_enum
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.lib.enum_lib import iterate_enum
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
@@ -134,10 +137,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         print_function()
 
 
-def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
-    def print_to_file(*args):
-        output.write("\t".join(str(arg) for arg in args) + "\n")
-
+def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template_name}:\n")
@@ -152,9 +152,29 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
             for level, text in pretty_print_requirement(weakness.requirement):
                 output.write("      {}{}\n".format("    " * level, text))
 
+
+def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
+    def print_to_file(*args):
+        output.write("\t".join(str(arg) for arg in args) + "\n")
+
     output.write("\n")
     for world in game.world_list.worlds:
         output.write("====================\n{}\n".format(world.name))
         for area in world.areas:
             output.write("----------------\n")
             pretty_print_area(game, area, print_function=print_to_file)
+
+
+def write_human_readable_game(game: GameDescription, base_path: Path):
+    with base_path.joinpath(f"header.txt").open("w", encoding="utf-8") as meta:
+        write_human_readable_meta(game, meta)
+
+    for world in game.world_list.worlds:
+        name = re.sub(r'[^a-zA-Z\- ]', r'', world.name)
+        with base_path.joinpath(f"{name}.txt").open("w", encoding="utf-8") as world_file:
+            def print_to_file(*args):
+                world_file.write("\t".join(str(arg) for arg in args) + "\n")
+
+            for area in world.areas:
+                world_file.write("----------------\n")
+                pretty_print_area(game, area, print_function=print_to_file)

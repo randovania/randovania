@@ -240,7 +240,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
             preset_row = typing.cast(GameSessionPreset, preset_row)
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
-                if preset.game != RandovaniaGame.PRIME2:
+                if preset.game != RandovaniaGame.METROID_PRIME_ECHOES:
                     raise InvalidAction("Only Prime 2 presets allowed.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)

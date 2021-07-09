@@ -235,7 +235,7 @@ def create_visual_etm() -> PickupEntry:
         name="Unknown item",
         progression=tuple(),
         model=PickupModel(
-            game=RandovaniaGame.PRIME2,
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
         item_category=ItemCategory.ETM,

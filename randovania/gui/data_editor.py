@@ -380,14 +380,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _save_database(self, path: Path):
         data = data_writer.write_game_description(self.game_description)
-        with path.open("w") as open_file:
-            json.dump(data, open_file, indent=4)
+        if self._is_internal:
+            path.with_suffix("").mkdir(exist_ok=True)
+            data_writer.write_as_split_files(data, path.with_suffix(""))
+        else:
+            with path.open("w") as open_file:
+                json.dump(data, open_file, indent=4)
         self._last_data = data
 
     def _save_as_internal_database(self):
         self._save_database(self._data_path)
-        with self._data_path.with_suffix(".txt").open("w", encoding="utf-8") as output:
-            pretty_print.write_human_readable_world_list(self.game_description, output)
+        pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
         default_database.game_description_for.cache_clear()
 
     def _create_new_node(self):

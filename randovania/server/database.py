@@ -151,9 +151,9 @@ class GameSession(BaseModel):
                 "permalink": None,
             }
 
-        games = [RandovaniaGame.PRIME1, RandovaniaGame.PRIME2]
+        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
         if "prime3" in (self.dev_features or ""):
-            games.append(RandovaniaGame.PRIME3)
+            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
         return {
             "id": self.id,

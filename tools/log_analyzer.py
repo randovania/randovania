@@ -127,7 +127,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     location_hints = collections.defaultdict(item_creator)
     item_order = collections.defaultdict(list)
 
-    game_description = game_description_for(RandovaniaGame.PRIME2)
+    game_description = game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     world_list = game_description.world_list
     index_to_location = {
         node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),

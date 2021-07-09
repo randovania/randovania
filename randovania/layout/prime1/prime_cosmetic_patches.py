@@ -15,4 +15,4 @@ class PrimeCosmeticPatches(BaseCosmeticPatches):
 
     @classmethod
     def game(cls):
-        return RandovaniaGame.PRIME1
+        return RandovaniaGame.METROID_PRIME

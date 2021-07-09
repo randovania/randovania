@@ -42,8 +42,8 @@ _echoes_items_to_not_add_in_minimal_logic = {
 }
 
 minimal_logic_custom_item_count = {
-    RandovaniaGame.PRIME1: {},
-    RandovaniaGame.PRIME2: {
+    RandovaniaGame.METROID_PRIME: {},
+    RandovaniaGame.METROID_PRIME_ECHOES: {
         # Energy Tank
         42: 14,
         # Power Bomb
@@ -94,8 +94,8 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
     events_to_skip = set()
     custom_item_count = minimal_logic_custom_item_count.get(resource_database.game_enum, {})
 
-    if resource_database.game_enum == RandovaniaGame.PRIME2:
-        item_db = default_database.item_database_for_game(RandovaniaGame.PRIME2)
+    if resource_database.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
+        item_db = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
 
         items_to_skip = copy.copy(_echoes_items_to_not_add_in_minimal_logic)
         if major_items.items_state[item_db.major_items["Progressive Grapple"]].num_shuffled_pickups == 0:
@@ -165,7 +165,7 @@ def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentRe
 def misc_resources_for_configuration(configuration: AnyGameConfiguration,
                                      resource_database: ResourceDatabase) -> CurrentResources:
     enabled_resources = set()
-    if configuration.game == RandovaniaGame.PRIME1:
+    if configuration.game == RandovaniaGame.METROID_PRIME:
         logical_patches = {
             "allow_underwater_movement_without_gravity": 0,
             "main_plaza_door": 1,
@@ -180,7 +180,7 @@ def misc_resources_for_configuration(configuration: AnyGameConfiguration,
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-    elif configuration.game == RandovaniaGame.PRIME2:
+    elif configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         enabled_resources = set()
         allow_vanilla = {
             "allow_jumping_on_dark_water": 1,
@@ -241,7 +241,7 @@ def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfigur
     damage_reductions = copy.copy(db.damage_reductions)
     requirement_template = copy.copy(db.requirement_template)
 
-    if configuration.game == RandovaniaGame.PRIME1:
+    if configuration.game == RandovaniaGame.METROID_PRIME:
         suits = [db.get_item_by_name("Varia Suit")]
         if configuration.heat_protection_only_varia:
             requirement_template["Heat-Resisting Suit"] = ResourceRequirement(db.get_item_by_name("Varia Suit"),
@@ -258,7 +258,7 @@ def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfigur
         else:
             base_damage_reduction = prime1_absolute_damage_reduction
 
-    elif configuration.game == RandovaniaGame.PRIME2:
+    elif configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 2)] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
             DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),

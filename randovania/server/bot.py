@@ -11,9 +11,9 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.preset_migration import VersionedPreset
 
 _PRETTY_GAME_NAME = {
-    RandovaniaGame.PRIME1: "Metroid Prime 1",
-    RandovaniaGame.PRIME2: "Metroid Prime 2: Echoes",
-    RandovaniaGame.PRIME3: "Metroid Prime 3: Corruption",
+    RandovaniaGame.METROID_PRIME: "Metroid Prime 1",
+    RandovaniaGame.METROID_PRIME_ECHOES: "Metroid Prime 2: Echoes",
+    RandovaniaGame.METROID_PRIME_CORRUPTION: "Metroid Prime 3: Corruption",
 }
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
 

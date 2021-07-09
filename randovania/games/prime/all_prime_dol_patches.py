@@ -136,12 +136,12 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List
 
 
 def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, state_mgr: GeneralRegister = r31):
-    if game == RandovaniaGame.PRIME1:
+    if game == RandovaniaGame.METROID_PRIME:
         return [
             lwz(target_register, 0x8b8, state_mgr),
             lwz(target_register, 0, target_register),
         ]
-    elif game == RandovaniaGame.PRIME2:
+    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
         return [
             lwz(target_register, 0x150c, state_mgr),
         ]
@@ -153,7 +153,7 @@ def adjust_item_amount_and_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
 ) -> List[BaseInstruction]:
     # r31 = CStateManager
-    if game == RandovaniaGame.PRIME1 and item_id in prime_items.ARTIFACT_ITEMS:
+    if game == RandovaniaGame.METROID_PRIME and item_id in prime_items.ARTIFACT_ITEMS:
         return increment_item_capacity_patch(patch_addresses, game, item_id, delta)
 
     if delta >= 0:
@@ -223,7 +223,7 @@ def increment_item_capacity_patch(
         li(r5, delta),
         bl(patch_addresses.add_power_up),
     ]
-    if game == RandovaniaGame.PRIME1 and item_id in prime_items.ARTIFACT_ITEMS:
+    if game == RandovaniaGame.METROID_PRIME and item_id in prime_items.ARTIFACT_ITEMS:
         if item_id > 29:
             layer_id = item_id - 28
         else:
@@ -291,12 +291,12 @@ def apply_reverse_energy_tank_heal_patch(sd2_base: int,
                                          game: RandovaniaGame,
                                          dol_file: DolFile,
                                          ):
-    if game == RandovaniaGame.PRIME2:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         health_offset = 0x14
         refill_item = 0x29
         patch_offset = 0x90
 
-    elif game == RandovaniaGame.PRIME3:
+    elif game == RandovaniaGame.METROID_PRIME_CORRUPTION:
         health_offset = 0xc
         refill_item = 0x12
         patch_offset = 0x138
