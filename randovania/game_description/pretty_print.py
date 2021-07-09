@@ -134,10 +134,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         print_function()
 
 
-def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
-    def print_to_file(*args):
-        output.write("\t".join(str(arg) for arg in args) + "\n")
-
+def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template_name}:\n")
@@ -151,6 +148,11 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
             output.write(f"\n  * ({weakness.index}) {weakness.name}; Lock type: {weakness.lock_type.name}\n")
             for level, text in pretty_print_requirement(weakness.requirement):
                 output.write("      {}{}\n".format("    " * level, text))
+
+
+def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
+    def print_to_file(*args):
+        output.write("\t".join(str(arg) for arg in args) + "\n")
 
     output.write("\n")
     for world in game.world_list.worlds:

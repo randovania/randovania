@@ -387,6 +387,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _save_as_internal_database(self):
         self._save_database(self._data_path)
         with self._data_path.with_suffix(".txt").open("w", encoding="utf-8") as output:
+            pretty_print.write_human_readable_meta(self.game_description, output)
             pretty_print.write_human_readable_world_list(self.game_description, output)
         default_database.game_description_for.cache_clear()
 
