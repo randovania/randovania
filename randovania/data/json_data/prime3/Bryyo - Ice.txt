@@ -1,0 +1,153 @@
+----------------
+Warp Site Bravo
+Asset id: 9245834436705857859
+> Door to Imperial Caverns; Heals? False
+  * Normal Door to Imperial Caverns/Door to Warp Site Bravo
+  > Teleport to Bryyo Fire - Warp Site Alpha
+      Trivial
+
+> Teleport to Bryyo Fire - Warp Site Alpha; Heals? False; Spawn Point
+  * Teleporter to Bryyo - Fire - Warp Site Alpha
+  > Door to Imperial Caverns
+      Trivial
+
+----------------
+Hall of Remembrance
+Asset id: 6915612318130423578
+> Door to Imperial Crypt (Upper); Heals? False
+  * Normal Door to Imperial Crypt/Door to Hall of Remembrance (Upper)
+  > Locked Door Ledge
+      Trivial
+
+> Door to Imperial Crypt (Lower); Heals? False
+  * Normal Door to Imperial Crypt/Door to Hall of Remembrance (Lower)
+  > Door to Tower (Lower)
+      Before Hall of Remembrance Item or Use Screw Attack (Space Jump)
+  > Event - Hall of Remembrance Item
+      Trivial
+
+> Door to Tower (Lower); Heals? False
+  * Normal Door to Tower/Door to Hall of Remembrance (Upper)
+  > Door to Imperial Crypt (Lower)
+      Before Hall of Remembrance Item or Use Screw Attack (Space Jump)
+  > Event - Hall of Remembrance Item
+      Trivial
+
+> Door to Tower (Upper); Heals? False
+  * Normal Door to Tower/Door to Hall of Remembrance (Lower)
+  > Door to Tower (Lower)
+      Trivial
+  > Pickup (Ship Missile Expansion)
+      Use Screw Attack (Space Jump)
+
+> Pickup (Screw Attack); Heals? False; Spawn Point
+  * Pickup 48; Major Location? True
+  > Door to Imperial Crypt (Lower)
+      Use Screw Attack (Space Jump)
+  > Door to Tower (Lower)
+      Use Screw Attack (Space Jump)
+
+> Pickup (Ship Missile Expansion); Heals? False
+  * Pickup 49; Major Location? False
+  > Door to Tower (Upper)
+      Use Screw Attack (Space Jump)
+  > Locked Door Ledge
+      Use Screw Attack (Space Jump)
+
+> Event - Unlock Door; Heals? False
+  * Event Hall of Remembrance Unlock Door
+  > Locked Door Ledge
+      Trivial
+
+> Locked Door Ledge; Heals? False
+  > Door to Imperial Crypt (Upper)
+      After Hall of Remembrance Unlock Door
+  > Door to Imperial Crypt (Lower)
+      Trivial
+  > Pickup (Ship Missile Expansion)
+      Use Screw Attack (Space Jump)
+  > Event - Unlock Door
+      Grapple Lasso
+
+> Event - Hall of Remembrance Item; Heals? False
+  * Event Hall of Remembrance Item
+  > Pickup (Screw Attack)
+      Trivial
+
+----------------
+Imperial Crypt
+Asset id: 17976174099400013428
+> Door to Hall of Remembrance (Upper); Heals? False
+  * Normal Door to Hall of Remembrance/Door to Imperial Crypt (Upper)
+  > Door to Imperial Caverns
+      Before Imperial Crypt Ice Floor or Use Screw Attack (Space Jump)
+
+> Door to Imperial Caverns; Heals? False; Spawn Point
+  * Normal Door to Imperial Caverns/Door to Imperial Crypt
+  > Door to Hall of Remembrance (Upper)
+      All of the following:
+          After Hall of Remembrance Unlock Door
+          Before Imperial Crypt Ice Floor or Use Screw Attack (Space Jump)
+  > Door to Hall of Remembrance (Lower)
+      After Imperial Crypt Ice Floor
+  > Event - Ice Floor
+      Any of the following:
+          Plasma Beam
+          Charge Beam and Knowledge (Beginner) and Enter Hypermode
+
+> Door to Hall of Remembrance (Lower); Heals? False
+  * Normal Door to Hall of Remembrance/Door to Imperial Crypt (Lower)
+  > Door to Imperial Caverns
+      Boost Ball and After Imperial Crypt Ice Floor
+
+> Event - Ice Floor; Heals? False
+  * Event Imperial Crypt Ice Floor
+  > Door to Hall of Remembrance (Upper)
+      Trivial
+  > Door to Imperial Caverns
+      Trivial
+
+----------------
+Tower
+Asset id: 10429003070780375168
+> Door to Hall of Remembrance (Upper); Heals? False
+  * Normal Door to Hall of Remembrance/Door to Tower (Lower)
+  > Door to Hall of Remembrance (Lower)
+      Trivial
+  > Pickup (Energy Tank)
+      Morph Ball Bomb and Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Expert) and Instant Morph (Expert)
+
+> Door to Hall of Remembrance (Lower); Heals? False; Spawn Point
+  * Normal Door to Hall of Remembrance/Door to Tower (Upper)
+  > Door to Hall of Remembrance (Upper)
+      Use Screw Attack (Space Jump)
+  > Pickup (Energy Tank)
+      Morph Ball Bomb and Morph Ball and Boost Ball and Spider Ball
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 50; Major Location? False
+  > Door to Hall of Remembrance (Upper)
+      Trivial
+
+----------------
+Imperial Caverns
+Asset id: 10980580650394598183
+> Door to Imperial Crypt; Heals? False
+  * Normal Door to Imperial Crypt/Door to Imperial Caverns
+  > Door to Warp Site Bravo
+      After Imperial Caverns Ice Floors and Use Screw Attack (Space Jump)
+
+> Door to Warp Site Bravo; Heals? False; Spawn Point
+  * Normal Door to Warp Site Bravo/Door to Imperial Caverns
+  > Door to Imperial Crypt
+      After Imperial Caverns Ice Floors
+  > Event - Ice Floors
+      Any of the following:
+          Plasma Beam
+          Charge Beam and Knowledge (Beginner) and Enter Hypermode
+
+> Event - Ice Floors; Heals? False
+  * Event Imperial Caverns Ice Floors
+  > Door to Warp Site Bravo
+      Trivial
+

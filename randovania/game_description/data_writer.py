@@ -1,10 +1,10 @@
+import copy
+import json
+import re
+from pathlib import Path
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -12,6 +12,10 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 
@@ -375,3 +379,18 @@ def write_game_description(game: GameDescription) -> dict:
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }
+
+
+def write_as_split_files(data: dict, base_path: Path):
+    data = copy.copy(data)
+    worlds = data.pop("worlds")
+    data["worlds"] = []
+
+    for world in worlds:
+        name = re.sub(r'[^a-zA-Z\- ]', r'', world["name"])
+        data["worlds"].append(f"{name}.json")
+        with base_path.joinpath(f"{name}.json").open("w", encoding="utf-8") as world_file:
+            json.dump(world, world_file, indent=4)
+
+    with base_path.joinpath(f"header.json").open("w", encoding="utf-8") as meta:
+        json.dump(data, meta, indent=4)

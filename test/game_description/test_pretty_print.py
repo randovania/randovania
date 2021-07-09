@@ -1,20 +1,24 @@
-import io
 from unittest.mock import patch, MagicMock
 
 import pytest
 
 import randovania
-from randovania.game_description import pretty_print
+from randovania.game_description import pretty_print, default_database
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, RequirementTemplate
+from randovania.games.game import RandovaniaGame
 
 
 @pytest.mark.skipif(randovania.is_frozen(), reason="frozen executable doesn't have JSON files")
-def test_commited_human_readable_description(echoes_game_description):
-    buffer = io.StringIO()
-    pretty_print.write_human_readable_meta(echoes_game_description, buffer)
-    pretty_print.write_human_readable_world_list(echoes_game_description, buffer)
+@pytest.mark.parametrize("game", RandovaniaGame)
+def test_commited_human_readable_description(game: RandovaniaGame, tmp_path):
+    pretty_print.write_human_readable_game(default_database.game_description_for(game), tmp_path)
+    new_files = {f.name: f.read_text("utf-8")
+                 for f in tmp_path.glob("*.txt")}
 
-    assert randovania.get_data_path().joinpath("json_data", "prime2.txt").read_text("utf-8") == buffer.getvalue()
+    existing_files = {f.name: f.read_text("utf-8")
+                      for f in randovania.get_data_path().joinpath("json_data", game.value).glob("*.txt")}
+
+    assert new_files == existing_files
 
 
 @patch("randovania.game_description.pretty_print.pretty_print_requirement")

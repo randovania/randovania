@@ -1,0 +1,4268 @@
+{
+    "name": "Pirate Homeworld - Command",
+    "dark_name": null,
+    "asset_id": 4037904934597342930,
+    "areas": [
+        {
+            "name": "Landing Site Bravo",
+            "in_dark_aether": false,
+            "asset_id": 4408585131827753141,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Lift Hub Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 55.00000762939453,
+                        "y": -5.849468231201172,
+                        "z": 2.6500979214906693
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16310261264317403600,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": []
+                    },
+                    "connections": {
+                        "Door to Lift Hub Access": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Security Air Lock",
+            "in_dark_aether": false,
+            "asset_id": 5682718801820042955,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Lift Hub",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 31.0,
+                        "z": 2.500000976837157
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2807909054514352708,
+                    "connected_dock_index": 3,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Defense Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 101,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Defense Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19.5,
+                        "y": -28.5,
+                        "z": 2.499999023162843
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 3,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Hub": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 101,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Event - Gate": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 14,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 86,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Defense Access": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Gate",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 101,
+                    "connections": {
+                        "Door to Defense Access": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Command Vault",
+            "in_dark_aether": false,
+            "asset_id": 1808913861159744919,
+            "default_node_index": 3,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Morph Ball Door to Command Station",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.84,
+                        "y": 30.0,
+                        "z": 9.21
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13589229454537797972,
+                    "connected_dock_index": 3,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Defense Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21.0,
+                        "y": 35.0,
+                        "z": 1.21
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 0,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 142,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (X-Ray Visor)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 87,
+                    "major_location": true,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Room Center",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Morph Ball Door to Command Station": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 34,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Morph Ball Door to Defense Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 142,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Pickup (X-Ray Visor)": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Tunnel Open": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 14,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Tunnel Open",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 142,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Command Courtyard",
+            "in_dark_aether": false,
+            "asset_id": 18221971457754325372,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Courtyard Passage",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.1,
+                        "y": -10.95,
+                        "z": -14.82
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 5574135827721005616,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 132,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Lift Hub",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -94.19,
+                        "z": -14.82
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 2807909054514352708,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 132,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Morph Ball Door to Flux Control": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Event - Grapple Voltage Barrier": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Upper Level": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Flux Control",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 52.9,
+                        "y": -100.19,
+                        "z": -16.07
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 5194668821114474017,
+                    "connected_dock_index": 0,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Hub": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 88,
+                    "major_location": false,
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Energy Cell)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 89,
+                    "major_location": false,
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Grapple Voltage Barrier",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 132,
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Fans",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 133,
+                    "connections": {
+                        "Pickup (Energy Cell)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Upper Level",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 5,
+                                        "amount": 3,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Door to Lift Hub": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Fans": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Command Station",
+            "in_dark_aether": false,
+            "asset_id": 13589229454537797972,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 2-A",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 39.000038146972656,
+                        "y": -19.09088706970215,
+                        "z": 7.4999988079071045
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 1933322814469947092,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Defense Access (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 106,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Flux Control",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10.29,
+                        "y": 31.86,
+                        "z": 17.25
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 5194668821114474017,
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Morph Ball Door to Command Vault": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Defense Access (Lower)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -25.71,
+                        "y": 0.0,
+                        "z": 2.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Transit Station 2-A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 106,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 105,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Event - Morph Ball Barrier": {
+                            "type": "template",
+                            "data": "Use Grapple Voltage (Lasso and Voltage)"
+                        },
+                        "Event - Phazon Blob": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 39,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                }
+                            ]
+                        },
+                        "Event - Disable Defense": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Command Vault",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.97,
+                        "y": -38.0,
+                        "z": 17.25
+                    },
+                    "node_type": "dock",
+                    "dock_index": 3,
+                    "connected_area_asset_id": 1808913861159744919,
+                    "connected_dock_index": 0,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Morph Ball Door to Flux Control": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Defense Access (Upper)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -29.4,
+                        "y": 35.4,
+                        "z": 20.44
+                    },
+                    "node_type": "dock",
+                    "dock_index": 4,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 90,
+                    "major_location": false,
+                    "connections": {
+                        "Morph Ball Door to Flux Control": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Door to Defense Access (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 105,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Morph Ball Barrier",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 105,
+                    "connections": {
+                        "Door to Defense Access (Lower)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Phazon Blob",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 106,
+                    "connections": {
+                        "Door to Defense Access (Lower)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Disable Defense",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 107,
+                    "connections": {
+                        "Door to Defense Access (Lower)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 1104",
+            "in_dark_aether": false,
+            "asset_id": 9401189381177175830,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 0203",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 11029728296836027873,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Front of Voltage Terminal": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 110,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 151,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Skyway Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.5,
+                        "y": -89.99999237060547,
+                        "z": -6.500002861022949
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 8444926274755356434,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Front of Voltage Terminal": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Grapple Voltage Wall",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 110,
+                    "connections": {
+                        "Front of Voltage Terminal": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Room Entered",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 150,
+                    "connections": {
+                        "Front of Voltage Terminal": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Front of Voltage Terminal",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Transit Station 0203": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 110,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 12,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Door to Skyway Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 151,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Grapple Voltage Wall": {
+                            "type": "template",
+                            "data": "Use Grapple Voltage (Lasso and Voltage)"
+                        },
+                        "Event - Room Entered": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 0203",
+            "in_dark_aether": false,
+            "asset_id": 11029728296836027873,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Tunnel P68",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 50.0,
+                        "y": 18.5,
+                        "z": 17.500000953674316
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16543666292419631320,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Transit Station 1104 Reloaded": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 150,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 144,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 1104",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -65.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 9401189381177175830,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Room Entered": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Transit Station 1104 Reloaded",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 151,
+                    "connections": {
+                        "Door to Transit Tunnel P68": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Room Entered",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 152,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Room Center",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Transit Tunnel P68": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 144,
+                                        "amount": 1,
+                                        "negate": true
+                                    }
+                                }
+                            ]
+                        },
+                        "Door to Transit Station 1104": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 151,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 0204",
+            "in_dark_aether": false,
+            "asset_id": 16448375801676354754,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Tunnel P68",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -65.0,
+                        "y": 18.5,
+                        "z": 17.500000953674316
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16543666292419631320,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Tunnel P69": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 17,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 1,
+                                                "amount": 300,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Tunnel P69",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 50.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 11121647730682962559,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Tunnel P68": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 13,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Transit Station P68 Reloaded": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 153,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Transit Station P68 Reloaded",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 145,
+                    "connections": {
+                        "Door to Transit Tunnel P69": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 0205",
+            "in_dark_aether": false,
+            "asset_id": 4381182303934744164,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Tunnel P69",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -65.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 11121647730682962559,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Tunnel P70": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 1,
+                                                "amount": 300,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 17,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Tunnel P70",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.0,
+                        "y": -4.76837158203125e-07,
+                        "z": 10.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 14037080802062413664,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Tunnel P69": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 13,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Tunnel P68",
+            "in_dark_aether": false,
+            "asset_id": 16543666292419631320,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 0204",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.0,
+                        "y": 18.5,
+                        "z": 17.500000953674316
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16448375801676354754,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 0203": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 144,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Transit Station 0203 Reloaded": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 152,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Room Entered": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 0203",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -35.0,
+                        "y": 18.5,
+                        "z": 17.500003814697266
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 11029728296836027873,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 0204": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                }
+                            ]
+                        },
+                        "Event - Room Entered": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Transit Station 0203 Reloaded",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 144,
+                    "connections": {
+                        "Door to Transit Station 0204": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Room Entered",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 153,
+                    "connections": {
+                        "Door to Transit Station 0203": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Tunnel P69",
+            "in_dark_aether": false,
+            "asset_id": 11121647730682962559,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 0205",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4381182303934744164,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 0204": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 13,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 0204",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -35.0,
+                        "y": -20.0,
+                        "z": 0.4999990463256836
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 16448375801676354754,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 0205": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 2-A",
+            "in_dark_aether": false,
+            "asset_id": 1933322814469947092,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Command Station",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -56.09955978393555,
+                        "y": 8.500145673751831,
+                        "z": 7.500000238418579
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13589229454537797972,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Train to Command Center - Transit Station 2-B": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Train to Command Center - Transit Station 2-B",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 9768654166807123312,
+                    "teleporter_instance_id": 851982,
+                    "scan_asset_id": 15720495307184570570,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Command Station": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 2-B",
+            "in_dark_aether": false,
+            "asset_id": 9768654166807123312,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Leviathan Access Portal",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.50014591217041,
+                        "y": -56.09955978393555,
+                        "z": 7.499998092651367
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 13825059228540765135,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Train to Command Center - Transit Station 2-A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Train to Command Center - Transit Station 2-A",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 1933322814469947092,
+                    "teleporter_instance_id": 917798,
+                    "scan_asset_id": 7193511573108640398,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Leviathan Access Portal": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Leviathan Access Portal",
+            "in_dark_aether": false,
+            "asset_id": 13825059228540765135,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 2-B",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.04260051250457764,
+                        "y": 25.0,
+                        "z": 2.500000976837157
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 9768654166807123312,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Teleporter to Leviathan": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 83,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Portal Activated": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Teleporter to Leviathan",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 5604040344596242484,
+                    "teleporter_instance_id": 983248,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Transit Station 2-B": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 83,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Portal Activated",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 83,
+                    "connections": {
+                        "Door to Transit Station 2-B": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Flux Control",
+            "in_dark_aether": false,
+            "asset_id": 5194668821114474017,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Morph Ball Door to Command Courtyard",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -40.15,
+                        "y": 13.4,
+                        "z": 46.05
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 18221971457754325372,
+                    "connected_dock_index": 2,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 34,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 8,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 8,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Lower Level": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Command Station",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21.15,
+                        "y": -25.83,
+                        "z": 32.05
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 13589229454537797972,
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Lower Level": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 87,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 91,
+                    "major_location": false,
+                    "connections": {
+                        "Morph Ball Door to Command Courtyard": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 34,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Lower Level": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 87,
+                                        "amount": 1,
+                                        "negate": true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Lower Level",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Morph Ball Door to Command Courtyard": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 2,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Morph Ball Door to Command Station": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 87,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 34,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 87,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Left Tunnel Opened": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 7,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Left Tunnel Opened",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 87,
+                    "connections": {
+                        "Lower Level": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Tunnel P70",
+            "in_dark_aether": false,
+            "asset_id": 14037080802062413664,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Station 0205",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -25.0,
+                        "y": -4.76837158203125e-07,
+                        "z": 10.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4381182303934744164,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station Leviathan": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station Leviathan",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25.0,
+                        "y": -4.76837158203125e-07,
+                        "z": 10.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 9997664456677642630,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Transit Station 0205": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station Leviathan",
+            "in_dark_aether": false,
+            "asset_id": 9997664456677642630,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Transit Tunnel P70",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -30.059877395629883,
+                        "y": -4.76837158203125e-07,
+                        "z": 10.028716325759888
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 14037080802062413664,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Pirate Commander": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 17,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 17,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 300,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Samus Ship": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 111,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Pirate Commander",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 12,
+                    "connections": {
+                        "Event - Destroy Door": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Ship Missile (Command Visor and Ship Missile)"
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Destroy Door",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 111,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Hazard Shield"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 16,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Samus Ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "player_ship",
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 111,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Transit Tunnel P70": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 13,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Leviathan",
+            "in_dark_aether": false,
+            "asset_id": 5604040344596242484,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Teleporter to Leviathan Access Portal",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 4037904934597342930,
+                    "destination_area_asset_id": 13825059228540765135,
+                    "teleporter_instance_id": 1245367,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Event - Control Leviathan Battleship": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 131,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Control Leviathan Battleship",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 112,
+                    "connections": {
+                        "Teleporter to Leviathan Access Portal": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Lift Hub",
+            "in_dark_aether": false,
+            "asset_id": 2807909054514352708,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Lift Hub Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.7871670722961426,
+                        "y": 23.599559783935547,
+                        "z": -2.499999023162843
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 16310261264317403600,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Command Courtyard",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 50.02,
+                        "y": -20.95,
+                        "z": 147.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 18221971457754325372,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 3-B\nLeads to Research Facility",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -60.0,
+                        "y": -36.064674377441406,
+                        "z": 147.5207977294922
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 10191943231769975720,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 1100,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 900,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Morph Ball Bomb Gate": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 1100,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 900,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Security Air Lock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.7871708869934082,
+                        "y": -38.54546356201172,
+                        "z": 117.50000762939453
+                    },
+                    "node_type": "dock",
+                    "dock_index": 3,
+                    "connected_area_asset_id": 5682718801820042955,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Missile Expansion)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 92,
+                    "major_location": false,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Elevator",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Lift Hub Access": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Door to Command Courtyard": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Door to Transit Station 3-B\nLeads to Research Facility": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 135,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Hazard Shield"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 16,
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 3,
+                                                                                "index": 1,
+                                                                                "amount": 1100,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 0,
+                                                                                        "index": 33,
+                                                                                        "amount": 1,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 3,
+                                                                                        "index": 1,
+                                                                                        "amount": 900,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Hazard Shield"
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 16,
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 3,
+                                                                        "index": 1,
+                                                                        "amount": 500,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Door to Security Air Lock": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Pirate Homeworld Map": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 14,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Pirate Homeworld Map",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 100,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Morph Ball Bomb Gate",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 135,
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Courtyard Passage",
+            "in_dark_aether": false,
+            "asset_id": 5574135827721005616,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Skyway Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.7881393432617188e-05,
+                        "y": 29.999990463256836,
+                        "z": 2.500004884185728
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 8444926274755356434,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Command Courtyard": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Command Courtyard",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -30.0,
+                        "z": 2.500000976837157
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 18221971457754325372,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Skyway Access": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Skyway Access",
+            "in_dark_aether": false,
+            "asset_id": 8444926274755356434,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Courtyard Passage",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -40.0,
+                        "z": 0.4999980926513672
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 5574135827721005616,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Morph Ball Door to Defense Access": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 108,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Door to Transit Station 1104": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 109,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - Open Wall": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 107,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Open Tunnel": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 17,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 500,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "or",
+                                                            "data": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Enter Hypermode"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 17,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 300,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 17,
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 1,
+                                                                "amount": 200,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door to Defense Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 50.0,
+                        "y": -265.0,
+                        "z": -101.25
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 5,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                {
+                    "name": "Door to Transit Station 1104",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 40.0,
+                        "z": 6.500001907348633
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 9401189381177175830,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 109,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Hazard Shield"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 16,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Open Wall",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 109,
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Open Tunnel",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 108,
+                    "connections": {
+                        "Door to Courtyard Passage": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 3-B\nLeads to Research Facility",
+            "in_dark_aether": false,
+            "asset_id": 10191943231769975720,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Lift Hub",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 56.09955978393555,
+                        "y": -8.50014591217041,
+                        "z": 7.499999761581421
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 2807909054514352708,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Train to Research Facility - Transit Station 3-A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Train to Research Facility - Transit Station 3-A",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 1184305208322576857,
+                    "destination_area_asset_id": 11544788909190121627,
+                    "teleporter_instance_id": 1507642,
+                    "scan_asset_id": 11245391886377035438,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Lift Hub": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Transit Station 4-A\nLeads to Mining Site",
+            "in_dark_aether": false,
+            "asset_id": 12520185503864049660,
+            "default_node_index": 1,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Defense Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.50014591217041,
+                        "y": 56.09955978393555,
+                        "z": 7.500001907348633
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 3288365355139345163,
+                    "connected_dock_index": 4,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Train to Mining Site - Transit Station 4-B": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Train to Mining Site - Transit Station 4-B",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": 15932695450594384879,
+                    "destination_area_asset_id": 4566937761378320542,
+                    "teleporter_instance_id": 1573178,
+                    "scan_asset_id": 7888662215166705640,
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Defense Access": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Defense Access",
+            "in_dark_aether": false,
+            "asset_id": 3288365355139345163,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Morph Ball Door to Command Vault",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.23,
+                        "y": -57.4,
+                        "z": 6.31
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 1808913861159744919,
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Command Station (Base)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 53.33,
+                        "y": -24.4,
+                        "z": -0.44
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 13589229454537797972,
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 102,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Command Station (Balcony)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 49.63,
+                        "y": 11.0,
+                        "z": 17.5
+                    },
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": 13589229454537797972,
+                    "connected_dock_index": 4,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 103,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Security Air Lock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13.873625755310059,
+                        "y": -24.395061492919922,
+                        "z": -0.4394230842590332
+                    },
+                    "node_type": "dock",
+                    "dock_index": 3,
+                    "connected_area_asset_id": 5682718801820042955,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Transit Station 4-A\nLeads to Mining Site",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 28.0,
+                        "y": -71.42926788330078,
+                        "z": 47.499996185302734
+                    },
+                    "node_type": "dock",
+                    "dock_index": 4,
+                    "connected_area_asset_id": 12520185503864049660,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Front of Spider Tracks": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Morph Ball Door from Skyway Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 67.33,
+                        "y": -29.05,
+                        "z": -72.19
+                    },
+                    "node_type": "dock",
+                    "dock_index": 5,
+                    "connected_area_asset_id": 8444926274755356434,
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Front of Spider Tracks": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Hall Center",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Morph Ball Door to Command Vault": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 33,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 4,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Door to Command Station (Base)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 102,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Command Station (Balcony)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 103,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Security Air Lock": {
+                            "type": "and",
+                            "data": []
+                        },
+                        "Event - Phazite Wall": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 14,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 9,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Event - X-Ray Terminal": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 14,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Front of Spider Tracks": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 104,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Phazite Wall",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 102,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - X-Ray Terminal",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 103,
+                    "connections": {
+                        "Hall Center": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Voltage Barrier",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 104,
+                    "connections": {
+                        "Front of Spider Tracks": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Front of Spider Tracks",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Transit Station 4-A\nLeads to Mining Site": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 34,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 104,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 12,
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 10,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 12,
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "Hall Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 104,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Voltage Barrier": {
+                            "type": "template",
+                            "data": "Use Grapple Voltage (Lasso and Voltage)"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Lift Hub Access",
+            "in_dark_aether": false,
+            "asset_id": 16310261264317403600,
+            "default_node_index": 0,
+            "valid_starting_location": true,
+            "nodes": [
+                {
+                    "name": "Door to Landing Site Bravo",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.7881393432617188e-05,
+                        "y": 44.9999885559082,
+                        "z": 2.5000060994416344
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": 4408585131827753141,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Hub": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Lift Hub",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -30.0,
+                        "z": 2.500000976837157
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 2807909054514352708,
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Landing Site Bravo": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

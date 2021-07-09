@@ -144,9 +144,8 @@ def update_human_readable_logic(args):
     path, data = default_data.read_json_then_binary(game)
     gd = data_reader.decode_data(data)
 
-    with path.with_suffix(".txt").open("w", encoding="utf-8") as output:
-        pretty_print.write_human_readable_meta(gd, output)
-        pretty_print.write_human_readable_world_list(gd, output)
+    path.with_suffix("").mkdir(parents=True, exist_ok=True)
+    pretty_print.write_human_readable_game(gd, path.with_suffix(""))
 
 
 def update_human_readable(sub_parsers):

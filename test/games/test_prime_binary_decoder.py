@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
+from randovania.game_description import data_reader
 from randovania.games import binary_data
 from randovania.games.game import RandovaniaGame
 
@@ -116,16 +117,13 @@ def _comparable_dict(value):
 
 
 @pytest.mark.skipif(
-    not get_data_path().joinpath("json_data", "prime2.json").is_file(),
-    reason="Missing prime2.json"
+    not get_data_path().joinpath("json_data", "prime2").is_dir(),
+    reason="Missing json-based prime2 data"
 )
 def test_full_data_encode_is_equal():
-    # The prime2.json may be missing if we're running using a Pyinstaller binary
+    # The json data may be missing if we're running using a Pyinstaller binary
     # Setup
-    json_database_file = get_data_path().joinpath("json_data", "prime2.json")
-
-    with json_database_file.open("r") as open_file:
-        json_database = json.load(open_file)
+    json_database = data_reader.read_split_file(get_data_path().joinpath("json_data", "prime2"))
 
     b = io.BytesIO()
     binary_data.encode(json_database, b)
