@@ -11,6 +11,7 @@ from randovania.game_description.requirements import RequirementAnd, ResourceReq
 @pytest.mark.skipif(randovania.is_frozen(), reason="frozen executable doesn't have JSON files")
 def test_commited_human_readable_description(echoes_game_description):
     buffer = io.StringIO()
+    pretty_print.write_human_readable_meta(echoes_game_description, buffer)
     pretty_print.write_human_readable_world_list(echoes_game_description, buffer)
 
     assert randovania.get_data_path().joinpath("json_data", "prime2.txt").read_text("utf-8") == buffer.getvalue()

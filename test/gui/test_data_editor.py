@@ -103,6 +103,7 @@ def test_create_node_and_save(tmpdir,
     exported_game = data_reader.decode_data(exported_data)
 
     output = io.StringIO()
+    randovania.game_description.pretty_print.write_human_readable_meta(exported_game, output)
     randovania.game_description.pretty_print.write_human_readable_world_list(exported_game, output)
 
     assert Path(tmpdir.join("game.txt")).read_text("utf-8") == output.getvalue()
