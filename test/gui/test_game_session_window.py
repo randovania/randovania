@@ -1,5 +1,6 @@
 import contextlib
 import datetime
+import sys
 
 import pytest
 import typing
@@ -378,12 +379,16 @@ async def test_on_kicked(skip_qtbot, window, mocker, expecting_kick, already_kic
 @pytest.mark.parametrize("exception", [False, True])
 @pytest.mark.parametrize("accept", [False, True])
 @pytest.mark.asyncio
-async def test_delete_session(window, mocker, accept, exception):
+async def test_delete_session(window, mocker, accept, exception, monkeypatch):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
 
     window.network_client.session_admin_global = AsyncMock()
     if exception and accept:
+        def re_raise_exception(_, v, __):
+            raise v
+        monkeypatch.setattr(sys, "excepthook", re_raise_exception)
+
         window.network_client.session_admin_global.side_effect = RuntimeError("error")
         expectation = pytest.raises(RuntimeError, match="error")
     else:
