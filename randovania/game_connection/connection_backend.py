@@ -87,6 +87,13 @@ def _echoes_powerup_offset(item_index: int) -> int:
     return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
 
 
+def _corruption_powerup_offset(item_index: int) -> int:
+    powerups_offset = 0x50
+    vector_data_offset = 0x4
+    powerup_size = 0xc
+    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
+
+
 def _add_pickup_to_resources(pickup: PickupEntry, inventory: CurrentResources) -> CurrentResources:
     return add_resource_gain_to_current_resources(
         pickup.resource_gain(inventory),
@@ -207,17 +214,30 @@ class ConnectionBackend(ConnectionBase):
 
         player_vtable = 0
         try:
+            player_offset = 0
+            asset_id_size = 4
+            asset_id_format = ">I"
+
             if self.patches.game == RandovaniaGame.METROID_PRIME:
                 mlvl_offset = 0x84
                 cplayer_offset = 0x84c
-            else:
+            elif self.patches.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 mlvl_offset = 4
                 cplayer_offset = 0x14fc
+            elif self.patches.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+                mlvl_offset = 8
+                asset_id_size = 8
+                asset_id_format = ">Q"
+
+                cplayer_offset = 40
+                player_offset = 0x2184
+            else:
+                raise ValueError(f"Unknown game: {self.patches.game}")
 
             memory_ops = [
-                MemoryOperation(self.patches.game_state_pointer, offset=mlvl_offset, read_byte_count=4),
+                MemoryOperation(self.patches.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
                 MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
-                MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
+                MemoryOperation(cstate_manager_global + cplayer_offset, offset=player_offset, read_byte_count=4),
             ]
             results = await self._perform_memory_operations(memory_ops)
 
@@ -227,7 +247,10 @@ class ConnectionBackend(ConnectionBase):
 
             self._has_pending_op = pending_op_byte != b"\x00"
             player_vtable = struct.unpack(">I", player_vtable_bytes)[0]
-            new_world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
+            new_world = self.game.world_list.world_by_asset_id(struct.unpack(asset_id_format, world_asset_id)[0])
+
+            if self.patches.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+                player_vtable = self.patches.cplayer_vtable
 
         except (KeyError, MemoryOperationException) as e:
             self.logger.debug("Failed to update world: %s", e)
@@ -250,15 +273,24 @@ class ConnectionBackend(ConnectionBase):
                 address=self.patches.cstate_manager_global + 0x8b8,
                 read_byte_count=4,
             )), "big")
-        else:
+        elif self.patches.game == RandovaniaGame.METROID_PRIME_ECHOES:
             offset_func = _echoes_powerup_offset
             player_state_pointer = self.patches.cstate_manager_global + 0x150c
+
+        elif self.patches.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+            offset_func = _corruption_powerup_offset
+            player_state_pointer = int.from_bytes(await self._perform_single_memory_operations(MemoryOperation(
+                address=self.patches.game_state_pointer,
+                read_byte_count=4,
+            )), "big") + 36
+        else:
+            raise ValueError(f"Unknown game: {self.patches.game}")
 
         memory_ops = [
             MemoryOperation(
                 address=player_state_pointer,
-                read_byte_count=8,
                 offset=offset_func(item.index),
+                read_byte_count=8,
             )
             for item in self.game.resource_database.item
             if item.index < 1000
@@ -279,6 +311,9 @@ class ConnectionBackend(ConnectionBase):
     # Multiworld
     async def _update_magic_item(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
+        if multiworld_magic_item is None:
+            return
+
         message = None
         patches = []
 
