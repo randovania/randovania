@@ -8,9 +8,12 @@ from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
-from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime.all_prime_dol_patches import (
+    BasePrimeDolVersion, HealthCapacityAddresses,
+    DangerousEnergyTankAddresses
+)
 from randovania.layout.prime2.beam_configuration import BeamConfiguration
+from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
 
 
 @dataclasses.dataclass(frozen=True)
@@ -339,6 +342,8 @@ def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_it
 
 @dataclasses.dataclass(frozen=True)
 class EchoesDolVersion(BasePrimeDolVersion):
+    health_capacity: HealthCapacityAddresses
+    dangerous_energy_tank: DangerousEnergyTankAddresses
     game_options_constructor_address: int
     beam_cost_addresses: BeamCostAddresses
     safe_zone: SafeZoneAddresses

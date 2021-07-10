@@ -1,6 +1,5 @@
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.all_prime_dol_patches import StringDisplayPatchAddresses, HealthCapacityAddresses, \
-    DangerousEnergyTankAddresses, PowerupFunctionsAddresses
+from randovania.games.prime.all_prime_dol_patches import StringDisplayPatchAddresses, PowerupFunctionsAddresses
 from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
 
 ALL_VERSIONS = [
@@ -24,14 +23,6 @@ ALL_VERSIONS = [
             add_power_up=0x80091d68,
             incr_pickup=0x80091bf0,
             decr_pickup=0x80091b94,
-        ),
-        health_capacity=HealthCapacityAddresses(
-            base_health_capacity=0x805aa830,
-            energy_tank_capacity=0x805aa82c,
-        ),
-        dangerous_energy_tank=DangerousEnergyTankAddresses(
-            small_number_float=0x805aa834,
-            incr_pickup=0x80091bf0,
         ),
     ),
 ]

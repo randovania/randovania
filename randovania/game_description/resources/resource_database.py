@@ -28,7 +28,7 @@ class ResourceDatabase:
     damage_reductions: Dict[SimpleResourceInfo, List[DamageReduction]]
     energy_tank_item_index: int
     item_percentage_index: Optional[int]
-    multiworld_magic_item_index: int
+    multiworld_magic_item_index: Optional[int]
     base_damage_reduction: Callable[["ResourceDatabase", CurrentResources], float] = default_base_damage_reduction
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
@@ -68,8 +68,9 @@ class ResourceDatabase:
         return self.get_by_type_and_index(ResourceType.ITEM, self.energy_tank_item_index)
 
     @property
-    def multiworld_magic_item(self) -> ItemResourceInfo:
-        return self.get_item(self.multiworld_magic_item_index)
+    def multiworld_magic_item(self) -> Optional[ItemResourceInfo]:
+        if self.multiworld_magic_item_index is not None:
+            return self.get_item(self.multiworld_magic_item_index)
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: CurrentResources):
         multiplier = self.base_damage_reduction(self, current_resources)
