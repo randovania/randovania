@@ -3490,7 +3490,7 @@
                             "data": {
                                 "type": 3,
                                 "index": 2,
-                                "amount": 18,
+                                "amount": 20,
                                 "negate": false
                             }
                         },
@@ -5777,13 +5777,41 @@
                                     }
                                 },
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 3,
-                                        "index": 2,
-                                        "amount": 13,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 99,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 2,
+                                                        "amount": 15,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 5,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -5813,13 +5841,41 @@
                                     }
                                 },
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 3,
-                                        "index": 2,
-                                        "amount": 13,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 99,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 2,
+                                                        "amount": 15,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 5,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -7047,13 +7103,41 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Door to Staging Area": {
-                            "type": "resource",
-                            "data": {
-                                "type": 3,
-                                "index": 2,
-                                "amount": 60,
-                                "negate": false
-                            }
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 60,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 15,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
                 },
@@ -7083,6 +7167,29 @@
                                         "amount": 45,
                                         "negate": false
                                     }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 15,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -14971,10 +15078,19 @@
                     "node_type": "generic",
                     "connections": {
                         "Door to Hive Reactor": {
-                            "type": "or",
+                            "type": "and",
                             "data": [
                                 {
-                                    "type": "and",
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 20,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
@@ -14984,27 +15100,13 @@
                                                 "amount": 15,
                                                 "negate": false
                                             }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 3,
+                                                "type": 5,
                                                 "index": 2,
-                                                "amount": 10,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -15026,13 +15128,41 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Save Station": {
-                            "type": "resource",
-                            "data": {
-                                "type": 3,
-                                "index": 2,
-                                "amount": 17,
-                                "negate": false
-                            }
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 20,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 15,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
                 }
@@ -22656,30 +22786,25 @@
                     "node_type": "generic",
                     "connections": {
                         "Door to Hive Gyro Chamber": {
-                            "type": "or",
+                            "type": "and",
                             "data": [
                                 {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 3,
-                                                "index": 2,
-                                                "amount": 15,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 15,
+                                        "negate": false
+                                    }
                                 },
                                 {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
+                                                "type": 5,
+                                                "index": 2,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -22689,7 +22814,7 @@
                                             "data": {
                                                 "type": 3,
                                                 "index": 2,
-                                                "amount": 9,
+                                                "amount": 10,
                                                 "negate": false
                                             }
                                         }
@@ -22711,13 +22836,41 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Save Station": {
-                            "type": "resource",
-                            "data": {
-                                "type": 3,
-                                "index": 2,
-                                "amount": 15,
-                                "negate": false
-                            }
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 15,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 10,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
                 }
