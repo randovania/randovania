@@ -5683,18 +5683,13 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "and",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 2,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "and",
@@ -23005,13 +23000,41 @@
                     "major_location": true,
                     "connections": {
                         "Door to Entrance Defense Hall": {
-                            "type": "resource",
-                            "data": {
-                                "type": 3,
-                                "index": 2,
-                                "amount": 40,
-                                "negate": false
-                            }
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 3,
+                                        "index": 2,
+                                        "amount": 55,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 40,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 5,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
                 }
