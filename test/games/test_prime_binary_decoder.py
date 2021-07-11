@@ -7,7 +7,6 @@ import pytest
 from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.games import binary_data
-from randovania.games.game import RandovaniaGame
 
 
 def test_simple_round_trip():
@@ -81,28 +80,6 @@ def test_complex_decode(test_files_dir):
     assert decoded_data == saved_data
 
 
-@pytest.mark.parametrize("game", RandovaniaGame)
-def test_full_file_round_trip(game):
-    # Setup
-    json_database_path = get_data_path().joinpath("json_data", f"{game.value}.json")
-    if not json_database_path.exists():
-        pytest.skip("Missing database")
-
-    with json_database_path.open("r") as json_file:
-        original_data = json.load(json_file)
-
-    # Run 1
-    output_io = io.BytesIO()
-    binary_data.encode(original_data, output_io)
-
-    # Run 2
-    output_io.seek(0)
-    final_data = binary_data.decode(output_io)
-
-    # Assert
-    assert final_data == original_data
-
-
 def _comparable_dict(value):
     if isinstance(value, dict):
         return [
@@ -116,14 +93,14 @@ def _comparable_dict(value):
     return value
 
 
-@pytest.mark.skipif(
-    not get_data_path().joinpath("json_data", "prime2").is_dir(),
-    reason="Missing json-based prime2 data"
-)
-def test_full_data_encode_is_equal():
+def test_full_data_encode_is_equal(game_enum):
     # The json data may be missing if we're running using a Pyinstaller binary
     # Setup
-    json_database = data_reader.read_split_file(get_data_path().joinpath("json_data", "prime2"))
+    data_dir = get_data_path().joinpath("json_data", game_enum.value)
+    if not data_dir.is_dir() and get_data_path().joinpath("binary_data", f"{game_enum.value}.bin").is_file():
+        pytest.skip("Missing json-based data")
+
+    json_database = data_reader.read_split_file(data_dir)
 
     b = io.BytesIO()
     binary_data.encode(json_database, b)
@@ -205,4 +182,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x01\x00\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x01\x00\x01\x00'

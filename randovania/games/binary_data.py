@@ -205,7 +205,7 @@ ConstructResourceDatabase = Struct(
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=VarInt,
     item_percentage_index=OptionalValue(VarInt),
-    multiworld_magic_item_index=VarInt,
+    multiworld_magic_item_index=OptionalValue(VarInt),
 )
 
 ConstructResourceGain = Struct(
