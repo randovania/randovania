@@ -34,6 +34,11 @@ class DangerousEnergyTankAddresses:
 
 @dataclasses.dataclass(frozen=True)
 class PowerupFunctionsAddresses:
+    """
+    add_power_up: Change the given item capacity
+    incr_pickup: Increments the given item amount
+    decr_pickup: Decrements the given item amount
+    """
     add_power_up: int
     incr_pickup: int
     decr_pickup: int
@@ -46,8 +51,6 @@ class BasePrimeDolVersion(DolVersion):
     cstate_manager_global: int
     string_display: StringDisplayPatchAddresses
     powerup_functions: PowerupFunctionsAddresses
-    health_capacity: HealthCapacityAddresses
-    dangerous_energy_tank: DangerousEnergyTankAddresses
 
 
 _registers_to_save = 2

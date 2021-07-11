@@ -234,8 +234,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.view_game_details_button.clicked.connect(self.view_game_details)
 
         # Game Connection
-        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.game_connection_label,
+        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_label,
                                                          self.game_connection, self._options)
+        self.game_connection_setup.setup_tool_button_menu(self.game_connection_tool)
 
         # Server Status
         self.server_connection_button.clicked.connect(self._connect_to_server)

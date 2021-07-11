@@ -1,6 +1,7 @@
 import dataclasses
 import json
 import logging
+from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Union, Optional
 
@@ -31,11 +32,19 @@ def path_for(name: str):
     return get_data_path().joinpath(f"gui_assets/tracker", name)
 
 
+class FieldToCheck(Enum):
+    AMOUNT = "amount"
+    CAPACITY = "capacity"
+    MAX_CAPACITY = "max_capacity"
+
+
 @dataclasses.dataclass(frozen=True)
 class Element:
     label: Union[QLabel, ClickableLabel]
     resources: List[ItemResourceInfo]
     text_template: str
+    minimum_to_check: int
+    field_to_check: FieldToCheck
 
 
 class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
@@ -71,9 +80,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         self._tracker_elements: List[Element] = []
         self.create_tracker()
 
-        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
+        self.game_connection_setup = GameConnectionSetup(self, self.connection_status_label,
                                                          self.game_connection, options)
-        self.force_update_button.clicked.connect(self.on_force_update_button)
+        self.game_connection_setup.create_backend_entries(self.menu_backend)
+        self.game_connection_setup.create_upload_nintendont_action(self.menu_options)
+        self.game_connection_setup.refresh_backend()
+
+        self.action_force_update.triggered.connect(self.on_force_update_button)
 
         self._update_timer = QTimer(self)
         self._update_timer.setInterval(100)
@@ -105,8 +118,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 capacity += current.capacity
                 max_capacity += resource.max_capacity
 
+            fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
+
             if isinstance(element.label, ClickableLabel):
-                element.label.set_checked(max_capacity == 0 or capacity > 0)
+                value_target = element.minimum_to_check
+                value = fields[element.field_to_check.value]
+
+                element.label.set_checked(max_capacity == 0 or value >= value_target)
             else:
                 element.label.setText(element.text_template.format(
                     amount=amount,
@@ -125,9 +143,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             current_status = self.game_connection.current_status
             if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,
                                       GameConnectionStatus.WrongGame}:
-                self.force_update_button.setEnabled(True)
+                self.action_force_update.setEnabled(True)
             else:
-                self.force_update_button.setEnabled(False)
+                self.action_force_update.setEnabled(False)
 
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 if self.game_connection.backend.patches.game == self._current_tracker_game:
@@ -159,6 +177,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         for element in tracker_details["elements"]:
             text_template = ""
+            minimum_to_check = element.get("minimum_to_check", 1)
+            field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
             if "image_path" in element:
                 image_path = get_data_path().joinpath(element["image_path"])
@@ -183,7 +203,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element["resources"]
             ]
-            self._tracker_elements.append(Element(label, resources, text_template))
+            self._tracker_elements.append(Element(label, resources, text_template, minimum_to_check, field_to_check))
             self.inventory_layout.addWidget(label, element["row"], element["column"])
 
         self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
