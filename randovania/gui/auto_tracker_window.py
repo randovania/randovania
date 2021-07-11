@@ -1,6 +1,7 @@
 import dataclasses
 import json
 import logging
+from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Union, Optional
 
@@ -31,11 +32,19 @@ def path_for(name: str):
     return get_data_path().joinpath(f"gui_assets/tracker", name)
 
 
+class FieldToCheck(Enum):
+    AMOUNT = "amount"
+    CAPACITY = "capacity"
+    MAX_CAPACITY = "max_capacity"
+
+
 @dataclasses.dataclass(frozen=True)
 class Element:
     label: Union[QLabel, ClickableLabel]
     resources: List[ItemResourceInfo]
     text_template: str
+    minimum_to_check: int
+    field_to_check: FieldToCheck
 
 
 class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
@@ -109,8 +118,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 capacity += current.capacity
                 max_capacity += resource.max_capacity
 
+            fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
+
             if isinstance(element.label, ClickableLabel):
-                element.label.set_checked(max_capacity == 0 or capacity > 0)
+                value_target = element.minimum_to_check
+                value = fields[element.field_to_check.value]
+
+                element.label.set_checked(max_capacity == 0 or value >= value_target)
             else:
                 element.label.setText(element.text_template.format(
                     amount=amount,
@@ -163,6 +177,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         for element in tracker_details["elements"]:
             text_template = ""
+            minimum_to_check = element.get("minimum_to_check", 1)
+            field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
             if "image_path" in element:
                 image_path = get_data_path().joinpath(element["image_path"])
@@ -187,7 +203,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element["resources"]
             ]
-            self._tracker_elements.append(Element(label, resources, text_template))
+            self._tracker_elements.append(Element(label, resources, text_template, minimum_to_check, field_to_check))
             self.inventory_layout.addWidget(label, element["row"], element["column"])
 
         self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
