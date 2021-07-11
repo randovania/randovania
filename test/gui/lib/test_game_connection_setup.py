@@ -16,7 +16,10 @@ def _setup(skip_qtbot):
     tool = QtWidgets.QToolButton(parent)
     label = QtWidgets.QLabel(parent)
 
-    return GameConnectionSetup(parent, tool, label, GameConnection(DolphinBackend()), MagicMock())
+    result = GameConnectionSetup(parent, label, GameConnection(DolphinBackend()), MagicMock())
+    result.setup_tool_button_menu(tool)
+
+    return result
 
 
 @pytest.mark.parametrize("nintendont_ip", [None, "localhost", "192.168.0.1"])
