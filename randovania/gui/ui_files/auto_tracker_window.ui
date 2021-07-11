@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>353</width>
-    <height>249</height>
+    <width>162</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,35 +15,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="inventory_group">
-      <property name="title">
-       <string>Inventory</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <layout class="QGridLayout" name="inventory_layout"/>
-     </widget>
-    </item>
     <item row="1" column="0">
-     <layout class="QHBoxLayout" name="game_connection_layout">
-      <item>
-       <widget class="QToolButton" name="game_connection_tool">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Connect to game</string>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::InstantPopup</enum>
-        </property>
-       </widget>
-      </item>
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="connection_status_label">
         <property name="sizePolicy">
@@ -57,20 +30,18 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="force_update_button">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Update</string>
-        </property>
-       </widget>
-      </item>
      </layout>
+    </item>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="inventory_group">
+      <property name="title">
+       <string>Inventory</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <layout class="QGridLayout" name="inventory_layout"/>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -79,8 +50,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>353</width>
-     <height>21</height>
+     <width>162</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_options">
@@ -92,7 +63,14 @@
       <string>Tracker</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menu_backend">
+     <property name="title">
+      <string>Configure backend</string>
+     </property>
+    </widget>
     <addaction name="menu_tracker"/>
+    <addaction name="menu_backend"/>
+    <addaction name="action_force_update"/>
    </widget>
    <addaction name="menu_options"/>
   </widget>
@@ -110,6 +88,16 @@
    </property>
    <property name="text">
     <string>Game Icons (Echoes only)</string>
+   </property>
+  </action>
+  <action name="actionasdf">
+   <property name="text">
+    <string>asdf</string>
+   </property>
+  </action>
+  <action name="action_force_update">
+   <property name="text">
+    <string>Force Update</string>
    </property>
   </action>
  </widget>

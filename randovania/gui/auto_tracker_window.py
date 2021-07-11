@@ -71,9 +71,13 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         self._tracker_elements: List[Element] = []
         self.create_tracker()
 
-        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
+        self.game_connection_setup = GameConnectionSetup(self, self.connection_status_label,
                                                          self.game_connection, options)
-        self.force_update_button.clicked.connect(self.on_force_update_button)
+        self.game_connection_setup.create_backend_entries(self.menu_backend)
+        self.game_connection_setup.create_upload_nintendont_action(self.menu_options)
+        self.game_connection_setup.refresh_backend()
+
+        self.action_force_update.triggered.connect(self.on_force_update_button)
 
         self._update_timer = QTimer(self)
         self._update_timer.setInterval(100)
@@ -125,9 +129,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             current_status = self.game_connection.current_status
             if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,
                                       GameConnectionStatus.WrongGame}:
-                self.force_update_button.setEnabled(True)
+                self.action_force_update.setEnabled(True)
             else:
-                self.force_update_button.setEnabled(False)
+                self.action_force_update.setEnabled(False)
 
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 if self.game_connection.backend.patches.game == self._current_tracker_game:

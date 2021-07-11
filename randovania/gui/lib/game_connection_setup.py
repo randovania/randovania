@@ -14,19 +14,24 @@ from randovania.interface_common.options import Options, InfoAlert
 
 
 class GameConnectionSetup:
-    def __init__(self, parent: QtWidgets.QWidget, tool_button: QtWidgets.QToolButton,
-                 label: QtWidgets.QLabel, connection: GameConnection, options: Options):
+    use_dolphin_backend: QtWidgets.QAction
+    use_nintendont_backend: QtWidgets.QAction
+    connect_to_game: QtWidgets.QAction
+    upload_nintendont_action: QtWidgets.QAction
+
+    def __init__(self, parent: QtWidgets.QWidget, label: QtWidgets.QLabel,
+                 connection: GameConnection, options: Options):
         self.parent = parent
-        self.tool = tool_button
         self.label = label
         self.game_connection = connection
         self.options = options
 
         self.game_connection.Updated.connect(self.on_game_connection_updated)
-        self.tool.setText("Configure backend")
+        self.on_game_connection_updated()
 
+    def create_backend_entries(self, menu: QtWidgets.QMenu):
         def _create_check(text: str, on_triggered, default: Optional[bool] = None):
-            action = QtWidgets.QAction(self.tool)
+            action = QtWidgets.QAction(menu)
             action.setText(text)
             action.setCheckable(True)
             if default is not None:
@@ -34,25 +39,30 @@ class GameConnectionSetup:
             action.triggered.connect(on_triggered)
             return action
 
-        self.game_connection_menu = QtWidgets.QMenu(self.tool)
-
         self.use_dolphin_backend = _create_check("Dolphin", self.on_use_dolphin_backend)
         self.use_nintendont_backend = _create_check("", self.on_use_nintendont_backend)
-        self.upload_nintendont_action = QtWidgets.QAction(self.tool)
-        self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
-        self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
         self.connect_to_game = _create_check("Connect to the game", self.on_connect_to_game, True)
 
-        self.game_connection_menu.addAction(self.use_dolphin_backend)
-        self.game_connection_menu.addAction(self.use_nintendont_backend)
-        self.game_connection_menu.addAction(self.upload_nintendont_action)
-        self.game_connection_menu.addSeparator()
-        self.game_connection_menu.addAction(self.connect_to_game)
+        menu.addAction(self.use_dolphin_backend)
+        menu.addAction(self.use_nintendont_backend)
+        menu.addSeparator()
+        menu.addAction(self.connect_to_game)
 
-        self.tool.setMenu(self.game_connection_menu)
+    def create_upload_nintendont_action(self, menu: QtWidgets.QMenu):
+        self.upload_nintendont_action = QtWidgets.QAction(menu)
+        self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
+        self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
+        menu.addAction(self.upload_nintendont_action)
 
+    def setup_tool_button_menu(self, tool_button: QtWidgets.QToolButton):
+        menu = QtWidgets.QMenu(tool_button)
+        self.create_backend_entries(menu)
+        menu.addSeparator()
+        self.create_upload_nintendont_action(menu)
+
+        tool_button.setText("Configure backend")
+        tool_button.setMenu(menu)
         self.refresh_backend()
-        self.on_game_connection_updated()
 
     def on_game_connection_updated(self):
         self.label.setText(self.game_connection.pretty_current_status)
