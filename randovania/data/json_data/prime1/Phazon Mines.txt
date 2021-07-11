@@ -648,12 +648,12 @@ Asset id: 961790803
 ----------------
 Central Dynamo
 Asset id: 4272124642
-> Door to Dynamo Access; Heals? False
+> Door to Dynamo Access; Heals? False; Spawn Point
   * Ice Door to Dynamo Access/Door to Central Dynamo
   > Door to Save Station Mines B
       After Invisible Drone
-  > Drone Fight Trigger
-      Trivial
+  > Event - Security Drone
+      Combat (Beginner) or Normal Damage ≥ 100
 
 > Door to Quarantine Access A; Heals? False
   * Ice Door to Quarantine Access A/Door to Central Dynamo
@@ -662,16 +662,14 @@ Asset id: 4272124642
 
 > Door to Save Station Mines B; Heals? False
   * Ice Door to Save Station Mines B/Door to Central Dynamo
-  > Door to Quarantine Access A
-      Power Bomb and Morph Ball and After Invisible Drone
-  > Event - Security Drone
-      Trivial
-  > Drone Fight Trigger
+  > Door to Dynamo Access
       Any of the following:
           Space Jump Boots
           Morph Ball Bomb and Morph Ball and Standable Terrain (Intermediate) and Complex Bomb Jump (Expert)
+  > Door to Quarantine Access A
+      Power Bomb and Morph Ball and After Invisible Drone
 
-> Event - Security Drone; Heals? False; Spawn Point
+> Event - Security Drone; Heals? False
   * Event Invisible Drone
   > Pickup (Main Power Bombs)
       Morph Ball Bomb and Morph Ball
@@ -680,12 +678,6 @@ Asset id: 4272124642
   * Pickup 84; Major Location? True
   > Door to Save Station Mines B
       Trivial
-
-> Drone Fight Trigger; Heals? False
-  > Door to Dynamo Access
-      After Invisible Drone
-  > Event - Security Drone
-      Energy Tank or Combat (Beginner)
 
 ----------------
 Elite Quarters Access
