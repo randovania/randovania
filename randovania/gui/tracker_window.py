@@ -31,6 +31,7 @@ from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
 from randovania.generator import generator
+from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
@@ -291,6 +292,27 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
 
+    def _on_show_path_to_here(self):
+        target: QTreeWidgetItem = self.possible_locations_tree.currentItem()
+        if target is None:
+            return
+        node: Optional[Node] = getattr(target, "node", None)
+        if node is not None:
+            reach = ResolverReach.calculate_reach(self.logic, self.state_for_current_configuration())
+            path = reach.path_to_node.get(node, [])
+
+            wl = self.logic.game.world_list
+            text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
+            for p in path:
+                text.append("<li>{}</li>".format(wl.node_name(p, with_world=True, distinguish_dark_aether=True)))
+            text.append("</ul>")
+
+            dialog = ScrollLabelDialog("".join(text), "Path to node", self)
+            dialog.exec_()
+        else:
+            QtWidgets.QMessageBox.warning(self, "Invalid target",
+                                          "Can't find a path to {}. Please select a node.".format(target.text(0)))
+
     def _positions_for_world(self, world: World):
         g = networkx.DiGraph()
         world_list = self.game_description.world_list
@@ -379,7 +401,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
         self.update_matplot_widget(nodes_in_reach)
 
-    def current_nodes_in_reach(self, state):
+    def current_nodes_in_reach(self, state: Optional[State]):
         if state is None:
             nodes_in_reach = set()
         else:
@@ -457,7 +479,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         """
         Creates the possible_locations_tree with all worlds, areas and nodes.
         """
+        self.action_show_path_to_here = QtWidgets.QAction("Show path to here")
+        self.action_show_path_to_here.triggered.connect(self._on_show_path_to_here)
         self.possible_locations_tree.itemDoubleClicked.connect(self._on_tree_node_double_clicked)
+        self.possible_locations_tree.insertAction(None, self.action_show_path_to_here)
 
         # TODO: Dark World names
         for world in self.game_description.world_list.worlds:
