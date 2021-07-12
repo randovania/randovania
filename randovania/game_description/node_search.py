@@ -39,10 +39,13 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
             for node in area.nodes:
                 if isinstance(node, DockNode):
                     connection = dock_connections.get((area.area_asset_id, node.dock_index), node.default_connection)
-                    new_areas.add(world.area_by_asset_id(connection.area_asset_id))
+                    if connection is not None:
+                        new_areas.add(world.area_by_asset_id(connection.area_asset_id))
+
                 elif isinstance(node, TeleporterNode) and not ignore_elevators:
                     connection = elevator_connections.get(node.teleporter, node.default_connection)
-                    new_areas.add(world_list.area_by_area_location(connection))
+                    if connection is not None:
+                        new_areas.add(world_list.area_by_area_location(connection))
 
             for next_area in new_areas:
                 g.add_edge(area, next_area)

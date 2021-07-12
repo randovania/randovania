@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 from dataclasses import dataclass
-from typing import Dict, Tuple, Iterator
+from typing import Dict, Tuple, Iterator, Optional
 
 from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
@@ -14,7 +14,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.teleporter import Teleporter
 
 
-ElevatorConnection = Dict[Teleporter, AreaLocation]
+ElevatorConnection = Dict[Teleporter, Optional[AreaLocation]]
 
 
 @dataclass(frozen=True)
@@ -26,7 +26,7 @@ class GamePatches:
     player_index: int
     pickup_assignment: PickupAssignment
     elevator_connection: ElevatorConnection
-    dock_connection: Dict[Tuple[int, int], DockConnection]
+    dock_connection: Dict[Tuple[int, int], Optional[DockConnection]]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     translator_gates: GateAssignment
     starting_items: CurrentResources
