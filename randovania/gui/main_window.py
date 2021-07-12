@@ -21,11 +21,11 @@ from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
-from randovania.lib.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.layout_description import LayoutDescription
+from randovania.lib.enum_lib import iterate_enum
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """
@@ -118,13 +118,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.open_faq_button.clicked.connect(self._open_faq)
         self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
                                                                  RandovaniaGame.METROID_PRIME_ECHOES))
-
-        for game in RandovaniaGame:
-            self.hint_item_names_game_combo.addItem(game.long_name, game)
-            self.hint_location_game_combo.addItem(game.long_name, game)
-
-        self.hint_item_names_game_combo.currentIndexChanged.connect(self._update_hints_text)
-        self.hint_location_game_combo.currentIndexChanged.connect(self._update_hint_locations)
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -223,12 +216,15 @@ class MainWindow(WindowManager, Ui_MainWindow):
         logging.info("Running GenerateSeedTab.setup_ui")
         self.generate_seed_tab.setup_ui()
 
+        # Remove pointless Prime 1/3 help tabs
+        self.prime_differences_tab.deleteLater()
+        self.corruption_differences_tab.deleteLater()
+
         # Update hints text
         logging.info("Will _update_hints_text")
         self._update_hints_text()
         logging.info("Will hide hint locations combo")
-        self.hint_location_game_combo.setVisible(False)
-        self.hint_location_game_combo.setCurrentIndex(1)
+        self._update_hint_locations()
 
         logging.info("Will update for modified options")
         with self._options:
@@ -236,11 +232,25 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _update_hints_text(self):
         from randovania.gui.lib import hints_text
-        hints_text.update_hints_text(self.hint_item_names_game_combo.currentData(), self.hint_item_names_tree_widget)
+
+        for game, widget in [
+            (RandovaniaGame.METROID_PRIME, self.prime_hint_item_names_tree_widget),
+            (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_item_names_tree_widget),
+            (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_item_names_tree_widget),
+        ]:
+            hints_text.update_hints_text(game, widget)
 
     def _update_hint_locations(self):
         from randovania.gui.lib import hints_text
-        hints_text.update_hint_locations(self.hint_location_game_combo.currentData(), self.hint_tree_widget)
+        for game, widget in [
+            (RandovaniaGame.METROID_PRIME, self.prime_hint_locations_tree_widget),
+            (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_locations_tree_widget),
+            (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_locations_tree_widget),
+        ]:
+            hints_text.update_hint_locations(game, widget)
+
+        self.prime_hint_locations_tab.deleteLater()
+        self.corruption_hint_locations_tab.deleteLater()
 
     # Generate Seed
     def _open_faq(self):
