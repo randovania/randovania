@@ -327,7 +327,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 if isinstance(node, DockNode):
                     try:
                         target_node = world_list.resolve_dock_node(node, state.patches)
-                        nearby_areas.add(world_list.nodes_to_area(target_node))
+                        if target_node is not None:
+                            nearby_areas.add(world_list.nodes_to_area(target_node))
                     except IndexError as e:
                         print(f"For {node.name} in {area.name}, received {e}")
                         continue
@@ -354,6 +355,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 if isinstance(node, DockNode):
                     try:
                         target_node = world_list.resolve_dock_node(node, state.patches)
+                        if target_node is None:
+                            continue
                         forward_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
                                                                            node.default_dock_weakness)
                         requirement = forward_weakness.requirement
@@ -564,7 +567,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     combo.addItem("Vanilla", node.default_connection)
                     combo.setEnabled(False)
                 else:
-                    combo.addItem("Undefined", location)
+                    combo.addItem("Undefined", None)
                     for target_name, connection in combo_targets:
                         combo.addItem(target_name, connection)
 
@@ -752,7 +755,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             state.node = self._actions[-1]
 
         for teleporter, combo in self._elevator_id_to_combo.items():
-            assert combo.currentData() is not None
             state.patches.elevator_connection[teleporter] = combo.currentData()
 
         for gate, item in self._translator_gate_to_combo.items():

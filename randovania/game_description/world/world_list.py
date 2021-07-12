@@ -1,6 +1,6 @@
 import copy
 import re
-from typing import List, Dict, Iterator, Tuple, Iterable
+from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement, RequirementAnd
@@ -135,17 +135,19 @@ class WorldList:
         target_area = world.area_by_asset_id(connection.area_asset_id)
         return target_area.node_with_dock_index(connection.dock_index)
 
-    def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
+    def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
         world = self.nodes_to_world(node)
         original_area = self.nodes_to_area(node)
 
         connection = patches.dock_connection.get((original_area.area_asset_id, node.dock_index),
                                                  node.default_connection)
-        return self.resolve_dock_connection(world, connection)
+        if connection is not None:
+            return self.resolve_dock_connection(world, connection)
 
-    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node:
+    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
         connection = patches.elevator_connection.get(node.teleporter, node.default_connection)
-        return self.resolve_teleporter_connection(connection)
+        if connection is not None:
+            return self.resolve_teleporter_connection(connection)
 
     def resolve_teleporter_connection(self, connection: AreaLocation) -> Node:
         area = self.area_by_area_location(connection)
@@ -167,6 +169,9 @@ class WorldList:
         if isinstance(node, DockNode):
             try:
                 target_node = self.resolve_dock_node(node, patches)
+                if target_node is None:
+                    return
+
                 original_area = self.nodes_to_area(node)
                 target_area = self.nodes_to_area(target_node)
 
@@ -190,7 +195,9 @@ class WorldList:
 
         if isinstance(node, TeleporterNode):
             try:
-                yield self.resolve_teleporter_node(node, patches), Requirement.trivial()
+                target_node = self.resolve_teleporter_node(node, patches)
+                if target_node is not None:
+                    yield target_node, Requirement.trivial()
             except IndexError:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
                 print("Teleporter is broken!", node)
