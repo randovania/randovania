@@ -546,10 +546,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
                                             world_list.nodes_to_area(node).area_asset_id)
                                for node in nodes]
-            nodes_names = [echoes_teleporters.elevator_area_name(world_list, location, True)
+            nodes_names = [echoes_teleporters.elevator_area_name(world_list, location, False)
                            for location in nodes_locations]
-
-            nodes = sorted(nodes_by_world[world_name], key=lambda it: world_list.nodes_to_area(it).name)
 
             group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
             group.setTitle(world_name)
