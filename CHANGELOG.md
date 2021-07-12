@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: New Help tab with information on how to read the Data Visualizer.
 
+-   Added: In the Map Tracker, it's now possible to right-click a location to see a path from last action to it.
+
 -   Changed: The items in the starting items popup is now sorted.
 
 -   Changed: Customizing Dark Aether damage is now considered by logic.
