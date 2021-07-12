@@ -46,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Hint Item Names now properly list Artifacts and Energy Cells.
 
+-   Fixed: Map Tracker now properly handles unassigned elevators.
+
 ### Metroid Prime 2 - Logic Database Changes
 
 -   **Major** - "Suitless Ingclaw/Ingstorm" trick added to cover traversing rooms with either Ingclaw Vapor or Ingstorm.
