@@ -191,8 +191,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 starting_location = AreaLocation.from_json(previous_state["starting_location"])
 
             elevators: Dict[Teleporter, Optional[AreaLocation]] = {
-                Teleporter.from_json(item["teleporter"]): AreaLocation.from_json(item["data"]) if item[
-                                                                                                      "data"] is not None else None
+                Teleporter.from_json(item["teleporter"]): (
+                    AreaLocation.from_json(item["data"])
+                    if item["data"] is not None else None
+                )
                 for item in previous_state["elevators"]
             }
             if self.layout_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
