@@ -348,7 +348,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
-            self.help_tab_widget.addTab(changelog_tab, "Change Log")
+            self.main_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
             await async_dialog.message_box(self, QtWidgets.QMessageBox.Information,
