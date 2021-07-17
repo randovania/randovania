@@ -4,9 +4,9 @@ from unittest.mock import patch, MagicMock
 from randovania.games.prime import echoes_dol_patcher, echoes_dol_versions
 
 
-@patch("randovania.games.prime.dol_patcher.DolFile")
-@patch("randovania.games.prime.dol_patcher._get_dol_path", autospec=True)
-@patch("randovania.games.prime.dol_patcher.find_version_for_dol", autospec=True)
+@patch("randovania.games.prime.echoes_dol_patcher.DolFile")
+@patch("randovania.games.prime.echoes_dol_patcher._get_dol_path", autospec=True)
+@patch("randovania.games.prime.echoes_dol_patcher.find_version_for_dol", autospec=True)
 def test_apply_patches(mock_find_version_for_dol: MagicMock,
                        mock_get_dol_path: MagicMock,
                        mock_dol_file_constructor: MagicMock,

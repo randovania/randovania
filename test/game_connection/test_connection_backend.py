@@ -1,6 +1,6 @@
 import re
 import struct
-from typing import Optional
+from typing import Optional, List
 
 import pytest
 from mock import AsyncMock, MagicMock
@@ -28,7 +28,16 @@ def add_memory_op_result(backend, result):
 @pytest.mark.asyncio
 async def test_identify_game_ntsc(backend):
     # Setup
-    add_memory_op_result(backend, b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32")
+    def side_effect(ops: List[MemoryOperation]):
+        if len(ops) > 1:
+            return {
+                op: b"!#$M"
+                for op in ops
+                if op.address == 0x803ac3b0
+            }
+        return {ops[0]: b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"}
+
+    backend._perform_memory_operations.side_effect = side_effect
 
     # Run
     assert await backend._identify_game()

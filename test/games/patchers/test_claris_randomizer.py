@@ -227,7 +227,7 @@ def test_apply_patcher_file(
         "randovania.games.patchers.claris_randomizer._run_with_args", autospec=True
     )
     mock_apply_patches: MagicMock = mocker.patch(
-        "randovania.games.prime.dol_patcher.apply_patches", autospec=True
+        "randovania.games.prime.echoes_dol_patcher.apply_patches", autospec=True
     )
     mock_create_progress_update_from_successive_messages: MagicMock = mocker.patch(
         "randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True
@@ -236,7 +236,7 @@ def test_apply_patcher_file(
     game_root = valid_tmp_game_root
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
-    mock_data_from_json = mocker.patch("randovania.games.prime.dol_patcher.DolPatchesData.from_json")
+    mock_data_from_json = mocker.patch("randovania.games.prime.echoes_dol_patcher.EchoesDolPatchesData.from_json")
 
     patcher_data = {
         "menu_mod": include_menu_mod,
