@@ -33,7 +33,7 @@ def apply_patches(game_root: Path, patches_data: DolPatchesData):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version = find_version_for_dol(dol_file, ALL_VERSIONS_PATCHES)
-    if not isinstance(version, BasePrimeDolVersion):
+    if not isinstance(version, EchoesDolVersion):
         return
 
     dol_file.set_editable(True)
@@ -45,19 +45,18 @@ def apply_patches(game_root: Path, patches_data: DolPatchesData):
                                                                    patches_data.dangerous_energy_tank,
                                                                    version.game, dol_file)
 
-        if isinstance(version, EchoesDolVersion):
-            echoes_dol_patches.apply_fixes(version, dol_file)
-            echoes_dol_patches.apply_unvisited_room_names(version, dol_file, patches_data.unvisited_room_names)
-            echoes_dol_patches.apply_teleporter_sounds(version, dol_file, patches_data.teleporter_sounds)
+        echoes_dol_patches.apply_fixes(version, dol_file)
+        echoes_dol_patches.apply_unvisited_room_names(version, dol_file, patches_data.unvisited_room_names)
+        echoes_dol_patches.apply_teleporter_sounds(version, dol_file, patches_data.teleporter_sounds)
 
-            echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
-                                                        patches_data.user_preferences, dol_file)
-            echoes_dol_patches.apply_beam_cost_patch(version.beam_cost_addresses, patches_data.beam_configuration,
-                                                     dol_file)
-            echoes_dol_patches.apply_safe_zone_heal_patch(version.safe_zone, version.sda2_base,
-                                                          patches_data.safe_zone_heal_per_second, dol_file)
-            echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, patches_data.default_items,
-                                                          dol_file)
+        echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
+                                                    patches_data.user_preferences, dol_file)
+        echoes_dol_patches.apply_beam_cost_patch(version.beam_cost_addresses, patches_data.beam_configuration,
+                                                 dol_file)
+        echoes_dol_patches.apply_safe_zone_heal_patch(version.safe_zone, version.sda2_base,
+                                                      patches_data.safe_zone_heal_per_second, dol_file)
+        echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, patches_data.default_items,
+                                                      dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:
