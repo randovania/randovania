@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, call
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_backend import MemoryOperation
+from randovania.game_connection.memory_operation import MemoryOperation
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 

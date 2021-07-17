@@ -5,7 +5,8 @@ from typing import Optional
 import pytest
 from mock import AsyncMock, MagicMock
 
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
+from randovania.game_connection.connection_backend import ConnectionBackend
+from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry

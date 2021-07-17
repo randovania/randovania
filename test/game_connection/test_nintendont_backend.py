@@ -1,7 +1,7 @@
 import pytest
 from mock import MagicMock, AsyncMock, call
 
-from randovania.game_connection.connection_backend import MemoryOperation, MemoryOperationException
+from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.nintendont_backend import NintendontBackend, SocketHolder
 

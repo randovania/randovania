@@ -3,7 +3,8 @@ from typing import List, Optional, Dict
 import dolphin_memory_engine
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
+from randovania.game_connection.connection_backend import ConnectionBackend
+from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world.world import World
 
