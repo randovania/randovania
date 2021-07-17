@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional
+from typing import Optional, List, Dict
 
 
 class MemoryOperationException(Exception):
@@ -39,3 +39,12 @@ class MemoryOperation:
             operation_pretty.append(f"write {self.write_bytes.hex()}")
 
         return f"At {address_text}, {' and '.join(operation_pretty)}"
+
+
+class MemoryOperatorExecutor:
+    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+        raise NotImplementedError()
+
+    async def perform_single_memory_operation(self, op: MemoryOperation) -> Optional[bytes]:
+        result = await self.perform_memory_operations([op])
+        return result.get(op)
