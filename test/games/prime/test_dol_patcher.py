@@ -1,7 +1,7 @@
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from randovania.games.prime import dol_patcher, echoes_dol_versions
+from randovania.games.prime import echoes_dol_patcher, echoes_dol_versions
 
 
 @patch("randovania.games.prime.dol_patcher.DolFile")
@@ -37,7 +37,7 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
         "randovania.games.prime.echoes_dol_patches.apply_teleporter_sounds", autospec=True)
 
     # Run
-    dol_patcher.apply_patches(game_root, patches_data)
+    echoes_dol_patcher.apply_patches(game_root, patches_data)
 
     # Assert
     mock_find_version_for_dol.assert_called_once_with(dol_file, echoes_dol_versions.ALL_VERSIONS)
@@ -67,5 +67,5 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
 
 
 def test_get_dol_path():
-    assert dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
+    assert echoes_dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
 

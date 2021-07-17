@@ -10,7 +10,7 @@ from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher, echoes_dol_versions
+from randovania.games.prime import echoes_dol_versions
 
 
 @pytest.fixture(name="backend")

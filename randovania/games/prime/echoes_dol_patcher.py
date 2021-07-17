@@ -11,7 +11,7 @@ from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferenc
 
 
 @dataclasses.dataclass(frozen=True)
-class DolPatchesData(JsonDataclass):
+class EchoesDolPatchesData(JsonDataclass):
     energy_per_tank: int
     beam_configuration: BeamConfiguration
     safe_zone_heal_per_second: float
@@ -22,7 +22,7 @@ class DolPatchesData(JsonDataclass):
     dangerous_energy_tank: bool
 
 
-def apply_patches(game_root: Path, patches_data: DolPatchesData):
+def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version = typing.cast(EchoesDolVersion, find_version_for_dol(dol_file, echoes_dol_versions.ALL_VERSIONS))

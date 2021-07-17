@@ -3,7 +3,7 @@ from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
-from randovania.games.prime import dol_patcher, echoes_dol_versions
+from randovania.games.prime import echoes_dol_versions
 from randovania.gui.debug_backend_window import DebugBackendWindow
 from randovania.lib.enum_lib import iterate_enum
 
