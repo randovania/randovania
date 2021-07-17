@@ -1,5 +1,4 @@
 import copy
-import dataclasses
 import logging
 import struct
 from typing import Optional, List, Dict, Tuple
@@ -7,6 +6,7 @@ from typing import Optional, List, Dict, Tuple
 from randovania.dol_patching import assembler
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
+from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -17,10 +17,6 @@ from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (all_prime_dol_patches, echoes_dol_versions, prime1_dol_versions,
                                     corruption_dol_versions)
-
-
-class MemoryOperationException(Exception):
-    pass
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -36,41 +32,6 @@ def format_received_item(item_name: str, player_name: str) -> str:
     generic = "Received {item_name} from {provider_name}."
 
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
-
-
-@dataclasses.dataclass(frozen=True)
-class MemoryOperation:
-    address: int
-    offset: Optional[int] = None
-    read_byte_count: Optional[int] = None
-    write_bytes: Optional[bytes] = None
-
-    @property
-    def byte_count(self) -> int:
-        if self.read_byte_count is not None:
-            return self.read_byte_count
-        if self.write_bytes is not None:
-            return len(self.write_bytes)
-        return 0
-
-    def validate_byte_sizes(self):
-        if (self.write_bytes is not None
-                and self.read_byte_count is not None
-                and len(self.write_bytes) != self.read_byte_count):
-            raise ValueError(f"Attempting to read {self.read_byte_count} bytes while writing {len(self.write_bytes)}.")
-
-    def __str__(self):
-        address_text = f"0x{self.address:08x}"
-        if self.offset is not None:
-            address_text = f"*{address_text} {self.offset:+05x}"
-
-        operation_pretty = []
-        if self.read_byte_count is not None:
-            operation_pretty.append(f"read {self.read_byte_count} bytes")
-        if self.write_bytes is not None:
-            operation_pretty.append(f"write {self.write_bytes.hex()}")
-
-        return f"At {address_text}, {' and '.join(operation_pretty)}"
 
 
 def _prime1_powerup_offset(item_index: int) -> int:
