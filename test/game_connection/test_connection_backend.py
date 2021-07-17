@@ -10,7 +10,7 @@ from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher
+from randovania.games.prime import dol_patcher, echoes_dol_versions
 
 
 @pytest.fixture(name="backend")
@@ -33,7 +33,7 @@ async def test_identify_game_ntsc(backend):
     assert await backend._identify_game()
 
     # Assert
-    assert backend.patches is dol_patcher.ALL_VERSIONS_PATCHES[0]
+    assert backend.patches is echoes_dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.mark.asyncio
@@ -63,7 +63,7 @@ async def test_identify_game_already_known(backend):
 @pytest.mark.asyncio
 async def test_write_string_to_game_buffer(backend, message_original, message_encoded, previous_size):
     # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._last_message_size = previous_size
 
     # Run
@@ -77,7 +77,7 @@ async def test_write_string_to_game_buffer(backend, message_original, message_en
 @pytest.mark.asyncio
 async def test_get_inventory_valid(backend):
     # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, backend.game.resource_database.item)
@@ -98,7 +98,7 @@ async def test_get_inventory_invalid_capacity(backend):
     # Setup
     custom_inventory = {5: InventoryItem(0, 50)}
 
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II", *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, backend.game.resource_database.item)
@@ -115,7 +115,7 @@ async def test_get_inventory_invalid_amount(backend):
     # Setup
     custom_inventory = {5: InventoryItem(1, 0)}
 
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II", *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, backend.game.resource_database.item)
@@ -127,11 +127,10 @@ async def test_get_inventory_invalid_amount(backend):
         await backend._get_inventory()
 
 
-
 @pytest.mark.asyncio
 async def test_update_magic_item_nothing(backend):
     # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._inventory = {
         backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)
     }
@@ -151,7 +150,7 @@ async def test_update_magic_item_collected_location(backend, mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._inventory = {
         backend.game.resource_database.multiworld_magic_item: InventoryItem(10, 10)
     }
@@ -176,7 +175,7 @@ async def test_update_magic_item_give_pickup(backend, mocker, on_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._emit_location_collected = AsyncMock()
     backend.execute_remote_patches = AsyncMock()
     pickup_patches = MagicMock()
@@ -210,7 +209,7 @@ async def test_patches_for_pickup(backend, mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
 
     db = backend.game.resource_database
     pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, progression=tuple(),
@@ -239,7 +238,7 @@ async def test_patches_for_pickup(backend, mocker):
 @pytest.mark.asyncio
 async def test_execute_remote_patches(backend, mocker, has_message):
     # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     backend._write_string_to_game_buffer = MagicMock()
 
     patch_address, patch_bytes = MagicMock(), MagicMock()
@@ -289,7 +288,7 @@ async def test_execute_remote_patches(backend, mocker, has_message):
 @pytest.mark.asyncio
 async def test_fetch_game_status(backend, has_world, has_pending_op, correct_vtable):
     # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
     world = backend.game.world_list.worlds[0]
 
     backend._perform_memory_operations.side_effect = lambda ops: {

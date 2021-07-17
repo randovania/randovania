@@ -3,7 +3,7 @@ from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
-from randovania.games.prime import dol_patcher
+from randovania.games.prime import dol_patcher, echoes_dol_versions
 from randovania.gui.debug_backend_window import DebugBackendWindow
 from randovania.lib.enum_lib import iterate_enum
 
@@ -23,7 +23,7 @@ def test_current_status(backend, expected_status):
 
 @pytest.mark.asyncio
 async def test_display_message(backend):
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.patches = echoes_dol_versions.ALL_VERSIONS[0]
 
     message = "Foo"
     await backend._perform_single_memory_operations(backend._write_string_to_game_buffer(message))

@@ -1,20 +1,13 @@
 import dataclasses
+import typing
 from pathlib import Path
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import find_version_for_dol
-from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches, prime1_dol_versions, \
-    corruption_dol_versions
-from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
+from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches
 from randovania.games.prime.echoes_dol_patches import EchoesDolVersion, BeamConfiguration
 from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
-
-ALL_VERSIONS_PATCHES = (
-        echoes_dol_versions.ALL_VERSIONS
-        + prime1_dol_versions.ALL_VERSIONS
-        + corruption_dol_versions.ALL_VERSIONS
-)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -32,9 +25,7 @@ class DolPatchesData(JsonDataclass):
 def apply_patches(game_root: Path, patches_data: DolPatchesData):
     dol_file = DolFile(_get_dol_path(game_root))
 
-    version = find_version_for_dol(dol_file, ALL_VERSIONS_PATCHES)
-    if not isinstance(version, EchoesDolVersion):
-        return
+    version = typing.cast(EchoesDolVersion, find_version_for_dol(dol_file, echoes_dol_versions.ALL_VERSIONS))
 
     dol_file.set_editable(True)
     with dol_file:

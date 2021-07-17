@@ -15,7 +15,8 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher, all_prime_dol_patches
+from randovania.games.prime import dol_patcher, all_prime_dol_patches, echoes_dol_versions, prime1_dol_versions, \
+    corruption_dol_versions
 from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
 
 
@@ -191,9 +192,14 @@ class ConnectionBackend(ConnectionBase):
         if self.patches is not None:
             return True
 
+        all_versions = (
+                echoes_dol_versions.ALL_VERSIONS
+                + prime1_dol_versions.ALL_VERSIONS
+                + corruption_dol_versions.ALL_VERSIONS
+        )
         read_first_ops = [
             MemoryOperation(version.build_string_address, read_byte_count=min(len(version.build_string), 4))
-            for version in dol_patcher.ALL_VERSIONS_PATCHES
+            for version in all_versions
         ]
         try:
             first_ops_result = await self._perform_memory_operations(read_first_ops)
@@ -203,7 +209,7 @@ class ConnectionBackend(ConnectionBase):
 
         possible_versions = [
             version
-            for version, read_op in zip(dol_patcher.ALL_VERSIONS_PATCHES, read_first_ops)
+            for version, read_op in zip(all_versions, read_first_ops)
             if first_ops_result.get(read_op) == version.build_string[:4]
         ]
 
