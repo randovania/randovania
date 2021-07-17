@@ -8,14 +8,14 @@ from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _echoes_powerup_offset
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.games.prime import dol_patcher
+from randovania.game_description.world.node import PickupNode
+from randovania.games.prime import echoes_dol_versions
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
-from randovania.lib import enum_lib
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.lib import enum_lib
 from randovania.network_common.admin_actions import SessionAdminUserAction
 
 
@@ -51,7 +51,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.collect_location_button.clicked.connect(self._emit_collection)
         self.collect_location_button.setEnabled(False)
 
-        self._expected_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+        self._expected_patches = echoes_dol_versions.ALL_VERSIONS[0]
         # FIXME: use PAL again
         self.patches = self._expected_patches
 
