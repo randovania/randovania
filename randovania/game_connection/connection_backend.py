@@ -191,7 +191,23 @@ class ConnectionBackend(ConnectionBase):
         if self.patches is not None:
             return True
 
-        for version in dol_patcher.ALL_VERSIONS_PATCHES:
+        read_first_ops = [
+            MemoryOperation(version.build_string_address, read_byte_count=min(len(version.build_string), 4))
+            for version in dol_patcher.ALL_VERSIONS_PATCHES
+        ]
+        try:
+            first_ops_result = await self._perform_memory_operations(read_first_ops)
+        except (RuntimeError, MemoryOperationException) as e:
+            self.logger.debug(f"Unable to probe for game version: {e}")
+            return False
+
+        possible_versions = [
+            version
+            for version, read_op in zip(dol_patcher.ALL_VERSIONS_PATCHES, read_first_ops)
+            if first_ops_result.get(read_op) == version.build_string[:4]
+        ]
+
+        for version in possible_versions:
             try:
                 # We're reading these build strings separately because combining would go above the maximum size allowed
                 # for read operations
