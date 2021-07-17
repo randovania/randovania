@@ -19,7 +19,7 @@ from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_teleporters
-from randovania.games.prime.dol_patcher import DolPatchesData
+from randovania.games.prime.echoes_dol_patcher import EchoesDolPatchesData
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, hint_lib, \
     credits_spoiler
 from randovania.generator.item_pool import pickup_creator
@@ -403,7 +403,7 @@ def create_patcher_file(description: LayoutDescription,
     )
 
     result["menu_mod"] = configuration.menu_mod
-    result["dol_patches"] = DolPatchesData(
+    result["dol_patches"] = EchoesDolPatchesData(
         energy_per_tank=configuration.energy_per_tank,
         beam_configuration=configuration.beam_configuration,
         safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,

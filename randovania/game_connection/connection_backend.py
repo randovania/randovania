@@ -15,9 +15,8 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import dol_patcher, all_prime_dol_patches, echoes_dol_versions, prime1_dol_versions, \
-    corruption_dol_versions
-from randovania.games.prime.all_prime_dol_patches import BasePrimeDolVersion
+from randovania.games.prime import (all_prime_dol_patches, echoes_dol_versions, prime1_dol_versions,
+                                    corruption_dol_versions)
 
 
 class MemoryOperationException(Exception):
@@ -114,7 +113,7 @@ def _capacity_for(item: ItemResourceInfo,
 
 
 class ConnectionBackend(ConnectionBase):
-    patches: Optional[BasePrimeDolVersion] = None
+    patches: Optional[all_prime_dol_patches.BasePrimeDolVersion] = None
     _checking_for_collected_index: bool = False
     _games: Dict[RandovaniaGame, GameDescription]
     _inventory: Dict[ItemResourceInfo, InventoryItem]
