@@ -148,7 +148,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 self.action_force_update.setEnabled(False)
 
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
-                if self.game_connection.backend.patches.game == self._current_tracker_game:
+                if self.game_connection.backend.connector.game_enum == self._current_tracker_game:
                     inventory = self.game_connection.get_current_inventory()
                     self._update_tracker_from_hook(inventory)
                 else:

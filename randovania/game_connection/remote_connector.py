@@ -6,6 +6,7 @@ from randovania.game_connection.memory_operation import MemoryOperatorExecutor, 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world import World
+from randovania.games.game import RandovaniaGame
 
 
 @dataclasses.dataclass(frozen=True)
@@ -15,6 +16,10 @@ class RemotePatch:
 
 
 class RemoteConnector:
+    @property
+    def game_enum(self) -> RandovaniaGame:
+        raise NotImplementedError()
+
     async def is_this_version(self, executor: MemoryOperatorExecutor) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         raise NotImplementedError()

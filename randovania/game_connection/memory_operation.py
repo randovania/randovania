@@ -1,5 +1,8 @@
 import dataclasses
+import logging
 from typing import Optional, List, Dict
+
+from randovania.game_connection.backend_choice import GameBackendChoice
 
 
 class MemoryOperationException(Exception):
@@ -42,6 +45,26 @@ class MemoryOperation:
 
 
 class MemoryOperatorExecutor:
+    def __init__(self):
+        self.logger = logging.getLogger(type(self).__name__)
+
+    @property
+    def lock_identifier(self) -> Optional[str]:
+        raise NotImplementedError()
+
+    @property
+    def backend_choice(self) -> GameBackendChoice:
+        raise NotImplementedError()
+
+    async def connect(self) -> bool:
+        raise NotImplementedError()
+
+    async def disconnect(self):
+        raise NotImplementedError()
+
+    def is_connected(self) -> bool:
+        raise NotImplementedError()
+
     async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         raise NotImplementedError()
 
