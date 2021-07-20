@@ -4,10 +4,10 @@ from typing import Optional, List, Dict, Tuple
 
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
-from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation, \
+from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperatorExecutor
-from randovania.game_connection.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.remote_connector import RemoteConnector
+from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry

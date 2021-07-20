@@ -7,6 +7,8 @@ from qasync import asyncSlot
 from randovania import get_data_path
 from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.dolphin_backend import DolphinBackend
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
+from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_connection.nintendont_backend import NintendontBackend
 from randovania.gui.lib import async_dialog
@@ -68,12 +70,12 @@ class GameConnectionSetup:
         self.label.setText(self.game_connection.pretty_current_status)
 
     def refresh_backend(self):
-        backend = self.game_connection.backend
+        executor = self.game_connection.backend.executor
 
-        self.use_dolphin_backend.setChecked(isinstance(backend, DolphinBackend))
-        if isinstance(backend, NintendontBackend):
+        self.use_dolphin_backend.setChecked(isinstance(executor, DolphinExecutor))
+        if isinstance(executor, NintendontExecutor):
             self.use_nintendont_backend.setChecked(True)
-            self.use_nintendont_backend.setText(f"Nintendont: {backend.ip}")
+            self.use_nintendont_backend.setText(f"Nintendont: {executor.ip}")
             self.upload_nintendont_action.setEnabled(True)
         else:
             self.use_nintendont_backend.setChecked(False)

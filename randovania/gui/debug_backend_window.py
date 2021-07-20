@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, _echoes_powerup_offset
-from randovania.game_connection.memory_operation import MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.node import PickupNode

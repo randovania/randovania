@@ -2,7 +2,7 @@ import dataclasses
 from typing import List, Tuple, Set, Optional
 
 from randovania.game_connection.connection_base import Inventory
-from randovania.game_connection.memory_operation import MemoryOperatorExecutor, MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperatorExecutor, MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world import World
