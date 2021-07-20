@@ -96,7 +96,7 @@ jobs:
         if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
       
       - name: run pytest
-        run: python -m pytest --cov randovania
+        run: python -m pytest --cov randovania --cov-report=xml
         if: ${{ !matrix.executable }}
 
       - name: create executable
@@ -116,6 +116,10 @@ jobs:
       
       - name: codecov
         uses: codecov/codecov-action@v2.0.1
+        if: ${{ !matrix.executable }}
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
 
       - name: Upload artifacts
         if: ${{ matrix.executable }}
