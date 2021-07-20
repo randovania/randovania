@@ -1,22 +1,22 @@
-import copy
+import dataclasses
 import dataclasses
 import logging
 import struct
-from typing import Optional, List, Dict, Tuple, Set
+from typing import List, Tuple, Set
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
+from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
-from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePatch
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import CurrentResources, \
-    add_resource_gain_to_current_resources
-from randovania.game_description.world.world import World
+from randovania.game_description.resources.resource_info import (
+    CurrentResources, add_resource_gain_to_current_resources
+)
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (all_prime_dol_patches)
 
@@ -24,60 +24,6 @@ from randovania.games.prime import (all_prime_dol_patches)
 @dataclasses.dataclass(frozen=True)
 class DolRemotePatch(RemotePatch):
     instructions: List[assembler.BaseInstruction]
-
-
-def format_received_item(item_name: str, player_name: str) -> str:
-    special = {
-        "Locked Power Bomb Expansion": ("Received Power Bomb Expansion from {provider_name}, "
-                                        "but the main Power Bomb is required to use it."),
-        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}, "
-                                     "but the Missile Launcher is required to use it."),
-        "Locked Seeker Launcher": ("Received Seeker Launcher from {provider_name}, "
-                                   "but the Missile Launcher is required to use it."),
-    }
-
-    generic = "Received {item_name} from {provider_name}."
-
-    return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
-
-
-def _prime1_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x24
-    vector_data_offset = 0x4
-    powerup_size = 0x8
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _echoes_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x58
-    vector_data_offset = 0x4
-    powerup_size = 0xc
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _corruption_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x50
-    vector_data_offset = 0x4
-    powerup_size = 0xc
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _add_pickup_to_resources(pickup: PickupEntry, inventory: CurrentResources) -> CurrentResources:
-    return add_resource_gain_to_current_resources(
-        pickup.resource_gain(inventory),
-        copy.copy(inventory)
-    )
-
-
-def _capacity_for(item: ItemResourceInfo,
-                  changed_items: Dict[ItemResourceInfo, InventoryItem],
-                  inventory: Dict[ItemResourceInfo, InventoryItem]):
-    if item in changed_items:
-        return changed_items[item].capacity
-    elif item in inventory:
-        return inventory[item].capacity
-    else:
-        return 0
 
 
 class PrimeRemoteConnector(RemoteConnector):
@@ -102,96 +48,12 @@ class PrimeRemoteConnector(RemoteConnector):
         build_string = await executor.perform_single_memory_operation(operation)
         return build_string == self.version.build_string
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
-        """
-        Fetches the world the player's currently at, or None if they're not in-game.
-        :param executor:
-        :return: bool indicating if there's a pending `execute_remote_patches` operation.
-        """
-
-        cstate_manager_global = self.version.cstate_manager_global
-
-        player_offset = 0
-        asset_id_size = 4
-        asset_id_format = ">I"
-
-        if self.version.game == RandovaniaGame.METROID_PRIME:
-            mlvl_offset = 0x84
-            cplayer_offset = 0x84c
-
-        elif self.version.game == RandovaniaGame.METROID_PRIME_ECHOES:
-            mlvl_offset = 4
-            cplayer_offset = 0x14fc
-
-        elif self.version.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            mlvl_offset = 8
-            asset_id_size = 8
-            asset_id_format = ">Q"
-
-            cplayer_offset = 40
-            player_offset = 0x2184
-        else:
-            raise ValueError(f"Unknown game: {self.version.game}")
-
-        memory_ops = [
-            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=player_offset, read_byte_count=4),
-        ]
-        results = await executor.perform_memory_operations(memory_ops)
-
-        world_asset_id = results[memory_ops[0]]
-        pending_op_byte = results[memory_ops[1]]
-        player_vtable_bytes = results[memory_ops[2]]
-
-        has_pending_op = pending_op_byte != b"\x00"
-
-        if self.version.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            # TODO: Corruption has an extra indirection
-            player_vtable = self.version.cplayer_vtable
-        else:
-            player_vtable = struct.unpack(">I", player_vtable_bytes)[0]
-
-        try:
-            new_world = self.game.world_list.world_by_asset_id(struct.unpack(asset_id_format, world_asset_id)[0])
-        except KeyError:
-            new_world = None
-
-        if player_vtable != self.version.cplayer_vtable:
-            new_world = None
-
-        return has_pending_op, new_world
+    async def current_game_status(self, executor: MemoryOperationExecutor):
+        raise NotImplementedError()
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
-        if self.version.game == RandovaniaGame.METROID_PRIME:
-            offset_func = _prime1_powerup_offset
-            player_state_pointer = int.from_bytes(await executor.perform_single_memory_operation(MemoryOperation(
-                address=self.version.cstate_manager_global + 0x8b8,
-                read_byte_count=4,
-            )), "big")
-
-        elif self.version.game == RandovaniaGame.METROID_PRIME_ECHOES:
-            offset_func = _echoes_powerup_offset
-            player_state_pointer = self.version.cstate_manager_global + 0x150c
-
-        elif self.version.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            offset_func = _corruption_powerup_offset
-            player_state_pointer = int.from_bytes(await executor.perform_single_memory_operation(MemoryOperation(
-                address=self.version.game_state_pointer,
-                read_byte_count=4,
-            )), "big") + 36
-        else:
-            raise ValueError(f"Unknown game: {self.version.game}")
-
-        return [
-            MemoryOperation(
-                address=player_state_pointer,
-                offset=offset_func(item.index),
-                read_byte_count=8,
-            )
-            for item in items
-        ]
+        raise NotImplementedError()
 
     async def get_inventory(self, executor: MemoryOperationExecutor) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
@@ -266,10 +128,7 @@ class PrimeRemoteConnector(RemoteConnector):
             self.game.game,
             multiworld_magic_item.index,
         )))
-        patches.append(DolRemotePatch(
-            [self._write_string_to_game_buffer(message)],
-            all_prime_dol_patches.call_display_hud_patch(self.version.string_display),
-        ))
+        patches.append(self._dol_patch_for_hud_message(message))
 
         return patches, True
 
@@ -330,22 +189,9 @@ class PrimeRemoteConnector(RemoteConnector):
         return item_name, resources_to_give
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory):
-        item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
-
-        self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
-        patches = [
-            all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions, self.game.game,
-                item.index, delta,
-            )
-            for item, delta in resources_to_give.items()
-        ]
-        return patches, format_received_item(item_name, provider_name)
+        raise NotImplementedError()
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
-        if self.version.game == RandovaniaGame.METROID_PRIME:
-            message = "&just=center;" + message
-
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
         encoded_message = message.encode("utf-16_be")[:self.version.string_display.max_message_size - overhead_size]
 
@@ -364,3 +210,9 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return MemoryOperation(self.version.string_display.message_receiver_string_ref,
                                write_bytes=encoded_message)
+
+    def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
+        return DolRemotePatch(
+            [self._write_string_to_game_buffer(message)],
+            all_prime_dol_patches.call_display_hud_patch(self.version.string_display),
+        )
