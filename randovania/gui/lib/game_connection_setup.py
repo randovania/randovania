@@ -134,4 +134,4 @@ class GameConnectionSetup:
 
     def on_connect_to_game(self):
         connect_to_game = self.connect_to_game.isChecked()
-        self.game_connection.backend.set_connection_enabled(connect_to_game)
+        self.game_connection.set_connection_enabled(connect_to_game)

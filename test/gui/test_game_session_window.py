@@ -8,6 +8,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
 
+from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.gui.game_session_window import GameSessionWindow
@@ -19,8 +20,9 @@ from randovania.network_common.session_state import GameSessionState
 
 @pytest.fixture(name="window")
 def _window(skip_qtbot):
-    game_connection = MagicMock()
-    game_connection.backend.lock_identifier = None
+    game_connection = MagicMock(spec=GameConnection)
+    game_connection.executor = AsyncMock()
+    game_connection.lock_identifier = None
     game_connection.pretty_current_status = "Pretty Status"
     window = GameSessionWindow(MagicMock(), game_connection, MagicMock(), MagicMock(), MagicMock())
     return window
@@ -32,9 +34,10 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
     network_client.session_self_update = AsyncMock()
-    game_connection = MagicMock()
+    game_connection = MagicMock(spec=GameConnection)
+    game_connection.executor = AsyncMock()
     game_connection.pretty_current_status = "Maybe Connected"
-    game_connection.backend.lock_identifier = None
+    game_connection.lock_identifier = None
 
     initial_session = GameSessionEntry(
         id=1234,
@@ -83,7 +86,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     network_client.session_self_update.assert_awaited_once_with(
         game_connection.get_current_inventory.return_value,
         game_connection.current_status,
-        game_connection.backend.backend_choice,
+        game_connection.backend_choice,
     )
 
 

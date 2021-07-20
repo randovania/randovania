@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from mock import MagicMock, AsyncMock, call
 
+from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
@@ -14,8 +15,8 @@ from randovania.gui.multiworld_client import MultiworldClient, Data
 @pytest.fixture(name="client")
 def _client(skip_qtbot):
     network_client = MagicMock()
-    game_connection = MagicMock()
-    game_connection.backend.lock_identifier = None
+    game_connection = MagicMock(spec=GameConnection)
+    game_connection.lock_identifier = None
     return MultiworldClient(network_client, game_connection)
 
 
@@ -161,8 +162,8 @@ async def test_lock_file_on_init(skip_qtbot, tmpdir):
     network_client = MagicMock()
     network_client.game_session_request_pickups = AsyncMock(return_value=(RandovaniaGame.METROID_PRIME, []))
     network_client.session_self_update = AsyncMock()
-    game_connection = MagicMock()
-    game_connection.backend.lock_identifier = str(tmpdir.join("my-lock"))
+    game_connection = MagicMock(spec=GameConnection)
+    game_connection.lock_identifier = str(tmpdir.join("my-lock"))
 
     # Run
     client = MultiworldClient(network_client, game_connection)
