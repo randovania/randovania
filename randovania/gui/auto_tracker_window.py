@@ -217,7 +217,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
     @asyncSlot()
     async def on_force_update_button(self):
-        await self.game_connection.backend.update_current_inventory()
+        await self.game_connection.update_current_inventory()
         inventory = self.game_connection.get_current_inventory()
         print("Inventory:" + "\n".join(
             f"{item.long_name}: {inv_item.amount}/{inv_item.capacity}"
