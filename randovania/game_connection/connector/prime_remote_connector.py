@@ -6,9 +6,9 @@ from typing import Optional, List, Dict, Tuple, Set
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
-from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation, \
+from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperatorExecutor
-from randovania.game_connection.remote_connector import RemoteConnector, RemotePatch
+from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePatch
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -255,7 +255,8 @@ class PrimeRemoteConnector(RemoteConnector):
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups):
             return [], False
 
-        item_patches, message = await self._patches_for_pickup(*remote_pickups[magic_inv.capacity])
+        provider_name, pickup = remote_pickups[magic_inv.capacity]
+        item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
         self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. "
                          f"Next pickup: {message}")
 

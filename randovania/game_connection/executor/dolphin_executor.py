@@ -3,8 +3,8 @@ from typing import List, Optional, Dict
 import dolphin_memory_engine
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.memory_operation import (MemoryOperationException, MemoryOperation,
-                                                         MemoryOperatorExecutor)
+from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
+                                                                  MemoryOperatorExecutor)
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000
@@ -103,7 +103,3 @@ class DolphinExecutor(MemoryOperatorExecutor):
             if op_result is not None:
                 result[op] = op_result
         return result
-
-    @property
-    def name(self) -> str:
-        return "Dolphin"

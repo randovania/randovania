@@ -1,5 +1,5 @@
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.nintendont_executor import NintendontExecutor
+from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
 
 
 class NintendontBackend(ConnectionBackend):

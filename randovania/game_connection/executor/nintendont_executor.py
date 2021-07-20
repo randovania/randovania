@@ -1,16 +1,12 @@
 import asyncio
 import dataclasses
-import logging
 import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional, Dict
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.memory_operation import MemoryOperationException, MemoryOperation, \
+from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperatorExecutor
-from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.world.world import World
 
 
 @dataclasses.dataclass(frozen=True)
@@ -257,7 +253,3 @@ class NintendontExecutor(MemoryOperatorExecutor):
                 read_index += op.read_byte_count
 
         return result
-
-    @property
-    def name(self) -> str:
-        return "Nintendont"

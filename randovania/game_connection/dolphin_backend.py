@@ -1,7 +1,7 @@
 import dolphin_memory_engine
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.dolphin_executor import DolphinExecutor
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 
 
 class DolphinBackend(ConnectionBackend):
