@@ -6,17 +6,18 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
-from randovania.game_connection.connection_backend import ConnectionBackend, _echoes_powerup_offset
-from randovania.game_connection.executor.memory_operation import MemoryOperation
-from randovania.game_connection.connection_base import GameConnectionStatus
+from randovania.game_connection.connection_backend import _echoes_powerup_offset
+from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.node import PickupNode
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_dol_versions
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.lib import enum_lib
 from randovania.network_common.admin_actions import SessionAdminUserAction
 
 
@@ -26,9 +27,9 @@ class DebugGameBackendChoice:
         return "Debug"
 
 
-class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
+class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
+    _connected: bool = False
     pickups: List[PickupEntry]
-    permanent_pickups: List[PickupEntry]
 
     def __init__(self):
         super().__init__()
@@ -37,10 +38,6 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.setupUi(self.window)
         common_qt_lib.set_default_window_icon(self.window)
 
-        for status in enum_lib.iterate_enum(GameConnectionStatus):
-            self.current_status_combo.addItem(status.pretty_text, status)
-
-        self.permanent_pickups = []
         self.pickups = []
 
         self.collect_location_combo.setVisible(False)
@@ -52,41 +49,36 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.collect_location_button.clicked.connect(self._emit_collection)
         self.collect_location_button.setEnabled(False)
 
-        self._expected_patches = echoes_dol_versions.ALL_VERSIONS[0]
-        # FIXME: use PAL again
-        self.patches = self._expected_patches
+        self._used_version = echoes_dol_versions.ALL_VERSIONS[0]
+        self.game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
         self._game_memory = bytearray(24 * (2 ** 20))
         self._game_memory_initialized = False
-        self.patches = None
 
     async def _ensure_initialized_game_memory(self):
         if self._game_memory_initialized:
             return
-        try:
-            self.patches = self._expected_patches
-            world = self.game.world_list.worlds[0]
 
-            await self._perform_memory_operations([
-                # Build String
-                MemoryOperation(self.patches.build_string_address, write_bytes=self._expected_patches.build_string),
+        world = self.game.world_list.worlds[0]
 
-                # current CWorld
-                MemoryOperation(self.patches.game_state_pointer, offset=4,
-                                write_bytes=world.world_asset_id.to_bytes(4, "big")),
+        await self.perform_memory_operations([
+            # Build String
+            MemoryOperation(self._used_version.build_string_address, write_bytes=self._used_version.build_string),
 
-                # CPlayer VTable
-                MemoryOperation(self.patches.cstate_manager_global + 0x14fc, offset=0,
-                                write_bytes=self.patches.cplayer_vtable.to_bytes(4, "big")),
+            # current CWorld
+            MemoryOperation(self._used_version.game_state_pointer, offset=4,
+                            write_bytes=world.world_asset_id.to_bytes(4, "big")),
 
-                # CPlayerState
-                MemoryOperation(self.patches.cstate_manager_global + 0x150c,
-                                write_bytes=0xA00000.to_bytes(4, "big")),
-            ])
+            # CPlayer VTable
+            MemoryOperation(self._used_version.cstate_manager_global + 0x14fc, offset=0,
+                            write_bytes=self._used_version.cplayer_vtable.to_bytes(4, "big")),
 
-            self._game_memory_initialized = True
-        finally:
-            self.patches = None
+            # CPlayerState
+            MemoryOperation(self._used_version.cstate_manager_global + 0x150c,
+                            write_bytes=0xA00000.to_bytes(4, "big")),
+        ])
+
+        self._game_memory_initialized = True
 
     def _read_memory(self, address: int, count: int):
         address &= ~0x80000000
@@ -101,37 +93,32 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.logger.info(f"Wrote {data.hex()} to {hex(address)}")
 
     @property
-    def current_status(self) -> GameConnectionStatus:
-        return self.current_status_combo.currentData()
+    def lock_identifier(self) -> Optional[str]:
+        return None
 
     @property
     def backend_choice(self):
         return DebugGameBackendChoice()
 
-    @property
-    def lock_identifier(self) -> Optional[str]:
-        return None
-
-    @property
-    def name(self) -> str:
-        return "Debug"
-
-    async def update(self, dt: float):
+    async def connect(self) -> bool:
         await self._ensure_initialized_game_memory()
-
-        if not self._enabled:
-            return
-
-        if not await self._identify_game():
-            return
-
-        await self._interact_with_game(dt)
         self._read_message_from_game()
-        self._update_inventory_label()
+        await self._update_inventory_label()
+        self._connected = True
+        return True
 
-    def _update_inventory_label(self):
+    async def disconnect(self):
+        self._connected = False
+
+    def is_connected(self) -> bool:
+        return self._connected
+
+    async def _update_inventory_label(self):
+        connector = PrimeRemoteConnector(self._used_version)
+        inventory = await connector.get_inventory(self)
+
         s = "<br />".join(
-            f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in self._inventory.items()
+            f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in inventory.items()
         )
         self.inventory_label.setText(s)
 
@@ -149,8 +136,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def _write_magic(self, magic_amount, magic_capacity):
         self._write_memory(self._get_magic_address(), struct.pack(">II", magic_amount, magic_capacity))
 
-    @asyncSlot()
-    async def _emit_collection(self):
+    def _emit_collection(self):
         new_magic_value = self.collect_location_combo.currentData() + 1
         magic_amount, magic_capacity = self._read_magic()
         magic_amount += new_magic_value
@@ -193,7 +179,6 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
     def clear(self):
         self.messages_list.clear()
-        self.permanent_pickups = []
         self.pickups.clear()
 
     def _memory_operation(self, op: MemoryOperation) -> Optional[bytes]:
@@ -211,7 +196,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
             self._write_memory(address, op.write_bytes)
         return result
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         result = {}
         for op in ops:
             op_result = self._memory_operation(op)
@@ -220,14 +205,13 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         return result
 
     def _read_message_from_game(self):
-        has_message_address = self.patches.cstate_manager_global + 0x2
+        has_message_address = self._used_version.cstate_manager_global + 0x2
         if self._read_memory(has_message_address, 1) == b"\x00":
             return
 
-        string_start = self.patches.string_display.message_receiver_string_ref
-        message_bytes = self._read_memory(string_start, self.patches.string_display.max_message_size + 2)
+        string_start = self._used_version.string_display.message_receiver_string_ref
+        message_bytes = self._read_memory(string_start, self._used_version.string_display.max_message_size + 2)
         message = message_bytes[:message_bytes.find(b"\x00\x00")].decode("utf-16_be")
 
         self.messages_list.addItem(message)
         self._write_memory(has_message_address, b"\x00")
-        self._write_magic(0, len(self.permanent_pickups))
