@@ -1,23 +1,21 @@
 import json
 import logging
 import shutil
+from pathlib import Path
+from typing import Callable, List, Union
 
+from randovania import get_data_path
 from randovania.games.patchers import csharp_subprocess
 from randovania.games.patchers.exceptions import ExportFailure
-from randovania.games.prime.dol_patcher import DolPatchesData
+from randovania.games.prime import echoes_dol_patcher
+from randovania.interface_common.game_workdir import validate_game_files_path
+from randovania.lib import status_update_lib
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 try:
     from asyncio.exceptions import IncompleteReadError
 except ImportError:
     from asyncio.streams import IncompleteReadError
-from pathlib import Path
-from typing import Callable, List, Union
-
-from randovania import get_data_path
-from randovania.games.prime import dol_patcher
-from randovania.lib import status_update_lib
-from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 CURRENT_PATCH_VERSION = 2
 logger = logging.getLogger(__name__)
@@ -174,7 +172,8 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    dol_patcher.apply_patches(game_root, DolPatchesData.from_json(patcher_data["dol_patches"]))
+    echoes_dol_patcher.apply_patches(game_root,
+                                     echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:

@@ -148,11 +148,11 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 self.action_force_update.setEnabled(False)
 
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
-                if self.game_connection.backend.patches.game == self._current_tracker_game:
+                if self.game_connection.connector.game_enum == self._current_tracker_game:
                     inventory = self.game_connection.get_current_inventory()
                     self._update_tracker_from_hook(inventory)
                 else:
-                    self.connection_status_label.setText(f"{self.game_connection.backend.name}: Wrong Game")
+                    self.connection_status_label.setText(f"{self.game_connection.backend_choice.pretty_text}: Wrong Game")
         finally:
             self._update_timer.start()
 
@@ -217,7 +217,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
     @asyncSlot()
     async def on_force_update_button(self):
-        await self.game_connection.backend.update_current_inventory()
+        await self.game_connection.update_current_inventory()
         inventory = self.game_connection.get_current_inventory()
         print("Inventory:" + "\n".join(
             f"{item.long_name}: {inv_item.amount}/{inv_item.capacity}"

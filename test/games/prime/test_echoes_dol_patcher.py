@@ -1,12 +1,12 @@
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from randovania.games.prime import dol_patcher
+from randovania.games.prime import echoes_dol_patcher, echoes_dol_versions
 
 
-@patch("randovania.games.prime.dol_patcher.DolFile")
-@patch("randovania.games.prime.dol_patcher._get_dol_path", autospec=True)
-@patch("randovania.games.prime.dol_patcher.find_version_for_dol", autospec=True)
+@patch("randovania.games.prime.echoes_dol_patcher.DolFile")
+@patch("randovania.games.prime.echoes_dol_patcher._get_dol_path", autospec=True)
+@patch("randovania.games.prime.echoes_dol_patcher.find_version_for_dol", autospec=True)
 def test_apply_patches(mock_find_version_for_dol: MagicMock,
                        mock_get_dol_path: MagicMock,
                        mock_dol_file_constructor: MagicMock,
@@ -15,7 +15,7 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     # Setup
     game_root = MagicMock()
     patches_data = MagicMock()
-    version_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    version_patches = echoes_dol_versions.ALL_VERSIONS[0]
     mock_find_version_for_dol.return_value = version_patches
     dol_file = mock_dol_file_constructor.return_value
 
@@ -37,10 +37,10 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
         "randovania.games.prime.echoes_dol_patches.apply_teleporter_sounds", autospec=True)
 
     # Run
-    dol_patcher.apply_patches(game_root, patches_data)
+    echoes_dol_patcher.apply_patches(game_root, patches_data)
 
     # Assert
-    mock_find_version_for_dol.assert_called_once_with(dol_file, dol_patcher.ALL_VERSIONS_PATCHES)
+    mock_find_version_for_dol.assert_called_once_with(dol_file, echoes_dol_versions.ALL_VERSIONS)
     mock_get_dol_path.assert_called_once_with(game_root)
     mock_dol_file_constructor.assert_called_once_with(mock_get_dol_path.return_value)
     mock_apply_string.assert_called_once_with(version_patches.string_display, dol_file)
@@ -67,5 +67,5 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
 
 
 def test_get_dol_path():
-    assert dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
+    assert echoes_dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
 

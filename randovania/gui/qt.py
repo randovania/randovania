@@ -95,7 +95,7 @@ async def display_window_for(app, options, command: str, args):
         raise RuntimeError(f"Unknown command: {command}")
 
 
-def create_backend(debug_game_backend: bool, options):
+def create_memory_executor(debug_game_backend: bool, options):
     from randovania.interface_common.options import Options
     options = typing.cast(Options, options)
 
@@ -106,20 +106,20 @@ def create_backend(debug_game_backend: bool, options):
         backend.show()
     else:
         try:
-            from randovania.game_connection.dolphin_backend import DolphinBackend
+            from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
         except ImportError:
             from randovania.gui.lib import common_qt_lib
             common_qt_lib.show_install_visual_cpp_redist()
             raise SystemExit(1)
 
-        from randovania.game_connection.nintendont_backend import NintendontBackend
-        from randovania.game_connection.backend_choice import GameBackendChoice
+        from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
+        from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
         logger.info("Loaded all game backends...")
-        if options.game_backend == GameBackendChoice.NINTENDONT and options.nintendont_ip is not None:
-            backend = NintendontBackend(options.nintendont_ip)
+        if options.game_backend == MemoryExecutorChoice.NINTENDONT and options.nintendont_ip is not None:
+            backend = NintendontExecutor(options.nintendont_ip)
         else:
-            backend = DolphinBackend()
+            backend = DolphinExecutor()
 
     logger.info("Game backend configured: %s", type(backend))
     return backend
@@ -183,11 +183,11 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     logging.info("Server client ready.")
 
     options = _load_options()
-    backend = create_backend(args.debug_game_backend, options)
+    executor = create_memory_executor(args.debug_game_backend, options)
 
     logging.info("Configuring game connection with the backend...")
     from randovania.game_connection.game_connection import GameConnection
-    app.game_connection = GameConnection(backend)
+    app.game_connection = GameConnection(executor)
 
     logging.info("Configuring qasync...")
     import qasync

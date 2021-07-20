@@ -75,7 +75,7 @@ class MultiworldClient(QObject):
         self.game_connection = game_connection
         self._pickups_lock = asyncio.Lock()
 
-        pid_name = game_connection.backend.lock_identifier
+        pid_name = game_connection.lock_identifier
         if pid_name is not None:
             self._pid = pid.PidFile(pid_name)
             try:

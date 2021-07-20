@@ -4,10 +4,9 @@ import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional, Dict
 
-from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, MemoryOperationException
-from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_description.world.world import World
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
+    MemoryOperationExecutor
 
 
 @dataclasses.dataclass(frozen=True)
@@ -91,10 +90,10 @@ def _was_invalid_address(response: bytes, i: int) -> bool:
         raise MemoryOperationException("Server response too short for validator bytes")
 
 
-class NintendontBackend(ConnectionBackend):
-    _world: Optional[World] = None
+class NintendontExecutor(MemoryOperationExecutor):
     _port = 43673
     _socket: Optional[SocketHolder] = None
+    _socket_error: Optional[Exception] = None
 
     def __init__(self, ip: str):
         super().__init__()
@@ -109,11 +108,10 @@ class NintendontBackend(ConnectionBackend):
         return None
 
     @property
-    def backend_choice(self) -> GameBackendChoice:
-        return GameBackendChoice.NINTENDONT
+    def backend_choice(self) -> MemoryExecutorChoice:
+        return MemoryExecutorChoice.NINTENDONT
 
-    # Game Backend Stuff
-    async def _connect(self) -> bool:
+    async def connect(self) -> bool:
         if self._socket is not None:
             return True
 
@@ -141,11 +139,14 @@ class NintendontBackend(ConnectionBackend):
             self.logger.warning(f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}")
             self._socket_error = e
 
-    def _disconnect(self):
+    async def disconnect(self):
         socket = self._socket
         self._socket = None
         if socket is not None:
             socket.writer.close()
+
+    def is_connected(self) -> bool:
+        return self._socket is not None
 
     def _prepare_requests_for(self, ops: List[MemoryOperation]) -> List[RequestBatch]:
         requests: List[RequestBatch] = []
@@ -218,12 +219,13 @@ class NintendontBackend(ConnectionBackend):
             else:
                 self.logger.warning(f"Unable to send {len(requests)} request to {self._ip}:{self._port}: {e}")
                 self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")
-            self._disconnect()
+
+            await self.disconnect()
             raise self._socket_error from e
 
         return all_responses
 
-    async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
 
@@ -251,34 +253,3 @@ class NintendontBackend(ConnectionBackend):
                 read_index += op.read_byte_count
 
         return result
-
-    async def update(self, dt: float):
-        if not self._enabled:
-            return
-
-        if not await self._connect():
-            return
-
-        if not await self._identify_game():
-            return
-
-        await self._interact_with_game(dt)
-
-    @property
-    def name(self) -> str:
-        return "Nintendont"
-
-    @property
-    def current_status(self) -> GameConnectionStatus:
-        if self._socket is None:
-            return GameConnectionStatus.Disconnected
-
-        if self.patches is None:
-            return GameConnectionStatus.UnknownGame
-
-        if self._world is None:
-            return GameConnectionStatus.TitleScreen
-        elif not self.checking_for_collected_index:
-            return GameConnectionStatus.TrackerOnly
-        else:
-            return GameConnectionStatus.InGame
