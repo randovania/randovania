@@ -6,8 +6,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
-from randovania.game_connection.connection_backend import _echoes_powerup_offset
-from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector, _echoes_powerup_offset
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -50,6 +49,7 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self.collect_location_button.setEnabled(False)
 
         self._used_version = echoes_dol_versions.ALL_VERSIONS[0]
+        self._connector = EchoesRemoteConnector(self._used_version)
         self.game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
         self._game_memory = bytearray(24 * (2 ** 20))
@@ -114,8 +114,7 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         return self._connected
 
     async def _update_inventory_label(self):
-        connector = PrimeRemoteConnector(self._used_version)
-        inventory = await connector.get_inventory(self)
+        inventory = await self._connector.get_inventory(self)
 
         s = "<br />".join(
             f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in inventory.items()
