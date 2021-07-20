@@ -157,7 +157,7 @@ class PrimeRemoteConnector(RemoteConnector):
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
         await executor.perform_memory_operations(memory_operations)
 
-    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory):
+    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory) -> Tuple[str, CurrentResources]:
         inventory_resources: CurrentResources = {
             item: inv_item.capacity
             for item, inv_item in inventory.items()
@@ -188,7 +188,8 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return item_name, resources_to_give
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory):
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
+                                  ) -> Tuple[List[List[assembler.BaseInstruction]], str]:
         raise NotImplementedError()
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
