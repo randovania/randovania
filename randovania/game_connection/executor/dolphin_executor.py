@@ -2,9 +2,9 @@ from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
-from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
-                                                                  MemoryOperatorExecutor)
+                                                                  MemoryOperationExecutor)
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000
@@ -16,7 +16,7 @@ def _validate_range(address: int, size: int):
             f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range.")
 
 
-class DolphinExecutor(MemoryOperatorExecutor):
+class DolphinExecutor(MemoryOperationExecutor):
     def __init__(self):
         super().__init__()
         self.dolphin = dolphin_memory_engine
@@ -26,8 +26,8 @@ class DolphinExecutor(MemoryOperatorExecutor):
         return "randovania-dolphin-backend"
 
     @property
-    def backend_choice(self) -> GameBackendChoice:
-        return GameBackendChoice.DOLPHIN
+    def backend_choice(self) -> MemoryExecutorChoice:
+        return MemoryExecutorChoice.DOLPHIN
 
     async def connect(self) -> bool:
         if not self.dolphin.is_hooked():

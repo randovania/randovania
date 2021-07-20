@@ -2,10 +2,10 @@ import copy
 import logging
 from typing import Optional, List, Dict, Tuple
 
-from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperatorExecutor
+    MemoryOperationExecutor
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_description.game_description import GameDescription
@@ -74,7 +74,7 @@ def _capacity_for(item: ItemResourceInfo,
 
 
 class ConnectionBackend(ConnectionBase):
-    executor: MemoryOperatorExecutor
+    executor: MemoryOperationExecutor
     connector: Optional[RemoteConnector] = None
 
     _checking_for_collected_index: bool = False
@@ -94,7 +94,7 @@ class ConnectionBackend(ConnectionBase):
     # Multiworld
     _permanent_pickups: List[Tuple[str, PickupEntry]]
 
-    def __init__(self, executor: MemoryOperatorExecutor):
+    def __init__(self, executor: MemoryOperationExecutor):
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
         self.executor = executor
@@ -121,7 +121,7 @@ class ConnectionBackend(ConnectionBase):
             return GameConnectionStatus.InGame
 
     @property
-    def backend_choice(self) -> GameBackendChoice:
+    def backend_choice(self) -> MemoryExecutorChoice:
         return self.executor.backend_choice
 
     @property

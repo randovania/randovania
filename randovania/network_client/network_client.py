@@ -13,7 +13,7 @@ import socketio
 import socketio.exceptions
 
 import randovania
-from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
@@ -303,7 +303,7 @@ class NetworkClient:
 
     async def session_self_update(self,
                                   inventory: Dict[ItemResourceInfo, InventoryItem],
-                                  state: GameConnectionStatus, backend: GameBackendChoice):
+                                  state: GameConnectionStatus, backend: MemoryExecutorChoice):
 
         inventory_json = json.dumps([
             {"index": resource.index, "amount": item.amount, "capacity": item.capacity}

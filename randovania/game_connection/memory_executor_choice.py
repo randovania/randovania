@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GameBackendChoice(Enum):
+class MemoryExecutorChoice(Enum):
     DOLPHIN = "dolphin"
     NINTENDONT = "nintendont"
 
@@ -11,6 +11,6 @@ class GameBackendChoice(Enum):
 
 
 _pretty_backend_name = {
-    GameBackendChoice.DOLPHIN: "Dolphin",
-    GameBackendChoice.NINTENDONT: "Nintendont",
+    MemoryExecutorChoice.DOLPHIN: "Dolphin",
+    MemoryExecutorChoice.NINTENDONT: "Nintendont",
 }

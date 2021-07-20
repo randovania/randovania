@@ -6,13 +6,13 @@ from mock import AsyncMock, MagicMock, call
 from randovania.game_connection.connection_backend import ConnectionBackend
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperatorExecutor
+    MemoryOperationExecutor
 from randovania.games.prime import echoes_dol_versions
 
 
 @pytest.fixture(name="backend")
 def dolphin_backend():
-    backend = ConnectionBackend(MagicMock(spec=MemoryOperatorExecutor))
+    backend = ConnectionBackend(MagicMock(spec=MemoryOperationExecutor))
     return backend
 
 

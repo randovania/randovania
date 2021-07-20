@@ -7,7 +7,7 @@ from typing import Optional, List, Dict, Tuple, Set
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperatorExecutor
+    MemoryOperationExecutor
 from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePatch
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -96,13 +96,13 @@ class PrimeRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self.version.game
 
-    async def is_this_version(self, executor: MemoryOperatorExecutor) -> bool:
+    async def is_this_version(self, executor: MemoryOperationExecutor) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
         build_string = await executor.perform_single_memory_operation(operation)
         return build_string == self.version.build_string
 
-    async def current_game_status(self, executor: MemoryOperatorExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -162,7 +162,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return has_pending_op, new_world
 
-    async def _memory_op_for_items(self, executor: MemoryOperatorExecutor, items: List[ItemResourceInfo],
+    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
         if self.version.game == RandovaniaGame.METROID_PRIME:
             offset_func = _prime1_powerup_offset
@@ -193,7 +193,7 @@ class PrimeRemoteConnector(RemoteConnector):
             for item in items
         ]
 
-    async def get_inventory(self, executor: MemoryOperatorExecutor) -> Inventory:
+    async def get_inventory(self, executor: MemoryOperationExecutor) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
         memory_ops = await self._memory_op_for_items(executor, [
@@ -213,7 +213,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return inventory
 
-    async def known_collected_locations(self, executor: MemoryOperatorExecutor,
+    async def known_collected_locations(self, executor: MemoryOperationExecutor,
                                         ) -> Tuple[Set[PickupIndex], List[DolRemotePatch]]:
         """Fetches pickup indices that have been collected.
         The list may return less than all collected locations, depending on implementation details.
@@ -240,7 +240,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             return set(), []
 
-    async def find_missing_remote_pickups(self, executor: MemoryOperatorExecutor, inventory: Inventory,
+    async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
                                           remote_pickups: List[Tuple[str, PickupEntry]],
                                           ) -> Tuple[List[RemotePatch], bool]:
         """
@@ -273,7 +273,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return patches, True
 
-    async def execute_remote_patches(self, executor: MemoryOperatorExecutor, patches: List[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[DolRemotePatch]) -> None:
         """
         Executes a given set of patches on the given memory operator. Should only be called if the bool returned by
         `current_game_status` is False, but validation of this fact is implementation-dependant.

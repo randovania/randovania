@@ -4,7 +4,7 @@ import pytest
 from mock import AsyncMock
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.dolphin_backend import DolphinBackend
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection
 
 
@@ -48,7 +48,7 @@ async def test_update(skip_qtbot, qapp):
     game_connection._notify_status = MagicMock()
 
     # Run
-    await game_connection._update()
+    await game_connection._auto_update()
 
     # Assert
     backend_update.assert_awaited_once_with(game_connection._dt)
@@ -57,7 +57,7 @@ async def test_update(skip_qtbot, qapp):
 
 def test_pretty_current_status(skip_qtbot):
     # Setup
-    connection = GameConnection(DolphinBackend())
+    connection = GameConnection(DolphinExecutor())
 
     # Run
     result = connection.pretty_current_status

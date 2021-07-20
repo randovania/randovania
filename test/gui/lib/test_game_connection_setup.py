@@ -4,7 +4,7 @@ import pytest
 from PySide2 import QtWidgets
 from mock import MagicMock, AsyncMock
 
-from randovania.game_connection.dolphin_backend import DolphinBackend
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 
@@ -16,7 +16,7 @@ def _setup(skip_qtbot):
     tool = QtWidgets.QToolButton(parent)
     label = QtWidgets.QLabel(parent)
 
-    result = GameConnectionSetup(parent, label, GameConnection(DolphinBackend()), MagicMock())
+    result = GameConnectionSetup(parent, label, GameConnection(DolphinExecutor()), MagicMock())
     result.setup_tool_button_menu(tool)
 
     return result
