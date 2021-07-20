@@ -2,7 +2,7 @@ import dataclasses
 from typing import List, Tuple, Set, Optional
 
 from randovania.game_connection.connection_base import Inventory
-from randovania.game_connection.executor.memory_operation import MemoryOperatorExecutor, MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor, MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world import World
@@ -20,11 +20,11 @@ class RemoteConnector:
     def game_enum(self) -> RandovaniaGame:
         raise NotImplementedError()
 
-    async def is_this_version(self, executor: MemoryOperatorExecutor) -> bool:
+    async def is_this_version(self, executor: MemoryOperationExecutor) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         raise NotImplementedError()
 
-    async def current_game_status(self, executor: MemoryOperatorExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -32,11 +32,11 @@ class RemoteConnector:
         """
         raise NotImplementedError()
 
-    async def get_inventory(self, executor: MemoryOperatorExecutor) -> Inventory:
+    async def get_inventory(self, executor: MemoryOperationExecutor) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
         raise NotImplementedError()
 
-    async def known_collected_locations(self, executor: MemoryOperatorExecutor,
+    async def known_collected_locations(self, executor: MemoryOperationExecutor,
                                         ) -> Tuple[Set[PickupIndex], List[RemotePatch]]:
         """Fetches pickup indices that have been collected.
         The list may return less than all collected locations, depending on implementation details.
@@ -44,7 +44,7 @@ class RemoteConnector:
         """
         raise NotImplementedError()
 
-    async def find_missing_remote_pickups(self, executor: MemoryOperatorExecutor, inventory: Inventory,
+    async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
                                           remote_pickups: List[Tuple[str, PickupEntry]],
                                           ) -> Tuple[List[RemotePatch], bool]:
         """
@@ -56,7 +56,7 @@ class RemoteConnector:
         """
         raise NotImplementedError()
 
-    async def execute_remote_patches(self, executor: MemoryOperatorExecutor, patches: List[RemotePatch]) -> None:
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[RemotePatch]) -> None:
         """
         Executes a given set of patches on the given memory operator. Should only be called if the bool returned by
         `current_game_status` is False, but validation of this fact is implementation-dependant.

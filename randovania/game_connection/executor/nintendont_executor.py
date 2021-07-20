@@ -4,9 +4,9 @@ import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional, Dict
 
-from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperatorExecutor
+    MemoryOperationExecutor
 
 
 @dataclasses.dataclass(frozen=True)
@@ -90,7 +90,7 @@ def _was_invalid_address(response: bytes, i: int) -> bool:
         raise MemoryOperationException("Server response too short for validator bytes")
 
 
-class NintendontExecutor(MemoryOperatorExecutor):
+class NintendontExecutor(MemoryOperationExecutor):
     _port = 43673
     _socket: Optional[SocketHolder] = None
     _socket_error: Optional[Exception] = None
@@ -108,8 +108,8 @@ class NintendontExecutor(MemoryOperatorExecutor):
         return None
 
     @property
-    def backend_choice(self) -> GameBackendChoice:
-        return GameBackendChoice.NINTENDONT
+    def backend_choice(self) -> MemoryExecutorChoice:
+        return MemoryExecutorChoice.NINTENDONT
 
     async def connect(self) -> bool:
         if self._socket is not None:
