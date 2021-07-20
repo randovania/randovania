@@ -1,3 +1,4 @@
+import contextlib
 from typing import Optional, List
 
 import pytest
@@ -72,17 +73,23 @@ async def test_interact_with_game(backend: ConnectionBackend, depth: int, failur
         MagicMock() if depth > 0 else None,  # world
     )
 
+    expectation = contextlib.nullcontext()
     if failure_at == 1:
         backend.connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
+        expectation = pytest.raises(MemoryOperationException, match="error at _get_inventory")
 
     backend._multiworld_interaction = AsyncMock()
     if failure_at == 2:
         backend._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
+        expectation = pytest.raises(MemoryOperationException, match="error at _check_for_collected_index")
 
     expected_depth = min(depth, failure_at) if failure_at is not None else depth
+    if (failure_at or 999) > depth:
+        expectation = contextlib.nullcontext()
 
     # Run
-    await backend._interact_with_game(1)
+    with expectation:
+        await backend._interact_with_game(1)
 
     # Assert
     assert backend.message_cooldown == (2 if expected_depth < 2 else 1)
@@ -98,7 +105,7 @@ async def test_interact_with_game(backend: ConnectionBackend, depth: int, failur
     else:
         backend._multiworld_interaction.assert_not_awaited()
 
-    if 0 < depth < (failure_at or 999):
+    if 0 < depth:
         assert backend._world is not None
     else:
         assert backend._world is None
@@ -157,3 +164,15 @@ async def test_update(backend: ConnectionBackend, depth: int):
         assert backend._world is None
     else:
         assert backend._world is world
+
+
+def test_get_current_inventory(backend: ConnectionBackend):
+    # Setup
+    inventory = {"a": 5}
+    backend._inventory = inventory
+
+    # Run
+    result = backend.get_current_inventory()
+
+    # Assert
+    assert result is inventory

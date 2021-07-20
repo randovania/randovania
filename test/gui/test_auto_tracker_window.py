@@ -43,7 +43,7 @@ async def test_on_timer_update(current_status: GameConnectionStatus, correct_gam
     game_connection.current_status = current_status
 
     if correct_game:
-        window._current_tracker_game = game_connection.backend.patches.game
+        window._current_tracker_game = game_connection.connector.game_enum
 
     # Run
     await window._on_timer_update()
