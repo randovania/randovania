@@ -35,6 +35,9 @@ class InventoryItem(NamedTuple):
     capacity: int
 
 
+Inventory = Dict[ItemResourceInfo, InventoryItem]
+
+
 class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
 
@@ -42,7 +45,7 @@ class ConnectionBase:
     def current_status(self) -> GameConnectionStatus:
         raise NotImplementedError()
 
-    def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+    def get_current_inventory(self) -> Inventory:
         raise NotImplementedError()
 
     def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):

@@ -7,7 +7,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Optional, TypeVar, Callable, Any, Set, List, Dict
 
-from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
@@ -110,7 +110,7 @@ _SERIALIZER_FOR_FIELD = {
     "selected_preset_uuid": Serializer(str, uuid.UUID),
     "per_game_options": Serializer(serialize_per_game_dict, decode_per_game_dict),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
-    "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
+    "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
 }
@@ -148,7 +148,7 @@ class Options:
     _selected_preset_uuid: Optional[uuid.UUID] = None
     _per_game_options: Optional[Dict[RandovaniaGame, PerGameOptions]] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
-    _game_backend: Optional[GameBackendChoice] = None
+    _game_backend: Optional[MemoryExecutorChoice] = None
     _nintendont_ip: Optional[str] = None
     _selected_tracker: Optional[str] = None
 
@@ -342,11 +342,11 @@ class Options:
         self._edit_field("selected_preset_uuid", value)
 
     @property
-    def game_backend(self) -> GameBackendChoice:
-        return _return_with_default(self._game_backend, lambda: GameBackendChoice.DOLPHIN)
+    def game_backend(self) -> MemoryExecutorChoice:
+        return _return_with_default(self._game_backend, lambda: MemoryExecutorChoice.DOLPHIN)
 
     @game_backend.setter
-    def game_backend(self, value: GameBackendChoice):
+    def game_backend(self, value: MemoryExecutorChoice):
         self._edit_field("game_backend", value)
 
     @property
