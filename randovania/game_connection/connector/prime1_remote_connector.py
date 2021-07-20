@@ -1,13 +1,14 @@
 import struct
 from typing import Optional, List, Tuple
 
+from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
-from randovania.games.prime import (all_prime_dol_patches)
+from randovania.games.prime import (all_prime_dol_patches, prime_items, prime1_dol_patches)
 from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
 
 
@@ -32,6 +33,8 @@ def _prime1_powerup_offset(item_index: int) -> int:
 
 
 class Prime1RemoteConnector(PrimeRemoteConnector):
+    version: Prime1DolVersion
+
     def __init__(self, version: Prime1DolVersion):
         super().__init__(version)
 
@@ -88,17 +91,35 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             for item in items
         ]
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory):
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
+                                  ) -> Tuple[List[List[assembler.BaseInstruction]], str]:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
-        patches = [
-            all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions, self.game.game,
-                item.index, delta,
-            )
-            for item, delta in resources_to_give.items()
-        ]
+
+        patches: List[List[assembler.BaseInstruction]] = []
+
+        for item, delta in resources_to_give.items():
+            if delta == 0:
+                continue
+
+            if item.index not in prime_items.ARTIFACT_ITEMS:
+                patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                    self.version.powerup_functions, self.game.game, item.index, delta,
+                ))
+            else:
+                if item.index > 29:
+                    layer_id = item.index - 28
+                else:
+                    layer_id = 24  # Truth layer
+
+                patches.append(all_prime_dol_patches.increment_item_capacity_patch(
+                    self.version.powerup_functions, self.game.game, item.index, delta
+                ))
+                patches.append(prime1_dol_patches.set_artifact_layer_active_patch(
+                    self.version, layer_id, delta > 0
+                ))
+
         return patches, format_received_item(item_name, provider_name)
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
