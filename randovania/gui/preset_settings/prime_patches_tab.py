@@ -10,6 +10,7 @@ from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import LayoutCutsceneMode
 
 _FIELDS = [
+    "warp_to_start",
     "main_plaza_door",
     "backwards_frigate",
     "backwards_labs",

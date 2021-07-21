@@ -413,14 +413,16 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         template_strings["Game Changes"].append("Small Samus")
 
     qol_changes = []
-    for flag, message in ((configuration.main_plaza_door, "Main Plaza Vault Door"),
-                          (configuration.backwards_frigate, "Backwards Frigate"),
-                          (configuration.backwards_labs, "Backwards Labs"),
-                          (configuration.backwards_upper_mines, "Backwards Upper Mines"),
-                          (configuration.backwards_lower_mines, "Backwards Lower Mines"),
-                          (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
-                          (configuration.qol_game_breaking, "Game Breaking QOL"),
-                          ):
+    for flag, message in (
+            (configuration.warp_to_start, "Can warp to start"),
+            (configuration.main_plaza_door, "Main Plaza Vault Door"),
+            (configuration.backwards_frigate, "Backwards Frigate"),
+            (configuration.backwards_labs, "Backwards Labs"),
+            (configuration.backwards_upper_mines, "Backwards Upper Mines"),
+            (configuration.backwards_lower_mines, "Backwards Lower Mines"),
+            (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
+            (configuration.qol_game_breaking, "Game Breaking QOL"),
+    ):
         if flag:
             qol_changes.append(message)
 

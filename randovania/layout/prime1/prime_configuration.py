@@ -20,6 +20,7 @@ class PrimeConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: LayoutArtifactMode
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
+    warp_to_start: bool
     heat_protection_only_varia: bool
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
