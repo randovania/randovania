@@ -1,76 +1,19 @@
-import copy
 import logging
-from typing import Optional, List, Dict, Tuple
+from typing import Optional, List, Tuple
 
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
-from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperationExecutor
+from randovania.game_connection.connection_base import ConnectionBase, GameConnectionStatus, Inventory
+from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
+from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
+from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
+    MemoryOperationExecutor
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import CurrentResources, \
-    add_resource_gain_to_current_resources
 from randovania.game_description.world.world import World
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (echoes_dol_versions, prime1_dol_versions,
                                     corruption_dol_versions)
-
-
-def format_received_item(item_name: str, player_name: str) -> str:
-    special = {
-        "Locked Power Bomb Expansion": ("Received Power Bomb Expansion from {provider_name}, "
-                                        "but the main Power Bomb is required to use it."),
-        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}, "
-                                     "but the Missile Launcher is required to use it."),
-        "Locked Seeker Launcher": ("Received Seeker Launcher from {provider_name}, "
-                                   "but the Missile Launcher is required to use it."),
-    }
-
-    generic = "Received {item_name} from {provider_name}."
-
-    return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
-
-
-def _prime1_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x24
-    vector_data_offset = 0x4
-    powerup_size = 0x8
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _echoes_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x58
-    vector_data_offset = 0x4
-    powerup_size = 0xc
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _corruption_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x50
-    vector_data_offset = 0x4
-    powerup_size = 0xc
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
-def _add_pickup_to_resources(pickup: PickupEntry, inventory: CurrentResources) -> CurrentResources:
-    return add_resource_gain_to_current_resources(
-        pickup.resource_gain(inventory),
-        copy.copy(inventory)
-    )
-
-
-def _capacity_for(item: ItemResourceInfo,
-                  changed_items: Dict[ItemResourceInfo, InventoryItem],
-                  inventory: Dict[ItemResourceInfo, InventoryItem]):
-    if item in changed_items:
-        return changed_items[item].capacity
-    elif item in inventory:
-        return inventory[item].capacity
-    else:
-        return 0
 
 
 class ConnectionBackend(ConnectionBase):
@@ -78,8 +21,7 @@ class ConnectionBackend(ConnectionBase):
     connector: Optional[RemoteConnector] = None
 
     _checking_for_collected_index: bool = False
-    _games: Dict[RandovaniaGame, GameDescription]
-    _inventory: Dict[ItemResourceInfo, InventoryItem]
+    _inventory: Inventory
     _enabled: bool = True
 
     # Detected Game
@@ -87,9 +29,7 @@ class ConnectionBackend(ConnectionBase):
     _last_world: Optional[World] = None
 
     # Messages
-    message_queue: List[str]
     message_cooldown: float = 0.0
-    _last_message_size: int = 0
 
     # Multiworld
     _permanent_pickups: List[Tuple[str, PickupEntry]]
@@ -100,7 +40,6 @@ class ConnectionBackend(ConnectionBase):
         self.executor = executor
 
         self._inventory = {}
-        self.message_queue = []
         self._permanent_pickups = []
 
     @property
@@ -149,14 +88,22 @@ class ConnectionBackend(ConnectionBase):
         if self.connector is not None:
             return True
 
-        all_versions = (
-                echoes_dol_versions.ALL_VERSIONS
-                + prime1_dol_versions.ALL_VERSIONS
-                + corruption_dol_versions.ALL_VERSIONS
-        )
+        all_connectors: List[PrimeRemoteConnector] = [
+            Prime1RemoteConnector(version)
+            for version in prime1_dol_versions.ALL_VERSIONS
+        ]
+        all_connectors.extend([
+            EchoesRemoteConnector(version)
+            for version in echoes_dol_versions.ALL_VERSIONS
+        ])
+        all_connectors.extend([
+            CorruptionRemoteConnector(version)
+            for version in corruption_dol_versions.ALL_VERSIONS
+        ])
         read_first_ops = [
-            MemoryOperation(version.build_string_address, read_byte_count=min(len(version.build_string), 4))
-            for version in all_versions
+            MemoryOperation(connectors.version.build_string_address,
+                            read_byte_count=min(len(connectors.version.build_string), 4))
+            for connectors in all_connectors
         ]
         try:
             first_ops_result = await self.executor.perform_memory_operations(read_first_ops)
@@ -165,9 +112,9 @@ class ConnectionBackend(ConnectionBase):
             return False
 
         possible_connectors = [
-            PrimeRemoteConnector(version)
-            for version, read_op in zip(all_versions, read_first_ops)
-            if first_ops_result.get(read_op) == version.build_string[:4]
+            connectors
+            for connectors, read_op in zip(all_connectors, read_first_ops)
+            if first_ops_result.get(read_op) == connectors.version.build_string[:4]
         ]
 
         for connector in possible_connectors:
@@ -183,7 +130,7 @@ class ConnectionBackend(ConnectionBase):
 
         return False
 
-    def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+    def get_current_inventory(self) -> Inventory:
         return self._inventory
 
     def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):

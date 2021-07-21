@@ -9,6 +9,7 @@ ALL_VERSIONS = [
         build_string_address=0x805822b0,
         build_string=b"!#$MetroidBuildInfo!#$2007/07/27 13:13 Build v3.436 (MP3)",
         sda2_base=0x806869C0,
+        sda13_base=0x806801c0,
         game_state_pointer=0x8067dc0c,
         cplayer_vtable=0x80592c78,
         cstate_manager_global=0x805c4f70,

@@ -12,6 +12,7 @@ class DolVersion:
     build_string_address: int
     build_string: bytes
     sda2_base: int
+    sda13_base: int
 
 
 def find_version_for_dol(dol_file: DolFile, all_versions: Iterable[DolVersion]) -> DolVersion:
