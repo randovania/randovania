@@ -67,13 +67,17 @@ class DolphinExecutor(MemoryOperationExecutor):
         if not self.dolphin.is_hooked():
             raise MemoryOperationException("Lost connection do Dolphin")
 
-        result = None
-        if op.read_byte_count is not None:
-            result = self.dolphin.read_bytes(address, op.read_byte_count)
+        try:
+            result = None
+            if op.read_byte_count is not None:
+                result = self.dolphin.read_bytes(address, op.read_byte_count)
 
-        if op.write_bytes is not None:
-            self.dolphin.write_bytes(address, op.write_bytes)
-            self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
+            if op.write_bytes is not None:
+                self.dolphin.write_bytes(address, op.write_bytes)
+                self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
+
+        except RuntimeError as e:
+            raise MemoryOperationException(f"Lost connection do Dolphin: {e}")
 
         return result
 
