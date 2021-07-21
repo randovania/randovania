@@ -883,7 +883,9 @@ def test_create_patch_data(test_files_dir):
                 'xray': False,
             },
             'startingMemo': 'Artifact of Sun, 5 Missiles',
-            'startingRoom': 'Tallon Overworld:Landing Site'},
+            'startingRoom': 'Tallon Overworld:Landing Site',
+            'warpToStart': False,
+        },
         "tweaks": {},
         'levelData': {
             'Impact Crater': {

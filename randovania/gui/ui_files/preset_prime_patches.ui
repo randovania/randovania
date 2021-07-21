@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-80</y>
+         <y>0</y>
          <width>487</width>
-         <height>826</height>
+         <height>1057</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -60,6 +60,48 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <spacer name="top_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>8</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="warp_to_start_group">
+          <property name="title">
+           <string>Warp to Start</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QCheckBox" name="warp_to_start_check">
+             <property name="text">
+              <string>Add warping to starting location from save stations</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="warp_to_start_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Refusing to save at any Save Station while holding L+R will warp you to the starting location (by default, Samus' ship in Landing Site).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item>
          <widget class="QGroupBox" name="qol_group">
           <property name="title">

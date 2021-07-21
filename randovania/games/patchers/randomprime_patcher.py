@@ -272,6 +272,7 @@ class RandomprimePatcher(Patcher):
             "gameConfig": {
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
                 "startingMemo": starting_memo,
+                "warpToStart": configuration.warp_to_start,
 
                 "nonvariaHeatDamage": configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": configuration.progressive_damage_reduction,
