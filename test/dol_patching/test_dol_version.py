@@ -12,6 +12,7 @@ test_versions = [
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
         sda2_base=0x804223c0,
+        sda13_base=0x8041fd80,
     ),
     dol_version.DolVersion(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
@@ -19,6 +20,7 @@ test_versions = [
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",
         sda2_base=0x804223c0,
+        sda13_base=0x80421060,
     ),
 ]
 

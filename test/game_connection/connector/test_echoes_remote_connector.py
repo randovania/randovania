@@ -6,7 +6,8 @@ from mock import AsyncMock, MagicMock
 
 from randovania.dol_patching.assembler import BaseInstruction
 from randovania.game_connection.connection_base import InventoryItem
-from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
+from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
+from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -17,12 +18,12 @@ from randovania.games.prime import echoes_dol_versions
 
 @pytest.fixture(name="connector")
 def prime_remote_connector():
-    connector = PrimeRemoteConnector(echoes_dol_versions.ALL_VERSIONS[0])
+    connector = EchoesRemoteConnector(echoes_dol_versions.ALL_VERSIONS[0])
     return connector
 
 
 @pytest.mark.asyncio
-async def test_is_this_version(connector: PrimeRemoteConnector):
+async def test_is_this_version(connector: EchoesRemoteConnector):
     # Setup
     build_info = b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"
     executor = AsyncMock()
@@ -38,7 +39,7 @@ async def test_is_this_version(connector: PrimeRemoteConnector):
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),
 ])
 @pytest.mark.asyncio
-async def test_write_string_to_game_buffer(connector: PrimeRemoteConnector, message_original, message_encoded,
+async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, message_original, message_encoded,
                                            previous_size):
     # Setup
     version = echoes_dol_versions.ALL_VERSIONS[0]
@@ -53,7 +54,7 @@ async def test_write_string_to_game_buffer(connector: PrimeRemoteConnector, mess
 
 
 @pytest.mark.asyncio
-async def test_get_inventory_valid(connector: PrimeRemoteConnector):
+async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
     executor.perform_memory_operations.side_effect = lambda ops: {
@@ -72,7 +73,7 @@ async def test_get_inventory_valid(connector: PrimeRemoteConnector):
 
 
 @pytest.mark.asyncio
-async def test_get_inventory_invalid_capacity(connector: PrimeRemoteConnector):
+async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {5: InventoryItem(0, 50)}
 
@@ -90,7 +91,7 @@ async def test_get_inventory_invalid_capacity(connector: PrimeRemoteConnector):
 
 
 @pytest.mark.asyncio
-async def test_get_inventory_invalid_amount(connector: PrimeRemoteConnector):
+async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {5: InventoryItem(1, 0)}
 
@@ -109,7 +110,7 @@ async def test_get_inventory_invalid_amount(connector: PrimeRemoteConnector):
 
 @pytest.mark.parametrize("capacity", [0, 10])
 @pytest.mark.asyncio
-async def test_known_collected_locations_nothing(connector: PrimeRemoteConnector, capacity: int):
+async def test_known_collected_locations_nothing(connector: EchoesRemoteConnector, capacity: int):
     # Setup
     executor = AsyncMock()
     executor.perform_single_memory_operation.return_value = struct.pack(">II", 0, capacity)
@@ -124,7 +125,7 @@ async def test_known_collected_locations_nothing(connector: PrimeRemoteConnector
 
 @pytest.mark.parametrize("capacity", [0, 10])
 @pytest.mark.asyncio
-async def test_known_collected_locations_location(connector: PrimeRemoteConnector, mocker, capacity):
+async def test_known_collected_locations_location(connector: EchoesRemoteConnector, mocker, capacity):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -147,7 +148,7 @@ async def test_known_collected_locations_location(connector: PrimeRemoteConnecto
 
 
 @pytest.mark.asyncio
-async def test_find_missing_remote_pickups_nothing(connector: PrimeRemoteConnector):
+async def test_find_missing_remote_pickups_nothing(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
@@ -161,7 +162,7 @@ async def test_find_missing_remote_pickups_nothing(connector: PrimeRemoteConnect
 
 
 @pytest.mark.asyncio
-async def test_find_missing_remote_pickups_pending_location(connector: PrimeRemoteConnector):
+async def test_find_missing_remote_pickups_pending_location(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(5, 15)}
@@ -175,7 +176,7 @@ async def test_find_missing_remote_pickups_pending_location(connector: PrimeRemo
 
 
 @pytest.mark.asyncio
-async def test_find_missing_remote_pickups_give_pickup(connector: PrimeRemoteConnector, mocker):
+async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
@@ -217,7 +218,7 @@ async def test_find_missing_remote_pickups_give_pickup(connector: PrimeRemoteCon
 
 
 @pytest.mark.asyncio
-async def test_patches_for_pickup(connector: PrimeRemoteConnector, mocker):
+async def test_patches_for_pickup(connector: EchoesRemoteConnector, mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -247,7 +248,7 @@ async def test_patches_for_pickup(connector: PrimeRemoteConnector, mocker):
 
 
 @pytest.mark.asyncio
-async def test_execute_remote_patches(connector: PrimeRemoteConnector, mocker):
+async def test_execute_remote_patches(connector: EchoesRemoteConnector, mocker):
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
     mock_remote_execute: MagicMock = mocker.patch(
@@ -282,7 +283,7 @@ async def test_execute_remote_patches(connector: PrimeRemoteConnector, mocker):
 @pytest.mark.parametrize("has_pending_op", [False, True])
 @pytest.mark.parametrize("has_world", [False, True])
 @pytest.mark.asyncio
-async def test_fetch_game_status(connector: PrimeRemoteConnector, has_world, has_pending_op, correct_vtable):
+async def test_fetch_game_status(connector: EchoesRemoteConnector, has_world, has_pending_op, correct_vtable):
     # Setup
     version = echoes_dol_versions.ALL_VERSIONS[0]
     expected_world = connector.game.world_list.worlds[0]
