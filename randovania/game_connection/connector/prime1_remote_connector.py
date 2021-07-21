@@ -71,7 +71,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         except KeyError:
             new_world = None
 
-        if player_vtable != self.version.cplayer_vtable:
+        if self.version.cplayer_vtable is not None and player_vtable != self.version.cplayer_vtable:
             new_world = None
 
         return has_pending_op, new_world
