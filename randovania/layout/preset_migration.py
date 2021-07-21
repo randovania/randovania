@@ -11,7 +11,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 11
+CURRENT_PRESET_VERSION = 12
 
 
 class InvalidPreset(Exception):
@@ -328,6 +328,13 @@ def _migrate_v10(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v11(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["warp_to_start"] = False
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -339,6 +346,7 @@ _MIGRATIONS = {
     8: _migrate_v8,
     9: _migrate_v9,
     10: _migrate_v10,
+    11: _migrate_v11,
 }
 
 
