@@ -2,7 +2,7 @@ import dataclasses
 import dataclasses
 import logging
 import struct
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Optional
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
@@ -17,6 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import (
     CurrentResources, add_resource_gain_to_current_resources
 )
+from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (all_prime_dol_patches)
 
@@ -47,6 +48,37 @@ class PrimeRemoteConnector(RemoteConnector):
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
         build_string = await executor.perform_single_memory_operation(operation)
         return build_string == self.version.build_string
+
+    def _asset_id_format(self):
+        """struct.unpack format string for decoding an asset id"""
+        raise NotImplementedError()
+
+    def _current_status_world(self, world_asset_id: Optional[bytes], vtable_bytes: Optional[bytes]) -> Optional[World]:
+        """
+        Helper for `current_game_status`. Calculates the current World based on raw world_asset_id and vtable pointer.
+        :param world_asset_id: Bytes for the current world asset id. Might be None.
+        :param vtable_bytes: Bytes for a CPlayer vtable pointer. Might be None.
+        :return:
+        """
+
+        if world_asset_id is None:
+            return None
+
+        if self.version.cplayer_vtable is not None:
+            if vtable_bytes is None:
+                return None
+
+            player_vtable = struct.unpack(">I", vtable_bytes)[0]
+            if player_vtable != self.version.cplayer_vtable:
+                return None
+
+        asset_id = struct.unpack(self._asset_id_format(), world_asset_id)[0]
+        try:
+            new_world = self.game.world_list.world_by_asset_id(asset_id)
+        except KeyError:
+            return None
+
+        return new_world
 
     async def current_game_status(self, executor: MemoryOperationExecutor):
         raise NotImplementedError()
