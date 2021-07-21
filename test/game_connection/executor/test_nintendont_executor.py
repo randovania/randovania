@@ -1,8 +1,10 @@
+import asyncio
+
 import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
-from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, SocketHolder
+from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, SocketHolder, RequestBatch
 
 
 @pytest.fixture(name="executor")
@@ -116,3 +118,67 @@ async def test_connect(executor, mocker):
     assert socket.max_input == 120
     assert socket.max_output == 250
     assert socket.max_addresses == 3
+
+
+@pytest.mark.asyncio
+async def test_connect_when_connected(executor: NintendontExecutor):
+    executor._socket = True
+    assert await executor.connect()
+
+
+@pytest.mark.asyncio
+async def test_connect_invalid_ip(executor: NintendontExecutor):
+    # Setup
+    executor._ip = "127..0.0.1"
+
+    # Run
+    assert not await executor.connect()
+
+    # Assert
+    assert executor._socket is None
+    assert type(executor._socket_error) is UnicodeError
+    assert "encoding with 'idna' codec failed" in str(executor._socket_error)
+
+
+@pytest.mark.asyncio
+async def test_disconnect_not_connected(executor: NintendontExecutor):
+    await executor.disconnect()
+    assert executor._socket is None
+
+
+@pytest.mark.asyncio
+async def test_disconnect_connected(executor: NintendontExecutor):
+    # Setup
+    socket = MagicMock()
+    executor._socket = socket
+
+    # Run
+    await executor.disconnect()
+
+    # Assert
+    assert executor._socket is None
+    socket.writer.close.assert_called_once_with()
+
+
+@pytest.mark.parametrize("use_timeout", [False, True])
+@pytest.mark.asyncio
+async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use_timeout):
+    # Setup
+    socket = AsyncMock()
+    socket.writer.drain.side_effect = asyncio.TimeoutError() if use_timeout else OSError("test-exp")
+    executor._socket = socket
+    executor.disconnect = AsyncMock()
+    reqs = [RequestBatch()]
+    if use_timeout:
+        msg = "Timeout when reading response"
+    else:
+        msg = "Unable to send 1 requests: test-exp"
+
+    # Run
+    with pytest.raises(MemoryOperationException, match=msg) as x:
+        await executor._send_requests_to_socket(reqs)
+
+    # Assert
+    assert executor._socket_error is x.value
+    executor.disconnect.assert_awaited_once_with()
+

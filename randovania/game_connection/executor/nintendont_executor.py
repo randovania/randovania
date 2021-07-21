@@ -134,10 +134,12 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return True
 
-        except (OSError, asyncio.TimeoutError, struct.error) as e:
+        except (OSError, asyncio.TimeoutError, struct.error, UnicodeError) as e:
+            # UnicodeError is for some invalid ip addresses
             self._socket = None
             self.logger.warning(f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}")
             self._socket_error = e
+            return False
 
     async def disconnect(self):
         socket = self._socket
@@ -217,7 +219,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 self.logger.warning(f"Timeout when reading response from {self._ip}")
                 self._socket_error = MemoryOperationException(f"Timeout when reading response")
             else:
-                self.logger.warning(f"Unable to send {len(requests)} request to {self._ip}:{self._port}: {e}")
+                self.logger.warning(f"Unable to send {len(requests)} requests to {self._ip}:{self._port}: {e}")
                 self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")
 
             await self.disconnect()
