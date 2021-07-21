@@ -149,7 +149,7 @@ class ConnectionBackend(ConnectionBase):
         else:
             patches, has_message = await self.connector.find_missing_remote_pickups(self.executor, self._inventory,
                                                                                     self._permanent_pickups)
-            if self.message_cooldown <= 0.0 or not has_message:
+            if patches and (self.message_cooldown <= 0.0 or not has_message):
                 await self.connector.execute_remote_patches(self.executor, patches)
                 if has_message:
                     self.message_cooldown = 4.0

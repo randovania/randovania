@@ -37,6 +37,9 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: EchoesDolVersion):
         super().__init__(version)
 
+    def _asset_id_format(self):
+        return ">I"
+
     async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
@@ -46,35 +49,21 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
         cstate_manager_global = self.version.cstate_manager_global
 
-        player_offset = 0
-        asset_id_size = 4
-        asset_id_format = ">I"
+        asset_id_size = struct.calcsize(self._asset_id_format())
         mlvl_offset = 4
         cplayer_offset = 0x14fc
 
         memory_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
             MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=player_offset, read_byte_count=4),
+            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
         results = await executor.perform_memory_operations(memory_ops)
 
-        world_asset_id = results[memory_ops[0]]
         pending_op_byte = results[memory_ops[1]]
-        player_vtable_bytes = results[memory_ops[2]]
-
         has_pending_op = pending_op_byte != b"\x00"
-        player_vtable = struct.unpack(">I", player_vtable_bytes)[0]
-
-        try:
-            new_world = self.game.world_list.world_by_asset_id(struct.unpack(asset_id_format, world_asset_id)[0])
-        except KeyError:
-            new_world = None
-
-        if player_vtable != self.version.cplayer_vtable:
-            new_world = None
-
-        return has_pending_op, new_world
+        return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
+                                                          results.get(memory_ops[2]))
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
