@@ -93,6 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Method of reaching the pickup in Mining Plaza with an Extended Dash (Hypermode).
 
+-   Method of completing the Main Gyro Puzzle with only Space Jump and Screw Attack (Advanced and above).
+
 #### Changed
 
 -   Reaching the pickup in Temple Transport B with a Wall Boost is now Hypermode (from Expert).
@@ -149,6 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   The dashes in Undertemple Shaft to reach Sacrificial Chamber Tunnel (and back) are now Advanced (from Intermediate). 
 
 -   The dash in Hall of Combat Mastery to reach the upper area after the glass is now Advanced (from Intermediate).
+
+-   Bomb Guardian now has proper logic when shuffling Power Beam.
 
 ## [2.6.1] - 2021-05-05
 
