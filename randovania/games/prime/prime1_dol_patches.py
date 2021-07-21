@@ -30,7 +30,7 @@ class Prime1DolVersion(BasePrimeDolVersion):
             sda13_base=sda13_base,
             game_state_pointer=symbols["g_GameState"],
             cplayer_vtable=cplayer_vtable,
-            cstate_manager_global=symbols["g_GameState"],
+            cstate_manager_global=symbols["g_StateManager"],
             string_display=StringDisplayPatchAddresses(
                 update_hint_state=symbols["UpdateHintState__13CStateManagerFf"],
                 message_receiver_string_ref=message_receiver_string_ref,

@@ -18,7 +18,7 @@ ALL_VERSIONS = [
         build_string=b"!#$MetroidBuildInfo!#$Build v1.111 3/10/2003 17:56:21",
         sda2_base=0x805b2de0,
         sda13_base=0x805afc40,
-        cplayer_vtable=None,
+        cplayer_vtable=0x803da7a8,
         message_receiver_string_ref=0x803f0ba8,
     ),
     Prime1DolVersion(
@@ -28,7 +28,7 @@ ALL_VERSIONS = [
         build_string=b"!#$MetroidBuildInfo!#$Build v1.110 2/4/2003 22:16:07",
         sda2_base=0x80473e60,
         sda13_base=0x80470c60,
-        cplayer_vtable=None,
+        cplayer_vtable=0x803c4b88,
         message_receiver_string_ref=0x803d7a28,
     ),
 ]
