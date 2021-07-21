@@ -35,6 +35,9 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: CorruptionDolVersion):
         super().__init__(version)
 
+    def _asset_id_format(self):
+        return ">Q"
+
     async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
@@ -45,8 +48,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         cstate_manager_global = self.version.cstate_manager_global
 
         mlvl_offset = 8
-        asset_id_size = 8
-        asset_id_format = ">Q"
+        asset_id_size = struct.calcsize(self._asset_id_format())
 
         # TODO: there's one extra pointer indirection
         # cplayer_offset = 40
@@ -58,17 +60,10 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         ]
         results = await executor.perform_memory_operations(memory_ops)
 
-        world_asset_id = results[memory_ops[0]]
         pending_op_byte = results[memory_ops[1]]
-
         has_pending_op = pending_op_byte != b"\x00"
-
-        try:
-            new_world = self.game.world_list.world_by_asset_id(struct.unpack(asset_id_format, world_asset_id)[0])
-        except KeyError:
-            new_world = None
-
-        return has_pending_op, new_world
+        return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
+                                                          results.get(memory_ops[2]))
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:

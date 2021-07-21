@@ -60,6 +60,9 @@ class DolphinExecutor(MemoryOperationExecutor):
         if op.offset is not None:
             if address not in pointers:
                 raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
+
+            if pointers[address] is None:
+                return None
             address = pointers[address] + op.offset
 
         _validate_range(address, op.byte_count)
@@ -95,6 +98,7 @@ class DolphinExecutor(MemoryOperationExecutor):
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
             except RuntimeError:
+                pointers[pointer] = None
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
                 self._test_still_hooked()
 
