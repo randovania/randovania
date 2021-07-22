@@ -299,6 +299,10 @@ class Options:
         return self._data_dir.joinpath("game_history")
 
     @property
+    def logs_path(self) -> Path:
+        return self._data_dir.joinpath("logs")
+
+    @property
     def data_dir(self) -> Path:
         return self._data_dir
 

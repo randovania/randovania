@@ -2,8 +2,6 @@ import functools
 import json
 import logging
 import os
-import platform
-import subprocess
 from functools import partial
 from pathlib import Path
 from typing import Optional, List
@@ -18,6 +16,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.patcher_provider import PatcherProvider
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
+from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
@@ -143,6 +142,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
+        self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
         self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
 
         self.menu_prime_1_trick_details.aboutToShow.connect(self._create_trick_details_prime_1)
@@ -540,16 +540,23 @@ class MainWindow(WindowManager, Ui_MainWindow):
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path
         try:
-            if platform.system() == "Windows":
-                os.startfile(path)
-            elif platform.system() == "Darwin":
-                subprocess.run(["open", path])
-            else:
-                subprocess.run(["xdg-open", path])
+            open_directory_in_explorer(path)
+
         except OSError:
-            print("Exception thrown :)")
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
+                                        QtWidgets.QMessageBox.Ok, self)
+            box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+            box.show()
+
+    def _on_menu_action_log_files_directory(self):
+        path = self._options.logs_path
+        try:
+            open_directory_in_explorer(path)
+
+        except OSError:
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Logs",
+                                        f"Randovania logs can be found at:\n{path}",
                                         QtWidgets.QMessageBox.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()

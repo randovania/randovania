@@ -1,3 +1,6 @@
+import os
+import platform
+import subprocess
 import typing
 from pathlib import Path
 from typing import Iterator, Optional
@@ -192,3 +195,12 @@ def show_install_visual_cpp_redist():
 def set_clipboard(text: str):
     from PySide2 import QtWidgets
     QtWidgets.QApplication.clipboard().setText(text)
+
+
+def open_directory_in_explorer(path: Path):
+    if platform.system() == "Windows":
+        os.startfile(path)
+    elif platform.system() == "Darwin":
+        subprocess.run(["open", path])
+    else:
+        subprocess.run(["xdg-open", path])
