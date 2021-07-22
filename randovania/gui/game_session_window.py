@@ -12,9 +12,9 @@ from PySide2.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
+from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
@@ -712,10 +712,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.history_table_widget.horizontalHeader().setVisible(True)
         self.history_table_widget.setRowCount(len(self._game_session.actions))
         for i, action in enumerate(self._game_session.actions):
+            preset = self._game_session.presets[action.provider_row]
+            game = default_database.game_description_for(preset.game)
+            location_node = game.world_list.node_from_pickup_index(action.location)
+            location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.provider))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.receiver))
             self.history_table_widget.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
-            self.history_table_widget.setItem(i, 3, QtWidgets.QTableWidgetItem(action.location))
+            self.history_table_widget.setItem(i, 3, QtWidgets.QTableWidgetItem(location_name))
             self.history_table_widget.setItem(i, 4, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
         if autoscroll:
             self.history_table_widget.scrollToBottom()
