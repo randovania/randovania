@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In the Map Tracker, it's now possible to right-click a location to see a path from last action to it.
 
+-   Added: A menu option to open the logs folder.
+
 -   Changed: The items in the starting items popup is now sorted.
 
 -   Changed: Customizing Dark Aether damage is now considered by logic.
