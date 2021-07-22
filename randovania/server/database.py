@@ -130,9 +130,10 @@ class GameSession(BaseModel):
 
             return {
                 "provider": location_to_name[provider],
+                "provider_row": provider,
                 "receiver": location_to_name[receiver],
                 "pickup": target.pickup.name,
-                "location": str(provider_location_index),
+                "location": provider_location_index.index,
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 

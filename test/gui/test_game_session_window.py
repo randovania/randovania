@@ -9,6 +9,7 @@ from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
 
 from randovania.game_connection.game_connection import GameConnection
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.gui.game_session_window import GameSessionWindow
@@ -64,7 +65,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
             24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
         },
         actions=[
-            GameSessionAction("A", "B", "Bombs", "Landing Site", datetime.datetime(year=2020, month=1, day=5))
+            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), datetime.datetime(year=2020, month=1, day=5))
         ],
         seed_hash="AB12",
         word_hash="Chykka Required",

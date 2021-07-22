@@ -870,9 +870,10 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "presets": [],
         "actions": [
             {
-                "location": "PickupIndex 0",
+                "location": 0,
                 "pickup": "The Pickup",
                 "provider": "Other",
+                "provider_row": 1,
                 "receiver": "The Name",
                 "time": "2020-05-02T10:20:00+00:00",
             }
