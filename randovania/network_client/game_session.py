@@ -2,6 +2,7 @@ import dataclasses
 import datetime
 from typing import List, Dict, Optional
 
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
@@ -54,18 +55,20 @@ class PlayerSessionEntry:
 @dataclasses.dataclass(frozen=True)
 class GameSessionAction:
     provider: str
+    provider_row: int
     receiver: str
     pickup: str
-    location: str
+    location: PickupIndex
     time: datetime.datetime
 
     @classmethod
     def from_json(cls, data) -> "GameSessionAction":
         return GameSessionAction(
             provider=data["provider"],
+            provider_row=data["provider_row"],
             receiver=data["receiver"],
             pickup=data["pickup"],
-            location=data["location"],
+            location=PickupIndex(data["location"]),
             time=datetime.datetime.fromisoformat(data["time"]),
         )
 
