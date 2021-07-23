@@ -12,7 +12,8 @@ import randovania
 from randovania.gui.lib import async_dialog
 from randovania.network_client.game_session import GameSessionEntry, User
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
-from randovania.network_common.error import InvalidAction, NotAuthorizedForAction, ServerError
+from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
+                                             NotLoggedIn)
 
 
 class QtNetworkClient(QWidget, NetworkClient):
@@ -120,6 +121,10 @@ def handle_network_errors(fn):
             await async_dialog.warning(self, "Server error",
                                        "An error occurred on the server while processing your request.")
 
+        except NotLoggedIn:
+            await async_dialog.warning(self, "Unauthenticated",
+                                       "You must be logged in.")
+
         except NotAuthorizedForAction:
             await async_dialog.warning(self, "Unauthorized",
                                        "You're not authorized to perform that action.")
@@ -127,5 +132,9 @@ def handle_network_errors(fn):
         except UnableToConnect as e:
             await async_dialog.warning(self, "Connection Error",
                                        f"<b>Unable to connect to the server:</b><br /><br />{e.reason}")
+
+        except RequestTimeout as e:
+            await async_dialog.warning(self, "Connection Error",
+                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}")
 
     return wrapper

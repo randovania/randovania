@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import logging
+import time
 from enum import Enum
 from pathlib import Path
 from typing import List, Optional, Tuple, Dict, Any
@@ -19,7 +20,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.error import decode_error, InvalidSession
+from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, ServerError, BaseNetworkError
 
 
 class ConnectionState(Enum):
@@ -183,6 +184,7 @@ class NetworkClient:
 
                 self.logger.info(f"session restored successful")
                 self.connection_state = ConnectionState.Connected
+
             except InvalidSession:
                 self.logger.info(f"invalid session, deleting")
                 self.connection_state = ConnectionState.ConnectedNotLogged
@@ -192,12 +194,18 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
+        error_message = None
         try:
             self._restore_session_task = asyncio.create_task(self._restore_session())
             self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
             await self._restore_session_task
+
+        except BaseNetworkError as e:
+            self.logger.warning(f"Unable to restore session after logging in, give up! Reason: {e}")
+            error_message = e
+
         finally:
-            self.notify_on_connect(None)
+            self.notify_on_connect(error_message)
 
     async def on_connect_error(self, error_message: str):
         if isinstance(error_message, dict) and "message" in error_message:
@@ -246,7 +254,16 @@ class NetworkClient:
         self.logger.debug(f"{event}, getting lock")
         async with self._call_lock:
             self.logger.debug(f"{event}, will call")
-            result = await self.sio.call(event, data, namespace=namespace, timeout=30)
+            request_start = time.time()
+            timeout = 30
+            try:
+                result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
+                # request_end = time.time()
+
+            except socketio.exceptions.TimeoutError:
+                request_end = time.time()
+                request_time = request_end - request_start
+                raise RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
             return None
