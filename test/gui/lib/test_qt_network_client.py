@@ -4,7 +4,8 @@ import pytest
 from mock import AsyncMock, MagicMock
 
 from randovania.gui.lib import qt_network_client
-from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction
+from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction, NotLoggedIn, \
+    RequestTimeout
 
 
 @pytest.fixture(name="client")
@@ -36,6 +37,12 @@ async def test_handle_network_errors_success(skip_qtbot, qapp):
     (InvalidAction("something"), "Invalid action", "Invalid Action: something"),
     (ServerError(), "Server error", "An error occurred on the server while processing your request."),
     (NotAuthorizedForAction(), "Unauthorized", "You're not authorized to perform that action."),
+    (NotLoggedIn(), "Unauthenticated", "You must be logged in."),
+    (
+            RequestTimeout("5s timeout"), "Connection Error",
+            "<b>Timeout while communicating with the server:</b><br /><br />Request timed out: 5s timeout<br />"
+            "Further attempts will wait for longer."
+    ),
 ])
 @pytest.mark.asyncio
 async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, exception, title, message):

@@ -1,12 +1,13 @@
 from pathlib import Path
 
 import pytest
+import socketio.exceptions
 from mock import MagicMock, AsyncMock, call
 
 import randovania
 from randovania.network_client.network_client import NetworkClient, ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.error import InvalidSession
+from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
 
 
 @pytest.fixture(name="client")
@@ -59,6 +60,21 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     else:
         assert client.connection_state == ConnectionState.ConnectedNotLogged
         assert not session_data_path.is_file()
+
+
+@pytest.mark.asyncio
+async def test_on_connect_restore_timeout(client: NetworkClient):
+    # Setup
+    client._restore_session = AsyncMock(side_effect=ServerError())
+    client._connection_state = ConnectionState.Connecting
+    client.disconnect_from_server = AsyncMock()
+
+    # Run
+    await client.on_connect()
+
+    # Assert
+    assert client.connection_state == ConnectionState.Disconnected
+    client.disconnect_from_server.assert_awaited_once_with()
 
 
 @pytest.mark.asyncio
@@ -119,3 +135,45 @@ async def test_leave_game_session(client: NetworkClient, permanent: bool):
     client._emit_with_result.assert_has_awaits(calls)
 
     assert client._current_game_session is None
+
+
+@pytest.mark.asyncio
+async def test_emit_with_result_timeout(client: NetworkClient):
+    # Setup
+    client._connection_state = ConnectionState.Connected
+    client.sio = AsyncMock()
+    client.sio.call.side_effect = socketio.exceptions.TimeoutError()
+
+    # Run
+    with pytest.raises(RequestTimeout, match="Timeout after "):
+        await client._emit_with_result("test_event")
+
+
+def test_update_timeout_with_increase(client: NetworkClient):
+    # Run
+    client._update_timeout_with(5.0, False)
+
+    # Assert
+    assert client._current_timeout == 40
+
+
+def test_update_timeout_with_dont_decrease_below_minimum(client: NetworkClient):
+    # Setup
+    client._current_timeout = 30
+
+    # Run
+    client._update_timeout_with(5.0, True)
+
+    # Assert
+    assert client._current_timeout == 30
+
+
+def test_update_timeout_with_decrease_on_success(client: NetworkClient):
+    # Setup
+    client._current_timeout = 50
+
+    # Run
+    client._update_timeout_with(5.0, True)
+
+    # Assert
+    assert client._current_timeout == 40
