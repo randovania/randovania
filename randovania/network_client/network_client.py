@@ -6,7 +6,7 @@ import logging
 import time
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple, Dict
 
 import aiofiles
 import engineio
@@ -14,13 +14,13 @@ import socketio
 import socketio.exceptions
 
 import randovania
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, ServerError, BaseNetworkError
+from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 
 
 class ConnectionState(Enum):
@@ -203,6 +203,8 @@ class NetworkClient:
         except BaseNetworkError as e:
             self.logger.warning(f"Unable to restore session after logging in, give up! Reason: {e}")
             error_message = e
+            self.connection_state = ConnectionState.Disconnected
+            await self.disconnect_from_server()
 
         finally:
             self.notify_on_connect(error_message)
