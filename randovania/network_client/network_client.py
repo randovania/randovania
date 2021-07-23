@@ -46,6 +46,11 @@ class UnableToConnect(Exception):
         self.reason = reason
 
 
+_MINIMUM_TIMEOUT = 30
+_MAXIMUM_TIMEOUT = 180
+_TIMEOUT_STEP = 10
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_game_session: Optional[GameSessionEntry] = None
@@ -63,6 +68,7 @@ class NetworkClient:
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()
         self._call_lock = asyncio.Lock()
+        self._current_timeout = _MINIMUM_TIMEOUT
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -247,6 +253,17 @@ class NetworkClient:
     async def on_game_update_notification(self, details):
         pass
 
+    def _update_timeout_with(self, request_time: float, success: bool):
+        if success:
+            if request_time < self._current_timeout - _TIMEOUT_STEP and self._current_timeout > _MINIMUM_TIMEOUT:
+                self._current_timeout -= _TIMEOUT_STEP
+                self.logger.debug(f"decreasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
+        else:
+            self._current_timeout += _TIMEOUT_STEP
+            self.logger.debug(f"increasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
+
+        self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
+
     async def _emit_with_result(self, event, data=None, namespace=None):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
@@ -255,16 +272,17 @@ class NetworkClient:
 
         self.logger.debug(f"{event}, getting lock")
         async with self._call_lock:
-            self.logger.debug(f"{event}, will call")
             request_start = time.time()
-            timeout = 30
+            timeout = self._current_timeout
+            self.logger.debug(f"{event}, will call with timeout {timeout}")
             try:
                 result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
-                # request_end = time.time()
+                request_time = time.time() - request_start
+                self._update_timeout_with(request_time, True)
 
             except socketio.exceptions.TimeoutError:
-                request_end = time.time()
-                request_time = request_end - request_start
+                request_time = time.time() - request_start
+                self._update_timeout_with(request_time, False)
                 raise RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:

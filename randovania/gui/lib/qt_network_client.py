@@ -135,6 +135,7 @@ def handle_network_errors(fn):
 
         except RequestTimeout as e:
             await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}")
+                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
+                                       f"<br />Further attempts will wait for longer.")
 
     return wrapper
