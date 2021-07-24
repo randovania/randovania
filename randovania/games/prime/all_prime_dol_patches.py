@@ -2,6 +2,7 @@ import dataclasses
 import struct
 from typing import List
 
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
@@ -12,7 +13,7 @@ from randovania.games.prime import prime_items
 
 
 @dataclasses.dataclass(frozen=True)
-class StringDisplayPatchAddresses:
+class StringDisplayPatchAddresses(DataclassPostInitTypeCheck):
     update_hint_state: int
     message_receiver_string_ref: int
     wstring_constructor: int
