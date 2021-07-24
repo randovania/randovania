@@ -67,7 +67,6 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
-
         player_state_pointer = int.from_bytes(await executor.perform_single_memory_operation(MemoryOperation(
             address=self.version.game_state_pointer,
             read_byte_count=4,
@@ -97,3 +96,12 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
 
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
+
+    async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
+                                          remote_pickups: List[Tuple[str, PickupEntry]],
+                                          ) -> Tuple[List[DolRemotePatch], bool]:
+        # Not yet implemented
+        return [], False
+
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[DolRemotePatch]) -> None:
+        raise RuntimeError("Unable to execute remote patches in Corruption")
