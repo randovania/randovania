@@ -3,9 +3,10 @@ import base64
 import hashlib
 import json
 import logging
+import time
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple, Dict
 
 import aiofiles
 import engineio
@@ -13,13 +14,13 @@ import socketio
 import socketio.exceptions
 
 import randovania
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.error import decode_error, InvalidSession
+from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 
 
 class ConnectionState(Enum):
@@ -45,6 +46,11 @@ class UnableToConnect(Exception):
         self.reason = reason
 
 
+_MINIMUM_TIMEOUT = 30
+_MAXIMUM_TIMEOUT = 180
+_TIMEOUT_STEP = 10
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_game_session: Optional[GameSessionEntry] = None
@@ -62,6 +68,7 @@ class NetworkClient:
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()
         self._call_lock = asyncio.Lock()
+        self._current_timeout = _MINIMUM_TIMEOUT
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -183,6 +190,7 @@ class NetworkClient:
 
                 self.logger.info(f"session restored successful")
                 self.connection_state = ConnectionState.Connected
+
             except InvalidSession:
                 self.logger.info(f"invalid session, deleting")
                 self.connection_state = ConnectionState.ConnectedNotLogged
@@ -192,12 +200,20 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
+        error_message = None
         try:
             self._restore_session_task = asyncio.create_task(self._restore_session())
             self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
             await self._restore_session_task
+
+        except BaseNetworkError as e:
+            self.logger.warning(f"Unable to restore session after logging in, give up! Reason: {e}")
+            error_message = e
+            self.connection_state = ConnectionState.Disconnected
+            await self.disconnect_from_server()
+
         finally:
-            self.notify_on_connect(None)
+            self.notify_on_connect(error_message)
 
     async def on_connect_error(self, error_message: str):
         if isinstance(error_message, dict) and "message" in error_message:
@@ -237,6 +253,17 @@ class NetworkClient:
     async def on_game_update_notification(self, details):
         pass
 
+    def _update_timeout_with(self, request_time: float, success: bool):
+        if success:
+            if request_time < self._current_timeout - _TIMEOUT_STEP and self._current_timeout > _MINIMUM_TIMEOUT:
+                self._current_timeout -= _TIMEOUT_STEP
+                self.logger.debug(f"decreasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
+        else:
+            self._current_timeout += _TIMEOUT_STEP
+            self.logger.debug(f"increasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
+
+        self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
+
     async def _emit_with_result(self, event, data=None, namespace=None):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
@@ -245,8 +272,18 @@ class NetworkClient:
 
         self.logger.debug(f"{event}, getting lock")
         async with self._call_lock:
-            self.logger.debug(f"{event}, will call")
-            result = await self.sio.call(event, data, namespace=namespace, timeout=30)
+            request_start = time.time()
+            timeout = self._current_timeout
+            self.logger.debug(f"{event}, will call with timeout {timeout}")
+            try:
+                result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
+                request_time = time.time() - request_start
+                self._update_timeout_with(request_time, True)
+
+            except socketio.exceptions.TimeoutError:
+                request_time = time.time() - request_start
+                self._update_timeout_with(request_time, False)
+                raise RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
             return None

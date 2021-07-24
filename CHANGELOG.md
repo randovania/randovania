@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: A menu option to open the logs folder.
 
+-   Added: The timeout limit is now progressively more forgiving, the more timeouts that happen.
+
 -   Changed: The items in the starting items popup is now sorted.
 
 -   Changed: Customizing Dark Aether damage is now considered by logic.
