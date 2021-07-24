@@ -9,10 +9,13 @@ from PySide2.QtCore import QObject
 from qasync import asyncSlot
 
 from randovania.bitpacking import bitpacking
+from randovania.game_connection.connection_backend import PermanentPickups
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
@@ -63,7 +66,8 @@ class Data(AsyncContextManager):
 
 class MultiworldClient(QObject):
     _data: Optional[Data] = None
-    _received_pickups: List[Tuple[str, PickupEntry]]
+    _expected_game: RandovaniaGame = None
+    _received_pickups: PermanentPickups
     _notify_task: Optional[asyncio.Task] = None
     _pid: Optional[pid.PidFile] = None
 
@@ -116,6 +120,7 @@ class MultiworldClient(QObject):
             pass
 
         async with self._pickups_lock:
+            self.game_connection.set_expected_game(None)
             self.game_connection.set_permanent_pickups([])
 
         self._data = None
@@ -145,14 +150,17 @@ class MultiworldClient(QObject):
 
         self._notify_task = asyncio.create_task(self._notify_collect_locations())
 
-    async def on_location_collected(self, location: int):
-        if location in self._data.collected_locations:
+    async def on_location_collected(self, game: RandovaniaGame, location: PickupIndex):
+        if game != self._expected_game:
+            return
+
+        if location.index in self._data.collected_locations:
             self.logger.info(f"{location}, but location was already collected")
             return
 
         self.logger.info(f"{location}, a new location")
         async with self._data as data:
-            data.collected_locations.add(location)
+            data.collected_locations.add(location.index)
 
         self.start_notify_collect_locations_task()
 
@@ -163,6 +171,7 @@ class MultiworldClient(QObject):
             resource_database = default_database.resource_database_for(game)
 
             self.logger.info(f"received {len(result)} items")
+            self._expected_game = game
             self._received_pickups = [
                 (provider_name, _decode_pickup(data, resource_database))
                 for provider_name, data in result
@@ -173,4 +182,5 @@ class MultiworldClient(QObject):
         await self.refresh_received_pickups()
 
         async with self._pickups_lock:
+            self.game_connection.set_expected_game(self._expected_game)
             self.game_connection.set_permanent_pickups(self._received_pickups)

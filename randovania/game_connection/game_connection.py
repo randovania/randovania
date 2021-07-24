@@ -1,11 +1,12 @@
 import copy
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import GameConnectionStatus, ConnectionBase, InventoryItem
+from randovania.game_connection.connection_base import GameConnectionStatus, ConnectionBase, InventoryItem, \
+    LocationListener
 from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -63,7 +64,7 @@ class GameConnection(QObject, ConnectionBackend):
     def name(self) -> str:
         raise ValueError("bleh")
 
-    def set_location_collected_listener(self, listener):
+    def set_location_collected_listener(self, listener: Optional[LocationListener]):
         super(ConnectionBackend, self).set_location_collected_listener(listener)
         self.checking_for_collected_index = listener is not None
 
