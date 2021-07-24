@@ -1,8 +1,6 @@
 import collections
 import copy
 import dataclasses
-import logging
-import traceback
 from functools import partial
 from typing import List, Dict, Optional, Set
 
@@ -20,6 +18,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime.patcher_file_lib import item_names
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
+from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -31,7 +30,6 @@ from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 def _unique(iterable):
@@ -185,10 +183,15 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
             f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
         ])
-        message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Commands for patcher",
-                                            commands)
-        common_qt_lib.set_default_window_icon(message_box)
-        message_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        dialog_text = (
+            "There is no integrated patcher for Metroid Prime 3: Corruption games.\n"
+            "Download the randomizer for it from #corruption-general in the Metroid Prime Randomizer Discord, "
+            "and use the following commands as a seed.\n\n"
+            "\n{}").format(commands)
+
+        message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
+        message_box.resize(750, 200)
+        message_box.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         QApplication.clipboard().setText(commands)
         await async_dialog.execute_dialog(message_box)
 
