@@ -149,7 +149,8 @@ async def test_update(backend: ConnectionBackend, depth: int):
     backend._enabled = depth > 0
     backend.executor.connect = AsyncMock(return_value=depth > 1)
     backend._identify_game = AsyncMock(return_value=depth > 2)
-    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if depth < 4 else None)
+    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if depth < 4 else None,
+                                            return_value=True)
     world = MagicMock()
     backend._world = world
 
