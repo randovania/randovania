@@ -3,6 +3,8 @@ from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict, Tuple
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 
 
 class GameConnectionStatus(Enum):
@@ -36,10 +38,11 @@ class InventoryItem(NamedTuple):
 
 
 Inventory = Dict[ItemResourceInfo, InventoryItem]
+LocationListener = Callable[[RandovaniaGame, PickupIndex], Awaitable[None]]
 
 
 class ConnectionBase:
-    _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
+    _location_collected_listener: Optional[LocationListener] = None
 
     @property
     def current_status(self) -> GameConnectionStatus:
@@ -51,9 +54,9 @@ class ConnectionBase:
     def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
         raise NotImplementedError()
 
-    def set_location_collected_listener(self, listener: Optional[Callable[[int], Awaitable[None]]]):
+    def set_location_collected_listener(self, listener: Optional[LocationListener]):
         self._location_collected_listener = listener
 
-    async def _emit_location_collected(self, location: int):
+    async def _emit_location_collected(self, game: RandovaniaGame, location: PickupIndex):
         if self._location_collected_listener is not None:
-            await self._location_collected_listener(location)
+            await self._location_collected_listener(game, location)

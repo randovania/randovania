@@ -14,13 +14,14 @@ ALL_VERSIONS = [
         cplayer_vtable=0x80592c78,
         cstate_manager_global=0x805c4f70,
 
-        string_display=StringDisplayPatchAddresses(
-            update_hint_state=None,
-            message_receiver_string_ref=0x805a4200,
-            wstring_constructor=None,
-            display_hud_memo=0x801c6480,
-            max_message_size=200,
-        ),
+        string_display=None,
+        # string_display=StringDisplayPatchAddresses(
+        #     update_hint_state=None,
+        #     message_receiver_string_ref=0x805a4200,
+        #     wstring_constructor=None,
+        #     display_hud_memo=0x801c6480,
+        #     max_message_size=200,
+        # ),
         powerup_functions=PowerupFunctionsAddresses(
             add_power_up=0x8019111c,
             incr_pickup=0x801913a0,

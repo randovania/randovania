@@ -7,6 +7,7 @@ from mock import MagicMock, AsyncMock, call
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui import multiworld_client
 from randovania.gui.multiworld_client import MultiworldClient, Data
@@ -41,7 +42,7 @@ async def test_start(client, tmpdir):
 
 
 @pytest.mark.asyncio
-async def test_stop(client):
+async def test_stop(client: MultiworldClient):
     # Run
     await client.stop()
 
@@ -51,20 +52,29 @@ async def test_stop(client):
     client.game_connection.set_permanent_pickups.assert_called_once_with([])
 
 
+@pytest.mark.parametrize("wrong_game", [False, True])
 @pytest.mark.parametrize("exists", [False, True])
 @pytest.mark.asyncio
-async def test_on_location_collected(client, tmpdir, exists):
+async def test_on_location_collected(client: MultiworldClient, tmpdir, exists, wrong_game):
     client._data = Data(Path(tmpdir).joinpath("data.json"))
     client._data.collected_locations = {10, 15} if exists else {10}
     client.start_notify_collect_locations_task = MagicMock()
 
+    if wrong_game and not exists:
+        expected_locations = {10}
+    else:
+        expected_locations = {10, 15}
+
+    if not wrong_game:
+        client._expected_game = RandovaniaGame.METROID_PRIME_ECHOES
+
     # Run
-    await client.on_location_collected(15)
+    await client.on_location_collected(RandovaniaGame.METROID_PRIME_ECHOES, PickupIndex(15))
 
     # Assert
-    assert client._data.collected_locations == {10, 15}
+    assert client._data.collected_locations == expected_locations
 
-    if exists:
+    if exists or wrong_game:
         client.start_notify_collect_locations_task.assert_not_called()
     else:
         client.start_notify_collect_locations_task.assert_called_once_with()

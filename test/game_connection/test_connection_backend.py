@@ -8,6 +8,8 @@ from randovania.game_connection.connection_backend import ConnectionBackend
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import echoes_dol_versions
 
 
@@ -111,30 +113,38 @@ async def test_interact_with_game(backend: ConnectionBackend, depth: int, failur
         assert backend._world is None
 
 
-def test_current_status_disconnected(backend):
+def test_current_status_disconnected(backend: ConnectionBackend):
     backend.executor.is_connected.return_value = False
     assert backend.current_status == GameConnectionStatus.Disconnected
 
 
-def test_current_status_wrong_game(backend):
+def test_current_status_unknown_game(backend: ConnectionBackend):
     backend.executor.is_connected.return_value = True
     assert backend.current_status == GameConnectionStatus.UnknownGame
 
 
-def test_current_status_not_in_game(backend):
+def test_current_status_wrong_game(backend: ConnectionBackend):
+    backend.executor.is_connected.return_value = True
+    backend.connector = MagicMock()
+    backend.connector.game_enum = RandovaniaGame.METROID_PRIME
+    backend.set_expected_game(RandovaniaGame.METROID_PRIME_ECHOES)
+    assert backend.current_status == GameConnectionStatus.WrongGame
+
+
+def test_current_status_not_in_game(backend: ConnectionBackend):
     backend.executor.is_connected.return_value = True
     backend.connector = True
     assert backend.current_status == GameConnectionStatus.TitleScreen
 
 
-def test_current_status_tracker_only(backend):
+def test_current_status_tracker_only(backend: ConnectionBackend):
     backend.executor.is_connected.return_value = True
     backend.connector = True
     backend._world = True
     assert backend.current_status == GameConnectionStatus.TrackerOnly
 
 
-def test_current_status_in_game(backend):
+def test_current_status_in_game(backend: ConnectionBackend):
     backend.executor.is_connected.return_value = True
     backend.connector = True
     backend._world = True
@@ -142,16 +152,118 @@ def test_current_status_in_game(backend):
     assert backend.current_status == GameConnectionStatus.InGame
 
 
-@pytest.mark.parametrize("depth", [0, 1, 2, 3, 4])
+@pytest.mark.parametrize("depth", [0, 1, 2])
+@pytest.mark.asyncio
+async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
+    # Setup
+    # depth 0: wrong game
+    # depth 1: non-empty known_collected_locations with patch
+    # depth 2: empty known_collected_locations and empty find_missing_remote_pickups
+
+    game_enum = RandovaniaGame.METROID_PRIME_CORRUPTION
+    patches = [MagicMock()]
+
+    location_collected = AsyncMock()
+    backend.set_location_collected_listener(location_collected)
+    if depth > 0:
+        backend.set_expected_game(game_enum)
+
+    connector = AsyncMock()
+    connector.game_enum = game_enum
+    backend.connector = connector
+    backend._inventory = MagicMock()
+    backend._permanent_pickups = MagicMock()
+
+    connector.find_missing_remote_pickups.return_value = ([], False)
+    if depth == 1:
+        connector.known_collected_locations.return_value = ([PickupIndex(2), PickupIndex(5)], patches)
+    else:
+        connector.known_collected_locations.return_value = ([], [])
+
+    # Run
+    await backend._multiworld_interaction()
+
+    # Assert
+    connector.known_collected_locations.assert_has_awaits(
+        [call(backend.executor)]
+        if depth > 0 else []
+    )
+    if depth == 1:
+        location_collected.assert_has_awaits([
+            call(game_enum, PickupIndex(2)),
+            call(game_enum, PickupIndex(5)),
+        ])
+        connector.execute_remote_patches(backend.executor, patches)
+    else:
+        location_collected.assert_not_awaited()
+        connector.execute_remote_patches.assert_not_awaited()
+
+    if depth == 2:
+        connector.find_missing_remote_pickups.assert_awaited_once_with(
+            backend.executor, backend._inventory, backend._permanent_pickups
+        )
+    else:
+        connector.find_missing_remote_pickups.assert_not_awaited()
+
+
+@pytest.mark.parametrize("has_message", [False, True])
+@pytest.mark.parametrize("has_cooldown", [False, True])
+@pytest.mark.parametrize("has_patches", [False, True])
+@pytest.mark.asyncio
+async def test_multiworld_interaction_missing_remote_pickups(backend: ConnectionBackend, has_message: bool,
+                                                             has_cooldown: bool, has_patches: bool):
+    # Setup
+    if has_cooldown:
+        initial_cooldown = 2.0
+    else:
+        initial_cooldown = 0.0
+    backend.message_cooldown = initial_cooldown
+
+    game_enum = RandovaniaGame.METROID_PRIME_CORRUPTION
+    backend.set_expected_game(game_enum)
+    patches = [MagicMock()]
+
+    connector = AsyncMock()
+    connector.game_enum = game_enum
+    backend.connector = connector
+    backend._inventory = MagicMock()
+    backend._permanent_pickups = MagicMock()
+
+    connector.known_collected_locations.return_value = ([], [])
+    connector.find_missing_remote_pickups.return_value = (patches if has_patches else [], has_message)
+
+    # Run
+    await backend._multiworld_interaction()
+
+    # Assert
+    if has_patches and not (has_cooldown and has_message):
+        connector.execute_remote_patches.assert_awaited_once_with(backend.executor, patches)
+        if has_message:
+            assert backend.message_cooldown == 4.0
+        else:
+            assert backend.message_cooldown == initial_cooldown
+    else:
+        connector.execute_remote_patches.assert_not_awaited()
+        assert backend.message_cooldown == initial_cooldown
+
+
+@pytest.mark.parametrize("depth", [0, 1, 2, 3, 4, 5])
 @pytest.mark.asyncio
 async def test_update(backend: ConnectionBackend, depth: int):
     # Setup
     backend._enabled = depth > 0
     backend.executor.connect = AsyncMock(return_value=depth > 1)
     backend._identify_game = AsyncMock(return_value=depth > 2)
-    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if depth < 4 else None)
+    backend._expected_game = MagicMock()
+    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if depth < 5 else None,
+                                            return_value=True)
     world = MagicMock()
     backend._world = world
+
+    connector = MagicMock()
+    backend.connector = connector
+    if depth > 3:
+        connector.game_enum = backend._expected_game
 
     # Run
     await backend.update(1)
@@ -159,11 +271,16 @@ async def test_update(backend: ConnectionBackend, depth: int):
     # Assert
     backend.executor.connect.assert_has_calls([call()] if depth > 0 else [])
     backend._identify_game.assert_has_awaits([call()] if depth > 1 else [])
-    backend._interact_with_game.assert_has_awaits([call(1)] if depth > 2 else [])
-    if depth == 3:
+    backend._interact_with_game.assert_has_awaits([call(1)] if depth > 3 else [])
+    if depth == 4:
         assert backend._world is None
+        assert backend.connector is None
     else:
         assert backend._world is world
+        if depth == 3:
+            assert backend.connector is None
+        else:
+            assert backend.connector is connector
 
 
 def test_get_current_inventory(backend: ConnectionBackend):

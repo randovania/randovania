@@ -12,8 +12,11 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (echoes_dol_versions, prime1_dol_versions,
                                     corruption_dol_versions)
+
+PermanentPickups = List[Tuple[str, PickupEntry]]
 
 
 class ConnectionBackend(ConnectionBase):
@@ -32,7 +35,8 @@ class ConnectionBackend(ConnectionBase):
     message_cooldown: float = 0.0
 
     # Multiworld
-    _permanent_pickups: List[Tuple[str, PickupEntry]]
+    _expected_game: Optional[RandovaniaGame]
+    _permanent_pickups: PermanentPickups
 
     def __init__(self, executor: MemoryOperationExecutor):
         super().__init__()
@@ -40,6 +44,7 @@ class ConnectionBackend(ConnectionBase):
         self.executor = executor
 
         self._inventory = {}
+        self._expected_game = None
         self._permanent_pickups = []
 
     @property
@@ -49,6 +54,9 @@ class ConnectionBackend(ConnectionBase):
 
         if self.connector is None:
             return GameConnectionStatus.UnknownGame
+
+        if self._expected_game is not None and self._expected_game != self.connector.game_enum:
+            return GameConnectionStatus.WrongGame
 
         if self._world is None:
             return GameConnectionStatus.TitleScreen
@@ -133,16 +141,22 @@ class ConnectionBackend(ConnectionBase):
     def get_current_inventory(self) -> Inventory:
         return self._inventory
 
-    def set_permanent_pickups(self, pickups: List[Tuple[str, PickupEntry]]):
+    def set_expected_game(self, game: Optional[RandovaniaGame]):
+        self._expected_game = game
+
+    def set_permanent_pickups(self, pickups: PermanentPickups):
         self._permanent_pickups = pickups
 
     async def update_current_inventory(self):
         self._inventory = await self.connector.get_inventory(self.executor)
 
     async def _multiworld_interaction(self):
+        if self._expected_game is None:
+            return
+
         locations, patches = await self.connector.known_collected_locations(self.executor)
         for location in locations:
-            await self._emit_location_collected(location.index)
+            await self._emit_location_collected(self.connector.game_enum, location)
 
         if patches:
             await self.connector.execute_remote_patches(self.executor, patches)
@@ -162,6 +176,8 @@ class ConnectionBackend(ConnectionBase):
             if not has_pending_op:
                 self.message_cooldown = max(self.message_cooldown - dt, 0.0)
                 await self._multiworld_interaction()
+            return True
+        return False
 
     async def update(self, dt: float):
         if not self._enabled:
@@ -173,9 +189,17 @@ class ConnectionBackend(ConnectionBase):
         if not await self._identify_game():
             return
 
+        if self._expected_game is not None and self._expected_game != self.connector.game_enum:
+            self.connector = None
+            return
+
+        should_re_identify = True
         try:
-            await self._interact_with_game(dt)
+            should_re_identify = not await self._interact_with_game(dt)
 
         except MemoryOperationException as e:
             self.logger.warning(f"Unable to perform memory operations: {e}")
+
+        if should_re_identify:
             self._world = None
+            self.connector = None
