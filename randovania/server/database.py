@@ -111,6 +111,15 @@ class GameSession(BaseModel):
             "creation_date": self.creation_datetime.astimezone(datetime.timezone.utc).isoformat(),
         }
 
+    @property
+    def allowed_games(self) -> List[RandovaniaGame]:
+        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
+
+        if "prime3" in (self.dev_features or ""):
+            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
+
+        return games
+
     def create_session_entry(self):
         description = self.layout_description
 
@@ -152,10 +161,6 @@ class GameSession(BaseModel):
                 "permalink": None,
             }
 
-        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
-        if "prime3" in (self.dev_features or ""):
-            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
         return {
             "id": self.id,
             "name": self.name,
@@ -176,7 +181,7 @@ class GameSession(BaseModel):
             **game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
-            "allowed_games": [game.value for game in games],
+            "allowed_games": [game.value for game in self.allowed_games],
         }
 
     def reset_layout_description(self):
