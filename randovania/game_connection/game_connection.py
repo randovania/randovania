@@ -61,6 +61,11 @@ class GameConnection(QObject, ConnectionBackend):
         return f"{self.backend_choice.pretty_text}: {self.current_status.pretty_text}"
 
     @property
+    def current_game_name(self) -> Optional[str]:
+        if self.connector is not None:
+            return self.connector.game_enum.long_name
+
+    @property
     def name(self) -> str:
         raise ValueError("bleh")
 

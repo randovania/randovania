@@ -2,7 +2,6 @@ import dataclasses
 import json
 import logging
 from enum import Enum
-from pathlib import Path
 from typing import Dict, List, Union, Optional
 
 import PySide2
@@ -151,8 +150,12 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 if self.game_connection.connector.game_enum == self._current_tracker_game:
                     inventory = self.game_connection.get_current_inventory()
                     self._update_tracker_from_hook(inventory)
+                    self.game_connection_setup.on_game_connection_updated()
                 else:
-                    self.connection_status_label.setText(f"{self.game_connection.backend_choice.pretty_text}: Wrong Game")
+                    self.connection_status_label.setText("{}: Wrong Game ({})".format(
+                        self.game_connection.backend_choice.pretty_text,
+                        self.game_connection.current_game_name,
+                    ))
         finally:
             self._update_timer.start()
 
