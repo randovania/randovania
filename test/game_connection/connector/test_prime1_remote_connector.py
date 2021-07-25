@@ -6,12 +6,18 @@ from randovania.game_connection.connector.prime1_remote_connector import Prime1R
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import prime1_dol_versions
+from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
+
+
+@pytest.fixture(name="version")
+def prime1_version():
+    from randovania.games.prime import prime1_dol_versions
+    return prime1_dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
-def remote_connector():
-    connector = Prime1RemoteConnector(prime1_dol_versions.ALL_VERSIONS[0])
+def remote_connector(version: Prime1DolVersion):
+    connector = Prime1RemoteConnector(version)
     return connector
 
 
