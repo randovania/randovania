@@ -107,9 +107,13 @@ def create_memory_executor(debug_game_backend: bool, options):
     else:
         try:
             from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-        except ImportError:
+        except ImportError as e:
             from randovania.gui.lib import common_qt_lib
-            common_qt_lib.show_install_visual_cpp_redist()
+            import traceback
+            common_qt_lib.show_install_visual_cpp_redist("{}\n\nTraceback:\n{}".format(
+                e,
+                "\n".join(traceback.format_tb(e.__traceback__)))
+            )
             raise SystemExit(1)
 
         from randovania.game_connection.executor.nintendont_executor import NintendontExecutor

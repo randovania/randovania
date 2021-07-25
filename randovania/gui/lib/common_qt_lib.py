@@ -178,18 +178,23 @@ def get_game_connection():
     return typing.cast(GameConnection, QApplication.instance().game_connection)
 
 
-def show_install_visual_cpp_redist():
+def show_install_visual_cpp_redist(details: str):
     from PySide2 import QtWidgets
 
     download_url = 'https://aka.ms/vs/16/release/vc_redist.x64.exe'
     support_url = 'https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads'
 
-    QtWidgets.QMessageBox.critical(
-        None,
+    box = QtWidgets.QMessageBox(
+        QtWidgets.QMessageBox.Critical,
         "Unable to load Dolphin backend",
         "Please install the latest "
         f"<a href='{download_url}'>Microsoft Visual C++ Redistributable</a>.<br /><br />"
-        f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.")
+        f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.",
+        QtWidgets.QMessageBox.Ok,
+    )
+    set_default_window_icon(box)
+    box.setDetailedText(details)
+    box.exec_()
 
 
 def set_clipboard(text: str):
