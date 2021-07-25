@@ -32,6 +32,8 @@ def _corruption_powerup_offset(item_index: int) -> int:
 
 
 class CorruptionRemoteConnector(PrimeRemoteConnector):
+    version: CorruptionDolVersion
+
     def __init__(self, version: CorruptionDolVersion):
         super().__init__(version)
 
@@ -51,19 +53,25 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         asset_id_size = struct.calcsize(self._asset_id_format())
 
         # TODO: there's one extra pointer indirection
-        # cplayer_offset = 40
-        # player_offset = 0x2184
+        cplayer_offset = 40
+        player_offset = 0x2184
 
         memory_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
             MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
+            MemoryOperation(cstate_manager_global + cplayer_offset, offset=player_offset, read_byte_count=4),
         ]
         results = await executor.perform_memory_operations(memory_ops)
+        player_pointer = results.get(memory_ops[2])
+        player_vtable = None
+        if player_pointer is not None:
+            player_vtable = await executor.perform_single_memory_operation(MemoryOperation(
+                struct.unpack(">I", player_pointer)[0], read_byte_count=4,
+            ))
 
         pending_op_byte = results[memory_ops[1]]
         has_pending_op = pending_op_byte != b"\x00"
-        return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
-                                                          results.get(memory_ops[2]))
+        return has_pending_op, self._current_status_world(results.get(memory_ops[0]), player_vtable)
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
