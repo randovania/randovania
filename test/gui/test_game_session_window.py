@@ -1,9 +1,9 @@
 import contextlib
 import datetime
 import sys
+import typing
 
 import pytest
-import typing
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
@@ -11,10 +11,10 @@ from mock import MagicMock, AsyncMock, ANY
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.generator import base_patches_factory
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.permalink import Permalink
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
+from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
+    GameSessionActions
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 
@@ -30,7 +30,7 @@ def _window(skip_qtbot):
 
 
 @pytest.mark.asyncio
-async def test_on_game_session_updated(preset_manager, skip_qtbot):
+async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
@@ -47,7 +47,6 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         players={
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
         },
-        actions=[],
         seed_hash=None,
         word_hash=None,
         spoiler=None,
@@ -64,9 +63,6 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
             24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
         },
-        actions=[
-            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), datetime.datetime(year=2020, month=1, day=5))
-        ],
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
@@ -82,13 +78,40 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     window.update_multiworld_client_status = AsyncMock()
 
     # Run
-    await window.on_game_session_updated(second_session)
+    await window.on_game_session_meta_update(second_session)
     window.update_multiworld_client_status.assert_awaited()
     network_client.session_self_update.assert_awaited_once_with(
         game_connection.get_current_inventory.return_value,
         game_connection.current_status,
         game_connection.backend_choice,
     )
+
+
+@pytest.mark.asyncio
+async def test_on_game_session_actions_update(window: GameSessionWindow, default_preset):
+    # Setup
+    game_session = MagicMock()
+    game_session.presets = [default_preset]
+    window._game_session = game_session
+
+    # Run
+    await window.on_game_session_actions_update(
+        GameSessionActions((
+            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), datetime.datetime(year=2020, month=1, day=5)),
+        ))
+    )
+
+    texts = [
+        window.history_table_widget.item(0, i).text()
+        for i in range(5)
+    ]
+    assert texts == [
+        'A',
+        'B',
+        'Bombs',
+        'Temple Grounds/Hive Chamber A/Pickup (Missile)',
+        'Sun Jan  5 00:00:00 2020'
+    ]
 
 
 @pytest.mark.parametrize("in_game", [False, True])
@@ -391,6 +414,7 @@ async def test_delete_session(window, mocker, accept, exception, monkeypatch):
     if exception and accept:
         def re_raise_exception(_, v, __):
             raise v
+
         monkeypatch.setattr(sys, "excepthook", re_raise_exception)
 
         window.network_client.session_admin_global.side_effect = RuntimeError("error")

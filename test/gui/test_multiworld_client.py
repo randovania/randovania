@@ -26,19 +26,15 @@ async def test_start(client, tmpdir):
     game_connection = client.game_connection
 
     client.network_client.game_session_request_pickups = AsyncMock(return_value=[])
+    client.network_client.game_session_request_update = AsyncMock()
     client.network_client.session_self_update = AsyncMock()
-    client.refresh_received_pickups = AsyncMock()
-    client._received_messages = ["Foo"]
-    client._received_pickups = ["Pickup"]
 
     # Run
     await client.start(Path(tmpdir).joinpath("missing_file.json"))
 
     # Assert
-    client.refresh_received_pickups.assert_awaited_once_with()
     game_connection.set_location_collected_listener.assert_called_once_with(client.on_location_collected)
-    client.network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_network_game_updated)
-    game_connection.set_permanent_pickups.assert_called_once_with(["Pickup"])
+    client.network_client.GameSessionPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
 
 
 @pytest.mark.asyncio
@@ -48,8 +44,9 @@ async def test_stop(client: MultiworldClient):
 
     # Assert
     client.game_connection.set_location_collected_listener.assert_called_once_with(None)
-    client.network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_network_game_updated)
-    client.game_connection.set_permanent_pickups.assert_called_once_with([])
+    client.network_client.GameSessionPickupsUpdated.disconnect.assert_called_once_with(client.on_network_game_updated)
+    client.game_connection.set_expected_game.assert_called_once_with(None)
+    client.game_connection.set_permanent_pickups.assert_called_once_with(())
 
 
 @pytest.mark.parametrize("wrong_game", [False, True])
@@ -81,39 +78,16 @@ async def test_on_location_collected(client: MultiworldClient, tmpdir, exists, w
 
 
 @pytest.mark.asyncio
-async def test_refresh_received_pickups(client, corruption_game_description, mocker):
-    db = corruption_game_description.resource_database
-
-    results = RandovaniaGame.METROID_PRIME_CORRUPTION, [
-        ("Message A", b"bytesA"),
-        ("Message B", b"bytesB"),
-        ("Message C", b"bytesC"),
-    ]
-    client.network_client.game_session_request_pickups = AsyncMock(return_value=results)
-
-    pickups = [MagicMock(), MagicMock(), MagicMock()]
-    mock_decode = mocker.patch("randovania.gui.multiworld_client._decode_pickup", side_effect=pickups)
-
-    # Run
-    await client.refresh_received_pickups()
-
-    # Assert
-    assert client._received_pickups == list(zip(["Message A", "Message B", "Message C"], pickups))
-    mock_decode.assert_has_calls([call(b"bytesA", db), call(b"bytesB", db), call(b"bytesC", db)])
-
-
-@pytest.mark.asyncio
 async def test_on_game_updated(client, tmpdir):
-    client.refresh_received_pickups = AsyncMock()
-    client._received_pickups = MagicMock()
-
     client._data = Data(Path(tmpdir).joinpath("data.json"))
+    pickups = MagicMock()
 
     # Run
-    await client.on_network_game_updated()
+    await client.on_network_game_updated(pickups)
 
     # Assert
-    client.game_connection.set_permanent_pickups.assert_called_once_with(client._received_pickups)
+    client.game_connection.set_expected_game.assert_called_once_with(pickups.game)
+    client.game_connection.set_permanent_pickups.assert_called_once_with(pickups.pickups)
 
 
 def test_decode_pickup(client, echoes_resource_database):
@@ -170,7 +144,7 @@ async def test_notify_collect_locations(client, tmpdir):
 async def test_lock_file_on_init(skip_qtbot, tmpdir):
     # Setup
     network_client = MagicMock()
-    network_client.game_session_request_pickups = AsyncMock(return_value=(RandovaniaGame.METROID_PRIME, []))
+    network_client.game_session_request_update = AsyncMock()
     network_client.session_self_update = AsyncMock()
     game_connection = MagicMock(spec=GameConnection)
     game_connection.lock_identifier = str(tmpdir.join("my-lock"))

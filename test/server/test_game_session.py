@@ -11,7 +11,6 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
@@ -23,7 +22,7 @@ from randovania.server import game_session, database
 
 @pytest.fixture(name="mock_emit_session_update")
 def _mock_emit_session_update(mocker) -> MagicMock:
-    return mocker.patch("randovania.server.game_session._emit_session_update", autospec=True)
+    return mocker.patch("randovania.server.game_session._emit_session_meta_update", autospec=True)
 
 
 def test_setup_app():
@@ -79,7 +78,6 @@ def test_create_game_session(clean_database, preset_manager):
         'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0, 'inventory': None,
                      'connection_state': 'Online, Unknown'}],
         'presets': [preset_manager.default_preset.as_json],
-        'actions': [],
         'seed_hash': None,
         'spoiler': None,
         'word_hash': None,
@@ -117,7 +115,6 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
             {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None, 'inventory': None,
              'connection_state': 'Online, Unknown'},
         ],
-        'actions': [],
         'presets': [{}],
         'seed_hash': None,
         'spoiler': None,
@@ -128,41 +125,32 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
     }
 
 
-def test_game_session_request_pickups_missing_membership(clean_database):
-    with pytest.raises(peewee.DoesNotExist):
-        game_session.game_session_request_pickups(MagicMock(), 1)
-
-
 def test_game_session_request_pickups_not_in_game(flask_app, clean_database):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
     session = database.GameSession.create(name="Debug", creator=user)
-    database.GameSessionMembership.create(user=user, session=session, row=0, admin=False)
+    membership = database.GameSessionMembership.create(user=user, session=session, row=0, admin=False)
 
     sio = MagicMock()
     sio.get_current_user.return_value = user
 
     # Run
-    result = game_session.game_session_request_pickups(sio, 1)
-
-    # Assert
-    assert result is None
+    with pytest.raises(RuntimeError, match="Unable to emit pickups during SETUP"):
+        game_session._emit_game_session_pickups_update(sio, membership)
 
 
 def test_game_session_request_pickups_observer(flask_app, clean_database):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
     session = database.GameSession.create(name="Debug", creator=user, state=GameSessionState.IN_PROGRESS)
-    database.GameSessionMembership.create(user=user, session=session, row=None, admin=False)
+    membership = database.GameSessionMembership.create(user=user, session=session, row=None, admin=False)
 
     sio = MagicMock()
     sio.get_current_user.return_value = user
 
     # Run
-    result = game_session.game_session_request_pickups(sio, 1)
-
-    # Assert
-    assert result is None
+    with pytest.raises(RuntimeError, match="Unable to emit pickups for observers"):
+        game_session._emit_game_session_pickups_update(sio, membership)
 
 
 @pytest.fixture(name="two_player_session")
@@ -187,10 +175,13 @@ def two_player_session_fixture(clean_database):
 def test_game_session_request_pickups_one_action(mock_session_description: PropertyMock,
                                                  mock_get_resource_database: MagicMock,
                                                  mock_get_pickup_target: MagicMock,
-                                                 flask_app, two_player_session, echoes_resource_database):
+                                                 flask_app, two_player_session, echoes_resource_database, mocker):
     # Setup
+    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
+    membership = database.GameSessionMembership.get(user=database.User.get_by_id(1234), session=two_player_session)
 
     pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
                          ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
@@ -199,15 +190,19 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     mock_get_resource_database.return_value = echoes_resource_database
 
     # Run
-    result = game_session.game_session_request_pickups(sio, 1)
+    game_session._emit_game_session_pickups_update(sio, membership)
 
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    assert result == {
-        "game": "prime2",
-        "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
-    }
+    mock_emit.assert_called_once_with(
+        "game_session_pickups_update",
+        {
+            "game": "prime2",
+            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
+        },
+        room=f"game-session-1-1234"
+    )
 
 
 @patch("flask_socketio.emit", autospec=True)
@@ -273,15 +268,19 @@ def test_game_session_collect_pickup_etm(mock_session_description: PropertyMock,
     ((0, 1), (0, 1)),
 ])
 def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes_resource_database,
-                                           locations_to_collect, exists, mock_emit_session_update, mocker):
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit", autospec=True)
+                                           locations_to_collect, exists, mocker):
+    mock_emit_pickups_update: MagicMock = mocker.patch(
+        "randovania.server.game_session._emit_game_session_pickups_update", autospec=True)
     mock_get_pickup_target: MagicMock = mocker.patch("randovania.server.game_session._get_pickup_target", autospec=True)
     mock_session_description: PropertyMock = mocker.patch("randovania.server.database.GameSession.layout_description",
                                                           new_callable=PropertyMock)
+    mock_emit_session_update = mocker.patch("randovania.server.game_session._emit_session_actions_update",
+                                            autospec=True)
 
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
     mock_get_pickup_target.return_value = PickupTarget(MagicMock(), 1)
+    membership = database.GameSessionMembership.get_by_session_position(two_player_session, row=1)
 
     for existing_id in exists:
         database.GameSessionTeamAction.create(session=two_player_session, provider_row=0,
@@ -301,11 +300,10 @@ def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes
         database.GameSessionTeamAction.get(session=two_player_session, provider_row=0,
                                            provider_location_index=location)
     if exists == locations_to_collect:
-        mock_emit.assert_not_called()
+        mock_emit_pickups_update.assert_not_called()
         mock_emit_session_update.assert_not_called()
     else:
-        mock_emit.assert_called_once_with("game_has_update", {"session": 1, "row": 1, },
-                                          room=f"game-session-1-1235")
+        mock_emit_pickups_update.assert_called_once_with(sio, membership)
         mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
@@ -379,8 +377,8 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     assert database.User.get_by_id(1234) == user
 
     mock_emit.assert_called_once_with(
-        'game_session_update',
-        {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [], 'actions': [],
+        "game_session_meta_update",
+        {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
          'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None,
          'allowed_games': ['prime1', 'prime2'], },
         room='game-session-1')
@@ -819,7 +817,8 @@ def test_verify_no_layout_description(clean_database, flask_app):
         game_session._verify_in_setup(session)
 
 
-def test_game_session_request_update(clean_database, mocker, flask_app):
+@pytest.fixture(name="session_update")
+def session_update_fixture(clean_database, mocker):
     mock_layout = mocker.patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
     target = mock_layout.return_value.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
     target.pickup.name = "The Pickup"
@@ -840,12 +839,13 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
     database.GameSessionTeamAction.create(session=session, provider_row=1, provider_location_index=0, receiver_row=0,
                                           time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
 
-    # Run
-    with flask_app.test_request_context():
-        result = game_session.game_session_request_update(MagicMock(), 1)
+    return session
 
-    # Assert
-    assert result == {
+
+def test_emit_session_meta_update(session_update, mocker):
+    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+
+    session_json = {
         "id": 1,
         "name": "Debug",
         "state": GameSessionState.IN_PROGRESS.value,
@@ -868,16 +868,6 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
             },
         ],
         "presets": [],
-        "actions": [
-            {
-                "location": 0,
-                "pickup": "The Pickup",
-                "provider": "Other",
-                "provider_row": 1,
-                "receiver": "The Name",
-                "time": "2020-05-02T10:20:00+00:00",
-            }
-        ],
         "spoiler": True,
         "word_hash": "Words of O-Lir",
         "seed_hash": "ABCDEFG",
@@ -885,3 +875,61 @@ def test_game_session_request_update(clean_database, mocker, flask_app):
         "generation_in_progress": None,
         'allowed_games': ['prime1', 'prime2'],
     }
+
+    # Run
+    game_session._emit_session_meta_update(session_update)
+
+    # Assert
+    mock_emit.assert_called_once_with(
+        "game_session_meta_update",
+        session_json,
+        room=f"game-session-{session_update.id}"
+    )
+
+
+def test_emit_session_actions_update(session_update, mocker):
+    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+
+    actions = [
+        {
+            "location": 0,
+            "pickup": "The Pickup",
+            "provider": "Other",
+            "provider_row": 1,
+            "receiver": "The Name",
+            "time": "2020-05-02T10:20:00+00:00",
+        }
+    ]
+
+    # Run
+    game_session._emit_session_actions_update(session_update)
+
+    # Assert
+    mock_emit.assert_called_once_with(
+        "game_session_actions_update",
+        actions,
+        room=f"game-session-{session_update.id}"
+    )
+
+
+def test_game_session_request_update(session_update, mocker, flask_app):
+    mock_meta_update: MagicMock = mocker.patch(
+        "randovania.server.game_session._emit_session_meta_update", autospec=True)
+    mock_actions_update: MagicMock = mocker.patch(
+        "randovania.server.game_session._emit_session_actions_update", autospec=True)
+    mock_pickups_update: MagicMock = mocker.patch(
+        "randovania.server.game_session._emit_game_session_pickups_update", autospec=True)
+
+    user = database.User.get_by_id(1234)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user
+    membership = database.GameSessionMembership.get(user=user, session=session_update)
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_request_update(sio, 1)
+
+    # Assert
+    mock_meta_update.assert_called_once_with(session_update)
+    mock_actions_update.assert_called_once_with(session_update)
+    mock_pickups_update.assert_called_once_with(sio, membership)
