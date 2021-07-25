@@ -65,7 +65,12 @@ class GameConnectionSetup:
         self.refresh_backend()
 
     def on_game_connection_updated(self):
-        self.label.setText(self.game_connection.pretty_current_status)
+        s = self.game_connection.pretty_current_status
+        game_name = self.game_connection.current_game_name
+        if game_name is not None:
+            s = "{} ({})".format(s, game_name)
+
+        self.label.setText(s)
 
     def refresh_backend(self):
         executor = self.game_connection.executor

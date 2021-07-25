@@ -92,10 +92,7 @@ class ConnectionBackend(ConnectionBase):
         if not value:
             self.connector = None
 
-    async def _identify_game(self) -> bool:
-        if self.connector is not None:
-            return True
-
+    async def _identify_game(self) -> Optional[RemoteConnector]:
         all_connectors: List[PrimeRemoteConnector] = [
             Prime1RemoteConnector(version)
             for version in prime1_dol_versions.ALL_VERSIONS
@@ -117,7 +114,7 @@ class ConnectionBackend(ConnectionBase):
             first_ops_result = await self.executor.perform_memory_operations(read_first_ops)
         except (RuntimeError, MemoryOperationException) as e:
             self.logger.debug(f"Unable to probe for game version: {e}")
-            return False
+            return None
 
         possible_connectors = [
             connectors
@@ -129,14 +126,11 @@ class ConnectionBackend(ConnectionBase):
             try:
                 is_version = await connector.is_this_version(self.executor)
             except (RuntimeError, MemoryOperationException) as e:
-                return False
+                return None
 
             if is_version:
-                self.connector = connector
-                self.logger.info(f"identified game as {connector.version.description}")
-                return True
-
-        return False
+                self.logger.info(f"identified game as {connector.game_enum.long_name}: {connector.version.description}")
+                return connector
 
     def get_current_inventory(self) -> Inventory:
         return self._inventory
@@ -176,7 +170,15 @@ class ConnectionBackend(ConnectionBase):
             if not has_pending_op:
                 self.message_cooldown = max(self.message_cooldown - dt, 0.0)
                 await self._multiworld_interaction()
-            return True
+
+    def _is_unexpected_game(self):
+        """
+        If has an expected game, True if connected game isn't that.
+        Otherwise, False.
+        :return:
+        """
+        if self._expected_game is not None:
+            return self._expected_game != self.connector.game_enum
         return False
 
     async def update(self, dt: float):
@@ -186,20 +188,13 @@ class ConnectionBackend(ConnectionBase):
         if not await self.executor.connect():
             return
 
-        if not await self._identify_game():
-            return
+        if self.connector is None or self._is_unexpected_game() or self._world is None:
+            self.connector = await self._identify_game()
 
-        if self._expected_game is not None and self._expected_game != self.connector.game_enum:
-            self.connector = None
-            return
-
-        should_re_identify = True
         try:
-            should_re_identify = not await self._interact_with_game(dt)
+            if self.connector is not None and not self._is_unexpected_game():
+                await self._interact_with_game(dt)
 
         except MemoryOperationException as e:
             self.logger.warning(f"Unable to perform memory operations: {e}")
-
-        if should_re_identify:
             self._world = None
-            self.connector = None

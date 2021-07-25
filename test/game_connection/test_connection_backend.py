@@ -6,6 +6,7 @@ from mock import AsyncMock, MagicMock, call
 
 from randovania.game_connection.connection_backend import ConnectionBackend
 from randovania.game_connection.connection_base import GameConnectionStatus
+from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -20,7 +21,7 @@ def dolphin_backend():
 
 
 @pytest.mark.asyncio
-async def test_identify_game_ntsc(backend):
+async def test_identify_game_ntsc(backend: ConnectionBackend):
     # Setup
     def side_effect(ops: List[MemoryOperation]):
         if len(ops) > 1:
@@ -36,14 +37,15 @@ async def test_identify_game_ntsc(backend):
     backend.executor.perform_single_memory_operation.return_value = build_info
 
     # Run
-    assert await backend._identify_game()
+    connector = await backend._identify_game()
 
     # Assert
-    assert backend.connector.version is echoes_dol_versions.ALL_VERSIONS[0]
+    assert isinstance(connector, EchoesRemoteConnector)
+    assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.mark.asyncio
-async def test_identify_game_error(backend):
+async def test_identify_game_error(backend: ConnectionBackend):
     # Setup
     backend.executor.perform_memory_operations.side_effect = RuntimeError("not connected")
 
@@ -52,14 +54,17 @@ async def test_identify_game_error(backend):
 
 
 @pytest.mark.asyncio
-async def test_identify_game_already_known(backend):
+async def test_identify_game_already_known(backend: ConnectionBackend):
     # Setup
     backend.connector = True
     backend.executor.perform_memory_operations.side_effect = RuntimeError("not connected")
     backend.executor.perform_single_memory_operation.return_value = RuntimeError("not connected")
 
     # Run
-    assert await backend._identify_game()
+    connector = await backend._identify_game()
+
+    # Assert
+    assert connector is None
 
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
@@ -247,40 +252,80 @@ async def test_multiworld_interaction_missing_remote_pickups(backend: Connection
         assert backend.message_cooldown == initial_cooldown
 
 
-@pytest.mark.parametrize("depth", [0, 1, 2, 3, 4, 5])
+@pytest.mark.parametrize("depth", [0, 1, 2, 3])
 @pytest.mark.asyncio
 async def test_update(backend: ConnectionBackend, depth: int):
     # Setup
-    backend._enabled = depth > 0
-    backend.executor.connect = AsyncMock(return_value=depth > 1)
-    backend._identify_game = AsyncMock(return_value=depth > 2)
-    backend._expected_game = MagicMock()
-    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if depth < 5 else None,
-                                            return_value=True)
-    world = MagicMock()
-    backend._world = world
+    # depth 0: not enabled
+    # depth 1: can't connect
+    # depth 2: call identify game
+    # depth 3: don't call identify game
 
     connector = MagicMock()
-    backend.connector = connector
-    if depth > 3:
-        connector.game_enum = backend._expected_game
+    backend._enabled = depth > 0
+    backend.executor.connect = AsyncMock(return_value=depth > 1)
+    backend._expected_game = None
+    backend._world = True
+    backend._identify_game = AsyncMock(return_value=connector)
+    backend._interact_with_game = AsyncMock()
+    if depth == 3:
+        backend.connector = connector
 
     # Run
     await backend.update(1)
 
     # Assert
     backend.executor.connect.assert_has_calls([call()] if depth > 0 else [])
-    backend._identify_game.assert_has_awaits([call()] if depth > 1 else [])
-    backend._interact_with_game.assert_has_awaits([call(1)] if depth > 3 else [])
-    if depth == 4:
-        assert backend._world is None
-        assert backend.connector is None
+
+    if depth == 2:
+        backend._identify_game.assert_awaited_once_with()
+        assert backend.connector == connector
     else:
-        assert backend._world is world
-        if depth == 3:
-            assert backend.connector is None
+        backend._identify_game.assert_not_awaited()
+
+    if depth >= 2:
+        backend._interact_with_game.assert_awaited_once_with(1)
+    else:
+        backend._interact_with_game.assert_not_awaited()
+
+
+@pytest.mark.parametrize("connected_game", [None, RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
+@pytest.mark.parametrize("expected_game", [None, RandovaniaGame.METROID_PRIME_ECHOES])
+@pytest.mark.parametrize("interact_fails", [False, True])
+@pytest.mark.asyncio
+async def test_update_calls_interact_with_game(backend: ConnectionBackend, interact_fails,
+                                               expected_game, connected_game):
+    # Setup
+    backend.connector = None
+    backend._world = True
+    backend.set_expected_game(expected_game)
+
+    if connected_game is not None:
+        connector = AsyncMock()
+        connector.game_enum = connected_game
+    else:
+        connector = None
+
+    backend._interact_with_game = AsyncMock(side_effect=MemoryOperationException("err") if interact_fails else None)
+    backend._identify_game = AsyncMock(return_value=connector)
+
+    should_call_interact = connected_game is not None
+    if should_call_interact:
+        should_call_interact = (expected_game == connected_game) or (expected_game is None)
+
+    # Run
+    await backend.update(1)
+
+    # Assert
+    backend._identify_game.assert_awaited_once_with()
+    if should_call_interact:
+        backend._interact_with_game.assert_awaited_once_with(1)
+        if interact_fails:
+            assert backend._world is None
         else:
-            assert backend.connector is connector
+            assert backend._world is not None
+    else:
+        backend._interact_with_game.assert_not_awaited()
 
 
 def test_get_current_inventory(backend: ConnectionBackend):
