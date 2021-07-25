@@ -13,14 +13,18 @@ import engineio
 import socketio
 import socketio.exceptions
 
+from randovania.bitpacking import bitpacking
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
+from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
+                                                    GameSessionAction, GameSessionPickups)
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
 class ConnectionState(Enum):
@@ -40,6 +44,11 @@ def _hash_address(server_address: str) -> str:
                                                     digest_size=12).digest()).decode("utf-8")
 
 
+def _decode_pickup(d: str, resource_database):
+    decoder = bitpacking.BitPackDecoder(base64.b85decode(d))
+    return BitPackPickupEntry.bit_pack_unpack(decoder, resource_database)
+
+
 class UnableToConnect(Exception):
     def __init__(self, reason: str):
         super().__init__(reason)
@@ -53,7 +62,6 @@ _TIMEOUT_STEP = 10
 
 class NetworkClient:
     sio: socketio.AsyncClient
-    _current_game_session: Optional[GameSessionEntry] = None
     _current_user: Optional[User] = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
@@ -61,6 +69,11 @@ class NetworkClient:
     _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
+
+    # Game Session
+    _current_game_session_meta: Optional[GameSessionEntry] = None
+    _current_game_session_actions: Optional[GameSessionActions] = None
+    _current_game_session_pickups: Optional[GameSessionPickups] = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -79,8 +92,9 @@ class NetworkClient:
         self.sio.on('connect_error', self.on_connect_error)
         self.sio.on('disconnect', self.on_disconnect)
         self.sio.on('user_session_update', self.on_user_session_updated)
-        self.sio.on('game_session_update', self.on_game_session_updated)
-        self.sio.on('game_has_update', self.on_game_update_notification)
+        self.sio.on("game_session_meta_update", self._on_game_session_meta_update_raw)
+        self.sio.on("game_session_actions_update", self._on_game_session_actions_update_raw)
+        self.sio.on("game_session_pickups_update", self._on_game_session_pickups_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -175,8 +189,8 @@ class NetworkClient:
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
         if persisted_session is not None:
-            if self._current_game_session is not None:
-                session_id = self._current_game_session.id
+            if self._current_game_session_meta is not None:
+                session_id = self._current_game_session_meta.id
             else:
                 session_id = None
             try:
@@ -185,10 +199,8 @@ class NetworkClient:
                 await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
                                                                                 (persisted_session, session_id)))
 
-                if self._current_game_session is not None:
-                    await self.on_game_session_updated(
-                        await self._emit_with_result("game_session_request_update", self._current_game_session.id))
-                    await self.on_game_update_notification({})
+                if self._current_game_session_meta is not None:
+                    await self.game_session_request_update()
 
                 self.logger.info(f"session restored successful")
                 self.connection_state = ConnectionState.Connected
@@ -248,12 +260,39 @@ class NetworkClient:
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
 
-    async def on_game_session_updated(self, data):
-        self._current_game_session = GameSessionEntry.from_json(data)
-        self.logger.debug(f"{self._current_game_session.id}")
+    # Game Session Updated
 
-    async def on_game_update_notification(self, details):
-        pass
+    async def _on_game_session_meta_update_raw(self, data):
+        await self.on_game_session_meta_update(GameSessionEntry.from_json(data))
+
+    async def on_game_session_meta_update(self, entry: GameSessionEntry):
+        self._current_game_session_meta = entry
+        self.logger.debug(f"{self._current_game_session_meta.id}")
+
+    async def _on_game_session_actions_update_raw(self, data):
+        await self.on_game_session_actions_update(GameSessionActions(
+            tuple(GameSessionAction.from_json(item) for item in data)
+        ))
+
+    async def on_game_session_actions_update(self, actions: GameSessionActions):
+        self._current_game_session_actions = actions
+
+    async def _on_game_session_pickups_update_raw(self, data):
+        game = RandovaniaGame(data["game"])
+        resource_database = default_database.resource_database_for(game)
+
+        await self.on_game_session_pickups_update(GameSessionPickups(
+            game=game,
+            pickups=tuple(
+                (item["provider_name"], _decode_pickup(item["pickup"], resource_database))
+                for item in data["pickups"]
+            ),
+        ))
+
+    async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
+        self._current_game_session_pickups = pickups
+
+    #
 
     def _update_timeout_with(self, request_time: float, success: bool):
         if success:
@@ -265,6 +304,17 @@ class NetworkClient:
             self.logger.debug(f"increasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
+
+    async def _emit_without_result(self, event, data=None, namespace=None):
+        if self.connection_state.is_disconnected:
+            self.logger.debug(f"{event}, urgent connect start")
+            await self.connect_to_server()
+            self.logger.debug(f"{event}, urgent connect finished")
+
+        self.logger.debug(f"{event}, getting lock")
+        async with self._call_lock:
+            self.logger.debug(f"{event}, will emit")
+            await self.sio.emit(event, data, namespace=namespace)
 
     async def _emit_with_result(self, event, data=None, namespace=None):
         if self.connection_state.is_disconnected:
@@ -296,20 +346,12 @@ class NetworkClient:
         else:
             raise possible_error
 
+    async def game_session_request_update(self):
+        await self._emit_without_result("game_session_request_update", self._current_game_session_meta.id)
+
     async def game_session_collect_locations(self, locations: Tuple[int, ...]):
         await self._emit_with_result("game_session_collect_locations",
-                                     (self._current_game_session.id, locations))
-
-    async def game_session_request_pickups(self) -> Tuple[RandovaniaGame, List[Tuple[str, bytes]]]:
-        data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
-        if data is None:
-            return RandovaniaGame.METROID_PRIME_ECHOES, []
-
-        return RandovaniaGame(data["game"]), [
-            (item["provider_name"], base64.b85decode(item["pickup"]))
-            for item in data["pickups"]
-            if item is not None
-        ]
+                                     (self._current_game_session_meta.id, locations))
 
     async def get_game_session_list(self) -> List[GameSessionListEntry]:
         return [
@@ -319,26 +361,26 @@ class NetworkClient:
 
     async def create_new_session(self, session_name: str) -> GameSessionEntry:
         result = await self._emit_with_result("create_game_session", session_name)
-        self._current_game_session = GameSessionEntry.from_json(result)
-        return self._current_game_session
+        self._current_game_session_meta = GameSessionEntry.from_json(result)
+        return self._current_game_session_meta
 
     async def join_game_session(self, session: GameSessionListEntry, password: Optional[str]):
         result = await self._emit_with_result("join_game_session", (session.id, password))
-        self._current_game_session = GameSessionEntry.from_json(result)
+        self._current_game_session_meta = GameSessionEntry.from_json(result)
 
     async def leave_game_session(self, permanent: bool):
         if permanent:
             await self.session_admin_player(self._current_user.id, SessionAdminUserAction.KICK, None)
-        await self._emit_with_result("disconnect_game_session", self._current_game_session.id)
-        self._current_game_session = None
+        await self._emit_with_result("disconnect_game_session", self._current_game_session_meta.id)
+        self._current_game_session_meta = None
 
     async def session_admin_global(self, action: SessionAdminGlobalAction, arg):
         return await self._emit_with_result("game_session_admin_session",
-                                            (self._current_game_session.id, action.value, arg))
+                                            (self._current_game_session_meta.id, action.value, arg))
 
     async def session_admin_player(self, user_id: int, action: SessionAdminUserAction, arg):
         return await self._emit_with_result("game_session_admin_player",
-                                            (self._current_game_session.id, user_id, action.value, arg))
+                                            (self._current_game_session_meta.id, user_id, action.value, arg))
 
     async def session_self_update(self,
                                   inventory: Dict[ItemResourceInfo, InventoryItem],
@@ -350,8 +392,8 @@ class NetworkClient:
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
 
-        await self._emit_with_result("game_session_self_update",
-                                     (self._current_game_session.id, inventory_json, state_string))
+        await self._emit_without_result("game_session_self_update",
+                                        (self._current_game_session_meta.id, inventory_json, state_string))
 
     @property
     def current_user(self) -> Optional[User]:
@@ -359,4 +401,4 @@ class NetworkClient:
 
     @property
     def current_game_session(self) -> Optional[GameSessionEntry]:
-        return self._current_game_session
+        return self._current_game_session_meta

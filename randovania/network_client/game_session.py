@@ -1,7 +1,8 @@
 import dataclasses
 import datetime
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset_migration import VersionedPreset
@@ -79,7 +80,6 @@ class GameSessionEntry:
     name: str
     presets: List[VersionedPreset]
     players: Dict[int, PlayerSessionEntry]
-    actions: List[GameSessionAction]
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
@@ -110,7 +110,6 @@ class GameSessionEntry:
                 player_entry.id: player_entry
                 for player_entry in player_entries
             },
-            actions=[GameSessionAction.from_json(item) for item in data["actions"]],
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
@@ -119,6 +118,17 @@ class GameSessionEntry:
             generation_in_progress=data["generation_in_progress"],
             allowed_games=[RandovaniaGame(game) for game in data["allowed_games"]],
         )
+
+
+@dataclasses.dataclass(frozen=True)
+class GameSessionActions:
+    actions: Tuple[GameSessionAction, ...]
+
+
+@dataclasses.dataclass(frozen=True)
+class GameSessionPickups:
+    game: RandovaniaGame
+    pickups: Tuple[Tuple[str, PickupEntry], ...]
 
 
 @dataclasses.dataclass(frozen=True)

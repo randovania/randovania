@@ -120,9 +120,8 @@ class GameSession(BaseModel):
 
         return games
 
-    def create_session_entry(self):
+    def describe_actions(self):
         description = self.layout_description
-
         location_to_name = {
             row: f"Player {row + 1}" for row in range(self.num_rows)
         }
@@ -145,6 +144,15 @@ class GameSession(BaseModel):
                 "location": provider_location_index.index,
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
+
+        return [
+            _describe_action(action)
+            for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
+                                                               ).order_by(GameSessionTeamAction.time.asc())
+        ]
+
+    def create_session_entry(self):
+        description = self.layout_description
 
         if description is not None:
             game_details = {
@@ -172,11 +180,6 @@ class GameSession(BaseModel):
             "presets": [
                 json.loads(preset.preset)
                 for preset in sorted(self.presets, key=lambda it: it.row)
-            ],
-            "actions": [
-                _describe_action(action)
-                for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
-                                                                   ).order_by(GameSessionTeamAction.time.asc())
             ],
             **game_details,
             "generation_in_progress": (self.generation_in_progress.id
