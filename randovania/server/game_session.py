@@ -15,22 +15,17 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.games.game import RandovaniaGame
-from randovania.layout import game_to_class
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.game_to_class import AnyCosmeticPatches
+from randovania.layout import game_to_class
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.error import WrongPassword, \
-    NotAuthorizedForAction, InvalidAction
+from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
-from randovania.server.database import GameSession, GameSessionMembership, GameSessionTeamAction, \
-    GameSessionPreset
+from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -163,8 +158,9 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
-    # if preset.game != RandovaniaGame.PRIME2:
-    #     raise InvalidAction("Only Prime 2 presets allowed.")
+
+    if preset.game not in session.allowed_games:
+        raise InvalidAction(f"Only {preset.game} preset not allowed.")
 
     try:
         with database.db.atomic():
@@ -240,8 +236,8 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
             preset_row = typing.cast(GameSessionPreset, preset_row)
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
-                if preset.game != RandovaniaGame.METROID_PRIME_ECHOES:
-                    raise InvalidAction("Only Prime 2 presets allowed.")
+                if preset.game not in session.allowed_games:
+                    raise InvalidAction(f"Only {preset.game} preset not allowed.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
