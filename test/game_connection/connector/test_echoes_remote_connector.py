@@ -13,12 +13,18 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_dol_versions
+from randovania.games.prime.echoes_dol_patches import EchoesDolVersion
+
+
+@pytest.fixture(name="version")
+def echoes_version():
+    from randovania.games.prime import echoes_dol_versions
+    return echoes_dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
-def prime_remote_connector():
-    connector = EchoesRemoteConnector(echoes_dol_versions.ALL_VERSIONS[0])
+def echoes_remote_connector(version: EchoesDolVersion):
+    connector = EchoesRemoteConnector(version)
     return connector
 
 
@@ -39,10 +45,9 @@ async def test_is_this_version(connector: EchoesRemoteConnector):
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),
 ])
 @pytest.mark.asyncio
-async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, message_original, message_encoded,
-                                           previous_size):
+async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, version: EchoesDolVersion,
+                                           message_original, message_encoded, previous_size):
     # Setup
-    version = echoes_dol_versions.ALL_VERSIONS[0]
     connector._last_message_size = previous_size
 
     # Run
@@ -125,12 +130,12 @@ async def test_known_collected_locations_nothing(connector: EchoesRemoteConnecto
 
 @pytest.mark.parametrize("capacity", [0, 10])
 @pytest.mark.asyncio
-async def test_known_collected_locations_location(connector: EchoesRemoteConnector, mocker, capacity):
+async def test_known_collected_locations_location(connector: EchoesRemoteConnector, version: EchoesDolVersion,
+                                                  mocker, capacity):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
-    version = echoes_dol_versions.ALL_VERSIONS[0]
     executor = AsyncMock()
     executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
 
@@ -176,14 +181,14 @@ async def test_find_missing_remote_pickups_pending_location(connector: EchoesRem
 
 
 @pytest.mark.asyncio
-async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, mocker):
+async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
+                                                       mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
     mock_call_display_hud_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.call_display_hud_patch")
 
-    version = echoes_dol_versions.ALL_VERSIONS[0]
     pickup_patches = MagicMock()
     connector._write_string_to_game_buffer = MagicMock()
     connector._patches_for_pickup = AsyncMock(return_value=([pickup_patches, pickup_patches], "The Message"))
@@ -218,11 +223,10 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
 
 
 @pytest.mark.asyncio
-async def test_patches_for_pickup(connector: EchoesRemoteConnector, mocker):
+async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
-    version = echoes_dol_versions.ALL_VERSIONS[0]
 
     db = connector.game.resource_database
     pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, progression=tuple(),
@@ -248,14 +252,13 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, mocker):
 
 
 @pytest.mark.asyncio
-async def test_execute_remote_patches(connector: EchoesRemoteConnector, mocker):
+async def test_execute_remote_patches(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker):
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
     mock_remote_execute: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.create_remote_execution_body",
         return_value=(patch_address, patch_bytes)
     )
-    version = echoes_dol_versions.ALL_VERSIONS[0]
 
     executor = AsyncMock()
 
@@ -283,9 +286,9 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, mocker):
 @pytest.mark.parametrize("has_pending_op", [False, True])
 @pytest.mark.parametrize("has_world", [False, True])
 @pytest.mark.asyncio
-async def test_fetch_game_status(connector: EchoesRemoteConnector, has_world, has_pending_op, correct_vtable):
+async def test_fetch_game_status(connector: EchoesRemoteConnector, version: EchoesDolVersion,
+                                 has_world, has_pending_op, correct_vtable):
     # Setup
-    version = echoes_dol_versions.ALL_VERSIONS[0]
     expected_world = connector.game.world_list.worlds[0]
 
     executor = AsyncMock()
