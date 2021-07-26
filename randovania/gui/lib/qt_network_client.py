@@ -130,8 +130,9 @@ def handle_network_errors(fn):
                                        "You're not authorized to perform that action.")
 
         except UnableToConnect as e:
+            s = e.reason.replace('\n', '<br />')
             await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Unable to connect to the server:</b><br /><br />{e.reason}")
+                                       f"<b>Unable to connect to the server:</b><br /><br />{s}")
 
         except RequestTimeout as e:
             await async_dialog.warning(self, "Connection Error",
