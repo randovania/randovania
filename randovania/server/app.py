@@ -7,6 +7,7 @@ import werkzeug.middleware.proxy_fix
 from flask_socketio import ConnectionRefusedError
 
 import randovania
+from randovania.network_common import connection_headers
 from randovania.server import game_session, user_session, database
 from randovania.server.server_app import ServerApp
 
@@ -78,6 +79,8 @@ def create_app():
         return "ok"
 
     server_version = randovania.VERSION
+    expected_headers = connection_headers()
+    expected_headers.pop("X-Randovania-Version")
 
     @sio.sio.server.on("connect")
     def connect(sid, environ):
@@ -86,6 +89,19 @@ def create_app():
 
         client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
         check_client_version(version_checking, client_app_version, server_version)
+
+        wrong_headers = {}
+        for name, expected in expected_headers.items():
+            value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))
+            if value != expected:
+                wrong_headers[name] = value
+
+        if wrong_headers:
+            raise ConnectionRefusedError("\n".join(
+                f"Expected '{expected_headers[name]}' for '{name}', got '{value}'"
+                for name, value in wrong_headers.values()
+            ))
+
         connected_clients.inc()
 
         forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')

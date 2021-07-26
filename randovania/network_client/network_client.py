@@ -13,12 +13,12 @@ import engineio
 import socketio
 import socketio.exceptions
 
-import randovania
 from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
+from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 
@@ -131,10 +131,12 @@ class NetworkClient:
 
             self.logger.info(f"connecting to {self.configuration['server_address']}")
             self._connect_error = None
-            await self.sio.connect(self.configuration["server_address"],
-                                   socketio_path=self.configuration["socketio_path"],
-                                   transports=['websocket'],
-                                   headers={"X-Randovania-Version": randovania.VERSION})
+            await self.sio.connect(
+                self.configuration["server_address"],
+                socketio_path=self.configuration["socketio_path"],
+                transports=['websocket'],
+                headers=connection_headers(),
+            )
             await waiting_for_on_connect
             self.logger.info(f"connected")
 

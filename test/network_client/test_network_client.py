@@ -6,6 +6,7 @@ from mock import MagicMock, AsyncMock, call
 
 import randovania
 from randovania.network_client.network_client import NetworkClient, ConnectionState
+from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
 
@@ -98,7 +99,7 @@ async def test_connect_to_server(tmpdir):
     client.sio.connect.assert_awaited_once_with("http://localhost:5000",
                                                 socketio_path="/path",
                                                 transports=["websocket"],
-                                                headers={"X-Randovania-Version": randovania.VERSION})
+                                                headers=connection_headers())
 
 
 @pytest.mark.asyncio
