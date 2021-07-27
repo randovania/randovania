@@ -686,6 +686,7 @@ def test_create_patch_data(test_files_dir):
 
     assert data == {
         'seed': 1499122484,
+        'hasSpoiler': True,
         'preferences': {
             'artifactHintBehavior': None,
             'mapDefaultState': 'default',
@@ -909,7 +910,7 @@ def test_patch_game(mocker, tmp_path):
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
-    patch_data = {"patch": "data", 'gameConfig': {}}
+    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True}
     game_files_path = MagicMock()
     progress_update = MagicMock()
 
