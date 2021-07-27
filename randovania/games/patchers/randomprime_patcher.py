@@ -316,6 +316,7 @@ class RandomprimePatcher(Patcher):
             },
             "tweaks": ctwk_config,
             "levelData": world_data,
+            "hasSpoiler": description.permalink.spoiler,
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
@@ -326,6 +327,7 @@ class RandomprimePatcher(Patcher):
         symbols = py_randomprime.symbols_for_file(input_file)
 
         new_config = copy.copy(patch_data)
+        has_spoiler = new_config.pop("hasSpoiler")
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
@@ -339,7 +341,8 @@ class RandomprimePatcher(Patcher):
         )
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
-        Path("patcher.json").write_text(patch_as_str)
+        if has_spoiler:
+            output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
 
         py_randomprime.patch_iso_raw(
             patch_as_str,
