@@ -6,13 +6,13 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
-from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector, _echoes_powerup_offset
+from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_dol_versions
+from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
@@ -26,7 +26,14 @@ class DebugGameBackendChoice:
         return "Debug"
 
 
-class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
+def _echoes_powerup_address(item_index: int) -> int:
+    powerups_offset = 0x58
+    vector_data_offset = 0x4
+    powerup_size = 0xc
+    return 0xA00000 + (powerups_offset + vector_data_offset) + (item_index * powerup_size)
+
+
+class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     _connected: bool = False
     pickups: List[PickupEntry]
 
@@ -92,27 +99,6 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._game_memory[address:address + len(data)] = data
         self.logger.info(f"Wrote {data.hex()} to {hex(address)}")
 
-    @property
-    def lock_identifier(self) -> Optional[str]:
-        return None
-
-    @property
-    def backend_choice(self):
-        return DebugGameBackendChoice()
-
-    async def connect(self) -> bool:
-        await self._ensure_initialized_game_memory()
-        self._read_message_from_game()
-        await self._update_inventory_label()
-        self._connected = True
-        return True
-
-    async def disconnect(self):
-        self._connected = False
-
-    def is_connected(self) -> bool:
-        return self._connected
-
     async def _update_inventory_label(self):
         inventory = await self._connector.get_inventory(self)
 
@@ -126,8 +112,7 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
     def _get_magic_address(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
-        magic_address = 0xA00000 + _echoes_powerup_offset(multiworld_magic_item.index)
-        return magic_address
+        return _echoes_powerup_address(multiworld_magic_item.index)
 
     def _read_magic(self):
         return self._read_memory_format(">II", self._get_magic_address())
@@ -195,6 +180,182 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             self._write_memory(address, op.write_bytes)
         return result
 
+    def _add_power_up(self, registers: Dict[int, int]):
+        item_id = registers[4]
+        delta = registers[5]
+        item = self.game.resource_database.get_item(item_id)
+        address = _echoes_powerup_address(item_id)
+
+        amount, capacity = self._read_memory_format(">II", address)
+        capacity = max(0, min(capacity + delta, item.max_capacity))
+        amount = min(amount, capacity)
+        self._write_memory(address, struct.pack(">II", amount, capacity))
+
+    def _incr_pickup(self, registers: Dict[int, int]):
+        item_id = registers[4]
+        delta = registers[5]
+        address = _echoes_powerup_address(item_id)
+
+        amount, capacity = self._read_memory_format(">II", address)
+        amount = max(0, min(amount + delta, capacity))
+        self._write_memory(address, struct.pack(">I", amount))
+
+    def _decr_pickup(self, registers: Dict[int, int]):
+        item_id = registers[4]
+        delta = registers[5]
+        address = _echoes_powerup_address(item_id)
+
+        amount, capacity = self._read_memory_format(">II", address)
+        amount = max(0, min(amount - delta, capacity))
+        self._write_memory(address, struct.pack(">I", amount))
+
+    def _display_hud_memo(self, registers):
+        string_start = self._used_version.string_display.message_receiver_string_ref
+        message_bytes = self._read_memory(string_start, self._used_version.string_display.max_message_size + 2)
+        message = message_bytes[:message_bytes.find(b"\x00\x00")].decode("utf-16_be")
+        self.messages_list.addItem(message)
+
+    def _handle_remote_execution(self):
+        has_message_address = self._used_version.cstate_manager_global + 0x2
+        if self._read_memory(has_message_address, 1) == b"\x00":
+            return
+
+        self.logger.debug("has code to execute, start parsing ppc")
+        registers: Dict[int, int] = {i: 0 for i in range(32)}
+        registers[3] = self._used_version.sda2_base
+
+        functions = {
+            self._used_version.powerup_functions.add_power_up: self._add_power_up,
+            self._used_version.powerup_functions.incr_pickup: self._incr_pickup,
+            self._used_version.powerup_functions.decr_pickup: self._decr_pickup,
+            self._used_version.string_display.wstring_constructor: lambda reg: None,
+            self._used_version.string_display.display_hud_memo: self._display_hud_memo,
+        }
+
+        patch_address, _ = all_prime_dol_patches.create_remote_execution_body(self._used_version.string_display, [])
+        current_address = patch_address
+        while current_address - patch_address < 0x2000:
+            instruction = self._read_memory(current_address, 4)
+            inst_value = int.from_bytes(instruction, "big")
+            header = inst_value >> 26
+
+            def get_signed_16():
+                return struct.unpack("h", struct.pack("H", inst_value & 65535))[0]
+
+            if header == 19:
+                # subset of branch without address. Consider these blr
+                end_address = current_address
+                self.logger.debug("blr")
+                break
+
+            if header == 14:
+                # addi
+                output_reg = (inst_value >> 21) & 31
+                input_reg = (inst_value >> 16) & 31
+                value = get_signed_16()
+                if input_reg == 0:
+                    self.logger.debug(f"addi r{output_reg}, {value}")
+                    registers[output_reg] = value
+                else:
+                    self.logger.debug(f"addi r{output_reg}, r{input_reg}, {value}")
+                    registers[output_reg] = registers[input_reg] + value
+
+            elif header == 15:
+                # addis
+                output_reg = (inst_value >> 21) & 31
+                input_reg = (inst_value >> 16) & 31
+                value = inst_value & 65535
+                if input_reg == 0:
+                    self.logger.debug(f"lis r{output_reg}, {value}")
+                    registers[output_reg] = value << 16
+                else:
+                    self.logger.debug(f"addis r{output_reg}, r{input_reg}, {value}")
+                    registers[output_reg] = (registers[input_reg] + value) << 16
+
+            elif header == 18:
+                # b and bl (relative branch)
+                jump_offset = (inst_value >> 2) & ((2 << 24) - 1)
+                link = bool(inst_value & 1)
+                address = current_address + (jump_offset * 4)
+
+                if address in functions:
+                    function_name = functions[address].__name__
+                    functions[address](registers)
+                else:
+                    function_name = "unknown"
+
+                self.logger.debug(f"b{'l' if link else ''} 0x{address:0x} [{function_name}]")
+
+            elif header == 24:
+                # ori
+                output_reg = (inst_value >> 21) & 31
+                input_reg = (inst_value >> 16) & 31
+                value = inst_value & 65535
+
+                self.logger.debug(f"ori r{output_reg}, r{input_reg}, {value}")
+                registers[output_reg] = registers[input_reg] | value
+
+            elif header == 36 or header == 38:
+                # stw (36) and stb (38)
+                input_reg = (inst_value >> 21) & 31
+                output_reg = (inst_value >> 16) & 31
+                value = get_signed_16()
+
+                if header == 36:
+                    inst = 'stw'
+                    size = 4
+                else:
+                    inst = 'stb'
+                    size = 1
+
+                self.logger.debug(f"{inst} r{input_reg}, 0x{value:0x} (r{output_reg})")
+                # ignore r1, as it's writing to stack
+                if output_reg != 1:
+                    self._write_memory(registers[output_reg] + value,
+                                       registers[input_reg].to_bytes(size, "big"))
+
+            elif header == 32:
+                # lwz
+                output_reg = (inst_value >> 21) & 31
+                input_reg = (inst_value >> 16) & 31
+                value = get_signed_16()
+
+                self.logger.debug(f"lwz r{input_reg}, 0x{value:0x} (r{output_reg})")
+                ea = value
+                if input_reg != 0:
+                    ea += registers[input_reg]
+
+                registers[output_reg] = int.from_bytes(self._read_memory(ea, 4), "big")
+            else:
+                self.logger.debug(f"unsupported instruction: {instruction.hex()}; {header}")
+
+            current_address += 4
+
+        self._write_memory(has_message_address, b"\x00")
+
+    # MemoryOperationExecutor
+
+    @property
+    def lock_identifier(self) -> Optional[str]:
+        return None
+
+    @property
+    def backend_choice(self):
+        return DebugGameBackendChoice()
+
+    async def connect(self) -> bool:
+        await self._ensure_initialized_game_memory()
+        self._handle_remote_execution()
+        await self._update_inventory_label()
+        self._connected = True
+        return True
+
+    async def disconnect(self):
+        self._connected = False
+
+    def is_connected(self) -> bool:
+        return self._connected
+
     async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
         result = {}
         for op in ops:
@@ -202,15 +363,3 @@ class DebugBackendWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             if op_result is not None:
                 result[op] = op_result
         return result
-
-    def _read_message_from_game(self):
-        has_message_address = self._used_version.cstate_manager_global + 0x2
-        if self._read_memory(has_message_address, 1) == b"\x00":
-            return
-
-        string_start = self._used_version.string_display.message_receiver_string_ref
-        message_bytes = self._read_memory(string_start, self._used_version.string_display.max_message_size + 2)
-        message = message_bytes[:message_bytes.find(b"\x00\x00")].decode("utf-16_be")
-
-        self.messages_list.addItem(message)
-        self._write_memory(has_message_address, b"\x00")

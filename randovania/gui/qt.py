@@ -101,8 +101,8 @@ def create_memory_executor(debug_game_backend: bool, options):
 
     logger.info("Preparing game backend...")
     if debug_game_backend:
-        from randovania.gui.debug_backend_window import DebugBackendWindow
-        backend = DebugBackendWindow()
+        from randovania.gui.debug_backend_window import DebugExecutorWindow
+        backend = DebugExecutorWindow()
         backend.show()
     else:
         try:
