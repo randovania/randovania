@@ -82,10 +82,19 @@ def setup_logging(default_level: str, log_to_file: Optional[Path]):
             'randovania.gui.multiworld_client': {
                 'level': 'DEBUG',
             },
-            'NintendontBackend': {
+            'NintendontExecutor': {
                 'level': 'DEBUG',
             },
-            'DolphinBackend': {
+            'DolphinExecutor': {
+                'level': 'DEBUG',
+            },
+            'Prime1RemoteConnector': {
+                'level': 'DEBUG',
+            },
+            'EchoesRemoteConnector': {
+                'level': 'DEBUG',
+            },
+            'CorruptionRemoteConnector': {
                 'level': 'DEBUG',
             },
             'randovania.gui.qt': {
