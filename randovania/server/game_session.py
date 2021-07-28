@@ -15,22 +15,17 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.games.game import RandovaniaGame
-from randovania.layout import game_to_class
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.game_to_class import AnyCosmeticPatches
+from randovania.layout import game_to_class
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.error import WrongPassword, \
-    NotAuthorizedForAction, InvalidAction
+from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
-from randovania.server.database import GameSession, GameSessionMembership, GameSessionTeamAction, \
-    GameSessionPreset
+from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -74,7 +69,7 @@ def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
                                                      defaults={"row": None, "admin": False,
                                                                "connection_state": "Online, Unknown"})[0]
 
-    _emit_session_update(session)
+    _emit_session_meta_update(session)
     sio.join_game_session(membership)
 
     return session.create_session_entry()
@@ -86,7 +81,7 @@ def disconnect_game_session(sio: ServerApp, session_id: int):
         current_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
         current_membership.connection_state = "Offline"
         current_membership.save()
-        _emit_session_update(current_membership.session)
+        _emit_session_meta_update(current_membership.session)
     except peewee.DoesNotExist:
         pass
     sio.leave_game_session()
@@ -133,13 +128,25 @@ def _get_preset(preset_json: dict) -> VersionedPreset:
         raise InvalidAction(f"invalid preset: {e}")
 
 
-def _emit_session_update(session: GameSession):
-    flask_socketio.emit("game_session_update", session.create_session_entry(), room=f"game-session-{session.id}")
+def _emit_session_meta_update(session: GameSession):
+    flask_socketio.emit("game_session_meta_update", session.create_session_entry(), room=f"game-session-{session.id}")
 
 
-def game_session_request_update(sio: ServerApp, session_id):
-    session: database.GameSession = database.GameSession.get_by_id(session_id)
-    return session.create_session_entry()
+def _emit_session_actions_update(session: GameSession):
+    flask_socketio.emit("game_session_actions_update", session.describe_actions(), room=f"game-session-{session.id}")
+
+
+def game_session_request_update(sio: ServerApp, session_id: int):
+    current_user = sio.get_current_user()
+    session: GameSession = GameSession.get_by_id(session_id)
+    membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
+
+    _emit_session_meta_update(session)
+    if session.layout_description is not None:
+        _emit_session_actions_update(session)
+
+    if not membership.is_observer and session.state != GameSessionState.SETUP:
+        _emit_game_session_pickups_update(sio, membership)
 
 
 def _create_row(sio: ServerApp, session: GameSession, preset_json: dict):
@@ -163,8 +170,9 @@ def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     preset = _get_preset(preset_json)
-    # if preset.game != RandovaniaGame.PRIME2:
-    #     raise InvalidAction("Only Prime 2 presets allowed.")
+
+    if preset.game not in session.allowed_games:
+        raise InvalidAction(f"Only {preset.game} preset not allowed.")
 
     try:
         with database.db.atomic():
@@ -240,8 +248,8 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
             preset_row = typing.cast(GameSessionPreset, preset_row)
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
-                if preset.game != RandovaniaGame.METROID_PRIME_ECHOES:
-                    raise InvalidAction("Only Prime 2 presets allowed.")
+                if preset.game not in session.allowed_games:
+                    raise InvalidAction(f"Only {preset.game} preset not allowed.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
@@ -352,7 +360,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         logger().info(f"Session {session.id}: Deleting session.")
         session.delete_instance(recursive=True)
 
-    _emit_session_update(session)
+    _emit_session_meta_update(session)
 
 
 def _find_empty_row(session: GameSession) -> int:
@@ -451,7 +459,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         # FIXME
         raise InvalidAction("Abandon is NYI")
 
-    _emit_session_update(session)
+    _emit_session_meta_update(session)
 
 
 def _query_for_actions(membership: GameSessionMembership) -> peewee.ModelSelect:
@@ -519,6 +527,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
     if membership.is_observer:
         raise InvalidAction("Observers can't collect locations")
 
+    logger().info(f"Session {session.id}, Row {membership.row} found items {pickup_locations}")
     description = session.layout_description
 
     receiver_players = set()
@@ -533,16 +542,10 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
     for receiver_player in receiver_players:
         try:
             receiver_membership = GameSessionMembership.get_by_session_position(session, row=receiver_player)
-            flask_socketio.emit(
-                "game_has_update",
-                {
-                    "session": session_id,
-                    "row": receiver_player,
-                },
-                room=f"game-session-{receiver_membership.session.id}-{receiver_membership.user.id}")
+            _emit_game_session_pickups_update(sio, receiver_membership)
         except peewee.DoesNotExist:
             pass
-    _emit_session_update(session)
+    _emit_session_actions_update(session)
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
@@ -554,19 +557,14 @@ def _get_pickup_target(description: LayoutDescription, provider: int, location: 
     return pickup_assignment.get(PickupIndex(location))
 
 
-def game_session_request_pickups(sio: ServerApp, session_id: int):
-    current_user = sio.get_current_user()
-    your_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
-    session: GameSession = your_membership.session
+def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMembership):
+    session: GameSession = membership.session
 
     if session.state == GameSessionState.SETUP:
-        logger().info(f"Session {session_id}, Row {your_membership.row} "
-                      f"requested pickups, but session is setup.")
-        return None
+        raise RuntimeError("Unable to emit pickups during SETUP")
 
-    if your_membership.is_observer:
-        logger().info(f"Session {session_id}, {current_user.name} requested pickups, but is an observer.")
-        return None
+    if membership.is_observer:
+        raise RuntimeError("Unable to emit pickups for observers")
 
     description = session.layout_description
     row_to_member_name = {
@@ -574,10 +572,10 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
         for member in GameSessionMembership.non_observer_members(session)
     }
 
-    resource_database = _get_resource_database(description, your_membership.row)
+    resource_database = _get_resource_database(description, membership.row)
 
     result = []
-    actions: List[GameSessionTeamAction] = list(_query_for_actions(your_membership))
+    actions: List[GameSessionTeamAction] = list(_query_for_actions(membership))
     for action in actions:
         pickup_target = _get_pickup_target(description, action.provider_row, action.provider_location_index)
 
@@ -591,13 +589,14 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
                 "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 
-    logger().info(f"Session {session_id}, Row {your_membership.row} "
-                  f"requested pickups, returning {len(result)} elements for {resource_database.game_enum.value}.")
+    logger().info(f"Session {session.id}, Row {membership.row} "
+                  f"notifying {resource_database.game_enum.value} of {len(result)} pickups.")
 
-    return {
+    data = {
         "game": resource_database.game_enum.value,
         "pickups": result,
     }
+    flask_socketio.emit("game_session_pickups_update", data, room=f"game-session-{session.id}-{membership.user.id}")
 
 
 def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, game_connection_state: str):
@@ -607,7 +606,7 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, ga
     membership.connection_state = f"Online, {game_connection_state}"
     membership.inventory = inventory
     membership.save()
-    _emit_session_update(membership.session)
+    _emit_session_meta_update(membership.session)
 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
@@ -624,7 +623,7 @@ def report_user_disconnected(sio: ServerApp, user_id: int, log):
             membership.save()
 
     for session in sessions_to_update:
-        _emit_session_update(session)
+        _emit_session_meta_update(session)
 
 
 def setup_app(sio: ServerApp):
@@ -636,7 +635,6 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_admin_session", game_session_admin_session)
     sio.on("game_session_admin_player", game_session_admin_player)
     sio.on("game_session_collect_locations", game_session_collect_locations)
-    sio.on("game_session_request_pickups", game_session_request_pickups)
     sio.on("game_session_self_update", game_session_self_update)
 
     @sio.admin_route("/sessions")

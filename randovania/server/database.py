@@ -111,9 +111,17 @@ class GameSession(BaseModel):
             "creation_date": self.creation_datetime.astimezone(datetime.timezone.utc).isoformat(),
         }
 
-    def create_session_entry(self):
-        description = self.layout_description
+    @property
+    def allowed_games(self) -> List[RandovaniaGame]:
+        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
 
+        if "prime3" in (self.dev_features or ""):
+            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
+
+        return games
+
+    def describe_actions(self):
+        description = self.layout_description
         location_to_name = {
             row: f"Player {row + 1}" for row in range(self.num_rows)
         }
@@ -137,6 +145,15 @@ class GameSession(BaseModel):
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
+        return [
+            _describe_action(action)
+            for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
+                                                               ).order_by(GameSessionTeamAction.time.asc())
+        ]
+
+    def create_session_entry(self):
+        description = self.layout_description
+
         if description is not None:
             game_details = {
                 "spoiler": description.permalink.spoiler,
@@ -152,10 +169,6 @@ class GameSession(BaseModel):
                 "permalink": None,
             }
 
-        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
-        if "prime3" in (self.dev_features or ""):
-            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
         return {
             "id": self.id,
             "name": self.name,
@@ -168,15 +181,10 @@ class GameSession(BaseModel):
                 json.loads(preset.preset)
                 for preset in sorted(self.presets, key=lambda it: it.row)
             ],
-            "actions": [
-                _describe_action(action)
-                for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
-                                                                   ).order_by(GameSessionTeamAction.time.asc())
-            ],
             **game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
-            "allowed_games": [game.value for game in games],
+            "allowed_games": [game.value for game in self.allowed_games],
         }
 
     def reset_layout_description(self):

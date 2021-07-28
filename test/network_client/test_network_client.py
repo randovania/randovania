@@ -4,7 +4,8 @@ import pytest
 import socketio.exceptions
 from mock import MagicMock, AsyncMock, call
 
-import randovania
+from randovania.games.game import RandovaniaGame
+from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_client.network_client import NetworkClient, ConnectionState
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -105,8 +106,8 @@ async def test_connect_to_server(tmpdir):
 @pytest.mark.asyncio
 async def test_session_admin_global(client):
     client._emit_with_result = AsyncMock()
-    client._current_game_session = MagicMock()
-    client._current_game_session.id = 1234
+    client._current_game_session_meta = MagicMock()
+    client._current_game_session_meta.id = 1234
 
     # Run
     result = await client.session_admin_global(SessionAdminGlobalAction.CHANGE_ROW, 5)
@@ -120,8 +121,8 @@ async def test_session_admin_global(client):
 @pytest.mark.asyncio
 async def test_leave_game_session(client: NetworkClient, permanent: bool):
     client._emit_with_result = AsyncMock()
-    client._current_game_session = MagicMock()
-    client._current_game_session.id = 1234
+    client._current_game_session_meta = MagicMock()
+    client._current_game_session_meta.id = 1234
     client._current_user = MagicMock()
     client._current_user.id = 5678
 
@@ -135,7 +136,7 @@ async def test_leave_game_session(client: NetworkClient, permanent: bool):
 
     client._emit_with_result.assert_has_awaits(calls)
 
-    assert client._current_game_session is None
+    assert client._current_game_session_meta is None
 
 
 @pytest.mark.asyncio
@@ -178,3 +179,34 @@ def test_update_timeout_with_decrease_on_success(client: NetworkClient):
 
     # Assert
     assert client._current_timeout == 40
+
+
+@pytest.mark.asyncio
+async def test_refresh_received_pickups(client: NetworkClient, corruption_game_description, mocker):
+    db = corruption_game_description.resource_database
+
+    data = {
+        "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
+        "pickups": [
+            {"provider_name": "Message A", "pickup": 'VtI6Bb3p'},
+            {"provider_name": "Message B", "pickup": 'VtI6Bb3y'},
+            {"provider_name": "Message C", "pickup": 'VtI6Bb3*'},
+        ]
+    }
+
+    pickups = [MagicMock(), MagicMock(), MagicMock()]
+    mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
+
+    # Run
+    await client._on_game_session_pickups_update_raw(data)
+
+    # Assert
+    assert client._current_game_session_pickups == GameSessionPickups(
+        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+        pickups=(
+            ("Message A", pickups[0]),
+            ("Message B", pickups[1]),
+            ("Message C", pickups[2]),
+        )
+    )
+    mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])

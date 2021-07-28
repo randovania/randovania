@@ -35,7 +35,7 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry
+from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
@@ -271,7 +271,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         spacer_item = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.main_layout.insertSpacerItem(2, spacer_item)
 
-        self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
+        self.network_client.GameSessionMetaUpdated.connect(self.on_game_session_meta_update)
+        self.network_client.GameSessionActionsUpdated.connect(self.on_game_session_actions_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.game_connection.Updated.connect(self.on_game_connection_updated)
 
@@ -282,7 +283,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         try:
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
-            await window.on_game_session_updated(network_client.current_game_session)
+            await window.on_game_session_meta_update(network_client.current_game_session)
             await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
             return window
@@ -320,7 +321,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         await self.multiworld_client.stop()
         try:
-            self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
+            self.network_client.GameSessionMetaUpdated.disconnect(self.on_game_session_meta_update)
         except Exception as e:
             logging.exception(f"Unable to disconnect: {e}")
         try:
@@ -590,7 +591,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.append(widget)
 
     @asyncSlot(GameSessionEntry)
-    async def on_game_session_updated(self, game_session: GameSessionEntry):
+    async def on_game_session_meta_update(self, game_session: GameSessionEntry):
         self._game_session = game_session
 
         if self.network_client.current_user.id not in game_session.players:
@@ -603,9 +604,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.sync_player_widgets_to_game_session()
         self.sync_background_process_to_game_session()
         self.update_game_tab()
-        self.update_session_actions()
         await self.update_multiworld_client_status()
         await self.update_logic_settings_window()
+
+    @asyncSlot(GameSessionActions)
+    async def on_game_session_actions_update(self, actions: GameSessionActions):
+        self.update_session_actions(actions)
 
     async def _on_kicked(self):
         if self._already_kicked:
@@ -706,12 +710,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.finish_session_action.setEnabled(self_is_admin and game_session.state == GameSessionState.IN_PROGRESS)
         self.reset_session_action.setEnabled(self_is_admin and game_session.state != GameSessionState.SETUP)
 
-    def update_session_actions(self):
+    def update_session_actions(self, actions: GameSessionActions):
         scrollbar = self.history_table_widget.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_table_widget.horizontalHeader().setVisible(True)
-        self.history_table_widget.setRowCount(len(self._game_session.actions))
-        for i, action in enumerate(self._game_session.actions):
+        self.history_table_widget.setRowCount(len(actions.actions))
+        for i, action in enumerate(actions.actions):
             preset = self._game_session.presets[action.provider_row]
             game = default_database.game_description_for(preset.game)
             location_node = game.world_list.node_from_pickup_index(action.location)
@@ -722,6 +726,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.history_table_widget.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
             self.history_table_widget.setItem(i, 3, QtWidgets.QTableWidgetItem(location_name))
             self.history_table_widget.setItem(i, 4, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+
         if autoscroll:
             self.history_table_widget.scrollToBottom()
 
