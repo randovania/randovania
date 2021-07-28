@@ -77,7 +77,7 @@ setup(
         'aiohttp',
         'aiofiles',
         'dulwich>=0.20',
-        'py_randomprime>=0.3.2',
+        'py_randomprime>=0.3.6',
     ],
     extras_require={
         "gui": [

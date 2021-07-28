@@ -860,6 +860,7 @@ def test_create_patch_data(test_files_dir):
             'startingItems': {
                 'bombs': False,
                 'boostBall': False,
+                'combatVisor': True,
                 'charge': False,
                 'energyTanks': 0,
                 'flamethrower': False,
