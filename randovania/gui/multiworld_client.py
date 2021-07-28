@@ -17,6 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
@@ -67,7 +68,6 @@ class Data(AsyncContextManager):
 class MultiworldClient(QObject):
     _data: Optional[Data] = None
     _expected_game: RandovaniaGame = None
-    _received_pickups: PermanentPickups
     _notify_task: Optional[asyncio.Task] = None
     _pid: Optional[pid.PidFile] = None
 
@@ -100,11 +100,10 @@ class MultiworldClient(QObject):
 
         self._data = Data(persist_path)
         self.game_connection.set_location_collected_listener(self.on_location_collected)
-        self.network_client.GameUpdateNotification.connect(self.on_network_game_updated)
-
-        await self.on_network_game_updated()
+        self.network_client.GameSessionPickupsUpdated.connect(self.on_network_game_updated)
 
         self.start_notify_collect_locations_task()
+        await self.network_client.game_session_request_update()
 
     async def stop(self):
         self.logger.debug("stop")
@@ -115,13 +114,13 @@ class MultiworldClient(QObject):
 
         self.game_connection.set_location_collected_listener(None)
         try:
-            self.network_client.GameUpdateNotification.disconnect(self.on_network_game_updated)
+            self.network_client.GameSessionPickupsUpdated.disconnect(self.on_network_game_updated)
         except RuntimeError:
             pass
 
         async with self._pickups_lock:
             self.game_connection.set_expected_game(None)
-            self.game_connection.set_permanent_pickups([])
+            self.game_connection.set_permanent_pickups(tuple())
 
         self._data = None
         if self._pid is not None:
@@ -164,23 +163,9 @@ class MultiworldClient(QObject):
 
         self.start_notify_collect_locations_task()
 
-    async def refresh_received_pickups(self):
-        self.logger.debug(f"start")
+    @asyncSlot(GameSessionPickups)
+    async def on_network_game_updated(self, pickups: GameSessionPickups):
         async with self._pickups_lock:
-            game, result = await self.network_client.game_session_request_pickups()
-            resource_database = default_database.resource_database_for(game)
-
-            self.logger.info(f"received {len(result)} items")
-            self._expected_game = game
-            self._received_pickups = [
-                (provider_name, _decode_pickup(data, resource_database))
-                for provider_name, data in result
-            ]
-
-    @asyncSlot()
-    async def on_network_game_updated(self):
-        await self.refresh_received_pickups()
-
-        async with self._pickups_lock:
-            self.game_connection.set_expected_game(self._expected_game)
-            self.game_connection.set_permanent_pickups(self._received_pickups)
+            self._expected_game = pickups.game
+            self.game_connection.set_expected_game(pickups.game)
+            self.game_connection.set_permanent_pickups(pickups.pickups)

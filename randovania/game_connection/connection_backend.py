@@ -16,7 +16,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime import (echoes_dol_versions, prime1_dol_versions,
                                     corruption_dol_versions)
 
-PermanentPickups = List[Tuple[str, PickupEntry]]
+PermanentPickups = Tuple[Tuple[str, PickupEntry], ...]
 
 
 class ConnectionBackend(ConnectionBase):
@@ -45,7 +45,7 @@ class ConnectionBackend(ConnectionBase):
 
         self._inventory = {}
         self._expected_game = None
-        self._permanent_pickups = []
+        self._permanent_pickups = tuple()
 
     @property
     def current_status(self) -> GameConnectionStatus:

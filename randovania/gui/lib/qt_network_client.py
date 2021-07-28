@@ -10,7 +10,7 @@ from PySide2.QtWidgets import QWidget
 
 import randovania
 from randovania.gui.lib import async_dialog
-from randovania.network_client.game_session import GameSessionEntry, User
+from randovania.network_client.game_session import GameSessionEntry, User, GameSessionActions, GameSessionPickups
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
                                              NotLoggedIn)
@@ -22,7 +22,9 @@ class QtNetworkClient(QWidget, NetworkClient):
     Disconnect = Signal()
     UserChanged = Signal(User)
     ConnectionStateUpdated = Signal(ConnectionState)
-    GameSessionUpdated = Signal(GameSessionEntry)
+    GameSessionMetaUpdated = Signal(GameSessionEntry)
+    GameSessionActionsUpdated = Signal(GameSessionActions)
+    GameSessionPickupsUpdated = Signal(GameSessionPickups)
     GameUpdateNotification = Signal()
 
     discord: Optional[pypresence.AioClient]
@@ -60,9 +62,17 @@ class QtNetworkClient(QWidget, NetworkClient):
         await super().on_user_session_updated(new_session)
         self.UserChanged.emit(self.current_user)
 
-    async def on_game_session_updated(self, data):
-        await super().on_game_session_updated(data)
-        self.GameSessionUpdated.emit(self._current_game_session)
+    async def on_game_session_meta_update(self, entry: GameSessionEntry):
+        await super().on_game_session_meta_update(entry)
+        self.GameSessionMetaUpdated.emit(entry)
+
+    async def on_game_session_actions_update(self, actions: GameSessionActions):
+        await super().on_game_session_actions_update(actions)
+        self.GameSessionActionsUpdated.emit(actions)
+
+    async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
+        await super().on_game_session_pickups_update(pickups)
+        self.GameSessionPickupsUpdated.emit(pickups)
 
     async def login_with_discord(self):
         if self.discord is None:
