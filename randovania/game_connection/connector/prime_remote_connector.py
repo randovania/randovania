@@ -135,18 +135,20 @@ class PrimeRemoteConnector(RemoteConnector):
             return set(), []
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: List[Tuple[str, PickupEntry]],
+                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          in_cooldown: bool,
                                           ) -> Tuple[List[RemotePatch], bool]:
         """
         Determines if any of the remote_pickups needs to be written to executor.
         :param executor:
         :param inventory: The player's inventory, as given by `get_inventory`.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
+        :param in_cooldown: If sending new pickups is on cooldown.
         :return: List of patches to give one missing pickup. A bool indicating that a message will be displayed.
         """
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
-        if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups):
+        if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return [], False
 
         provider_name, pickup = remote_pickups[magic_inv.capacity]

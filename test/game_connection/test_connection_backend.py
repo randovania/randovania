@@ -205,7 +205,7 @@ async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
 
     if depth == 2:
         connector.find_missing_remote_pickups.assert_awaited_once_with(
-            backend.executor, backend._inventory, backend._permanent_pickups
+            backend.executor, backend._inventory, backend._permanent_pickups, False
         )
     else:
         connector.find_missing_remote_pickups.assert_not_awaited()
