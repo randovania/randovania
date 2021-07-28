@@ -47,6 +47,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "iceSpreader": 14,
     "spaceJump": 15,
     "morphBall": 16,
+    "combatVisor": 17,
     "boostBall": 18,
     "spiderBall": 19,
     "gravitySuit": 21,
