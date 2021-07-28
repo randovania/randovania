@@ -263,11 +263,14 @@ class NetworkClient:
     # Game Session Updated
 
     async def _on_game_session_meta_update_raw(self, data):
-        await self.on_game_session_meta_update(GameSessionEntry.from_json(data))
+        entry = GameSessionEntry.from_json(data)
+        self.logger.debug("%s: %s",
+                          entry.id,
+                          hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
+        await self.on_game_session_meta_update(entry)
 
     async def on_game_session_meta_update(self, entry: GameSessionEntry):
         self._current_game_session_meta = entry
-        self.logger.debug(f"{self._current_game_session_meta.id}")
 
     async def _on_game_session_actions_update_raw(self, data):
         await self.on_game_session_actions_update(GameSessionActions(
