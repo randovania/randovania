@@ -106,7 +106,8 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: List[Tuple[str, PickupEntry]],
+                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          in_cooldown: bool,
                                           ) -> Tuple[List[DolRemotePatch], bool]:
         # Not yet implemented
         return [], False
