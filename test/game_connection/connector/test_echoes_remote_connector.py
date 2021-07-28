@@ -159,7 +159,7 @@ async def test_find_missing_remote_pickups_nothing(connector: EchoesRemoteConnec
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [])
+    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [], False)
 
     # Assert
     assert patches == []
@@ -173,16 +173,17 @@ async def test_find_missing_remote_pickups_pending_location(connector: EchoesRem
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(5, 15)}
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [])
+    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [], False)
 
     # Assert
     assert patches == []
     assert not has_message
 
 
+@pytest.mark.parametrize("in_cooldown", [False, True])
 @pytest.mark.asyncio
 async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
-                                                       mocker):
+                                                       mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
@@ -201,9 +202,19 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
     ]
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, permanent_pickups)
+    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, permanent_pickups,
+                                                                       in_cooldown)
 
     # Assert
+    if in_cooldown:
+        assert patches == []
+        assert not has_message
+        mock_item_patch.assert_not_called()
+        connector._patches_for_pickup.assert_not_called()
+        connector._write_string_to_game_buffer.assert_not_called()
+        mock_call_display_hud_patch.assert_not_called()
+        return
+
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
                                             connector.game.resource_database.multiworld_magic_item.index)

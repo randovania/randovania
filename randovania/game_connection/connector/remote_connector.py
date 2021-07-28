@@ -45,13 +45,15 @@ class RemoteConnector:
         raise NotImplementedError()
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: List[Tuple[str, PickupEntry]],
+                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          in_cooldown: bool,
                                           ) -> Tuple[List[RemotePatch], bool]:
         """
         Determines if any of the remote_pickups needs to be written to executor.
         :param executor:
         :param inventory: The player's inventory, as given by `get_inventory`.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
+        :param in_cooldown: If sending new pickups is on cooldown.
         :return: List of patches to give one missing pickup. A bool indicating that a message will be displayed.
         """
         raise NotImplementedError()
