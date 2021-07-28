@@ -266,8 +266,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.observers = []
         self.team_players = []
 
-        self.main_layout.insertWidget(1, self.players_box)
-
         spacer_item = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.main_layout.insertSpacerItem(2, spacer_item)
 
@@ -525,19 +523,19 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         player_label = QtWidgets.QLabel(self.players_box)
         player_label.setText("")
         player_label.setWordWrap(True)
-        parent_layout.addWidget(player_label, 2 + row_id, _PRESET_COLUMNS + 1 + team_id * 3)
+        parent_layout.addWidget(player_label, 2 + row_id, _PRESET_COLUMNS + 0 + team_id * 3)
 
         connection_state = None
         if not is_observer:
             connection_state = QtWidgets.QLabel(self.players_box)
             connection_state.setText("")
             connection_state.setWordWrap(True)
-            parent_layout.addWidget(connection_state, 2 + row_id, _PRESET_COLUMNS + 2 + team_id * 3)
+            parent_layout.addWidget(connection_state, 2 + row_id, _PRESET_COLUMNS + 1 + team_id * 3)
 
         tool_button = QtWidgets.QToolButton(self.players_box)
         tool_button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         tool_button.setText("...")
-        parent_layout.addWidget(tool_button, 2 + row_id, _PRESET_COLUMNS + 3 + team_id * 3)
+        parent_layout.addWidget(tool_button, 2 + row_id, _PRESET_COLUMNS + 2 + team_id * 3)
 
         tool_button_menu = QtWidgets.QMenu(tool_button)
         tool_button.setMenu(tool_button_menu)
