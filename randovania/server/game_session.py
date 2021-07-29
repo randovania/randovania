@@ -603,10 +603,14 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, ga
     current_user = sio.get_current_user()
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
+    old_state = membership.connection_state
+    # old_inventory = membership.inventory
+
     membership.connection_state = f"Online, {game_connection_state}"
     membership.inventory = inventory
     membership.save()
-    _emit_session_meta_update(membership.session)
+    if old_state != membership.connection_state:
+        _emit_session_meta_update(membership.session)
 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
