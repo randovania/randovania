@@ -1,14 +1,12 @@
 import copy
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Any, Tuple, Optional
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import GameConnectionStatus, ConnectionBase, InventoryItem, \
-    LocationListener
+from randovania.game_connection.connection_base import LocationListener
 from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
