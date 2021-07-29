@@ -178,7 +178,7 @@ class GameSession(BaseModel):
                 for membership in self.players
             ],
             "presets": [
-                json.loads(preset.preset)
+                preset.preset
                 for preset in sorted(self.presets, key=lambda it: it.row)
             ],
             **game_details,
