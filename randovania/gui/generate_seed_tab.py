@@ -141,7 +141,10 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._preset_menu.action_map_tracker.triggered.connect(self._on_open_map_tracker_for_preset)
         self._preset_menu.action_import.triggered.connect(self._on_import_preset)
 
-        window.create_preset_tree.update_items()
+        self._update_preset_tree_items()
+
+    def _update_preset_tree_items(self):
+        self.window.create_preset_tree.update_items(self._options.experimental_games)
 
     @asyncSlot()
     async def _do_migration(self):
@@ -162,7 +165,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
             dialog.setMaximum(target)
 
         await self._window_manager.preset_manager.migrate_from_old_path(on_update)
-        self.window.create_preset_tree.update_items()
+        self._update_preset_tree_items()
         dialog.setCancelButtonText("Ok")
 
     def _tab_show_event(self, event: QtGui.QShowEvent):
@@ -185,7 +188,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
             options.selected_preset_uuid = preset.uuid
 
         self._window_manager.preset_manager.add_new_preset(preset)
-        self.window.create_preset_tree.update_items()
+        self._update_preset_tree_items()
         self.window.create_preset_tree.select_preset(preset)
 
     @asyncSlot()
@@ -212,7 +215,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
     def _on_delete_preset(self):
         self._window_manager.preset_manager.delete_preset(self._current_preset_data)
         index = self.window.create_preset_tree.currentIndex()
-        self.window.create_preset_tree.update_items()
+        self._update_preset_tree_items()
         self.window.create_preset_tree.setCurrentIndex(index)
         self._on_select_preset()
 
@@ -319,6 +322,8 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
+        self._update_preset_tree_items()
+
         if not self._has_set_from_last_selected:
             self._has_set_from_last_selected = True
             preset = self._window_manager.preset_manager.preset_for_uuid(options.selected_preset_uuid)
