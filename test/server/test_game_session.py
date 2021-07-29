@@ -16,7 +16,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.binary_formats import BinaryGameSessionEntry
+from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import game_session, database
@@ -903,7 +903,7 @@ def test_emit_session_actions_update(session_update, mocker):
     # Assert
     mock_emit.assert_called_once_with(
         "game_session_actions_update",
-        actions,
+        BinaryGameSessionActions.build(actions),
         room=f"game-session-{session_update.id}"
     )
 

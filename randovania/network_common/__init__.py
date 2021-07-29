@@ -1,6 +1,6 @@
 import randovania
 
-SERVER_API_VERSION = 3
+SERVER_API_VERSION = 4
 
 
 def connection_headers():
