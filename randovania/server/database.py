@@ -11,7 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.network_common.binary_formats import BinaryGameSessionEntry
+from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -146,11 +146,11 @@ class GameSession(BaseModel):
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
-        return [
+        return BinaryGameSessionActions.build([
             _describe_action(action)
             for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
                                                                ).order_by(GameSessionTeamAction.time.asc())
-        ]
+        ])
 
     def create_session_entry(self):
         description = self.layout_description
