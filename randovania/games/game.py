@@ -16,6 +16,10 @@ class RandovaniaGame(BitPackEnum, Enum):
     def long_name(self) -> str:
         return LONG_NAME[self]
 
+    @property
+    def is_experimental(self) -> bool:
+        return self in EXPERIMENTAL
+
 
 SHORT_NAME = {
     RandovaniaGame.METROID_PRIME: "Prime",
@@ -27,4 +31,8 @@ LONG_NAME = {
     RandovaniaGame.METROID_PRIME: "Metroid Prime",
     RandovaniaGame.METROID_PRIME_ECHOES: "Metroid Prime 2: Echoes",
     RandovaniaGame.METROID_PRIME_CORRUPTION: "Metroid Prime 3: Corruption"
+}
+
+EXPERIMENTAL = {
+    RandovaniaGame.METROID_PRIME_CORRUPTION,
 }

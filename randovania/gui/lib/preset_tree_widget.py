@@ -48,11 +48,14 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         for item in self.selectedItems():
             return self.preset_for_item(item)
 
-    def update_items(self):
+    def update_items(self, show_experimental: bool):
         self.clear()
 
         tree_item = {}
         for game in enum_lib.iterate_enum(RandovaniaGame):
+            if game.is_experimental and not show_experimental:
+                continue
+
             root = QtWidgets.QTreeWidgetItem(self)
             root.setText(0, game.long_name)
             root.setExpanded(True)
@@ -62,6 +65,9 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Included presets
         for preset in self.window_manager.preset_manager.included_presets.values():
+            if preset.game.is_experimental and not show_experimental:
+                continue
+
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])
             item.setText(0, preset.name)
             item.setExpanded(True)
@@ -70,6 +76,9 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Custom Presets
         for preset in self.window_manager.preset_manager.custom_presets.values():
+            if preset.game.is_experimental and not show_experimental:
+                continue
+
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])
             item.setText(0, preset.name)
             item.setData(0, Qt.UserRole, preset.uuid)
