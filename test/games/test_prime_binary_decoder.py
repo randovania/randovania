@@ -128,7 +128,7 @@ def test_full_data_encode_is_equal(game_enum):
 def test_encode_requirement_simple(req):
     # Run
     encoded = binary_data.ConstructRequirement.build(req)
-    decoded = binary_data._convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
+    decoded = binary_data.convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
 
     # Assert
     assert req == decoded
@@ -150,7 +150,7 @@ def test_encode_requirement_complex():
 
     # Run
     encoded = binary_data.ConstructRequirement.build(req)
-    decoded = binary_data._convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
+    decoded = binary_data.convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
 
     # Assert
     assert req == decoded

@@ -10,11 +10,13 @@ import pytest
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
+from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import game_session, database
@@ -71,17 +73,14 @@ def test_create_game_session(clean_database, preset_manager):
     # Assert
     session = database.GameSession.get(1)
     assert session.name == "My Room"
-    assert result == {
+    assert convert_to_raw_python(BinaryGameSessionEntry.parse(result)) == {
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'My Room',
         'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0,
                      'connection_state': 'Online, Unknown'}],
         'presets': [json.dumps(preset_manager.default_preset.as_json)],
-        'seed_hash': None,
-        'spoiler': None,
-        'word_hash': None,
-        'permalink': None,
+        'game_details': None,
         'generation_in_progress': None,
         'allowed_games': ['prime1', 'prime2'],
     }
@@ -105,7 +104,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
-    assert result == {
+    assert convert_to_raw_python(BinaryGameSessionEntry.parse(result)) == {
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'The Session',
@@ -116,10 +115,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
              'connection_state': 'Online, Unknown'},
         ],
         'presets': ["{}"],
-        'seed_hash': None,
-        'spoiler': None,
-        'word_hash': None,
-        'permalink': None,
+        'game_details': None,
         'generation_in_progress': None,
         'allowed_games': ['prime1', 'prime2'],
     }
@@ -378,9 +374,9 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
 
     mock_emit.assert_called_once_with(
         "game_session_meta_update",
-        {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
-         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None,
-         'allowed_games': ['prime1', 'prime2'], },
+        BinaryGameSessionEntry.build({'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
+         'game_details': None, 'generation_in_progress': None,
+         'allowed_games': ['prime1', 'prime2'], }),
         room='game-session-1')
 
 
@@ -866,10 +862,12 @@ def test_emit_session_meta_update(session_update, mocker):
             },
         ],
         "presets": [],
-        "spoiler": True,
-        "word_hash": "Words of O-Lir",
-        "seed_hash": "ABCDEFG",
-        "permalink": "<permalink>",
+        "game_details": {
+            "spoiler": True,
+            "word_hash": "Words of O-Lir",
+            "seed_hash": "ABCDEFG",
+            "permalink": "<permalink>",
+        },
         "generation_in_progress": None,
         'allowed_games': ['prime1', 'prime2'],
     }
@@ -880,7 +878,7 @@ def test_emit_session_meta_update(session_update, mocker):
     # Assert
     mock_emit.assert_called_once_with(
         "game_session_meta_update",
-        session_json,
+        BinaryGameSessionEntry.build(session_json),
         room=f"game-session-{session_update.id}"
     )
 
