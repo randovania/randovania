@@ -1,8 +1,9 @@
 import logging
+import random
 import struct
 from typing import List, Optional, Dict
 
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
@@ -35,6 +36,7 @@ def _echoes_powerup_address(item_index: int) -> int:
 
 class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     _connected: bool = False
+    _timer: QtCore.QTimer
     pickups: List[PickupEntry]
 
     def __init__(self):
@@ -50,10 +52,14 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self.setup_collect_location_combo_button = QtWidgets.QPushButton(self.window)
         self.setup_collect_location_combo_button.setText("Load list of locations")
         self.setup_collect_location_combo_button.clicked.connect(self._setup_locations_combo)
-        self.gridLayout.addWidget(self.setup_collect_location_combo_button, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.setup_collect_location_combo_button, 0, 0, 1, 2)
 
         self.collect_location_button.clicked.connect(self._emit_collection)
         self.collect_location_button.setEnabled(False)
+        self.collect_randomly_check.stateChanged.connect(self._on_collect_randomly_toggle)
+        self._timer = QtCore.QTimer(self.window)
+        self._timer.timeout.connect(self._collect_randomly)
+        self._timer.setInterval(10000)
 
         self._used_version = echoes_dol_versions.ALL_VERSIONS[0]
         self._connector = EchoesRemoteConnector(self._used_version)
@@ -61,6 +67,16 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
         self._game_memory = bytearray(24 * (2 ** 20))
         self._game_memory_initialized = False
+
+    def _on_collect_randomly_toggle(self, value: int):
+        if bool(value):
+            self._timer.start()
+        else:
+            self._timer.stop()
+
+    def _collect_randomly(self):
+        row = random.randint(0, self.collect_location_combo.count())
+        self._collect_location(self.collect_location_combo.itemData(row))
 
     async def _ensure_initialized_game_memory(self):
         if self._game_memory_initialized:
@@ -121,11 +137,15 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._write_memory(self._get_magic_address(), struct.pack(">II", magic_amount, magic_capacity))
 
     def _emit_collection(self):
-        new_magic_value = self.collect_location_combo.currentData() + 1
+        self._collect_location(self.collect_location_combo.currentData())
+
+    def _collect_location(self, location: int):
+        new_magic_value = location + 1
         magic_amount, magic_capacity = self._read_magic()
-        magic_amount += new_magic_value
-        magic_capacity += new_magic_value
-        self._write_magic(magic_amount, magic_capacity)
+        if magic_amount == 0:
+            magic_amount += new_magic_value
+            magic_capacity += new_magic_value
+            self._write_magic(magic_amount, magic_capacity)
 
     @asyncSlot()
     @handle_network_errors
@@ -149,12 +169,12 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
                                                                      BaseCosmeticPatches().as_json)
             names = {
                 pickup["pickup_index"]: "{}: {}".format(index_to_name[pickup["pickup_index"]],
-                                                        pickup["hud_text"][0])
+                                                        pickup["hud_text"][0].split(", ", 1)[0])
                 for pickup in patcher_data["pickups"]
             }
 
         self.collect_location_combo.clear()
-        for index, name in sorted(names.items()):
+        for index, name in sorted(names.items(), key=lambda t: t[1]):
             self.collect_location_combo.addItem(name, index)
 
         self.collect_location_button.setEnabled(True)

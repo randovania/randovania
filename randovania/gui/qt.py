@@ -84,6 +84,35 @@ def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     app.details_window = details_window
 
 
+async def show_game_session(app: QtWidgets.QApplication, options, session_id: int):
+    from randovania.gui.game_session_window import GameSessionWindow
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.interface_common.preset_manager import PresetManager
+
+    network_client: QtNetworkClient = app.network_client
+
+    sessions = [
+        session
+        for session in await network_client.get_game_session_list()
+        if session.id == session_id
+    ]
+    if not sessions:
+        app.quit()
+        return
+    await network_client.join_game_session(sessions[0], None)
+
+    preset_manager = PresetManager(options.presets_path)
+
+    app.game_session_window = await GameSessionWindow.create_and_update(
+        network_client,
+        app.game_connection,
+        preset_manager,
+        None,
+        options
+    )
+    app.game_session_window.show()
+
+
 async def display_window_for(app, options, command: str, args):
     if command == "tracker":
         show_tracker(app)
@@ -91,6 +120,8 @@ async def display_window_for(app, options, command: str, args):
         await show_main_window(app, options, args.preview)
     elif command == "game":
         show_game_details(app, options, args.rdvgame)
+    elif command == "session":
+        await show_game_session(app, options, args.session_id)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
@@ -186,6 +217,10 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     app.network_client = QtNetworkClient(data_dir)
     logging.info("Server client ready.")
 
+    if args.login_as_guest:
+        logging.info("Logging as %s", args.login_as_guest)
+        await app.network_client.login_as_guest(args.login_as_guest)
+
     options = _load_options()
     executor = create_memory_executor(args.debug_game_backend, options)
 
@@ -239,6 +274,7 @@ def create_subparsers(sub_parsers):
     )
     parser.add_argument("--preview", action="store_true", help="Activates preview features")
     parser.add_argument("--custom-network-storage", type=Path, help="Use a custom path to store the network login.")
+    parser.add_argument("--login-as-guest", type=str, help="Login as the given quest user")
     parser.add_argument("--debug-game-backend", action="store_true", help="Opens the debug game backend.")
 
     gui_parsers = parser.add_subparsers(dest="command")
@@ -248,6 +284,10 @@ def create_subparsers(sub_parsers):
     game_parser = gui_parsers.add_parser("game", help="Opens an rdvgame")
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
     game_parser.set_defaults(func=run)
+
+    session_parser = gui_parsers.add_parser("session", help="Connects to a game session")
+    session_parser.add_argument("session_id", type=int, help="Id of the session")
+    session_parser.set_defaults(func=run)
 
     def check_command(args):
         if args.command is None:
