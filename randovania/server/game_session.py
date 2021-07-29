@@ -42,7 +42,7 @@ def create_game_session(sio: ServerApp, session_name: str):
     current_user = sio.get_current_user()
 
     with database.db.atomic():
-        new_session = GameSession.create(
+        new_session: GameSession = GameSession.create(
             name=session_name,
             password=None,
             creator=current_user,
@@ -58,7 +58,7 @@ def create_game_session(sio: ServerApp, session_name: str):
 
 
 def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
-    session = GameSession.get_by_id(session_id)
+    session: GameSession = GameSession.get_by_id(session_id)
 
     if session.password is not None:
         if password is None or _hash_password(password) != session.password:
