@@ -11,6 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
+from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -154,6 +155,7 @@ class GameSession(BaseModel):
     def create_session_entry(self):
         description = self.layout_description
 
+        game_details = None
         if description is not None:
             game_details = {
                 "spoiler": description.permalink.spoiler,
@@ -161,15 +163,8 @@ class GameSession(BaseModel):
                 "seed_hash": description.shareable_hash,
                 "permalink": description.permalink.as_base64_str,
             }
-        else:
-            game_details = {
-                "spoiler": None,
-                "word_hash": None,
-                "seed_hash": None,
-                "permalink": None,
-            }
 
-        return {
+        return BinaryGameSessionEntry.build({
             "id": self.id,
             "name": self.name,
             "state": self.state.value,
@@ -181,11 +176,11 @@ class GameSession(BaseModel):
                 preset.preset
                 for preset in sorted(self.presets, key=lambda it: it.row)
             ],
-            **game_details,
+            "game_details": game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
             "allowed_games": [game.value for game in self.allowed_games],
-        }
+        })
 
     def reset_layout_description(self):
         self.layout_description_json = None

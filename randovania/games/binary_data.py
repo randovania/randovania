@@ -6,7 +6,6 @@ import construct
 from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
                        Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b)
 
-from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
@@ -16,16 +15,16 @@ current_format_version = 8
 _IMPOSSIBLE_SET = {"type": "or", "data": []}
 
 
-def _convert_to_raw_python(value) -> Any:
+def convert_to_raw_python(value) -> Any:
     if isinstance(value, construct.ListContainer):
         return [
-            _convert_to_raw_python(item)
+            convert_to_raw_python(item)
             for item in value
         ]
 
     if isinstance(value, construct.Container):
         return {
-            key: _convert_to_raw_python(item)
+            key: convert_to_raw_python(item)
             for key, item in value.items()
             if not key.startswith("_")
         }
@@ -37,7 +36,7 @@ def _convert_to_raw_python(value) -> Any:
 
 
 def decode(binary_io: BinaryIO) -> Dict:
-    decoded = _convert_to_raw_python(ConstructGame.parse_stream(binary_io))
+    decoded = convert_to_raw_python(ConstructGame.parse_stream(binary_io))
 
     decoded.pop("format_version")
     decoded.pop("magic_number")

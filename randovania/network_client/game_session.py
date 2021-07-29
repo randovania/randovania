@@ -3,11 +3,14 @@ import datetime
 import json
 from typing import List, Dict, Optional, Tuple
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
+from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -77,15 +80,20 @@ class GameSessionAction:
 
 
 @dataclasses.dataclass(frozen=True)
+class GameDetails(JsonDataclass):
+    seed_hash: str
+    word_hash: str
+    spoiler: bool
+    permalink: str
+
+
+@dataclasses.dataclass(frozen=True)
 class GameSessionEntry:
     id: int
     name: str
     presets: List[VersionedPreset]
     players: Dict[int, PlayerSessionEntry]
-    seed_hash: Optional[str]
-    word_hash: Optional[str]
-    spoiler: Optional[bool]
-    permalink: Optional[str]
+    game_details: Optional[GameDetails]
     state: GameSessionState
     generation_in_progress: Optional[int]
     allowed_games: List[RandovaniaGame]
@@ -100,6 +108,8 @@ class GameSessionEntry:
 
     @classmethod
     def from_json(cls, data) -> "GameSessionEntry":
+        data = convert_to_raw_python(BinaryGameSessionEntry.parse(data))
+
         player_entries = [
             PlayerSessionEntry.from_json(player_json)
             for player_json in data["players"]
@@ -112,10 +122,7 @@ class GameSessionEntry:
                 player_entry.id: player_entry
                 for player_entry in player_entries
             },
-            seed_hash=data["seed_hash"],
-            word_hash=data["word_hash"],
-            spoiler=data["spoiler"],
-            permalink=data["permalink"],
+            game_details=GameDetails.from_json(data["game_details"]) if data["game_details"] is not None else None,
             state=GameSessionState(data["state"]),
             generation_in_progress=data["generation_in_progress"],
             allowed_games=[RandovaniaGame(game) for game in data["allowed_games"]],

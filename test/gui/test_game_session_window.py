@@ -14,7 +14,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.permalink import Permalink
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
-    GameSessionActions
+    GameSessionActions, GameDetails
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 
@@ -47,10 +47,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
         players={
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
         },
-        seed_hash=None,
-        word_hash=None,
-        spoiler=None,
-        permalink=None,
+        game_details=None,
         state=GameSessionState.SETUP,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
@@ -63,10 +60,12 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
             24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
         },
-        seed_hash="AB12",
-        word_hash="Chykka Required",
-        spoiler=True,
-        permalink="<permalink>",
+        game_details=GameDetails(
+            seed_hash="AB12",
+            word_hash="Chykka Required",
+            spoiler=True,
+            permalink="<permalink>",
+        ),
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
@@ -154,19 +153,19 @@ async def test_row_show_preset_summary(window, mocker, preset_manager):
     execute_dialog.assert_awaited_once()
 
 
-@pytest.mark.parametrize(["has_background_process", "generation_in_progress", "seed_hash", "expected_text"], [
+@pytest.mark.parametrize(["has_background_process", "generation_in_progress", "game_details", "expected_text"], [
     (True, None, None, "Stop"),
     (False, True, None, "Abort generation"),
     (False, None, None, "Generate game"),
     (False, None, True, "Clear generated game"),
 ])
-def test_update_background_process_button(window, has_background_process, generation_in_progress, seed_hash,
+def test_update_background_process_button(window, has_background_process, generation_in_progress, game_details,
                                           expected_text):
     window._game_session = MagicMock()
 
     window._background_thread = True if has_background_process else None
     window._game_session.generation_in_progress = generation_in_progress
-    window._game_session.seed_hash = seed_hash
+    window._game_session.game_details = game_details
 
     # Run
     window.update_background_process_button()
@@ -222,7 +221,7 @@ async def test_update_logic_settings_window(window, mocker, has_game):
 
     window._game_session = MagicMock()
     window._logic_settings_window = MagicMock()
-    window._game_session.seed_hash = True if has_game else None
+    window._game_session.game_details = True if has_game else None
 
     # Run
     await window.update_logic_settings_window()
@@ -327,7 +326,7 @@ async def test_copy_permalink(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     game_session = MagicMock()
-    game_session.permalink = "<permalink>"
+    game_session.game_details.permalink = "<permalink>"
 
     window._game_session = game_session
 
