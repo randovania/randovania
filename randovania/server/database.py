@@ -178,7 +178,7 @@ class GameSession(BaseModel):
                 for membership in self.players
             ],
             "presets": [
-                json.loads(preset.preset)
+                preset.preset
                 for preset in sorted(self.presets, key=lambda it: it.row)
             ],
             **game_details,
@@ -208,7 +208,7 @@ class GameSessionMembership(BaseModel):
     admin = peewee.BooleanField()
     join_date = peewee.DateTimeField(default=_datetime_now)
     connection_state = peewee.TextField(null=True)
-    inventory = peewee.TextField(null=True)
+    inventory = peewee.BlobField(null=True)
 
     @property
     def as_json(self):
