@@ -14,7 +14,7 @@ import socketio
 import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
-from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
+from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus, Inventory
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -23,6 +23,7 @@ from randovania.network_client.game_session import (GameSessionListEntry, GameSe
                                                     GameSessionAction, GameSessionPickups)
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
+from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
@@ -385,18 +386,17 @@ class NetworkClient:
         return await self._emit_with_result("game_session_admin_player",
                                             (self._current_game_session_meta.id, user_id, action.value, arg))
 
-    async def session_self_update(self,
-                                  inventory: Dict[ItemResourceInfo, InventoryItem],
-                                  state: GameConnectionStatus, backend: MemoryExecutorChoice):
+    async def session_self_update(self, inventory: Inventory, state: GameConnectionStatus,
+                                  backend: MemoryExecutorChoice):
 
-        inventory_json = json.dumps([
+        inventory_binary = BinaryInventory.build([
             {"index": resource.index, "amount": item.amount, "capacity": item.capacity}
             for resource, item in inventory.items()
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
 
         await self._emit_without_result("game_session_self_update",
-                                        (self._current_game_session_meta.id, inventory_json, state_string))
+                                        (self._current_game_session_meta.id, inventory_binary, state_string))
 
     @property
     def current_user(self) -> Optional[User]:

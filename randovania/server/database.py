@@ -208,7 +208,7 @@ class GameSessionMembership(BaseModel):
     admin = peewee.BooleanField()
     join_date = peewee.DateTimeField(default=_datetime_now)
     connection_state = peewee.TextField(null=True)
-    inventory = peewee.TextField(null=True)
+    inventory = peewee.BlobField(null=True)
 
     @property
     def as_json(self):
