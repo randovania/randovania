@@ -21,6 +21,7 @@ from randovania.layout import game_to_class
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
+from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
@@ -599,7 +600,7 @@ def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMem
     flask_socketio.emit("game_session_pickups_update", data, room=f"game-session-{session.id}-{membership.user.id}")
 
 
-def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, game_connection_state: str):
+def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, game_connection_state: str):
     current_user = sio.get_current_user()
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
@@ -678,12 +679,13 @@ def setup_app(sio: ServerApp):
                 db = default_database.resource_database_for(preset.game)
 
                 inventory = []
-                for item in json.loads(player.inventory):
-                    if item["amount"] + item["capacity"] > 0:
-                        inventory.append("{} x{}/{}".format(
-                            db.get_item(item["index"]).long_name,
-                            item["amount"], item["capacity"]
-                        ))
+                if player.inventory is not None:
+                    for item in BinaryInventory.parse(player.inventory):
+                        if item["amount"] + item["capacity"] > 0:
+                            inventory.append("{} x{}/{}".format(
+                                db.get_item(item["index"]).long_name,
+                                item["amount"], item["capacity"]
+                            ))
 
                 rows.append([
                     player.effective_name,
