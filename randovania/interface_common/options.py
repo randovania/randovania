@@ -107,6 +107,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
+    "experimental_games": Serializer(identity, bool),
     "selected_preset_uuid": Serializer(str, uuid.UUID),
     "per_game_options": Serializer(serialize_per_game_dict, decode_per_game_dict),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
@@ -145,6 +146,7 @@ class Options:
     _advanced_timeout_during_generation: Optional[bool] = None
     _auto_save_spoiler: Optional[bool] = None
     _dark_mode: Optional[bool] = None
+    _experimental_games: Optional[bool] = None
     _selected_preset_uuid: Optional[uuid.UUID] = None
     _per_game_options: Optional[Dict[RandovaniaGame, PerGameOptions]] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
@@ -277,6 +279,7 @@ class Options:
         self._per_game_options = None
         self._displayed_alerts = None
         self._dark_mode = None
+        self._experimental_games = None
         self._game_backend = None
         self._nintendont_ip = None
         self._selected_tracker = None
@@ -336,6 +339,14 @@ class Options:
     @dark_mode.setter
     def dark_mode(self, value: bool):
         self._edit_field("dark_mode", value)
+
+    @property
+    def experimental_games(self) -> bool:
+        return _return_with_default(self._experimental_games, lambda: False)
+
+    @experimental_games.setter
+    def experimental_games(self, value):
+        self._edit_field("experimental_games", value)
 
     @property
     def selected_preset_uuid(self) -> Optional[uuid.UUID]:
