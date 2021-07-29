@@ -23,7 +23,7 @@ from randovania.network_client.game_session import (GameSessionListEntry, GameSe
                                                     GameSessionAction, GameSessionPickups)
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.binary_formats import BinaryInventory
+from randovania.network_common.binary_formats import BinaryInventory, BinaryGameSessionActions
 from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
@@ -263,7 +263,7 @@ class NetworkClient:
 
     # Game Session Updated
 
-    async def _on_game_session_meta_update_raw(self, data):
+    async def _on_game_session_meta_update_raw(self, data: bytes):
         entry = GameSessionEntry.from_json(data)
         self.logger.debug("%s: %s",
                           entry.id,
@@ -273,9 +273,10 @@ class NetworkClient:
     async def on_game_session_meta_update(self, entry: GameSessionEntry):
         self._current_game_session_meta = entry
 
-    async def _on_game_session_actions_update_raw(self, data):
+    async def _on_game_session_actions_update_raw(self, data: bytes):
         await self.on_game_session_actions_update(GameSessionActions(
-            tuple(GameSessionAction.from_json(item) for item in data)
+            tuple(GameSessionAction.from_json(item)
+                  for item in BinaryGameSessionActions.parse(data))
         ))
 
     async def on_game_session_actions_update(self, actions: GameSessionActions):

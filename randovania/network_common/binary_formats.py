@@ -38,3 +38,13 @@ BinaryGameSessionEntry = Struct(
     generation_in_progress=OptionalValue(VarInt),
     allowed_games=PrefixedArray(VarInt, BinStr),
 )
+
+BinaryGameSessionAction = Struct(
+    location=VarInt,
+    pickup=BinStr,
+    provider=BinStr,
+    provider_row=VarInt,
+    receiver=BinStr,
+    time=BinStr,
+)
+BinaryGameSessionActions = PrefixedArray(VarInt, BinaryGameSessionAction)
