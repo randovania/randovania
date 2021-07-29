@@ -140,6 +140,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
+        self.menu_action_experimental_games.triggered.connect(self._on_menu_action_experimental_games)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -377,6 +378,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
+        self.menu_action_experimental_games.setChecked(self._options.experimental_games)
 
         self.generate_seed_tab.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
@@ -531,6 +533,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
     def _on_menu_action_dark_mode(self):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
+
+    def _on_menu_action_experimental_games(self):
+        with self._options as options:
+            options.experimental_games = self.menu_action_experimental_games.isChecked()
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
