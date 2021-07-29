@@ -1,10 +1,12 @@
 import dataclasses
 import datetime
+import json
 from typing import List, Dict, Optional, Tuple
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
@@ -105,7 +107,7 @@ class GameSessionEntry:
         return GameSessionEntry(
             id=data["id"],
             name=data["name"],
-            presets=[VersionedPreset(preset_json) for preset_json in data["presets"]],
+            presets=[VersionedPreset(json.loads(preset_json)) for preset_json in data["presets"]],
             players={
                 player_entry.id: player_entry
                 for player_entry in player_entries
