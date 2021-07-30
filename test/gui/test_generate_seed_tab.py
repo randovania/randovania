@@ -1,10 +1,11 @@
 import pytest
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
+from randovania.interface_common.options import Options
 
 
 @pytest.fixture(name="tab")
@@ -57,8 +58,8 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
         tab._add_new_preset.assert_called_once()
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION])
-def test_on_options_changed_select_preset(tab, preset_manager, game):
+@pytest.mark.parametrize("game", RandovaniaGame)
+def test_on_options_changed_select_preset(tab, preset_manager, game: RandovaniaGame):
     preset = preset_manager.default_preset_for_game(game)
 
     tab._window_manager.preset_manager = preset_manager
@@ -71,3 +72,31 @@ def test_on_options_changed_select_preset(tab, preset_manager, game):
 
     # Assert
     assert tab._current_preset_data == preset
+
+
+@pytest.mark.parametrize("allow_experimental", [False, True])
+@pytest.mark.parametrize("game", RandovaniaGame)
+def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qtbot, tmp_path, allow_experimental):
+    preset = preset_manager.default_preset_for_game(game)
+
+    options = Options(tmp_path, None)
+    with options:
+        options.experimental_games = allow_experimental
+    options.on_options_changed = lambda: tab.on_options_changed(options)
+
+    tab._options = options
+    tab._window_manager.preset_manager = preset_manager
+    tab.setup_ui()
+    tab.on_options_changed(options)
+
+    # Run
+    item = tab.window.create_preset_tree.preset_to_item.get(preset.uuid)
+    # assert item.parent().text(0) == "1"
+    if game.is_experimental and not allow_experimental:
+        assert item is None
+    else:
+        tab.window.create_preset_tree.selectionModel().reset()
+        tab.window.create_preset_tree.setItemSelected(item, True)
+
+        # Assert
+        assert tab._current_preset_data.get_preset() == preset.get_preset()
