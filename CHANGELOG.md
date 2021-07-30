@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The timeout limit is now progressively more forgiving, the more timeouts that happen.
 
+-   Added: Button to set all gates to "Random with Unlocked' for Prime 2.
+
 -   Changed: The items in the starting items popup is now sorted.
 
 -   Changed: Customizing Dark Aether damage is now considered by logic.
