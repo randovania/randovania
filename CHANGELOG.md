@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Map Tracker now properly handles unassigned elevators.
 
+-   Fixed: Trick names in the preset are always sorted.
+
 ### Metroid Prime 2 - Logic Database Changes
 
 -   **Major** - "Suitless Ingclaw/Ingstorm" trick added to cover traversing rooms with either Ingclaw Vapor or Ingstorm.
