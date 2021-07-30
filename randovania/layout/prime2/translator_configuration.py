@@ -136,6 +136,14 @@ class TranslatorConfiguration(BitPackValue):
                                        for key in self.translator_requirement.keys()
                                    })
 
+    def with_full_random_with_unlocked(self) -> "TranslatorConfiguration":
+        result = copy.copy(self)
+        return dataclasses.replace(result,
+                                   translator_requirement={
+                                       key: LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
+                                       for key in self.translator_requirement.keys()
+                                   })
+
     def replace_requirement_for_gate(self, gate: TranslatorGate,
                                      requirement: LayoutTranslatorRequirement,
                                      ) -> "TranslatorConfiguration":
