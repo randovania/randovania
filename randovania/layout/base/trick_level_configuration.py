@@ -87,7 +87,7 @@ class TrickLevelConfiguration(BitPackValue):
     def as_json(self) -> dict:
         specific_levels = {
             trick_short_name: level.value
-            for trick_short_name, level in self.specific_levels.items()
+            for trick_short_name, level in sorted(self.specific_levels.items())
         }
 
         return {
