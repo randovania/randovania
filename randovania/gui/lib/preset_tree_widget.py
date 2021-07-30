@@ -14,6 +14,7 @@ from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 class PresetTreeWidget(QtWidgets.QTreeWidget):
     window_manager: WindowManager
     preset_to_item: Dict[uuid.UUID, QtWidgets.QTreeWidgetItem]
+    show_experimental: bool = False
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
         item: QtWidgets.QTreeWidgetItem = self.itemAt(event.pos())
@@ -48,12 +49,18 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         for item in self.selectedItems():
             return self.preset_for_item(item)
 
-    def update_items(self, show_experimental: bool):
+    def set_show_experimental(self, show_experimental: bool):
+        old = self.show_experimental
+        self.show_experimental = show_experimental
+        if old != show_experimental:
+            self.update_items()
+
+    def update_items(self):
         self.clear()
 
         tree_item = {}
         for game in enum_lib.iterate_enum(RandovaniaGame):
-            if game.is_experimental and not show_experimental:
+            if game.is_experimental and not self.show_experimental:
                 continue
 
             root = QtWidgets.QTreeWidgetItem(self)
@@ -65,7 +72,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Included presets
         for preset in self.window_manager.preset_manager.included_presets.values():
-            if preset.game.is_experimental and not show_experimental:
+            if preset.game.is_experimental and not self.show_experimental:
                 continue
 
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])
@@ -76,7 +83,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Custom Presets
         for preset in self.window_manager.preset_manager.custom_presets.values():
-            if preset.game.is_experimental and not show_experimental:
+            if preset.game.is_experimental and not self.show_experimental:
                 continue
 
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])

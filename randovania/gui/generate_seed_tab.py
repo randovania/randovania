@@ -144,7 +144,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._update_preset_tree_items()
 
     def _update_preset_tree_items(self):
-        self.window.create_preset_tree.update_items(self._options.experimental_games)
+        self.window.create_preset_tree.update_items()
 
     @asyncSlot()
     async def _do_migration(self):
@@ -322,7 +322,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
-        self._update_preset_tree_items()
+        self.window.create_preset_tree.set_show_experimental(options.experimental_games)
 
         if not self._has_set_from_last_selected:
             self._has_set_from_last_selected = True
