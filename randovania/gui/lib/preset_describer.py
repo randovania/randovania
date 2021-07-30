@@ -276,6 +276,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
         (configuration.translator_configuration.with_vanilla_actual(), "Vanilla (Actual)"),
         (configuration.translator_configuration.with_vanilla_colors(), "Vanilla (Colors)"),
         (configuration.translator_configuration.with_full_random(), "Random"),
+        (configuration.translator_configuration.with_full_random_with_unlocked(), "Random with Unlocked")
     ]
     for translator_config, name in translator_configurations:
         if translator_config == configuration.translator_configuration:

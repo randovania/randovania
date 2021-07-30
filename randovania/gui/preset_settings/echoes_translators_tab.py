@@ -26,6 +26,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
 
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
+        self.translator_randomize_all_with_unlocked_button.clicked.connect(self._on_randomize_all_gates_with_unlocked_pressed)
         self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
         self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
 
@@ -54,6 +55,12 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
             editor.set_configuration_field(
                 "translator_configuration",
                 editor.configuration.translator_configuration.with_full_random())
+
+    def _on_randomize_all_gates_with_unlocked_pressed(self):
+        with self._editor as editor:
+            editor.set_configuration_field(
+                "translator_configuration",
+                editor.configuration.translator_configuration.with_full_random_with_unlocked())
 
     def _on_vanilla_actual_gates_pressed(self):
         with self._editor as editor:
