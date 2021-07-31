@@ -57,17 +57,23 @@ def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_a
     }
 
 
-@patch("randovania.server.user_session._create_client_side_session", autospec=True)
-def test_restore_user_session_with_discord(mock_create_session: MagicMock,
-                                           flask_app, fernet, clean_database):
+@pytest.mark.parametrize("has_session_id", [False, True])
+def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker, has_session_id):
+    discord_user = MagicMock()
+    discord_user.id = 3452
+    discord_result = MagicMock()
+    mock_create_session: MagicMock = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
+                                                  autospec=True, return_value=(discord_user, discord_result))
+    mock_get_membership: MagicMock = mocker.patch("randovania.server.database.GameSessionMembership.get_by_ids",
+                                                  autospec=True)
+
+    if has_session_id:
+        session_id = 89
+    else:
+        session_id = None
+
     sio = MagicMock()
     sio.fernet_encrypt = fernet
-
-    user: User = User.create(
-        id=1234,
-        discord_id=5678,
-        name="The Name"
-    )
 
     session = {
         "user-id": 1234,
@@ -78,12 +84,18 @@ def test_restore_user_session_with_discord(mock_create_session: MagicMock,
     # Run
     with flask_app.test_request_context():
         flask.request.sid = 7890
-        result = user_session.restore_user_session(sio, enc_session, None)
+        result = user_session.restore_user_session(sio, enc_session, session_id)
 
     # Assert
-    sio.get_server.return_value.save_session.assert_called_once_with(7890, session)
-    mock_create_session.assert_called_once_with(sio, user)
-    assert result is mock_create_session.return_value
+    mock_create_session.assert_called_once_with(sio, "access-token")
+    if has_session_id:
+        mock_get_membership.assert_called_once_with(3452, session_id)
+        sio.join_game_session.assert_called_once_with(mock_get_membership.return_value)
+    else:
+        mock_get_membership.assert_not_called()
+        sio.join_game_session.assert_not_called()
+
+    assert result is discord_result
 
 
 def test_login_with_guest(flask_app, clean_database, mocker):

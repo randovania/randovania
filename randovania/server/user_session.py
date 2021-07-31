@@ -1,12 +1,13 @@
 import base64
 import datetime
 import json
-from typing import Optional
+from typing import Optional, Tuple
 
 import cryptography.fernet
 import flask
 import flask_socketio
 import peewee
+from oauthlib.oauth2 import OAuth2Error
 from requests_oauthlib import OAuth2Session
 
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction
@@ -15,7 +16,7 @@ from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
 
-def _create_client_side_session(sio: ServerApp, user: Optional[User]):
+def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
@@ -38,18 +39,7 @@ def _create_client_side_session(sio: ServerApp, user: Optional[User]):
     }
 
 
-def login_with_discord(sio: ServerApp, code: str):
-    oauth = OAuth2Session(
-        client_id=sio.app.config["DISCORD_CLIENT_ID"],
-        scope=["identify"],
-        redirect_uri=sio.app.config["DISCORD_REDIRECT_URI"],
-    )
-    access_token = oauth.fetch_token(
-        "https://discord.com/api/oauth2/token",
-        code=code,
-        client_secret=sio.app.config["DISCORD_CLIENT_SECRET"],
-    )
-
+def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> Tuple[User, dict]:
     flask.session["DISCORD_OAUTH2_TOKEN"] = access_token
     discord_user = sio.discord.fetch_user()
 
@@ -63,7 +53,21 @@ def login_with_discord(sio: ServerApp, code: str):
         session["user-id"] = user.id
         session["discord-access-token"] = access_token
 
-    return _create_client_side_session(sio, user)
+    return user, _create_client_side_session(sio, user)
+
+
+def login_with_discord(sio: ServerApp, code: str) -> dict:
+    oauth = OAuth2Session(
+        client_id=sio.app.config["DISCORD_CLIENT_ID"],
+        scope=["identify"],
+        redirect_uri=sio.app.config["DISCORD_REDIRECT_URI"],
+    )
+    access_token = oauth.fetch_token(
+        "https://discord.com/api/oauth2/token",
+        code=code,
+        client_secret=sio.app.config["DISCORD_CLIENT_SECRET"],
+    )
+    return _create_session_with_discord_token(sio, access_token)[1]
 
 
 def _get_now():
@@ -103,19 +107,20 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
         decrypted_session: bytes = sio.fernet_encrypt.decrypt(encrypted_session)
         session = json.loads(decrypted_session.decode("utf-8"))
 
-        user = User.get_by_id(session["user-id"])
-
         if "discord-access-token" in session:
-            # TODO: test if the discord access token is still valid
-            flask.session["DISCORD_OAUTH2_TOKEN"] = session["discord-access-token"]
-        sio.get_server().save_session(flask.request.sid, session)
+            user, result = _create_session_with_discord_token(sio, session["discord-access-token"])
+        else:
+            user = User.get_by_id(session["user-id"])
+            sio.get_server().save_session(flask.request.sid, session)
+            result = _create_client_side_session(sio, user)
 
         if session_id is not None:
             sio.join_game_session(GameSessionMembership.get_by_ids(user.id, session_id))
 
-        return _create_client_side_session(sio, user)
+        return result
 
-    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError):
+    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, OAuth2Error):
+        # OAuth2Error: discord token expired and couldn't renew
         raise InvalidSession()
 
     except Exception:
