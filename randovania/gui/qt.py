@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
+        logging.exception("unhandled exception", exc_info=val)
         box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
                                     "An exception was raised",
                                     "An unhandled Exception occurred:\n{}".format(val),
@@ -30,10 +31,6 @@ def display_exception(val: Exception):
 
 def catch_exceptions(t, val, tb):
     display_exception(val)
-    old_hook(t, val, tb)
-
-
-old_hook = sys.excepthook
 
 
 def catch_exceptions_async(loop, context):
