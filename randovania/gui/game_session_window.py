@@ -196,18 +196,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.advanced_options_menu.addAction(self.delete_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
-        self.rename_session_action.triggered.connect(self.rename_session)
-        self.change_password_action.triggered.connect(self.change_password)
-        self.delete_session_action.triggered.connect(self.delete_session)
-
         # Save ISO Button
         self.save_iso_menu = QtWidgets.QMenu(self.save_iso_button)
         self.copy_permalink_action = QtWidgets.QAction("Copy Permalink", self.save_iso_menu)
 
         self.save_iso_menu.addAction(self.copy_permalink_action)
         self.save_iso_button.setMenu(self.save_iso_menu)
-
-        self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
@@ -219,6 +213,40 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.background_process_menu.addAction(self.generate_game_without_spoiler_action)
         self.background_process_menu.addAction(self.import_permalink_action)
         self.background_process_button.setMenu(self.background_process_menu)
+
+        # Game Connection
+        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_label,
+                                                         self.game_connection, self._options)
+        self.game_connection_setup.setup_tool_button_menu(self.game_connection_tool)
+
+        # Session status
+        self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
+        self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
+        self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
+        self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
+
+        self.session_status_menu.addAction(self.start_session_action)
+        self.session_status_menu.addAction(self.finish_session_action)
+        self.session_status_menu.addAction(self.reset_session_action)
+        self.session_status_tool.setMenu(self.session_status_menu)
+
+        self.players_layout.addWidget(self.players_vertical_line, 0, 2, -1, 1)
+
+        self.rows = []
+        self.observers = []
+        self.team_players = []
+
+        spacer_item = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.main_layout.insertSpacerItem(2, spacer_item)
+
+    def connect_to_events(self):
+        # Advanced Options
+        self.rename_session_action.triggered.connect(self.rename_session)
+        self.change_password_action.triggered.connect(self.change_password)
+        self.delete_session_action.triggered.connect(self.delete_session)
+
+        # Save ISO Button
+        self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         self.generate_game_with_spoiler_action.triggered.connect(self.generate_game_with_spoiler)
         self.generate_game_without_spoiler_action.triggered.connect(self.generate_game_without_spoiler)
@@ -233,41 +261,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.save_iso_button.clicked.connect(self.save_iso)
         self.view_game_details_button.clicked.connect(self.view_game_details)
 
-        # Game Connection
-        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_label,
-                                                         self.game_connection, self._options)
-        self.game_connection_setup.setup_tool_button_menu(self.game_connection_tool)
-
         # Server Status
         self.server_connection_button.clicked.connect(self._connect_to_server)
 
         # Session status
-        self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
-        self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
         self.start_session_action.triggered.connect(self.start_session)
-
-        self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
         self.finish_session_action.triggered.connect(self.finish_session)
-
-        self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
         self.reset_session_action.triggered.connect(self.reset_session)
-
-        self.session_status_menu.addAction(self.start_session_action)
-        self.session_status_menu.addAction(self.finish_session_action)
-        self.session_status_menu.addAction(self.reset_session_action)
-        self.session_status_tool.setMenu(self.session_status_menu)
-
-        self.players_layout.addWidget(self.players_vertical_line, 0, 2, -1, 1)
         self.new_row_button.clicked.connect(functools.partial(
             self._admin_global_action_slot, SessionAdminGlobalAction.CREATE_ROW,
             self._preset_manager.default_preset.as_json))
-
-        self.rows = []
-        self.observers = []
-        self.team_players = []
-
-        spacer_item = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.main_layout.insertSpacerItem(2, spacer_item)
 
         self.network_client.GameSessionMetaUpdated.connect(self.on_game_session_meta_update)
         self.network_client.GameSessionActionsUpdated.connect(self.on_game_session_actions_update)
@@ -284,6 +287,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             await window.on_game_session_meta_update(network_client.current_game_session)
             await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
+            window.connect_to_events()
+
             return window
 
         except BackendInUse as e:
@@ -715,15 +720,19 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.history_table_widget.horizontalHeader().setVisible(True)
         self.history_table_widget.setRowCount(len(actions.actions))
         for i, action in enumerate(actions.actions):
-            preset = self._game_session.presets[action.provider_row]
-            game = default_database.game_description_for(preset.game)
             try:
-                location_node = game.world_list.node_from_pickup_index(action.location)
-                location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
-            except KeyError as e:
-                logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
-                               preset.game.long_name)
-                location_name = f"Invalid location: {e}"
+                preset = self._game_session.presets[action.provider_row]
+                game = default_database.game_description_for(preset.game)
+                try:
+                    location_node = game.world_list.node_from_pickup_index(action.location)
+                    location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+                except KeyError as e:
+                    logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
+                                   preset.game.long_name)
+                    location_name = f"Invalid location: {e}"
+            except IndexError:
+                logger.warning("Action %d has invalid provider_row %d", i, action.provider_row)
+                location_name = f"Invalid location: row {action.provider_row} has no preset"
 
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.provider))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.receiver))
