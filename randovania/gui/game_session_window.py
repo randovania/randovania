@@ -717,8 +717,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         for i, action in enumerate(actions.actions):
             preset = self._game_session.presets[action.provider_row]
             game = default_database.game_description_for(preset.game)
-            location_node = game.world_list.node_from_pickup_index(action.location)
-            location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+            try:
+                location_node = game.world_list.node_from_pickup_index(action.location)
+                location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+            except KeyError as e:
+                logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
+                               preset.game.long_name)
+                location_name = f"Invalid location: {e}"
 
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.provider))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.receiver))
