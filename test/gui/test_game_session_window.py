@@ -26,6 +26,7 @@ def _window(skip_qtbot):
     game_connection.lock_identifier = None
     game_connection.pretty_current_status = "Pretty Status"
     window = GameSessionWindow(MagicMock(), game_connection, MagicMock(), MagicMock(), MagicMock())
+    window.connect_to_events()
     return window
 
 
