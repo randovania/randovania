@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Fixed: Game Sessions - History entries with invalid locations no longer cause error messages. 
+- Fixed: Server will now re-authenticate with Discord, preventing users from logging with the incorrect account.
+
+- Fixed: Game Sessions - History entries with invalid locations no longer cause error messages. 
 
 ## [3.0.0] - 2021-07-30
 
