@@ -732,6 +732,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                     location_name = f"Invalid location: {e}"
             except IndexError:
                 logger.warning("Action %d has invalid provider_row %d", i, action.provider_row)
+                logger.info("All presets: %s", str([(p.game, p.name) for p in self._game_session.presets]))
                 location_name = f"Invalid location: row {action.provider_row} has no preset"
 
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.provider))

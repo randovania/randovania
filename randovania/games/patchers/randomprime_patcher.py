@@ -345,6 +345,8 @@ class RandomprimePatcher(Patcher):
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
 
+        os.environ["RUST_BACKTRACE"] = "1"
+
         py_randomprime.patch_iso_raw(
             patch_as_str,
             py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
