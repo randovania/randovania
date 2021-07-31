@@ -689,6 +689,7 @@ def test_create_patch_data(test_files_dir):
         'hasSpoiler': True,
         'preferences': {
             'artifactHintBehavior': None,
+            'automaticCrashScreen': True,
             'mapDefaultState': 'default',
             'obfuscateItems': False,
             'qolCosmetic': True,
