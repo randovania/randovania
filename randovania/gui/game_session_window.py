@@ -168,6 +168,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     _generating_game: bool = False
     _expecting_kick = False
     _already_kicked = False
+    _can_stop_background_process = True
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
                  preset_manager: PresetManager, window_manager: WindowManager, options: Options):
@@ -1064,6 +1065,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.save_options()
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                      options.options_for_game(game).cosmetic_patches.as_json)
+        self._can_stop_background_process = patcher.export_can_be_aborted
         await game_exporter.export_game(
             patcher=patcher,
             input_dialog=dialog,
@@ -1115,7 +1117,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     def update_background_process_button(self):
         is_admin = self.current_player_membership.admin
         if self.has_background_process:
-            self.background_process_button.setEnabled(self.has_background_process or is_admin)
+            self.background_process_button.setEnabled(self.has_background_process and self._can_stop_background_process)
             self.background_process_button.setText("Stop")
 
         elif self._game_session.generation_in_progress is not None:

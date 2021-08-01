@@ -4,7 +4,7 @@ import dataclasses
 from functools import partial
 from typing import List, Dict, Optional, Set
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
@@ -67,6 +67,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     _player_names: Dict[int, str]
     _pickup_spoiler_current_game: Optional[GameDescription] = None
     _last_percentage: float = 0
+    _can_stop_background_process: bool = True
 
     def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
@@ -229,6 +230,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         )
 
         patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
+        self._can_stop_background_process = patcher.export_can_be_aborted
         await game_exporter.export_game(
             patcher=patcher,
             input_dialog=dialog,
@@ -238,6 +240,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             background=self,
             progress_update_signal=self.progress_update_signal,
         )
+        self._can_stop_background_process = True
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
@@ -452,7 +455,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                                                        cosmetic_patches=dialog.cosmetic_patches))
 
     def enable_buttons_with_background_tasks(self, value: bool):
-        self.stop_background_process_button.setEnabled(not value)
+        self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
         simplified_patcher.export_busy = not value
 
@@ -470,3 +473,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             self.progress_bar.setValue(percentage)
         else:
             self.progress_bar.setRange(0, 0)
+
+    def ignore_close_event(self, event: QtGui.QCloseEvent) -> bool:
+        return not self._can_stop_background_process
