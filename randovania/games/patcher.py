@@ -19,6 +19,14 @@ class Patcher(ABC):
 
     @property
     @abstractmethod
+    def export_can_be_aborted(self) -> bool:
+        """
+        Checks if patch_game can be aborted
+        """
+        raise NotImplementedError()
+
+    @property
+    @abstractmethod
     def uses_input_file_directly(self) -> bool:
         """
         Does this patcher uses the input file directly?

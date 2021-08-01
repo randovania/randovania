@@ -26,6 +26,13 @@ class ClarisPatcher(Patcher):
         return self._busy
 
     @property
+    def export_can_be_aborted(self) -> bool:
+        """
+        Checks if patch_game can be aborted
+        """
+        return True
+
+    @property
     def uses_input_file_directly(self) -> bool:
         """
         Does this patcher uses the input file directly?

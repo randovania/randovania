@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Changed: Disabled the option to stop exporting a Prime 1 ISO to avoid crashes.
+
 - Fixed: Server will now re-authenticate with Discord, preventing users from logging with the incorrect account.
 
 - Fixed: Game Sessions - History entries with invalid locations no longer cause error messages. 
