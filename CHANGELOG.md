@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Changed: Game Sessions - The window now uses docks for the different parts, meaning you can resize, reorder and even split off.
+
+## [3.0.1] - 2021-08-01
+
 - Changed: Disabled the option to stop exporting a Prime 1 ISO to avoid crashes.
 
 - Fixed: Server will now re-authenticate with Discord, preventing users from logging with the incorrect account.
