@@ -237,8 +237,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.observers = []
         self.team_players = []
 
-        spacer_item = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.main_layout.insertSpacerItem(2, spacer_item)
+        # tab stuff
+        self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
+        self.tabifyDockWidget(self.game_dock, self.observers_dock)
+        self.tabifyDockWidget(self.game_dock, self.history_dock)
+        self.game_dock.raise_()
+
+        self.resizeDocks([self.players_dock, self.game_dock],
+                         [self.height() - 200, 100],
+                         Qt.Vertical)
 
     def connect_to_events(self):
         # Advanced Options
@@ -286,6 +293,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         try:
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
             await window.on_game_session_meta_update(network_client.current_game_session)
+            window.update_session_actions(GameSessionActions(tuple()))
             await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
             window.connect_to_events()
@@ -342,6 +350,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                     not self.network_client.connection_state.is_disconnected):
                 await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
         finally:
+            for d in [self.players_dock, self.game_dock, self.observers_dock, self.history_dock]:
+                d.close()
             super().closeEvent(event)
         self.has_closed = True
 
@@ -601,8 +611,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if self.network_client.current_user.id not in game_session.players:
             return await self._on_kicked()
 
-        self.session_name_label.setText(game_session.name)
+        self.players_dock.setWindowTitle(f"Session: {game_session.name}")
         self.advanced_options_tool.setEnabled(game_session.players[self.network_client.current_user.id].admin)
+        self.customize_user_preferences_button.setEnabled(self.current_player_game is not None)
 
         self.sync_rows_to_game_session()
         self.sync_player_widgets_to_game_session()
