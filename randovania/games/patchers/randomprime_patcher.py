@@ -273,6 +273,7 @@ class RandomprimePatcher(Patcher):
                 "obfuscateItems": False,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
+                "automaticCrashScreen": True,
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
