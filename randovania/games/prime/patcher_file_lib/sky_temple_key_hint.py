@@ -42,6 +42,8 @@ def create_hints(all_patches: Dict[int, GamePatches],
     resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
         all_patches, players_config, area_namers, hide_area,
         [resource_database.get_item(index) for index in echoes_items.SKY_TEMPLE_KEY_ITEMS],
+        hint_lib.TextColor.ITEM,
+        hint_lib.TextColor.LOCATION,
     )
     return [
         hint_lib.create_simple_logbook_hint(

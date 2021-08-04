@@ -702,40 +702,40 @@ def test_create_patch_data(test_files_dir):
         },
         'gameConfig': {
             'artifactHints': {
-                'Artifact of Chozo': '&push;&main-color=#FF6705B3;Artifact of Chozo&pop; is located in '
+                'Artifact of Chozo': '&push;&main-color=#c300ff;Artifact of Chozo&pop; is located in '
                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                     "&push;&main-color=#FF3333;Dark Agon Wastes - Ing Cache 1&pop;.",
-                'Artifact of Elder': '&push;&main-color=#FF6705B3;Artifact of Elder&pop; is located in '
+                                     "&push;&main-color=#89a1ff;Dark Agon Wastes - Ing Cache 1&pop;.",
+                'Artifact of Elder': '&push;&main-color=#c300ff;Artifact of Elder&pop; is located in '
                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                     '&push;&main-color=#FF3333;Agon Wastes - Sand Cache&pop;.',
-                'Artifact of Lifegiver': '&push;&main-color=#FF6705B3;Artifact of Lifegiver&pop; is located in '
+                                     '&push;&main-color=#89a1ff;Agon Wastes - Sand Cache&pop;.',
+                'Artifact of Lifegiver': '&push;&main-color=#c300ff;Artifact of Lifegiver&pop; is located in '
                                          "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                         '&push;&main-color=#FF3333;Temple Grounds - Storage Cavern B&pop;.',
-                'Artifact of Nature': '&push;&main-color=#FF6705B3;Artifact of Nature&pop; is located in '
+                                         '&push;&main-color=#89a1ff;Temple Grounds - Storage Cavern B&pop;.',
+                'Artifact of Nature': '&push;&main-color=#c300ff;Artifact of Nature&pop; is located in '
                                       "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                      '&push;&main-color=#FF3333;Sanctuary Fortress - Hall of Combat Mastery&pop;.',
-                'Artifact of Newborn': '&push;&main-color=#FF6705B3;Artifact of Newborn&pop; is located in '
+                                      '&push;&main-color=#89a1ff;Sanctuary Fortress - Hall of Combat Mastery&pop;.',
+                'Artifact of Newborn': '&push;&main-color=#c300ff;Artifact of Newborn&pop; is located in '
                                        "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                       '&push;&main-color=#FF3333;Great Temple - Transport A Access&pop;.',
-                'Artifact of Spirit': '&push;&main-color=#FF6705B3;Artifact of Spirit&pop; is located in '
+                                       '&push;&main-color=#89a1ff;Great Temple - Transport A Access&pop;.',
+                'Artifact of Spirit': '&push;&main-color=#c300ff;Artifact of Spirit&pop; is located in '
                                       "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                      '&push;&main-color=#FF3333;Temple Grounds - Transport to Agon Wastes&pop;.',
-                'Artifact of Strength': '&push;&main-color=#FF6705B3;Artifact of Strength&pop; is located in '
+                                      '&push;&main-color=#89a1ff;Temple Grounds - Transport to Agon Wastes&pop;.',
+                'Artifact of Strength': '&push;&main-color=#c300ff;Artifact of Strength&pop; is located in '
                                         "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                        '&push;&main-color=#FF3333;Agon Wastes - Storage D&pop;.',
-                'Artifact of Sun': '&push;&main-color=#FF6705B3;Artifact of Sun&pop; has no need to be located.',
-                'Artifact of Truth': '&push;&main-color=#FF6705B3;Artifact of Truth&pop; is located in '
+                                        '&push;&main-color=#89a1ff;Agon Wastes - Storage D&pop;.',
+                'Artifact of Sun': '&push;&main-color=#c300ff;Artifact of Sun&pop; has no need to be located.',
+                'Artifact of Truth': '&push;&main-color=#c300ff;Artifact of Truth&pop; is located in '
                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                     '&push;&main-color=#FF3333;Agon Wastes - Mining Station Access&pop;.',
-                'Artifact of Warrior': '&push;&main-color=#FF6705B3;Artifact of Warrior&pop; is located in '
+                                     '&push;&main-color=#89a1ff;Agon Wastes - Mining Station Access&pop;.',
+                'Artifact of Warrior': '&push;&main-color=#c300ff;Artifact of Warrior&pop; is located in '
                                        "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                       '&push;&main-color=#FF3333;Agon Wastes - Portal Access A&pop;.',
-                'Artifact of Wild': '&push;&main-color=#FF6705B3;Artifact of Wild&pop; is located in '
+                                       '&push;&main-color=#89a1ff;Agon Wastes - Portal Access A&pop;.',
+                'Artifact of Wild': '&push;&main-color=#c300ff;Artifact of Wild&pop; is located in '
                                     "&push;&main-color=#d4cc33;Prime&pop;'s "
-                                    '&push;&main-color=#FF3333;Tallon Overworld - Transport Tunnel B&pop;.',
-                'Artifact of World': '&push;&main-color=#FF6705B3;Artifact of World&pop; is located in '
+                                    '&push;&main-color=#89a1ff;Tallon Overworld - Transport Tunnel B&pop;.',
+                'Artifact of World': '&push;&main-color=#c300ff;Artifact of World&pop; is located in '
                                      "&push;&main-color=#d4cc33;Echoes&pop;'s "
-                                     '&push;&main-color=#FF3333;Ing Hive - Culling Chamber&pop;.'
+                                     '&push;&main-color=#89a1ff;Ing Hive - Culling Chamber&pop;.'
             },
 
             'artifactTempleLayerOverrides': {

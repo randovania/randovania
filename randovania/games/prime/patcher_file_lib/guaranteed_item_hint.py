@@ -34,13 +34,14 @@ def hint_text_if_items_are_starting(
         target_items: List[ItemResourceInfo],
         all_patches: Dict[int, GamePatches],
         player: int,
+        resource_color: hint_lib.TextColor,
 ) -> Dict[ItemResourceInfo, str]:
     result = {}
 
     for resource, quantity in all_patches[player].starting_items.items():
         if quantity > 0 and resource in target_items:
             result[resource] = "{} has no need to be located.".format(
-                hint_lib.color_text(hint_lib.TextColor.ITEM, resource.long_name))
+                hint_lib.color_text(resource_color, resource.long_name))
 
     return result
 
@@ -51,6 +52,8 @@ def create_guaranteed_hints_for_resources(
         area_namers: Dict[int, hint_lib.AreaNamer],
         hide_area: bool,
         items: List[ItemResourceInfo],
+        resource_color: hint_lib.TextColor,
+        location_color: hint_lib.TextColor,
 ) -> Dict[ItemResourceInfo, str]:
     """
     Creates a hint for where each of the given resources for the given player can be found, across all players.
@@ -62,9 +65,11 @@ def create_guaranteed_hints_for_resources(
     :param area_namers: Area namer for all players in the LayoutDescription
     :param hide_area: Should the area of the location be hidden?
     :param items: The item resources to hint
+    :param resource_color: The color to use for resource names.
+    :param location_color: The color to use for location names.
     :return:
     """
-    resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.player_index)
+    resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.player_index, resource_color)
     locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.player_index)
 
     used_locations = set()
@@ -87,9 +92,9 @@ def create_guaranteed_hints_for_resources(
                 determiner = hint_lib.Determiner("", False)
 
             resulting_hints[resource] = "{} is located in {}{}.".format(
-                hint_lib.color_text(hint_lib.TextColor.ITEM, resource.long_name),
+                hint_lib.color_text(resource_color, resource.long_name),
                 determiner,
-                area_namers[location[0]].location_name(location[1], hide_area),
+                area_namers[location[0]].location_name(location[1], hide_area, color=location_color),
             )
 
     if len(resulting_hints) != len(items):
