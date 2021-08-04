@@ -253,6 +253,8 @@ class RandomprimePatcher(Patcher):
         resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             description.all_patches, players_config, area_namers, False,
             [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
+            hint_lib.TextColor.PRIME1_ITEM,
+            hint_lib.TextColor.PRIME1_LOCATION,
         )
 
         # Tweaks

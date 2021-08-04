@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Game Sessions - The window now uses docks for the different parts, meaning you can resize, reorder and even split off.
 
+- Changed: Use different colors for artifact hints in Metroid Prime, for better readability on both scan box and logbook.
+
 - Fixed: Exporting a Metroid Prime ISO with Warp to Start enabled and starting at certain elevator rooms no longer fails.
 
 ## [3.0.1] - 2021-08-01
