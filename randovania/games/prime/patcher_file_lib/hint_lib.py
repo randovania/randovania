@@ -10,8 +10,10 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 class TextColor(Enum):
     GUARDIAN = "#FF3333"
     ITEM = "#FF6705B3"
+    PRIME1_ITEM = "#c300ff"
     JOKE = "#45F731"
     LOCATION = "#FF3333"
+    PRIME1_LOCATION = "#89a1ff"
     PLAYER = "#d4cc33"
 
 
