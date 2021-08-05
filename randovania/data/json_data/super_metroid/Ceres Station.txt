@@ -1,0 +1,76 @@
+----------------
+Elevator Shaft
+Asset id: 253
+> Dock to Hallway A; Heals? False; Spawn Point
+  * Normal Door to Hallway A/Dock to Elevator Shaft
+  > Escape
+      After Fight Ridley At Ceres
+
+> Escape; Heals? False
+  * Teleporter to Upper Zebes - Landing Site
+
+----------------
+Hallway A
+Asset id: 254
+> Dock to Elevator Shaft; Heals? False; Spawn Point
+  * Normal Door to Elevator Shaft/Dock to Hallway A
+  > Dock to Hallway B
+      Trivial
+
+> Dock to Hallway B; Heals? False
+  * Normal Door to Hallway B/Dock to Hallway A
+  > Dock to Elevator Shaft
+      Trivial
+
+----------------
+Hallway B
+Asset id: 255
+> Dock to Hallway A; Heals? False; Spawn Point
+  * Normal Door to Hallway A/Dock to Hallway B
+  > Dock to Hallway C
+      Trivial
+
+> Dock to Hallway C; Heals? False
+  * Normal Door to Hallway C/Dock to Hallway B
+  > Dock to Hallway A
+      Trivial
+
+----------------
+Hallway C
+Asset id: 256
+> Dock to Hallway B; Heals? False; Spawn Point
+  * Normal Door to Hallway B/Dock to Hallway C
+  > Dock to Hallway D
+      Trivial
+
+> Dock to Hallway D; Heals? False
+  * Normal Door to Hallway D/Dock to Hallway C
+  > Dock to Hallway B
+      Trivial
+
+----------------
+Hallway D
+Asset id: 257
+> Dock to Hallway C; Heals? False; Spawn Point
+  * Normal Door to Hallway C/Dock to Hallway D
+  > Dock to Sample Storage
+      Trivial
+
+> Dock to Sample Storage; Heals? False
+  * Normal Door to Sample Storage/Dock to Hallway D
+  > Dock to Hallway C
+      Trivial
+
+----------------
+Sample Storage
+Asset id: 258
+> Dock to Hallway D; Heals? False; Spawn Point
+  * Normal Door to Hallway D/Dock to Sample Storage
+  > Event - Fight Ridley at Ceres
+      Trivial
+
+> Event - Fight Ridley at Ceres; Heals? False
+  * Event Fight Ridley At Ceres
+  > Dock to Hallway D
+      Trivial
+
