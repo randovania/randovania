@@ -108,7 +108,7 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
-        if "Key" not in item:
+        if "Key" not in item and "Artifact" not in item:
             no_key.add(location)
 
     for item in all_items:
