@@ -35,6 +35,10 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
+def _t(key: str, disambiguation: Optional[str] = None):
+    return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
+
+
 def _update_label_on_show(label: QtWidgets.QLabel, text: str):
     def showEvent(_):
         if label._delayed_text is not None:
@@ -125,15 +129,33 @@ class MainWindow(WindowManager, Ui_MainWindow):
             lambda: self.main_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
-        for action, game in ((self.menu_action_prime_1_data_visualizer, RandovaniaGame.METROID_PRIME),
-                             (self.menu_action_prime_2_data_visualizer, RandovaniaGame.METROID_PRIME_ECHOES),
-                             (self.menu_action_prime_3_data_visualizer, RandovaniaGame.METROID_PRIME_CORRUPTION)):
-            action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
+        self.game_menus = []
+        self.menu_action_edits = []
 
-        for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.METROID_PRIME),
-                             (self.menu_action_edit_prime_2, RandovaniaGame.METROID_PRIME_ECHOES),
-                             (self.menu_action_edit_prime_3, RandovaniaGame.METROID_PRIME_CORRUPTION)):
+        for game in iterate_enum(RandovaniaGame):
+            # Sub-Menu in Open Menu
+            game_menu = QtWidgets.QMenu(self.menu_open)
+            game_menu.setTitle(_t(game.long_name))
+            self.menu_open.addAction(game_menu.menuAction())
+            self.game_menus.append(game_menu)
+
+            game_trick_details_menu = QtWidgets.QMenu(game_menu)
+            game_trick_details_menu.setTitle(_t("Trick Details"))
+            self._setup_trick_difficulties_menu_on_show(game_trick_details_menu, game)
+
+            game_data_visualizer_action = QtWidgets.QAction(game_menu)
+            game_data_visualizer_action.setText(_t("Data Visualizer"))
+            game_data_visualizer_action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
+
+            game_menu.addAction(game_trick_details_menu.menuAction())
+            game_menu.addAction(game_data_visualizer_action)
+
+            # Data Editor
+            action = QtWidgets.QAction(self)
+            action.setText(_t(game.long_name))
+            self.menu_internal.addAction(action)
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
+            self.menu_action_edits.append(action)
 
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
@@ -145,10 +167,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
         self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
-
-        self.menu_prime_1_trick_details.aboutToShow.connect(self._create_trick_details_prime_1)
-        self.menu_prime_2_trick_details.aboutToShow.connect(self._create_trick_details_prime_2)
-        self.menu_prime_3_trick_details.aboutToShow.connect(self._create_trick_details_prime_3)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -468,17 +486,12 @@ class MainWindow(WindowManager, Ui_MainWindow):
         from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
         self._exec_trick_details(TrickDetailsPopup(self, self, game, trick, level))
 
-    def _create_trick_details_prime_1(self):
-        self.menu_prime_1_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_1)
-        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME, self.menu_prime_1_trick_details)
+    def _setup_trick_difficulties_menu_on_show(self, menu: QtWidgets.QMenu, game: RandovaniaGame):
+        def on_show():
+            menu.aboutToShow.disconnect(on_show)
+            self._setup_difficulties_menu(game, menu)
 
-    def _create_trick_details_prime_2(self):
-        self.menu_prime_2_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_2)
-        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME_ECHOES, self.menu_prime_2_trick_details)
-
-    def _create_trick_details_prime_3(self):
-        self.menu_prime_3_trick_details.aboutToShow.disconnect(self._create_trick_details_prime_3)
-        self._setup_difficulties_menu(RandovaniaGame.METROID_PRIME_CORRUPTION, self.menu_prime_3_trick_details)
+        menu.aboutToShow.connect(on_show)
 
     def _setup_difficulties_menu(self, game: RandovaniaGame, menu: QtWidgets.QMenu):
         from randovania.game_description import default_database
@@ -491,7 +504,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 continue
 
             trick_menu = QtWidgets.QMenu(self)
-            trick_menu.setTitle(trick.long_name)
+            trick_menu.setTitle(_t(trick.long_name))
             menu.addAction(trick_menu.menuAction())
 
             used_difficulties = difficulties_for_trick(game, trick)

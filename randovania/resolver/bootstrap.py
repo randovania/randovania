@@ -283,7 +283,9 @@ def logic_bootstrap(configuration: AnyGameConfiguration,
     if not game.mutable:
         raise ValueError("Running logic_bootstrap with non-mutable game")
 
-    starting_state = calculate_starting_state(game, patches, configuration.energy_per_tank)
+    # FIXME
+    energy_per_tank = getattr(configuration, "energy_per_tank", 100)
+    starting_state = calculate_starting_state(game, patches, energy_per_tank)
 
     if configuration.trick_level.minimal_logic:
         _add_minimal_logic_initial_resources(starting_state.resources,

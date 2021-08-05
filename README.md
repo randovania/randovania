@@ -65,3 +65,7 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 Alternatively, install requirements.txt to run tests or server.
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
+
+### Adding a new game?
+
+Check the [dedicated guide](docs/NEW_GAME.md).
