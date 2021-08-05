@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: Metroid Prime 1 racetime.gg rooms are now viewable in the racetime.gg browser, with filters for each game
+- Fixed: Importing a permalink from the racetime.gg browser while a race is currently in progress now selects the correct racetime.gg room
+
 ## [3.0.3] - 2021-08-08
 
 - Fixed: "Open FAQ" in the main window now works correctly.
