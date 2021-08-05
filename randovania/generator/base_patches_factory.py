@@ -194,7 +194,9 @@ def create_base_patches(configuration: EchoesConfiguration,
     patches = dataclasses.replace(game.create_game_patches(),
                                   player_index=player_index)
 
-    patches = add_elevator_connections_to_patches(configuration, rng, patches)
+
+    if hasattr(configuration, "elevators"):
+        patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
     if configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:

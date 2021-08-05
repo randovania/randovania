@@ -19,7 +19,10 @@ def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
 
 @functools.lru_cache()
 def game_description_for(game: RandovaniaGame) -> GameDescription:
-    return data_reader.decode_data(default_data.read_json_then_binary(game)[1])
+    result = data_reader.decode_data(default_data.read_json_then_binary(game)[1])
+    if result.game != game:
+        raise ValueError(f"Game Description for {game} has game field {result.game}")
+    return result
 
 
 def _read_item_database_in_path(path: Path) -> item_database.ItemDatabase:

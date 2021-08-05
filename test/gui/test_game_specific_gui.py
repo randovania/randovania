@@ -14,4 +14,4 @@ def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_ma
     result = game_specific_gui.preset_editor_tabs_for(editor, window_manager)
 
     # Assert
-    assert len(result) > 4
+    assert len(result) >= 3
