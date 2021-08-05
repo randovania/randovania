@@ -40,8 +40,9 @@ def accumulate_results(game_modifications: dict,
                        index_to_location: Dict[int, Tuple[str, str]],
                        logbook_to_name: Dict[str, str],
                        ):
-    for worlds, world_data in game_modifications["locations"].items():
+    for world_name, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
+            area_name = f"{world_name}/{area_name}"
             item_name = _filter_item_name(item_name)
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
