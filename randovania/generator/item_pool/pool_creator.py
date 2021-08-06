@@ -41,10 +41,15 @@ def corruption_specific_pool(results: PoolResults, configuration: CorruptionConf
     _extend_pool_results(results, add_energy_cells(db))
 
 
+def super_metroid_specific_pool(results: PoolResults, configuration: CorruptionConfiguration, db: ResourceDatabase):
+    pass
+
+
 _GAME_SPECIFIC = typing.cast(Dict[RandovaniaGame, Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]], {
     RandovaniaGame.METROID_PRIME: prime1_specific_pool,
     RandovaniaGame.METROID_PRIME_ECHOES: echoes_specific_pool,
     RandovaniaGame.METROID_PRIME_CORRUPTION: corruption_specific_pool,
+    RandovaniaGame.SUPER_METROID: super_metroid_specific_pool,
 })
 
 
