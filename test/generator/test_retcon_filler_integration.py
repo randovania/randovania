@@ -9,6 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver.bootstrap import logic_bootstrap
 
 
@@ -31,7 +32,7 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
         exclusion = frozenset([PickupIndex(3)])
     else:
         exclusion = frozenset()
-    configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False)
+    configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False, LayoutLogicalResourceAction.RANDOMLY)
 
     # Run
     indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list, configuration)
