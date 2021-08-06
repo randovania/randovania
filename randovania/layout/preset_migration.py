@@ -11,7 +11,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 12
+CURRENT_PRESET_VERSION = 13
 
 
 class InvalidPreset(Exception):
@@ -335,6 +335,12 @@ def _migrate_v11(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v12(preset: dict) -> dict:
+    preset["configuration"]["logical_resource_action"] = "randomly"
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -347,6 +353,7 @@ _MIGRATIONS = {
     9: _migrate_v9,
     10: _migrate_v10,
     11: _migrate_v11,
+    12: _migrate_v12,
 }
 
 

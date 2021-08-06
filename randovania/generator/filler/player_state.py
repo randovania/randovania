@@ -8,6 +8,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
@@ -15,9 +16,11 @@ from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
-from randovania.generator.filler.pickup_list import get_pickups_that_solves_unreachable, \
-    get_pickups_with_interesting_resources, interesting_resources_for_reach
+from randovania.generator.filler.pickup_list import (get_pickups_that_solves_unreachable,
+                                                     get_pickups_with_interesting_resources,
+                                                     interesting_resources_for_reach, PickupCombinations)
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
@@ -30,7 +33,7 @@ class PlayerState:
     pickup_index_seen_count: DefaultDict[PickupIndex, int]
     scan_asset_seen_count: DefaultDict[LogbookAsset, int]
     scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
-    _unfiltered_potential_actions: List[Action]
+    _unfiltered_potential_actions: Tuple[PickupCombinations, Tuple[ResourceNode, ...]]
     num_random_starting_items_placed: int
     num_assigned_pickups: int
 
@@ -98,17 +101,22 @@ class PlayerState:
         pickups = get_pickups(self.pickups_left, self.reach, uncollected_resource_nodes)
         print_retcon_loop_start(self.game, self.pickups_left, self.reach, self.index)
 
-        self._unfiltered_potential_actions = list(pickups)
-        self._unfiltered_potential_actions.extend(uncollected_resource_nodes)
+        self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
 
     def potential_actions(self, num_available_indices: int) -> List[Action]:
         num_available_indices += (self.configuration.maximum_random_starting_items
                                   - self.num_random_starting_items_placed)
-        return [
-            action
-            for action in self._unfiltered_potential_actions
-            if not isinstance(action, tuple) or len(action) <= num_available_indices
-        ]
+
+        pickups, uncollected_resource_nodes = self._unfiltered_potential_actions
+        result: List[Action] = [pickup_tuple for pickup_tuple in pickups
+                                if len(pickup_tuple) <= num_available_indices]
+
+        logical_resource_action = self.configuration.logical_resource_action
+        if (logical_resource_action == LayoutLogicalResourceAction.RANDOMLY
+                or (logical_resource_action == LayoutLogicalResourceAction.LAST_RESORT and not result)):
+            result.extend(uncollected_resource_nodes)
+
+        return result
 
     def victory_condition_satisfied(self):
         return self.game.victory_condition.satisfied(self.reach.state.resources,
