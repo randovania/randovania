@@ -92,6 +92,7 @@ _EXPECTED_ITEMS = {
         "Charge Beam",
         "Space Jump Boots",
     },
+    RandovaniaGame.SUPER_METROID: set(),
 }
 _CUSTOM_ITEMS = {
     "Cannon Ball",
@@ -461,6 +462,9 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     elif preset.game == RandovaniaGame.METROID_PRIME:
         template_strings, params = _prime_format_params(configuration)
         format_params.update(params)
+
+    elif preset.game == RandovaniaGame.SUPER_METROID:
+        template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
 
     if configuration.multi_pickup_placement:
         template_strings["Item Placement"].append("Multi-pickup placement")
