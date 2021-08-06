@@ -24,11 +24,12 @@ def read_json(path: Path) -> dict:
 
 
 _KEY_MATCH = re.compile(r"Key (\d+)")
+_ARTIFACT_MATCH = re.compile(r"Artifact of (\w+)")
 _PLAYER_MATCH = re.compile(r" for Player \d+")
 
 
 def _filter_item_name(name: str) -> str:
-    return _PLAYER_MATCH.sub("", _KEY_MATCH.sub("Key", name))
+    return _PLAYER_MATCH.sub("", _ARTIFACT_MATCH.sub("Artifact", _KEY_MATCH.sub("Key", name)))
 
 
 def accumulate_results(game_modifications: dict,
