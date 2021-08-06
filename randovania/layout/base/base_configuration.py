@@ -6,13 +6,14 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
-from randovania.layout.lib import location_list
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.lib import location_list
 
 
 class StartingLocationList(location_list.LocationList):
@@ -32,6 +33,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_style: PickupModelStyle
     pickup_model_data_source: PickupModelDataSource
     multi_pickup_placement: bool
+    logical_resource_action: LayoutLogicalResourceAction
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
