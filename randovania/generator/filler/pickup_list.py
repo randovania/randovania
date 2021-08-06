@@ -13,6 +13,9 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
+PickupCombination = Tuple[PickupEntry, ...]
+PickupCombinations = Tuple[PickupCombination, ...]
+
 
 def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResources) -> FrozenSet[ResourceInfo]:
     resource_gain = pickup.resource_gain(current_resources, force_lock=True)
@@ -136,7 +139,7 @@ def pickups_to_solve_list(pickup_pool: List[PickupEntry],
 def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
                                         reach: GeneratorReach,
                                         uncollected_resource_nodes: List[ResourceNode],
-                                        ) -> Tuple[Tuple[PickupEntry, ...], ...]:
+                                        ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
     that satisfies on unreachable nodes"""
     state = reach.state
@@ -163,7 +166,7 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
 def get_pickups_with_interesting_resources(pickup_pool: List[PickupEntry],
                                            reach: GeneratorReach,
                                            uncollected_resource_nodes: List[ResourceNode],
-                                           ) -> Tuple[Tuple[PickupEntry, ...], ...]:
+                                           ) -> PickupCombinations:
     """Old logic. Given pickup list and a reach, gets these that gives at least one of the interesting resources."""
     interesting_resources = interesting_resources_for_reach(reach)
     progression_pickups = []

@@ -359,6 +359,7 @@ async def run_filler(rng: Random,
                 maximum_random_starting_items=major_configuration.maximum_random_starting_items,
                 indices_to_exclude=pool.configuration.available_locations.excluded_indices,
                 multi_pickup_placement=pool.configuration.multi_pickup_placement,
+                logical_resource_action=pool.configuration.logical_resource_action,
             ),
         ))
 
