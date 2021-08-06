@@ -54,3 +54,34 @@ new game enum.
 
 
 12. Run the unit tests. If some test don't pass, one of the steps above have incorrect data.
+
+
+### Correctly generating games
+
+For a game to be correctly generated, it's necessary to be able to reach the victory condition. This will normally be
+some requirement for a final boss event.
+During development, this can be anything you want, which can help when the database is not complete.
+
+While the database deals with items, the generator and layouts uses pickups. It's now necessary to configuring the new
+game to have proper pickups:
+
+1. Fill `randovania/data/item_database/{enum-value}/configuration/major-items.json`. Use another game's file for reference.
+   1. Fill `randovania/data/item_database/{enum-value}/configuration/ammo.json` as needed.
+
+
+2. Update `major_items_configuration` and `ammo_configuration` in `randovania/data/presets/{enum-value}/starter_preset.rdvpreset`.
+
+
+3. Fill `randovania/data/item_database/super_metroid/default_state` (needed for tests, but point of cleanup).
+
+
+### Exporting games
+
+Update `randovania/games/patcher_provider.py`, providing a instance of your new class that inherits from `Patcher`.
+
+TODO: details
+
+
+### Multiworld
+
+TODO
