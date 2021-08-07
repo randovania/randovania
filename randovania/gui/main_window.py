@@ -273,8 +273,11 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     # Generate Seed
     def _open_faq(self):
-        self.main_tab_widget.setCurrentWidget(self.help_tab)
-        self.help_tab_widget.setCurrentWidget(self.tab_faq)
+        self.main_tab_widget.setCurrentWidget(self.games_tab)
+        self.games_tab_widget.setCurrentWidget(self.help_echoes_tab)
+        self.help_prime_tab_widget.setCurrentWidget(self.prime_faq_tab)
+        self.help_echoes_tab_widget.setCurrentWidget(self.echoes_faq_tab)
+        self.help_corruption_tab_widget.setCurrentWidget(self.corruption_faq_tab)
 
     async def generate_seed_from_permalink(self, permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
