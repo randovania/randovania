@@ -5,25 +5,21 @@ import typing
 from pathlib import Path
 from typing import Iterator, Optional
 
-from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget, QComboBox, QTextEdit, \
-    QLineEdit
+from PySide2 import QtWidgets, QtGui
 
 from randovania import get_data_path
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset_migration import VersionedPreset
 
 
-def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
+def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
     for checkbox in iterable:
         checkbox.setChecked(new_status)
 
 
 def lock_application(value: bool):
-    QApplication.instance().main_window.setEnabled(value)
+    QtWidgets.QApplication.instance().main_window.setEnabled(value)
 
 
-def _prompt_user_for_file(window: QMainWindow,
+def _prompt_user_for_file(window: QtWidgets.QMainWindow,
                           caption: str,
                           filter: str,
                           dir: Optional[str] = None,
@@ -37,16 +33,16 @@ def _prompt_user_for_file(window: QMainWindow,
     :return: A string if the user selected a file, None otherwise
     """
     if new_file:
-        method = QFileDialog.getSaveFileName
+        method = QtWidgets.QFileDialog.getSaveFileName
     else:
-        method = QFileDialog.getOpenFileName
+        method = QtWidgets.QFileDialog.getOpenFileName
     open_result = method(window, caption=caption, dir=dir, filter=filter)
     if not open_result or open_result == ("", ""):
         return None
     return Path(open_result[0])
 
 
-def prompt_user_for_vanilla_input_file(window: QMainWindow, extensions: typing.List[str],
+def prompt_user_for_vanilla_input_file(window: QtWidgets.QMainWindow, extensions: typing.List[str],
                                        existing_file: Optional[Path] = None) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a vanilla game file
@@ -63,7 +59,7 @@ def prompt_user_for_vanilla_input_file(window: QMainWindow, extensions: typing.L
     )
 
 
-def prompt_user_for_output_file(window: QMainWindow,
+def prompt_user_for_output_file(window: QtWidgets.QMainWindow,
                                 default_name: str,
                                 extensions: typing.List[str]) -> Optional[Path]:
     """
@@ -82,31 +78,33 @@ def prompt_user_for_output_file(window: QMainWindow,
     )
 
 
-def prompt_user_for_output_game_log(window: QMainWindow, default_name: str) -> Optional[Path]:
+def prompt_user_for_output_game_log(window: QtWidgets.QMainWindow, default_name: str) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
     :param default_name:
     :return: A string if the user selected a file, None otherwise
     """
+    from randovania.layout.layout_description import LayoutDescription
     return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
                                  dir=default_name,
                                  filter="Randovania Game, *.{}".format(LayoutDescription.file_extension()),
                                  new_file=True)
 
 
-def prompt_user_for_input_game_log(window: QMainWindow) -> Optional[Path]:
+def prompt_user_for_input_game_log(window: QtWidgets.QMainWindow) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
     :return: A string if the user selected a file, None otherwise
     """
+    from randovania.layout.layout_description import LayoutDescription
     return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
                                  filter="Randovania Game, *.{}".format(LayoutDescription.file_extension()),
                                  new_file=False)
 
 
-def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
+def prompt_user_for_database_file(window: QtWidgets.QMainWindow) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania database file
     :param window:
@@ -115,29 +113,30 @@ def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QMainWindow, new_file: bool) -> Optional[Path]:
+def prompt_user_for_preset_file(window: QtWidgets.QMainWindow, new_file: bool) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
     :param new_file: If it should be an existing file (False) or not.
     :return: A path if the user selected a file, None otherwise
     """
+    from randovania.layout.preset_migration import VersionedPreset
     return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
                                  filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
                                         f"All Files (*.*)",
                                  new_file=new_file)
 
 
-def set_default_window_icon(window: QWidget):
+def set_default_window_icon(window: QtWidgets.QWidget):
     """
     Sets the window icon for the given widget to the default icon
     :param window:
     :return:
     """
-    window.setWindowIcon(QIcon(str(get_data_path().joinpath("icons", "sky_temple_key_NqN_icon.ico"))))
+    window.setWindowIcon(QtGui.QIcon(str(get_data_path().joinpath("icons", "sky_temple_key_NqN_icon.ico"))))
 
 
-def set_combo_with_value(combo: QComboBox, value):
+def set_combo_with_value(combo: QtWidgets.QComboBox, value):
     """
     Searches all items of the given combo for the given value and changes the current index to that one.
     :param combo:
@@ -147,7 +146,7 @@ def set_combo_with_value(combo: QComboBox, value):
     combo.setCurrentIndex(combo.findData(value))
 
 
-def set_error_border_stylesheet(edit: QTextEdit, has_error: bool):
+def set_error_border_stylesheet(edit: QtWidgets.QTextEdit, has_error: bool):
     edit.has_error = has_error
     if has_error:
         edit.setStyleSheet(":enabled { border: 1px solid red; }"
@@ -156,7 +155,7 @@ def set_error_border_stylesheet(edit: QTextEdit, has_error: bool):
         edit.setStyleSheet("")
 
 
-def set_edit_if_different(edit: QLineEdit, new_text: str):
+def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
     """
     Sets the text of the given QLineEdit only if it differs from the current value.
     Prevents snapping the user's cursor to the end unnecessarily.
@@ -170,12 +169,12 @@ def set_edit_if_different(edit: QLineEdit, new_text: str):
 
 def get_network_client():
     from randovania.gui.lib.qt_network_client import QtNetworkClient
-    return typing.cast(QtNetworkClient, QApplication.instance().network_client)
+    return typing.cast(QtNetworkClient, QtWidgets.QApplication.instance().network_client)
 
 
 def get_game_connection():
     from randovania.game_connection.game_connection import GameConnection
-    return typing.cast(GameConnection, QApplication.instance().game_connection)
+    return typing.cast(GameConnection, QtWidgets.QApplication.instance().game_connection)
 
 
 def show_install_visual_cpp_redist(details: str):

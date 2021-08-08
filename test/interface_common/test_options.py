@@ -203,7 +203,7 @@ def test_load_from_disk_missing_json(ignore_decode_errors: bool,
                                      tmpdir):
     # Setup
     option = Options(Path(tmpdir))
-    tmpdir.join("config.json").write_text("", "utf-8")
+    tmpdir.join("config.json").write_text("wtf", "utf-8")
 
     if ignore_decode_errors:
         result = option.load_from_disk(ignore_decode_errors)
