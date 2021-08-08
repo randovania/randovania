@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.3] - 2021-08-08
+
 - Fixed: "Open FAQ" in the main window now works correctly.
 - Fixed: Pressing Yes to ignore invalid configuration now works correctly. 
 - Changed: Randovania now silently handles some invalid configuration states.
