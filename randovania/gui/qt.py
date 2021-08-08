@@ -176,7 +176,8 @@ async def _load_options():
     import dulwich.errors
     try:
         dulwich.repo.Repo(options.user_dir)
-    except dulwich.errors.NotGitRepository:
+
+    except (dulwich.errors.NotGitRepository, ValueError):
         options.user_dir.mkdir(parents=True, exist_ok=True)
         dulwich.repo.Repo.init(options.user_dir)
 
