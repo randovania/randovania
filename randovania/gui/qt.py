@@ -61,10 +61,14 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     await main_window.request_new_data()
 
 
-def show_tracker(app: QtWidgets.QApplication):
+async def show_tracker(app: QtWidgets.QApplication):
     from randovania.gui.auto_tracker_window import AutoTrackerWindow
+    options = await _load_options()
+    if options is None:
+        app.exit(1)
+        return
 
-    app.tracker = AutoTrackerWindow(app.game_connection, _load_options())
+    app.tracker = AutoTrackerWindow(app.game_connection, options)
     logger.info("Displaying auto tracker")
     app.tracker.show()
 
@@ -112,7 +116,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
 
 async def display_window_for(app, options, command: str, args):
     if command == "tracker":
-        show_tracker(app)
+        await show_tracker(app)
     elif command == "main":
         await show_main_window(app, options, args.preview)
     elif command == "game":
@@ -157,22 +161,23 @@ def create_memory_executor(debug_game_backend: bool, options):
     return backend
 
 
-def _load_options():
+async def _load_options():
     logger.info("Loading up user preferences code...")
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
 
     logger.info("Restoring saved user preferences...")
     options = Options.with_default_data_dir()
-    if not startup_tools.load_options_from_disk(options):
-        raise SystemExit(1)
+    if not await startup_tools.load_options_from_disk(options):
+        return None
 
     logger.info("Creating user preferences folder")
     import dulwich.repo
     import dulwich.errors
     try:
         dulwich.repo.Repo(options.user_dir)
-    except dulwich.errors.NotGitRepository:
+
+    except (dulwich.errors.NotGitRepository, ValueError):
         options.user_dir.mkdir(parents=True, exist_ok=True)
         dulwich.repo.Repo.init(options.user_dir)
 
@@ -207,6 +212,7 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
+    app.setQuitOnLastWindowClosed(False)
     app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -218,7 +224,11 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
         logging.info("Logging as %s", args.login_as_guest)
         await app.network_client.login_as_guest(args.login_as_guest)
 
-    options = _load_options()
+    options = await _load_options()
+    if options is None:
+        app.exit(1)
+        return
+
     executor = create_memory_executor(args.debug_game_backend, options)
 
     logging.info("Configuring game connection with the backend...")
@@ -234,6 +244,7 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
         await app.game_connection.stop()
         logger.info("Last QT window closed")
 
+    app.setQuitOnLastWindowClosed(True)
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
 
     await asyncio.gather(app.game_connection.start(),
@@ -257,6 +268,7 @@ def run(args):
         e: typing.Optional[Exception] = done.exception()
         if e is not None:
             display_exception(e)
+            app.exit(1)
 
     loop = create_loop(app)
     with loop:

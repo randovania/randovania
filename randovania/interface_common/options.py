@@ -165,8 +165,10 @@ class Options:
 
     def _read_persisted_options(self) -> Optional[dict]:
         try:
-            with self._data_dir.joinpath("config.json").open() as options_file:
-                return json.load(options_file)
+            contents = self._data_dir.joinpath("config.json").read_text("utf-8")
+            if contents.strip() == "":
+                return None
+            return json.loads(contents)
         except FileNotFoundError:
             return None
 
