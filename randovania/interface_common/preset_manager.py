@@ -28,11 +28,22 @@ def read_preset_list() -> List[Path]:
 
 
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
+
+    with dulwich.porcelain.open_repo_closing(repository) as r:
+        r = typing.cast(dulwich.repo.Repo, r)
+        # Detect invalid index
+        try:
+            r.open_index()
+        except Exception:
+            os.remove(r.index_path())
+            r.reset_index()
+
     author = "randovania <nobody@example.com>"
     if remove:
         dulwich.porcelain.remove(repository, [file_path])
     else:
         dulwich.porcelain.add(repository, [file_path])
+
     dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
                              author=author, committer=author)
 
@@ -83,6 +94,13 @@ class PresetManager:
         yield from self.included_presets.values()
         yield from self.custom_presets.values()
 
+    def _commit(self, message: str, file_path: Path, remove: bool):
+        repo_root = self._data_dir.parent
+        try:
+            _commit(message, file_path, repo_root, remove)
+        except Exception as e:
+            logging.warning(f"Error committing change to presets: {e}", exc_info=e)
+
     def add_new_preset(self, new_preset: VersionedPreset) -> bool:
         """
         Adds a new custom preset.
@@ -95,7 +113,7 @@ class PresetManager:
 
         path = self._file_name_for_preset(new_preset)
         new_preset.save_to_file(path)
-        _commit(f"Update preset '{new_preset.name}'", path, self._data_dir.parent, False)
+        self._commit(f"Update preset '{new_preset.name}'", path, False)
 
         return not existed_before
 
@@ -103,7 +121,7 @@ class PresetManager:
         del self.custom_presets[preset.uuid]
         path = self._file_name_for_preset(preset)
         os.remove(path)
-        _commit(f"Remove preset '{preset.name}'", path, self._data_dir.parent, True)
+        self._commit(f"Remove preset '{preset.name}'", path, True)
 
     def included_preset_with(self, game: RandovaniaGame, name: str) -> Optional[VersionedPreset]:
         for preset in self.included_presets.values():
