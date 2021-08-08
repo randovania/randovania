@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: "Open FAQ" in the main window now works correctly.
 - Fixed: Pressing Yes to ignore invalid configuration now works correctly. 
 - Changed: Randovania now silently handles some invalid configuration states.
+- Changed: Improved handling of corrupted repository for old preset versions.
 
 ## [3.0.2] - 2021-08-05
 
