@@ -3,9 +3,11 @@ import datetime
 from typing import List, Optional
 
 import aiohttp
-from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QCheckBox
 from qasync import asyncSlot
 
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors
@@ -21,9 +23,10 @@ class RaceEntry:
     goal: str
     opened_at: datetime.datetime
     info: str
+    game: RandovaniaGame
 
     @classmethod
-    def from_json(cls, data) -> "RaceEntry":
+    def from_json(cls, data, game) -> "RaceEntry":
         return RaceEntry(
             name=data["name"],
             status=data["status"]["value"],
@@ -32,10 +35,13 @@ class RaceEntry:
             goal=data["goal"]["name"],
             opened_at=datetime.datetime.fromisoformat(data["opened_at"].replace("Z", "+00:00")),
             info=data["info"],
+            game=game,
         )
 
-
-_RACES_URL = "https://racetime.gg/mp2r/data"
+_SUPPORTED_GAME_URLS = {
+    RandovaniaGame.METROID_PRIME: "https://racetime.gg/mpr/data",
+    RandovaniaGame.METROID_PRIME_ECHOES: "https://racetime.gg/mp2r/data",
+}
 _TEST_RESPONSE = {
     "name": "Metroid Prime 2: Echoes Randomizer",
     "short_name": "MP2R",
@@ -64,6 +70,26 @@ _TEST_RESPONSE = {
     "moderators": [],
     "current_races": [
         {
+            "name": "mp2r/proud-stadium-7340",
+            "status": {
+                "value": "in_progress",
+                "verbose_value": "In progress",
+                "help_text": "Race is in progress"
+            },
+            "url": "/mp2r/proud-stadium-7340",
+            "data_url": "/mp2r/proud-stadium-7340/data",
+            "goal": {
+                "name": "Beat the game",
+                "custom": False
+            },
+            "info": "zasj0oGRVOUaUwbx6LFMgLrjmF0kH2aEFX9OMr1tu7xcW8az || Seed Hash: Command Caretaker Alcove (67J3ZJPT)",
+            "entrants_count": 3,
+            "entrants_count_inactive": 0,
+            "opened_at": "2020-10-03T18:44:17.865Z",
+            "started_at": "2020-10-03T18:45:17.865Z",
+            "time_limit": "P1DT00H00M00S"
+        },
+        {
             "name": "mp2r/proud-arena-4584",
             "status": {
                 "value": "open",
@@ -76,7 +102,7 @@ _TEST_RESPONSE = {
                 "name": "Beat the game",
                 "custom": False
             },
-            "info": "r6Ds6EUgBAGQBwkUhAcUAIEjxlUA7Q==  || Seed Hash: Morph Defiled Minigyro (I6LNUHZH)",
+            "info": "yevhOB287u6SOly2HFReAapCZprQOvB9fVaU5-EAvS08qoQi  || Seed Hash: Sandigger Module Boom (GN73RSFH)",
             "entrants_count": 5,
             "entrants_count_inactive": 0,
             "opened_at": "2020-10-03T18:46:17.865Z",
@@ -87,9 +113,9 @@ _TEST_RESPONSE = {
 }
 
 
-async def _query_server() -> dict:
+async def _query_server(race_url) -> dict:
     async with aiohttp.ClientSession() as session:
-        async with session.get(_RACES_URL) as response:
+        async with session.get(race_url) as response:
             response.raise_for_status()
             return await response.json()
 
@@ -124,6 +150,14 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             check.stateChanged.connect(self.update_list)
         self.filter_name_edit.textEdited.connect(self.update_list)
 
+        self._game_checks = set()
+        for game in _SUPPORTED_GAME_URLS:
+            game_checkbox = QCheckBox(game.long_name)
+            game_checkbox.setChecked(True)
+            self.game_check_layout.addWidget(game_checkbox)
+            game_checkbox.stateChanged.connect(self.update_list)
+            self._game_checks.add((game_checkbox, game))
+
         self.table_widget.itemSelectionChanged.connect(self.on_selection_changed)
         self.table_widget.itemDoubleClicked.connect(self.on_double_click)
 
@@ -131,15 +165,18 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
     @handle_network_errors
     async def refresh(self) -> bool:
         self.refresh_button.setEnabled(False)
+        self.races = []
         try:
-            try:
-                raw_races = await _query_server()
-            except aiohttp.ClientError as e:
-                await async_dialog.warning(self, "Connection error",
-                                           f"Unable to retrieve races from `{_RACES_URL}`: {e}")
-                return False
+            for game in _SUPPORTED_GAME_URLS:
+                race_url = _SUPPORTED_GAME_URLS[game]
+                try:
+                    raw_races = await _query_server(race_url)
+                except aiohttp.ClientError as e:
+                    await async_dialog.warning(self, "Connection error",
+                                               f"Unable to retrieve races from `{race_url}`: {e}")
+                    return False
 
-            self.races = [RaceEntry.from_json(item) for item in raw_races["current_races"]]
+                self.races.extend([RaceEntry.from_json(item, game) for item in raw_races["current_races"]])
             self.update_list()
             return True
         finally:
@@ -150,8 +187,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
 
     @property
     def selected_race(self):
-        row: int = self.table_widget.selectedIndexes()[0].row()
-        return self.races[row]
+        return self.table_widget.selectedItems()[0].data(Qt.UserRole)
 
     @asyncSlot(QTableWidgetItem)
     async def on_double_click(self, item: QTableWidgetItem):
@@ -182,7 +218,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
 
     def update_list(self):
         self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "Status", "Entrants",
+        self.table_widget.setHorizontalHeaderLabels(["Name", "Game", "Status", "Entrants",
                                                      "Goal", "Info", "Opened At"])
 
         name_filter = self.filter_name_edit.text().strip()
@@ -192,11 +228,17 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             if check.isChecked():
                 displayed_status.add(status)
 
+        displayed_games = set()
+        for (check, game) in self._game_checks:
+            if check.isChecked():
+                displayed_games.add(game)
+
         visible_races = [
             race
             for race in self.races
             if (race.status in displayed_status
-                and name_filter in race.name)
+                and name_filter in race.name
+                and race.game in displayed_games)
         ]
 
         self.table_widget.setRowCount(len(visible_races))
@@ -207,12 +249,15 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             goal = QTableWidgetItem(session.goal)
             info = QTableWidgetItem(session.info)
             opened_at = QTableWidgetItem(session.opened_at.astimezone().strftime("%c"))
+            game_name = QTableWidgetItem(session.game.short_name)
 
+            name.setData(Qt.UserRole, session)
             self.table_widget.setItem(i, 0, name)
-            self.table_widget.setItem(i, 1, status)
-            self.table_widget.setItem(i, 2, entrants)
-            self.table_widget.setItem(i, 3, goal)
-            self.table_widget.setItem(i, 4, info)
-            self.table_widget.setItem(i, 5, opened_at)
+            self.table_widget.setItem(i, 1, game_name)
+            self.table_widget.setItem(i, 2, status)
+            self.table_widget.setItem(i, 3, entrants)
+            self.table_widget.setItem(i, 4, goal)
+            self.table_widget.setItem(i, 5, info)
+            self.table_widget.setItem(i, 6, opened_at)
 
         self.status_label.setText(f"{len(self.races)} races total, {len(visible_races)} displayed.")
