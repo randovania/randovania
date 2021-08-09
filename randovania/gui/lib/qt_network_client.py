@@ -10,7 +10,8 @@ from PySide2.QtWidgets import QWidget
 
 import randovania
 from randovania.gui.lib import async_dialog
-from randovania.network_client.game_session import GameSessionEntry, User, GameSessionActions, GameSessionPickups
+from randovania.network_client.game_session import GameSessionEntry, User, GameSessionActions, GameSessionPickups, \
+    GameSessionAuditLog
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
                                              NotLoggedIn)
@@ -25,6 +26,7 @@ class QtNetworkClient(QWidget, NetworkClient):
     GameSessionMetaUpdated = Signal(GameSessionEntry)
     GameSessionActionsUpdated = Signal(GameSessionActions)
     GameSessionPickupsUpdated = Signal(GameSessionPickups)
+    GameSessionAuditLogUpdated = Signal(GameSessionAuditLog)
     GameUpdateNotification = Signal()
 
     discord: Optional[pypresence.AioClient]
@@ -73,6 +75,10 @@ class QtNetworkClient(QWidget, NetworkClient):
     async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
         await super().on_game_session_pickups_update(pickups)
         self.GameSessionPickupsUpdated.emit(pickups)
+
+    async def on_game_session_audit_update(self, audit_log: GameSessionAuditLog):
+        await super().on_game_session_audit_update(audit_log)
+        self.GameSessionAuditLogUpdated.emit(audit_log)
 
     async def login_with_discord(self):
         if self.discord is None:

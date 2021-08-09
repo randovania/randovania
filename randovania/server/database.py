@@ -5,13 +5,13 @@ from typing import Iterator, List, Optional, Callable, Any
 
 import peewee
 
-from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions
+from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
+    BinaryGameSessionAuditLog
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -182,6 +182,12 @@ class GameSession(BaseModel):
             "allowed_games": [game.value for game in self.allowed_games],
         })
 
+    def get_audit_log(self):
+        return BinaryGameSessionAuditLog.build([
+            entry.as_json
+            for entry in self.audit_log
+        ])
+
     def reset_layout_description(self):
         self.layout_description_json = None
         self.save()
@@ -261,4 +267,21 @@ class GameSessionTeamAction(BaseModel):
         primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')
 
 
-all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction]
+class GameSessionAudit(BaseModel):
+    session = peewee.ForeignKeyField(GameSession, backref="audit_log")
+    user = peewee.ForeignKeyField(User)
+    message = peewee.TextField()
+    time = peewee.DateTimeField(default=_datetime_now)
+
+    @property
+    def as_json(self):
+        time = datetime.datetime.fromisoformat(self.time)
+
+        return {
+            "user": self.user.name,
+            "message": self.message,
+            "time": time.astimezone(datetime.timezone.utc).isoformat(),
+        }
+
+
+all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction, GameSessionAudit]
