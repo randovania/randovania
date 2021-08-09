@@ -48,3 +48,10 @@ BinaryGameSessionAction = Struct(
     time=BinStr,
 )
 BinaryGameSessionActions = PrefixedArray(VarInt, BinaryGameSessionAction)
+
+BinaryGameSessionAudit = Struct(
+    user=BinStr,
+    message=BinStr,
+    time=BinStr,
+)
+BinaryGameSessionAuditLog = PrefixedArray(VarInt, BinaryGameSessionAudit)
