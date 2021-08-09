@@ -16,7 +16,8 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions
+from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
+    BinaryGameSessionAuditLog
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import game_session, database
@@ -25,6 +26,11 @@ from randovania.server import game_session, database
 @pytest.fixture(name="mock_emit_session_update")
 def _mock_emit_session_update(mocker) -> MagicMock:
     return mocker.patch("randovania.server.game_session._emit_session_meta_update", autospec=True)
+
+
+@pytest.fixture(name="mock_audit")
+def _mock_audit(mocker) -> MagicMock:
+    return mocker.patch("randovania.server.game_session._add_audit_entry", autospec=True)
 
 
 def test_setup_app():
@@ -351,7 +357,7 @@ def test_game_session_admin_player_include_in_session(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
+def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_audit):
     mock_emit = mocker.patch("flask_socketio.emit")
 
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
@@ -375,9 +381,10 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     mock_emit.assert_called_once_with(
         "game_session_meta_update",
         BinaryGameSessionEntry.build({'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
-         'game_details': None, 'generation_in_progress': None,
-         'allowed_games': ['prime1', 'prime2'], }),
+                                      'game_details': None, 'generation_in_progress': None,
+                                      'allowed_games': ['prime1', 'prime2'], }),
         room='game-session-1')
+    mock_audit.assert_called_once_with(sio, session, "Left session")
 
 
 @pytest.mark.parametrize("offset", [-1, 1])
@@ -403,7 +410,7 @@ def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_ses
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_player_patcher_file(mock_layout_description: PropertyMock,
-                                                flask_app,
+                                                flask_app, mock_audit,
                                                 clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Brother")
@@ -437,6 +444,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         cosmetic
     )
     assert result is patcher.create_patch_data.return_value
+    mock_audit.assert_called_once_with(sio, session, "Made an ISO for row 3")
 
 
 def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):
@@ -579,7 +587,7 @@ def test_game_session_admin_session_update_layout_generation(mock_emit_session_u
 
 
 def test_game_session_admin_session_change_layout_description(clean_database, preset_manager, mock_emit_session_update,
-                                                              mocker, flask_app):
+                                                              mocker, flask_app, mock_audit):
     mock_verify_no_layout_description = mocker.patch("randovania.server.game_session._verify_no_layout_description",
                                                      autospec=True)
     mock_from_json_dict: MagicMock = mocker.patch(
@@ -604,6 +612,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     layout_description.as_json = "some_json_string"
     layout_description.permalink.player_count = 2
     layout_description.permalink.presets = {i: new_preset for i in (0, 1)}
+    layout_description.shareable_word_hash = "Hash Words"
 
     # Run
     with flask_app.test_request_context():
@@ -612,6 +621,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Set game to Hash Words")
     mock_verify_no_layout_description.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).layout_description_json == '"some_json_string"'
     assert database.GameSession.get_by_id(1).generation_in_progress is None
@@ -622,7 +632,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
 
 
 def test_game_session_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database,
-                                                              flask_app):
+                                                              flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user1,
@@ -638,6 +648,7 @@ def test_game_session_admin_session_remove_layout_description(mock_emit_session_
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Removed generated game")
     assert database.GameSession.get_by_id(1).layout_description_json is None
     assert database.GameSession.get_by_id(1).generation_in_progress is None
 
@@ -670,7 +681,7 @@ def test_game_session_admin_session_change_layout_description_invalid(mock_emit_
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_session_download_layout_description(mock_layout_description: PropertyMock, flask_app,
-                                                                clean_database, mock_emit_session_update):
+                                                                clean_database, mock_emit_session_update, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
@@ -686,6 +697,7 @@ def test_game_session_admin_session_download_layout_description(mock_layout_desc
 
     # Assert
     mock_emit_session_update.assert_not_called()
+    mock_audit.assert_called_once_with(sio, session, "Requested the spoiler log")
     mock_layout_description.assert_called_once()
     assert result == database.GameSession.get_by_id(1).layout_description_json
 
@@ -716,7 +728,7 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
 def test_game_session_admin_session_start_session(mock_session_description: PropertyMock,
                                                   mock_emit_session_update,
                                                   clean_database, preset_manager,
-                                                  flask_app):
+                                                  flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="{}")
@@ -731,13 +743,14 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Started session")
     assert database.GameSession.get_by_id(1).state == GameSessionState.IN_PROGRESS
 
 
 @pytest.mark.parametrize("starting_state", [GameSessionState.SETUP, GameSessionState.IN_PROGRESS,
                                             GameSessionState.FINISHED])
 def test_game_session_admin_session_finish_session(clean_database, mock_emit_session_update, starting_state,
-                                                   flask_app):
+                                                   flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=starting_state, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
@@ -755,9 +768,11 @@ def test_game_session_admin_session_finish_session(clean_database, mock_emit_ses
     # Assert
     if starting_state != GameSessionState.IN_PROGRESS:
         mock_emit_session_update.assert_not_called()
+        mock_audit.assert_not_called()
         assert database.GameSession.get_by_id(1).state == starting_state
     else:
         mock_emit_session_update.assert_called_once_with(session)
+        mock_audit.assert_called_once_with(sio, session, "Finished session")
         assert database.GameSession.get_by_id(1).state == GameSessionState.FINISHED
 
 
@@ -773,7 +788,7 @@ def test_game_session_admin_session_reset_session(clean_database, flask_app):
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.RESET_SESSION.value, None)
 
 
-def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update, flask_app):
+def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update, flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
@@ -787,6 +802,7 @@ def test_game_session_admin_session_change_password(clean_database, mock_emit_se
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Changed password")
     assert database.GameSession.get_by_id(1).password == expected_password
 
 
@@ -908,6 +924,30 @@ def test_emit_session_actions_update(session_update, mocker):
     )
 
 
+def test_emit_session_audit_update(session_update, mocker):
+    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+
+    database.GameSessionAudit.create(session=session_update, user=1234, message="Did something",
+                                     time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+    database.GameSessionAudit.create(session=session_update, user=1235, message="Did something else",
+                                     time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.timezone.utc))
+
+    audit_log = [
+        {"user": "The Name", "message": "Did something", "time": "2020-05-02T10:20:00+00:00"},
+        {"user": "Other", "message": "Did something else", "time": "2020-05-03T10:20:00+00:00"},
+    ]
+
+    # Run
+    game_session._emit_session_audit_update(session_update)
+
+    # Assert
+    mock_emit.assert_called_once_with(
+        "game_session_audit_update",
+        BinaryGameSessionAuditLog.build(audit_log),
+        room=f"game-session-{session_update.id}"
+    )
+
+
 def test_game_session_request_update(session_update, mocker, flask_app):
     mock_meta_update: MagicMock = mocker.patch(
         "randovania.server.game_session._emit_session_meta_update", autospec=True)
@@ -915,6 +955,8 @@ def test_game_session_request_update(session_update, mocker, flask_app):
         "randovania.server.game_session._emit_session_actions_update", autospec=True)
     mock_pickups_update: MagicMock = mocker.patch(
         "randovania.server.game_session._emit_game_session_pickups_update", autospec=True)
+    mock_audit_update: MagicMock = mocker.patch(
+        "randovania.server.game_session._emit_session_audit_update", autospec=True)
 
     user = database.User.get_by_id(1234)
     sio = MagicMock()
@@ -929,3 +971,4 @@ def test_game_session_request_update(session_update, mocker, flask_app):
     mock_meta_update.assert_called_once_with(session_update)
     mock_actions_update.assert_called_once_with(session_update)
     mock_pickups_update.assert_called_once_with(sio, membership)
+    mock_audit_update.assert_called_once_with(session_update)
