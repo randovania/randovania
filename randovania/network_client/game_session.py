@@ -8,7 +8,6 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
@@ -138,6 +137,26 @@ class GameSessionActions:
 class GameSessionPickups:
     game: RandovaniaGame
     pickups: Tuple[Tuple[str, PickupEntry], ...]
+
+
+@dataclasses.dataclass(frozen=True)
+class GameSessionAuditEntry:
+    user: str
+    message: str
+    time: datetime.datetime
+
+    @classmethod
+    def from_json(cls, data) -> "GameSessionAuditEntry":
+        return GameSessionAuditEntry(
+            user=data["user"],
+            message=data["message"],
+            time=datetime.datetime.fromisoformat(data["time"]),
+        )
+
+
+@dataclasses.dataclass(frozen=True)
+class GameSessionAuditLog:
+    entries: Tuple[GameSessionAuditEntry, ...]
 
 
 @dataclasses.dataclass(frozen=True)

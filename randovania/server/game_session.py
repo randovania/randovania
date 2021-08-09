@@ -26,7 +26,8 @@ from randovania.network_common.error import (WrongPassword, NotAuthorizedForActi
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
-from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset)
+from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset,
+                                        GameSessionAudit)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -137,6 +138,19 @@ def _emit_session_actions_update(session: GameSession):
     flask_socketio.emit("game_session_actions_update", session.describe_actions(), room=f"game-session-{session.id}")
 
 
+def _emit_session_audit_update(session: GameSession):
+    flask_socketio.emit("game_session_audit_update", session.get_audit_log(), room=f"game-session-{session.id}")
+
+
+def _add_audit_entry(sio: ServerApp, session: GameSession, message: str):
+    GameSessionAudit.create(
+        session=session,
+        user=sio.get_current_user(),
+        message=message
+    )
+    _emit_session_audit_update(session)
+
+
 def game_session_request_update(sio: ServerApp, session_id: int):
     current_user = sio.get_current_user()
     session: GameSession = GameSession.get_by_id(session_id)
@@ -148,6 +162,8 @@ def game_session_request_update(sio: ServerApp, session_id: int):
 
     if not membership.is_observer and session.state != GameSessionState.SETUP:
         _emit_game_session_pickups_update(sio, membership)
+
+    _emit_session_audit_update(session)
 
 
 def _create_row(sio: ServerApp, session: GameSession, preset_json: dict):
@@ -261,6 +277,9 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
         session.generation_in_progress = None
         session.layout_description = description
         session.save()
+        _add_audit_entry(sio, session,
+                         "Removed generated game" if description is None
+                         else f"Set game to {description.shareable_word_hash}")
 
 
 def _download_layout_description(sio: ServerApp, session: GameSession):
@@ -276,6 +295,7 @@ def _download_layout_description(sio: ServerApp, session: GameSession):
     if not session.layout_description.permalink.spoiler:
         raise InvalidAction("Session does not contain a spoiler")
 
+    _add_audit_entry(sio, session, f"Requested the spoiler log")
     return session.layout_description_json
 
 
@@ -295,6 +315,7 @@ def _start_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.IN_PROGRESS
     logger().info(f"Session {session.id}: Starting session.")
     session.save()
+    _add_audit_entry(sio, session, f"Started session")
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
@@ -305,6 +326,7 @@ def _finish_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.FINISHED
     logger().info(f"Session {session.id}: Finishing session.")
     session.save()
+    _add_audit_entry(sio, session, f"Finished session")
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
@@ -321,6 +343,7 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
     session.password = _hash_password(password)
     logger().info(f"Session {session.id}: Changing password.")
     session.save()
+    _add_audit_entry(sio, session, f"Changed password")
 
 
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
@@ -382,6 +405,9 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     membership = GameSessionMembership.get_by_ids(user_id, session_id)
 
     if action == SessionAdminUserAction.KICK:
+        _add_audit_entry(sio, session,
+                         f"Kicked {membership.effective_name}" if membership.user != sio.get_current_user()
+                         else "Left session")
         membership.delete_instance()
         if not list(session.players):
             session.delete_instance(recursive=True)
@@ -434,6 +460,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             raise InvalidAction("can't demote the only admin")
 
         membership.admin = not membership.admin
+        _add_audit_entry(sio, session, f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin")
         logger().info(f"Session {session_id}, User {user_id}. Performing {action}, new status is {membership.admin}.")
         membership.save()
 
@@ -451,6 +478,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         preset = layout_description.permalink.get_preset(players_config.player_index)
         cosmetic_patches = game_to_class.GAME_TO_COSMETIC[preset.game].from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
+
+        _add_audit_entry(sio, session, f"Made an ISO for row {membership.row + 1}")
 
         return patcher.create_patch_data(session.layout_description,
                                          players_config,
