@@ -1,12 +1,11 @@
 import asyncio
 import base64
 import hashlib
-import json
 import logging
 import time
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple, Dict
+from typing import List, Optional, Tuple
 
 import aiofiles
 import engineio
@@ -14,16 +13,17 @@ import socketio
 import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
-from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus, Inventory
+from randovania.game_connection.connection_base import GameConnectionStatus, Inventory
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
-                                                    GameSessionAction, GameSessionPickups)
+                                                    GameSessionAction, GameSessionPickups, GameSessionAuditLog,
+                                                    GameSessionAuditEntry)
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.binary_formats import BinaryInventory, BinaryGameSessionActions
+from randovania.network_common.binary_formats import BinaryInventory, BinaryGameSessionActions, \
+    BinaryGameSessionAuditLog
 from randovania.network_common.error import decode_error, InvalidSession, RequestTimeout, BaseNetworkError
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
@@ -75,6 +75,7 @@ class NetworkClient:
     _current_game_session_meta: Optional[GameSessionEntry] = None
     _current_game_session_actions: Optional[GameSessionActions] = None
     _current_game_session_pickups: Optional[GameSessionPickups] = None
+    _current_game_session_audit_log: Optional[GameSessionAuditLog] = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -96,6 +97,7 @@ class NetworkClient:
         self.sio.on("game_session_meta_update", self._on_game_session_meta_update_raw)
         self.sio.on("game_session_actions_update", self._on_game_session_actions_update_raw)
         self.sio.on("game_session_pickups_update", self._on_game_session_pickups_update_raw)
+        self.sio.on("game_session_audit_update", self._on_game_session_audit_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -296,6 +298,17 @@ class NetworkClient:
 
     async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
         self._current_game_session_pickups = pickups
+
+    async def _on_game_session_audit_update_raw(self, data):
+        await self.on_game_session_audit_update(GameSessionAuditLog(
+            entries=tuple(
+                GameSessionAuditEntry.from_json(entry)
+                for entry in BinaryGameSessionAuditLog.parse(data)
+            ),
+        ))
+
+    async def on_game_session_audit_update(self, audit_log: GameSessionAuditLog):
+        self._current_game_session_audit_log = audit_log
 
     #
 

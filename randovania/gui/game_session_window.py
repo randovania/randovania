@@ -35,7 +35,8 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions
+from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
+    GameSessionAuditLog
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
@@ -241,6 +242,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
         self.tabifyDockWidget(self.game_dock, self.observers_dock)
         self.tabifyDockWidget(self.game_dock, self.history_dock)
+        self.tabifyDockWidget(self.game_dock, self.audit_dock)
         self.game_dock.raise_()
 
         self.resizeDocks([self.players_dock, self.game_dock],
@@ -282,6 +284,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         self.network_client.GameSessionMetaUpdated.connect(self.on_game_session_meta_update)
         self.network_client.GameSessionActionsUpdated.connect(self.on_game_session_actions_update)
+        self.network_client.GameSessionAuditLogUpdated.connect(self.on_game_session_audit_log_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.game_connection.Updated.connect(self.on_game_connection_updated)
 
@@ -294,6 +297,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
             await window.on_game_session_meta_update(network_client.current_game_session)
             window.update_session_actions(GameSessionActions(tuple()))
+            window.update_session_audit_log(GameSessionAuditLog(tuple()))
             await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
             window.connect_to_events()
@@ -626,6 +630,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def on_game_session_actions_update(self, actions: GameSessionActions):
         self.update_session_actions(actions)
 
+    @asyncSlot(GameSessionAuditLog)
+    async def on_game_session_audit_log_update(self, audit_log: GameSessionAuditLog):
+        self.update_session_audit_log(audit_log)
+
     async def _on_kicked(self):
         if self._already_kicked:
             return
@@ -755,6 +763,20 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         if autoscroll:
             self.history_table_widget.scrollToBottom()
+
+    def update_session_audit_log(self, audit_log: GameSessionAuditLog):
+        scrollbar = self.audit_table_widget.verticalScrollBar()
+        autoscroll = scrollbar.value() == scrollbar.maximum()
+        self.audit_table_widget.horizontalHeader().setVisible(True)
+        self.audit_table_widget.setRowCount(len(audit_log.entries))
+
+        for i, entry in enumerate(audit_log.entries):
+            self.audit_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(entry.user))
+            self.audit_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(entry.message))
+            self.audit_table_widget.setItem(i, 2, QtWidgets.QTableWidgetItem(entry.time.astimezone().strftime("%c")))
+
+        if autoscroll:
+            self.audit_table_widget.scrollToBottom()
 
     async def update_multiworld_client_status(self):
         game_session_in_progress = self._game_session.state == GameSessionState.IN_PROGRESS

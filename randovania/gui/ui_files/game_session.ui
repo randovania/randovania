@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>699</width>
-    <height>503</height>
+    <width>1169</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,7 +128,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>699</width>
+     <width>1169</width>
      <height>22</height>
     </rect>
    </property>
@@ -182,7 +182,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>697</width>
+          <width>1167</width>
           <height>68</height>
          </rect>
         </property>
@@ -258,7 +258,7 @@
     <string>Game</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="game_dock_contents">
     <layout class="QGridLayout" name="game_dock_layout">
@@ -362,7 +362,7 @@
     <string>History</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="history_dock_contents">
     <layout class="QVBoxLayout" name="history_layout">
@@ -380,6 +380,9 @@
      </property>
      <item>
       <widget class="QTableWidget" name="history_table_widget">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
@@ -410,6 +413,70 @@
        <column>
         <property name="text">
          <string>Location</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Time</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="audit_dock">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Audit Log</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="audit_dock_contents">
+    <layout class="QVBoxLayout" name="audit_dock_layout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTableWidget" name="audit_table_widget">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>200</number>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>User</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Message</string>
         </property>
        </column>
        <column>
