@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: The seed hash label in Game Sessions is now selectable.
+
 ## [3.0.4] - 2021-08-10
 
 - Added: Game Sessions now have an accessible audit log, which includes whenever a player accesses the spoiler log.
