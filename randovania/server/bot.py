@@ -394,9 +394,9 @@ async def async_race_cmd(message: discord.Message, guild):
                     await message.author.send(ASYNC_RACE_FINISH_MESSAGE % (format_seconds_to_hhmmss(t), ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M))
                     if time_diff > ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t:
                         await message.author.send("**Warning: You have submitted your time %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t))
-                        await async_race_admin_msg("%s, *%s finished their run of '%s' in %s, but they submitted the time %s late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (time_diff - ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t)))
+                        await async_race_admin_msg("%s, *%s finished their run of '%s' in ||%s||, but they submitted the time %s late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (time_diff - ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t)))
                     else:
-                        await async_race_admin_msg("*%s finished their run of '%s' in %s.*" % (player_name, race_name, format_seconds_to_hhmmss(t)))
+                        await async_race_admin_msg("*%s finished their run of '%s' in ||%s||.*" % (player_name, race_name, format_seconds_to_hhmmss(t)))
                 else:
                     await message.author.send("*You already submitted your time for this seed. Use the `!vod <url>` command to submit your vod.*")
                     return
