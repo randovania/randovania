@@ -85,8 +85,8 @@ async def test_look_for_permalinks(mocker):
     mock_describe.assert_called_once_with(preset)
 
     mock_embed.assert_has_calls([
-        call(title="yu4abbceWfLI-", description="2 player multiworld permalink"),
-        call(title="yua73123yWdLI-", description="1 player multiworld permalink"),
+        call(title="`yu4abbceWfLI-`", description="2 player multiworld permalink"),
+        call(title="`yua73123yWdLI-`", description="1 player multiworld permalink"),
     ])
     embed_1.add_field.assert_not_called()
     assert embed_2.description == "Metroid Prime 2: Echoes permalink for Randovania {}".format(randovania.VERSION)
