@@ -525,6 +525,12 @@ async def async_race_cmd(message: discord.Message, guild):
                     out_message = out_message + "\nPermalink - ||%s||" % race.permalink
                     for player in race.players:
                         out_message = out_message + "\n    %s - %s" % (player.username, async_race_state_to_string(player.state))
+                        if player.time == DNF:
+                            out_message = out_message + " - DNF"
+                        elif player.time != 0:
+                            out_message = out_message + " - ||%s||" % format_seconds_to_hhmmss(player.time)
+                        if player.vod_url != "":
+                            out_message = out_message + " - `%s`" % player.vod_url
                 await channel.send(out_message)
 
                 return # don't update disk because nothing changed
@@ -613,7 +619,7 @@ async def async_race_cmd(message: discord.Message, guild):
                     await async_race_announce_results(async_races[race_idx])
 
                 async_races[race_idx].turnover(permalink)      
-                await channel.send("*Successfully updated '%s'. Players may now play the new seed with `!asyncrace add`.*" % race_name)
+                await channel.send("*Successfully updated '%s'. Players may now play the new seed with `!asyncrace play`.*" % race_name)
             elif command[0] == "end" or command[0] == "end_silent":
                 race_name = command[1]
                 race_idx = async_race_idx_from_name(race_name)
