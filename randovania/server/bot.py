@@ -357,16 +357,16 @@ async def async_race_announce_results(race):
         elif player.state == AsyncRacerState.DNF and player.vod_url == "":
             ill_play = ill_play + "\n%s forfeit, but did not submit a VoD." % player.username
         
-        diff = (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + player.time) - (player.time_timestamp - player.play_timestamp)
-        if diff < 0:
-            ill_play = ill_play + "\n%s Submitted their time %i minutes late." % (player.username, (-1*diff)/60)
+        diff = (player.time_timestamp - player.play_timestamp) - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + player.time)
+        if diff > 0:
+            ill_play = ill_play + "\n%s Submitted their time %d minutes late." % (player.username, (diff/60))
         
-        diff = ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60 - (player.vod_timestamp - player.time_timestamp)
-        if diff < 0:
-            ill_play = ill_play + "\n%s Submitted their VoD %i minutes late." % (player.username, (-1*diff)/60)
+        diff =  (player.vod_timestamp - player.time_timestamp) - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60
+        if diff > 0:
+            ill_play = ill_play + "\n%s Submitted their VoD %d minutes late." % (player.username, (diff/60))
 
     if ill_play != "":
-        await async_race_admin_msg(async_race_admin_ping() + ", %s finished with the following ill-play:" + ill_play)
+        await async_race_admin_msg(async_race_admin_ping() + (", %s finished with the following ill-play:" % race.name) + ill_play)
 
 async_racing_admin_channel = None
 async def async_race_admin_msg(msg):
@@ -410,11 +410,11 @@ async def async_race_cmd(message: discord.Message, guild):
                     async_races[race_idx].players[player_idx].state = AsyncRacerState.SUBMITTED_TIME
                     async_races[race_idx].players[player_idx].time = t
                     async_races[race_idx].players[player_idx].time_timestamp = time.time()
-                    time_diff = async_races[race_idx].players[player_idx].time_timestamp - async_races[race_idx].players[player_idx].play_timestamp
+                    diff =  (async_races[race_idx].players[player_idx].time_timestamp - async_races[race_idx].players[player_idx].play_timestamp) - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t)
                     await message.author.send(ASYNC_RACE_FINISH_MESSAGE % (format_seconds_to_hhmmss(t), ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M))
-                    if time_diff > ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t:
-                        await message.author.send("**Warning: You have submitted your time %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t))/60)
-                        await async_race_admin_msg("%s, *%s finished their run of '%s' in ||%s||, but they submitted the time %s late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (time_diff - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t))/60))
+                    if diff > 0:
+                        await message.author.send("**Warning: You have submitted your time %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (diff/60))
+                        await async_race_admin_msg("%s, *%s finished their run of '%s' in ||%s||, but they submitted the time %d minutes late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (diff/60)))
                     else:
                         await async_race_admin_msg("*%s finished their run of '%s' in ||%s||.*" % (player_name, race_name, format_seconds_to_hhmmss(t)))
                 else:
@@ -441,11 +441,11 @@ async def async_race_cmd(message: discord.Message, guild):
                         async_races[race_idx].players[player_idx].state = AsyncRacerState.SUBMITTED_VOD
                     async_races[race_idx].players[player_idx].vod_url = vod_url
                     async_races[race_idx].players[player_idx].vod_timestamp = time.time()
-                    time_diff = async_races[race_idx].players[player_idx].vod_timestamp - async_races[race_idx].players[player_idx].time_timestamp
+                    diff =  (async_races[race_idx].players[player_idx].vod_timestamp - async_races[race_idx].players[player_idx].time_timestamp) - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60
                     await message.author.send("*Your run has been recorded. Please wait for results to be announced in #async-racing-results before discussing the seed or making your VOD public.*")
-                    if time_diff > ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60:
-                        await message.author.send("**Warning: You have submitted your VOD %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60)/60)
-                        await async_race_admin_msg("*%s, %s was %d minutes late submitting their VOD for '%s'.*" % (async_race_admin_ping(), player_name, (time_diff - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60)/60, race_name))
+                    if diff > 0:
+                        await message.author.send("**Warning: You have submitted your VOD %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (diff/60))
+                        await async_race_admin_msg("*%s, %s was %d minutes late submitting their VOD for '%s'.*" % (async_race_admin_ping(), player_name, (diff/60), race_name))
                     else: 
                         await async_race_admin_msg("*%s submitted the vod of their run for '%s':*\n`%s`" % (player_name, race_name, vod_url))
                 
