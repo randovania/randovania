@@ -56,9 +56,9 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
         embed.add_field(name=category, value="\n".join(items), inline=True)
     await message.reply(embed=embed)
 
-ASYNC_RACE_PLAY_TIME_LIMIT_M = 60*5     # players have 4 hours max to beat the seed
-ASYNC_RACE_SUBMIT_TIME_LIMIT_M = 30     # players have RTA + 30min to submit their time once finishing a seed to avoid DQ
-ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M = 90 # players have 90min after submitting their time to submit a link to a private VOD to avoid DQ
+ASYNC_RACE_PLAY_TIME_LIMIT_M = 60*5       # players have 4 hours max to beat the seed
+ASYNC_RACE_SUBMIT_TIME_LIMIT_M = 30       # players have RTA + 30min to submit their time once finishing a seed to avoid DQ
+ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M = 60*4 # players have 4hr after submitting their time to submit a link to a private VOD to avoid DQ
 
 class AsyncRacerState(Enum):
     NOT_STARTED = 0
