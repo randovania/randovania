@@ -414,7 +414,7 @@ async def async_race_cmd(message: discord.Message, guild):
                     await message.author.send("*Please submit your time first with the `!finish hh:mm:ss` commands.*")
                     return
                 else:
-                    vod_url = command[1]
+                    vod_url = message.content.split(" ")[1] # this is case sensitive because youtube links are case sensitive
                     if async_races[race_idx].players[player_idx].time == DNF:
                         async_races[race_idx].players[player_idx].state = AsyncRacerState.DNF
                     else:
@@ -427,7 +427,7 @@ async def async_race_cmd(message: discord.Message, guild):
                         await message.author.send("**Warning: You have submitted your VOD %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60))
                         await async_race_admin_msg("*%s, %s was %d minutes late submitting their VOD for '%s'.*" % (async_race_admin_ping(), player_name, time_diff - ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M*60, race_name))
                     else: 
-                        await async_race_admin_msg("*%s submitted the vod of their run for '%s':*\n> %s" % (player_name, race_name, vod_url))
+                        await async_race_admin_msg("*%s submitted the vod of their run for '%s':*\n`%s`" % (player_name, race_name, vod_url))
                 
                 is_race_done = True
                 for player in async_races[race_idx].players:
