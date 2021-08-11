@@ -330,18 +330,23 @@ async def async_race_announce_results(race):
         return
 
     # sort by time
-    players = sorted(race.players, key=results_sort)
-
-    msg = "**%s Results**" % race.name
+    players = sorted(race.players, key=results_sort, reverse=True)
+    
+    title = "%s Results" % race.name
+    embed = discord.Embed(title=title, description="Thanks for playing!", color=0x00ff00)
     for player in players:
         time = "DNF"
         if player.time != DNF and player.time != 0:
             time = format_seconds_to_hhmmss(player.time)
+
+        name = player.username.split("#")[0]
         if player.vod_url != "":
-            msg = msg + "\n%s - %s - [VoD](%s)" % (player.username.split("#")[0], time, player.vod_url)
+            vod = "[%s](%s)" % (time, player.vod_url)
         else:
-            msg = msg + "\n%s - %s" % (player.username, time)
-    await async_racing_results_channel.send(msg)
+            vod = "DNF"
+
+        embed.add_field(name=name, value=vod, inline=False)
+    await async_racing_results_channel.send(embed=embed)
 
 async_racing_admin_channel = None
 async def async_race_admin_msg(msg):
