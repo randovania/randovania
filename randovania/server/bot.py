@@ -81,10 +81,10 @@ def async_race_state_to_string(x):
 
     raise Exception
 
-def asyc_race_state_from_string(x):
+def async_race_state_from_string(x):
     x = x.upper()
     for state in AsyncRacerState:
-        if state == async_race_state_to_string(x):
+        if async_race_state_to_string(state) == x:
             return state
     raise Exception
 
@@ -207,8 +207,11 @@ class AsyncRace:
         self.players.append(AsyncRacePlayer(username))
     
     def turnover(self, permalink):
-        for player in self.players:
-            player.state = AsyncRacerState.NOT_STARTED
+        players = self.players
+        self.players = list()
+        for player in players:
+            self.add_player(player.username)
+            
         self.permalink = permalink
     
     def to_json(self):
@@ -218,7 +221,10 @@ class AsyncRace:
                 "username":player.username,
                 "state":async_race_state_to_string(player.state),
                 "time":player.time,
-                "vod_url":player.vod_url
+                "vod_url":player.vod_url,
+                "play_timestamp":player.play_timestamp,
+                "time_timestamp":player.time_timestamp,
+                "vod_timestamp":player.vod_timestamp,
             })
 
         race = {
@@ -230,15 +236,17 @@ class AsyncRace:
         return json.dumps(race)
 
     @staticmethod
-    def from_json(json_string):
-        race_json = json.loads(json_string)
-        race = AsyncRace(race_json["name"], race_json["permalink"])
-        for player_json in race_json["players"]:
+    def from_json(json_data):
+        race = AsyncRace(json_data["name"], json_data["permalink"])
+        for player_json in json_data["players"]:
             player = AsyncRacePlayer(player_json["username"])
-            player.state = player_json["state"]
+            player.state = async_race_state_from_string(player_json["state"])
             player.time = player_json["time"]
             player.vod_url = player_json["vod_url"]
-            race.add_player(player)
+            player.play_timestamp = player_json["play_timestamp"]
+            player.time_timestamp = player_json["time_timestamp"]
+            player.vod_timestamp = player_json["vod_timestamp"]
+            race.players.append(player)
         return race
 
 class AsyncRacePlayer:
@@ -628,6 +636,17 @@ async def async_race_cmd(message: discord.Message, guild):
     # end guild handling
 
     # Update race states on disk
+    with open(ASYNC_RACE_DATA_FILENAME, "w") as f:
+        d = "["
+        first = True
+        for race in async_races:
+            if not first:
+                d = d + ","
+            d = d + race.to_json()
+            if first:
+                first = False
+        d = d + "]"
+        f.write(d)
 
 class Bot(discord.Client):
     def __init__(self, configuration: dict):
@@ -667,7 +686,22 @@ class Bot(discord.Client):
             await look_for_permalinks(message.content, channel)
 
 def run():
-    global async_racing_admin_channel
+    # read state from disk if it exists
+    global async_races
+    try:
+        if os.path.exists(ASYNC_RACE_DATA_FILENAME):
+            with open(ASYNC_RACE_DATA_FILENAME, "r") as f:
+                json_string = f.read()
+                races = json.loads(json_string)
+                for race in races:
+                    async_races.append(AsyncRace.from_json(race))
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        async_races = list()
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(e)
+
     configuration = randovania.get_configuration()["discord_bot"]
 
     client = Bot(configuration)
