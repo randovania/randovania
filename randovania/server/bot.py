@@ -56,7 +56,6 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
         embed.add_field(name=category, value="\n".join(items), inline=True)
     await message.reply(embed=embed)
 
-ASYNC_RACE_PLAY_TIME_LIMIT_M = 60*5       # players have 4 hours max to beat the seed
 ASYNC_RACE_SUBMIT_TIME_LIMIT_M = 30       # players have RTA + 30min to submit their time once finishing a seed to avoid DQ
 ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M = 60*4 # players have 4hr after submitting their time to submit a link to a private VOD to avoid DQ
 
@@ -174,11 +173,9 @@ If you failed to complete your run, register as `DNF` like so:
 
 After sumbitting your time, you will have %d minutes to upload an unlisted YouTube video of your run.
 
-Note that submission will automatically close after %d minutes.
-
 Good Luck!
 
-""" % (ASYNC_RACE_SUBMIT_TIME_LIMIT_M, ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M, ASYNC_RACE_PLAY_TIME_LIMIT_M)
+""" % (ASYNC_RACE_SUBMIT_TIME_LIMIT_M, ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M)
 
 ASYNC_RACE_FINISH_MESSAGE = """Congratulations on completing your run in %s!
 
@@ -392,9 +389,9 @@ async def async_race_cmd(message: discord.Message, guild):
                     async_races[race_idx].players[player_idx].time_timestamp = time.time()
                     time_diff = async_races[race_idx].players[player_idx].time_timestamp - async_races[race_idx].players[player_idx].play_timestamp
                     await message.author.send(ASYNC_RACE_FINISH_MESSAGE % (format_seconds_to_hhmmss(t), ASYNC_RACE_SUBMIT_VOD_TIME_LIMIT_M))
-                    if time_diff > ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t:
-                        await message.author.send("**Warning: You have submitted your time %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t))
-                        await async_race_admin_msg("%s, *%s finished their run of '%s' in ||%s||, but they submitted the time %s late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (time_diff - ASYNC_RACE_PLAY_TIME_LIMIT_M*60 + t)))
+                    if time_diff > ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t:
+                        await message.author.send("**Warning: You have submitted your time %d minutes late. While this does not automatically disqualify your run, the race organizer has been notified of this infraction.**" % (time_diff - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t)))
+                        await async_race_admin_msg("%s, *%s finished their run of '%s' in ||%s||, but they submitted the time %s late!*" % (async_race_admin_ping(), player_name, race_name, format_seconds_to_hhmmss(t), (time_diff - (ASYNC_RACE_SUBMIT_TIME_LIMIT_M*60 + t))))
                     else:
                         await async_race_admin_msg("*%s finished their run of '%s' in ||%s||.*" % (player_name, race_name, format_seconds_to_hhmmss(t)))
                 else:
