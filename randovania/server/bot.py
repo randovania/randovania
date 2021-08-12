@@ -26,7 +26,7 @@ async def look_for_permalinks(message: str, channel: discord.TextChannel):
         except ValueError:
             continue
 
-        embed = discord.Embed(title=word.group(1),
+        embed = discord.Embed(title=f"`{word.group(1)}`",
                               description="{} player multiworld permalink".format(permalink.player_count))
 
         if permalink.player_count == 1:
