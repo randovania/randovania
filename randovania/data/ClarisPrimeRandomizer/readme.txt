@@ -63,6 +63,34 @@ Options: -hivw
 
 4. VERSION HISTORY
 
+v5.1.1 - Hack 9:
+- Add `-data:<path>` argument to override path to RandomizerData.json
+
+v5.1.1 - Hack 8:
+- Add `credits` to add arbitrary text to credits.
+
+v5.1.1 - Hack 7:
+- Add `maps_to_always_reveal`, instead of hard coding all Energy Controllers.
+- Add `maps_to_never_reveal` to exclude rooms from `full_map_at_start`.
+
+v5.1.1 - Hack 6:
+- Always mark the Energy Controllers as visible.
+
+v5.1.1 - Hack 5:
+- Use Seed Hash instead of Permalink in the Mission Results screen.
+
+v5.1.1 - Hack 4:
+- Fix string patches for things in GGuiSys
+
+v5.1.1 - Hack 3:
+- read patcher_data.json in files if no stdin
+
+v5.1.1 - Hack 2:
+- Unknown changes. Related to changing logbook strings
+
+v5.1.1 - Hack 1:
+- Add `logbook_patches` for changing connections of logbook entries
+
 v4.0
 - Fixed various issues with multiple copies of the same pickup.
 - Starting the Dark Samus 1 fight disables adjacent rooms from loading automatically (fixes a potential crash).

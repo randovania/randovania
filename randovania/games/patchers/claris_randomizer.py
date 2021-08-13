@@ -85,6 +85,7 @@ def _base_args(game_root: Path,
         _get_randomizer_path(),
         game_root,
         # "-test",
+        "-data:" + str(_get_randomizer_folder().joinpath("RandomizerData.json")),
     ]
 
 
