@@ -112,6 +112,7 @@ def test_base_args(mock_get_data_path: MagicMock,
     expected_results = [
         Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
         Path("root"),
+        "-data:" + str(Path("data", "ClarisPrimeRandomizer", "CustomRandomizerData.json"))
     ]
 
     assert results == expected_results
@@ -242,10 +243,11 @@ def test_apply_patcher_file(
         "menu_mod": include_menu_mod,
         "dol_patches": {"key": "special"}
     }
+    randomizer_data = {"custom": "data"}
     assert claris_randomizer.get_patch_version(game_root) == 0
 
     # Run
-    claris_randomizer.apply_patcher_file(game_root, patcher_data, progress_update)
+    claris_randomizer.apply_patcher_file(game_root, patcher_data, randomizer_data, progress_update)
 
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
@@ -263,3 +265,4 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
+    assert claris_randomizer._get_custom_data_path()

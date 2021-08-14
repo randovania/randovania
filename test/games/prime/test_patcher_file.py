@@ -265,7 +265,7 @@ def test_get_single_hud_text_locked_pbs():
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
 
 
-def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_database, randomizer_data):
+def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_database):
     # Setup
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -286,18 +286,15 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
     result = claris_patcher_file.echoes_pickup_details_to_patcher(
-        details, MagicMock(),
-        claris_patcher_file._get_model_mapping(randomizer_data))
+        details, MagicMock())
 
     # Assert
     assert result == {
         "pickup_index": 0,
         "scan": "Seeker Launcher",
-        "model_index": 25,
+        "model_name": "SeekerLauncher",
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
-        "sound_index": 0,
-        "jingle_index": 1,
         'resources': [{'amount': 5, 'index': 71},
                       {'amount': 1, 'index': 47},
                       {'amount': 1, 'index': 26}],
@@ -312,8 +309,7 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
 
 
 @pytest.mark.parametrize("simplified", [False, True])
-def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, echoes_resource_database,
-                                             randomizer_data):
+def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, echoes_resource_database):
     # Setup
     pickup = pickup_creator.create_ammo_expansion(
         echoes_item_database.ammo["Power Bomb Expansion"],
@@ -340,17 +336,14 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
     result = claris_patcher_file.echoes_pickup_details_to_patcher(
-        details, MagicMock(),
-        claris_patcher_file._get_model_mapping(randomizer_data))
+        details, MagicMock())
 
     # Assert
     assert result == {
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
-        "model_index": 21,
+        "model_name": "PowerBombExpansion",
         "hud_text": hud_text,
-        "sound_index": 0,
-        "jingle_index": 0,
         'resources': [{'amount': 2, 'index': 72},
                       {'amount': 1, 'index': 47}],
         "conditional_resources": [
@@ -362,7 +355,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
     }
 
 
-def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_resource_database, randomizer_data):
+def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_resource_database):
     # Setup
     pickup = pickup_creator.create_ammo_expansion(
         echoes_item_database.ammo["Power Bomb Expansion"],
@@ -375,17 +368,14 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
     result = claris_patcher_file.echoes_pickup_details_to_patcher(
-        details, MagicMock(),
-        claris_patcher_file._get_model_mapping(randomizer_data))
+        details, MagicMock())
 
     # Assert
     assert result == {
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
-        "model_index": 21,
+        "model_name": "PowerBombExpansion",
         "hud_text": ["Power Bomb Expansion acquired!"],
-        "sound_index": 0,
-        "jingle_index": 0,
         'resources': [{'amount': 2, 'index': 43},
                       {'amount': 1, 'index': 47}],
         "conditional_resources": [],
@@ -413,7 +403,7 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
             assert not hud_text.startswith("Locked")
 
 
-def test_run_validated_hud_text(randomizer_data):
+def test_run_validated_hud_text():
     # Setup
     rng = MagicMock()
     rng.randint.return_value = 0
@@ -433,8 +423,7 @@ def test_run_validated_hud_text(randomizer_data):
 
     # Run
     data = claris_patcher_file.echoes_pickup_details_to_patcher(
-        details, rng,
-        claris_patcher_file._get_model_mapping(randomizer_data))
+        details, rng)
 
     # Assert
     assert data['hud_text'] == ['Run validated!']
@@ -492,7 +481,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     assert result == expected_result
 
 
-def test_create_claris_patcher_file(test_files_dir, randomizer_data):
+def test_create_claris_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
@@ -501,7 +490,7 @@ def test_create_claris_patcher_file(test_files_dir, randomizer_data):
 
     # Run
     result = claris_patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),
-                                                     cosmetic_patches, randomizer_data)
+                                                     cosmetic_patches)
 
     # Assert
     assert isinstance(result["spawn_point"], dict)
