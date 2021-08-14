@@ -45,6 +45,10 @@ def _get_randomizer_path() -> Path:
     return _get_randomizer_folder().joinpath("Randomizer.exe")
 
 
+def _get_custom_data_path() -> Path:
+    return _get_randomizer_folder().joinpath("CustomRandomizerData.json")
+
+
 def _get_menu_mod_path() -> Path:
     return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
@@ -85,7 +89,7 @@ def _base_args(game_root: Path,
         _get_randomizer_path(),
         game_root,
         # "-test",
-        "-data:" + str(_get_randomizer_folder().joinpath("RandomizerData.json")),
+        "-data:" + str(_get_custom_data_path()),
     ]
 
 
@@ -149,12 +153,14 @@ def _add_menu_mod_to_files(
 
 def apply_patcher_file(game_root: Path,
                        patcher_data: dict,
+                       randomizer_data: dict,
                        progress_update: ProgressUpdateCallable,
                        ):
     """
     Applies the modifications listed in the given patcher_data to the game in game_root.
     :param game_root:
     :param patcher_data:
+    :param randomizer_data: The RandomizerData.json contents to use.
     :param progress_update:
     :return:
     """
@@ -169,6 +175,8 @@ def apply_patcher_file(game_root: Path,
                             f"which is above supported version {CURRENT_PATCH_VERSION}. "
                             f"\nPlease press 'Delete internal copy'.", None)
 
+    with _get_custom_data_path().open("w") as data_file:
+        json.dump(randomizer_data, data_file, indent=4)
     _run_with_args(_base_args(game_root),
                    json.dumps(patcher_data),
                    "Randomized!",
