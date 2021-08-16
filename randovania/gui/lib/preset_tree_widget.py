@@ -98,4 +98,5 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 self.preset_to_item[preset.base_preset_uuid].addChild(self.preset_to_item[preset.uuid])
 
     def select_preset(self, preset: VersionedPreset):
-        self.setCurrentItem(self.preset_to_item[preset.uuid])
+        if preset.uuid in self.preset_to_item:
+            self.setCurrentItem(self.preset_to_item[preset.uuid])
