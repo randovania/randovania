@@ -9,6 +9,7 @@ from randovania import get_data_path
 from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
+from randovania.games.prime import asset_conversion
 from randovania.interface_common import game_workdir
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -70,7 +71,7 @@ class ClarisPatcher(Patcher):
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
-        updaters = status_update_lib.split_progress_update(progress_update, 3)
+        updaters = status_update_lib.split_progress_update(progress_update, 4)
 
         contents_files_path = internal_copies_path.joinpath("prime2", "contents")
         backup_files_path = internal_copies_path.joinpath("prime2", "vanilla")
@@ -106,19 +107,22 @@ class ClarisPatcher(Patcher):
             "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"])
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
-        # Add custom models
+
+        if patch_data.pop("convert_other_game_assets", False):
+            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
+
         claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,
             randomizer_data,
-            updaters[1])
+            updaters[2])
 
         # Pack ISO
         iso_packager.pack_iso(
             iso=output_file,
             game_files_path=contents_files_path,
-            progress_update=updaters[2],
+            progress_update=updaters[3],
         )
 
 
