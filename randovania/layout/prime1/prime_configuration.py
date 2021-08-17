@@ -6,7 +6,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.prime1.artifact_mode import LayoutArtifactMode
 from randovania.layout.lib.teleporters import TeleporterConfiguration
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
@@ -26,7 +25,6 @@ class PrimeConfiguration(BaseConfiguration):
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
-    logical_resource_action: LayoutLogicalResourceAction
 
     main_plaza_door: bool
     backwards_frigate: bool
