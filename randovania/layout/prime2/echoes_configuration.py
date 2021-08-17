@@ -10,6 +10,7 @@ from randovania.layout.prime2.beam_configuration import BeamConfiguration
 from randovania.layout.prime2.hint_configuration import HintConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 from randovania.layout.prime2.translator_configuration import TranslatorConfiguration
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -73,6 +74,7 @@ class EchoesConfiguration(BaseConfiguration):
     allow_vanilla_gravity_boost: bool
     allow_vanilla_boost_ball: bool
     allow_vanilla_spider_ball: bool
+    logical_resource_action: LayoutLogicalResourceAction
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
