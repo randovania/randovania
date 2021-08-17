@@ -87,6 +87,48 @@
          </widget>
         </item>
         <item>
+         <widget class="QGroupBox" name="dangerous_actions_group">
+          <property name="title">
+           <string>Allow dangerous actions</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QComboBox" name="dangerous_combo">
+             <item>
+              <property name="text">
+               <string>Randomly</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Last Resort</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Never</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="cutscene_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Randomly&lt;/span&gt;: Items can be placed behind nodes that would require said item to escape.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Last Resort&lt;/span&gt;: Only allows dangerous actions if no other option is available for progression.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Never&lt;/span&gt;: Will never allow dangerous actions to happen logically.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="trick_level_line_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="trick_level_minimal_logic_check">
           <property name="text">
            <string>Use minimal logic instead</string>
@@ -127,7 +169,7 @@
          </widget>
         </item>
         <item>
-         <widget class="Line" name="trick_level_line_2">
+         <widget class="Line" name="trick_level_line_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>

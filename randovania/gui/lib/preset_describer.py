@@ -13,6 +13,7 @@ from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
 from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 def _bool_to_str(b: bool) -> str:
@@ -26,6 +27,7 @@ _BASE_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
         "Randomization Mode: {randomization_mode}",
+        "Dangerous Actions: {dangerous_actions}",
         "Random Starting Items: {random_starting_items}",
     ],
     "Items": [
@@ -208,6 +210,7 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
 
     format_params["trick_level"] = configuration.trick_level.pretty_description
     format_params["randomization_mode"] = configuration.available_locations.randomization_mode.value
+    format_params["dangerous_actions"] = configuration.logical_resource_action.value
     format_params["random_starting_items"] = random_starting_items
 
     # Items

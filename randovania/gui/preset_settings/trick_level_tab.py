@@ -14,8 +14,10 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
+from randovania.gui.lib import common_qt_lib
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
@@ -27,6 +29,11 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self._editor = editor
         self.game_description = game_description
         self._window_manager = window_manager
+
+        self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
+        self.dangerous_combo.setItemData(1, LayoutLogicalResourceAction.LAST_RESORT)
+        self.dangerous_combo.setItemData(2, LayoutLogicalResourceAction.NEVER)
+        signal_handling.on_combo(self.dangerous_combo, self._on_dangerous_changed)
 
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
@@ -117,6 +124,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
     def on_preset_changed(self, preset: Preset):
         trick_level_configuration = preset.configuration.trick_level
         self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
+        common_qt_lib.set_combo_with_value(self.dangerous_combo, preset.configuration.logical_resource_action)
 
         for trick, slider in self._slider_for_trick.items():
             assert self._slider_for_trick[trick] is slider
@@ -176,6 +184,10 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
                 "allow_underwater_movement_without_gravity",
                 state,
             )
+
+    def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
+        with self._editor as editor:
+            editor.set_configuration_field("logical_resource_action", value)
 
     def _on_click_link_underwater_details(self, link: str):
         self._exec_trick_details(ResourceDetailsPopup(
