@@ -9,7 +9,6 @@ from randovania import get_data_path
 from randovania.games.patcher import Patcher
 from randovania.games.patchers import claris_randomizer, claris_patcher_file
 from randovania.games.patchers.gamecube import banner_patcher, iso_packager
-from randovania.games.prime import asset_conversion
 from randovania.interface_common import game_workdir
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -109,6 +108,7 @@ class ClarisPatcher(Patcher):
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
         if patch_data.pop("convert_other_game_assets", False):
+            from randovania.games.prime import asset_conversion
             asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
 
         claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
