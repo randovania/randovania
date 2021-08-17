@@ -96,6 +96,7 @@ class BitPackPickupEntry:
         yield from bitpacking.encode_bool(self.value.respects_lock)
         yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
         yield from BitPackFloat(self.value.probability_multiplier).bit_pack_encode(_PROBABILITY_MULTIPLIER_META)
+        yield from bitpacking.encode_big_int(self.value.required_progression)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
@@ -117,6 +118,7 @@ class BitPackPickupEntry:
         respects_lock = bitpacking.decode_bool(decoder)
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
+        required_progression = bitpacking.decode_big_int(decoder)
 
         return PickupEntry(
             name=name,
@@ -130,4 +132,5 @@ class BitPackPickupEntry:
             respects_lock=respects_lock,
             probability_offset=probability_offset,
             probability_multiplier=probability_multiplier,
+            required_progression=required_progression,
         )

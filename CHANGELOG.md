@@ -8,10 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: Implemented support for dangerous checks in logic
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
+
+### Metroid Prime - Logic Database 
+
+- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Advanced and above).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
 
 ## [3.0.4] - 2021-08-10
