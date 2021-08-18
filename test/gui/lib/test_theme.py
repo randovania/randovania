@@ -20,7 +20,7 @@ def test_set_dark_theme_change(skip_qtbot, active, mocker):
     app.palette.return_value = QtGui.QPalette()
 
     theme._current_dark_theme = not active
-    theme.set_dark_theme(active, app)
+    theme.set_dark_theme(active, app=app)
 
     mock_load_stylesheet.assert_called_once_with(qt_api='pyside2',
                                                  palette=qdarkstyle.DarkPalette if active

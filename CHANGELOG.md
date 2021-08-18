@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
+  - Default Prime 1 presets now default to 6 minimum progression for artifacts.
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: Implemented support for dangerous checks in logic
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
+- Changed: Removed customization of Qt theme for decreasing whitespace.
 
 ### Metroid Prime - Logic Database 
 
