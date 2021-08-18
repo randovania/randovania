@@ -205,6 +205,42 @@
                                             }
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Super Missile"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 1,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 48,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -280,6 +316,15 @@
                                     }
                                 }
                             ]
+                        },
+                        "Pickup (Missile Behind Ice)": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 3,
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -347,6 +392,42 @@
                         "Door to Plaza Walkway": {
                             "type": "and",
                             "data": []
+                        },
+                        "Event - Spider Track Item": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "template",
+                                    "data": "Shoot Super Missile"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 16,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 19,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     }
                 },
@@ -370,8 +451,13 @@
                             "data": []
                         },
                         "Door to Ruins Entryway": {
-                            "type": "and",
-                            "data": []
+                            "type": "resource",
+                            "data": {
+                                "type": 2,
+                                "index": 0,
+                                "amount": 3,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -393,51 +479,6 @@
                         "Door to Shoreline Entrance": {
                             "type": "and",
                             "data": []
-                        },
-                        "Pickup (Missile Behind Ice)": {
-                            "type": "resource",
-                            "data": {
-                                "type": 0,
-                                "index": 3,
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Spider Track Missile)": {
-                            "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 16,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 19,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Shoot Super Missile"
-                                }
-                            ]
                         }
                     }
                 },
@@ -449,7 +490,7 @@
                     "pickup_index": 35,
                     "major_location": false,
                     "connections": {
-                        "Door to Ice Ruins Access": {
+                        "Door to Shoreline Entrance": {
                             "type": "and",
                             "data": []
                         }
@@ -463,7 +504,20 @@
                     "pickup_index": 36,
                     "major_location": false,
                     "connections": {
-                        "Door to Ice Ruins Access": {
+                        "Door to Temple Entryway": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Spider Track Item",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 48,
+                    "connections": {
+                        "Pickup (Spider Track Missile)": {
                             "type": "and",
                             "data": []
                         }

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Implemented support for dangerous checks in logic
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
+- Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
 
 ## [3.0.4] - 2021-08-10
 
