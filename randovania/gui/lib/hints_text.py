@@ -9,7 +9,7 @@ from randovania.generator.item_pool import pickup_creator
 
 def prime1_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
-    artifact = pickup_creator.create_artifact(0, db)
+    artifact = pickup_creator.create_artifact(0, 0, db)
 
     result = [(
         "Artifact",

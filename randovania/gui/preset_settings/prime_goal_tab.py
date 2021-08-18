@@ -17,6 +17,7 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.slider.valueChanged.connect(self._on_slider_changed)
+        self.min_progression_spin.valueChanged.connect(self._on_spin_changed)
 
     @property
     def uses_patches_tab(self) -> bool:
@@ -25,8 +26,15 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
     def _update_editor(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "artifacts",
+                "artifact_target",
                 LayoutArtifactMode(self.slider.value())
+            )
+
+    def _on_spin_changed(self):
+        with self._editor as editor:
+            editor.set_configuration_field(
+                "artifact_minimum_progression",
+                self.min_progression_spin.value(),
             )
 
     def _on_slider_changed(self):
@@ -34,5 +42,6 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
         self._update_editor()
 
     def on_preset_changed(self, preset: Preset):
-        artifacts = preset.configuration.artifacts
+        artifacts = preset.configuration.artifact_target
         self.slider.setValue(artifacts.num_artifacts)
+        self.min_progression_spin.setValue(preset.configuration.artifact_minimum_progression)
