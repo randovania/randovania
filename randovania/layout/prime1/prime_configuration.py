@@ -10,6 +10,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
     ORIGINAL = "original"
+    COMPETITIVE = "competitive"
     MINOR = "minor"
     MAJOR = "major"
 
@@ -35,6 +36,7 @@ class PrimeConfiguration(BaseConfiguration):
     phazon_elite_without_dynamo: bool
 
     qol_game_breaking: bool
+    qol_pickup_scans: bool
     qol_cutscenes: LayoutCutsceneMode
 
     @classmethod

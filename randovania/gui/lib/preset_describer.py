@@ -13,7 +13,6 @@ from randovania.layout.preset import Preset
 from randovania.layout.prime1.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
 from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
 from randovania.layout.prime3.corruption_configuration import CorruptionConfiguration
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 def _bool_to_str(b: bool) -> str:
@@ -363,6 +362,14 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     return format_params
 
 
+_CUTSCENE_MODE_DESCRIPTION = {
+    LayoutCutsceneMode.MAJOR: "Major cutscene removal",
+    LayoutCutsceneMode.MINOR: "Minor cutscene removal",
+    LayoutCutsceneMode.COMPETITIVE: "Competitive cutscene removal",
+    LayoutCutsceneMode.ORIGINAL: None,
+}
+
+
 def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
@@ -409,10 +416,9 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
     if required_messages:
         template_strings["Game Changes"].append(", ".join(required_messages))
 
-    if configuration.qol_cutscenes == LayoutCutsceneMode.MAJOR:
-        template_strings["Game Changes"].append("Major cutscene removal")
-    elif configuration.qol_cutscenes == LayoutCutsceneMode.MINOR:
-        template_strings["Game Changes"].append("Minor cutscene removal")
+    cutscene_removal = _CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
+    if cutscene_removal is not None:
+        template_strings["Game Changes"].append(cutscene_removal)
 
     if configuration.small_samus:
         template_strings["Game Changes"].append("Small Samus")
@@ -427,6 +433,7 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
             (configuration.backwards_lower_mines, "Backwards Lower Mines"),
             (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
             (configuration.qol_game_breaking, "Game Breaking QOL"),
+            (configuration.qol_pickup_scans, "Pickup Scans QOL"),
     ):
         if flag:
             qol_changes.append(message)
