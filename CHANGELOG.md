@@ -10,11 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
   - Default Prime 1 presets now default to 6 minimum progression for artifacts.
+- Added: Setting for toggling the pickup scan QOL adjustments.
+- Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: The seed hash label in Game Sessions is now selectable.
-- Added: Implemented support for dangerous checks in logic
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Changed: Removed customization of Qt theme for decreasing whitespace.
+
+### Metroid Prime - Patcher Changes
+
+- Moved Shorelines Tower cutscene to major (it sometimes has a reposition that is sometimes useful in routing)
+- Removed Main Quarry Combat Visor switch
+- Speed up opening of gate in ice temple
+- Speed up opening of gate in sun tower
+- Fixed thardus cutscene skip softlock
+- Magmoor Workstation item scannable through the purple door (QOL Pickup Scan)
 
 ### Metroid Prime - Logic Database 
 
