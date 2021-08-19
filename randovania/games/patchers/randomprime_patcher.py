@@ -269,8 +269,8 @@ class RandomprimePatcher(Patcher):
             "preferences": {
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
-                "qolMinorCutscenes": configuration.qol_cutscenes != LayoutCutsceneMode.ORIGINAL,
-                "qolMajorCutscenes": configuration.qol_cutscenes == LayoutCutsceneMode.MAJOR,
+                "qolPickupScans": configuration.qol_pickup_scans,
+                "qolCutscenes": configuration.qol_cutscenes.value,
 
                 "obfuscateItems": False,
                 "mapDefaultState": map_default_state,

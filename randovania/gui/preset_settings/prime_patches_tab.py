@@ -18,6 +18,7 @@ _FIELDS = [
     "backwards_lower_mines",
     "phazon_elite_without_dynamo",
     "qol_game_breaking",
+    "qol_pickup_scans",
     "small_samus",
 ]
 
@@ -34,8 +35,9 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 
         # Signals
         self.cutscene_combo.setItemData(0, LayoutCutsceneMode.ORIGINAL)
-        self.cutscene_combo.setItemData(1, LayoutCutsceneMode.MINOR)
-        self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MAJOR)
+        self.cutscene_combo.setItemData(1, LayoutCutsceneMode.COMPETITIVE)
+        self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MINOR)
+        self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
         signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)

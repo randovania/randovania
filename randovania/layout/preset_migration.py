@@ -340,6 +340,7 @@ def _migrate_v12(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["artifact_target"] = preset["configuration"].pop("artifacts")
         preset["configuration"]["artifact_minimum_progression"] = 0
+        preset["configuration"]["qol_pickup_scans"] = False
 
     return preset
 
