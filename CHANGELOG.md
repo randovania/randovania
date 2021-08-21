@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: Implemented support for dangerous checks in logic
+- Added: Certain prime 1 rooms will now require charge beam without combat tricks.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
