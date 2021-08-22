@@ -27,9 +27,32 @@ NON_PROGRESSION = [
     "Ice Spreader",
 ]
 
+NON_MAJOR_PROGRESSION = [
+    "Missile Expansion",
+    "Energy Tank",
+    "Energy Transfer Module",
+    "Artifact",
+    "Power Bomb Expansion",
+    "Ice Spreader",
+    "Wavebuster",
+    "Gravity Suit",
+    "Flamethrower",
+    "X-Ray Visor",
+    "Grapple Beam",
+    "Thermal Visor",
+    "Phazon Suit",
+]
+
 def is_non_progression(x: str):
     x = x.lower()
     for item in NON_PROGRESSION:
+        if x in item.lower():
+            return True
+    return False
+
+def is_non_major_progression(x: str):
+    x = x.lower()
+    for item in NON_MAJOR_PROGRESSION:
         if x in item.lower():
             return True
     return False
@@ -56,12 +79,15 @@ def accumulate_results(game_modifications: dict,
                        index_to_location: Dict[int, Tuple[str, str]],
                        logbook_to_name: Dict[str, str],
                        progression_items_only: bool,
+                       major_progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
             area_name = f"{world_name}/{area_name}"
             item_name = _filter_item_name(item_name)
             if progression_items_only and is_non_progression(item_name):
+                continue
+            if major_progression_items_only and is_non_major_progression(item_name):
                 continue
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
@@ -124,8 +150,6 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
         if splitter not in entry:
             splitter = " at "
         item, location = entry.split(splitter, 1)
-        if is_non_progression(item):
-            continue
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
@@ -138,7 +162,7 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
 
     return order, locations, no_key
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool, progression_items_only: bool):
+def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool, progression_items_only: bool, major_progression_items_only:bool):
     def item_creator():
         return collections.defaultdict(int)
 
@@ -180,7 +204,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
                                items, locations,
                                item_hints, location_hints,
                                index_to_location, logbook_to_name,
-                               progression_items_only)
+                               progression_items_only,
+                               major_progression_items_only)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
@@ -310,9 +335,10 @@ def main():
     parser.add_argument("output_file")
     parser.add_argument('--use-percentage', action='store_true')
     parser.add_argument('--progression-only', action='store_true')
+    parser.add_argument('--major-progression-only', action='store_true')
     args = parser.parse_args()
     create_report(args.seeds_dir, args.output_file,
-                  args.csv_dir, args.use_percentage, args.progression_only)
+                  args.csv_dir, args.use_percentage, args.progression_only, args.major_progression_only)
 
 
 if __name__ == "__main__":
