@@ -118,8 +118,7 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
 
     return order, locations, no_key
 
-
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
+def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool):
     def item_creator():
         return collections.defaultdict(int)
 
@@ -185,25 +184,46 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
         for location in locations.keys()
     }
 
+    items = sort_by_contents(items)
+    locations = sort_by_contents(locations)
+    item_hints = sort_by_contents(item_hints)
+    location_hints = sort_by_contents(location_hints)
+
+    location_progression_count = {
+        location: value
+        for location, value in sorted(progression_count_for_location.items(), key=lambda t: t[1], reverse=True)
+    }
+
+    location_progression_no_key_count = {
+        location: value
+        for location, value in sorted(progression_no_key_count_for_location.items(),
+                                        key=lambda t: t[1], reverse=True)
+    }
+
+    if use_percentage:
+        for item in items:
+            for room in items[item]:
+                items[item][room] = (float(items[item][room])/float(seed_count))*100.0
+        for location in locations:
+            for item in locations[location]:
+                locations[location][item] = (float(locations[location][item])/float(seed_count))*100.0
+        for location in location_progression_count:
+            location_progression_count[location] = (float(location_progression_count[location])/float(seed_count))*100.0
+        for location in location_progression_no_key_count:
+            location_progression_no_key_count[location] = (float(location_progression_no_key_count[location])/float(seed_count))*100.0
+
     final_results = {
         "seed_count": seed_count,
         "stddev_by_location": {
             location: stddev
             for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1], reverse=True)
         },
-        "items": sort_by_contents(items),
-        "locations": sort_by_contents(locations),
-        "item_hints": sort_by_contents(item_hints),
-        "location_hints": sort_by_contents(location_hints),
-        "location_progression_count": {
-            location: value
-            for location, value in sorted(progression_count_for_location.items(), key=lambda t: t[1], reverse=True)
-        },
-        "location_progression_no_key_count": {
-            location: value
-            for location, value in sorted(progression_no_key_count_for_location.items(),
-                                          key=lambda t: t[1], reverse=True)
-        },
+        "items": items,
+        "locations": locations,
+        "item_hints": item_hints,
+        "location_hints": location_hints,
+        "location_progression_count": location_progression_count,
+        "location_progression_no_key_count": location_progression_no_key_count,
         "item_order": {
             "average": {
                 name: statistics.mean(orders)
@@ -250,9 +270,10 @@ def main():
     parser.add_argument("--csv-dir")
     parser.add_argument("seeds_dir")
     parser.add_argument("output_file")
+    parser.add_argument('--use-percentage', action='store_true')
     args = parser.parse_args()
     create_report(args.seeds_dir, args.output_file,
-                  args.csv_dir)
+                  args.csv_dir, args.use_percentage)
 
 
 if __name__ == "__main__":
