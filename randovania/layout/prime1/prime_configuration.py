@@ -10,6 +10,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
     ORIGINAL = "original"
+    COMPETITIVE = "competitive"
     MINOR = "minor"
     MAJOR = "major"
 
@@ -18,7 +19,8 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
 class PrimeConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
-    artifacts: LayoutArtifactMode
+    artifact_target: LayoutArtifactMode
+    artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
     heat_protection_only_varia: bool
@@ -34,6 +36,7 @@ class PrimeConfiguration(BaseConfiguration):
     phazon_elite_without_dynamo: bool
 
     qol_game_breaking: bool
+    qol_pickup_scans: bool
     qol_cutscenes: LayoutCutsceneMode
 
     @classmethod

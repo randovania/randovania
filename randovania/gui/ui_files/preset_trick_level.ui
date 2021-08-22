@@ -49,8 +49,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>539</width>
-         <height>516</height>
+         <width>525</width>
+         <height>724</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="trick_level_layout">
@@ -81,6 +81,51 @@
         </item>
         <item>
          <widget class="Line" name="trick_level_line_1">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="dangerous_actions_group">
+          <property name="title">
+           <string>Allow dangerous actions</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QComboBox" name="dangerous_combo">
+             <item>
+              <property name="text">
+               <string>Randomly</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Last Resort</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Never</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="cutscene_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A dangerous action is the act of moving past a lock without the appropriate items needed to head backwards, or doing an action that can only be done once.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Randomly&lt;/span&gt;: Dangerous actions might be required by logic.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Last Resort&lt;/span&gt;: Only allows dangerous actions to be required if no other option is available for progression.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Never&lt;/span&gt;: Will never require dangerous actions to happen logically.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="trick_level_line_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -127,7 +172,7 @@
          </widget>
         </item>
         <item>
-         <widget class="Line" name="trick_level_line_2">
+         <widget class="Line" name="trick_level_line_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>

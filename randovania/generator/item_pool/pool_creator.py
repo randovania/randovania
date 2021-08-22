@@ -25,7 +25,8 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
 
 
 def prime1_specific_pool(results: PoolResults, configuration: PrimeConfiguration, db: ResourceDatabase):
-    _extend_pool_results(results, add_artifacts(db, configuration.artifacts))
+    _extend_pool_results(results, add_artifacts(db, configuration.artifact_target,
+                                                configuration.artifact_minimum_progression))
 
 
 def echoes_specific_pool(results: PoolResults, configuration: EchoesConfiguration, db: ResourceDatabase):

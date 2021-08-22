@@ -201,7 +201,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
         "game_session_pickups_update",
         {
             "game": "prime2",
-            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb='}]
+            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{94xPb=%'}]
         },
         room=f"game-session-1-1234"
     )

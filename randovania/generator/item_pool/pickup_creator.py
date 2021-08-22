@@ -169,6 +169,7 @@ def create_energy_cell(cell_index: int,
 
 
 def create_artifact(artifact_index: int,
+                    minimum_progression: int,
                     resource_database: ResourceDatabase,
                     ) -> PickupEntry:
     return PickupEntry(
@@ -183,6 +184,7 @@ def create_artifact(artifact_index: int,
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
         probability_offset=0.25,
+        required_progression=minimum_progression,
     )
 
 

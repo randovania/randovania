@@ -26,6 +26,7 @@ _BASE_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
         "Randomization Mode: {randomization_mode}",
+        "Dangerous Actions: {dangerous_actions}",
         "Random Starting Items: {random_starting_items}",
     ],
     "Items": [
@@ -208,6 +209,7 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
 
     format_params["trick_level"] = configuration.trick_level.pretty_description
     format_params["randomization_mode"] = configuration.available_locations.randomization_mode.value
+    format_params["dangerous_actions"] = configuration.logical_resource_action.value
     format_params["random_starting_items"] = random_starting_items
 
     # Items
@@ -360,6 +362,14 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
     return format_params
 
 
+_CUTSCENE_MODE_DESCRIPTION = {
+    LayoutCutsceneMode.MAJOR: "Major cutscene removal",
+    LayoutCutsceneMode.MINOR: "Minor cutscene removal",
+    LayoutCutsceneMode.COMPETITIVE: "Competitive cutscene removal",
+    LayoutCutsceneMode.ORIGINAL: None,
+}
+
+
 def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
@@ -406,10 +416,9 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
     if required_messages:
         template_strings["Game Changes"].append(", ".join(required_messages))
 
-    if configuration.qol_cutscenes == LayoutCutsceneMode.MAJOR:
-        template_strings["Game Changes"].append("Major cutscene removal")
-    elif configuration.qol_cutscenes == LayoutCutsceneMode.MINOR:
-        template_strings["Game Changes"].append("Minor cutscene removal")
+    cutscene_removal = _CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
+    if cutscene_removal is not None:
+        template_strings["Game Changes"].append(cutscene_removal)
 
     if configuration.small_samus:
         template_strings["Game Changes"].append("Small Samus")
@@ -424,6 +433,7 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
             (configuration.backwards_lower_mines, "Backwards Lower Mines"),
             (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
             (configuration.qol_game_breaking, "Game Breaking QOL"),
+            (configuration.qol_pickup_scans, "Pickup Scans QOL"),
     ):
         if flag:
             qol_changes.append(message)
@@ -435,7 +445,8 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
         template_strings.pop("Game Changes")
 
     # Artifacts
-    template_strings["Items"].append(f"{configuration.artifacts.num_artifacts} Artifacts shuffled")
+    template_strings["Items"].append(f"{configuration.artifact_target.num_artifacts} Artifacts shuffled, "
+                                     f"{configuration.artifact_minimum_progression} min progression")
 
     # Item Model
     if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:

@@ -1,3 +1,4 @@
+import copy
 import functools
 import json
 import shutil
@@ -65,12 +66,11 @@ class ClarisPatcher(Patcher):
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: EchoesCosmeticPatches):
-        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches,
-                                                       decode_randomizer_data())
+        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
-        updaters = status_update_lib.split_progress_update(progress_update, 3)
+        updaters = status_update_lib.split_progress_update(progress_update, 4)
 
         contents_files_path = internal_copies_path.joinpath("prime2", "contents")
         backup_files_path = internal_copies_path.joinpath("prime2", "vanilla")
@@ -105,16 +105,24 @@ class ClarisPatcher(Patcher):
             contents_files_path,
             "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"])
         )
+        randomizer_data = copy.deepcopy(decode_randomizer_data())
+
+        if patch_data.pop("convert_other_game_assets", False):
+            from randovania.games.prime import asset_conversion
+            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
+
+        claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,
-            updaters[1])
+            randomizer_data,
+            updaters[2])
 
         # Pack ISO
         iso_packager.pack_iso(
             iso=output_file,
             game_files_path=contents_files_path,
-            progress_update=updaters[2],
+            progress_update=updaters[3],
         )
 
 

@@ -324,6 +324,35 @@ def _simplified_memo_data() -> Dict[str, str]:
     return result
 
 
+def _get_model_name_missing_backup():
+    """
+    A mapping of alternative model names if some models are missing.
+    :return:
+    """
+    other_game = {
+        PickupModel(RandovaniaGame.METROID_PRIME, "Charge Beam"): "ChargeBeam INCOMPLETE",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Super Missile"): "SuperMissile",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Scan Visor"): "ScanVisor INCOMPLETE",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Varia Suit"): "VariaSuit INCOMPLETE",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Gravity Suit"): "VariaSuit INCOMPLETE",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Phazon Suit"): "VariaSuit INCOMPLETE",
+        # PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"): "MorphBallBomb",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Boost Ball"): "BoostBall",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Spider Ball"): "SpiderBall",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb"): "PowerBomb",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb Expansion"): "PowerBombExpansion",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Missile"): "MissileExpansionPrime1",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Grapple Beam"): "GrappleBeam",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Space Jump Boots"): "SpaceJumpBoots",
+        PickupModel(RandovaniaGame.METROID_PRIME, "Energy Tank"): "EnergyTank",
+    }
+    return {
+        f"{model.game.value}_{model.name}": name
+        for model, name in other_game.items()
+    }
+
+
 def _get_model_mapping(randomizer_data: dict):
     jingles = {
         "SkyTempleKey": 2,
@@ -335,24 +364,6 @@ def _get_model_mapping(randomizer_data: dict):
         "BeamAmmoExpansion": 0,
     }
     return EchoesModelNameMapping(
-        other_game={
-            PickupModel(RandovaniaGame.METROID_PRIME, "Charge Beam"): "ChargeBeam INCOMPLETE",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Super Missile"): "SuperMissile",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Scan Visor"): "ScanVisor INCOMPLETE",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Varia Suit"): "VariaSuit INCOMPLETE",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Gravity Suit"): "VariaSuit INCOMPLETE",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Phazon Suit"): "VariaSuit INCOMPLETE",
-            # PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"): "MorphBallBomb",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Boost Ball"): "BoostBall",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Spider Ball"): "SpiderBall",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb"): "PowerBomb",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb Expansion"): "PowerBombExpansion",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Missile"): "MissileExpansionPrime1",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Grapple Beam"): "GrappleBeam",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Space Jump Boots"): "SpaceJumpBoots",
-            PickupModel(RandovaniaGame.METROID_PRIME, "Energy Tank"): "EnergyTank",
-        },
         index={
             entry["Name"]: entry["Index"]
             for entry in randomizer_data["ModelData"]
@@ -371,14 +382,12 @@ def _get_model_mapping(randomizer_data: dict):
 def create_patcher_file(description: LayoutDescription,
                         players_config: PlayersConfiguration,
                         cosmetic_patches: EchoesCosmeticPatches,
-                        randomizer_data: dict,
                         ) -> dict:
     """
 
     :param description:
     :param players_config:
     :param cosmetic_patches:
-    :param randomizer_data:
     :return:
     """
     preset = description.permalink.get_preset(players_config.player_index)
@@ -393,6 +402,7 @@ def create_patcher_file(description: LayoutDescription,
     result = {}
     _add_header_data_to_result(description, result)
 
+    result["convert_other_game_assets"] = cosmetic_patches.convert_other_game_assets
     result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
         configuration.major_items_configuration,
         description.all_patches,
@@ -424,8 +434,7 @@ def create_patcher_file(description: LayoutDescription,
     result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
 
     # Add the pickups
-    result["pickups"] = _create_pickup_list(cosmetic_patches, configuration, game, patches, players_config,
-                                            randomizer_data, rng)
+    result["pickups"] = _create_pickup_list(cosmetic_patches, configuration, game, patches, players_config, rng)
 
     # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game)
@@ -489,7 +498,7 @@ def create_patcher_file(description: LayoutDescription,
 
 def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: BaseConfiguration,
                         game: GameDescription,
-                        patches: GamePatches, players_config: PlayersConfiguration, randomizer_data: dict,
+                        patches: GamePatches, players_config: PlayersConfiguration,
                         rng: Random):
     useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),
                                   players_config.player_index)
@@ -510,9 +519,8 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         visual_etm=pickup_creator.create_visual_etm(),
     )
 
-    mapping = _get_model_mapping(randomizer_data)
     return [
-        echoes_pickup_details_to_patcher(details, rng, mapping)
+        echoes_pickup_details_to_patcher(details, rng)
         for details in pickup_list
     ]
 
@@ -527,7 +535,6 @@ def _add_header_data_to_result(description: LayoutDescription, result: dict) -> 
 
 @dataclasses.dataclass(frozen=True)
 class EchoesModelNameMapping:
-    other_game: Dict[PickupModel, str]
     index: Dict[str, int]
     sound_index: Dict[str, int]  # 1 for keys, 0 otherwise
     jingle_index: Dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
@@ -544,14 +551,11 @@ def _create_pickup_resources_for(resources: ResourceGain):
     ]
 
 
-def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails,
-                                     rng: Random, mapping: EchoesModelNameMapping) -> dict:
+def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails, rng: Random) -> dict:
     if details.model.game == RandovaniaGame.METROID_PRIME_ECHOES:
         model_name = details.model.name
     else:
-        # TODO: for Prime 1 and 3 items that exist in prime 3, lets use these for now.
-        # TODO: maybe use a different fallback model?
-        model_name = mapping.other_game.get(details.model, "EnergyTransferModule")
+        model_name = f"{details.model.game.value}_{details.model.name}"
 
     if model_name == "MissileExpansion" and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
@@ -583,7 +587,19 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         ],
         "hud_text": hud_text,
         "scan": details.scan_text,
-        "model_index": mapping.index[model_name],
-        "sound_index": mapping.sound_index.get(model_name, 0),
-        "jingle_index": mapping.jingle_index.get(model_name, 0),
+        "model_name": model_name,
     }
+
+
+def adjust_model_name(patcher_data: dict, randomizer_data: dict):
+    mapping = _get_model_mapping(randomizer_data)
+    backup = _get_model_name_missing_backup()
+
+    for pickup in patcher_data["pickups"]:
+        model_name = pickup.pop("model_name")
+        if model_name not in mapping.index:
+            model_name = backup.get(model_name, "EnergyTransferModule")
+
+        pickup["model_index"] = mapping.index[model_name]
+        pickup["sound_index"] = mapping.sound_index.get(model_name, 0)
+        pickup["jingle_index"] = mapping.jingle_index.get(model_name, 0)

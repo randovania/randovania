@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>487</width>
-         <height>1057</height>
+         <height>1189</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -111,7 +111,7 @@
            <item>
             <widget class="QLabel" name="description_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to improve the game experience, many quality of life changes are provided separated in 5 different groups.&lt;/p&gt;&lt;p&gt;For in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/multiworld/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to improve the game experience, many quality of life changes are provided separated in 5 different groups.&lt;/p&gt;&lt;p&gt;For in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/randovania/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -275,6 +275,23 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QCheckBox" name="qol_pickup_scans_check">
+             <property name="text">
+              <string>Pickup Scans</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_pickup_scans_label">
+             <property name="text">
+              <string>Enable this option to patch various item locations so that they can be scanned. Only locations whose model is visible in combat visor are affected. Note that the new scan may be near the item, not necessarily on top of it.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -293,6 +310,11 @@
              </item>
              <item>
               <property name="text">
+               <string>Competitive</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>Minor</string>
               </property>
              </item>
@@ -306,7 +328,10 @@
            <item>
             <widget class="QLabel" name="cutscene_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original&lt;/span&gt;: No changes to the cutscenes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Minor&lt;/span&gt;: Removes cutscenes that don't affect the game too much when removed.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Major&lt;/span&gt;: Allows you to continue playing the game while cutscenes happen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original&lt;/span&gt;: No changes to the cutscenes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Competitive&lt;/span&gt;: Similar to minor, but leaves a few rooms alone where skipping cutscenes would be inappropriate for races.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Minor&lt;/span&gt;: Removes cutscenes that don't affect the game too much when removed.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Major&lt;/span&gt;: Allows you to continue playing the game while cutscenes happen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
