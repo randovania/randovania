@@ -231,6 +231,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     }
     
     regions = dict()
+    region_totals = dict()
+
     total_progression_item_count = 0
     for location in locations:
         region = location.split("/")[0]
@@ -238,11 +240,20 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         if region not in regions.keys():
             regions[region] = 0
 
+        if region not in region_totals.keys():
+            region_totals[region] = 0
+        region_totals[region] += 1
+
         count = 0
         for item in locations[location]:
             count = count + locations[location][item]
         total_progression_item_count += count
         regions[region] += count
+
+    # probability that any given location in this region contains progression
+    regions_weighted = dict()
+    for region in regions:
+        regions_weighted[region] = ((float(regions[region])/float(seed_count)) / float(region_totals[region]))*100.0
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
@@ -276,12 +287,13 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     final_results = {
         "seed_count": seed_count,
+        "regions": regions,
+        "regions_weighted":regions_weighted,
         "stddev_by_location": {
             location: stddev
             for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1], reverse=True)
         },
         "items": items,
-        "regions": regions,
         "locations": locations,
         "item_hints": item_hints,
         "location_hints": location_hints,
