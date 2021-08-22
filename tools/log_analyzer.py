@@ -17,6 +17,22 @@ from randovania.game_description.world.node import PickupNode, LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 
+NON_PROGRESSION = [
+    "Missile Expansion",
+    "Energy Transfer Module",
+    "Power Bomb Expansion",
+    "Artifact",
+    "Wavebuster",
+    "Flamethrower",
+    "Ice Spreader",
+]
+
+def is_non_progression(x: str):
+    x = x.lower()
+    for item in NON_PROGRESSION:
+        if x in item.lower():
+            return True
+    return False
 
 def read_json(path: Path) -> dict:
     with path.open() as x:
@@ -26,7 +42,6 @@ def read_json(path: Path) -> dict:
 _KEY_MATCH = re.compile(r"Key (\d+)")
 _ARTIFACT_MATCH = re.compile(r"Artifact of (\w+)")
 _PLAYER_MATCH = re.compile(r" for Player \d+")
-
 
 def _filter_item_name(name: str) -> str:
     return _PLAYER_MATCH.sub("", _ARTIFACT_MATCH.sub("Artifact", _KEY_MATCH.sub("Key", name)))
@@ -40,11 +55,14 @@ def accumulate_results(game_modifications: dict,
 
                        index_to_location: Dict[int, Tuple[str, str]],
                        logbook_to_name: Dict[str, str],
+                       progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
             area_name = f"{world_name}/{area_name}"
             item_name = _filter_item_name(item_name)
+            if progression_items_only and is_non_progression(item_name):
+                continue
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
 
@@ -106,6 +124,8 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
         if splitter not in entry:
             splitter = " at "
         item, location = entry.split(splitter, 1)
+        if is_non_progression(item):
+            continue
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
@@ -118,7 +138,7 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
 
     return order, locations, no_key
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool):
+def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool, progression_items_only: bool):
     def item_creator():
         return collections.defaultdict(int)
 
@@ -159,7 +179,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             accumulate_results(game_modifications,
                                items, locations,
                                item_hints, location_hints,
-                               index_to_location, logbook_to_name)
+                               index_to_location, logbook_to_name,
+                               progression_items_only)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
@@ -288,9 +309,10 @@ def main():
     parser.add_argument("seeds_dir")
     parser.add_argument("output_file")
     parser.add_argument('--use-percentage', action='store_true')
+    parser.add_argument('--progression-only', action='store_true')
     args = parser.parse_args()
     create_report(args.seeds_dir, args.output_file,
-                  args.csv_dir, args.use_percentage)
+                  args.csv_dir, args.use_percentage, args.progression_only)
 
 
 if __name__ == "__main__":
