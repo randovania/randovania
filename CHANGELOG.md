@@ -28,8 +28,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime - Logic Database 
 
-- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Advanced and above).
+- Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
+- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
+- Fixed: Replaced Bomb Jump (Intermediate) with Dash (Beginner) trick to cross the gap to reach the Courtyard Access door in Ice Ruins West.
+- Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
+- Changed: Improved readability of Ruined Courtyard logic.
+- Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
+- Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
 
 ## [3.0.4] - 2021-08-10
 
