@@ -183,6 +183,20 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         location: calculate_stddev(pickup_count, locations[location])
         for location in locations.keys()
     }
+    
+    regions = dict()
+    total_progression_item_count = 0
+    for location in locations:
+        region = location.split("/")[0]
+
+        if region not in regions.keys():
+            regions[region] = 0
+
+        count = 0
+        for item in locations[location]:
+            count = count + locations[location][item]
+        total_progression_item_count += count
+        regions[region] += count
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
@@ -211,6 +225,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             location_progression_count[location] = (float(location_progression_count[location])/float(seed_count))*100.0
         for location in location_progression_no_key_count:
             location_progression_no_key_count[location] = (float(location_progression_no_key_count[location])/float(seed_count))*100.0
+        for region in regions:
+            regions[region] = (float(regions[region])/float(total_progression_item_count))*100.0
 
     final_results = {
         "seed_count": seed_count,
@@ -219,6 +235,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1], reverse=True)
         },
         "items": items,
+        "regions": regions,
         "locations": locations,
         "item_hints": item_hints,
         "location_hints": location_hints,
