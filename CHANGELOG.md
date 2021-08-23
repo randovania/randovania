@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: Implemented support for dangerous checks in logic
-- Added: Certain prime 1 rooms will now require charge beam without combat tricks.
+
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Changed: Removed customization of Qt theme for decreasing whitespace.
@@ -38,6 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Improved readability of Ruined Courtyard logic.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
+- Added: Charge Beam requirements were added to the following prime 1 rooms with combat trick alternatives:
+    - (Beginner) Elite research phazon elite
+    - (Beginner) Research entrance
+    - (Intermediate) Hall of the elders wave and ice bomb slots
+    - (Intermediate) Sunchamber ghosts fight 
+    - (Intermediate) Mine Security station with >= 200 energy
+    - (Advanced) Mine Security station
 
 ## [3.0.4] - 2021-08-10
 
