@@ -275,6 +275,13 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
                                         key=lambda t: t[1], reverse=True)
     }
 
+    for location in locations:
+        if location not in location_progression_no_key_count.keys():
+            location_progression_no_key_count[location] = 0
+    
+        if location not in location_progression_count.keys():
+            location_progression_count[location] = 0
+
     if use_percentage:
         for item in items:
             for room in items[item]:
