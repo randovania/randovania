@@ -140,7 +140,7 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Dict[str, int], Set[str], Set[str]]:
+def get_items_order(all_items: Iterable[str], item_order: List[str], progression_items_only: bool, major_progression_items_only: bool) -> Tuple[Dict[str, int], Set[str], Set[str]]:
     locations = set()
     no_key = set()
     order = {}
@@ -150,6 +150,10 @@ def get_items_order(all_items: Iterable[str], item_order: List[str]) -> Tuple[Di
         if splitter not in entry:
             splitter = " at "
         item, location = entry.split(splitter, 1)
+        if progression_items_only and is_non_progression(item):
+            continue
+        if major_progression_items_only and is_non_major_progression(item):
+            continue
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
@@ -210,7 +214,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             pickup_count = calculate_pickup_count(items)
 
         item_orders, locations_with_progression, no_key_progression = get_items_order(list(items.keys()),
-                                                                                      seed_data["item_order"])
+                                                                                      seed_data["item_order"], progression_items_only, major_progression_items_only)
         for item, order in item_orders.items():
             item_order[item].append(order)
 
