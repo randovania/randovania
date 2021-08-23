@@ -46,14 +46,14 @@ NON_MAJOR_PROGRESSION = [
 def is_non_progression(x: str):
     x = x.lower()
     for item in NON_PROGRESSION:
-        if x in item.lower():
+        if x == item.lower():
             return True
     return False
 
 def is_non_major_progression(x: str):
     x = x.lower()
     for item in NON_MAJOR_PROGRESSION:
-        if x in item.lower():
+        if x == item.lower():
             return True
     return False
 
