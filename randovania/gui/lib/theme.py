@@ -4,7 +4,7 @@ from PySide2.QtCore import Qt
 _current_dark_theme = None
 
 
-def set_dark_theme(active: bool, app: QtWidgets.QApplication = None):
+def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QApplication = None):
     global _current_dark_theme
     if _current_dark_theme == active:
         return
@@ -20,7 +20,8 @@ def set_dark_theme(active: bool, app: QtWidgets.QApplication = None):
         palette = qdarkstyle.LightPalette
 
     style = qdarkstyle.load_stylesheet(qt_api='pyside2', palette=palette)
-    style += """
+    if compact:
+        style += """
     QGroupBox {
         padding: 0px;
     }
@@ -36,7 +37,6 @@ def set_dark_theme(active: bool, app: QtWidgets.QApplication = None):
     QToolButton {
         border: 1px solid #32414B;
     }
-
         """
 
     if active:

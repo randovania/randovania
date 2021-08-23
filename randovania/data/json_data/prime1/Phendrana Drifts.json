@@ -389,6 +389,43 @@
                             "type": "and",
                             "data": []
                         },
+                        "Door to Temple Entryway": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 0,
+                                        "amount": 2,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         "Door to Plaza Walkway": {
                             "type": "and",
                             "data": []
@@ -1332,6 +1369,43 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 5,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 0,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -1506,36 +1580,13 @@
                                     }
                                 },
                                 {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 6,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 9,
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 0,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
                         },
@@ -2116,6 +2167,75 @@
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
+                        "Door to Specimen Storage": {
+                            "type": "and",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 16,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 19,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 9,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 7,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         "Top Middle Platform": {
                             "type": "or",
                             "data": [
@@ -2142,57 +2262,6 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 16,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "or",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 19,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "and",
-                                                                    "data": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 0,
-                                                                                "index": 6,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 0,
-                                                                                "index": 18,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2222,66 +2291,6 @@
                                         {
                                             "type": "or",
                                             "data": [
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 19,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 3,
-                                                                "amount": 2,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "or",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 7,
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "and",
-                                                                    "data": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 0,
-                                                                                "index": 6,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": 2,
-                                                                                "index": 9,
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": [
@@ -2322,8 +2331,63 @@
                                                             }
                                                         }
                                                     ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 18,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 9,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 18,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }

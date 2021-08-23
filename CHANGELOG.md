@@ -8,12 +8,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
+  - Default Prime 1 presets now default to 6 minimum progression for artifacts.
+- Added: Setting for toggling the pickup scan QOL adjustments.
+- Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: Implemented support for dangerous checks in logic
 - Added: Certain prime 1 rooms will now require charge beam without combat tricks.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
+- Changed: Removed customization of Qt theme for decreasing whitespace.
+
+### Metroid Prime - Patcher Changes
+
+- Moved Shorelines Tower cutscene to major (it sometimes has a reposition that is sometimes useful in routing)
+- Removed Main Quarry Combat Visor switch
+- Speed up opening of gate in ice temple
+- Speed up opening of gate in sun tower
+- Fixed thardus cutscene skip softlock
+- Magmoor Workstation item scannable through the purple door (QOL Pickup Scan)
+
+### Metroid Prime - Logic Database 
+
+- Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
+- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
+- Fixed: Replaced Bomb Jump (Intermediate) with Dash (Beginner) trick to cross the gap to reach the Courtyard Access door in Ice Ruins West.
+- Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
+- Changed: Improved readability of Ruined Courtyard logic.
+- Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
+- Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
 
 ## [3.0.4] - 2021-08-10
 
