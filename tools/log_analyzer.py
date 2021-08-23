@@ -281,6 +281,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     
         if location not in location_progression_count.keys():
             location_progression_count[location] = 0
+        
+        for item in items:
+            if location not in items[item].keys():
+                items[item][location] = 0
 
     if use_percentage:
         for item in items:
