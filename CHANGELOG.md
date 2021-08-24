@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Changed: Removed customization of Qt theme for decreasing whitespace. 
 - Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
+- Changed: Upgrades in the tracker fills an entire column first, instead of filling rows first.
 
 ### Metroid Prime - Patcher Changes
 
