@@ -1,6 +1,7 @@
 import collections
 import functools
 import json
+import math
 import typing
 from pathlib import Path
 from random import Random
@@ -707,6 +708,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 pickup_with_quantity[pickup] = 1
 
         non_expansions_with_quantity = []
+        without_quantity_by_parent = collections.defaultdict(list)
 
         for pickup, quantity in pickup_with_quantity.items():
             self._collected_pickups[pickup] = 0
@@ -721,21 +723,27 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 if quantity > 1:
                     non_expansions_with_quantity.append((parent_widget, parent_layout, pickup, quantity))
                 else:
-                    check_box = QCheckBox(parent_widget)
-                    check_box.setText(pickup.name)
-                    check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
-                    self._widget_for_pickup[pickup] = check_box
+                    without_quantity_by_parent[parent_widget].append((parent_layout, pickup))
 
-                    column = column_for_parent[parent_widget]
-                    parent_layout.addWidget(check_box, row, column)
+        for parent_widget, l in without_quantity_by_parent.items():
+            num_rows = math.ceil(len(l) / k_column_count)
+            for parent_layout, pickup in l:
+                check_box = QCheckBox(parent_widget)
+                check_box.setText(pickup.name)
+                check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
+                self._widget_for_pickup[pickup] = check_box
+
+                row = row_for_parent[parent_widget]
+                column = column_for_parent[parent_widget]
+                parent_layout.addWidget(check_box, row, column)
+                row += 1
+
+                if row >= num_rows:
+                    row = 0
                     column += 1
 
-                    if column >= k_column_count:
-                        column = 0
-                        row += 1
-
-                    row_for_parent[parent_widget] = row
-                    column_for_parent[parent_widget] = column
+                row_for_parent[parent_widget] = row
+                column_for_parent[parent_widget] = column
 
         for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
             if column_for_parent[parent_widget] != 0:
