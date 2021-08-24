@@ -402,9 +402,9 @@ def create_patcher_file(description: LayoutDescription,
     result = {}
     _add_header_data_to_result(description, result)
 
-    result["game_id"] = "G2ME0R"
+    result["publisher_id"] = "0R"
     if configuration.menu_mod:
-        result["game_id"] = "G2ME1R"
+        result["publisher_id"] = "1R"
 
     result["convert_other_game_assets"] = cosmetic_patches.convert_other_game_assets
     result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
