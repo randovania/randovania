@@ -330,6 +330,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         }
     }
 
+    # add non-item insights to csv file
+    for location in locations:
+        locations[location]["Progression Probability"] = location_progression_no_key_count[location]
+
     if csv_dir is not None:
         os.makedirs(csv_dir, exist_ok=True)
         for field in "items", "locations", "item_hints", "location_hints":
