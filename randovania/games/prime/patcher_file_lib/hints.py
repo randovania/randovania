@@ -36,6 +36,7 @@ _JOKE_HINTS = [
     "While walking, holding L makes you move faster.",
     "I wonder how many players will see this message...?",
     "We've been trying to contact you about your ship's extended warranty.",
+    "The Scan Visor is useful for gathering information.",
 ]
 
 
