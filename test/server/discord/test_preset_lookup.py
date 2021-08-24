@@ -3,19 +3,20 @@ from mock import MagicMock, AsyncMock, call
 
 import randovania
 from randovania.games.game import RandovaniaGame
-from randovania.server import bot
+from randovania.server.discord import preset_lookup
 
 
 @pytest.mark.asyncio
 async def test_on_message_from_bot(mocker):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.bot.look_for_permalinks", new_callable=AsyncMock)
-    client = bot.Bot(None)
+    client = MagicMock()
+    cog = preset_lookup.PermalinkLookupCog(None, client)
 
     message = MagicMock()
     message.author = client.user
 
     # Run
-    await client.on_message(message)
+    await cog.on_message(message)
 
     # Assert
     mock_look_for.assert_not_awaited()
@@ -30,14 +31,14 @@ async def test_on_message_from_bot(mocker):
 @pytest.mark.asyncio
 async def test_on_message_wrong_place(mocker, name_filter: str, guild: int, expected):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.bot.look_for_permalinks", new_callable=AsyncMock)
-    client = bot.Bot({"channel_name_filter": name_filter, "guild": guild})
+    cog = preset_lookup.PermalinkLookupCog({"channel_name_filter": name_filter, "guild": guild}, MagicMock())
 
     message = MagicMock()
     message.channel.name = "the_expected_name"
     message.guild.id = 1234
 
     # Run
-    await client.on_message(message)
+    await cog.on_message(message)
 
     # Assert
     if expected:
@@ -74,7 +75,7 @@ async def test_look_for_permalinks(mocker):
     message = "yu4abbceWfLI- `yua73123yWdLI-` foo???"
 
     # Run
-    await bot.look_for_permalinks(message, channel)
+    await preset_lookup.look_for_permalinks(message, channel)
 
     # Assert
     mock_from_str.assert_has_calls([
@@ -115,7 +116,7 @@ async def test_reply_for_preset(mocker):
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
 
     # Run
-    await bot.reply_for_preset(message, versioned_preset)
+    await preset_lookup.reply_for_preset(message, versioned_preset)
 
     # Assert
     mock_embed.assert_called_once_with(title=preset.name, description=preset.description)
