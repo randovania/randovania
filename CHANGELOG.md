@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Changed: Removed customization of Qt theme for decreasing whitespace.
+- Added: One joke hint, requested in 2019.
 
 ### Metroid Prime - Patcher Changes
 
@@ -28,8 +29,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime - Logic Database 
 
-- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Advanced and above).
+- Fixed: Main Plaza door to Plaza Access is now properly a normal door, instead of a permanently locked door.
+- Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
+- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
+- Fixed: Replaced Bomb Jump (Intermediate) with Dash (Beginner) trick to cross the gap to reach the Courtyard Access door in Ice Ruins West.
+- Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
+- Changed: Improved readability of Ruined Courtyard logic.
+- Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
+- Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
+- Added: Charge Beam requirements were added to the following prime 1 rooms with combat trick alternatives:
+    - (Beginner) Elite research phazon elite
+    - (Beginner) Research entrance
+    - (Intermediate) Hall of the elders wave and ice bomb slots
+    - (Intermediate) Sunchamber ghosts fight 
+    - (Intermediate) Mine Security station with >= 200 energy
+    - (Advanced) Mine Security station
 
 ## [3.0.4] - 2021-08-10
 
