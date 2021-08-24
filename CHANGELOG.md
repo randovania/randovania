@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Changed: Removed customization of Qt theme for decreasing whitespace.
+- Added: One joke hint, requested in 2019.
 
 ### Metroid Prime - Patcher Changes
 
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime - Logic Database 
 
+- Fixed: Main Plaza door to Plaza Access is now properly a normal door, instead of a permanently locked door.
 - Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
 - Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
