@@ -36,7 +36,10 @@ from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 from randovania.layout.prime2 import translator_configuration
 from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
@@ -50,17 +53,20 @@ class InvalidLayoutForTracker(Exception):
     pass
 
 
+def _persisted_preset_path(persistence_path: Path) -> Path:
+    return persistence_path.joinpath(f"preset.{VersionedPreset.file_extension()}")
+
+
 def _load_previous_state(persistence_path: Path,
-                         layout_configuration: EchoesConfiguration,
+                         game_configuration: AnyGameConfiguration,
                          ) -> Optional[dict]:
-    previous_layout_path = persistence_path.joinpath("layout_configuration.json")
+    previous_layout_path = _persisted_preset_path(persistence_path)
     try:
-        with previous_layout_path.open() as previous_layout_file:
-            previous_layout = EchoesConfiguration.from_json(json.load(previous_layout_file))
-    except (FileNotFoundError, TypeError, KeyError, ValueError, json.JSONDecodeError):
+        previous_configuration = VersionedPreset.from_file_sync(previous_layout_path).get_preset().configuration
+    except (FileNotFoundError, json.JSONDecodeError, InvalidPreset):
         return None
 
-    if previous_layout != layout_configuration:
+    if previous_configuration != game_configuration:
         return None
 
     previous_state_path = persistence_path.joinpath("state.json")
@@ -96,7 +102,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker configuration
     logic: Logic
     game_description: GameDescription
-    layout_configuration: EchoesConfiguration
+    game_configuration: EchoesConfiguration
     persistence_path: Path
     _initial_state: State
     _elevator_id_to_combo: Dict[Teleporter, QtWidgets.QComboBox]
@@ -110,7 +116,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, QtWidgets.QComboBox]]
     _during_setup = False
 
-    def __init__(self, persistence_path: Path, layout_configuration: EchoesConfiguration):
+    def __init__(self, persistence_path: Path, preset: Preset):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -120,15 +126,15 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._actions = []
         self._asset_id_to_item = {}
         self._node_to_item = {}
-        self.layout_configuration = layout_configuration
+        self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
 
-        player_pool = generator.create_player_pool(Random(0), self.layout_configuration, 0, 1)
+        player_pool = generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
         pool_patches = player_pool.patches
-        self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
+        self.game_description, self._initial_state = logic_bootstrap(preset.configuration,
                                                                      player_pool.game,
                                                                      pool_patches)
-        self.logic = Logic(self.game_description, layout_configuration)
+        self.logic = Logic(self.game_description, preset.configuration)
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
@@ -138,7 +144,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
-            layout_configuration.trick_level.pretty_description,
+            preset.configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()
@@ -160,13 +166,14 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.graph_map_world_combo.currentIndexChanged.connect(self.on_graph_map_world_combo)
 
         persistence_path.mkdir(parents=True, exist_ok=True)
-        previous_state = _load_previous_state(persistence_path, layout_configuration)
+        previous_state = _load_previous_state(persistence_path, preset.configuration)
 
         if not self.apply_previous_state(previous_state):
             self.setup_starting_location(None)
 
-            with persistence_path.joinpath("layout_configuration.json").open("w") as layout_file:
-                json.dump(layout_configuration.as_json, layout_file)
+            VersionedPreset.with_preset(preset).save_to_file(
+                _persisted_preset_path(persistence_path)
+            )
             self._add_new_action(self._initial_state.node)
 
     def apply_previous_state(self, previous_state: Optional[dict]) -> bool:
@@ -174,7 +181,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             return False
 
         starting_location = None
-        needs_starting_location = len(self.layout_configuration.starting_location.locations) > 1
+        needs_starting_location = len(self.game_configuration.starting_location.locations) > 1
         resource_db = self.game_description.resource_database
         translator_gates = {}
 
@@ -198,7 +205,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 )
                 for item in previous_state["elevators"]
             }
-            if self.layout_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
+            if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 translator_gates = {
                     TranslatorGate(int(gate)): (resource_db.get_item(item)
                                                 if item is not None
@@ -535,7 +542,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 location = AreaLocation(world.world_asset_id, area.area_asset_id)
                 targets[echoes_teleporters.elevator_area_name(world_list, location, True)] = location
 
-        if self.layout_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+        if self.game_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
             for world in world_list.worlds:
                 for area in world.areas:
@@ -564,7 +571,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
-                if self.layout_configuration.elevators.is_vanilla:
+                if self.game_configuration.elevators.is_vanilla:
                     combo.addItem("Vanilla", node.default_connection)
                     combo.setEnabled(False)
                 else:
@@ -581,7 +588,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         resource_db = self.game_description.resource_database
         self._translator_gate_to_combo = {}
 
-        if self.layout_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
+        if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
             return
 
         gates = {
@@ -589,7 +596,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for world, area, node in world_list.all_worlds_areas_nodes
             if isinstance(node, TranslatorGateNode)
         }
-        translator_requirement = self.layout_configuration.translator_configuration.translator_requirement
+        translator_requirement = self.game_configuration.translator_configuration.translator_requirement
 
         for i, (gate_name, gate) in enumerate(sorted(gates.items(), key=lambda it: it[0])):
             node_name = QtWidgets.QLabel(self.translator_gate_scroll_contents)
@@ -615,9 +622,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def setup_starting_location(self, area_location: Optional[AreaLocation]):
         world_list = self.game_description.world_list
 
-        if len(self.layout_configuration.starting_location.locations) > 1:
+        if len(self.game_configuration.starting_location.locations) > 1:
             if area_location is None:
-                area_locations = sorted(self.layout_configuration.starting_location.locations,
+                area_locations = sorted(self.game_configuration.starting_location.locations,
                                         key=lambda it: world_list.area_name(world_list.area_by_area_location(it)))
 
                 location_names = [world_list.area_name(world_list.area_by_area_location(it))
