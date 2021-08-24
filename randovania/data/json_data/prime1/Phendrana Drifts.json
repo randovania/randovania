@@ -488,13 +488,8 @@
                             "data": []
                         },
                         "Door to Ruins Entryway": {
-                            "type": "resource",
-                            "data": {
-                                "type": 2,
-                                "index": 0,
-                                "amount": 3,
-                                "negate": false
-                            }
+                            "type": "and",
+                            "data": []
                         }
                     }
                 },
@@ -3138,8 +3133,27 @@
                     "dock_weakness_index": 2,
                     "connections": {
                         "Door to Map Station": {
-                            "type": "and",
-                            "data": []
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 2,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     }
                 },
@@ -3184,8 +3198,27 @@
                     "dock_weakness_index": 2,
                     "connections": {
                         "Door to Map Station": {
-                            "type": "and",
-                            "data": []
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 10,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 2,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
