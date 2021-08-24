@@ -38,6 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Improved readability of Ruined Courtyard logic.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
+- Added: Charge Beam requirements were added to the following prime 1 rooms with combat trick alternatives:
+    - (Beginner) Elite research phazon elite
+    - (Beginner) Research entrance
+    - (Intermediate) Hall of the elders wave and ice bomb slots
+    - (Intermediate) Sunchamber ghosts fight 
+    - (Intermediate) Mine Security station with >= 200 energy
+    - (Advanced) Mine Security station
 
 ## [3.0.4] - 2021-08-10
 
