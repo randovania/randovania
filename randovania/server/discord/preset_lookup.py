@@ -3,18 +3,16 @@ import logging
 import re
 
 import discord
+from discord.ext import commands
+
+from randovania.server.discord.bot import RandovaniaBot
+
 
 import randovania
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import preset_describer
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset_migration import VersionedPreset
 
-_PRETTY_GAME_NAME = {
-    RandovaniaGame.METROID_PRIME: "Metroid Prime 1",
-    RandovaniaGame.METROID_PRIME_ECHOES: "Metroid Prime 2: Echoes",
-    RandovaniaGame.METROID_PRIME_CORRUPTION: "Metroid Prime 3: Corruption",
-}
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
 
 
@@ -30,7 +28,7 @@ async def look_for_permalinks(message: str, channel: discord.TextChannel):
 
         if permalink.player_count == 1:
             preset = permalink.get_preset(0)
-            embed.description = "{} permalink for Randovania {}".format(_PRETTY_GAME_NAME[preset.game],
+            embed.description = "{} permalink for Randovania {}".format(preset.game.long_name,
                                                                         randovania.VERSION)
             for category, items in preset_describer.describe(preset):
                 embed.add_field(name=category, value="\n".join(items), inline=True)
@@ -54,13 +52,14 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
     await message.reply(embed=embed)
 
 
-class Bot(discord.Client):
-    def __init__(self, configuration: dict):
-        super().__init__()
+class PermalinkLookupCog(commands.Cog):
+    def __init__(self, configuration: dict, bot: commands.Bot):
         self.configuration = configuration
+        self.bot = bot
 
+    @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.author == self.user:
+        if message.author == self.bot.user:
             return
 
         if message.guild.id != self.configuration["guild"]:
@@ -78,8 +77,5 @@ class Bot(discord.Client):
             await look_for_permalinks(message.content, channel)
 
 
-def run():
-    configuration = randovania.get_configuration()["discord_bot"]
-
-    client = Bot(configuration)
-    client.run(configuration["token"])
+def setup(bot: RandovaniaBot):
+    bot.add_cog(PermalinkLookupCog(bot.configuration, bot))
