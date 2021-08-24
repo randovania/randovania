@@ -8,7 +8,7 @@ import re
 import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional, List, Iterable, Set
+from typing import Dict, Tuple, Optional, List, Iterable, Set, final
 
 import tqdm as tqdm
 
@@ -336,8 +336,14 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     if csv_dir is not None:
         os.makedirs(csv_dir, exist_ok=True)
-        for field in "items", "locations", "item_hints", "location_hints":
+        for field in "items", "locations", "item_hints", "location_hints", "regions":
             data = final_results[field]
+
+            if field == "regions":
+                data = {
+                    "Share of Progression":final_results["regions"],
+                    "Locations with Progression":final_results["regions_weighted"],
+                }
 
             possible_columns = set()
             for potential_values in data.values():
