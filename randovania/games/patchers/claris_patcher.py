@@ -103,7 +103,8 @@ class ClarisPatcher(Patcher):
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
             contents_files_path,
-            "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"])
+            "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
+            patch_data["publisher_id"]
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
