@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Removed customization of Qt theme for decreasing whitespace.
 - Added: One joke hint, requested in 2019.
 - Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
-- Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
 
 ### Metroid Prime - Patcher Changes
 
@@ -48,6 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - (Intermediate) Sunchamber ghosts fight 
     - (Intermediate) Mine Security station with >= 200 energy
     - (Advanced) Mine Security station
+
+### Metroid Prime 2: Echoes - Logic Database
+- Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
 
 ## [3.0.4] - 2021-08-10
 
