@@ -208,7 +208,7 @@ def _logbook_title_string_patches():
                 'Sanctuary Entrance', '&line-spacing=75;Transport to\nAgon Wastes', 'Mining Plaza',
                 '&line-spacing=75;Agon Energy\nController', 'Portal Terminal', 'Mining Station B',
                 'Mining Station A', 'Meeting Grounds', 'Path of Eyes', 'Path of Roots',
-                '&line-spacing=75;Main Energy\nController', "A-Kul's Testament",
+                '&line-spacing=75;Main Energy\nController', "Champions of Aether",
                 '&line-spacing=75;Central\nMining\nStation', 'Main Reactor', 'Torvus Lagoon', 'Catacombs',
                 'Sanctuary Entrance', "Dynamo Works", 'Storage Cavern A', 'Landing Site', 'Industrial Site',
                 '&line-spacing=75;Sky Temple\nKey Hints', 'Keys 7, 8, 9', 'Keys 4, 5, 6', 'Sky Temple Key 1',
@@ -261,6 +261,33 @@ def _logbook_title_string_patches():
         },
     ]
 
+def _akul_testament_string_patch():
+    # update after each tournament! ordered from newest to oldest
+    champs = [
+        {
+            "title": "2021 Champion",
+            "name": "Dyceron"
+        },
+        {
+            "title": "2020 Champion",
+            "name": "Dyceron"
+        }
+    ]
+
+    title = "Metroid Prime 2: Echoes Randomizer Tournament"
+    champstring = '\n'.join([f'{champ["title"]}: {hint_lib.color_text(hint_lib.TextColor.PLAYER, champ["name"])}' for champ in champs])
+    latest = champstring.partition("\n")[0]
+
+    return [
+        {
+            "asset_id": 0x080BBD00,
+            "strings": [
+                'Luminoth Datapac translated.\n(Champions of Aether)',
+                f"{title}\n\n{latest}",
+                f"{title}\n\n{champstring}",
+            ],
+        },
+    ]
 
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
@@ -278,6 +305,8 @@ def _create_string_patches(hint_config: HintConfiguration,
     """
     patches = all_patches[players_config.player_index]
     string_patches = []
+
+    string_patches.extend(_akul_testament_string_patch())
 
     # Location Hints
     string_patches.extend(
@@ -298,6 +327,8 @@ def _create_string_patches(hint_config: HintConfiguration,
     string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
 
     string_patches.extend(_logbook_title_string_patches())
+
+    
 
     return string_patches
 

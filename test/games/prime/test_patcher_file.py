@@ -434,7 +434,10 @@ def test_run_validated_hud_text():
 @patch("randovania.games.prime.patcher_file_lib.hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
-def test_create_string_patches(mock_stk_create_hints: MagicMock,
+@patch("randovania.games.patchers.claris_patcher_file._akul_testament_string_patch", autospec=True)
+def test_create_string_patches(
+                               mock_akul_testament: MagicMock,
+                               mock_stk_create_hints: MagicMock,
                                mock_stk_hide_hints: MagicMock,
                                mock_item_create_hints: MagicMock,
                                mock_logbook_title_string_patches: MagicMock,
@@ -450,6 +453,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     mock_stk_hide_hints.return_value = ["hide", "hints"]
     player_config = PlayersConfiguration(0, {0: "you"})
     mock_logbook_title_string_patches.return_values = []
+    mock_akul_testament.return_values = []
     area_namers = MagicMock()
 
     # Run
@@ -466,6 +470,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     expected_result = ["item", "hints"]
     mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.world_list, area_namers, rng)
     mock_logbook_title_string_patches.assert_called_once_with()
+    mock_akul_testament.assert_called_once_with()
 
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         mock_stk_hide_hints.assert_called_once_with()
@@ -505,7 +510,7 @@ def test_create_claris_patcher_file(test_files_dir):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 60
+    assert len(result["string_patches"]) == 61
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
