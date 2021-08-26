@@ -49,6 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - (Intermediate) Mine Security station with >= 200 energy
     - (Advanced) Mine Security station
 
+### Metroid Prime 2: Echoes - Logic Database
+- Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
+
 ## [3.0.4] - 2021-08-10
 
 - Added: Game Sessions now have an accessible audit log, which includes whenever a player accesses the spoiler log.
