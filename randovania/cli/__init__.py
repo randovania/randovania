@@ -16,7 +16,7 @@ def create_subparsers(root_parser):
 
 
 def _print_version(args):
-    print("Randovania {} from {}".format(
+    logging.info("Randovania {} from {}".format(
         randovania.VERSION,
         os.path.dirname(randovania.__file__)))
 

@@ -1,5 +1,6 @@
 import asyncio
 import time
+import logging
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -25,7 +26,7 @@ def validate_command_logic(args):
         patches=patches
     ))
     after = time.perf_counter()
-    print("Took {} seconds. Game is {}.".format(
+    logging.info("Took {} seconds. Game is {}.".format(
         after - before,
         "possible" if final_state_by_resolve is not None else "impossible")
     )

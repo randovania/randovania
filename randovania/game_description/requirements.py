@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 from functools import lru_cache
 from math import ceil
 from typing import Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
@@ -513,7 +514,7 @@ class RequirementSet:
     def __repr__(self):
         return repr(self.alternatives)
 
-    def pretty_print(self, indent="", print_function=print):
+    def pretty_print(self, indent="", print_function=logging.info):
         to_print = []
         if self == RequirementSet.impossible():
             to_print.append("Impossible")

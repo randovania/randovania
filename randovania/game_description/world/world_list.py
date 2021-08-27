@@ -1,5 +1,6 @@
 import copy
 import re
+import logging
 from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
 from randovania.game_description.game_patches import GamePatches
@@ -200,7 +201,7 @@ class WorldList:
                     yield target_node, Requirement.trivial()
             except IndexError:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
-                print("Teleporter is broken!", node)
+                logging.error("Teleporter is broken!", node)
                 yield None, Requirement.impossible()
 
         if isinstance(node, PlayerShipNode):

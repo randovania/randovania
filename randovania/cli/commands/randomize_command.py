@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -20,7 +21,7 @@ async def randomize_command_logic_async(args):
 
     def status_update(s):
         if args.verbose:
-            print(s)
+            logging.info(s)
 
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)

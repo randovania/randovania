@@ -1,5 +1,6 @@
 import asyncio
 import random
+import logging
 from argparse import ArgumentParser
 
 from randovania.games.game import RandovaniaGame
@@ -24,7 +25,7 @@ async def permalink_command_body(args):
         spoiler=not args.race,
         presets={i: preset for i in range(args.player_count)}
     )
-    print(permalink.as_base64_str)
+    logging.info(permalink.as_base64_str)
 
     Permalink.from_str(permalink.as_base64_str)
 

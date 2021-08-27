@@ -1,5 +1,6 @@
 import asyncio
 import time
+import logging
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -26,13 +27,13 @@ def distribute_command_logic(args):
 
     def status_update(s):
         if args.status_update:
-            print(s)
+            logging.info(s)
 
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)
     else:
         permalink = asyncio.run(_create_permalink(args))
-        print(f"Permalink: {permalink.as_base64_str}")
+        logging.info(f"Permalink: {permalink.as_base64_str}")
 
     if permalink.spoiler:
         debug.set_level(args.debug)
@@ -46,7 +47,7 @@ def distribute_command_logic(args):
                                                                                  validate_after_generation=args.validate,
                                                                                  timeout=None, **extra_args))
     after = time.perf_counter()
-    print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
+    logging.info("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 
     layout_description.save_to_file(args.output_file)
 
