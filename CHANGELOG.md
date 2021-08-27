@@ -15,9 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: One joke hint, requested in 2019.
 - Added: A-Kul's scan in Echoes now displays a list of previous tournament winners.
+- Added: Data Visualizer now only shows target nodes for selection that are non-impossible.
+- Added: Data Visualizer now highlights nodes that have a path to the selected node.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
-- Changed: Removed customization of Qt theme for decreasing whitespace.
+- Changed: Removed customization of Qt theme for decreasing whitespace. 
 - Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
 
 ### Metroid Prime - Patcher Changes
