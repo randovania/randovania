@@ -318,7 +318,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
                 progress_update("Generation Failure: {}".format(generate_exception), -1)
 
         if self._window_manager.is_preview_mode:
-            print(f"Permalink: {permalink.as_base64_str}")
+            logging.info(f"Permalink: {permalink.as_base64_str}")
         self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):

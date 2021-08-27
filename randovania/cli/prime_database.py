@@ -1,6 +1,7 @@
 import argparse
 import json
 import typing
+import logging
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
@@ -90,7 +91,7 @@ def view_area_command_logic(args):
 
     except KeyError:
         options = "\n".join(_get_sorted_list_of_names(world_list.worlds, " "))
-        print(f"Unknown world named '{args.world}'. Options:\n{options}")
+        logging.error(f"Unknown world named '{args.world}'. Options:\n{options}")
         raise SystemExit(1)
 
     try:
@@ -98,7 +99,7 @@ def view_area_command_logic(args):
 
     except KeyError:
         options = "\n".join(_get_sorted_list_of_names(world.areas, " "))
-        print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
+        logging.error(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
         raise SystemExit(1)
 
     pretty_print.pretty_print_area(game, area)
@@ -179,7 +180,7 @@ def _list_paths_with_resource(game,
                     if needed_quantity is None or needed_quantity == individual.amount:
                         area_had_resource = True
                         if not print_only_area:
-                            print("At {0}, from {1} to {2}:\n{3}\n".format(
+                            logging.info("At {0}, from {1} to {2}:\n{3}\n".format(
                                 game.world_list.area_name(area),
                                 source.name,
                                 target.name,
@@ -189,9 +190,9 @@ def _list_paths_with_resource(game,
                         count += 1
 
         if area_had_resource and print_only_area:
-            print(game.world_list.area_name(area))
+            logging.info(game.world_list.area_name(area))
 
-    print("Total routes: {}".format(count))
+    logging.info("Total routes: {}".format(count))
 
 
 def list_paths_with_dangerous_logic(args):
@@ -209,7 +210,7 @@ def list_paths_with_dangerous_logic(args):
                         if individual.negate:
                             area_had_resource = True
                             if not print_only_area:
-                                print("At {0}, from {1} to {2}:\n{4}\n".format(
+                                logging.info("At {0}, from {1} to {2}:\n{4}\n".format(
                                     game.world_list.area_name(area),
                                     area,
                                     source.name,
@@ -218,9 +219,9 @@ def list_paths_with_dangerous_logic(args):
                             count += 1
 
         if area_had_resource and print_only_area:
-            print(game.world_list.area_name(area))
+            logging.info(game.world_list.area_name(area))
 
-    print("Total routes: {}".format(count))
+    logging.info("Total routes: {}".format(count))
 
 
 def list_paths_with_dangerous_command(sub_parsers):
@@ -246,7 +247,7 @@ def list_paths_with_resource_logic(args):
             continue
 
     if resource is None:
-        print(f"A resource named {args.resource} was not found.")
+        logging.error(f"A resource named {args.resource} was not found.")
         raise SystemExit(1)
 
     _list_paths_with_resource(
@@ -275,7 +276,7 @@ def pickups_per_area_command_logic(args):
 
     for world in gd.world_list.worlds:
         num_pickups = sum(1 for node in world.all_nodes if isinstance(node, PickupNode))
-        print(f"{world.correct_name(False)}: {num_pickups}")
+        logging.info(f"{world.correct_name(False)}: {num_pickups}")
 
 
 def pickups_per_area_command(sub_parsers):
