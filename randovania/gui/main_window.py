@@ -441,7 +441,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    def open_map_tracker(self, configuration: "EchoesConfiguration"):
+    def open_map_tracker(self, configuration: "Preset"):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 
         try:
