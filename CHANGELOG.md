@@ -8,20 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
+- **Major** - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
   - Default Prime 1 presets now default to 6 minimum progression for artifacts.
+- **Major** - Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: Setting for toggling the pickup scan QOL adjustments.
-- Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: The seed hash label in Game Sessions is now selectable.
 - Added: One joke hint, requested in 2019.
-- Added: A-Kul's scan in Echoes now displays a list of previous tournament winners.
 - Added: Data Visualizer now only shows target nodes for selection that are non-impossible.
 - Added: Data Visualizer now highlights nodes that have a path to the selected node.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Fixed: The tracker now properly restores states for games other than Echoes.
 - Changed: Removed customization of Qt theme for decreasing whitespace. 
-- Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
 - Changed: Upgrades in the tracker fills an entire column first, instead of filling rows first.
 - Changed: Tracker now properly saves the preset used when persisting the state.
 
@@ -31,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed Main Quarry Combat Visor switch
 - Speed up opening of gate in ice temple
 - Speed up opening of gate in sun tower
-- Fixed thardus cutscene skip softlock
+- Fixed Thardus cutscene skip softlock
 - Magmoor Workstation item scannable through the purple door (QOL Pickup Scan)
 
 ### Metroid Prime - Logic Database 
@@ -53,6 +51,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Changed: Improved readability of Ruined Courtyard logic.
+
+### Metroid Prime 2: Echoes - Patcher Changes
+
+- Added: A-Kul's scan in Sky Temple Gateway now displays a list of previous tournament winners.
+- Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
+- Changed: The elevator sound effect is never removed when elevators are vanilla, ignoring the preference. 
 
 ### Metroid Prime 2: Echoes - Logic Database
 - Added: Method of reaching the pickup in Reactor Core with Space Jump, Bombs, Spider Ball, and Standable Terrain (Intermediate and above).
