@@ -459,7 +459,7 @@ def create_patcher_file(description: LayoutDescription,
         },
         unvisited_room_names=(configuration.elevators.can_use_unvisited_room_names
                               and cosmetic_patches.unvisited_room_names),
-        teleporter_sounds=cosmetic_patches.teleporter_sounds,
+        teleporter_sounds=cosmetic_patches.teleporter_sounds or configuration.elevators.is_vanilla,
         dangerous_energy_tank=configuration.dangerous_energy_tank,
     ).as_json
 
