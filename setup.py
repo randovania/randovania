@@ -96,7 +96,8 @@ setup(
         ],
         "server": [
             "cryptography",
-            "discord.py",
+            "discord.py",  # for randovania/server/discord
+            "discord-py-interactions",  # for randovania/server/discord/database_command
             "eventlet",
             "flask-discord",
             "flask-socketio",
