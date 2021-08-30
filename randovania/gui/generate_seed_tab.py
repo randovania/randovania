@@ -214,9 +214,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
     def _on_delete_preset(self):
         self._window_manager.preset_manager.delete_preset(self._current_preset_data)
-        index = self.window.create_preset_tree.currentIndex()
         self._update_preset_tree_items()
-        self.window.create_preset_tree.setCurrentIndex(index)
         self._on_select_preset()
 
     def _on_view_preset_history(self):

@@ -55,6 +55,7 @@ class PresetManager:
     _fallback_dir: Optional[Path]
 
     def __init__(self, data_dir: Optional[Path]):
+        self.logger = logging.getLogger("PresetManager")
         self.included_presets = {
             preset.uuid: preset
             for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
@@ -97,9 +98,11 @@ class PresetManager:
     def _commit(self, message: str, file_path: Path, remove: bool):
         repo_root = self._data_dir.parent
         try:
+            self.logger.info("Will perform git operation: %s for path %s", message, str(file_path))
             _commit(message, file_path, repo_root, remove)
+            self.logger.debug("Git operation successful.")
         except Exception as e:
-            logging.warning(f"Error committing change to presets: {e}", exc_info=e)
+            self.logger.warning(f"Error committing change to presets: {e}", exc_info=e)
 
     def add_new_preset(self, new_preset: VersionedPreset) -> bool:
         """
@@ -147,6 +150,7 @@ class PresetManager:
         from randovania.interface_common import persistence
 
         files_to_commit = []
+        self.logger.info("Performing migration of presets from old path")
 
         all_files = list(persistence.local_data_dir().joinpath("presets").glob("*.rdvpreset"))
 
@@ -159,12 +163,15 @@ class PresetManager:
                 preset.save_to_file(path)
                 self.custom_presets[preset.uuid] = preset
                 files_to_commit.append(path)
+                self.logger.info("Migrated %s", preset.name)
+
             except InvalidPreset as e:
-                logging.info(f"Not migrating {preset.name}: {e}")
+                self.logger.warning(f"Not migrating {preset.name}: {e}")
                 continue
 
         on_update(len(all_files), len(all_files))
         dulwich.porcelain.add(self._data_dir.parent, files_to_commit)
+        self.logger.info("Finished migration from old path.")
 
         author = "randovania <nobody@example.com>"
         dulwich.porcelain.commit(self._data_dir.parent,
