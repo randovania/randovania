@@ -232,7 +232,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._add_new_preset(VersionedPreset.with_preset(old_preset.get_preset().fork()))
 
     def _on_open_map_tracker_for_preset(self):
-        self._window_manager.open_map_tracker(self._current_preset_data.get_preset().configuration)
+        self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
 
     def _on_import_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
