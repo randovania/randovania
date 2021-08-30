@@ -1,3 +1,4 @@
+import logging
 from typing import Iterator, Dict
 
 from randovania.game_description.game_description import GameDescription
@@ -11,7 +12,7 @@ from randovania.resolver import debug
 
 def debug_print_collect_event(event: ResourceNode, game: GameDescription):
     if debug.debug_level() > 0:
-        print("\n--> Collecting {}".format(game.world_list.node_name(event, with_world=True)))
+        logging.debug("\n--> Collecting {}".format(game.world_list.node_name(event, with_world=True)))
 
 
 def print_retcon_loop_start(game: GameDescription,
@@ -26,8 +27,8 @@ def print_retcon_loop_start(game: GameDescription,
         else:
             extra = ""
 
-        print("\n===============================")
-        print("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
+        logging.debug("\n===============================")
+        logging.debug("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
             player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
             len(current_uncollected.indices),
@@ -36,9 +37,9 @@ def print_retcon_loop_start(game: GameDescription,
         ))
 
         if debug.debug_level() > 2:
-            print("\nCurrent reach:")
+            logging.debug("\nCurrent reach:")
             for node in reach.nodes:
-                print("[{!s:>5}, {!s:>5}] {}".format(reach.is_reachable_node(node), reach.is_safe_node(node),
+                logging.debug("[{!s:>5}, {!s:>5}] {}".format(reach.is_reachable_node(node), reach.is_safe_node(node),
                                                      game.world_list.node_name(node)))
 
 
@@ -52,4 +53,4 @@ def print_new_resources(game: GameDescription,
         for index, count in seen_count.items():
             if count == 1:
                 node = find_node_with_resource(index, world_list.all_nodes)
-                print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
+                logging.debug("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))

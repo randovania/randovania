@@ -1,4 +1,5 @@
 import copy
+import logging
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
@@ -106,26 +107,26 @@ class OldGeneratorReach(GeneratorReach):
             yield target_node, requirement.as_set(self._state.resource_database)
 
     def _expand_graph(self, paths_to_check: List[GraphPath]):
-        # print("!! _expand_graph", len(paths_to_check))
+        # logging.debug("!! _expand_graph", len(paths_to_check))
         self._reachable_paths = None
         while paths_to_check:
             path = paths_to_check.pop(0)
 
             if path.is_in_graph(self._digraph):
-                # print(">>> already in graph", self.game.world_list.node_name(path.node))
+                # logging.debug(">>> already in graph", self.game.world_list.node_name(path.node))
                 continue
 
-            # print(">>> will check starting at", self.game.world_list.node_name(path.node))
+            # logging.debug(">>> will check starting at", self.game.world_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
             for target_node, requirement in self._potential_nodes_from(path.node):
                 if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
-                    # print("* Queue path to", self.game.world_list.node_name(target_node))
+                    # logging.debug("* Queue path to", self.game.world_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
-                    # print("* Unreachable", self.game.world_list.node_name(target_node), requirement)
+                    # logging.debug("* Unreachable", self.game.world_list.node_name(target_node), requirement)
                     self._unreachable_paths[path.node, target_node] = requirement
-            # print("> done")
+            # logging.debug("> done")
 
         self._safe_nodes = None
 
