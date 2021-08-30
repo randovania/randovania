@@ -3,6 +3,7 @@ import functools
 import json
 import math
 import typing
+import logging
 from pathlib import Path
 from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
@@ -340,7 +341,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         if target_node is not None:
                             nearby_areas.add(world_list.nodes_to_area(target_node))
                     except IndexError as e:
-                        print(f"For {node.name} in {area.name}, received {e}")
+                        logging.error(f"For {node.name} in {area.name}, received {e}")
                         continue
             for other_area in nearby_areas:
                 g.add_edge(area, other_area)
@@ -384,7 +385,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                             nearby_areas.add(world_list.nodes_to_area(target_node))
 
                     except IndexError as e:
-                        print(f"For {node.name} in {area.name}, received {e}")
+                        logging.error(f"For {node.name} in {area.name}, received {e}")
                         continue
 
             for other_area in nearby_areas:

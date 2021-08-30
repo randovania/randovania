@@ -1,3 +1,5 @@
+import logging
+
 _CURRENT_OPTIONS_FILE_VERSION = 16
 
 
@@ -93,20 +95,20 @@ def get_persisted_options_from_data(persisted_data: dict) -> dict:
     options = persisted_data.get("options")
 
     if not isinstance(options, dict):
-        print("Data has no options.")
+        logging.error("Data has no options.")
         return {}
 
     while version < _CURRENT_OPTIONS_FILE_VERSION:
         converter = _CONVERTER_FOR_VERSION.get(version)
         if converter is None:
-            print("Converter not found for version '{}'".format(version))
+            logging.error("Converter not found for version '{}'".format(version))
             return {}
 
         options = converter(options)
         version += 1
 
     if version > _CURRENT_OPTIONS_FILE_VERSION:
-        print("Options has an version from the future '{}'. Supported is only up to {}".format(
+        logging.error("Options has an version from the future '{}'. Supported is only up to {}".format(
             version, _CURRENT_OPTIONS_FILE_VERSION))
         return {}
 

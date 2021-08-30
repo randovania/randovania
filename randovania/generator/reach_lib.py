@@ -1,4 +1,5 @@
 import copy
+import logging
 from typing import Iterator, List
 
 from randovania.game_description.game_description import GameDescription
@@ -103,13 +104,13 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
     for action in get_collectable_resource_nodes_of_reach(previous_reach):
-        # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
+        # logging.debug("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
         next_reach = copy.deepcopy(previous_reach)
         next_reach.act_on(action)
         collect_all_safe_resources_in_reach(next_reach)
 
         if previous_safe_nodes <= set(next_reach.safe_nodes):
-            # print("Non-safe {} was good".format(logic.game.node_name(action)))
+            # logging.debug("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach)
 
         if next_reach.is_reachable_node(initial_state.node):
@@ -118,7 +119,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
             next_reach = reach_with_all_safe_resources(game, next_next_state)
             if previous_safe_nodes <= set(next_reach.safe_nodes):
-                # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
+                # logging.debug("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
                 return advance_reach_with_possible_unsafe_resources(next_reach)
         else:
             pass
