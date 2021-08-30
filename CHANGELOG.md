@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Fixed: The tracker now properly restores states for games other than Echoes.
+- Fixed: Fixed a crash that sometimes occurs when deleting presets.
 - Changed: Removed customization of Qt theme for decreasing whitespace. 
 - Changed: Upgrades in the tracker fills an entire column first, instead of filling rows first.
 - Changed: Tracker now properly saves the preset used when persisting the state.
