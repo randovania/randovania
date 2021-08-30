@@ -3,7 +3,6 @@ import math
 import multiprocessing
 import time
 import typing
-import logging
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -57,7 +56,7 @@ def batch_distribute_command_logic(args):
     def report_update(msg: str):
         nonlocal finished_count
         finished_count += 1
-        logging.info(number_format.format(finished_count, seed_count) + msg)
+        print(number_format.format(finished_count, seed_count) + msg)
 
     def callback(result):
         report_update(f"Finished seed in {result} seconds.")
