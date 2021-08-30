@@ -8,17 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
+- **Major** - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
   - Default Prime 1 presets now default to 6 minimum progression for artifacts.
+- **Major** - Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: Setting for toggling the pickup scan QOL adjustments.
-- Added: Setting for controlling how dangerous checks are handled in logic.
 - Added: The seed hash label in Game Sessions is now selectable.
+- Added: One joke hint, requested in 2019.
+- Added: Data Visualizer now only shows target nodes for selection that are non-impossible.
+- Added: Data Visualizer now highlights nodes that have a path to the selected node.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
-- Changed: Removed customization of Qt theme for decreasing whitespace.
-- Added: One joke hint, requested in 2019.
-- Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
-- Added: A-Kul's scan in Echoes now displays a list of previous tournament winners.
+- Fixed: The tracker now properly restores states for games other than Echoes.
+- Changed: Removed customization of Qt theme for decreasing whitespace. 
+- Changed: Upgrades in the tracker fills an entire column first, instead of filling rows first.
+- Changed: Tracker now properly saves the preset used when persisting the state.
 
 ### Metroid Prime - Patcher Changes
 
@@ -26,31 +29,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed Main Quarry Combat Visor switch
 - Speed up opening of gate in ice temple
 - Speed up opening of gate in sun tower
-- Fixed thardus cutscene skip softlock
+- Fixed Thardus cutscene skip softlock
 - Magmoor Workstation item scannable through the purple door (QOL Pickup Scan)
 
 ### Metroid Prime - Logic Database 
 
+- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
+- Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
+- Added: Charge Beam requirements were added to the following rooms with combat trick alternatives:
+    - (Beginner) Elite research - Phazon Elite
+    - (Beginner) Research Entrance
+    - (Intermediate) Hall of the Elders - Wave and Ice bomb slots
+    - (Intermediate) Sunchamber - Ghosts fight 
+    - (Intermediate) Mine Security Station with >= 200 energy
+    - (Advanced) Mine Security Station
 - Fixed: Main Plaza door to Plaza Access is now properly a normal door, instead of a permanently locked door.
 - Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
-- Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
 - Fixed: Trivial logic for Plaza Walkway to Ruins Walkway
 - Fixed: Replaced Bomb Jump (Intermediate) with Dash (Beginner) trick to cross the gap to reach the Courtyard Access door in Ice Ruins West.
 - Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
-- Changed: Improved readability of Ruined Courtyard logic.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
-- Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
-- Added: Charge Beam requirements were added to the following prime 1 rooms with combat trick alternatives:
-    - (Beginner) Elite research phazon elite
-    - (Beginner) Research entrance
-    - (Intermediate) Hall of the elders wave and ice bomb slots
-    - (Intermediate) Sunchamber ghosts fight 
-    - (Intermediate) Mine Security station with >= 200 energy
-    - (Advanced) Mine Security station
+- Changed: Improved readability of Ruined Courtyard logic.
+
+### Metroid Prime 2: Echoes - Patcher Changes
+
+- Added: A-Kul's scan in Sky Temple Gateway now displays a list of previous tournament winners.
+- Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
+- Changed: The elevator sound effect is never removed when elevators are vanilla, ignoring the preference. 
 
 ### Metroid Prime 2: Echoes - Logic Database
+- Added: Method of reaching the pickup in Reactor Core with Space Jump, Bombs, Spider Ball, and Standable Terrain (Intermediate and above).
 - Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
+- Fixed: Reactor Core has been cleaned up slightly.
 
 ## [3.0.4] - 2021-08-10
 

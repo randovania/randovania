@@ -1,6 +1,5 @@
 import dataclasses
 
-from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
