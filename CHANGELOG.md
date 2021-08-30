@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: One joke hint, requested in 2019.
 - Added: Data Visualizer now only shows target nodes for selection that are non-impossible.
 - Added: Data Visualizer now highlights nodes that have a path to the selected node.
+- Added: The discord bot now provides the `/database-inspect` command to send the logic of a room to the channel.
+- Added: The discord bot now also replies to shared rdvgame files.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Fixed: The tracker now properly restores states for games other than Echoes.
