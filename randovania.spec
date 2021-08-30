@@ -23,6 +23,8 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                 "mock",
                 "unittest.mock",
                 "pkg_resources.py2_warn",
+                "randovania.server.discord.preset_lookup",
+                "randovania.server.discord.database_command",
              ],
              hookspath=[
                  # https://github.com/pyinstaller/pyinstaller/issues/4040
