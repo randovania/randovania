@@ -184,7 +184,4 @@ async def resolve(configuration: EchoesConfiguration,
     starting_state.resources["add_self_as_requirement_to_resources"] = 1
     debug.log_resolve_start()
 
-    for name, req in new_game.resource_database.requirement_template.items():
-        print(name, req)
-
     return await advance_depth(starting_state, logic, status_update)
