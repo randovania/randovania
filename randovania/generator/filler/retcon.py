@@ -1,7 +1,6 @@
 import math
 import pprint
 import typing
-import logging
 from random import Random
 from typing import Tuple, Iterator, Set, AbstractSet, Dict, \
     Mapping, FrozenSet, Callable, List, Optional
@@ -49,7 +48,7 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
         for index in sorted(uncollected_indices & indices):
             weight_from_seen_count = min(10, seen_counts[index]) ** -2
             result[index] = weight_from_collected_indices * weight_from_seen_count
-            # logging.debug(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
 
     return result
 
@@ -80,7 +79,7 @@ def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices:
     }
     if weighted_players:
         if debug.debug_level() > 1:
-            logging.debug(f">>>>> Player Weights: {weighted_players}")
+            print(f">>>>> Player Weights: {weighted_players}")
 
         return select_element_with_weight(weighted_players, rng)
     else:
@@ -132,7 +131,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
     if debug.debug_level() > 1:
         for action, weight in actions_weights.items():
-            logging.debug("{} - {}".format(action_name(action), weight))
+            print("{} - {}".format(action_name(action), weight))
 
     return actions_weights
 
@@ -283,12 +282,12 @@ def _calculate_all_pickup_indices_weight(player_states: List[PlayerState]) -> We
 
     total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states)
 
-    # logging.debug("================ WEIGHTS! ==================")
+    # print("================ WEIGHTS! ==================")
     for player_state in player_states:
         delta = (total_assigned_pickups - player_state.num_assigned_pickups)
         player_weight = 1 + delta
 
-        # logging.debug(f"** Player {player_state.index} -- {player_weight}")
+        # print(f"** Player {player_state.index} -- {player_weight}")
 
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
@@ -300,8 +299,8 @@ def _calculate_all_pickup_indices_weight(player_states: List[PlayerState]) -> We
             all_weights[(player_state, pickup_index)] = weight * player_weight
 
     # for (player_state, pickup_index), weight in all_weights.items():
-    #     logging.debug(f"> {player_state.index} - {pickup_index}: {weight}")
-    # logging.debug("============================================")
+    #     print(f"> {player_state.index} - {pickup_index}: {weight}")
+    # print("============================================")
 
     return all_weights
 
