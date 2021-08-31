@@ -1,6 +1,5 @@
 import math
 import typing
-import logging
 from collections import defaultdict
 from typing import Dict, Set, Iterator, Tuple, FrozenSet
 
@@ -143,7 +142,7 @@ class ResolverReach:
             state.energy,
             state.resource_database)
 
-        # logging.debug(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
+        # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
             for resource, amount in action.resource_gain_on_collect(state.patches, state.resources,
                                                                     self._logic.game.world_list.all_nodes,

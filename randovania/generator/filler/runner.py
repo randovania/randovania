@@ -1,6 +1,5 @@
 import copy
 import dataclasses
-import logging
 from random import Random
 from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union, Iterator, Optional
 
@@ -252,10 +251,10 @@ def fill_unassigned_hints(patches: GamePatches,
         len(possible_indices), len(potential_hint_locations)))
 
     if debug.debug_level() > 1:
-        logging.debug(f"> Num pickups per asset:")
+        print(f"> Num pickups per asset:")
         for asset, pickups in scan_asset_initial_pickups.items():
-            logging.debug(f"* {asset}: {len(pickups)} pickups")
-        logging.debug("> Done.")
+            print(f"* {asset}: {len(pickups)} pickups")
+        print("> Done.")
 
     # But if we don't have enough hints, just pick randomly from everything
     if len(possible_indices) < len(potential_hint_locations):

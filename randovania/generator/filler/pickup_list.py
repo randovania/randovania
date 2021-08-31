@@ -1,6 +1,5 @@
 import copy
 import itertools
-import logging
 from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
@@ -97,9 +96,9 @@ def _requirement_lists_without_satisfied_resources(state: State,
                 _add_items(items)
 
     if debug.debug_level() > 2:
-        logging.debug(">> All requirement lists:")
+        print(">> All requirement lists:")
         for items in sorted(result):
-            logging.debug(f"* {items}")
+            print(f"* {items}")
 
     return result
 
@@ -157,9 +156,9 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
             result.append(tuple(pickups))
 
     if debug.debug_level() > 2:
-        logging.debug(">> All pickup combinations alternatives:")
+        print(">> All pickup combinations alternatives:")
         for items in sorted(result):
-            logging.debug("* {}".format(", ".join(p.name for p in items)))
+            print("* {}".format(", ".join(p.name for p in items)))
 
     return tuple(result)
 
