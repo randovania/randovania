@@ -927,37 +927,40 @@ Sunchamber
 Asset id: 2584347627
 > Door to Sun Tower Access; Heals? False
   * Normal Door to Sun Tower Access/Door to Sunchamber
-  > Door to Sunchamber Access
-      After Chozo Ghosts (Sunchamber)
-  > Event - Flaahgra
-      Before Flaahgra
-  > Event - Chozo Ghosts
-      All of the following:
-          After Sunchamber Chozo Ghosts Layer Activated
-          Charge Beam or Combat (Intermediate)
+  > Before Fight
+      Trivial
 
 > Door to Sunchamber Access; Heals? False
   * Normal Door to Sunchamber Access/Door to Sunchamber
-  > Door to Sun Tower Access
-      Any of the following:
-          After Chozo Ghosts (Sunchamber)
-          After Flaahgra and Before Chozo Ghosts (Sunchamber)
-  > Event - Flaahgra
+  > Before Fight
       Trivial
 
 > Pickup (Varia Suit); Heals? False
   * Pickup 20; Major Location? True
-  > Door to Sun Tower Access
+  > Before Fight
       Trivial
 
 > Pickup (Artifact of Wild); Heals? False
   * Pickup 21; Major Location? True
-  > Door to Sun Tower Access
+  > Before Fight
       Trivial
 
-> Event - Flaahgra; Heals? False; Spawn Point
+> Event - Flaahgra; Heals? False
   * Event Flaahgra
   > Pickup (Varia Suit)
+      Trivial
+
+> Event - Chozo Ghosts; Heals? False
+  * Event Chozo Ghosts (Sunchamber)
+  > Pickup (Artifact of Wild)
+      Trivial
+
+> Before Fight; Heals? False; Spawn Point
+  > Door to Sun Tower Access
+      After Flaahgra or After Chozo Ghosts (Sunchamber)
+  > Door to Sunchamber Access
+      After Chozo Ghosts (Sunchamber)
+  > Event - Flaahgra
       Any of the following:
           All of the following:
               Morph Ball
@@ -965,12 +968,10 @@ Asset id: 2584347627
                   Morph Ball Bomb
                   Power Bomb ≥ 4 and Combat (Beginner)
           Wave Beam and Missile ≥ 230 and Charge Beam and Wavebuster and Combat (Advanced)
-
-> Event - Chozo Ghosts; Heals? False
-  * Event Chozo Ghosts (Sunchamber)
-  > Pickup (Artifact of Wild)
+  > Event - Chozo Ghosts
       All of the following:
-          Power Beam
+          Power Beam and After Sunchamber Chozo Ghosts Layer Activated
+          Charge Beam or Combat (Intermediate)
           Space Jump Boots or L-Jump (Intermediate)
 
 ----------------

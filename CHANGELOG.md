@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Changed: Improved readability of Ruined Courtyard logic.
+- Changed: Reorganized Sunchamber logic to improve usage by generator/solver.
 
 ### Metroid Prime 2: Echoes - Patcher Changes
 
