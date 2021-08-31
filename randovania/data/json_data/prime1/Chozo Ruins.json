@@ -5350,7 +5350,7 @@
             "name": "Sunchamber",
             "in_dark_aether": false,
             "asset_id": 2584347627,
-            "default_node_index": 4,
+            "default_node_index": 6,
             "valid_starting_location": true,
             "nodes": [
                 {
@@ -5368,60 +5368,9 @@
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
-                        "Door to Sunchamber Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": 1,
-                                "index": 8,
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Flaahgra": {
-                            "type": "resource",
-                            "data": {
-                                "type": 1,
-                                "index": 7,
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Event - Chozo Ghosts": {
+                        "Before Fight": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 6,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 10,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 2,
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
+                            "data": []
                         }
                     }
                 },
@@ -5440,44 +5389,7 @@
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
-                        "Door to Sun Tower Access": {
-                            "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 8,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 7,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 8,
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Event - Flaahgra": {
+                        "Before Fight": {
                             "type": "and",
                             "data": []
                         }
@@ -5491,7 +5403,7 @@
                     "pickup_index": 20,
                     "major_location": true,
                     "connections": {
-                        "Door to Sun Tower Access": {
+                        "Before Fight": {
                             "type": "and",
                             "data": []
                         }
@@ -5505,7 +5417,7 @@
                     "pickup_index": 21,
                     "major_location": true,
                     "connections": {
-                        "Door to Sun Tower Access": {
+                        "Before Fight": {
                             "type": "and",
                             "data": []
                         }
@@ -5519,6 +5431,63 @@
                     "event_index": 7,
                     "connections": {
                         "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Chozo Ghosts",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 8,
+                    "connections": {
+                        "Pickup (Artifact of Wild)": {
+                            "type": "and",
+                            "data": []
+                        }
+                    }
+                },
+                {
+                    "name": "Before Fight",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Sun Tower Access": {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 8,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        },
+                        "Door to Sunchamber Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 8,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Flaahgra": {
                             "type": "or",
                             "data": [
                                 {
@@ -5623,48 +5592,81 @@
                                     ]
                                 }
                             ]
-                        }
-                    }
-                },
-                {
-                    "name": "Event - Chozo Ghosts",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "event",
-                    "event_index": 8,
-                    "connections": {
-                        "Pickup (Artifact of Wild)": {
+                        },
+                        "Event - Chozo Ghosts": {
                             "type": "and",
                             "data": [
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 0,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
+                                                "type": 1,
+                                                "index": 6,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 2,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
                                             "type": "resource",
                                             "data": {
-                                                "type": 2,
-                                                "index": 3,
-                                                "amount": 2,
+                                                "type": 0,
+                                                "index": 0,
+                                                "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
