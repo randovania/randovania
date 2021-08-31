@@ -1,5 +1,4 @@
 import time
-import logging
 from typing import Set
 
 from randovania.game_description.world.node import Node
@@ -20,7 +19,7 @@ def sorted_requirementset_print(new_requirements: Set[RequirementList]):
     to_print = []
     for requirement in new_requirements:
         to_print.append(", ".join(str(item) for item in sorted(requirement.values())))
-    logging.info("\n".join(x for x in sorted(to_print)))
+    print("\n".join(x for x in sorted(to_print)))
 
 
 def increment_attempts():
@@ -61,21 +60,21 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
         else:
             resource = None
 
-        logging.debug("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
+        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
         if _DEBUG_LEVEL >= 3:
             for node in reach.nodes:
-                logging.debug("{}: {}".format(_indent(), n(node, world_list=world_list)))
+                print("{}: {}".format(_indent(), n(node, world_list=world_list)))
 
 
 def log_checking_satisfiable_actions():
     if _DEBUG_LEVEL > 1:
-        logging.debug("{}# Satisfiable Actions".format(_indent()))
+        print("{}# Satisfiable Actions".format(_indent()))
 
 
 def log_rollback(state: "State", has_action, possible_action: bool):
     global _current_indent
     if _DEBUG_LEVEL > 0:
-        logging.debug("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
+        print("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
             _indent(),
             n(state.node, world_list=state.world_list),
             has_action, possible_action))
@@ -85,23 +84,23 @@ def log_rollback(state: "State", has_action, possible_action: bool):
 def log_skip_action_missing_requirement(node: Node, game: "GameDescription", requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
         if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
-            logging.debug("{}* Skip {}, same additional".format(_indent(), n(node, world_list=game.world_list)))
+            print("{}* Skip {}, same additional".format(_indent(), n(node, world_list=game.world_list)))
         else:
-            logging.debug("{}* Skip {}, missing additional:".format(_indent(), n(node, world_list=game.world_list)))
+            print("{}* Skip {}, missing additional:".format(_indent(), n(node, world_list=game.world_list)))
             requirement_set.pretty_print(_indent(-1))
             _last_printed_additional[node] = requirement_set
 
 
 def print_distribute_one_item_detail(potential_pickup_nodes, start_time):
     if _DEBUG_LEVEL > 0:
-        logging.debug(":: {:2d} pickups spots :: Took {}s".format(
+        print(":: {:2d} pickups spots :: Took {}s".format(
             len(potential_pickup_nodes), time.perf_counter() - start_time
         ))
 
 
 def print_distribute_one_item(state: "State", available_item_pickups):
     if _DEBUG_LEVEL > 0:
-        logging.debug("\n> Distribute starting at {} with {} resources and {} pickups left.".format(
+        print("\n> Distribute starting at {} with {} resources and {} pickups left.".format(
             n(state.node, world_list=state.world_list),
             len(state.resources),
             len(available_item_pickups)
@@ -123,4 +122,4 @@ def debug_level() -> int:
 
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:
-        logging.debug(message)
+        print(message)
