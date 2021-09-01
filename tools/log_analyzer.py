@@ -8,7 +8,7 @@ import re
 import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional, List, Iterable, Set, final
+from typing import Dict, Tuple, Optional, List, Iterable, Set
 
 import tqdm as tqdm
 
