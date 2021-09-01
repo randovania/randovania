@@ -22,7 +22,8 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.random_lib import select_element_with_weight
 
-_RESOURCES_WEIGHT_MULTIPLIER = 1
+_DANGEROUS_ACTION_MULTIPLIER = 0.75
+_EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 1
 _VICTORY_WEIGHT = 1000
@@ -124,7 +125,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
         else:
             weight = _calculate_weights_for(
                 reach_lib.advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
-                current_uncollected)
+                current_uncollected) * _DANGEROUS_ACTION_MULTIPLIER
 
         actions_weights[action] = weight
         update_for_option()
@@ -334,7 +335,7 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     return sum((
-        _RESOURCES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.resources)),
+        _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
         _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
         _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
     ))

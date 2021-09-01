@@ -44,21 +44,21 @@ def _filter_not_in_dict(elements: Iterator[X],
 class UncollectedState(NamedTuple):
     indices: Set[PickupIndex]
     logbooks: Set[LogbookAsset]
-    resources: Set[ResourceNode]
+    events: Set[ResourceInfo]
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
             _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
             _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
-            set(reach_lib.collectable_resource_nodes(reach.connected_nodes, reach))
+            set(reach.state.collected_events)
         )
 
     def __sub__(self, other: "UncollectedState") -> "UncollectedState":
         return UncollectedState(
             self.indices - other.indices,
             self.logbooks - other.logbooks,
-            self.resources - other.resources
+            self.events - other.events
         )
 
 
