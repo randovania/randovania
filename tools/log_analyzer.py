@@ -257,7 +257,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     # probability that any given location in this region contains progression
     regions_weighted = dict()
     for region in regions:
-        regions_weighted[region] = ((float(regions[region])/float(seed_count)) / float(region_totals[region]))
+        regions_weighted[region] = (regions[region]/seed_count) / region_totals[region]
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
@@ -289,16 +289,16 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     if use_percentage:
         for item in items:
             for room in items[item]:
-                items[item][room] = (float(items[item][room])/float(seed_count))
+                items[item][room] = items[item][room]/seed_count
         for location in locations:
             for item in locations[location]:
-                locations[location][item] = (float(locations[location][item])/float(seed_count))
+                locations[location][item] = locations[location][item]/seed_count
         for location in location_progression_count:
-            location_progression_count[location] = (float(location_progression_count[location])/float(seed_count))
+            location_progression_count[location] = location_progression_count[location]/seed_count
         for location in location_progression_no_key_count:
-            location_progression_no_key_count[location] = (float(location_progression_no_key_count[location])/float(seed_count))
+            location_progression_no_key_count[location] = location_progression_no_key_count[location]/seed_count
         for region in regions:
-            regions[region] = (float(regions[region])/float(total_progression_item_count))
+            regions[region] = regions[region]/total_progression_item_count
 
     final_results = {
         "seed_count": seed_count,
