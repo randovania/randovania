@@ -2,6 +2,7 @@ import asyncio
 import platform
 import re
 from asyncio import StreamWriter, StreamReader, IncompleteReadError
+from pathlib import Path
 from typing import Callable, List, Optional
 
 IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
@@ -49,6 +50,9 @@ async def _process_command_async(args: List[str], input_data: str, read_callback
 
 def process_command(args: List[str], input_data: str, read_callback: Callable[[str], None],
                     add_mono_if_needed: bool = True):
+    if not Path(args[0]).is_file():
+        raise FileNotFoundError("{} not found".format(args[0]))
+
     if add_mono_if_needed and not is_windows():
         args = ["mono", *args]
     work = _process_command_async(args, input_data, read_callback)
