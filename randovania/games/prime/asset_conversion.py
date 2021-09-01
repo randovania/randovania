@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import time
+import logging
 from pathlib import Path
 from typing import NamedTuple, List
 
@@ -143,7 +144,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
             converters=conversions.converter_for,
         )
         updaters[0]("Finished loading Prime 1 PAKs", 1)
-        # print(f"Finished loading PAKs: {time.time() - start}")
+        # logging.debug(f"Finished loading PAKs: {time.time() - start}")
 
         result = {}
         num_assets = len(prime1_assets)
@@ -158,7 +159,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
                 )
         updaters[1]("Finished converting Prime 1 assets", 1)
     end = time.time()
-    # print(f"Time took: {end - start}")
+    # logging.debug(f"Time took: {end - start}")
 
     pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
     for pak_i in range(1, 6):
@@ -192,7 +193,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
 
     converted_dependencies = all_converted_dependencies(converter)
 
-    # print("Updating RandomizerData.json")
+    # logging.debug("Updating RandomizerData.json")
     start = time.time()
     for name, asset in result.items():
         dependencies = [
@@ -220,7 +221,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
         })
 
     end = time.time()
-    # print(f"Time took: {end - start}")
+    # logging.debug(f"Time took: {end - start}")
 
 
 def convert_prime2_pickups():
@@ -241,14 +242,14 @@ def convert_prime2_pickups():
 
     start = time.time()
     with echoes_asset_provider() as asset_provider:
-        print("Loading PAKs")
+        logging.info("Loading PAKs")
         converter = AssetConverter(
             target_game=Game.PRIME,
             asset_providers={Game.ECHOES: asset_provider},
             id_generator=id_generator,
             converters=conversions.converter_for,
         )
-        print(f"Finished loading PAKs: {time.time() - start}")
+        logging.info(f"Finished loading PAKs: {time.time() - start}")
 
         result = {}
         for data in randomizer_data["ModelData"]:
@@ -261,9 +262,9 @@ def convert_prime2_pickups():
                         scale=data["Scale"][0],
                     )
                 except (InvalidAssetId, UnknownAssetId) as e:
-                    print("Unable to convert {}: {}".format(data["Name"], e))
+                    logging.error("Unable to convert {}: {}".format(data["Name"], e))
     end = time.time()
-    print(f"Time took: {end - start}")
+    logging.info(f"Time took: {end - start}")
 
     start = time.time()
     converted_dependencies = all_converted_dependencies(converter)
@@ -304,7 +305,7 @@ def convert_prime2_pickups():
             format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
         )
 
-    print(f"Time took: {time.time() - start}")
+    logging.info(f"Time took: {time.time() - start}")
 
 
 if __name__ == '__main__':

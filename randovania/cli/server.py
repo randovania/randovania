@@ -29,7 +29,7 @@ def add_migrate_database_command(sub_parsers):
 
 
 def bot_command_logic(args):
-    from randovania.server import bot
+    from randovania.server.discord import bot
     bot.run()
 
 
