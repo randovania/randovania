@@ -27,11 +27,11 @@ def print_retcon_loop_start(game: GameDescription,
             extra = ""
 
         print("\n===============================")
-        print("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
+        print("\n>>> Player {}: From {}, {} open pickup indices, {} open events{}".format(
             player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
             len(current_uncollected.indices),
-            len(current_uncollected.resources),
+            len(current_uncollected.events),
             extra
         ))
 
