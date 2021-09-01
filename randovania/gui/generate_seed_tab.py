@@ -214,9 +214,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
     def _on_delete_preset(self):
         self._window_manager.preset_manager.delete_preset(self._current_preset_data)
-        index = self.window.create_preset_tree.currentIndex()
         self._update_preset_tree_items()
-        self.window.create_preset_tree.setCurrentIndex(index)
         self._on_select_preset()
 
     def _on_view_preset_history(self):
@@ -232,7 +230,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._add_new_preset(VersionedPreset.with_preset(old_preset.get_preset().fork()))
 
     def _on_open_map_tracker_for_preset(self):
-        self._window_manager.open_map_tracker(self._current_preset_data.get_preset().configuration)
+        self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
 
     def _on_import_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
@@ -318,7 +316,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
                 progress_update("Generation Failure: {}".format(generate_exception), -1)
 
         if self._window_manager.is_preview_mode:
-            print(f"Permalink: {permalink.as_base64_str}")
+            logging.info(f"Permalink: {permalink.as_base64_str}")
         self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):

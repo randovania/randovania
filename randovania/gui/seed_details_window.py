@@ -244,7 +244,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
-        self._window_manager.open_map_tracker(current_preset.configuration)
+        self._window_manager.open_map_tracker(current_preset)
 
     # Layout Visualization
     def _create_pickup_spoilers(self, game_description: GameDescription):

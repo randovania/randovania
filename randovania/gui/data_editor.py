@@ -277,6 +277,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_details_label.setText(msg)
         self.update_other_node_connection()
 
+        for button, source_node in self.radio_button_to_node.items():
+            button.setStyleSheet(
+                "font-weight: bold;"
+                if node in self.current_area.connections[source_node]
+                else ""
+            )
+        for node in self.current_area.nodes:
+
+            pass
+
         self._previous_selected_node = node
 
     def update_other_node_connection(self):
@@ -302,10 +312,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.other_node_connection_combo.clear()
 
         for node in sorted(self.current_area.nodes, key=lambda x: x.name):
-            if node is not current_node:
-                self.other_node_connection_combo.addItem(node.name, userData=node)
-                if node is selected_node:
-                    self.other_node_connection_combo.setCurrentIndex(self.other_node_connection_combo.count() - 1)
+            if node is current_node:
+                continue
+
+            if not self.edit_mode and node not in self.current_area.connections[current_node]:
+                continue
+
+            self.other_node_connection_combo.addItem(node.name, userData=node)
+            if node is selected_node:
+                self.other_node_connection_combo.setCurrentIndex(self.other_node_connection_combo.count() - 1)
 
         if self.other_node_connection_combo.count() > 0:
             self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
