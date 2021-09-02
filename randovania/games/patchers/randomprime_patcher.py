@@ -25,7 +25,7 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names,
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
+from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
@@ -84,8 +84,44 @@ _MODEL_MAPPING = {
     (RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTank"): "Energy Tank",
 }
 
+# The following locations have cutscenes that weren't removed
+_LOCATIONS_WITH_MODAL_ALERT = {
+    63,  # Artifact Temple
+    23,  # Watery Hall (Charge Beam)
+    50,  # Research Core
+}
 
-def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
+# Show a popup on collection if two or more is for another player.
+# The location to the right is considered for the count, but it can't show a popup.
+_LOCATIONS_GROUPED_TOGETHER = [
+    ({0, 1, 2, 3}, None),  # Main Plaza
+    ({8}, 3),  # Vault -> Main Plaza Ledge
+    ({5, 6, 7}, None),  # Ruined Shrine (all 3)
+    ({27, 28}, None),  # Burn dome
+    ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
+    ({70, 71, 72}, None),  # Life Grove Tunnel + Life Grovex2
+    ({92, 81}, None),  # Processing Center Access + Phazon Processing Center
+    ({23, 24}, None),  # Watery Hall
+    ({25, 26}, None),  # Dynamo (the one in Chozo)
+    ({55}, 54),  # Gravity Chamber: Upper -> Lower
+    ({19, 17}, None),  # Hive Totem + Transport Access North
+    ({12, 11}, None),  # Magma Pool + Training Chamber Access
+    ({59, 58}, None),  # Alcove + Landing Site
+    ({61}, 60),  # Overgrown Cavern -> Frigate Crash Site
+    ({62, 65}, 64),  # Root Cave + Arbor Chamber -> Transport Tunnel B
+    ({39, 40}, None),  # Ice Ruins East
+    ({13}, 14),  # Tower of Light -> Tower Chamber
+    ({15, 16}, None),  # Ruined Gallery
+    ({18}, 22),  # Gathering Hall -> Watery Hall Access
+    ({52, 53}, None),  # Research Lab Aether
+    ({56, 57}, None),  # Storage Cave + Security Cave
+    ({44}, 46),  # Quarantine Cave -> Quarantine Monitor
+    ({73}, 74),  # Main Quarry -> Security Access A
+]
+
+
+def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
+                                     modal_hud_override: bool) -> dict:
     if detail.model.game == RandovaniaGame.METROID_PRIME:
         model_name = detail.model.name
     else:
@@ -104,7 +140,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     scan_text = detail.scan_text
     hud_text = detail.hud_text[0]
 
-    return {
+    result = {
         "type": pickup_type,
         "model": model_name,
         "scanText": scan_text,
@@ -112,6 +148,30 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "count": count,
         "respawn": False
     }
+    if modal_hud_override:
+        result["modalHudmemo"] = True
+
+    return result
+
+
+def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.ExportedPickupDetails]) -> typing.Set[int]:
+    result = set()
+
+    for index in _LOCATIONS_WITH_MODAL_ALERT:
+        if pickups[index].other_player:
+            result.add(index)
+
+    for indices, extra in _LOCATIONS_GROUPED_TOGETHER:
+        num_other = sum(pickups[i].other_player for i in indices)
+        if extra is not None:
+            num_other += pickups[extra].other_player
+
+        if num_other > 1:
+            for index in indices:
+                if pickups[index].other_player:
+                    result.add(index)
+
+    return result
 
 
 def _starting_items_value_for(resource_database: ResourceDatabase,
@@ -199,6 +259,8 @@ class RandomprimePatcher(Patcher):
             exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
+        modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
+
         world_data = {}
         for world in db.world_list.worlds:
             if world.name == "End of Game":
@@ -213,7 +275,8 @@ class RandomprimePatcher(Patcher):
                 if pickup_indices:
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
-                            prime1_pickup_details_to_patcher(pickup_list[index.index])
+                            prime1_pickup_details_to_patcher(pickup_list[index.index],
+                                                             index.index in modal_hud_override)
                             for index in pickup_indices
                         ],
                     }
