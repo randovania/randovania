@@ -62,6 +62,7 @@ so Randovania can properly detect they were picked up.
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Changed: Improved readability of Ruined Courtyard logic.
 - Changed: Reorganized Sunchamber logic to improve usage by generator/solver.
+- Changed: Picking up Sunchamber Ghosts item NSJ is now L-Jump (Beginner) instead of Intermediate.   
 
 ### Metroid Prime 2: Echoes - Patcher Changes
 
