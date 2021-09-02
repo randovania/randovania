@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed shorelines tower item custom scan sometimes showing the incorrect text for certain models
 - Certain pickups now always have the popup alert on collection during multiworlds.
 - If there are multiple pickups for other players next to each other, these pickups are forced to have a popup alert, so Randovania can properly detect they were picked up.
+- Fixed PCA crash patch not being applied when playing small samus.
 
 #### Cutscene Skips
 - Added `Competitive` cutscene skip option.
@@ -66,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Improved readability of Ruined Courtyard logic.
 - Changed: Reorganized Sunchamber logic to improve usage by generator/solver.
 - Changed: Picking up Sunchamber Ghosts item NSJ is now L-Jump (Beginner) instead of Intermediate.   
+- Changed: Crossing TFT to TF with Gravity+SJ now requires Movement (Beginner)
 
 ### Metroid Prime 2: Echoes - Patcher Changes
 
