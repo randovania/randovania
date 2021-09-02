@@ -183,13 +183,14 @@ def test_create_patch_data(test_files_dir):
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
                         'count': 53,
+                        'modalHudmemo': True,
                         'respawn': False},
                     {
                         'type': 'Unknown Item 1',
                         'model': 'Power Bomb Expansion',
                         'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                         'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                        'count': 54,
+                        'count': 54, 'modalHudmemo': True,
                         'respawn': False}]},
             'Gravity Chamber': {
                 'pickups': [
@@ -435,7 +436,8 @@ def test_create_patch_data(test_files_dir):
                 {'type': 'Unknown Item 1', 'model': 'Nothing',
                  'scanText': "Echoes's Violet Translator",
                  'hudmemoText': 'Sent Violet Translator to Echoes!',
-                 'count': 64, 'respawn': False}]},
+                 'count': 64, 'respawn': False, 'modalHudmemo': True
+                 }]},
             'Transport Tunnel B': {'pickups': [
                 {'type': 'Artifact of Wild',
                  'model': 'Artifact of Wild',
@@ -519,15 +521,15 @@ def test_create_patch_data(test_files_dir):
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 6, 'respawn': False},
+                     'count': 6, 'respawn': False, 'modalHudmemo': True},
                     {'type': 'Unknown Item 1', 'model': 'Power Bomb Expansion',
                      'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                      'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                     'count': 7, 'respawn': False},
+                     'count': 7, 'respawn': False, 'modalHudmemo': True},
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 8, 'respawn': False}]
+                     'count': 8, 'respawn': False, 'modalHudmemo': True}]
             },
             'Vault': {
                 'pickups': [
@@ -566,7 +568,8 @@ def test_create_patch_data(test_files_dir):
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 14, 'respawn': False}]},
+                     'count': 14, 'respawn': False, 'modalHudmemo': True
+                     }]},
             'Tower Chamber': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Power Bomb Expansion',
@@ -589,7 +592,8 @@ def test_create_patch_data(test_files_dir):
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 18, 'respawn': False}]},
+                     'count': 18, 'respawn': False, 'modalHudmemo': True
+                     }]},
             'Gathering Hall': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
@@ -601,7 +605,8 @@ def test_create_patch_data(test_files_dir):
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 20, 'respawn': False}]},
+                     'count': 20, 'respawn': False, 'modalHudmemo': True,
+                     }]},
             'Sunchamber': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',

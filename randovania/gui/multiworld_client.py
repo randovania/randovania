@@ -2,16 +2,14 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import List, Set, Optional, AsyncContextManager, Tuple
+from typing import Set, Optional, AsyncContextManager
 
 import pid
 from PySide2.QtCore import QObject
 from qasync import asyncSlot
 
 from randovania.bitpacking import bitpacking
-from randovania.game_connection.connection_backend import PermanentPickups
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
