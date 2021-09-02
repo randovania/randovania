@@ -69,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Picking up Sunchamber Ghosts item NSJ is now L-Jump (Beginner) instead of Intermediate.   
 - Changed: Crossing TFT to TF with Gravity+SJ now requires Movement (Beginner)
 - Changed: FCS Item Scan Dash method is now Intermediate without SJ.
+- Added: FCS Grapple strat - Movement (Beginner)
 
 ### Metroid Prime 2: Echoes - Patcher Changes
 
