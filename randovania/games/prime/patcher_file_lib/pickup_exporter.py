@@ -129,6 +129,7 @@ class ExportedPickupDetails:
     conditional_resources: List[ConditionalResources]
     conversion: List[ResourceConversion]
     model: PickupModel
+    other_player: bool
 
 
 class PickupExporter:
@@ -177,6 +178,7 @@ class PickupExporterSolo(PickupExporter):
             conditional_resources=_conditional_resources_for_pickup(pickup),
             conversion=list(pickup.convert_resources),
             model=model,
+            other_player=False,
         )
 
 
@@ -213,6 +215,7 @@ class PickupExporterMulti(PickupExporter):
                 )],
                 conversion=[],
                 model=model,
+                other_player=True,
             )
 
 
