@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The discord bot now provides the `/database-inspect` command to send the logic of a room to the channel.
 - Added: The discord bot now also replies to shared rdvgame files.
 - Added: Improved the error message when the patcher executable is somehow missing.
+- Added: New entries to the Multiworld Help for collecting items and cross game.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
 - Fixed: Quality of Life page link in Metroid Prime preset customization is now fixed.
 - Fixed: The tracker now properly restores states for games other than Echoes.
@@ -36,6 +37,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Speed up opening of gate in sun tower
 - Fixed Thardus cutscene skip softlock
 - Magmoor Workstation item scannable through the purple door (QOL Pickup Scan)
+- Fixed shorelines tower item custom scan sometimes showing the incorrect text for certain models
+- Certain pickups now always have the popup alert on collection during multiworlds.
+- If there are multiple pickups for other players next to each other, these pickups are forced to have a popup alert, 
+so Randovania can properly detect they were picked up.  
 
 ### Metroid Prime - Logic Database 
 

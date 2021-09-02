@@ -144,6 +144,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        other_player=False,
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(1),
@@ -152,6 +153,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
         model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        other_player=False,
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(2),
@@ -164,6 +166,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         ],
         conversion=[],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        other_player=False,
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(3),
@@ -172,6 +175,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        other_player=False,
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
@@ -182,6 +186,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         ))],
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        other_player=False,
     )
 
 
@@ -244,6 +249,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
         model=model_1,
+        other_player=False,
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(1),
@@ -252,6 +258,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("Useless", None, ())],
         conversion=[],
         model=model_1,
+        other_player=False,
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(2),
@@ -263,6 +270,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         ],
         conversion=[],
         model=model_2,
+        other_player=False,
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(3),
@@ -271,6 +279,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
         model=model_2,
+        other_player=False,
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
@@ -279,6 +288,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("C", None, ())],
         conversion=[],
         model=model_1,
+        other_player=False,
     )
 
 
@@ -345,6 +355,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        other_player=False,
     )
 
 
@@ -372,6 +383,7 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        other_player=False,
     )
 
 
@@ -399,4 +411,5 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        other_player=True,
     )

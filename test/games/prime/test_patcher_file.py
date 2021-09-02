@@ -419,6 +419,7 @@ def test_run_validated_hud_text():
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
+        other_player=False,
     )
 
     # Run
