@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - (Advanced) Mine Security Station
 - Fixed: Main Plaza door to Plaza Access is now properly a normal door, instead of a permanently locked door.
 - Fixed: Sun tower now requires Knowledge (Intermediate) to collect the Sunchamber layer change event without falling down.
-- Fixed: Phendrana Shorelines now properly accounts for collecting the pickup on the Spider Ball track.
+- Fixed: Removed broken/redudant trick for reaching Temple Entryway ledge using cutscene reposition
 - Fixed: Trivial logic for Plaza Walkway to Ruins Walkway
 - Fixed: Replaced Bomb Jump (Intermediate) with Dash (Beginner) trick to cross the gap to reach the Courtyard Access door in Ice Ruins West.
 - Fixed: NSJ logic now accounts for stalactite in Ice Ruins West.
