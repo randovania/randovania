@@ -79,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Method of reaching the pickup in Reactor Core with Space Jump, Bombs, Spider Ball, and Standable Terrain (Intermediate and above).
 - Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
 - Fixed: Reactor Core has been cleaned up slightly.
+- Fixed: Spawn point in Accursed Lake is now correctly set.
 
 ### Discord Bot (Caretaker Class Drone)
 
