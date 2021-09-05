@@ -43,7 +43,7 @@ async def look_for_permalinks(message: discord.Message):
         content = None
         if multiple_permalinks:
             content = "Multiple permalinks found, using only the first."
-        await message.reply(content=content, embed=embed)
+        await message.reply(content=content, embed=embed, mention_author=False)
 
 
 async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
@@ -59,7 +59,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
                           description=preset.description)
     for category, items in preset_describer.describe(preset):
         embed.add_field(name=category, value="\n".join(items), inline=True)
-    await message.reply(embed=embed)
+    await message.reply(embed=embed, mention_author=False)
 
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
@@ -87,7 +87,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text,
         )
 
-    await message.reply(embed=embed)
+    await message.reply(embed=embed, mention_author=False)
 
 
 class PermalinkLookupCog(commands.Cog):
