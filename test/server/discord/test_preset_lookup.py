@@ -115,6 +115,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     message.reply.assert_awaited_once_with(
         content=content,
         embed=embed,
+        mention_author=False,
     )
 
 
@@ -141,5 +142,5 @@ async def test_reply_for_preset(mocker):
         call(name="General", value="Foo\nBar", inline=True),
         call(name="Other", value="X\nY", inline=True),
     ])
-    message.reply.assert_awaited_once_with(embed=embed)
+    message.reply.assert_awaited_once_with(embed=embed, mention_author=False)
     mock_describe.assert_called_once_with(preset)

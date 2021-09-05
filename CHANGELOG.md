@@ -16,8 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: One joke hint, requested in 2019.
 - Added: Data Visualizer now only shows target nodes for selection that are non-impossible.
 - Added: Data Visualizer now highlights nodes that have a path to the selected node.
-- Added: The discord bot now provides the `/database-inspect` command to send the logic of a room to the channel.
-- Added: The discord bot now also replies to shared rdvgame files.
 - Added: Improved the error message when the patcher executable is somehow missing.
 - Added: New entries to the Multiworld Help for collecting items and cross game.
 - Fixed: Randovania no longer errors when the last selected preset is for a hidden game.
@@ -81,6 +79,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Method of reaching the pickup in Reactor Core with Space Jump, Bombs, Spider Ball, and Standable Terrain (Intermediate and above).
 - Fixed: Lore Scan in Meeting Grounds no longer believes that Boost is required to scan it.
 - Fixed: Reactor Core has been cleaned up slightly.
+
+### Discord Bot (Caretaker Class Drone)
+
+- Added: The `/database-inspect` command to send the logic of a room to the channel.
+- Added: Messages with rdvgame files also get a reply with a summary of the preset.
+- Changed: Responses with preset descriptions no longer pings the original message.
 
 ## [3.0.4] - 2021-08-10
 
