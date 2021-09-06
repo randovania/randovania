@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2021-09-05
+
 - **Major** - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.
   - Default Prime 1 presets now default to 6 minimum progression for artifacts.
 - **Major** - Added: Setting for controlling how dangerous checks are handled in logic.
