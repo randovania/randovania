@@ -37,7 +37,7 @@ CUSTOM_NAMES_FOR_ELEVATORS = {
     # Ruins
     1047210935: "Main Plaza Elevator",
     2199318005: "Sun Tower Elevator",
-    2784651681: "Reflecting Pool West Elevator (Save Station)",
+    2784651681: "Reflecting Pool West Elevator",
     594418447: "Reflecting Pool South Elevator",
 
     # Magmoor
@@ -45,7 +45,7 @@ CUSTOM_NAMES_FOR_ELEVATORS = {
     3702104715: "Monitor Station Elevator",
     1279075404: "Twin Fires Elevator",
     4012840000: "Magmoor Workstation South Elevator",
-    3249312307: "Magmoor Workstation West Elevator (Save Station)",
+    3249312307: "Magmoor Workstation West Elevator",
 
     # Mines
     1125030300: "Phazon Processing Center Elevator",
@@ -59,8 +59,8 @@ CUSTOM_NAMES_FOR_ELEVATORS = {
     295707720: "Tallon Canyon Elevator",
     2318493278: "Frigate Crash Site Elevator",
     366411659: "Root Cave Elevator",
-    212145392: "North Great Tree Hall Elevator",
-    2098226800: "South Great Tree Hall Elevator",
+    212145392: "Lower (N) Great Tree Hall Elevator",
+    2098226800: "Upper (S) Great Tree Hall Elevator",
 }
 # Teleporter(0x3bfa3eff, 0xaded752e, 0x9001b): "Temple Transport C",  # 589851
 # Teleporter(0x3bfa3eff, 0x62ff94ee, 0x180086): "Transport to Agon Wastes",  # 1572998
