@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - Unreleased
+
+### Discord Bot (Caretaker Class Drone)
+
+- Changed: `/database-inspect` response is now more readable and includes the name of who requested it.
+
 ## [3.1.0] - 2021-09-05
 
 - **Major** - Added: Setting for requiring a number of actions/progression before artifacts are placed, to prevent early artifacts.

@@ -99,5 +99,8 @@ async def test_on_database_area_selected(echoes_game_description):
     await cog.on_database_area_selected(ctx, RandovaniaGame.METROID_PRIME_ECHOES, split_world)
 
     # Assert
-    ctx.send.assert_awaited_once_with(embed=ANY)
+    ctx.send.assert_awaited_once_with(
+        content=f"Requested by {ctx.author.display_name}.",
+        embed=ANY,
+    )
 

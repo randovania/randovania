@@ -178,17 +178,42 @@ class DatabaseCommandCog(commands.Cog):
         area = valid_items[0]
         db = default_database.game_description_for(game)
 
-        rows = []
+        embed = Embed(title="{}: {}".format(game.long_name, db.world_list.area_name(area)))
 
-        def append(*args):
-            rows.append("    ".join(args))
+        for i, node in enumerate(area.nodes):
+            name = node.name
+            if node.heal:
+                name += " (Heals)"
+            if area.default_node_index == i:
+                name += "; Spawn Point"
 
-        pretty_print.pretty_print_area(db, area, append)
-        rows.pop(0)
-        rows.pop(0)
+            body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"
+
+            for target_node, requirement in db.world_list.area_connections_from(node):
+                extra_lines = []
+                for level, text in pretty_print.pretty_print_requirement(requirement.simplify()):
+                    extra_lines.append("{}{}".format("  " * level, text))
+
+                if len(extra_lines) == 1:
+                    inner = f" `{extra_lines[0]}`"
+                else:
+                    inner = "\n".join(extra_lines)
+                    inner = f"\n```\n{inner}\n```"
+
+                new_entry = f"\n{target_node.name}:{inner}"
+
+                if len(body) + len(new_entry) < 1024:
+                    body += new_entry
+
+            embed.add_field(
+                name=name,
+                value=body,
+                inline=False,
+            )
+
         await ctx.send(
-            embed=Embed(title=db.world_list.area_name(area),
-                        description="```\n{}\n```".format("\n".join(rows))),
+            content=f"Requested by {ctx.author.display_name}.",
+            embed=embed,
         )
 
 
