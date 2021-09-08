@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Metroid Prime - Patcher Changes
+
+- Move shorelines tower cutscene skip back to minor.
+- Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
+- New Nothing model.
+- Missile Expansions for yourself has a 1 in 1024 of being shiny.
+
 ## [3.1.1] - Unreleased
 
 ### Discord Bot (Caretaker Class Drone)
