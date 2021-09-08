@@ -569,6 +569,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                               key=lambda it: it[2])):
                 node_name = QtWidgets.QLabel(group)
                 node_name.setText(name)
+                node_name.setWordWrap(True)
+                node_name.setMinimumWidth(75)
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
@@ -580,6 +582,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     for target_name, connection in combo_targets:
                         combo.addItem(target_name, connection)
 
+                combo.setMinimumContentsLength(11)
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
                 self._elevator_id_to_combo[node.teleporter] = combo
                 layout.addWidget(combo, i, 1)
