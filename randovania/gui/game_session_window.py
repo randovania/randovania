@@ -132,7 +132,8 @@ class RowWidget:
     customize: QtWidgets.QAction
     import_menu: QtWidgets.QMenu
     import_actions: List[QtWidgets.QAction]
-    save_copy: QtWidgets.QAction
+    export_menu: QtWidgets.QMenu
+    export_actions: List[QtWidgets.QAction]
     delete: QtWidgets.QAction
 
     @property
@@ -153,7 +154,7 @@ class RowWidget:
             self.name.setText(f"({preset.game.short_name}) {preset.name}")
         else:
             self.name.setText(preset.name)
-        self.save_copy.setEnabled(preset.base_preset_uuid is not None)
+        self.export_menu.setEnabled(preset.base_preset_uuid is not None)
 
 
 _PRESET_COLUMNS = 3
@@ -380,6 +381,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         tool_button_menu = QtWidgets.QMenu(tool_button)
         tool_button.setMenu(tool_button_menu)
         import_menu = QtWidgets.QMenu(tool_button_menu)
+        export_menu = QtWidgets.QMenu(tool_button_menu)
 
         row = RowWidget(
             name=preset_name,
@@ -388,7 +390,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             customize=QtWidgets.QAction(tool_button_menu),
             import_menu=import_menu,
             import_actions=[],
-            save_copy=QtWidgets.QAction(tool_button_menu),
+            export_menu=export_menu,
+            export_actions=[],
             delete=QtWidgets.QAction(tool_button_menu),
         )
         self.rows.append(row)
@@ -405,9 +408,20 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         tool_button_menu.addMenu(row.import_menu)
         self._create_actions_for_import_menu(row)
 
-        row.save_copy.setText("Save copy of preset")
-        row.save_copy.triggered.connect(functools.partial(self._row_save_preset, row))
-        tool_button_menu.addAction(row.save_copy)
+        row.export_menu.setTitle("Export preset")
+        tool_button_menu.addMenu(row.export_menu)
+
+        save_copy = QtWidgets.QAction(tool_button_menu)
+        save_copy.setText("Save copy of preset")
+        save_copy.triggered.connect(functools.partial(self._row_save_preset_to_manager, row))
+        row.export_actions.append(save_copy)
+        export_menu.addAction(save_copy)
+
+        save_to_file = QtWidgets.QAction(tool_button_menu)
+        save_to_file.setText("Save to file")
+        save_to_file.triggered.connect(functools.partial(self._row_save_preset_to_file, row))
+        row.export_actions.append(save_to_file)
+        export_menu.addAction(save_to_file)
 
         row.delete.setText("Delete session row")
         row.delete.triggered.connect(functools.partial(self._row_delete, row))
@@ -526,28 +540,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row_index = self.rows.index(row)
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
 
-    def _row_save_preset(self, row: RowWidget):
+    def _row_save_preset_to_manager(self, row: RowWidget):
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
 
-        # FIXME? Customizing a preset is now always an inplace change
-        # existing_preset = self._preset_manager.preset_for_name(preset.name)
-        # if existing_preset is not None:
-        #     if existing_preset == preset:
-        #         return
-        #
-        #     user_response = QMessageBox.warning(
-        #         self,
-        #         "Preset name conflict",
-        #         "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
-        #         QMessageBox.Yes | QMessageBox.No,
-        #         QMessageBox.No
-        #     )
-        #     if user_response == QMessageBox.No:
-        #         return
-
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
+
+    def _row_save_preset_to_file(self, row: RowWidget):
+        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True)
+        if path is None:
+            return
+
+        row_index = self.rows.index(row)
+        preset = self._game_session.presets[row_index]
+        preset.save_to_file(path)
 
     @asyncSlot()
     @handle_network_errors
