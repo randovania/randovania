@@ -89,7 +89,12 @@ def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices:
             return None
         else:
             total_actions = sum(player_state.num_actions for player_state in player_states)
-            raise UnableToGenerate(f"No players with possible actions after {total_actions} total actions.")
+            unfinished_players = ", ".join([str(player_state) for player_state in player_states
+                                            if not player_state.victory_condition_satisfied()])
+
+            raise UnableToGenerate(
+                f"{unfinished_players} with no possible actions after {total_actions} total actions."
+            )
 
 
 def weighted_potential_actions(player_state: PlayerState, status_update: Callable[[str], None],
@@ -196,7 +201,7 @@ def retcon_playthrough_filler(rng: Random,
                 actions_log.append(log_entry)
                 debug.debug_print(f"* {log_entry}")
 
-            # TODO: this item is potentially dangerous and we should remove the invalidated paths
+                # TODO: this item is potentially dangerous and we should remove the invalidated paths
                 current_player.pickups_left.remove(new_pickup)
             current_player.num_actions += 1
 
