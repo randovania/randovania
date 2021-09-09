@@ -4,6 +4,7 @@ import functools
 import json
 import logging
 import random
+from pathlib import Path
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
@@ -33,7 +34,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog
@@ -433,6 +434,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             _add(self._game_session.allowed_games[0], row.import_menu)
 
+        action = QtWidgets.QAction(row.import_menu)
+        action.setText("Import from file")
+        action.triggered.connect(functools.partial(self._row_import_preset_from_file_prompt, row))
+        row.import_actions.append(action)
+        row.import_menu.addAction(action)
+
     def refresh_row_import_preset_actions(self):
         for row in self.rows:
             row.import_menu.clear()
@@ -489,6 +496,29 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def _row_import_preset(self, row: RowWidget, preset: Preset):
+        row_index = self.rows.index(row)
+        await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
+
+    def _row_import_preset_from_file_prompt(self, row: RowWidget):
+        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
+        if path is not None:
+            self._row_import_preset_from_file(row, path)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _row_import_preset_from_file(self, row: RowWidget, path: Path):
+        preset = await VersionedPreset.from_file(path)
+        try:
+            preset.get_preset()
+        except InvalidPreset:
+            await async_dialog.message_box(
+                self._window_manager,
+                QtWidgets.QMessageBox.Critical,
+                "Error loading preset",
+                "The file at '{}' contains an invalid preset.".format(path)
+            )
+            return
+
         row_index = self.rows.index(row)
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
 
@@ -745,7 +775,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 game = default_database.game_description_for(preset.game)
                 try:
                     location_node = game.world_list.node_from_pickup_index(action.location)
-                    location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+                    location_name = game.world_list.node_name(location_node, with_world=True,
+                                                              distinguish_dark_aether=True)
                 except KeyError as e:
                     logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
                                    preset.game.long_name)
