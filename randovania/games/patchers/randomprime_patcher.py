@@ -29,6 +29,8 @@ from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
+_EASTER_EGG_SHINY_MISSILE = 1024
+
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": 0,
     "ice": 1,
@@ -121,12 +123,15 @@ _LOCATIONS_GROUPED_TOGETHER = [
 
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
-                                     modal_hud_override: bool) -> dict:
+                                     modal_hud_override: bool,
+                                     rng: Random) -> dict:
     if detail.model.game == RandovaniaGame.METROID_PRIME:
         model_name = detail.model.name
     else:
         model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
 
+    scan_text = detail.scan_text
+    hud_text = detail.hud_text[0]
     pickup_type = "Nothing"
     count = 0
 
@@ -137,15 +142,20 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
+    if (model_name == "Missile" and not detail.other_player
+            and "Missile Expansion" in hud_text
+            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
+        model_name = "Shiny Missile"
+        hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
         "model": model_name,
         "scanText": scan_text,
         "hudmemoText": hud_text,
-        "count": count,
+        "curr_increase": count,
+        "max_increase": count,
         "respawn": False
     }
     if modal_hud_override:
@@ -276,7 +286,8 @@ class RandomprimePatcher(Patcher):
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
                             prime1_pickup_details_to_patcher(pickup_list[index.index],
-                                                             index.index in modal_hud_override)
+                                                             index.index in modal_hud_override,
+                                                             rng)
                             for index in pickup_indices
                         ],
                     }
