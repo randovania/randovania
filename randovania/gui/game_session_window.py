@@ -209,10 +209,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
         self.generate_game_with_spoiler_action = QtWidgets.QAction("Generate game", self.background_process_menu)
+        self.generate_game_with_spoiler_no_retry_action = QtWidgets.QAction("Generate game (no retries)",
+                                                                            self.background_process_menu)
         self.generate_game_without_spoiler_action = QtWidgets.QAction("Generate without spoiler",
                                                                       self.background_process_menu)
         self.import_permalink_action = QtWidgets.QAction("Import permalink", self.background_process_menu)
         self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
+        self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
         self.background_process_menu.addAction(self.generate_game_without_spoiler_action)
         self.background_process_menu.addAction(self.import_permalink_action)
         self.background_process_button.setMenu(self.background_process_menu)
@@ -260,6 +263,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         self.generate_game_with_spoiler_action.triggered.connect(self.generate_game_with_spoiler)
+        self.generate_game_with_spoiler_no_retry_action.triggered.connect(self.generate_game_with_spoiler_no_retry)
         self.generate_game_without_spoiler_action.triggered.connect(self.generate_game_without_spoiler)
         self.import_permalink_action.triggered.connect(self.import_permalink)
         self.background_process_button.clicked.connect(self.background_process_button_clicked)
@@ -934,7 +938,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         return True
 
-    async def generate_game(self, spoiler: bool):
+    async def generate_game(self, spoiler: bool, retries: Optional[int]):
         if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
             await async_dialog.warning(self, "Multiworld Limitation",
                                        "Warning: Multiworld games doesn't have proper energy damage logic. "
@@ -949,16 +953,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
-        return await self.generate_game_with_permalink(permalink)
+        return await self.generate_game_with_permalink(permalink, retries=retries)
 
-    async def generate_game_with_permalink(self, permalink: Permalink):
+    async def generate_game_with_permalink(self, permalink: Permalink, retries: Optional[int]):
         if not await self._check_dangerous_presets(permalink):
             return
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
                                                       permalink=permalink,
-                                                      options=self._options)
+                                                      options=self._options,
+                                                      retries=retries)
 
         await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)
         self._generating_game = True
@@ -995,7 +1000,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def generate_game_with_spoiler(self):
-        await self.generate_game(True)
+        await self.generate_game(True, retries=None)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def generate_game_with_spoiler_no_retry(self):
+        await self.generate_game(True, retries=0)
 
     @asyncSlot()
     @handle_network_errors
@@ -1030,7 +1040,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             if response != QMessageBox.Yes:
                 return
 
-        await self.generate_game_with_permalink(permalink)
+        await self.generate_game_with_permalink(permalink, retries=None)
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
