@@ -62,7 +62,7 @@ class PlayerState:
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
 
     def __repr__(self):
-        return f"Player {self.index}"
+        return f"Player {self.index + 1}"
 
     def update_for_new_state(self):
         debug.debug_print(f"\n>>> Updating state of {self}")
