@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In game session, there's now a "Generate game (no retries)" button. This option attempts generation only a single
 time, before giving the error message of why it failed. It's useful for investigating bad presets.
 - Changed: When multiworld generation fails, the error message is now clearer on which players haven't reached the end.
+- Changed: Preset summaries have been split better into categories.
 - Removed: The "Never" option for dangerous actions has been removed from the UI, as it currently doesn't work.
 
 ### Discord Bot (Caretaker Class Drone)
