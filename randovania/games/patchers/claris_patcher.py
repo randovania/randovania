@@ -44,7 +44,7 @@ class ClarisPatcher(Patcher):
         result = game_workdir.discover_game(internal_copies_path.joinpath("prime2", "contents"))
         if result is not None:
             game_id, _ = result
-            if game_id.startswith("G2M"):
+            if game_id.startswith("G2M") or game_id.startswith("R3M"):
                 return True
         return False
 
@@ -74,6 +74,7 @@ class ClarisPatcher(Patcher):
 
         contents_files_path = internal_copies_path.joinpath("prime2", "contents")
         backup_files_path = internal_copies_path.joinpath("prime2", "vanilla")
+        is_trilogy = False
 
         if input_file is not None:
             unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
@@ -83,15 +84,27 @@ class ClarisPatcher(Patcher):
                 game_files_path=contents_files_path,
                 progress_update=unpack_updaters[0],
             )
+            if contents_files_path.joinpath("DATA", "files", "MP2").exists():
+                is_trilogy = True
+                files_folder = contents_files_path.joinpath("DATA", "files", "MP2")
+            else:
+                files_folder = contents_files_path.joinpath("files")
+
             claris_randomizer.create_pak_backups(
-                contents_files_path,
+                files_folder,
                 backup_files_path,
                 unpack_updaters[1]
             )
         else:
+            if contents_files_path.joinpath("DATA", "files", "MP2").exists():
+                is_trilogy = True
+                files_folder = contents_files_path.joinpath("DATA", "files", "MP2")
+            else:
+                files_folder = contents_files_path.joinpath("files")
+
             try:
                 claris_randomizer.restore_pak_backups(
-                    contents_files_path,
+                    files_folder,
                     backup_files_path,
                     updaters[0]
                 )
@@ -101,30 +114,34 @@ class ClarisPatcher(Patcher):
                     "a clean game ISO.")
 
         # Apply patcher
-        banner_patcher.patch_game_name_and_id(
-            contents_files_path,
-            "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
-            patch_data["publisher_id"]
-        )
+        if not is_trilogy:
+            banner_patcher.patch_game_name_and_id(
+                contents_files_path,
+                "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
+                patch_data["publisher_id"]
+            )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
         if patch_data.pop("convert_other_game_assets", False):
             from randovania.games.prime import asset_conversion
-            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
+            asset_conversion.convert_prime1_pickups(files_folder, randomizer_data, updaters[1])
 
         claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,
             randomizer_data,
-            updaters[2])
+            is_trilogy,
+            updaters[2],
+        )
 
         # Pack ISO
-        iso_packager.pack_iso(
-            iso=output_file,
-            game_files_path=contents_files_path,
-            progress_update=updaters[3],
-        )
+        if not is_trilogy:
+            iso_packager.pack_iso(
+                iso=output_file,
+                game_files_path=contents_files_path,
+                progress_update=updaters[3],
+            )
 
 
 @functools.lru_cache()

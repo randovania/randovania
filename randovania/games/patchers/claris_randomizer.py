@@ -8,7 +8,6 @@ from randovania import get_data_path
 from randovania.games.patchers import csharp_subprocess
 from randovania.games.patchers.exceptions import ExportFailure
 from randovania.games.prime import echoes_dol_patcher
-from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
@@ -83,7 +82,7 @@ def _run_with_args(args: List[Union[str, Path]],
 def _base_args(game_root: Path,
                ) -> List[Union[str, Path]]:
     game_files = game_root / "files"
-    validate_game_files_path(game_files)
+    # validate_game_files_path(game_files)
 
     return [
         _get_randomizer_path(),
@@ -103,19 +102,18 @@ _ECHOES_PAKS = tuple(
 
 
 def restore_pak_backups(
-        game_root: Path,
+        files_folder: Path,
         backup_files_path: Path,
         progress_update: ProgressUpdateCallable,
 ):
     """
     Ensures the given game_root has unmodified paks.
-    :param game_root:
+    :param files_folder:
     :param backup_files_path:
     :param progress_update:
     :return:
     """
     pak_folder = backup_files_path.joinpath("paks")
-    files_folder = game_root.joinpath("files")
     for i, pak in enumerate(_ECHOES_PAKS):
         progress_update("Restoring {} from backup".format(pak), i / len(_ECHOES_PAKS))
         shutil.copy(pak_folder.joinpath(pak), files_folder.joinpath(pak))
@@ -124,14 +122,13 @@ def restore_pak_backups(
 
 
 def create_pak_backups(
-        game_root: Path,
+        files_folder: Path,
         backup_files_path: Path,
         progress_update: ProgressUpdateCallable,
 ):
     pak_folder = backup_files_path.joinpath("paks")
     pak_folder.mkdir(parents=True, exist_ok=True)
 
-    files_folder = game_root.joinpath("files")
     for i, pak in enumerate(_ECHOES_PAKS):
         progress_update("Backing up {}".format(pak), i / len(_ECHOES_PAKS))
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
@@ -154,6 +151,7 @@ def _add_menu_mod_to_files(
 def apply_patcher_file(game_root: Path,
                        patcher_data: dict,
                        randomizer_data: dict,
+                       is_trilogy: bool,
                        progress_update: ProgressUpdateCallable,
                        ):
     """
@@ -161,13 +159,17 @@ def apply_patcher_file(game_root: Path,
     :param game_root:
     :param patcher_data:
     :param randomizer_data: The RandomizerData.json contents to use.
+    :param is_trilogy:
     :param progress_update:
     :return:
     """
-    menu_mod = patcher_data["menu_mod"]
+    menu_mod = patcher_data["menu_mod"] and not is_trilogy
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 200 if menu_mod else 100)
+
+    if is_trilogy:
+        game_root = game_root.joinpath("DATA")
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
@@ -181,8 +183,13 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    echoes_dol_patcher.apply_patches(game_root,
-                                     echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
+
+    if not is_trilogy:
+        echoes_dol_patcher.apply_patches(
+            game_root,
+            echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"])
+        )
+
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
     if menu_mod:

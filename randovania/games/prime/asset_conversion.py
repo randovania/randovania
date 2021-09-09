@@ -164,7 +164,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
     pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
     for pak_i in range(1, 6):
         pak_status = pak_updaters[pak_i - 1]
-        pak_path = echoes_files_path.joinpath("files", f"Metroid{pak_i}.pak")
+        pak_path = echoes_files_path.joinpath(f"Metroid{pak_i}.pak")
         pak_status(f"Preparing to write custom assets to Echoes {pak_path.name}", 0)
         num_assets = len(converter.converted_assets) + 1
 

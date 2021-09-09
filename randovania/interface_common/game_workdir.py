@@ -7,6 +7,9 @@ def discover_game(game_files_path: Path) -> Optional[Tuple[str, str]]:
         return None
 
     boot_bin = game_files_path / "sys" / "boot.bin"
+    if not boot_bin.is_file():
+        boot_bin = game_files_path / "DATA" / "sys" / "boot.bin"
+
     try:
         header_bytes = boot_bin.read_bytes()
 
