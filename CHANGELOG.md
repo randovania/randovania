@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.1.1] - Unreleased
 
 - Added: When importing a preset in a game session, there's now an option to import directly from a file.
+- Added: In game session, there's now a "Generate game (no retries)" button. This option attempts generation only a single
+time, before giving the error message of why it failed. It's useful for investigating bad presets.
 - Changed: When multiworld generation fails, the error message is now clearer on which players haven't reached the end. 
 
 ### Discord Bot (Caretaker Class Drone)
