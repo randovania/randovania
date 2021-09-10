@@ -5,6 +5,7 @@ from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
@@ -25,14 +26,10 @@ def _bool_to_str(b: bool) -> str:
 _BASE_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
-        "Randomization Mode: {randomization_mode}",
-        "Dangerous Actions: {dangerous_actions}",
-        "Random Starting Items: {random_starting_items}",
     ],
-    "Items": [
-        "Starting Items: {starting_items}",
-        "Item Pool: {item_pool}",
-        "Item Pool Size: {item_pool_size}",
+    "Starting Items": [],
+    "Item Pool": [
+        "Size: {item_pool_size}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -46,25 +43,16 @@ _BASE_TEMPLATE_STRINGS = {
 _CORRUPTION_TEMPLATE_STRINGS = {
     "Item Placement": [
         "Trick Level: {trick_level}",
-        "Randomization Mode: {randomization_mode}",
-        "Random Starting Items: {random_starting_items}",
     ],
-    "Items": [
-        "Progressive Missile: {progressive_missile}",
-        "Progressive Beam: {progressive_beam}",
-        "Starting Items: {starting_items}",
-        "Item Pool: {item_pool}",
-        "Item Pool Size: {item_pool_size}",
+    "Starting Items": [],
+    "Item Pool": [
+        "Size: {item_pool_size}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
         "Teleporters: {elevators}",
     ],
-    "Game Changes": [
-        "Missiles needs Launcher: {missile_launcher_required}",
-        "Ship Missile needs Launcher: {ship_launcher_required}",
-        "Final bosses included? {include_final_bosses}",
-    ],
+    "Game Changes": [],
     "Difficulty": [
         "Energy Tank: {energy_tank}",
         "Damage Strictness: {damage_strictness}",
@@ -112,7 +100,7 @@ def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) ->
     return False
 
 
-def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem, MajorItemState]) -> str:
+def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem, MajorItemState]) -> List[str]:
     expected_items = _EXPECTED_ITEMS[game]
     starting_items = []
 
@@ -133,13 +121,13 @@ def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem,
             starting_items.append(f"No {major_item.name}")
 
     if starting_items:
-        return ", ".join(starting_items)
+        return starting_items
     else:
         # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
-        return "Vanilla"
+        return ["Vanilla"]
 
 
-def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfiguration) -> str:
+def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfiguration) -> List[str]:
     item_pool = []
 
     unexpected_items = _EXPECTED_ITEMS[game] | _CUSTOM_ITEMS
@@ -187,13 +175,11 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
             if item_was_expected and item_state.num_included_in_starting_items == 0:
                 item_pool.append(f"No {major_item.name}")
 
-    if item_pool:
-        return ", ".join(item_pool)
-    else:
-        return "Default"
+    return item_pool
 
 
-def _format_params_base(configuration: BaseConfiguration) -> dict:
+def _format_params_base(template_strings: Dict[str, List[str]], configuration: BaseConfiguration,
+                        ) -> Tuple[Dict[str, List[str]], dict]:
     game_description = default_database.game_description_for(configuration.game)
     major_items = configuration.major_items_configuration
 
@@ -204,18 +190,26 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
         major_items.minimum_random_starting_items,
         major_items.maximum_random_starting_items,
     )
-    if random_starting_items == "0 to 0":
-        random_starting_items = "None"
 
     format_params["trick_level"] = configuration.trick_level.pretty_description
-    format_params["randomization_mode"] = configuration.available_locations.randomization_mode.value
-    format_params["dangerous_actions"] = configuration.logical_resource_action.value
-    format_params["random_starting_items"] = random_starting_items
+
+    randomization_mode = configuration.available_locations.randomization_mode
+    if randomization_mode != RandomizationMode.FULL:
+        template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
+
+    template_strings["Item Placement"].append(f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
+
+    if random_starting_items != "0 to 0":
+        template_strings["Item Placement"].append(f"Random Starting Items: {random_starting_items}")
 
     # Items
-    format_params["starting_items"] = _calculate_starting_items(configuration.game, major_items.items_state)
-    format_params["item_pool"] = _calculate_item_pool(configuration.game, major_items)
+    template_strings["Starting Items"] = _calculate_starting_items(configuration.game, major_items.items_state)
+
     format_params["item_pool_size"] = "{} of {}".format(*pool_creator.calculate_pool_item_count(configuration))
+
+    item_pool = _calculate_item_pool(configuration.game, major_items)
+    if item_pool:
+        template_strings["Item Pool"].append(", ".join(item_pool))
 
     # Difficulty
     format_params["damage_strictness"] = configuration.damage_strictness.long_name
@@ -234,15 +228,14 @@ def _format_params_base(configuration: BaseConfiguration) -> dict:
     else:
         format_params["starting_location"] = "{} locations".format(len(starting_locations))
 
-    return format_params
+    return template_strings, format_params
 
 
 def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str, List[str]], dict]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
-    template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
 
-    format_params = {}
+    template_strings, format_params = _format_params_base(copy.deepcopy(_BASE_TEMPLATE_STRINGS), configuration)
 
     # Items
     inventory_changes = []
@@ -256,7 +249,7 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
         inventory_changes.append("Split beam ammo")
 
     if inventory_changes:
-        template_strings["Items"].append(", ".join(inventory_changes))
+        template_strings["Item Pool"].append(", ".join(inventory_changes))
 
     # Difficulty
     if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
@@ -311,9 +304,9 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
 
     qol_changes = []
     if configuration.warp_to_start:
-        qol_changes.append("Can warp to start")
+        qol_changes.append("Warp to start")
     if configuration.menu_mod:
-        qol_changes.append("Menu Mod included")
+        qol_changes.append("Menu Mod")
     if configuration.elevators.skip_final_bosses:
         qol_changes.append("Final bosses removed")
 
@@ -325,11 +318,11 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-        template_strings["Items"].append("Sky Temple Keys at all bosses")
+        template_strings["Item Pool"].append("Sky Temple Keys at all bosses")
     elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-        template_strings["Items"].append("Sky Temple Keys at all guardians")
+        template_strings["Item Pool"].append("Sky Temple Keys at all guardians")
     else:
-        template_strings["Items"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys shuffled")
+        template_strings["Item Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
 
     # Item Model
     if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
@@ -339,14 +332,23 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Tuple[Dict[str,
     return template_strings, format_params
 
 
-def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
+def _corruption_format_params(configuration: CorruptionConfiguration) -> Tuple[dict, dict]:
     major_items = configuration.major_items_configuration
 
-    format_params = {"energy_tank": f"{configuration.energy_per_tank} energy",
-                     "include_final_bosses": _bool_to_str(not configuration.elevators.skip_final_bosses),
-                     "elevators": configuration.elevators.description(),
-                     "progressive_missile": _bool_to_str(has_shuffled_item(major_items, "Progressive Missile")),
-                     "progressive_beam": _bool_to_str(has_shuffled_item(major_items, "Progressive Beam"))}
+    template_strings, format_params = _format_params_base(copy.deepcopy(_CORRUPTION_TEMPLATE_STRINGS), configuration)
+
+    format_params.update(
+        {
+            "energy_tank": f"{configuration.energy_per_tank} energy",
+            "elevators": configuration.elevators.description(),
+        }
+    )
+
+    if has_shuffled_item(major_items, "Progressive Missile"):
+        template_strings["Item Pool"].append("Progressive missile")
+
+    if has_shuffled_item(major_items, "Progressive Beam"):
+        template_strings["Item Pool"].append("Progressive Beam")
 
     missile_launcher_required = True
     ship_launcher_required = True
@@ -356,10 +358,19 @@ def _corruption_format_params(configuration: CorruptionConfiguration) -> dict:
         elif ammo.name == "Ship Missile Expansion":
             ship_launcher_required = state.requires_major_item
 
-    format_params["missile_launcher_required"] = _bool_to_str(missile_launcher_required)
-    format_params["ship_launcher_required"] = _bool_to_str(ship_launcher_required)
+    required_messages = []
+    if missile_launcher_required:
+        required_messages.append("Missiles needs Launcher")
+    if ship_launcher_required:
+        required_messages.append("Ship Missiles needs Main")
 
-    return format_params
+    if required_messages:
+        template_strings["Game Changes"].append(", ".join(required_messages))
+
+    if configuration.elevators.skip_final_bosses:
+        template_strings["Game Changes"].append("Final bosses removed")
+
+    return template_strings, format_params
 
 
 _CUTSCENE_MODE_DESCRIPTION = {
@@ -371,11 +382,7 @@ _CUTSCENE_MODE_DESCRIPTION = {
 
 
 def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, List[str]], dict]:
-    major_items = configuration.major_items_configuration
-    item_database = default_database.item_database_for_game(configuration.game)
-    template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
-
-    format_params = {}
+    template_strings, format_params = _format_params_base(copy.deepcopy(_BASE_TEMPLATE_STRINGS), configuration)
 
     # Difficulty
     if configuration.heat_damage != 10.0:
@@ -425,12 +432,8 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
 
     qol_changes = []
     for flag, message in (
-            (configuration.warp_to_start, "Can warp to start"),
-            (configuration.main_plaza_door, "Main Plaza Vault Door"),
-            (configuration.backwards_frigate, "Backwards Frigate"),
-            (configuration.backwards_labs, "Backwards Labs"),
-            (configuration.backwards_upper_mines, "Backwards Upper Mines"),
-            (configuration.backwards_lower_mines, "Backwards Lower Mines"),
+            (configuration.warp_to_start, "Warp to start"),
+            (configuration.main_plaza_door, "Unlocked Vault door"),
             (configuration.phazon_elite_without_dynamo, "Phazon Elite without Dynamo"),
             (configuration.qol_game_breaking, "Game Breaking QOL"),
             (configuration.qol_pickup_scans, "Pickup Scans QOL"),
@@ -439,14 +442,27 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
             qol_changes.append(message)
 
     if qol_changes:
-        template_strings["Quality of Life"] = [", ".join(qol_changes)]
+        template_strings["Quality of Life"] = qol_changes
+
+    backwards = [
+        message
+        for flag, message in [
+            (configuration.backwards_frigate, "Frigate"),
+            (configuration.backwards_labs, "Labs"),
+            (configuration.backwards_upper_mines, "Upper Mines"),
+            (configuration.backwards_lower_mines, "Lower Mines"),
+        ]
+        if flag
+    ]
+    if backwards:
+        template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
 
     if not template_strings["Game Changes"]:
         template_strings.pop("Game Changes")
 
     # Artifacts
-    template_strings["Items"].append(f"{configuration.artifact_target.num_artifacts} Artifacts shuffled, "
-                                     f"{configuration.artifact_minimum_progression} min progression")
+    template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "
+                                     f"{configuration.artifact_minimum_progression} min actions")
 
     # Item Model
     if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
@@ -459,23 +475,17 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Tuple[Dict[str, L
 def describe(preset: Preset) -> Iterable[PresetDescription]:
     configuration = preset.configuration
 
-    format_params = _format_params_base(configuration)
-
-    template_strings = None
     if preset.game == RandovaniaGame.METROID_PRIME_ECHOES:
-        template_strings, params = _echoes_format_params(configuration)
-        format_params.update(params)
+        template_strings, format_params = _echoes_format_params(configuration)
 
     elif preset.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-        template_strings = copy.deepcopy(_CORRUPTION_TEMPLATE_STRINGS)
-        format_params.update(_corruption_format_params(configuration))
+        template_strings, format_params = _corruption_format_params(configuration)
 
     elif preset.game == RandovaniaGame.METROID_PRIME:
-        template_strings, params = _prime_format_params(configuration)
-        format_params.update(params)
+        template_strings, format_params = _prime_format_params(configuration)
 
-    elif preset.game == RandovaniaGame.SUPER_METROID:
-        template_strings = copy.deepcopy(_BASE_TEMPLATE_STRINGS)
+    else:
+        template_strings, format_params = _format_params_base(copy.deepcopy(_BASE_TEMPLATE_STRINGS), configuration)
 
     if configuration.multi_pickup_placement:
         template_strings["Item Placement"].append("Multi-pickup placement")
