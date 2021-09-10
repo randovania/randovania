@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New Nothing model.
 - Missile Expansions for yourself has a 1 in 1024 of being shiny.
 
+### Metroid Prime - Logic Database
+
+- Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
+
 ## [3.1.1] - Unreleased
 
 ### Discord Bot (Caretaker Class Drone)
