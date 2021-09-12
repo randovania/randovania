@@ -160,3 +160,16 @@ class TranslatorConfiguration(BitPackValue):
         new_requirement[gate] = requirement
 
         return dataclasses.replace(result, translator_requirement=new_requirement)
+
+    def description(self) -> str:
+        translator_configurations = [
+            (self.with_vanilla_actual(), "Vanilla (Actual)"),
+            (self.with_vanilla_colors(), "Vanilla (Colors)"),
+            (self.with_full_random(), "Random"),
+            (self.with_full_random_with_unlocked(), "Random with Unlocked")
+        ]
+        for translator_config, name in translator_configurations:
+            if translator_config == self:
+                return name
+
+        return "Custom"
