@@ -269,7 +269,7 @@ async def test_generate_game(window, mocker, preset_manager):
     window._admin_global_action = AsyncMock()
 
     # Run
-    await window.generate_game(spoiler)
+    await window.generate_game(spoiler, retries=3)
 
     # Assert
     mock_randint.assert_called_once_with(0, 2 ** 31)
@@ -283,7 +283,8 @@ async def test_generate_game(window, mocker, preset_manager):
                 1: preset_manager.default_preset.get_preset(),
             },
         ),
-        options=window._options
+        options=window._options,
+        retries=3,
     )
     window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
 
@@ -366,7 +367,7 @@ async def test_import_permalink(window, mocker):
     # Assert
     execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
     mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.No)
-    window.generate_game_with_permalink.assert_awaited_once_with(permalink)
+    window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
 
 
 @pytest.mark.parametrize(["expecting_kick", "already_kicked"], [

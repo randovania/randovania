@@ -32,7 +32,6 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
         self.dangerous_combo.setItemData(1, LayoutLogicalResourceAction.LAST_RESORT)
-        self.dangerous_combo.setItemData(2, LayoutLogicalResourceAction.NEVER)
         signal_handling.on_combo(self.dangerous_combo, self._on_dangerous_changed)
 
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
