@@ -105,8 +105,8 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     if is_solo:
         assert embed.description == "Metroid Prime 2: Echoes permalink for Randovania {}".format(randovania.VERSION)
         embed.add_field.assert_has_calls([
-            call(name="General", value="Foo\nBar", inline=True),
-            call(name="Other", value="X\nY", inline=True),
+            call(name="General", value="Foo\nBar", inline=False),
+            call(name="Other", value="X\nY", inline=False),
         ])
 
     content = None
@@ -139,8 +139,8 @@ async def test_reply_for_preset(mocker):
     # Assert
     mock_embed.assert_called_once_with(title=preset.name, description=preset.description)
     embed.add_field.assert_has_calls([
-        call(name="General", value="Foo\nBar", inline=True),
-        call(name="Other", value="X\nY", inline=True),
+        call(name="General", value="Foo\nBar", inline=False),
+        call(name="Other", value="X\nY", inline=False),
     ])
     message.reply.assert_awaited_once_with(embed=embed, mention_author=False)
     mock_describe.assert_called_once_with(preset)
