@@ -68,20 +68,28 @@ class TrickLevelConfiguration(BitPackValue):
         if self.minimal_logic:
             return "Minimal Logic"
 
-        difficulties = collections.defaultdict(int)
+        count_at_difficulties = collections.defaultdict(list)
         for trick in _all_tricks(default_database.resource_database_for(self.game)):
-            difficulties[self.level_for_trick(trick)] += 1
+            count_at_difficulties[self.level_for_trick(trick)].append(trick.long_name)
 
-        if len(difficulties) == 1:
-            for level in difficulties.keys():
-                return f"All at {level.long_name}"
+        if len(count_at_difficulties) == 1:
+            for level in count_at_difficulties.keys():
+                if level == LayoutTrickLevel.DISABLED:
+                    return "All tricks disabled"
+                return f"All tricks enabled at {level.long_name}"
+
+        def tricks_at_level(tricks: List[str]) -> str:
+            if len(tricks) != 1:
+                return f"{len(tricks)}"
+            else:
+                return tricks[0]
 
         descriptions = [
-            f"{difficulties[level]} at {level.long_name}"
+            f"{tricks_at_level(count_at_difficulties[level])} at {level.long_name}"
             for level in iterate_enum(LayoutTrickLevel)
-            if difficulties[level] > 0
+            if count_at_difficulties[level]
         ]
-        return ", ".join(descriptions)
+        return "Enabled tricks: {}".format(", ".join(descriptions))
 
     @property
     def as_json(self) -> dict:
