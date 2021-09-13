@@ -98,13 +98,27 @@
                             "type": "or",
                             "data": [
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 60,
-                                        "amount": 1,
-                                        "negate": true
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 60,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 {
                                     "type": "template",
@@ -129,7 +143,7 @@
                     "node_type": "dock",
                     "dock_index": 2,
                     "connected_area_asset_id": 10429003070780375168,
-                    "connected_dock_index": 0,
+                    "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
@@ -137,17 +151,31 @@
                             "type": "or",
                             "data": [
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 60,
-                                        "amount": 1,
-                                        "negate": true
-                                    }
-                                },
-                                {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 60,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -168,7 +196,7 @@
                     "node_type": "dock",
                     "dock_index": 3,
                     "connected_area_asset_id": 10429003070780375168,
-                    "connected_dock_index": 1,
+                    "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
