@@ -104,6 +104,7 @@ setup(
             "prometheus-flask-exporter",
             "peewee",
             "requests-oauthlib",
+            "graphviz",  # for randovania/server/discord/database_command
         ],
         "test": [
             'pytest',
