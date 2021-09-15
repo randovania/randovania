@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.2] - Unreleased
 
+- Fixed: In game session, pressing the "Generate game" button no longer errors.
+
 ## [3.1.1] - 2021-09-12
 
 - Added: When importing a preset in a game session, there's now an option to import directly from a file.

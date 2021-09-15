@@ -1193,7 +1193,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         elif self._game_session.game_details is not None:
             await self.clear_generated_game()
         else:
-            await self.generate_game(True)
+            await self.generate_game(True, retries=None)
 
     def update_background_process_button(self):
         is_admin = self.current_player_membership.admin
