@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: In game session, pressing the "Generate game" button no longer errors.
 
+### Discord Bot (Caretaker Class Drone)
+
+- Changed: The response to `.rdvgame` files now include the seed hash and permalink.
+
 ## [3.1.1] - 2021-09-12
 
 - Added: When importing a preset in a game session, there's now an option to import directly from a file.
