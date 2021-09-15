@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.1] - Unreleased
 
+### Custom Elevator Names (Prime 1 + Echoes)
+- Changed: Reworked how elevator custom names are handled in the UI
+- Added: Support for short names in the tracker
+
 ### Discord Bot (Caretaker Class Drone)
 
 - Changed: `/database-inspect` response is now more readable and includes the name of who requested it.
