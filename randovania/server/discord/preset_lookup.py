@@ -18,8 +18,7 @@ possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
 
 def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
     for category, items in preset_describer.describe(preset):
-        embed.add_field(name=category, value="\n".join(items), inline=False)
-
+        embed.add_field(name=category, value="\n".join(items), inline=True)
 
 
 async def look_for_permalinks(message: discord.Message):
@@ -86,9 +85,11 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text += " and "
         games_text += last_game
 
-        embed.description = "{} player multiworld for {}".format(
+        embed.description = "{} player multiworld for {}.\nSeed Hash: {}\nPermalink: {}".format(
             description.permalink.player_count,
             games_text,
+            description.shareable_word_hash,
+            description.permalink.as_base64_str,
         )
 
     await message.reply(embed=embed, mention_author=False)
