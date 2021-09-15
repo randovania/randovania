@@ -1,7 +1,10 @@
 import functools
 import math
-from typing import List, Tuple, Dict
+from pathlib import Path
+from typing import List, Tuple, Dict, Optional
 
+import discord
+import graphviz
 from discord import Embed
 from discord.ext import commands
 from discord_slash import SlashCommand, SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
@@ -16,6 +19,21 @@ from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
 
 SplitWorld = Tuple[World, str, List[Area]]
+
+
+def render_area_with_graphviz(area: Area) -> Optional[Path]:
+    dot = graphviz.Digraph(comment=area.name)
+    for node in area.nodes:
+        dot.node(node.name)
+
+    for source, target in area.connections.items():
+        for target_node, requirement in target.items():
+            dot.edge(source.name, target_node.name)
+
+    try:
+        return Path(dot.render(format="png", cleanup=True))
+    except graphviz.backend.ExecutableNotFound:
+        return None
 
 
 async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
@@ -211,10 +229,20 @@ class DatabaseCommandCog(commands.Cog):
                 inline=False,
             )
 
+        files = []
+
+        image_path = render_area_with_graphviz(area)
+        if image_path is not None:
+            files.append(discord.File(image_path))
+
         await ctx.send(
             content=f"Requested by {ctx.author.display_name}.",
             embed=embed,
+            files=files,
         )
+
+        if image_path is not None:
+            image_path.unlink()
 
 
 def setup(bot: RandovaniaBot):
