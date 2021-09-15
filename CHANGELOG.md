@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
 
+### Discord Bot (Caretaker Class Drone)
+
+- Changed: `/database-inspect` response now includes an image of the requested room layout.
+
 ## [3.1.2] - Unreleased
 
 ## [3.1.1] - 2021-09-12
