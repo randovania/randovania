@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Discord Bot (Caretaker Class Drone)
 
 - Changed: The response to `.rdvgame` files now include the seed hash and permalink.
+- Changed: `/database-inspect` response now includes an image of the requested room layout.
 
 ## [3.1.1] - 2021-09-12
 
