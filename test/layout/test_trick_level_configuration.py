@@ -89,12 +89,12 @@ def test_pretty_description_minimal_logic():
 
 
 @pytest.mark.parametrize(["levels", "expected"], [
-    ({}, "All at Disabled"),
+    ({}, "All tricks disabled"),
     ({i: LayoutTrickLevel.HYPERMODE for i in ["Dash", "BombJump", "Movement", "BSJ"]},
-     "21 at Disabled, 4 at Hypermode"),
+     "Enabled tricks: 21 at Disabled, 4 at Hypermode"),
     ({"Dash": LayoutTrickLevel.HYPERMODE, "BombJump": LayoutTrickLevel.HYPERMODE,
       "AirUnderwater": LayoutTrickLevel.ADVANCED},
-     "22 at Disabled, 1 at Advanced, 2 at Hypermode"),
+     "Enabled tricks: 22 at Disabled, Air Underwater at Advanced, 2 at Hypermode"),
 ])
 def test_pretty_description_tricks_echoes(levels, expected):
     config = TrickLevelConfiguration(False, levels, RandovaniaGame.METROID_PRIME_ECHOES)

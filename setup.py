@@ -77,7 +77,7 @@ setup(
         'aiohttp',
         'aiofiles',
         'dulwich>=0.20',
-        'py_randomprime>=0.6.0',
+        'py_randomprime>=0.6.1',
         'retro-data-structures>=0.6.0',
     ],
     extras_require={

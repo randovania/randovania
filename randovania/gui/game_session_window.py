@@ -4,6 +4,7 @@ import functools
 import json
 import logging
 import random
+from pathlib import Path
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
@@ -33,7 +34,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog
@@ -131,7 +132,8 @@ class RowWidget:
     customize: QtWidgets.QAction
     import_menu: QtWidgets.QMenu
     import_actions: List[QtWidgets.QAction]
-    save_copy: QtWidgets.QAction
+    export_menu: QtWidgets.QMenu
+    export_actions: List[QtWidgets.QAction]
     delete: QtWidgets.QAction
 
     @property
@@ -152,7 +154,7 @@ class RowWidget:
             self.name.setText(f"({preset.game.short_name}) {preset.name}")
         else:
             self.name.setText(preset.name)
-        self.save_copy.setEnabled(preset.base_preset_uuid is not None)
+        self.export_menu.setEnabled(preset.base_preset_uuid is not None)
 
 
 _PRESET_COLUMNS = 3
@@ -208,10 +210,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
         self.generate_game_with_spoiler_action = QtWidgets.QAction("Generate game", self.background_process_menu)
+        self.generate_game_with_spoiler_no_retry_action = QtWidgets.QAction("Generate game (no retries)",
+                                                                            self.background_process_menu)
         self.generate_game_without_spoiler_action = QtWidgets.QAction("Generate without spoiler",
                                                                       self.background_process_menu)
         self.import_permalink_action = QtWidgets.QAction("Import permalink", self.background_process_menu)
         self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
+        self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
         self.background_process_menu.addAction(self.generate_game_without_spoiler_action)
         self.background_process_menu.addAction(self.import_permalink_action)
         self.background_process_button.setMenu(self.background_process_menu)
@@ -259,6 +264,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         self.generate_game_with_spoiler_action.triggered.connect(self.generate_game_with_spoiler)
+        self.generate_game_with_spoiler_no_retry_action.triggered.connect(self.generate_game_with_spoiler_no_retry)
         self.generate_game_without_spoiler_action.triggered.connect(self.generate_game_without_spoiler)
         self.import_permalink_action.triggered.connect(self.import_permalink)
         self.background_process_button.clicked.connect(self.background_process_button_clicked)
@@ -375,6 +381,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         tool_button_menu = QtWidgets.QMenu(tool_button)
         tool_button.setMenu(tool_button_menu)
         import_menu = QtWidgets.QMenu(tool_button_menu)
+        export_menu = QtWidgets.QMenu(tool_button_menu)
 
         row = RowWidget(
             name=preset_name,
@@ -383,7 +390,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             customize=QtWidgets.QAction(tool_button_menu),
             import_menu=import_menu,
             import_actions=[],
-            save_copy=QtWidgets.QAction(tool_button_menu),
+            export_menu=export_menu,
+            export_actions=[],
             delete=QtWidgets.QAction(tool_button_menu),
         )
         self.rows.append(row)
@@ -400,9 +408,20 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         tool_button_menu.addMenu(row.import_menu)
         self._create_actions_for_import_menu(row)
 
-        row.save_copy.setText("Save copy of preset")
-        row.save_copy.triggered.connect(functools.partial(self._row_save_preset, row))
-        tool_button_menu.addAction(row.save_copy)
+        row.export_menu.setTitle("Export preset")
+        tool_button_menu.addMenu(row.export_menu)
+
+        save_copy = QtWidgets.QAction(tool_button_menu)
+        save_copy.setText("Save copy of preset")
+        save_copy.triggered.connect(functools.partial(self._row_save_preset_to_manager, row))
+        row.export_actions.append(save_copy)
+        export_menu.addAction(save_copy)
+
+        save_to_file = QtWidgets.QAction(tool_button_menu)
+        save_to_file.setText("Save to file")
+        save_to_file.triggered.connect(functools.partial(self._row_save_preset_to_file, row))
+        row.export_actions.append(save_to_file)
+        export_menu.addAction(save_to_file)
 
         row.delete.setText("Delete session row")
         row.delete.triggered.connect(functools.partial(self._row_delete, row))
@@ -432,6 +451,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 _add(g, menu)
         else:
             _add(self._game_session.allowed_games[0], row.import_menu)
+
+        action = QtWidgets.QAction(row.import_menu)
+        action.setText("Import from file")
+        action.triggered.connect(functools.partial(self._row_import_preset_from_file_prompt, row))
+        row.import_actions.append(action)
+        row.import_menu.addAction(action)
 
     def refresh_row_import_preset_actions(self):
         for row in self.rows:
@@ -492,28 +517,44 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row_index = self.rows.index(row)
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
 
-    def _row_save_preset(self, row: RowWidget):
+    def _row_import_preset_from_file_prompt(self, row: RowWidget):
+        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
+        if path is not None:
+            self._row_import_preset_from_file(row, path)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _row_import_preset_from_file(self, row: RowWidget, path: Path):
+        preset = await VersionedPreset.from_file(path)
+        try:
+            preset.get_preset()
+        except InvalidPreset:
+            await async_dialog.message_box(
+                self._window_manager,
+                QtWidgets.QMessageBox.Critical,
+                "Error loading preset",
+                "The file at '{}' contains an invalid preset.".format(path)
+            )
+            return
+
+        row_index = self.rows.index(row)
+        await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
+
+    def _row_save_preset_to_manager(self, row: RowWidget):
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
 
-        # FIXME? Customizing a preset is now always an inplace change
-        # existing_preset = self._preset_manager.preset_for_name(preset.name)
-        # if existing_preset is not None:
-        #     if existing_preset == preset:
-        #         return
-        #
-        #     user_response = QMessageBox.warning(
-        #         self,
-        #         "Preset name conflict",
-        #         "A preset named '{}' already exists. Do you want to overwrite it?".format(preset.name),
-        #         QMessageBox.Yes | QMessageBox.No,
-        #         QMessageBox.No
-        #     )
-        #     if user_response == QMessageBox.No:
-        #         return
-
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
+
+    def _row_save_preset_to_file(self, row: RowWidget):
+        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True)
+        if path is None:
+            return
+
+        row_index = self.rows.index(row)
+        preset = self._game_session.presets[row_index]
+        preset.save_to_file(path)
 
     @asyncSlot()
     @handle_network_errors
@@ -745,7 +786,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 game = default_database.game_description_for(preset.game)
                 try:
                     location_node = game.world_list.node_from_pickup_index(action.location)
-                    location_name = game.world_list.node_name(location_node, with_world=True, distinguish_dark_aether=True)
+                    location_name = game.world_list.node_name(location_node, with_world=True,
+                                                              distinguish_dark_aether=True)
                 except KeyError as e:
                     logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
                                    preset.game.long_name)
@@ -903,7 +945,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         return True
 
-    async def generate_game(self, spoiler: bool):
+    async def generate_game(self, spoiler: bool, retries: Optional[int]):
         if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
             await async_dialog.warning(self, "Multiworld Limitation",
                                        "Warning: Multiworld games doesn't have proper energy damage logic. "
@@ -918,16 +960,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
-        return await self.generate_game_with_permalink(permalink)
+        return await self.generate_game_with_permalink(permalink, retries=retries)
 
-    async def generate_game_with_permalink(self, permalink: Permalink):
+    async def generate_game_with_permalink(self, permalink: Permalink, retries: Optional[int]):
         if not await self._check_dangerous_presets(permalink):
             return
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
                                                       permalink=permalink,
-                                                      options=self._options)
+                                                      options=self._options,
+                                                      retries=retries)
 
         await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)
         self._generating_game = True
@@ -964,7 +1007,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def generate_game_with_spoiler(self):
-        await self.generate_game(True)
+        await self.generate_game(True, retries=None)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def generate_game_with_spoiler_no_retry(self):
+        await self.generate_game(True, retries=0)
 
     @asyncSlot()
     @handle_network_errors
@@ -999,7 +1047,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             if response != QMessageBox.Yes:
                 return
 
-        await self.generate_game_with_permalink(permalink)
+        await self.generate_game_with_permalink(permalink, retries=None)
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,

@@ -3,6 +3,7 @@ import collections
 import copy
 import csv
 import json
+import math
 import os
 import re
 import statistics
@@ -33,12 +34,14 @@ NON_MAJOR_PROGRESSION = [
     "Phazon Suit",
 ]
 
+
 def is_non_major_progression(x: str):
     x = x.lower()
     for item in NON_MAJOR_PROGRESSION:
         if x == item.lower():
             return True
     return False
+
 
 def read_json(path: Path) -> dict:
     with path.open() as x:
@@ -48,6 +51,7 @@ def read_json(path: Path) -> dict:
 _KEY_MATCH = re.compile(r"Key (\d+)")
 _ARTIFACT_MATCH = re.compile(r"Artifact of (\w+)")
 _PLAYER_MATCH = re.compile(r" for Player \d+")
+
 
 def _filter_item_name(name: str) -> str:
     return _PLAYER_MATCH.sub("", _ARTIFACT_MATCH.sub("Artifact", _KEY_MATCH.sub("Key", name)))
@@ -106,13 +110,16 @@ def sort_by_contents(data: dict) -> dict:
     }
 
 
-def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]) -> float:
+def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]) -> Optional[float]:
     balanced_freq = {
         item: count / pickup_count[item]
         for item, count in item_counts.items()
         if item in pickup_count
     }
-    return stdev(balanced_freq.values())
+    try:
+        return stdev(balanced_freq.values())
+    except statistics.StatisticsError:
+        return None
 
 
 def first_key(d: dict):
@@ -120,7 +127,8 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: List[str], major_progression_items_only: bool) -> Tuple[Dict[str, int], Set[str], Set[str], Set[str]]:
+def get_items_order(all_items: Iterable[str], item_order: List[str], major_progression_items_only: bool) -> Tuple[
+    Dict[str, int], Set[str], Set[str], Set[str]]:
     locations = set()
     no_key = set()
     progression_items = set()
@@ -146,7 +154,9 @@ def get_items_order(all_items: Iterable[str], item_order: List[str], major_progr
 
     return order, locations, no_key, progression_items
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool, major_progression_items_only:bool):
+
+def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool,
+                  major_progression_items_only: bool):
     def item_creator():
         return collections.defaultdict(int)
 
@@ -195,8 +205,9 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
-        item_orders, locations_with_progression, no_key_progression, _progression_items = get_items_order(list(items.keys()),
-                                                                                      seed_data["item_order"], major_progression_items_only)
+        item_orders, locations_with_progression, no_key_progression, _progression_items = get_items_order(
+            list(items.keys()),
+            seed_data["item_order"], major_progression_items_only)
         for item, order in item_orders.items():
             item_order[item].append(order)
 
@@ -218,7 +229,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         location: calculate_stddev(pickup_count, locations[location])
         for location in locations.keys()
     }
-    
+
     regions = dict()
     region_totals = dict()
 
@@ -243,7 +254,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     # probability that any given location in this region contains progression
     regions_weighted = dict()
     for region in regions:
-        regions_weighted[region] = (regions[region]/seed_count) / region_totals[region]
+        regions_weighted[region] = (regions[region] / seed_count) / region_totals[region]
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
@@ -258,16 +269,16 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     location_progression_no_key_count = {
         location: value
         for location, value in sorted(progression_no_key_count_for_location.items(),
-                                        key=lambda t: t[1], reverse=True)
+                                      key=lambda t: t[1], reverse=True)
     }
 
     for location in locations:
         if location not in location_progression_no_key_count.keys():
             location_progression_no_key_count[location] = 0
-    
+
         if location not in location_progression_count.keys():
             location_progression_count[location] = 0
-        
+
         for item in items:
             if location not in items[item].keys():
                 items[item][location] = 0
@@ -275,24 +286,24 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     if use_percentage:
         for item in items:
             for room in items[item]:
-                items[item][room] = items[item][room]/seed_count
+                items[item][room] = items[item][room] / seed_count
         for location in locations:
             for item in locations[location]:
-                locations[location][item] = locations[location][item]/seed_count
+                locations[location][item] = locations[location][item] / seed_count
         for location in location_progression_count:
-            location_progression_count[location] = location_progression_count[location]/seed_count
+            location_progression_count[location] = location_progression_count[location] / seed_count
         for location in location_progression_no_key_count:
-            location_progression_no_key_count[location] = location_progression_no_key_count[location]/seed_count
+            location_progression_no_key_count[location] = location_progression_no_key_count[location] / seed_count
         for region in regions:
-            regions[region] = regions[region]/total_progression_item_count
+            regions[region] = regions[region] / total_progression_item_count
 
     final_results = {
         "seed_count": seed_count,
         "regions": regions,
-        "regions_weighted":regions_weighted,
+        "regions_weighted": regions_weighted,
         "stddev_by_location": {
             location: stddev
-            for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1], reverse=True)
+            for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
         },
         "items": items,
         "locations": locations,
@@ -327,8 +338,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
             if field == "regions":
                 data = {
-                    "Share of Progression":final_results["regions"],
-                    "Locations with Progression":final_results["regions_weighted"],
+                    "Share of Progression": final_results["regions"],
+                    "Locations with Progression": final_results["regions_weighted"],
                 }
 
             possible_columns = set()
