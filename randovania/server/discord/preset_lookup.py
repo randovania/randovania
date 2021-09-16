@@ -123,7 +123,7 @@ class PermalinkLookupCog(commands.Cog):
         if message.author == self.bot.user:
             return
 
-        if message.guild.id != self.configuration["guild"]:
+        if message.guild is not None and message.guild.id != self.configuration["guild"]:
             return
 
         for attachment in message.attachments:
@@ -138,9 +138,7 @@ class PermalinkLookupCog(commands.Cog):
                 description = LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
                 await reply_for_layout_description(message, description)
 
-        channel: discord.TextChannel = message.channel
-        if self.configuration["channel_name_filter"] in channel.name:
-            await look_for_permalinks(message)
+        await look_for_permalinks(message)
 
     async def on_request_presets(self, ctx: ComponentContext):
         try:

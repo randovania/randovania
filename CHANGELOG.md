@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Discord Bot (Caretaker Class Drone)
 
+- Added: The bot now responds to permalinks, presets and rdvgame files sent via direct messages.
 - Added: Response for permalinks now offers the permalink's presets for download.
 - Changed: `/database-inspect` area responses now has a node selection.
 
