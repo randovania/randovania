@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 from mock import MagicMock, AsyncMock, call, ANY
 
@@ -23,21 +25,23 @@ async def test_on_message_from_bot(mocker):
     mock_look_for.assert_not_awaited()
 
 
-@pytest.mark.parametrize(["name_filter", "guild", "expected"], [
-    ("unknown", 0, False),
-    ("expected_name", 0, False),
-    ("unknown", 1234, False),
-    ("expected_name", 1234, True),
+@pytest.mark.parametrize(["guild", "expected"], [
+    (None, True),
+    (0, False),
+    (1234, True),
 ])
 @pytest.mark.asyncio
-async def test_on_message_wrong_place(mocker, name_filter: str, guild: int, expected):
+async def test_on_message_wrong_place(mocker, guild: Optional[int], expected):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.discord.preset_lookup.look_for_permalinks",
                                             new_callable=AsyncMock)
-    cog = preset_lookup.PermalinkLookupCog({"channel_name_filter": name_filter, "guild": guild}, MagicMock())
+    cog = preset_lookup.PermalinkLookupCog({"guild": 1234}, MagicMock())
 
     message = MagicMock()
     message.channel.name = "the_expected_name"
-    message.guild.id = 1234
+    if guild is None:
+        message.guild = None
+    else:
+        message.guild.id = guild
 
     # Run
     await cog.on_message(message)
