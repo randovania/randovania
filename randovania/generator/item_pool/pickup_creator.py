@@ -208,7 +208,7 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
     )
 
 
-def create_prime1_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
     """
     Creates a Nothing pickup.
     :param resource_database:

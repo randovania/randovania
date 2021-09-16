@@ -256,7 +256,7 @@ class RandomprimePatcher(Patcher):
         }
 
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
-        useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
+        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)
 
         pickup_list = pickup_exporter.export_all_indices(
