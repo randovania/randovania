@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.1.2] - Unreleased
+## [3.1.3] - Unreleased
+
+## [3.1.2] - 2021-09-15
 
 - Fixed: In game session, pressing the "Generate game" button no longer errors.
 
