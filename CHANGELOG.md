@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime - Logic Database
 
 - Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
+- Fixed shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
 
 ### Discord Bot (Caretaker Class Drone)
 
