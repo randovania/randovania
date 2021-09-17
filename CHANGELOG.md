@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.2] - Unreleased
 
+- Added: Custom names for Prime 1 elevators
+- Changed: Custom elevator names across both games now used throughout the entire UI
+
 ## [3.1.1] - 2021-09-12
 
 - Added: When importing a preset in a game session, there's now an option to import directly from a file.
@@ -30,10 +33,6 @@ time, before giving the error message of why it failed. It's useful for investig
 - Changed: When multiworld generation fails, the error message is now clearer on which players haven't reached the end.
 - Changed: Preset summaries have been split better into categories.
 - Removed: The "Never" option for dangerous actions has been removed from the UI, as it currently doesn't work.
-
-### Custom Elevator Names (Prime 1 + Echoes)
-- Changed: Reworked how elevator custom names are handled in the UI
-- Added: Support for short names in the tracker
 
 ### Discord Bot (Caretaker Class Drone)
 
