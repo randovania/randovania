@@ -87,9 +87,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         return self.game_description.game
 
     def _create_check_for_source_elevator(self, location: Teleporter):
-        area = self.game_description.world_list.area_by_area_location(location.area_location)
-
-        name = elevators.get_elevator_area_name(self.game_enum, self.game_description.world_list, area, False)
+        name = elevators.get_elevator_area_name(self.game_enum, self.game_description.world_list, location.area_location, False)
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)

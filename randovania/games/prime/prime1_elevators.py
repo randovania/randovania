@@ -56,12 +56,7 @@ UI_CUSTOM_NAMES = {
     2318493278: "Frigate Crash Site Elevator",
     366411659: "Root Cave Elevator",
     212145392: "Lower/North Great Tree Elevator",
-    2098226800: "Upper/South Great Tree Elevator",
-
-    # Here to prevent exceptions in _get_elevator_area_name
-    597223686: "Artifact Temple",
-    2472970646: "Crater Entry Point",
-    3508802073: "Exterior Docking Hangar"
+    2098226800: "Upper/South Great Tree Elevator"
 }
 
 # Names for use when "elevator" is implied
@@ -92,10 +87,5 @@ SHORT_UI_CUSTOM_NAMES = {
     2318493278: "Frigate Crash Site",
     366411659: "Root Cave",
     212145392: "Lower/North Great Tree",
-    2098226800: "Upper/South Great Tree",
-
-    # Here to prevent exceptions in _get_elevator_area_name
-    597223686: "Artifact Temple",
-    2472970646: "Crater Entry Point",
-    3508802073: "Exterior Docking Hangar"
+    2098226800: "Upper/South Great Tree"
 }
