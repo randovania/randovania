@@ -85,8 +85,7 @@ class AreaListHelper:
             for area in sorted(areas_by_world[world.world_asset_id], key=lambda a: a.name):
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
-                check_label = elevators.CUSTOM_NAMES_FOR_ELEVATORS[self.game_description.game].get(area.area_asset_id, area.name)
-                check.setText(check_label)
+                check.setText(elevators.get_elevator_name_or_default(self.game_description.game, area.area_asset_id, area.name))
                 check.area_location = AreaLocation(world.world_asset_id, area.area_asset_id)
                 check.stateChanged.connect(functools.partial(_on_check_area, check))
                 group_box.vertical_layout.addWidget(check)

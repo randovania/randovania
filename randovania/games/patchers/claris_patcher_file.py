@@ -111,7 +111,7 @@ def _pretty_name_for_elevator(game: RandovaniaGame,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(elevators.get_elevator_area_name(game, world_list, connection, False))
+    return "Transport to {}".format(elevators.get_elevator_or_area_name(game, world_list, connection, False))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -188,7 +188,7 @@ def _create_elevator_scan_port_patches(game:RandovaniaGame, world_list: WorldLis
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = elevators.get_elevator_area_name(game, world_list, elevator_connection[teleporter], True)
+        target_area_name = elevators.get_elevator_or_area_name(game, world_list, elevator_connection[teleporter], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
