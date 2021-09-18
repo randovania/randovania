@@ -25,20 +25,28 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         self.skytemple_combo.currentIndexChanged.connect(self._on_sky_temple_key_combo_changed)
         self.skytemple_slider.valueChanged.connect(self._on_sky_temple_key_combo_slider_changed)
 
+        # Default to False, since the slider defaults to a non-collect keys value.
+        self._set_slider_visible(False)
+
     @property
     def uses_patches_tab(self) -> bool:
         return False
 
+    def _set_slider_visible(self, visible: bool):
+        for w in [self.skytemple_slider, self.skytemple_slider_label]:
+            w.setVisible(visible)
+
     def _on_sky_temple_key_combo_changed(self):
         combo_enum = self.skytemple_combo.currentData()
-        with self._editor:
+        with self._editor as editor:
             if combo_enum is int:
-                self.skytemple_slider.setEnabled(True)
-                self._editor.layout_configuration_sky_temple_keys = LayoutSkyTempleKeyMode(
-                    self.skytemple_slider.value())
+                new_value = LayoutSkyTempleKeyMode(self.skytemple_slider.value())
+                self._set_slider_visible(True)
             else:
-                self.skytemple_slider.setEnabled(False)
-                self._editor.layout_configuration_sky_temple_keys = combo_enum
+                new_value = combo_enum
+                self._set_slider_visible(False)
+
+            editor.layout_configuration_sky_temple_keys = new_value
 
     def _on_sky_temple_key_combo_slider_changed(self):
         self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
