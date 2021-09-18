@@ -10,7 +10,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_teleporters, prime1_elevators
+from randovania.games.prime import elevators
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.area_list_helper import AreaListHelper
@@ -87,19 +87,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         return self.game_description.game
 
     def _create_check_for_source_elevator(self, location: Teleporter):
-        area = self.game_description.world_list.area_by_area_location(location.area_location)
-
-        name = None
-        if self.game_enum == RandovaniaGame.METROID_PRIME:
-            name = prime1_elevators.CUSTOM_NAMES.get(location.area_location)
-
-        elif self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
-            name = echoes_teleporters.CUSTOM_NAMES_FOR_ELEVATORS.get(area.area_asset_id)
-
-        if name is None:
-            name = self.game_description.world_list.area_name(area)
-
-        name = name.replace("\0", " ")
+        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.world_list, location.area_location, False)
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)
