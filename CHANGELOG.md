@@ -10,10 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime - Patcher Changes
 
-- Move shorelines tower cutscene skip back to minor.
-- Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
-- New Nothing model.
-- Missile Expansions for yourself has a 1 in 1024 of being shiny.
+- Added: New Nothing model.
+- Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
+- Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
+- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer
+
+#### Cutscene Skips
+
+- Added: cutscene skip for arboretum to all Minor and above.
+- Added: Mine Security Station now longer force switches to Combat Visor.
+- Changed: Shorelines Tower cutscene skip is now Minor.
+- Changed: Workstation cutscene is now Competitive.
+- Changed: Wave panel cutscene in Main Quarry is now Competitive.
+- Changed: Elevator leaving cutscenes back are now Major.
 
 ### Metroid Prime - Logic Database
 
