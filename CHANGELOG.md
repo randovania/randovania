@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: Custom names for Prime 1 elevators
+- Changed: Custom elevator names across both games now used throughout the entire UI
+
 ### Metroid Prime - Patcher Changes
 
 - Added: New Nothing model.
@@ -42,9 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The response to `.rdvgame` files now include the seed hash and permalink.
 - Changed: `/database-inspect` response now includes an image of the requested room layout.
-
-- Added: Custom names for Prime 1 elevators
-- Changed: Custom elevator names across both games now used throughout the entire UI
 
 ## [3.1.1] - 2021-09-12
 
