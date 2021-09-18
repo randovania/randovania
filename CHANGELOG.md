@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: In the description of Prime 1 presets, Quality of Life now comes before Game Changes.
 
+### Discord Bot (Caretaker Class Drone)
+
+- Changed: `/database-inspect` area responses now has a node selection.
+
 ## [3.1.2] - 2021-09-15
 
 - Fixed: In game session, pressing the "Generate game" button no longer errors.

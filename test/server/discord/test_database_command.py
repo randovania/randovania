@@ -6,7 +6,7 @@ from discord import Embed
 from discord_slash import ComponentType
 
 from randovania.games.game import RandovaniaGame
-from randovania.server.discord.database_command import DatabaseCommandCog
+from randovania.server.discord.database_command import DatabaseCommandCog, SplitWorld
 
 
 @pytest.mark.asyncio
@@ -100,16 +100,17 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
 
     world = echoes_game_description.world_list.worlds[2]
     area = world.areas[0]
-    split_world = (world, "The World", [MagicMock(), area])
+    split_world = SplitWorld(world, "The World", [MagicMock(), area])
 
     # Run
-    await cog.on_database_area_selected(ctx, RandovaniaGame.METROID_PRIME_ECHOES, split_world)
+    await cog.on_database_area_selected(ctx, RandovaniaGame.METROID_PRIME_ECHOES, split_world, 2)
 
     # Assert
     ctx.send.assert_awaited_once_with(
         content=f"Requested by {ctx.author.display_name}.",
         embed=ANY,
         files=[mock_file.return_value],
+        components=[ANY],
     )
     mock_digraph.assert_called_once_with(comment=area.name)
     dot.node.assert_has_calls([
@@ -120,3 +121,35 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
     mock_file.assert_called_once_with(Path("bar"))
     assert not Path("bar").is_file()
 
+
+@pytest.mark.asyncio
+async def test_on_area_node_selection(echoes_game_description, mocker):
+    # Setup
+    mock_embed: MagicMock = mocker.patch("discord.Embed")
+
+    cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
+
+    world = echoes_game_description.world_list.worlds[2]
+    area = world.areas[2]
+
+    ctx = AsyncMock()
+    ctx.selected_options = [area.nodes[0].name, area.nodes[2].name]
+
+    # Run
+    await cog.on_area_node_selection(ctx, RandovaniaGame.METROID_PRIME_ECHOES, area)
+
+    # Assert
+    ctx.edit_origin.assert_awaited_once_with(embed=mock_embed.return_value)
+    mock_embed.assert_called_once_with(title=ctx.origin_message.embeds[0].title)
+    mock_embed.return_value.add_field.assert_has_calls([
+        call(
+            name=area.nodes[0].name,
+            value=ANY,
+            inline=False,
+        ),
+        call(
+            name=area.nodes[2].name,
+            value=ANY,
+            inline=False,
+        ),
+    ])
