@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Custom names for Prime 1 elevators
 - Changed: Custom elevator names across both games now used throughout the entire UI
+- Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
 
 ### Metroid Prime - Patcher Changes
 
