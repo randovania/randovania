@@ -70,15 +70,15 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
 class DatabaseCommandCog(commands.Cog):
     _split_worlds: Dict[RandovaniaGame, List[SplitWorld]]
 
-    def __init__(self, configuration: dict, bot: commands.Bot):
+    def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
-        self.slash = SlashCommand(bot)
+        self.bot = bot
         self._split_worlds = {}
         self._on_database_component_listener = {}
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.slash.add_slash_command(
+        self.bot.slash.add_slash_command(
             self.database_command,
             name="database-inspect",
             description="Consult the Randovania's logic database for one specific room.",
@@ -111,13 +111,13 @@ class DatabaseCommandCog(commands.Cog):
                 for j, area in enumerate(split_world.areas):
                     add_id(f"{game.value}_world_{i}_area_{j}", self.on_area_node_selection, game=game, area=area)
 
-        self.slash.add_component_callback(
+        self.bot.slash.add_component_callback(
             self.on_database_component,
             components=list(self._on_database_component_listener.keys()),
             use_callback_name=False,
         )
 
-        await self.slash.sync_all_commands()
+        await self.bot.slash.sync_all_commands()
 
     def _message_components_for_game(self, game: RandovaniaGame):
         options = []
