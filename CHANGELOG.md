@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.3] - Unreleased
 
+- Added: Dialog that shows all enabled tricks in a preset and a list of all rooms that have some combination of tricks that ends up active in that preset.
+  - This dialog can be accessed by right-clicking a preset on the "Generate Game" tab, or by pressing the "..." menu in the "Game Details" window. 
 - Added: Multiworld Help entry regarding maximum number of players.
 - Added: Metroid Prime FAQ entry regarding the forced popup alert.
 - Changed: Long lines of requirements (Check for all artifacts in Artifact Temple) are now word wrapped.
