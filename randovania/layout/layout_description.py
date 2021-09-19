@@ -161,6 +161,10 @@ class LayoutDescription:
         return result
 
     @property
+    def all_games(self) -> typing.FrozenSet[RandovaniaGame]:
+        return frozenset(preset.game for preset in self.permalink.presets.values())
+
+    @property
     def _shareable_hash_bytes(self) -> bytes:
         bytes_representation = json.dumps(self._serialized_patches).encode()
         return hashlib.blake2b(bytes_representation, digest_size=5).digest()
@@ -173,9 +177,12 @@ class LayoutDescription:
     def shareable_word_hash(self) -> str:
         rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
         words = _shareable_hash_words()
-        all_games = [preset.game for preset in self.permalink.presets.values()]
-        games_left = []
 
+        # We're not using self.all_games because we want multiple copies of a given game in the list,
+        # so a game that has more players is more likely to have words in the hash
+        all_games = [preset.game for preset in self.permalink.presets.values()]
+
+        games_left = []
         selected_words = []
         for _ in range(3):
             if not games_left:

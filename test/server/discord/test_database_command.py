@@ -1,4 +1,5 @@
-from unittest.mock import MagicMock, AsyncMock, ANY
+from pathlib import Path
+from unittest.mock import MagicMock, AsyncMock, ANY, call
 
 import pytest
 from discord import Embed
@@ -84,8 +85,14 @@ async def test_on_database_world_selected():
 
 
 @pytest.mark.asyncio
-async def test_on_database_area_selected(echoes_game_description):
+async def test_on_database_area_selected(echoes_game_description, mocker):
     # Setup
+    mock_file: MagicMock = mocker.patch("discord.File")
+    mock_digraph: MagicMock = mocker.patch("graphviz.Digraph")
+    dot: MagicMock = mock_digraph.return_value
+    dot.render.return_value = "bar"
+    Path("bar").write_bytes(b"1234")
+
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
 
     ctx = AsyncMock()
@@ -102,5 +109,14 @@ async def test_on_database_area_selected(echoes_game_description):
     ctx.send.assert_awaited_once_with(
         content=f"Requested by {ctx.author.display_name}.",
         embed=ANY,
+        files=[mock_file.return_value],
     )
+    mock_digraph.assert_called_once_with(comment=area.name)
+    dot.node.assert_has_calls([
+        call(node.name)
+        for node in area.nodes
+    ])
+    dot.render.assert_called_once_with(format="png", cleanup=True)
+    mock_file.assert_called_once_with(Path("bar"))
+    assert not Path("bar").is_file()
 

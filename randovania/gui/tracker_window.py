@@ -31,7 +31,7 @@ from randovania.game_description.world.node import Node, ResourceNode, Translato
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_teleporters
+from randovania.games.prime import elevators
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
@@ -541,7 +541,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 nodes_by_world[name].append(node)
 
                 location = AreaLocation(world.world_asset_id, area.area_asset_id)
-                targets[echoes_teleporters.elevator_area_name(world_list, location, True)] = location
+                targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, True)] = location
 
         if self.game_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -557,7 +557,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
                                             world_list.nodes_to_area(node).area_asset_id)
                                for node in nodes]
-            nodes_names = [echoes_teleporters.elevator_area_name(world_list, location, False)
+            nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, False)
                            for location in nodes_locations]
 
             group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
@@ -569,6 +569,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                               key=lambda it: it[2])):
                 node_name = QtWidgets.QLabel(group)
                 node_name.setText(name)
+                node_name.setWordWrap(True)
+                node_name.setMinimumWidth(75)
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
@@ -580,6 +582,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     for target_name, connection in combo_targets:
                         combo.addItem(target_name, connection)
 
+                combo.setMinimumContentsLength(11)
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
                 self._elevator_id_to_combo[node.teleporter] = combo
                 layout.addWidget(combo, i, 1)

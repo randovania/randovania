@@ -8,18 +8,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added: Files in the "Previously generated games" folder now includes the name of the games used.
+- Added: Custom names for Prime 1 elevators
+- Changed: Custom elevator names across both games now used throughout the entire UI
+- Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
+- Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
+
 ### Metroid Prime - Patcher Changes
 
-- Move shorelines tower cutscene skip back to minor.
-- Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
-- New Nothing model.
-- Missile Expansions for yourself has a 1 in 1024 of being shiny.
+- Added: New Nothing model.
+- Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
+- Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
+- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer
+
+#### Cutscene Skips
+
+- Added: cutscene skip for arboretum to all Minor and above.
+- Added: Mine Security Station now longer force switches to Combat Visor.
+- Changed: Shorelines Tower cutscene skip is now Minor.
+- Changed: Workstation cutscene is now Competitive.
+- Changed: Wave panel cutscene in Main Quarry is now Competitive.
+- Changed: Elevator leaving cutscenes back are now Major.
 
 ### Metroid Prime - Logic Database
 
 - Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
+- Fixed shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
+- Fixed Backwards Lower Mines logic
+- Added additional Lower Mines NSJ logic
 
-## [3.1.2] - Unreleased
+### Discord Bot (Caretaker Class Drone)
+
+- Nothing.
+
+## [3.1.3] - Unreleased
+
+## [3.1.2] - 2021-09-15
+
+- Fixed: In game session, pressing the "Generate game" button no longer errors.
+
+### Discord Bot (Caretaker Class Drone)
+
+- Changed: The response to `.rdvgame` files now include the seed hash and permalink.
+- Changed: `/database-inspect` response now includes an image of the requested room layout.
 
 ## [3.1.1] - 2021-09-12
 

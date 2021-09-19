@@ -9,10 +9,16 @@ import randovania
 from randovania.gui.lib import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot
 
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
+
+
+def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
+    for category, items in preset_describer.describe(preset):
+        embed.add_field(name=category, value="\n".join(items), inline=True)
 
 
 async def look_for_permalinks(message: discord.Message):
@@ -36,8 +42,7 @@ async def look_for_permalinks(message: discord.Message):
             preset = permalink.get_preset(0)
             embed.description = "{} permalink for Randovania {}".format(preset.game.long_name,
                                                                         randovania.VERSION)
-            for category, items in preset_describer.describe(preset):
-                embed.add_field(name=category, value="\n".join(items), inline=True)
+            _add_preset_description_to_embed(embed, preset)
 
     if embed is not None:
         content = None
@@ -57,8 +62,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
 
     embed = discord.Embed(title=preset.name,
                           description=preset.description)
-    for category, items in preset_describer.describe(preset):
-        embed.add_field(name=category, value="\n".join(items), inline=True)
+    _add_preset_description_to_embed(embed, preset)
     await message.reply(embed=embed, mention_author=False)
 
 
@@ -70,8 +74,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
     if description.permalink.player_count == 1:
         preset = description.get_preset(0)
         embed.description = "{}, with preset {}".format(preset.game.long_name, preset.name)
-        for category, items in preset_describer.describe(preset):
-            embed.add_field(name=category, value="\n".join(items), inline=True)
+        _add_preset_description_to_embed(embed, preset)
     else:
         games = {preset.game.long_name for preset in description.permalink.presets.values()}
         game_names = sorted(games)
@@ -82,9 +85,11 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text += " and "
         games_text += last_game
 
-        embed.description = "{} player multiworld for {}".format(
+        embed.description = "{} player multiworld for {}.\nSeed Hash: {}\nPermalink: {}".format(
             description.permalink.player_count,
             games_text,
+            description.shareable_word_hash,
+            description.permalink.as_base64_str,
         )
 
     await message.reply(embed=embed, mention_author=False)
