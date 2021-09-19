@@ -71,7 +71,8 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         # Update
         if areas_to_show:
             lines = [
-                f'<a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">{world.correct_name(area.in_dark_aether)} - {area.name}</a>'
+                (f'<a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">'
+                 f'{world.correct_name(area.in_dark_aether)} - {area.name}</a>')
                 for (world, area) in areas_to_show
             ]
             self.area_list_label.setText("<br />".join(sorted(lines)))

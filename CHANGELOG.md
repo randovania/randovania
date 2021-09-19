@@ -42,7 +42,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [3.1.3] - Unreleased
+## [3.1.4] - Unreleased
+
+## [3.1.3] - 2021-09-19
+
+- Added: Dialog that shows all enabled tricks in a preset and a list of all rooms that have some combination of tricks that ends up active in that preset.
+  - This dialog can be accessed by right-clicking a preset on the "Generate Game" tab, or by pressing the "..." menu in the "Game Details" window. 
+- Added: Multiworld Help entry regarding maximum number of players.
+- Added: Metroid Prime FAQ entry regarding the forced popup alert.
+- Changed: Long lines of requirements (Check for all artifacts in Artifact Temple) are now word wrapped.
+- Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
+- Changed: In the description of Prime 1 presets, Quality of Life now comes before Game Changes.
+- Changed: Clarify that only "Two-way, between areas" guarantees that all areas are accessible.
+- Changed: Progress bar when generating a game now reports how many actions were taken, instead of how many items are left.
+- Fixed: Nodes with no outbound connections now clearly display this in the visualizer, instead of an error.
+- Fixed: Updated multiworld damage warning to mention Magmoor Caverns as well.
+
+### Discord Bot (Caretaker Class Drone)
+
+- Added: The bot now responds to permalinks, presets and rdvgame files sent via direct messages.
+- Added: Response for permalinks now offers the permalink's presets for download.
+- Changed: `/database-inspect` area responses now has a node selection.
 
 ## [3.1.2] - 2021-09-15
 

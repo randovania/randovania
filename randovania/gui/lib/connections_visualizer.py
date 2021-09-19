@@ -175,6 +175,7 @@ class ConnectionsVisualizer:
             else:
                 label = QLabel(parents[depth][0])
                 label.setText(text)
+                label.setWordWrap(True)
                 self._elements.append(label)
                 parents[depth][1].addWidget(label)
 
