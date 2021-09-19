@@ -2,7 +2,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, ANY, call
 
 import pytest
-from discord import Embed
 from discord_slash import ComponentType
 
 from randovania.games.game import RandovaniaGame
@@ -13,25 +12,26 @@ from randovania.server.discord.database_command import DatabaseCommandCog, Split
 async def test_on_ready():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
-    cog.slash = AsyncMock()
+    slash = AsyncMock()
+    cog.bot.slash = slash
 
     # Run
     await cog.on_ready()
 
     # Assert
-    cog.slash.add_slash_command.assert_called_once_with(
+    slash.add_slash_command.assert_called_once_with(
         cog.database_command,
         name="database-inspect",
         description="Consult the Randovania's logic database for one specific room.",
         guild_ids=[1234],
         options=[ANY],
     )
-    cog.slash.add_component_callback.assert_called_once_with(
+    slash.add_component_callback.assert_called_once_with(
         cog.on_database_component,
         components=ANY,
         use_callback_name=False,
     )
-    cog.slash.sync_all_commands.assert_awaited_once_with()
+    slash.sync_all_commands.assert_awaited_once_with()
 
 
 @pytest.mark.asyncio

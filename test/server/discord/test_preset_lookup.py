@@ -1,5 +1,5 @@
 import pytest
-from mock import MagicMock, AsyncMock, call
+from mock import MagicMock, AsyncMock, call, ANY
 
 import randovania
 from randovania.games.game import RandovaniaGame
@@ -63,6 +63,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     embed = MagicMock()
 
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
+    mock_create_actionrow = mocker.patch("discord_slash.utils.manage_components.create_actionrow")
 
     mock_describe: MagicMock = mocker.patch("randovania.gui.lib.preset_describer.describe",
                                             return_value=[
@@ -115,6 +116,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     message.reply.assert_awaited_once_with(
         content=content,
         embed=embed,
+        components=[mock_create_actionrow.return_value],
         mention_author=False,
     )
 
