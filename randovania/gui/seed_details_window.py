@@ -97,10 +97,9 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._action_export_preset.setText("Export current player's preset")
         self._tool_button_menu.addAction(self._action_export_preset)
 
-        self._action_open_dolphin = QAction(self)
-        self._action_open_dolphin.setText("Open Dolphin Hook")
-        self._tool_button_menu.addAction(self._action_open_dolphin)
-        self._action_open_dolphin.setVisible(False)
+        self._action_view_trick_usages = QAction(self)
+        self._action_view_trick_usages.setText("View current player's expected trick usage")
+        self._tool_button_menu.addAction(self._action_view_trick_usages)
 
         # Signals
         self.export_log_button.clicked.connect(self._export_log)
@@ -108,6 +107,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
         self._action_export_preset.triggered.connect(self._export_preset)
+        self._action_view_trick_usages.triggered.connect(self._view_trick_usages)
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.player_index_combo.activated.connect(self._update_current_player)
@@ -148,6 +148,13 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         output_path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
         if output_path is not None:
             VersionedPreset.with_preset(preset).save_to_file(output_path)
+
+    def _view_trick_usages(self):
+        from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
+        preset = self.layout_description.permalink.get_preset(self.current_player_index)
+        self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, preset)
+        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_usage_popup.open()
 
     async def _show_dialog_for_prime3_layout(self):
         from randovania.games.patchers import gollop_corruption_patcher
