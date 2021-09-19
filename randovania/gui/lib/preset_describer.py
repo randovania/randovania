@@ -346,6 +346,12 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[st
             {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
             {"Underwater movement without Gravity allowed": configuration.allow_underwater_movement_without_gravity},
         ],
+        "Quality of Life": [
+            {
+                "Fixes to game breaking bugs": configuration.qol_game_breaking,
+                "Pickup scans": configuration.qol_pickup_scans,
+            }
+        ],
         "Game Changes": [
             message_for_required_mains(
                 configuration.ammo_configuration,
@@ -371,12 +377,6 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[st
                 cutscene_removal: cutscene_removal is not None,
             }
         ],
-        "Quality of Life": [
-            {
-                "Fixes to game breaking bugs": configuration.qol_game_breaking,
-                "Pickup scans": configuration.qol_pickup_scans,
-            }
-        ]
     }
 
     fill_template_strings_from_tree(template_strings, extra_message_tree)

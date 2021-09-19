@@ -947,9 +947,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     async def generate_game(self, spoiler: bool, retries: Optional[int]):
         if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
-            await async_dialog.warning(self, "Multiworld Limitation",
-                                       "Warning: Multiworld games doesn't have proper energy damage logic. "
-                                       "You might be required to do Dark Aether checks with very low energy.")
+            await async_dialog.warning(
+                self, "Multiworld Limitation",
+                "Warning: Multiworld games doesn't have proper energy damage logic. "
+                "You might be required to do Dark Aether or heated Magmoor Cavern checks with very low energy."
+            )
             self._options.mark_alert_as_displayed(InfoAlert.MULTI_ENERGY_ALERT)
 
         permalink = Permalink(
