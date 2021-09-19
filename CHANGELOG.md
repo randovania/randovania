@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Multiworld Help entry regarding maximum number of players.
 - Added: Metroid Prime FAQ entry regarding the forced popup alert.
+- Changed: Long lines of requirements (Check for all artifacts in Artifact Temple) are now word wrapped.
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
 - Changed: In the description of Prime 1 presets, Quality of Life now comes before Game Changes.
 - Changed: Clarify that only "Two-way, between areas" guarantees that all areas are accessible.
