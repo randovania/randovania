@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime - Logic Database
 
 - Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
+- Fixed shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
+- Fixed Backwards Lower Mines logic
+- Added additional Lower Mines NSJ logic
 
 ### Discord Bot (Caretaker Class Drone)
 
