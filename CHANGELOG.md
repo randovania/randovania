@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Clarify that only "Two-way, between areas" guarantees that all areas are accessible.
 - Changed: Progress bar when generating a game now reports how many actions were taken, instead of how many items are left.
 - Fixed: Nodes with no outbound connections now clearly display this in the visualizer, instead of an error.
+- Fixed: Updated multiworld damage warning to mention Magmoor Caverns as well.
 
 ### Discord Bot (Caretaker Class Drone)
 
