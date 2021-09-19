@@ -283,9 +283,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 if node in self.current_area.connections[source_node]
                 else ""
             )
-        for node in self.current_area.nodes:
-
-            pass
 
         self._previous_selected_node = node
 
@@ -308,7 +305,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self._area_with_displayed_connections = self.current_area
 
         if self.other_node_connection_combo.count() > 0:
-            self.other_node_connection_combo.currentIndexChanged.disconnect(self.update_connections)
+            if self.other_node_connection_combo.isEnabled():
+                self.other_node_connection_combo.currentIndexChanged.disconnect(self.update_connections)
             self.other_node_connection_combo.clear()
 
         for node in sorted(self.current_area.nodes, key=lambda x: x.name):
@@ -328,6 +326,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.other_node_connection_edit_button.setEnabled(True)
         else:
             self.other_node_connection_combo.setEnabled(False)
+            self.other_node_connection_combo.addItem("No connections")
             self.other_node_connection_edit_button.setEnabled(False)
 
         self.update_connections()
@@ -344,7 +343,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self._connections_visualizer = None
 
         if current_connection_node is None:
-            assert len(self.current_area.nodes) == 1
+            assert len(self.current_area.nodes) == 1 or not self.edit_mode
             return
 
         requirement = self.current_area.connections[self.current_node].get(self.current_connection_node,
@@ -480,5 +479,5 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return self.radio_button_to_node.get(self.selected_node_button)
 
     @property
-    def current_connection_node(self) -> Node:
+    def current_connection_node(self) -> Optional[Node]:
         return self.other_node_connection_combo.currentData()
