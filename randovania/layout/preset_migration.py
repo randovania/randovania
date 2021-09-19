@@ -1,4 +1,5 @@
 import copy
+import io
 import json
 import uuid
 from pathlib import Path
@@ -470,6 +471,11 @@ class VersionedPreset:
         path.parent.mkdir(exist_ok=True, parents=True)
         with path.open("w") as preset_file:
             json.dump(self.as_json, preset_file, indent=4)
+
+    def save_to_io(self, data: io.BytesIO):
+        data.write(
+            json.dumps(self.as_json, indent=4).encode("utf-8")
+        )
 
     @property
     def as_json(self) -> dict:

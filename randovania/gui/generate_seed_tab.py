@@ -45,6 +45,7 @@ class PresetMenu(QtWidgets.QMenu):
     action_export: QtWidgets.QAction
     action_duplicate: QtWidgets.QAction
     action_map_tracker: QtWidgets.QAction
+    action_required_tricks: QtWidgets.QAction
 
     action_import: QtWidgets.QAction
     action_view_deleted: QtWidgets.QAction
@@ -59,6 +60,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_export = QtWidgets.QAction(parent)
         self.action_duplicate = QtWidgets.QAction(parent)
         self.action_map_tracker = QtWidgets.QAction(parent)
+        self.action_required_tricks = QtWidgets.QAction(parent)
         self.action_import = QtWidgets.QAction(parent)
         self.action_view_deleted = QtWidgets.QAction(parent)
 
@@ -68,6 +70,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_export.setText("Export")
         self.action_duplicate.setText("Duplicate")
         self.action_map_tracker.setText("Open map tracker")
+        self.action_required_tricks.setText("View expected trick usage")
         self.action_import.setText("Import")
         self.action_view_deleted.setText("View deleted presets")
 
@@ -77,6 +80,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.addAction(self.action_export)
         self.addAction(self.action_duplicate)
         self.addAction(self.action_map_tracker)
+        self.addAction(self.action_required_tricks)
         self.addSeparator()
         self.addAction(self.action_import)
         self.addAction(self.action_view_deleted)
@@ -91,7 +95,7 @@ class PresetMenu(QtWidgets.QMenu):
         for p in [self.action_delete, self.action_history, self.action_export]:
             p.setEnabled(preset is not None and preset.base_preset_uuid is not None)
 
-        for p in [self.action_customize, self.action_duplicate, self.action_map_tracker]:
+        for p in [self.action_customize, self.action_duplicate, self.action_map_tracker, self.action_required_tricks]:
             p.setEnabled(preset is not None)
 
 
@@ -141,6 +145,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self._preset_menu.action_export.triggered.connect(self._on_export_preset)
         self._preset_menu.action_duplicate.triggered.connect(self._on_duplicate_preset)
         self._preset_menu.action_map_tracker.triggered.connect(self._on_open_map_tracker_for_preset)
+        self._preset_menu.action_required_tricks.triggered.connect(self._on_open_required_tricks_for_preset)
         self._preset_menu.action_import.triggered.connect(self._on_import_preset)
 
         self._update_preset_tree_items()
@@ -233,6 +238,12 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
     def _on_open_map_tracker_for_preset(self):
         self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
+
+    def _on_open_required_tricks_for_preset(self):
+        from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
+        self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, self._current_preset_data.get_preset())
+        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_usage_popup.open()
 
     def _on_import_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)

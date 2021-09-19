@@ -1,7 +1,7 @@
 import functools
 import math
 from pathlib import Path
-from typing import List, Tuple, Dict, Optional
+from typing import List, Dict, Optional, NamedTuple
 
 import discord
 import graphviz
@@ -18,7 +18,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
 
-SplitWorld = Tuple[World, str, List[Area]]
+
+class SplitWorld(NamedTuple):
+    world: World
+    name: str
+    areas: List[Area]
 
 
 def render_area_with_graphviz(area: Area) -> Optional[Path]:
@@ -54,10 +58,10 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
                     areas_part = areas[:per_part]
                     del areas[:per_part]
 
-                    world_options.append((world, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                                     areas_part[-1].name[:2]), areas_part))
+                    world_options.append(SplitWorld(world, "{} ({}-{})".format(name, areas_part[0].name[:2],
+                                                                               areas_part[-1].name[:2]), areas_part))
             else:
-                world_options.append((world, name, areas))
+                world_options.append(SplitWorld(world, name, areas))
 
     world_options.sort(key=lambda it: it[1])
     return world_options
@@ -66,15 +70,15 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
 class DatabaseCommandCog(commands.Cog):
     _split_worlds: Dict[RandovaniaGame, List[SplitWorld]]
 
-    def __init__(self, configuration: dict, bot: commands.Bot):
+    def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
-        self.slash = SlashCommand(bot)
+        self.bot = bot
         self._split_worlds = {}
         self._on_database_component_listener = {}
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.slash.add_slash_command(
+        self.bot.slash.add_slash_command(
             self.database_command,
             name="database-inspect",
             description="Consult the Randovania's logic database for one specific room.",
@@ -102,15 +106,18 @@ class DatabaseCommandCog(commands.Cog):
             add_id(f"back_to_{game.value}", self.on_database_back_to_game, game=game)
 
             for i, split_world in enumerate(world_options):
-                add_id(f"{game.value}_world_{i}", self.on_database_area_selected, game=game, split_world=split_world)
+                add_id(f"{game.value}_world_{i}", self.on_database_area_selected, game=game, split_world=split_world,
+                       world_id=i)
+                for j, area in enumerate(split_world.areas):
+                    add_id(f"{game.value}_world_{i}_area_{j}", self.on_area_node_selection, game=game, area=area)
 
-        self.slash.add_component_callback(
+        self.bot.slash.add_component_callback(
             self.on_database_component,
             components=list(self._on_database_component_listener.keys()),
             use_callback_name=False,
         )
 
-        await self.slash.sync_all_commands()
+        await self.bot.slash.sync_all_commands()
 
     def _message_components_for_game(self, game: RandovaniaGame):
         options = []
@@ -179,12 +186,13 @@ class DatabaseCommandCog(commands.Cog):
             ],
         )
 
-    async def on_database_area_selected(self, ctx: ComponentContext, game: RandovaniaGame, split_world: SplitWorld):
+    async def on_database_area_selected(self, ctx: ComponentContext, game: RandovaniaGame, split_world: SplitWorld,
+                                        world_id: int):
         option_selected = ctx.selected_options[0]
 
         valid_items = [
             area
-            for i, area in enumerate(split_world[2])
+            for i, area in enumerate(split_world.areas)
             if f"area_{i}" == option_selected
         ]
         if not valid_items:
@@ -198,7 +206,44 @@ class DatabaseCommandCog(commands.Cog):
 
         embed = Embed(title="{}: {}".format(game.long_name, db.world_list.area_name(area)))
 
+        select = manage_components.create_select(
+            options=[
+                manage_components.create_select_option(node.name, value=node.name)
+                for i, node in sorted(enumerate(area.nodes), key=lambda it: it[1].name)
+            ],
+            max_values=len(area.nodes),
+            custom_id=f"{game.value}_world_{world_id}_{option_selected}",
+            placeholder="Choose the room",
+        )
+        action_row = manage_components.create_actionrow(select)
+
+        files = []
+
+        image_path = render_area_with_graphviz(area)
+        if image_path is not None:
+            files.append(discord.File(image_path))
+
+        await ctx.send(
+            content=f"Requested by {ctx.author.display_name}.",
+            embed=embed,
+            files=files,
+            components=[
+                action_row,
+            ],
+        )
+
+        if image_path is not None:
+            image_path.unlink()
+
+    async def on_area_node_selection(self, ctx: ComponentContext, game: RandovaniaGame, area: Area):
+        db = default_database.game_description_for(game)
+
+        embed = discord.Embed(title=ctx.origin_message.embeds[0].title)
+
         for i, node in enumerate(area.nodes):
+            if node.name not in ctx.selected_options:
+                continue
+
             name = node.name
             if node.heal:
                 name += " (Heals)"
@@ -212,13 +257,8 @@ class DatabaseCommandCog(commands.Cog):
                 for level, text in pretty_print.pretty_print_requirement(requirement.simplify()):
                     extra_lines.append("{}{}".format("  " * level, text))
 
-                if len(extra_lines) == 1:
-                    inner = f" `{extra_lines[0]}`"
-                else:
-                    inner = "\n".join(extra_lines)
-                    inner = f"\n```\n{inner}\n```"
-
-                new_entry = f"\n{target_node.name}:{inner}"
+                inner = "\n".join(extra_lines)
+                new_entry = f"\n{target_node.name}:\n```\n{inner}\n```"
 
                 if len(body) + len(new_entry) < 1024:
                     body += new_entry
@@ -229,20 +269,9 @@ class DatabaseCommandCog(commands.Cog):
                 inline=False,
             )
 
-        files = []
-
-        image_path = render_area_with_graphviz(area)
-        if image_path is not None:
-            files.append(discord.File(image_path))
-
-        await ctx.send(
-            content=f"Requested by {ctx.author.display_name}.",
+        await ctx.edit_origin(
             embed=embed,
-            files=files,
         )
-
-        if image_path is not None:
-            image_path.unlink()
 
 
 def setup(bot: RandovaniaBot):

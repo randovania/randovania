@@ -204,19 +204,13 @@ def retcon_playthrough_filler(rng: Random,
                 # TODO: this item is potentially dangerous and we should remove the invalidated paths
                 current_player.pickups_left.remove(new_pickup)
             current_player.num_actions += 1
-
-            count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states)
-            last_message = "{} items left.".format(count_pickups_left)
-            status_update(last_message)
-
         else:
-            last_message = "Triggered an event out of {} options.".format(len(weighted_actions))
-            status_update(last_message)
             debug_print_collect_event(action, current_player.game)
-
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
             current_player.reach.act_on(action)
 
+        last_message = "{} actions performed.".format(sum(player.num_actions for player in player_states))
+        status_update(last_message)
         current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
         current_player.update_for_new_state()
 
