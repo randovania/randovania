@@ -27,7 +27,7 @@ with everything ready to use. Just extract and run!
 
 ## Community
 
-Join the Metroid Prime Randomizer Discord: <https://discord.gg/gymstUz>
+Join the Metroid Prime Randomizer Discord: <https://discord.gg/metroid-prime-randomizer>
 
 ## Credits
 Game patching written by [Claris](https://www.twitch.tv/claris).
