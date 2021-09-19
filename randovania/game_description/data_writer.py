@@ -345,10 +345,22 @@ def write_world(world: World) -> dict:
 def write_world_list(world_list: WorldList) -> list:
     errors = []
 
+    known_indices = {}
+
     worlds = []
     for world in world_list.worlds:
         try:
             worlds.append(write_world(world))
+
+            for node in world.all_nodes:
+                if isinstance(node, PickupNode):
+                    name = world_list.node_name(node, with_world=True, distinguish_dark_aether=True)
+                    if node.pickup_index in known_indices:
+                        errors.append(f"{name} has {node.pickup_index}, "
+                                      f"but it was already used in {known_indices[node.pickup_index]}")
+                    else:
+                        known_indices[node.pickup_index] = name
+
         except ValueError as e:
             errors.append(str(e))
 
