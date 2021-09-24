@@ -55,13 +55,14 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 1. Clone this repository
 2. Open a terminal in the repository root
-3. Create a virtual environment: `py -3.9 -m venv venv`
-4. Activate the virtual environment `venv\scripts\activate`
-5. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
-6. Install requirements: `python -m pip install --upgrade -r requirements-small.txt`
-7. Generate the UI files: `python setup.py build_ui`
-7. Install Randovania as editable: `python -m pip install -e .`
-8. Run with `python -m randovania`
+3. Run the following file:
+   1. Windows: `tools/prepare_virtual_env.bat`
+   2. Linux/macOS: `tools/prepare_virtual_env.sh`
+4. You should see "Setup finished successfully." visible when the command finishes.
+
+In order to start Randovania, open:
+   1. Windows: `tools/start_client.bat`
+   2. Linux/macOS: `tools/start_client.sh` 
 
 Alternatively, install requirements.txt to run tests or server.
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
