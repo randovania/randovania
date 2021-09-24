@@ -38,6 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Backwards Lower Mines logic
 - Added additional Lower Mines NSJ logic
 
+### Metroid Prime 2: Echoes - Logic Database
+
+- Added: Method of climbing halfpipe in Meeting Grounds with Space Jump, Screw Attack, and Standable Terrain (Beginner and above)
+- Changed: Simplified Meeting Grounds logic slightly, by removing the redundant Top of Halfpipe node
+
 ### Discord Bot (Caretaker Class Drone)
 
 - Nothing.
