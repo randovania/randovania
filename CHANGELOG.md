@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
 - Fixed Backwards Lower Mines logic
 - Added additional Lower Mines NSJ logic
+- Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
 
 ### Metroid Prime 2: Echoes - Logic Database
 
