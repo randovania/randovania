@@ -262,7 +262,7 @@ class RandomprimePatcher(Patcher):
         pickup_list = pickup_exporter.export_all_indices(
             patches,
             useless_target,
-            db.world_list.num_pickup_nodes,
+            db.world_list,
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
