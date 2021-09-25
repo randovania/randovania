@@ -11,6 +11,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator
@@ -123,11 +124,17 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     })
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
 
+    world_list = MagicMock()
+    world_list.all_nodes = [
+        PickupNode(f"Name {i}", False, None, i, PickupIndex(i), False)
+        for i in range(5)
+    ]
+
     # Run
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        5,
+        world_list,
         rng,
         model_style,
         PickupModelDataSource.ETM,
@@ -228,11 +235,17 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     creator = pickup_exporter.PickupExporterSolo(memo_data)
 
+    world_list = MagicMock()
+    world_list.all_nodes = [
+        PickupNode(f"Name {i}", False, None, i, PickupIndex(i), False)
+        for i in range(5)
+    ]
+
     # Run
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        5,
+        world_list,
         rng,
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,

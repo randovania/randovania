@@ -547,7 +547,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
     pickup_list = pickup_exporter.export_all_indices(
         patches,
         useless_target,
-        game.world_list.num_pickup_nodes,
+        game.world_list,
         rng,
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
