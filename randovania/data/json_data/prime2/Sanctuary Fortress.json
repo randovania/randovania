@@ -1074,92 +1074,8 @@
                             }
                         },
                         "Event - Reactor Core Quad": {
-                            "type": "or",
-                            "data": [
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 13,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 18,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 13,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "or",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 16,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 43,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
+                            "type": "template",
+                            "data": "Kill Quad MB"
                         },
                         "Room Top": {
                             "type": "and",
@@ -2547,6 +2463,24 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Kill Quad MB"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 1,
+                                                                "index": 50,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -18842,71 +18776,71 @@
                             ]
                         },
                         "Event - Quad": {
-                            "type": "and",
+                            "type": "or",
                             "data": [
                                 {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 18,
+                                                "type": 2,
+                                                "index": 34,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 43,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 1,
-                                                        "index": 105,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 1,
+                                                                "index": 105,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 34,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 10,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (No Space Jump)"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Kill Quad MB"
                                 }
                             ]
                         },
