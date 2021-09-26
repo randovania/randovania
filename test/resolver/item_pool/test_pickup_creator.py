@@ -1,5 +1,6 @@
 import pytest
 
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 import randovania.generator.item_pool.ammo
 import randovania.generator.item_pool.pickup_creator
 from randovania.game_description.item.ammo import Ammo
@@ -186,7 +187,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
         name="The Item",
         maximum=100,
         items=(42,),
-        broad_category=echoes_item_database.item_categories["etm"],
+        broad_category=USELESS_ITEM_CATEGORY,
         unlocked_by=73,
         temporary=71,
         model_name="AmmoModel",
@@ -207,7 +208,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
             (echoes_resource_database.item_percentage, 1),
         ),
         item_category=echoes_item_database.item_categories["expansion"],
-        broad_category=echoes_item_database.item_categories["etm"],
+        broad_category=USELESS_ITEM_CATEGORY,
         probability_offset=0,
         respects_lock=requires_major_item,
         resource_lock=ResourceLock(

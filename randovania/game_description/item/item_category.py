@@ -28,8 +28,8 @@ class ItemCategory:
         else:
             return "an ", "expansion"
 
-NOTHING_CATEGORY = ItemCategory(
-    name="nothing",
+USELESS_ITEM_CATEGORY = ItemCategory(
+    name="useless",
     long_name="",
     hint_details=["an ", "Energy Transfer Module"],
     is_major_category=False,
