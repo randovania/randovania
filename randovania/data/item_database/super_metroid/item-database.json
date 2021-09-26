@@ -1,4 +1,84 @@
 {
+    "item_categories": {
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [ "a ", "beam" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [ "a ", "missile system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [ "a ", "morph ball system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [ "a ", "movement system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "visor": {
+            "long_name": "Visors",
+            "hint_details": [ "a ", "visor" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "suit": {
+            "long_name": "Suits",
+            "hint_details": [ "a ", "suit" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [ "an ", "Energy Tank" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "morph_ball_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "morph ball-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "beam_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "beam-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "missile_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "missile-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "life_support": {
+            "long_name": "",
+            "hint_details": [ "a ", "life support system" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "expansion": {
+            "long_name": "",
+            "hint_details": [ "an ", "expansion" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "etm": {
+            "long_name": "",
+            "hint_details": [ "an ", "Energy Transfer Module" ],
+            "is_major_category": false,
+            "is_key": false
+        }
+    },
     "items": {
         "Charge Beam": {
             "item_category": "beam",
@@ -180,6 +260,26 @@
             "progression": [20],
             "probability_offset": 0,
             "probability_multiplier": 1
+        }
+    },
+    "ammo": {
+        "Missile Expansion": {
+            "model_name": "Missile",
+            "items": [5],
+            "broad_category": "missile_related",
+            "maximum": 255
+        },
+        "Super Missile Expansion": {
+            "model_name": "Super Missile",
+            "items": [6],
+            "broad_category": "missile_related",
+            "maximum": 50
+        },
+        "Power Bomb Expansion": {
+            "model_name": "Power Bomb",
+            "items": [7],
+            "broad_category": "morph_ball_related",
+            "maximum": 50
         }
     },
     "default_items": {}

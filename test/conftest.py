@@ -9,7 +9,6 @@ import randovania.games.patchers.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -98,15 +97,15 @@ def game_enum(request) -> RandovaniaGame:
 
 
 @pytest.fixture()
-def blank_pickup() -> PickupEntry:
+def blank_pickup(echoes_item_database) -> PickupEntry:
     return PickupEntry(
         name="Blank Pickup",
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        item_category=ItemCategory.SUIT,
-        broad_category=ItemCategory.LIFE_SUPPORT,
+        item_category=echoes_item_database.item_categories["suit"],
+        broad_category=echoes_item_database.item_categories["life_support"],
         progression=(),
         resource_lock=None,
         unlocks_resource=False,

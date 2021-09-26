@@ -1,4 +1,108 @@
 {
+    "item_categories": {
+        "visor": {
+            "long_name": "Visors",
+            "hint_details": [ "a ", "visor" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "suit": {
+            "long_name": "Suits",
+            "hint_details": [ "a ", "suit" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [ "a ", "beam" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [ "a ", "morph ball system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [ "a ", "movement system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [ "a ", "missile system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "grapple": {
+            "long_name": "Grapple",
+            "hint_details": [ "a ", "grapple system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "hypermode": {
+            "long_name": "Hypermode",
+            "hint_details": [ "a ", "hypermode system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [ "an ", "Energy Tank" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "missile_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "missile-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "morph_ball_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "morph ball-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "beam_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "beam-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "life_support": {
+            "long_name": "",
+            "hint_details": [ "a ", "life support system" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "expansion": {
+            "long_name": "",
+            "hint_details": [ "an ", "expansion" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "energy_cell": {
+            "long_name": "",
+            "hint_details": [ "an ", "energy cell" ],
+            "is_major_category": false,
+            "is_key": true
+        },
+        "key": {
+            "long_name": "",
+            "hint_details": [ "a ", "key" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "etm": {
+            "long_name": "",
+            "hint_details": [ "an ", "Energy Transfer Module" ],
+            "is_major_category": false,
+            "is_key": false
+        }
+    },
     "items": {
         "Charge Beam": {
             "item_category": "beam",
@@ -340,6 +444,24 @@
             "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
+        }
+    },
+    "ammo": {
+        "Missile Expansion": {
+            "model_name": "Missile",
+            "items": [4],
+            "broad_category": "missile_related",
+            "unlocked_by": 1000,
+            "temporary": 1002,
+            "maximum": 255
+        },
+        "Ship Missile Expansion": {
+            "model_name": "Ship Missile",
+            "items": [45],
+            "broad_category": "missile_related",
+            "unlocked_by": 1001,
+            "temporary": 1003,
+            "maximum": 11
         }
     },
     "default_items": {}

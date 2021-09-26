@@ -28,13 +28,13 @@ class Ammo:
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
     @classmethod
-    def from_json(cls, name: str, value: dict) -> "Ammo":
+    def from_json(cls, name: str, value: dict, item_categories: dict) -> "Ammo":
         return cls(
             name=name,
             maximum=value["maximum"],
             model_name=value["model_name"],
             items=tuple(value["items"]),
-            broad_category=ItemCategory(value["broad_category"]),
+            broad_category=item_categories[value["broad_category"]],
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
         )
@@ -45,7 +45,7 @@ class Ammo:
             "maximum": self.maximum,
             "model_name": self.model_name,
             "items": list(self.items),
-            "broad_category": self.broad_category.value,
+            "broad_category": self.broad_category.name,
         }
         if self.unlocked_by is not None:
             result["temporary"] = self.temporary

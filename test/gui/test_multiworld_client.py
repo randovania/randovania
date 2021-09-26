@@ -5,7 +5,6 @@ import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -88,32 +87,6 @@ async def test_on_game_updated(client, tmpdir):
     # Assert
     client.game_connection.set_expected_game.assert_called_once_with(pickups.game)
     client.game_connection.set_permanent_pickups.assert_called_once_with(pickups.pickups)
-
-
-def test_decode_pickup(client, echoes_resource_database):
-    data = (b'\x88\xa8\xd0\xca@\x9c\xc2\xda\xca\xcc\x08\x8a\xdc\xca\xe4\xce'
-            b'\xf2\xa8\xe4\xc2\xdc\xe6\xcc\xca\xe4\x9a\xde\xc8\xea\xd8\xcaB\x00p')
-    expected_pickup = PickupEntry(
-        name="The Name",
-        model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_ECHOES,
-            name="EnergyTransferModule",
-        ),
-        item_category=ItemCategory.MOVEMENT,
-        broad_category=ItemCategory.MOVEMENT,
-        progression=tuple(),
-    )
-
-    # from randovania.bitpacking import bitpacking
-    # from randovania.network_common.pickup_serializer import BitPackPickupEntry
-    # new_data = bitpacking.pack_value(BitPackPickupEntry(expected_pickup, echoes_resource_database))
-    # assert new_data == data
-
-    # Run
-    pickup = multiworld_client._decode_pickup(data, echoes_resource_database)
-
-    # Assert
-    assert pickup == expected_pickup
 
 
 @pytest.mark.asyncio

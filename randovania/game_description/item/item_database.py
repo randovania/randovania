@@ -8,45 +8,53 @@ from randovania.game_description.item.major_item import MajorItem
 
 @dataclass(frozen=True)
 class ItemDatabase:
+    item_categories: Dict[str, ItemCategory]
     major_items: Dict[str, MajorItem]
     ammo: Dict[str, Ammo]
     default_items: Dict[ItemCategory, Tuple[MajorItem, ...]]
 
 
-def read_database(major_items_data: Dict,
-                  ammo_data: Dict,
-                  ) -> ItemDatabase:
+def read_database(database_data: Dict) -> ItemDatabase:
     """
 
     :param major_items_data:
     :param ammo_data:
     :return:
     """
+    item_categories = {
+        name: ItemCategory.from_json(name, value)
+        for name, value in database_data["item_categories"].items()
+    }
+
     major_items = {
-        name: MajorItem.from_json(name, value)
-        for name, value in major_items_data["items"].items()
+        name: MajorItem.from_json(name, value, item_categories)
+        for name, value in database_data["items"].items()
     }
 
     ammo = {
-        name: Ammo.from_json(name, value)
-        for name, value in ammo_data.items()
+        name: Ammo.from_json(name, value, item_categories)
+        for name, value in database_data["ammo"].items()
     }
 
     default_items = {
-        ItemCategory(category_name): tuple(major_items[item_name] for item_name in value)
-        for category_name, value in major_items_data["default_items"].items()
+        item_categories[category_name]: tuple(major_items[item_name] for item_name in value)
+        for category_name, value in database_data["default_items"].items()
     }
 
-    return ItemDatabase(major_items, ammo, default_items)
+    return ItemDatabase(item_categories, major_items, ammo, default_items)
 
 
-def write_database(database: ItemDatabase,
-                   ) -> Tuple[Dict, Dict]:
+def write_database(database: ItemDatabase) -> Dict:
     """
 
     :param database:
     :return:
     """
+    item_categories = {
+        name: item.as_json
+        for name, item in database.item_categories.items()    
+    }
+
     major_items_data = {
         name: item.as_json
         for name, item in database.major_items.items()
@@ -58,24 +66,8 @@ def write_database(database: ItemDatabase,
     }
 
     default_data = {
-        category.value: [item.name for item in items]
+        category.name: [item.name for item in items]
         for category, items in database.default_items.items()
     }
 
-    return {"items": major_items_data, "default_items": default_data}, ammo_data
-
-
-_TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
-
-
-def add_memo_data_keys(data: dict):
-    for i in range(1, 4):
-        for temple_key in _TEMPLE_KEYS:
-            data["{} {}".format(temple_key, i)] = data[temple_key]
-
-    for temple_key in _TEMPLE_KEYS:
-        data.pop(temple_key)
-
-    for i in range(1, 10):
-        data["Sky Temple Key {}".format(i)] = data["Sky Temple Key"]
-    data.pop("Sky Temple Key")
+    return {"item_categories": item_categories, "items": major_items_data, "ammo": ammo_data, "default_items": default_data}

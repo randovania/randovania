@@ -1,12 +1,14 @@
+import base64
 from pathlib import Path
 
 import pytest
 import socketio.exceptions
 from mock import MagicMock, AsyncMock, call
 
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionPickups
-from randovania.network_client.network_client import NetworkClient, ConnectionState
+from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
@@ -210,3 +212,28 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
         )
     )
     mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
+
+
+def test_decode_pickup(client: NetworkClient, echoes_resource_database, echoes_item_database):
+    data = "h^WxYK%Bzb%FGCg+{)z6@~Gs(+~&;6<eJ{d>e$N>wY}MuwUxQjBWruJD{Curpa%c"
+    expected_pickup = PickupEntry(
+        name="The Name",
+        model=PickupModel(
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
+            name="EnergyTransferModule",
+        ),
+        item_category=echoes_item_database.item_categories["movement"],
+        broad_category=echoes_item_database.item_categories["movement"], 
+        progression=tuple(),
+    )
+    
+    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason 
+#    from randovania.server.game_session import _base64_encode_pickup
+#    new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
+#    assert new_data == data
+
+    # Run
+    pickup = _decode_pickup(data, echoes_resource_database)
+
+    # Assert
+    assert pickup == expected_pickup

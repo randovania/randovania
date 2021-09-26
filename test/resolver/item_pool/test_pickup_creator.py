@@ -3,7 +3,6 @@ import pytest
 import randovania.generator.item_pool.ammo
 import randovania.generator.item_pool.pickup_creator
 from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
     ResourceLock, PickupModel
@@ -13,7 +12,7 @@ from randovania.layout.base.major_item_state import MajorItemState
 
 
 @pytest.mark.parametrize("percentage", [False, True])
-def test_create_pickup_for(percentage: bool, echoes_resource_database):
+def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resource_database):
     # Setup
     item_a = echoes_resource_database.get_item(10)
     item_b = echoes_resource_database.get_item(15)
@@ -23,8 +22,8 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
 
     major_item = MajorItem(
         name="The Item",
-        item_category=ItemCategory.MORPH_BALL,
-        broad_category=ItemCategory.MORPH_BALL_RELATED,
+        item_category=echoes_item_database.item_categories["morph_ball"],
+        broad_category=echoes_item_database.item_categories["morph_ball_related"],
         model_name="SuperModel",
         progression=(10, 15, 18),
         ammo_index=(42, 45),
@@ -66,8 +65,8 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
             (item_c, 1),
         ),
         extra_resources=extra_resources,
-        item_category=ItemCategory.MORPH_BALL,
-        broad_category=ItemCategory.MORPH_BALL_RELATED,
+        item_category=echoes_item_database.item_categories["morph_ball"],
+        broad_category=echoes_item_database.item_categories["morph_ball_related"],
         probability_offset=5,
         respects_lock=False,
     )
@@ -112,8 +111,8 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             (echoes_resource_database.item_percentage, 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
-        item_category=ItemCategory.MISSILE,
-        broad_category=ItemCategory.MISSILE_RELATED,
+        item_category=echoes_item_database.item_categories["missile"],
+        broad_category=echoes_item_database.item_categories["missile_related"],
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
             temporary_item=temporary,
@@ -165,8 +164,8 @@ def test_create_seeker_launcher(ammo_quantity: int,
             (echoes_resource_database.item_percentage, 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "SeekerLauncher"),
-        item_category=ItemCategory.MISSILE,
-        broad_category=ItemCategory.MISSILE_RELATED,
+        item_category=echoes_item_database.item_categories["missile"],
+        broad_category=echoes_item_database.item_categories["missile_related"],
         respects_lock=ammo_requires_major_item,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
@@ -177,7 +176,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
 
 
 @pytest.mark.parametrize("requires_major_item", [False, True])
-def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_database):
+def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, echoes_resource_database):
     # Setup
     primary_a = echoes_resource_database.get_item(73)
     ammo_a = echoes_resource_database.get_item(42)
@@ -187,7 +186,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
         name="The Item",
         maximum=100,
         items=(42,),
-        broad_category=ItemCategory.ETM,
+        broad_category=echoes_item_database.item_categories["etm"],
         unlocked_by=73,
         temporary=71,
         model_name="AmmoModel",
@@ -207,8 +206,8 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
             (ammo_a, ammo_count[0]),
             (echoes_resource_database.item_percentage, 1),
         ),
-        item_category=ItemCategory.EXPANSION,
-        broad_category=ItemCategory.ETM,
+        item_category=echoes_item_database.item_categories["expansion"],
+        broad_category=echoes_item_database.item_categories["etm"],
         probability_offset=0,
         respects_lock=requires_major_item,
         resource_lock=ResourceLock(

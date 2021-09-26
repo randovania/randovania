@@ -21,11 +21,25 @@ from randovania.layout.base.major_item_state import MajorItemState
         {"encoded": b'\x076D', "ammo_index": (10, 20), "json": {"included_ammo": [230, 200]}},
     ],
     name="state_with_data")
-def _state_with_data(request):
+def _state_with_data(request, echoes_item_database):
+    default_item_category = ItemCategory(
+        name="visor",
+        long_name="Visors",
+        hint_details=("a ","visor"),
+        is_major_category=True,
+        is_key=False
+    )
+
+    item_category_name = request.param.get("category", "")
+    item_category = echoes_item_database.item_categories[item_category_name] if item_category_name else default_item_category
+
+    broad_category_name = request.param.get("broad_category", "")
+    broad_category = echoes_item_database.item_categories[broad_category_name] if broad_category_name else default_item_category
+
     item = MajorItem(
         name="Item Name",
-        item_category=ItemCategory(request.param.get("category", "visor")),
-        broad_category=ItemCategory(request.param.get("broad_category", "visor")),
+        item_category=item_category,
+        broad_category=broad_category,
         model_name="Model Name",
         progression=(),
         ammo_index=request.param.get("ammo_index", ()),

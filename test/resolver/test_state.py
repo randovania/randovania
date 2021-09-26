@@ -2,7 +2,6 @@ from unittest.mock import Mock
 
 import pytest
 
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -36,13 +35,13 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     assert indices == [PickupIndex(1), PickupIndex(15)]
 
 
-def test_add_pickup_to_state(state_game_data, empty_patches):
+def test_add_pickup_to_state(state_game_data, empty_patches, echoes_item_database):
     # Starting State
     s = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    p = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    p = PickupEntry("B", 2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
                     progression=(
                         (resource_a, 1),
                         (resource_b, 1),
@@ -59,14 +58,14 @@ def test_add_pickup_to_state(state_game_data, empty_patches):
     }
 
 
-def test_assign_pickup_to_starting_items(empty_patches, state_game_data):
+def test_assign_pickup_to_starting_items(empty_patches, state_game_data, echoes_item_database):
     # Setup
 
     starting = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    p = PickupEntry("A", 2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
                     progression=(
                         (resource_a, 5),
                     ),
@@ -85,12 +84,12 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data):
     assert final.resources == {resource_a: 5, resource_b: 0}
 
 
-def test_state_with_pickup(state_game_data, empty_patches):
+def test_state_with_pickup(state_game_data, empty_patches, echoes_item_database):
     # Setup
     starting = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    p = PickupEntry("A", 2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
                     progression=(
                         (resource_a, 1),
                     ))

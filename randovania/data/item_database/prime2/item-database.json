@@ -1,4 +1,120 @@
 {
+    "item_categories": {
+        "visor": {
+            "long_name": "Visors",
+            "hint_details": [ "a ", "visor" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "suit": {
+            "long_name": "Suits",
+            "hint_details": [ "a ", "suit" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [ "a ", "beam" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [ "a ", "morph ball system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [ "a ", "movement system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [ "a ", "missile system" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "charge_combo": {
+            "long_name": "Charge Combos",
+            "hint_details": [ "a ", "charge combo" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "translator": {
+            "long_name": "Translators",
+            "hint_details": [ "a ", "translator" ],
+            "is_major_category": true,
+            "is_key": false
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [ "an ", "Energy Tank" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "missile_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "missile-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "morph_ball_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "morph ball-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "beam_related": {
+            "long_name": "",
+            "hint_details": [ "a ", "beam-related upgrade" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "life_support": {
+            "long_name": "",
+            "hint_details": [ "a ", "life support system" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "hud": {
+            "long_name": "",
+            "hint_details": [ "a ", "HUD system" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "expansion": {
+            "long_name": "",
+            "hint_details": [ "an ", "expansion" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "temple_key": {
+            "long_name": "",
+            "hint_details": [ "a ", "red Temple Key" ],
+            "is_major_category": false,
+            "is_key": true
+        },
+        "sky_temple_key": {
+            "long_name": "",
+            "hint_details": [ "a ", "Sky Temple Key" ],
+            "is_major_category": false,
+            "is_key": true
+        },
+        "etm": {
+            "long_name": "",
+            "hint_details": [ "an ", "Energy Transfer Module" ],
+            "is_major_category": false,
+            "is_key": false
+        },
+        "key": {
+            "long_name": "",
+            "hint_details": [ "a ", "key" ],
+            "is_major_category": false,
+            "is_key": false
+        }
+    },
     "items": {
         "Combat Visor": {
             "item_category": "visor",
@@ -357,6 +473,42 @@
             "progression": [42],
             "probability_offset": 1,
             "probability_multiplier": 2
+        }
+    },
+    "ammo": {
+        "Missile Expansion": {
+            "model_name": "MissileExpansion",
+            "items": [44],
+            "broad_category": "missile_related",
+            "unlocked_by": 73,
+            "temporary": 71,
+            "maximum": 255
+        },
+        "Power Bomb Expansion": {
+            "model_name": "PowerBombExpansion",
+            "items": [43],
+            "broad_category": "morph_ball_related",
+            "unlocked_by": 43,
+            "temporary": 72,
+            "maximum": 10
+        },
+        "Dark Ammo Expansion": {
+            "model_name": "DarkBeamAmmoExpansion",
+            "items": [45],
+            "broad_category": "beam_related",
+            "maximum": 250
+        },
+        "Light Ammo Expansion": {
+            "model_name": "LightBeamAmmoExpansion",
+            "items": [46],
+            "broad_category": "beam_related",
+            "maximum": 250
+        },
+        "Beam Ammo Expansion": {
+            "model_name": "BeamAmmoExpansion",
+            "items": [45, 46],
+            "broad_category": "beam_related",
+            "maximum": 250
         }
     },
     "default_items": {
