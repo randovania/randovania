@@ -1,8 +1,9 @@
+from randovania.game_description.item.item_database import ItemDatabase
 from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
-from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
     PickupModel
@@ -72,21 +73,21 @@ class DatabaseBitPackHelper:
 class BitPackPickupEntry:
     value: PickupEntry
     database: ResourceDatabase
-
+    item_database: ItemDatabase
+    
     def __init__(self, value: PickupEntry, database: ResourceDatabase):
         self.value = value
         self.database = database
-
+   
     # Main Methods
-
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         helper = DatabaseBitPackHelper(self.database)
 
         yield from bitpacking.encode_string(self.value.name)
         yield from self.value.model.game.bit_pack_encode({})
         yield from bitpacking.encode_string(self.value.model.name)
-        yield from self.value.item_category.bit_pack_encode({})
-        yield from self.value.broad_category.bit_pack_encode({})
+        yield from bitpacking.encode_string(self.value.item_category.name)
+        yield from bitpacking.encode_string(self.value.broad_category.name)
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
         yield from bitpacking.encode_tuple(self.value.extra_resources, helper.encode_resource_quantity)
         yield from bitpacking.encode_bool(self.value.unlocks_resource)
@@ -101,14 +102,15 @@ class BitPackPickupEntry:
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
         helper = DatabaseBitPackHelper(database)
+        item_database = default_database.item_database_for_game(database.game_enum)
 
         name = bitpacking.decode_string(decoder)
         model = PickupModel(
             game=RandovaniaGame.bit_pack_unpack(decoder, {}),
             name=bitpacking.decode_string(decoder),
         )
-        item_category = ItemCategory.bit_pack_unpack(decoder, {})
-        broad_category = ItemCategory.bit_pack_unpack(decoder, {})
+        item_category = item_database.item_categories[bitpacking.decode_string(decoder)]
+        broad_category = item_database.item_categories[bitpacking.decode_string(decoder)]
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)

@@ -28,7 +28,7 @@ class MajorItemsConfiguration(BitPackValue):
                 for major_item, state in self.items_state.items()
             },
             "default_items": {
-                category.value: item.name
+                category.name: item.name
                 for category, item in self.default_items.items()
             },
             "minimum_random_starting_items": self.minimum_random_starting_items,
@@ -49,7 +49,7 @@ class MajorItemsConfiguration(BitPackValue):
 
         default_items = {}
         for category, options in item_database.default_items.items():
-            default_items[category] = item_database.major_items[value["default_items"][category.value]]
+            default_items[category] = item_database.major_items[value["default_items"][category.name]]
             if default_items[category] not in options:
                 raise ValueError(f"Category {category} has {default_items[category]} as default item, "
                                  f"but that's not a valid option.")

@@ -9,7 +9,6 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintRelativeAreaName, RelativeDataArea, RelativeDataItem
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -36,7 +35,7 @@ def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], 
     expansions = []
 
     for pickup in item_pool:
-        if pickup.item_category == ItemCategory.EXPANSION:
+        if pickup.item_category.name == "expansion":
             expansions.append(pickup)
         else:
             major_items.append(pickup)
@@ -108,7 +107,7 @@ def add_relative_hint(world_list: WorldList,
             # FIXME: None should be ok, but this must be called after junk has been filled
             if t is not None:
                 cat = t.pickup.item_category
-                if cat.is_major_category or (cat != ItemCategory.EXPANSION
+                if cat.is_major_category or (cat.name != "expansion"
                                              and target_precision == HintItemPrecision.DETAILED):
                     yield index
 

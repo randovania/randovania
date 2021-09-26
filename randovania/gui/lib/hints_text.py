@@ -1,7 +1,6 @@
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
@@ -87,8 +86,8 @@ def update_hints_text(game: RandovaniaGame,
     for item in item_database.ammo.values():
         rows.append((
             item.name,
-            ItemCategory.EXPANSION.hint_details[1],
-            ItemCategory.EXPANSION.general_details[1],
+            item_database.item_categories["expansion"].hint_details[1],
+            item_database.item_categories["expansion"].general_details[1],
             item.broad_category.hint_details[1],
         ))
 
