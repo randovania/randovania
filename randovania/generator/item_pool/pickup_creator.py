@@ -1,6 +1,7 @@
 from typing import Optional, List
 
 from randovania.game_description import default_database
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
@@ -202,8 +203,6 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
     :param resource_database:
     :return:
     """
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
-
     return PickupEntry(
         name="Energy Transfer Module",
         progression=(
@@ -213,8 +212,8 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             game=resource_database.game_enum,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=item_database.item_categories["etm"],
-        broad_category=item_database.item_categories["etm"],
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )
 
 
@@ -224,8 +223,6 @@ def create_prime1_useless_pickup(resource_database: ResourceDatabase) -> PickupE
     :param resource_database:
     :return:
     """
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
-
     return PickupEntry(
         name="Nothing",
         progression=(
@@ -235,8 +232,8 @@ def create_prime1_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             game=resource_database.game_enum,
             name="Nothing",
         ),
-        item_category=item_database.item_categories["etm"],
-        broad_category=item_database.item_categories["etm"],
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )
 
 
@@ -245,8 +242,6 @@ def create_visual_etm() -> PickupEntry:
     Creates an ETM that should only be used as a visual pickup.
     :return:
     """
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-
     return PickupEntry(
         name="Unknown item",
         progression=tuple(),
@@ -254,6 +249,6 @@ def create_visual_etm() -> PickupEntry:
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=item_database.item_categories["etm"],
-        broad_category=item_database.item_categories["etm"],
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )
