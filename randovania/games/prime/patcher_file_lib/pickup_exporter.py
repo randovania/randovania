@@ -10,6 +10,8 @@ from randovania.game_description.resources.pickup_entry import (PickupEntry, Con
                                                                 ResourceConversion)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
+from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import item_names
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
@@ -235,7 +237,7 @@ def _get_visual_model(original_index: int,
 
 def export_all_indices(patches: GamePatches,
                        useless_target: PickupTarget,
-                       pickup_count: int,
+                       world_list: WorldList,
                        rng: Random,
                        model_style: PickupModelStyle,
                        data_source: PickupModelDataSource,
@@ -246,7 +248,7 @@ def export_all_indices(patches: GamePatches,
     Creates the patcher data for all pickups in the game
     :param patches:
     :param useless_target:
-    :param pickup_count:
+    :param world_list:
     :param rng:
     :param model_style:
     :param data_source:
@@ -259,13 +261,19 @@ def export_all_indices(patches: GamePatches,
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
+    indices = sorted(
+        node.pickup_index
+        for node in world_list.all_nodes
+        if isinstance(node, PickupNode)
+    )
+
     pickups = [
-        exporter.export(PickupIndex(i),
-                        pickup_assignment.get(PickupIndex(i), useless_target),
+        exporter.export(index,
+                        pickup_assignment.get(index, useless_target),
                         _get_visual_model(i, pickup_list, data_source, visual_etm),
                         model_style,
                         )
-        for i in range(pickup_count)
+        for i, index in enumerate(indices)
     ]
 
     return pickups
