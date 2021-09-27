@@ -39,7 +39,7 @@ _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("Each expansion will provide exactly {per
 
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
-    _boxes_for_category: Dict[ItemCategory, Tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
+    _boxes_for_category: Dict[str, Tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
                                                   Dict[MajorItem, ItemConfigurationWidget]]]
     _default_items: Dict[ItemCategory, QtWidgets.QComboBox]
 
@@ -85,7 +85,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         for progressive_widget in self._progressive_widgets:
             progressive_widget.on_preset_changed(
                 preset,
-                self._boxes_for_category[progressive_widget.progressive_item.item_category][2],
+                self._boxes_for_category[progressive_widget.progressive_item.item_category.name][2],
             )
 
         for split_ammo in self._split_ammo_widgets:
@@ -108,7 +108,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             combo = self._default_items[category]
             combo.setCurrentIndex(combo.findData(default_item))
 
-            for item, widget in self._boxes_for_category[category][2].items():
+            for item, widget in self._boxes_for_category[category.name][2].items():
                 widget.setEnabled(default_item != item)
 
         # Major Items
@@ -290,7 +290,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         for (progressive_item_name, non_progressive_items) in all_progressive:
             progressive_item = item_database.major_items[progressive_item_name]
-            parent, layout, _ = self._boxes_for_category[progressive_item.item_category]
+            parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
 
             widget = ProgressiveItemWidget(
                 parent, self._editor,
@@ -302,7 +302,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(widget)
 
     def _create_split_ammo_widgets(self, item_database: ItemDatabase):
-        parent, layout, _ = self._boxes_for_category[ItemCategory.BEAM]
+        parent, layout, _ = self._boxes_for_category["beam"]
 
         self._split_ammo_widgets = []
 
@@ -335,7 +335,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             if not major_item.required:
                 categories.add(major_item.item_category)
 
-        all_categories = list(iterate_enum(ItemCategory))
+        all_categories = list(item_database.item_categories.values())
         for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_box = QtWidgets.QGroupBox(self.scroll_area_contents)
             category_box.setTitle(major_item_category.long_name)
@@ -346,13 +346,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             category_layout.setObjectName(f"category_layout {major_item_category}")
 
             self.item_pool_layout.addWidget(category_box)
-            self._boxes_for_category[major_item_category] = category_box, category_layout, {}
+            self._boxes_for_category[major_item_category.name] = category_box, category_layout, {}
 
     def _create_customizable_default_items(self, item_database: ItemDatabase):
         self._default_items = {}
 
         for category, possibilities in item_database.default_items.items():
-            parent, layout, _ = self._boxes_for_category[category]
+            parent, layout, _ = self._boxes_for_category[category.name]
 
             label = QtWidgets.QLabel(parent)
             label.setText(f"Default {category.long_name}")
@@ -376,10 +376,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):
         for major_item in item_database.major_items.values():
-            if major_item.required or major_item.item_category == ItemCategory.ENERGY_TANK:
+            if major_item.required or major_item.item_category.name == "energy_tank":
                 continue
 
-            category_box, category_layout, elements = self._boxes_for_category[major_item.item_category]
+            category_box, category_layout, elements = self._boxes_for_category[major_item.item_category.name]
             widget = ItemConfigurationWidget(None, major_item, MajorItemState(), resource_database)
             widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
@@ -397,7 +397,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     # Energy Tank
 
     def _create_energy_tank_box(self):
-        category_box, category_layout, _ = self._boxes_for_category[ItemCategory.ENERGY_TANK]
+        category_box, category_layout, _ = self._boxes_for_category["energy_tank"]
 
         starting_label = QtWidgets.QLabel(category_box)
         starting_label.setText("Starting Quantity")
@@ -449,13 +449,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         resource_database = default_database.resource_database_for(self.game)
         broad_to_category = {
-            ItemCategory.BEAM_RELATED: ItemCategory.BEAM,
-            ItemCategory.MORPH_BALL_RELATED: ItemCategory.MORPH_BALL,
-            ItemCategory.MISSILE_RELATED: ItemCategory.MISSILE,
+            "beam_related": "beam",
+            "morph_ball_related": "morph_ball",
+            "missile_related": "missile",
         }
 
         for ammo in item_database.ammo.values():
-            category_box, category_layout, _ = self._boxes_for_category[broad_to_category[ammo.broad_category]]
+            category_box, category_layout, _ = self._boxes_for_category[broad_to_category[ammo.broad_category.name]]
 
             pickup_box = QtWidgets.QGroupBox(category_box)
             pickup_box.setSizePolicy(size_policy)

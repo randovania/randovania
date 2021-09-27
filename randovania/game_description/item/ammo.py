@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple, Optional
+from typing import Dict, Tuple, Optional
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ResourceLock
@@ -28,13 +28,13 @@ class Ammo:
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
     @classmethod
-    def from_json(cls, name: str, value: dict) -> "Ammo":
+    def from_json(cls, name: str, value: dict, item_categories: Dict[str, ItemCategory]) -> "Ammo":
         return cls(
             name=name,
             maximum=value["maximum"],
             model_name=value["model_name"],
             items=tuple(value["items"]),
-            broad_category=ItemCategory(value["broad_category"]),
+            broad_category=item_categories[value["broad_category"]],
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
         )
@@ -45,12 +45,16 @@ class Ammo:
             "maximum": self.maximum,
             "model_name": self.model_name,
             "items": list(self.items),
-            "broad_category": self.broad_category.value,
+            "broad_category": self.broad_category.name,
         }
         if self.unlocked_by is not None:
             result["temporary"] = self.temporary
             result["unlocked_by"] = self.unlocked_by
         return result
+
+    @property
+    def item_category(self) -> ItemCategory:
+        return AMMO_ITEM_CATEGORY
 
     def create_resource_lock(self, resource_database: ResourceDatabase) -> Optional[ResourceLock]:
         if self.unlocked_by is not None:
@@ -60,3 +64,10 @@ class Ammo:
                 temporary_item=resource_database.get_item(self.temporary),
             )
         return None
+
+AMMO_ITEM_CATEGORY = ItemCategory(
+    name="expansion",
+    long_name="",
+    hint_details=["an ", "expansion"],
+    is_major=False
+)

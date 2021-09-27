@@ -19,11 +19,6 @@ from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
-def _decode_pickup(data: bytes, resource_database: ResourceDatabase) -> PickupEntry:
-    decoder = bitpacking.BitPackDecoder(data)
-    return BitPackPickupEntry.bit_pack_unpack(decoder, resource_database)
-
-
 class BackendInUse(Exception):
     def __init__(self, lock_file: Path):
         self.lock_file = lock_file

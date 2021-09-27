@@ -1,7 +1,8 @@
 from typing import Optional, List
 
+from randovania.game_description import default_database
+from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -91,7 +92,7 @@ def create_ammo_expansion(ammo: Ammo,
             game=resource_database.game_enum,
             name=ammo.model_name,
         ),
-        item_category=ItemCategory.EXPANSION,
+        item_category=ammo.item_category,
         broad_category=ammo.broad_category,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
@@ -109,6 +110,13 @@ def create_dark_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
+    TEMPLE_KEY_CATEGORY = ItemCategory(
+        name="temple_key",
+        long_name="",
+        hint_details=("a ", "red Temple Key"),
+        is_major=False,
+        is_key=True
+    )
 
     return PickupEntry(
         name=echoes_items.DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
@@ -117,8 +125,8 @@ def create_dark_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.DARK_TEMPLE_KEY_MODEL,
         ),
-        item_category=ItemCategory.TEMPLE_KEY,
-        broad_category=ItemCategory.KEY,
+        item_category=TEMPLE_KEY_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=3,
     )
 
@@ -132,6 +140,13 @@ def create_sky_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
+    SKY_TEMPLE_KEY_CATEGORY = ItemCategory(
+        name="sky_temple_key",
+        long_name="",
+        hint_details=("a ", "Sky Temple Key"),
+        is_major=False,
+        is_key=True
+    )
 
     return PickupEntry(
         name="Sky Temple Key {}".format(key_number + 1),
@@ -140,8 +155,8 @@ def create_sky_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.SKY_TEMPLE_KEY_MODEL,
         ),
-        item_category=ItemCategory.SKY_TEMPLE_KEY,
-        broad_category=ItemCategory.KEY,
+        item_category=SKY_TEMPLE_KEY_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=3,
     )
 
@@ -149,6 +164,14 @@ def create_sky_temple_key(key_number: int,
 def create_energy_cell(cell_index: int,
                        resource_database: ResourceDatabase,
                        ) -> PickupEntry:
+    ENERGY_CELL_CATEGORY = ItemCategory(
+        name="energy_cell",
+        long_name="",
+        hint_details=("an ", "energy cell"),
+        is_major=False,
+        is_key=True
+    )
+
     return PickupEntry(
         name=f"Energy Cell {cell_index + 1}",
         progression=(
@@ -162,8 +185,8 @@ def create_energy_cell(cell_index: int,
             game=resource_database.game_enum,
             name=corruption_items.ENERGY_CELL_MODEL,
         ),
-        item_category=ItemCategory.TEMPLE_KEY,
-        broad_category=ItemCategory.KEY,
+        item_category=ENERGY_CELL_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=0.25,
     )
 
@@ -172,6 +195,14 @@ def create_artifact(artifact_index: int,
                     minimum_progression: int,
                     resource_database: ResourceDatabase,
                     ) -> PickupEntry:
+    ARTIFACT_CATEGORY = ItemCategory(
+        name="artifact",
+        long_name="",
+        hint_details=("an ", "artifact"),
+        is_major=False,
+        is_key=True
+    )
+
     return PickupEntry(
         name=prime_items.ARTIFACT_NAMES[artifact_index],
         progression=(
@@ -181,8 +212,8 @@ def create_artifact(artifact_index: int,
             game=resource_database.game_enum,
             name=prime_items.ARTIFACT_MODEL[artifact_index],
         ),
-        item_category=ItemCategory.TEMPLE_KEY,
-        broad_category=ItemCategory.KEY,
+        item_category=ARTIFACT_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=0.25,
         required_progression=minimum_progression,
     )
@@ -203,8 +234,8 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             game=resource_database.game_enum,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=ItemCategory.ETM,
-        broad_category=ItemCategory.ETM,
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )
 
 
@@ -223,8 +254,8 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
             game=resource_database.game_enum,
             name="Nothing",
         ),
-        item_category=ItemCategory.ETM,
-        broad_category=ItemCategory.ETM,
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )
 
 
@@ -240,6 +271,6 @@ def create_visual_etm() -> PickupEntry:
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=ItemCategory.ETM,
-        broad_category=ItemCategory.ETM,
+        item_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_ITEM_CATEGORY,
     )

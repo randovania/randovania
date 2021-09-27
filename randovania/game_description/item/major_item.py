@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -21,11 +21,11 @@ class MajorItem:
     warning: Optional[str] = None
 
     @classmethod
-    def from_json(cls, name: str, value: dict) -> "MajorItem":
+    def from_json(cls, name: str, value: dict, item_categories: Dict[str, ItemCategory]) -> "MajorItem":
         return cls(
             name=name,
-            item_category=ItemCategory(value["item_category"]),
-            broad_category=ItemCategory(value["broad_category"]),
+            item_category=item_categories[value["item_category"]],
+            broad_category=item_categories[value["broad_category"]],
             model_name=value["model_name"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),
@@ -40,8 +40,8 @@ class MajorItem:
     @property
     def as_json(self) -> dict:
         result = {
-            "item_category": self.item_category.value,
-            "broad_category": self.broad_category.value,
+            "item_category": self.item_category.name,
+            "broad_category": self.broad_category.name,
             "model_name": self.model_name,
             "progression": list(self.progression),
             "ammo": list(self.ammo_index),
