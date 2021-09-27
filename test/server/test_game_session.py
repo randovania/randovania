@@ -205,7 +205,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
         "game_session_pickups_update",
         {
             "game": "prime2",
-            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{97Z0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<Y+1Xo}T$)(s1xICWWpZg_AW3v(Z6HHobY*96a(Qem#1jBIw>h{nv9z-^va%2~x-zzi5O4'}]
+            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{97Z0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<QZ0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<K1RMY'}]
         },
         room=f"game-session-1-1234"
     )

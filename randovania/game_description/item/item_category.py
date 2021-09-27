@@ -7,6 +7,7 @@ class ItemCategory:
     long_name: str
     hint_details: Tuple[str, str]
     is_major: bool
+    is_key: bool = False
 
     @classmethod
     def from_json(cls, name: str, value: dict) -> "ItemCategory":
@@ -14,22 +15,22 @@ class ItemCategory:
             name=name,
             long_name=value["long_name"],
             hint_details=tuple(value["hint_details"]),
-            is_major=value["is_major"]
+            is_major=value["is_major"],
+            is_key=value["is_key"] if "is_key" in value else False
         )
 
     @property
     def general_details(self) -> Tuple[str, str]:
         if self.is_major:
             return "a ", "major upgrade"
-        return self.hint_details
+        elif self.is_key:
+            return "a ", "key"
+        else:
+            return "an ", "expansion"
     
     @property
     def is_expansion(self) -> bool:
         return self.name == "expansion"
-
-    @property
-    def is_key(self) -> bool:
-        return self.name ==  "key"
 
 
 USELESS_ITEM_CATEGORY = ItemCategory(

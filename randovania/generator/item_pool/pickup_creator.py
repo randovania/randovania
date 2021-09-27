@@ -114,7 +114,8 @@ def create_dark_temple_key(key_number: int,
         name="temple_key",
         long_name="",
         hint_details=("a ", "red Temple Key"),
-        is_major=False
+        is_major=False,
+        is_key=True
     )
 
     return PickupEntry(
@@ -143,7 +144,8 @@ def create_sky_temple_key(key_number: int,
         name="sky_temple_key",
         long_name="",
         hint_details=("a ", "Sky Temple Key"),
-        is_major=False
+        is_major=False,
+        is_key=True
     )
 
     return PickupEntry(
@@ -166,7 +168,8 @@ def create_energy_cell(cell_index: int,
         name="energy_cell",
         long_name="",
         hint_details=("an ", "energy cell"),
-        is_major=False
+        is_major=False,
+        is_key=True
     )
 
     return PickupEntry(
@@ -196,7 +199,8 @@ def create_artifact(artifact_index: int,
         name="artifact",
         long_name="",
         hint_details=("an ", "artifact"),
-        is_major=False
+        is_major=False,
+        is_key=True
     )
 
     return PickupEntry(
