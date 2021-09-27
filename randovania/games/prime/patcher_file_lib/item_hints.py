@@ -1,11 +1,12 @@
 import collections
+
 import typing
 from typing import Tuple, Optional
 
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision, Hint, RelativeDataItem
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world_list import WorldList
@@ -102,8 +103,8 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
                     game=RandovaniaGame.METROID_PRIME_ECHOES,
                     name="EnergyTransferModule",
                 ),
-                item_category=ItemCategory.ETM,
-                broad_category=ItemCategory.ETM,
+                item_category=USELESS_ITEM_CATEGORY,
+                broad_category=USELESS_ITEM_CATEGORY,
             ),
             player=players_config.player_index,
         )

@@ -1,5 +1,6 @@
 import dataclasses
 from random import Random
+from randovania.game_description.item import item_database
 from typing import Dict, Iterator
 
 import randovania
@@ -8,7 +9,6 @@ from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
@@ -448,6 +448,9 @@ def create_patcher_file(description: LayoutDescription,
         "&push;&main-color=#33ffd6;{}&pop;",
     )
 
+    [item_category_visors] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "visor"]
+    [item_category_beams] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "beam"]
+    
     result["menu_mod"] = configuration.menu_mod
     result["dol_patches"] = EchoesDolPatchesData(
         energy_per_tank=configuration.energy_per_tank,
@@ -455,8 +458,8 @@ def create_patcher_file(description: LayoutDescription,
         safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
         user_preferences=cosmetic_patches.user_preferences,
         default_items={
-            "visor": configuration.major_items_configuration.default_items[ItemCategory.VISOR].name,
-            "beam": configuration.major_items_configuration.default_items[ItemCategory.BEAM].name,
+            "visor": configuration.major_items_configuration.default_items[item_category_visors].name,
+            "beam": configuration.major_items_configuration.default_items[item_category_beams].name,
         },
         unvisited_room_names=(configuration.elevators.can_use_unvisited_room_names
                               and cosmetic_patches.unvisited_room_names),

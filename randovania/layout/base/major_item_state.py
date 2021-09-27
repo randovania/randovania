@@ -3,7 +3,6 @@ from typing import Tuple, Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
@@ -54,7 +53,7 @@ class MajorItemState:
 
         # starting item
         yield self.num_included_in_starting_items, (
-            ENERGY_TANK_MAXIMUM_COUNT if item.item_category == ItemCategory.ENERGY_TANK else 2)
+            ENERGY_TANK_MAXIMUM_COUNT if item.item_category.name == "energy_tank" else 2)
 
         # ammo index
         assert len(self.included_ammo) == len(item.ammo_index)
@@ -72,7 +71,7 @@ class MajorItemState:
         shuffled = bitpacking.decode_int_with_limits(decoder, DEFAULT_MAXIMUM_SHUFFLED)
 
         # starting item
-        starting = decoder.decode_single(ENERGY_TANK_MAXIMUM_COUNT if item.item_category == ItemCategory.ENERGY_TANK
+        starting = decoder.decode_single(ENERGY_TANK_MAXIMUM_COUNT if item.item_category.name == "energy_tank"
                                          else 2)
 
         if item.ammo_index:
