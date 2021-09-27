@@ -132,13 +132,13 @@ def _make_pickup(item_category: ItemCategory):
 @pytest.mark.parametrize("precise_distance", [False, True])
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
-def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision):
+def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision, echoes_item_database):
     # Setup
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
     patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(8): PickupTarget(_make_pickup(ItemCategory.MOVEMENT), 0),
+        PickupIndex(8): PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"]), 0),
     })
 
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:

@@ -10,7 +10,6 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
@@ -159,7 +158,7 @@ def test_decode(patches_with_data, default_layout_configuration):
 
 
 @pytest.mark.parametrize("has_convert", [False, True])
-def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category):
     # Setup
     name = "Some Random Name"
     if has_convert:
@@ -177,8 +176,8 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        item_category=ItemCategory.TEMPLE_KEY,
-        broad_category=ItemCategory.KEY,
+        item_category=generic_item_category,
+        broad_category=generic_item_category, 
         progression=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),

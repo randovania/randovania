@@ -5,7 +5,6 @@ from typing import List, Dict
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import (PickupEntry, ConditionalResources, PickupModel,
                                                                 ResourceConversion)
@@ -56,7 +55,7 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalRe
 
 
 def _pickup_scan(pickup: PickupEntry) -> str:
-    if pickup.item_category != ItemCategory.EXPANSION:
+    if not pickup.item_category.is_expansion:
         if len(pickup.progression) > 1:
             return "{}. Provides the following in order: {}".format(
                 pickup.name, ", ".join(conditional.name for conditional in pickup.conditional_resources))

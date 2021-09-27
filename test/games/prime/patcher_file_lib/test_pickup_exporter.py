@@ -4,9 +4,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion
@@ -42,21 +43,21 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
     ("Y", "X"),
     ("Y", "Z"),
 ])
-def test_calculate_hud_text(order: Tuple[str, str]):
+def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
     # Setup
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup_x = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
+    pickup_x = PickupEntry("A", 1, generic_item_category, generic_item_category,
                            progression=(
                                ((resource_a, 1),)
                            ))
-    pickup_y = PickupEntry("Y", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    pickup_y = PickupEntry("Y", 2, generic_item_category, generic_item_category,
                            progression=(
                                (resource_b, 1),
                                (resource_a, 5),
                            ))
-    pickup_z = PickupEntry("Z", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    pickup_z = PickupEntry("Z", 2, generic_item_category, generic_item_category,
                            progression=(
                                (resource_a, 1),
                                (resource_b, 5),
@@ -86,7 +87,7 @@ def test_calculate_hud_text(order: Tuple[str, str]):
 
 
 @pytest.mark.parametrize("model_style", PickupModelStyle)
-def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
+def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_item_category):
     # Setup
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
     rng = Random(5000)
@@ -102,20 +103,19 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10, None)
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    pickup_a = PickupEntry("P-A", model_1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
+    pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,
                            progression=((resource_a, 1),),
                            )
-    pickup_b = PickupEntry("P-B", model_2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+    pickup_b = PickupEntry("P-B", model_2, generic_item_category, generic_item_category,
                            progression=((resource_b, 1),
                                         (resource_a, 5)), )
-    pickup_c = PickupEntry("P-C", model_2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED,
+    pickup_c = PickupEntry("P-C", model_2, AMMO_ITEM_CATEGORY, generic_item_category,
                            progression=tuple(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource))
 
-    useless_pickup = PickupEntry("P-Useless", model_0, ItemCategory.ETM, ItemCategory.ETM,
-                                 progression=((useless_resource, 1),))
+    useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY, progression=((useless_resource, 1),))
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),
         PickupIndex(2): PickupTarget(pickup_b, 0),
@@ -198,7 +198,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
 
 
 @pytest.mark.parametrize("has_memo_data", [False, True])
-def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches):
+def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_item_category):
     # Setup
     rng = Random(5000)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
@@ -207,11 +207,13 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     model_2 = MagicMock(spec=PickupModel)
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
-    pickup_a = PickupEntry("A", model_1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY, progression=tuple())
-    pickup_b = PickupEntry("B", model_2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
-                           progression=((resource_b, 1), (resource_b, 1)))
-    pickup_c = PickupEntry("C", model_2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED, progression=tuple())
-    useless_pickup = PickupEntry("Useless", useless_model, ItemCategory.ETM, ItemCategory.ETM, progression=tuple())
+    pickup_a = PickupEntry("A", model_1, generic_item_category, generic_item_category, 
+                            progression=tuple())
+    pickup_b = PickupEntry("B", model_2, generic_item_category, generic_item_category,
+                            progression=((resource_b, 1), (resource_b, 1)))
+    pickup_c = PickupEntry("C", model_2, generic_item_category, generic_item_category, 
+                            progression=tuple())
+    useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY, progression=tuple())
 
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),
@@ -335,10 +337,10 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
 
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
-def _create_pickup_data():
+def _create_pickup_data(generic_item_category):
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    return PickupEntry("Cake", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
+    return PickupEntry("Cake", 1, generic_item_category, generic_item_category,
                        progression=(
                            (resource_a, 1),
                            (resource_b, 1),

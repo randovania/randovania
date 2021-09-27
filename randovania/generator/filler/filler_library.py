@@ -29,7 +29,7 @@ class UnableToGenerate(RuntimeError):
 
 
 def should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category
+    return item_category.is_major
 
 
 X = TypeVar("X")
