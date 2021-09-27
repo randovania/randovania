@@ -51,8 +51,8 @@ def write_database(database: ItemDatabase) -> Dict:
     :return:
     """
     item_categories = {
-        name: item.as_json
-        for name, item in database.item_categories.items()    
+        name: item_category.as_json
+        for name, item_category in database.item_categories.items()    
     }
 
     major_items_data = {

@@ -448,10 +448,9 @@ def create_patcher_file(description: LayoutDescription,
         "&push;&main-color=#33ffd6;{}&pop;",
     )
 
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-    item_category_visors = item_database.item_categories["visor"]
-    item_category_beams = item_database.item_categories["beam"]
-
+    [item_category_visors] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "visor"]
+    [item_category_beams] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "beam"]
+    
     result["menu_mod"] = configuration.menu_mod
     result["dol_patches"] = EchoesDolPatchesData(
         energy_per_tank=configuration.energy_per_tank,

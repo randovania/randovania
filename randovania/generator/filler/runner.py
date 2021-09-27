@@ -35,7 +35,7 @@ def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], 
     expansions = []
 
     for pickup in item_pool:
-        if pickup.item_category.name == "expansion":
+        if pickup.item_category.is_expansion:
             expansions.append(pickup)
         else:
             major_items.append(pickup)
@@ -107,8 +107,7 @@ def add_relative_hint(world_list: WorldList,
             # FIXME: None should be ok, but this must be called after junk has been filled
             if t is not None:
                 cat = t.pickup.item_category
-                if cat.is_major_category or (cat.name != "expansion"
-                                             and target_precision == HintItemPrecision.DETAILED):
+                if cat.is_major or (not cat.is_expansion and target_precision == HintItemPrecision.DETAILED):
                     yield index
 
     area_choices = {

@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from randovania.game_description import default_database
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
+from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
@@ -84,8 +84,6 @@ def create_ammo_expansion(ammo: Ammo,
     if resource_database.item_percentage is not None:
         resources.append((resource_database.item_percentage, 1))
 
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
-
     return PickupEntry(
         name=ammo.name,
         progression=(),
@@ -94,7 +92,7 @@ def create_ammo_expansion(ammo: Ammo,
             game=resource_database.game_enum,
             name=ammo.model_name,
         ),
-        item_category=item_database.item_categories["expansion"],
+        item_category=ammo.item_category,
         broad_category=ammo.broad_category,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
@@ -112,7 +110,12 @@ def create_dark_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
+    TEMPLE_KEY_CATEGORY = ItemCategory(
+        name="temple_key",
+        long_name="",
+        hint_details=("a ", "red Temple Key"),
+        is_major=False
+    )
 
     return PickupEntry(
         name=echoes_items.DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
@@ -121,8 +124,8 @@ def create_dark_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.DARK_TEMPLE_KEY_MODEL,
         ),
-        item_category=item_database.item_categories["temple_key"],
-        broad_category=item_database.item_categories["key"],
+        item_category=TEMPLE_KEY_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=3,
     )
 
@@ -136,7 +139,12 @@ def create_sky_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
+    SKY_TEMPLE_KEY_CATEGORY = ItemCategory(
+        name="sky_temple_key",
+        long_name="",
+        hint_details=("a ", "Sky Temple Key"),
+        is_major=False
+    )
 
     return PickupEntry(
         name="Sky Temple Key {}".format(key_number + 1),
@@ -145,8 +153,8 @@ def create_sky_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.SKY_TEMPLE_KEY_MODEL,
         ),
-        item_category=item_database.item_categories["sky_temple_key"],
-        broad_category=item_database.item_categories["key"],
+        item_category=SKY_TEMPLE_KEY_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=3,
     )
 
@@ -154,7 +162,12 @@ def create_sky_temple_key(key_number: int,
 def create_energy_cell(cell_index: int,
                        resource_database: ResourceDatabase,
                        ) -> PickupEntry:
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
+    ENERGY_CELL_CATEGORY = ItemCategory(
+        name="energy_cell",
+        long_name="",
+        hint_details=("an ", "energy cell"),
+        is_major=False
+    )
 
     return PickupEntry(
         name=f"Energy Cell {cell_index + 1}",
@@ -169,8 +182,8 @@ def create_energy_cell(cell_index: int,
             game=resource_database.game_enum,
             name=corruption_items.ENERGY_CELL_MODEL,
         ),
-        item_category=item_database.item_categories["energy_cell"],
-        broad_category=item_database.item_categories["key"],
+        item_category=ENERGY_CELL_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=0.25,
     )
 
@@ -179,7 +192,12 @@ def create_artifact(artifact_index: int,
                     minimum_progression: int,
                     resource_database: ResourceDatabase,
                     ) -> PickupEntry:
-    item_database = default_database.item_database_for_game(resource_database.game_enum)
+    ARTIFACT_CATEGORY = ItemCategory(
+        name="artifact",
+        long_name="",
+        hint_details=("an ", "artifact"),
+        is_major=False
+    )
 
     return PickupEntry(
         name=prime_items.ARTIFACT_NAMES[artifact_index],
@@ -190,8 +208,8 @@ def create_artifact(artifact_index: int,
             game=resource_database.game_enum,
             name=prime_items.ARTIFACT_MODEL[artifact_index],
         ),
-        item_category=item_database.item_categories["artifact"],
-        broad_category=item_database.item_categories["key"],
+        item_category=ARTIFACT_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
         probability_offset=0.25,
         required_progression=minimum_progression,
     )
