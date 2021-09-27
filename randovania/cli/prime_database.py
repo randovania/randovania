@@ -5,11 +5,10 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
-from randovania.game_description import default_database, data_reader
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data, binary_data
+from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -139,6 +138,7 @@ def view_area_command(sub_parsers):
 
 def update_human_readable_logic(args):
     from randovania.game_description import pretty_print
+    from randovania.game_description import data_reader
     game = RandovaniaGame(args.game)
 
     path, data = default_data.read_json_then_binary(game)
@@ -155,6 +155,29 @@ def update_human_readable(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     parser.set_defaults(func=update_human_readable_logic)
+
+
+def refresh_all_logic(args):
+    from randovania.game_description import pretty_print
+    from randovania.game_description import data_reader, data_writer
+
+    for game in RandovaniaGame:
+        path, data = default_data.read_json_then_binary(game)
+        gd = data_reader.decode_data(data)
+        new_data = data_writer.write_game_description(gd)
+
+        data_writer.write_as_split_files(new_data, path)
+        path.with_suffix("").mkdir(parents=True, exist_ok=True)
+        pretty_print.write_human_readable_game(gd, path.with_suffix(""))
+
+
+def refresh_all(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "refresh-all",
+        help="Re-exports the json and txt files of all databases",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.set_defaults(func=refresh_all_logic)
 
 
 def _list_paths_with_resource(game,
@@ -311,6 +334,7 @@ def create_subparsers(sub_parsers):
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
     update_human_readable(sub_parsers)
+    refresh_all(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
     pickups_per_area_command(sub_parsers)
