@@ -27,35 +27,41 @@
                     "connections": {
                         "Samus Ship": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (No Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 4,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -66,82 +72,94 @@
                     "node_type": "player_ship",
                     "is_unlocked": {
                         "type": "and",
-                        "data": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": 1,
-                                    "index": 57,
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": 1,
-                                    "index": 45,
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    },
-                    "connections": {
-                        "Door to Core Access": {
-                            "type": "or",
-                            "data": [
+                        "data": {
+                            "comment": null,
+                            "items": [
                                 {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 15,
+                                        "type": 1,
+                                        "index": 57,
                                         "amount": 1,
                                         "negate": false
                                     }
                                 },
                                 {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (No Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 4,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 33,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 4,
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 45,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
+                        }
+                    },
+                    "connections": {
+                        "Door to Core Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -171,30 +189,33 @@
                     "connections": {
                         "Door to Bryyo Leviathan Core": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Enter Hypermode"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Enter Hypermode"
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 4,
-                                        "amount": 2,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -215,44 +236,50 @@
                     "connections": {
                         "Door to Landing Site Delta": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 2,
-                                        "index": 13,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 4,
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 3,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Enter Hypermode"
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 2,
+                                            "index": 13,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Enter Hypermode"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -282,30 +309,33 @@
                     "connections": {
                         "Event - Mogenar": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Enter Hypermode"
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 10,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Enter Hypermode"
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -336,26 +366,29 @@
                     "connections": {
                         "Teleporter to Bryyo Cliffside": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 38,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 38,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -368,7 +401,10 @@
                     "connections": {
                         "Pickup (Hyper Ball)": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

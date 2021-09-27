@@ -435,32 +435,36 @@ def _json_req(amount: int, index: int = 1, resource_type: int = 3):
     return {"type": "resource", "data": {"type": resource_type, "index": index, "amount": amount, "negate": False}}
 
 
+def _arr_req(req_type: str, items: list):
+    return {"type": req_type, "data": {"comment": None, "items": items}}
+
+
 @pytest.mark.parametrize(["damage", "items", "requirement"], [
-    (50, [], {"type": "and", "data": [_json_req(50)]}),
-    (MAX_DAMAGE, [], {"type": "and", "data": [_json_req(1, resource_type=0)]}),
-    (80, [], {"type": "and", "data": [_json_req(50), _json_req(30)]}),
-    (30, [], {"type": "or", "data": [_json_req(50), _json_req(30)]}),
-    (50, [], {"type": "or", "data": [_json_req(50), _json_req(1, resource_type=0)]}),
-    (0, [1], {"type": "or", "data": [_json_req(50), _json_req(1, resource_type=0)]}),
-    (100, [], {"type": "or", "data": [
+    (50, [], _arr_req("and", [_json_req(50)])),
+    (MAX_DAMAGE, [], _arr_req("and", [_json_req(1, resource_type=0)])),
+    (80, [], _arr_req("and", [_json_req(50), _json_req(30)])),
+    (30, [], _arr_req("or", [_json_req(50), _json_req(30)])),
+    (50, [], _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)])),
+    (0, [1], _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)])),
+    (100, [], _arr_req("or", [
         _json_req(100),
-        {"type": "and", "data": [_json_req(50), _json_req(1, resource_type=0)]},
-    ]}),
-    (50, [1], {"type": "or", "data": [
+        _arr_req("and", [_json_req(50), _json_req(1, resource_type=0)]),
+    ])),
+    (50, [1], _arr_req("or", [
         _json_req(100),
-        {"type": "and", "data": [_json_req(50), _json_req(1, resource_type=0)]},
-    ]}),
-    (150, [], {"type": "and", "data": [
+        _arr_req("and", [_json_req(50), _json_req(1, resource_type=0)]),
+    ])),
+    (150, [], _arr_req("and", [
         _json_req(100),
-        {"type": "or", "data": [_json_req(50), _json_req(1, resource_type=0)]},
-    ]}),
-    (100, [1], {"type": "and", "data": [
+        _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)]),
+    ])),
+    (100, [1], _arr_req("and", [
         _json_req(100),
-        {"type": "or", "data": [_json_req(50), _json_req(1, resource_type=0)]},
-    ]}),
-    (200, [], {"type": "and", "data": [_json_req(100), _json_req(100, 2)]}),
-    (121, [13], {"type": "and", "data": [_json_req(100), _json_req(100, 2)]}),
-    (100, [14], {"type": "and", "data": [_json_req(100), _json_req(100, 2)]}),
+        _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)]),
+    ])),
+    (200, [], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
+    (121, [13], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
+    (100, [14], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
 ])
 def test_requirement_damage(damage, items, requirement, echoes_resource_database):
     req = data_reader.read_requirement(requirement, echoes_resource_database)
