@@ -62,13 +62,69 @@ class Requirement:
         raise NotImplementedError()
 
 
-class RequirementAnd(Requirement):
+class RequirementArrayBase(Requirement):
     items: Tuple[Requirement, ...]
+    comment: Optional[str]
     _cached_hash = None
 
-    def __init__(self, items: Iterable[Requirement]):
+    def __init__(self, items: Iterable[Requirement], comment: Optional[str] = None):
         self.items = tuple(items)
+        self.comment = comment
 
+    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+        raise NotImplementedError()
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+        raise NotImplementedError()
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           database: ResourceDatabase) -> Requirement:
+        return type(self)(
+            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
+        )
+
+    def simplify(self) -> "Requirement":
+        raise NotImplementedError()
+
+    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
+        raise NotImplementedError()
+
+    @property
+    def sorted(self) -> Tuple[Requirement]:
+        return tuple(sorted(self.items))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.items == other.items
+
+    def __hash__(self) -> int:
+        if self._cached_hash is None:
+            self._cached_hash = hash(self.items)
+        return self._cached_hash
+
+    def __repr__(self):
+        return repr(self.items)
+
+    def iterate_resource_requirements(self, database: ResourceDatabase):
+        for item in self.items:
+            yield from item.iterate_resource_requirements(database)
+
+    def __str__(self) -> str:
+        if self.items:
+            visual_items = [str(item) for item in self.items]
+            return "({})".format(self.combinator().join(sorted(visual_items)))
+        else:
+            return self._str_no_items()
+
+    @classmethod
+    def combinator(cls):
+        raise NotImplementedError()
+
+    @classmethod
+    def _str_no_items(cls):
+        raise NotImplementedError()
+
+
+class RequirementAnd(RequirementArrayBase):
     def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         result = 0
         for item in self.items:
@@ -84,12 +140,6 @@ class RequirementAnd(Requirement):
             for item in self.items
         )
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
-        return RequirementAnd(
-            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
-        )
-
     def simplify(self) -> Requirement:
         new_items = _expand_items(self.items, RequirementAnd, Requirement.trivial())
         if Requirement.impossible() in new_items:
@@ -98,7 +148,7 @@ class RequirementAnd(Requirement):
         if len(new_items) == 1:
             return new_items[0]
 
-        return RequirementAnd(new_items)
+        return RequirementAnd(new_items, comment=self.comment)
 
     def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         result = RequirementSet.trivial()
@@ -106,40 +156,16 @@ class RequirementAnd(Requirement):
             result = result.union(item.as_set(database))
         return result
 
-    @property
-    def sorted(self) -> Tuple[Requirement]:
-        return tuple(sorted(self.items))
+    @classmethod
+    def combinator(cls):
+        return " and "
 
-    def __eq__(self, other):
-        return isinstance(other, RequirementAnd) and self.items == other.items
-
-    def __hash__(self) -> int:
-        if self._cached_hash is None:
-            self._cached_hash = hash(self.items)
-        return self._cached_hash
-
-    def __repr__(self):
-        return repr(self.items)
-
-    def __str__(self) -> str:
-        if self.items:
-            visual_items = [str(item) for item in self.items]
-            return "({})".format(" and ".join(sorted(visual_items)))
-        else:
-            return "Trivial"
-
-    def iterate_resource_requirements(self, database: ResourceDatabase):
-        for item in self.items:
-            yield from item.iterate_resource_requirements(database)
+    @classmethod
+    def _str_no_items(cls):
+        return "Trivial"
 
 
-class RequirementOr(Requirement):
-    items: Tuple[Requirement, ...]
-    _cached_hash = None
-
-    def __init__(self, items: Iterable[Requirement]):
-        self.items = tuple(items)
-
+class RequirementOr(RequirementArrayBase):
     def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
         try:
             return min(
@@ -154,12 +180,6 @@ class RequirementOr(Requirement):
         return any(
             item.satisfied(current_resources, current_energy, database)
             for item in self.items
-        )
-
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
-        return RequirementOr(
-            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
         )
 
     def simplify(self) -> Requirement:
@@ -206,7 +226,7 @@ class RequirementOr(Requirement):
         if len(final_items) == 1:
             return final_items[0]
 
-        return RequirementOr(final_items)
+        return RequirementOr(final_items, comment=self.comment)
 
     def as_set(self, database: ResourceDatabase) -> "RequirementSet":
         alternatives = set()
@@ -214,31 +234,13 @@ class RequirementOr(Requirement):
             alternatives |= item.as_set(database).alternatives
         return RequirementSet(alternatives)
 
-    @property
-    def sorted(self) -> Tuple[Requirement]:
-        return tuple(sorted(self.items))
+    @classmethod
+    def combinator(cls):
+        return " or "
 
-    def __eq__(self, other):
-        return isinstance(other, RequirementOr) and self.items == other.items
-
-    def __hash__(self) -> int:
-        if self._cached_hash is None:
-            self._cached_hash = hash(self.items)
-        return self._cached_hash
-
-    def __repr__(self):
-        return repr(self.items)
-
-    def __str__(self) -> str:
-        if self.items:
-            visual_items = [str(item) for item in self.items]
-            return "({})".format(" or ".join(sorted(visual_items)))
-        else:
-            return "Impossible"
-
-    def iterate_resource_requirements(self, database: ResourceDatabase):
-        for item in self.items:
-            yield from item.iterate_resource_requirements(database)
+    @classmethod
+    def _str_no_items(cls):
+        return "Impossible"
 
 
 def _expand_items(items: Tuple[Requirement, ...],
