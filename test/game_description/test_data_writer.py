@@ -26,6 +26,10 @@ def test_round_trip_small(test_files_dir):
     game = data_reader.decode_data(original_data)
     encoded_data = data_writer.write_game_description(game)
 
+    # # Uncomment the following to update the file
+    # with test_files_dir.joinpath("prime_data_as_json.json").open("w", encoding="utf-8") as meta:
+    #     json.dump(encoded_data, meta, indent=4); assert False
+
     assert encoded_data == original_data
 
 
