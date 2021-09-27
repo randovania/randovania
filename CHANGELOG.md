@@ -43,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Method of climbing halfpipe in Meeting Grounds with Space Jump, Screw Attack, and Standable Terrain (Beginner and above)
 - Changed: Simplified Meeting Grounds logic slightly, by removing the redundant Top of Halfpipe node
+- Changed: Killing Quad MBs now uses a template, as it's a complex set of requirements repeated in three separate rooms
+- Added: Method of killing Quad MBs using Bombs or Power Bombs and Combat (Beginner)
+- Added: Method of killing Quad MBs using Screw Attack (Space Jump) and Knowledge (Beginner)
+- Added: Requirement to either kill the Quad MBs or defeat Spider Guardian in order to collect the item in Hall of Combat Mastery in the intended way
 
 ### Discord Bot (Caretaker Class Drone)
 
