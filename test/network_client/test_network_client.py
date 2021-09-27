@@ -214,16 +214,16 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
 
 
-def test_decode_pickup(client: NetworkClient, echoes_resource_database, echoes_item_database):
-    data = "h^WxYK%Bzb%FGCg+{)z6@~Gs(+~&;6<eJ{d>e$N>wY}MuwUxQjBWruJD{Curpa%c"
+def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_item_category):
+    data = "h^WxYK%Bzb%FGCg+{)z6@~Gs(+~&;6<eJ{d>e$N-ot3$j$)%29RCZS8S0<J+1eZou(gZdaMpkzBCzit8K`;ZWbDM)J8%r}wD<K0*qbq6~J1cW5lS>@HsO+uGu1zdt2`-GSqzG&-jI8bMPc4PGf?x+$=QjpcHkM|VRze1sMpn=V00"
     expected_pickup = PickupEntry(
         name="The Name",
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        item_category=echoes_item_database.item_categories["movement"],
-        broad_category=echoes_item_database.item_categories["movement"], 
+        item_category=generic_item_category,
+        broad_category=generic_item_category, 
         progression=tuple(),
     )
     

@@ -83,12 +83,12 @@ def update_hints_text(game: RandovaniaGame,
             broad_category.hint_details[1],
         ))
 
-    for item in item_database.ammo.values():
+    for ammo in item_database.ammo.values():
         rows.append((
-            item.name,
-            item_database.item_categories["expansion"].hint_details[1],
-            item_database.item_categories["expansion"].general_details[1],
-            item.broad_category.hint_details[1],
+            ammo.name,
+            ammo.item_category.hint_details[1],
+            ammo.item_category.general_details[1],
+            ammo.broad_category.hint_details[1],
         ))
 
     hint_item_names_tree_widget.setSortingEnabled(False)

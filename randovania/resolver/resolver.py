@@ -74,7 +74,7 @@ def _should_check_if_action_is_safe(state: State,
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        if target is not None and (target.pickup.item_category.is_major_category or target.pickup.item_category.is_key):
+        if target is not None and (target.pickup.item_category.is_major or target.pickup.item_category.is_key):
             return True
 
     return False

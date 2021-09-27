@@ -176,7 +176,7 @@ def two_player_session_fixture(clean_database):
 def test_game_session_request_pickups_one_action(mock_session_description: PropertyMock,
                                                  mock_get_resource_database: MagicMock,
                                                  mock_get_pickup_target: MagicMock,
-                                                 flask_app, two_player_session, echoes_item_database, echoes_resource_database, mocker):
+                                                 flask_app, two_player_session, generic_item_category, echoes_resource_database, mocker):
     # Setup
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
@@ -185,13 +185,18 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     membership = database.GameSessionMembership.get(user=database.User.get_by_id(1234), session=two_player_session)
 
     pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
-                         echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"],
+                         generic_item_category, generic_item_category,
                          progression=((echoes_resource_database.item[0], 1),))
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
 
     # Run
     game_session._emit_game_session_pickups_update(sio, membership)
+
+    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason 
+#    from randovania.server.game_session import _base64_encode_pickup
+#    new_data = _base64_encode_pickup(pickup, echoes_resource_database)
+#    print(new_data)
 
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
@@ -200,7 +205,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
         "game_session_pickups_update",
         {
             "game": "prime2",
-            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{97&Wx?D4UDVpY_Bb?mE?g300'}]
+            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{97Z0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<Y+1Xo}T$)(s1xICWWpZg_AW3v(Z6HHobY*96a(Qem#1jBIw>h{nv9z-^va%2~x-zzi5O4'}]
         },
         room=f"game-session-1-1234"
     )
@@ -214,11 +219,11 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
                                               mock_get_resource_database: MagicMock,
                                               mock_get_pickup_target: MagicMock,
                                               mock_emit: MagicMock,
-                                              flask_app, two_player_session, echoes_item_database, echoes_resource_database):
+                                              flask_app, two_player_session, generic_item_category, echoes_resource_database):
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
-    pickup = PickupEntry("A", 1, echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"],
+    pickup = PickupEntry("A", 1, generic_item_category, generic_item_category,
                          progression=((echoes_resource_database.item[0], 1),))
     mock_get_resource_database.return_value = echoes_resource_database
     mock_get_pickup_target.return_value = PickupTarget(pickup, 0)

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -42,21 +43,21 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
     ("Y", "X"),
     ("Y", "Z"),
 ])
-def test_calculate_hud_text(order: Tuple[str, str], echoes_item_database):
+def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
     # Setup
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup_x = PickupEntry("A", 1, echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"],
+    pickup_x = PickupEntry("A", 1, generic_item_category, generic_item_category,
                            progression=(
                                ((resource_a, 1),)
                            ))
-    pickup_y = PickupEntry("Y", 2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
+    pickup_y = PickupEntry("Y", 2, generic_item_category, generic_item_category,
                            progression=(
                                (resource_b, 1),
                                (resource_a, 5),
                            ))
-    pickup_z = PickupEntry("Z", 2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
+    pickup_z = PickupEntry("Z", 2, generic_item_category, generic_item_category,
                            progression=(
                                (resource_a, 1),
                                (resource_b, 5),
@@ -86,7 +87,7 @@ def test_calculate_hud_text(order: Tuple[str, str], echoes_item_database):
 
 
 @pytest.mark.parametrize("model_style", PickupModelStyle)
-def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, echoes_item_database):
+def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_item_category):
     # Setup
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
     rng = Random(5000)
@@ -102,13 +103,13 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, echoes
     useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10, None)
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    pickup_a = PickupEntry("P-A", model_1, echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"],
+    pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,
                            progression=((resource_a, 1),),
                            )
-    pickup_b = PickupEntry("P-B", model_2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
+    pickup_b = PickupEntry("P-B", model_2, generic_item_category, generic_item_category,
                            progression=((resource_b, 1),
                                         (resource_a, 5)), )
-    pickup_c = PickupEntry("P-C", model_2, echoes_item_database.item_categories["expansion"], echoes_item_database.item_categories["missile_related"],
+    pickup_c = PickupEntry("P-C", model_2, AMMO_ITEM_CATEGORY, generic_item_category,
                            progression=tuple(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
@@ -197,7 +198,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, echoes
 
 
 @pytest.mark.parametrize("has_memo_data", [False, True])
-def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, echoes_item_database):
+def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_item_category):
     # Setup
     rng = Random(5000)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
@@ -206,11 +207,11 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     model_2 = MagicMock(spec=PickupModel)
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
-    pickup_a = PickupEntry("A", model_1, echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"], 
+    pickup_a = PickupEntry("A", model_1, generic_item_category, generic_item_category, 
                             progression=tuple())
-    pickup_b = PickupEntry("B", model_2, echoes_item_database.item_categories["suit"], echoes_item_database.item_categories["life_support"],
+    pickup_b = PickupEntry("B", model_2, generic_item_category, generic_item_category,
                             progression=((resource_b, 1), (resource_b, 1)))
-    pickup_c = PickupEntry("C", model_2, echoes_item_database.item_categories["expansion"], echoes_item_database.item_categories["missile_related"], 
+    pickup_c = PickupEntry("C", model_2, generic_item_category, generic_item_category, 
                             progression=tuple())
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY, progression=tuple())
 
@@ -336,10 +337,10 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
 
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
-def _create_pickup_data(echoes_item_database):
+def _create_pickup_data(generic_item_category):
     resource_a = ItemResourceInfo(1, "A", "A", 10, None)
     resource_b = ItemResourceInfo(2, "B", "B", 10, None)
-    return PickupEntry("Cake", 1, echoes_item_database.item_categories["temple_key"], echoes_item_database.item_categories["key"],
+    return PickupEntry("Cake", 1, generic_item_category, generic_item_category,
                        progression=(
                            (resource_a, 1),
                            (resource_b, 1),

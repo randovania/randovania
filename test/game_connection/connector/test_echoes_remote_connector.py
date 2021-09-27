@@ -233,13 +233,13 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
 
 
 @pytest.mark.asyncio
-async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker, echoes_item_database):
+async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker, generic_item_category):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     db = connector.game.resource_database
-    pickup = PickupEntry("Pickup", 0, echoes_item_database.item_categories["missile"], echoes_item_database.item_categories["missile"], progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),
                              (db.item_percentage, 1),

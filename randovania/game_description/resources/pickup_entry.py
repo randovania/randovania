@@ -154,4 +154,4 @@ class PickupEntry:
 
     @property
     def is_expansion(self) -> bool:
-        return self.item_category.name == "expansion"
+        return self.item_category.is_expansion

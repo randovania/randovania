@@ -5,7 +5,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, Pick
 from randovania.games.game import RandovaniaGame
 
 
-def test_extra_resources_maximum(echoes_item_database):
+def test_extra_resources_maximum(generic_item_category):
     item = ItemResourceInfo(0, "Item", "Item", 2, None)
     msg = "Attempt to give 5 of Item, more than max capacity"
 
@@ -13,8 +13,8 @@ def test_extra_resources_maximum(echoes_item_database):
         PickupEntry(
             name="broken",
             model=PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "Nothing"),
-            item_category=echoes_item_database.item_categories["missile"],
-            broad_category=echoes_item_database.item_categories["missile"],
+            item_category=generic_item_category,
+            broad_category=generic_item_category,
             progression=(),
             extra_resources=(
                 (item, 5),

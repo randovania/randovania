@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -21,7 +21,7 @@ class MajorItem:
     warning: Optional[str] = None
 
     @classmethod
-    def from_json(cls, name: str, value: dict, item_categories: dict) -> "MajorItem":
+    def from_json(cls, name: str, value: dict, item_categories: Dict[str, ItemCategory]) -> "MajorItem":
         return cls(
             name=name,
             item_category=item_categories[value["item_category"]],

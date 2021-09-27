@@ -1,6 +1,7 @@
 import dataclasses
 import json
 from pathlib import Path
+from randovania.game_description.item.item_category import ItemCategory
 from unittest.mock import MagicMock
 
 import pytest
@@ -95,6 +96,15 @@ def randomizer_data() -> dict:
 def game_enum(request) -> RandovaniaGame:
     return request.param
 
+
+@pytest.fixture()
+def generic_item_category() -> ItemCategory:
+    return ItemCategory(
+        name="generic",
+        long_name="Generic Item Category",
+        hint_details=("an ", "unspecified item"),
+        is_major=False
+    )
 
 @pytest.fixture()
 def blank_pickup(echoes_item_database) -> PickupEntry:

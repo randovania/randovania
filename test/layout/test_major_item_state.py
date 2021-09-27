@@ -26,8 +26,7 @@ def _state_with_data(request, echoes_item_database):
         name="visor",
         long_name="Visors",
         hint_details=("a ","visor"),
-        is_major_category=True,
-        is_key=False
+        is_major=True
     )
 
     item_category_name = request.param.get("category", "")

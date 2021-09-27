@@ -12,7 +12,7 @@ from randovania.layout.base.ammo_state import AmmoState
     (2, 5, 1),
     (50, 1, 0),
 ])
-def test_items_for_ammo_one_item(per_pickup: int, total_pickup: int, included: int, echoes_item_database):
+def test_items_for_ammo_one_item(per_pickup: int, total_pickup: int, included: int, generic_item_category):
     # Setup
     item_a = 1
 
@@ -20,7 +20,7 @@ def test_items_for_ammo_one_item(per_pickup: int, total_pickup: int, included: i
     previous_pickup_for_item = {}
 
     maximum = per_pickup * total_pickup + included
-    ammo = Ammo("My Ammo", model_name="Model", maximum=maximum, items=(item_a,), broad_category=echoes_item_database.item_categories["beam_related"])
+    ammo = Ammo("My Ammo", model_name="Model", maximum=maximum, items=(item_a,), broad_category=generic_item_category)
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum}
 
@@ -35,7 +35,7 @@ def test_items_for_ammo_one_item(per_pickup: int, total_pickup: int, included: i
     assert ammo_per_pickup == [[per_pickup]] * total_pickup
 
 
-def test_items_for_ammo_one_item_non_divisible(echoes_item_database):
+def test_items_for_ammo_one_item_non_divisible(generic_item_category):
     # Setup
     item_a = 1
 
@@ -46,7 +46,7 @@ def test_items_for_ammo_one_item_non_divisible(echoes_item_database):
     previous_pickup_for_item = {}
 
     ammo = Ammo("My Ammo", model_name="Model", maximum=maximum, items=(item_a,),
-                broad_category=echoes_item_database.item_categories["beam_related"])
+                broad_category=generic_item_category)
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum}
 
@@ -67,7 +67,7 @@ def test_items_for_ammo_one_item_non_divisible(echoes_item_database):
     (2, 5, 1),
     (50, 1, 0),
 ])
-def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: int, echoes_item_database):
+def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: int, generic_item_category):
     # Setup
     item_a = 1
     item_b = 2
@@ -77,7 +77,7 @@ def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: i
 
     maximum = per_pickup * total_pickup + included
     ammo = Ammo("My Ammo", model_name="Model", maximum=maximum, items=(item_a, item_b),
-                broad_category=echoes_item_database.item_categories["beam_related"])
+                broad_category=generic_item_category)
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum, item_b: maximum}
 
@@ -93,7 +93,7 @@ def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: i
     assert ammo_per_pickup == [[per_pickup, per_pickup]] * total_pickup
 
 
-def test_items_for_ammo_two_item_diverging_values(echoes_item_database):
+def test_items_for_ammo_two_item_diverging_values(generic_item_category):
     # Setup
     item_a = 1
     item_b = 2
@@ -105,7 +105,7 @@ def test_items_for_ammo_two_item_diverging_values(echoes_item_database):
     previous_pickup_for_item = {}
 
     ammo = Ammo("My Ammo", model_name="Model", maximum=maximum, items=(item_a, item_b),
-                broad_category=echoes_item_database.item_categories["beam_related"])
+                broad_category=generic_item_category)
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum, item_b: maximum}
 
