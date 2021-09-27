@@ -91,6 +91,17 @@ def read_requirement_array(data: Dict,
                            resource_database: ResourceDatabase,
                            cls: Type[X],
                            ) -> X:
+
+    # Old version
+    if isinstance(data["data"], list):
+        return cls(
+            [
+                read_requirement(item, resource_database)
+                for item in data["data"]
+            ],
+            None
+        )
+
     return cls(
         [
             read_requirement(item, resource_database)
