@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import List, Callable, TypeVar, Tuple, Dict
+from typing import List, Callable, TypeVar, Tuple, Dict, Type
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
@@ -87,21 +87,28 @@ def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
         data["amount"], data["negate"])
 
 
-def read_requirement_and(data: Dict,
-                         resource_database: ResourceDatabase,
-                         ) -> RequirementAnd:
-    return RequirementAnd([
-        read_requirement(item, resource_database)
-        for item in data["data"]
-    ])
+def read_requirement_array(data: Dict,
+                           resource_database: ResourceDatabase,
+                           cls: Type[X],
+                           ) -> X:
 
+    # Old version
+    if isinstance(data["data"], list):
+        return cls(
+            [
+                read_requirement(item, resource_database)
+                for item in data["data"]
+            ],
+            None
+        )
 
-def read_requirement_or(data: Dict,
-                        resource_database: ResourceDatabase) -> RequirementOr:
-    return RequirementOr([
-        read_requirement(item, resource_database)
-        for item in data["data"]
-    ])
+    return cls(
+        [
+            read_requirement(item, resource_database)
+            for item in data["data"]["items"]
+        ],
+        data["data"]["comment"],
+    )
 
 
 def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -> RequirementTemplate:
@@ -114,10 +121,10 @@ def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Require
         return read_resource_requirement(data, resource_database)
 
     elif req_type == "and":
-        return read_requirement_and(data, resource_database)
+        return read_requirement_array(data, resource_database, RequirementAnd)
 
     elif req_type == "or":
-        return read_requirement_or(data, resource_database)
+        return read_requirement_array(data, resource_database, RequirementOr)
 
     elif req_type == "template":
         return read_requirement_template(data, resource_database)
