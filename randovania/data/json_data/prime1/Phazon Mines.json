@@ -4805,6 +4805,95 @@
                                 ]
                             }
                         },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Processing Center Access",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.41,
+                        "y": 90.44,
+                        "z": 32.35
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": 3983402811,
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {
+                        "Door to Elite Quarters Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 31,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Event - Omega Pirate",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "event",
+                    "event_index": 31,
+                    "connections": {
+                        "Pickup (Phazon Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Pickup (Phazon Suit)",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "pickup",
+                    "pickup_index": 83,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Elite Quarters Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Fight Trigger",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
                         "Event - Omega Pirate": {
                             "type": "and",
                             "data": {
@@ -5059,96 +5148,8 @@
                                     }
                                 ]
                             }
-                        },
-                        "Fight Trigger": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
-                },
-                {
-                    "name": "Door to Processing Center Access",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 0.41,
-                        "y": 90.44,
-                        "z": 32.35
-                    },
-                    "node_type": "dock",
-                    "dock_index": 1,
-                    "connected_area_asset_id": 3983402811,
-                    "connected_dock_index": 1,
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
-                    "connections": {
-                        "Door to Elite Quarters Access": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 1,
-                                            "index": 31,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Fight Trigger": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "Event - Omega Pirate",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "event",
-                    "event_index": 31,
-                    "connections": {
-                        "Pickup (Phazon Suit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "Pickup (Phazon Suit)",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "pickup",
-                    "pickup_index": 83,
-                    "major_location": true,
-                    "connections": {
-                        "Door to Elite Quarters Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "Fight Trigger",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "generic",
-                    "connections": {}
                 }
             ]
         },
