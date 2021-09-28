@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
 - Fixed: Backwards Lower Mines logic
 - Added: Tricks for climbing Research Lab Aether NSJ 
+- Added: Tricks for traversing Magmoor Workstation bombless NSJ
 
 ### Metroid Prime 2: Echoes - Logic Database
 
