@@ -41,12 +41,12 @@ async def _read_from_persisted() -> Optional[List[dict]]:
 
 async def _download_from_github() -> Optional[List[dict]]:
     async with aiohttp.ClientSession() as session:
-        async with session.get(_RELEASES_URL) as response:
-            try:
+        try:
+            async with session.get(_RELEASES_URL) as response:
                 response.raise_for_status()
                 return await response.json()
-            except aiohttp.ClientResponseError:
-                return None
+        except (aiohttp.ClientResponseError, aiohttp.ClientConnectionError):
+            return None
 
 
 async def _persist(data: List[dict]):
@@ -67,7 +67,9 @@ async def get_releases() -> Optional[List[dict]]:
 
     if data is None:
         data = await _download_from_github()
-        if data is not None:
-            await _persist(data)
+        if data is None:
+            logging.warning("Unable to fetch release data from Github")
+            return []
+        await _persist(data)
 
     return data
