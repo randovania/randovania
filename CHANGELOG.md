@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
 - Fixed Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
 - Fixed Backwards Lower Mines logic
+- Added: More detailed boss/combat logic
 
 ### Metroid Prime 2: Echoes - Logic Database
 
