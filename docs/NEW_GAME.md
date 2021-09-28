@@ -35,10 +35,9 @@ that inherits from `BaseCosmeticPatches` and implement the `game` method.
 
 
 8. Create `randovania/data/item_database/{enum-value}` with the following content:
-   1. `configuration/ammo.json`, with content `{}`.
-   2. `configuration/major-items.json`, with content `{"items": {}, "default_items": {}}`.
-   3. `default_state/ammo.json`, with content `{"maximum_ammo": {}, "items_state": {}}`.
-   4. `default_state/major-items.json`, with content  `{"items_state": {}}`.
+   1. `item-database.json`, with content `{"item_categories": {}, "items": {}, "ammo": {}, "default_items": {}}`.
+   2. `default_state/ammo.json`, with content `{"maximum_ammo": {}, "items_state": {}}`.
+   3. `default_state/major-items.json`, with content  `{"items_state": {}}`.
 
 
 9. Update `randovania/gui/game_specific_gui.py`, adding new values to `TAB_PROVIDER_FOR_GAME` and `COSMETIC_DIALOG_FOR_GAME`.
@@ -65,14 +64,13 @@ During development, this can be anything you want, which can help when the datab
 While the database deals with items, the generator and layouts uses pickups. It's now necessary to configuring the new
 game to have proper pickups:
 
-1. Fill `randovania/data/item_database/{enum-value}/configuration/major-items.json`. Use another game's file for reference.
-   1. Fill `randovania/data/item_database/{enum-value}/configuration/ammo.json` as needed.
+1. Fill `randovania/data/item_database/{enum-value}/item-database.json`. Use another game's file for reference.
 
 
 2. Update `major_items_configuration` and `ammo_configuration` in `randovania/data/presets/{enum-value}/starter_preset.rdvpreset`.
 
 
-3. Fill `randovania/data/item_database/super_metroid/default_state` (needed for tests, but point of cleanup).
+3. Fill `randovania/data/item_database/{enum-value}/default_state` (needed for tests, but point of cleanup).
 
 
 ### Exporting games
