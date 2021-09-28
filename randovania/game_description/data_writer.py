@@ -6,7 +6,7 @@ from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import ResourceRequirement, \
-    RequirementOr, RequirementAnd, Requirement, RequirementTemplate
+    RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -32,23 +32,16 @@ def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     }
 
 
-def write_requirement_and(requirement: RequirementAnd) -> dict:
+def write_requirement_array(requirement: RequirementArrayBase, type_name: str) -> dict:
     return {
-        "type": "and",
-        "data": [
-            write_requirement(item)
-            for item in requirement.items
-        ]
-    }
-
-
-def write_requirement_or(requirement: RequirementOr) -> dict:
-    return {
-        "type": "or",
-        "data": [
-            write_requirement(item)
-            for item in requirement.items
-        ]
+        "type": type_name,
+        "data": {
+            "comment": requirement.comment,
+            "items": [
+                write_requirement(item)
+                for item in requirement.items
+            ]
+        }
     }
 
 
@@ -64,10 +57,10 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_resource_requirement(requirement)
 
     elif isinstance(requirement, RequirementOr):
-        return write_requirement_or(requirement)
+        return write_requirement_array(requirement, "or")
 
     elif isinstance(requirement, RequirementAnd):
-        return write_requirement_and(requirement)
+        return write_requirement_array(requirement, "and")
 
     elif isinstance(requirement, RequirementTemplate):
         return write_requirement_template(requirement)

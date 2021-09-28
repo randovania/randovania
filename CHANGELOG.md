@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **Major** - Added: The Logic Database can now have comments in requirements.
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
 - Changed: Custom elevator names across both games now used throughout the entire UI
@@ -19,11 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New Nothing model.
 - Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
 - Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
-- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer
+- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer.
+- Fixed: Qol scan for Ice Ruins West pickup.
+- Fixed: Warp-to-start crash.
 
 #### Cutscene Skips
 
-- Added: cutscene skip for arboretum to all Minor and above.
+- Added: Cutscene skip for arboretum gate (competitive+).
 - Added: Mine Security Station now longer force switches to Combat Visor.
 - Changed: Shorelines Tower cutscene skip is now Minor.
 - Changed: Workstation cutscene is now Competitive.
@@ -32,17 +35,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime - Logic Database
 
-- Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
-- Fixed shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Added: Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
 - Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
-- Fixed Backwards Lower Mines logic
 - Added additional Lower Mines NSJ logic
 - Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
+- Fixed Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Fixed Backwards Lower Mines logic
+- Fixed: Ice Ruins West NSJ logic now accounts for adult sheegoth layer
+- Fixed: Added missing requirements for releasing the metroid in Research Lab Aether
 
 ### Metroid Prime 2: Echoes - Logic Database
 
 - Added: Method of climbing halfpipe in Meeting Grounds with Space Jump, Screw Attack, and Standable Terrain (Beginner and above)
+- Added: Method of killing Quad MBs using Bombs or Power Bombs and Combat (Beginner)
+- Added: Method of killing Quad MBs using Screw Attack (Space Jump) and Knowledge (Beginner)
+- Added: Requirement to either kill the Quad MBs or defeat Spider Guardian in order to collect the item in Hall of Combat Mastery in the intended way
+- Fixed: A few broken Dark Forgotten Bridge paths have now been fixed.
 - Changed: Simplified Meeting Grounds logic slightly, by removing the redundant Top of Halfpipe node
+- Changed: Killing Quad MBs now uses a template, as it's a complex set of requirements repeated in three separate rooms
 
 ### Discord Bot (Caretaker Class Drone)
 
