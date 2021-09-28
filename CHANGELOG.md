@@ -34,11 +34,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime - Logic Database
 
 - Added: Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
-- Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
-- Added additional Lower Mines NSJ logic
-- Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
-- Fixed Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
-- Fixed Backwards Lower Mines logic
+- Added: Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
+- Added: additional Lower Mines NSJ logic
+- Added: Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
+- Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Fixed: Backwards Lower Mines logic
+- Added: Tricks for climbing Research Lab Aether NSJ 
 
 ### Metroid Prime 2: Echoes - Logic Database
 
