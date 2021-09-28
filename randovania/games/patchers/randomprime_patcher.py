@@ -97,28 +97,20 @@ _LOCATIONS_WITH_MODAL_ALERT = {
 # The location to the right is considered for the count, but it can't show a popup.
 _LOCATIONS_GROUPED_TOGETHER = [
     ({0, 1, 2, 3}, None),  # Main Plaza
-    ({8}, 3),  # Vault -> Main Plaza Ledge
     ({5, 6, 7}, None),  # Ruined Shrine (all 3)
     ({27, 28}, None),  # Burn dome
     ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
-    ({70, 71, 72}, None),  # Life Grove Tunnel + Life Grovex2
-    ({92, 81}, None),  # Processing Center Access + Phazon Processing Center
     ({23, 24}, None),  # Watery Hall
     ({25, 26}, None),  # Dynamo (the one in Chozo)
     ({55}, 54),  # Gravity Chamber: Upper -> Lower
     ({19, 17}, None),  # Hive Totem + Transport Access North
-    ({12, 11}, None),  # Magma Pool + Training Chamber Access
-    ({59, 58}, None),  # Alcove + Landing Site
-    ({61}, 60),  # Overgrown Cavern -> Frigate Crash Site
-    ({62, 65}, 64),  # Root Cave + Arbor Chamber -> Transport Tunnel B
-    ({39, 40}, None),  # Ice Ruins East
-    ({13}, 14),  # Tower of Light -> Tower Chamber
+    ({12}, 11),  # Magma Pool -> Training Chamber Access
+    ({59}, 58),  # Alcove -> Landing Site
+    ({62, 65}, None),  # Root Cave + Arbor Chamber
+    ({40}, 39),  # Ice Ruins East (spider -> ice)
     ({15, 16}, None),  # Ruined Gallery
     ({18}, 22),  # Gathering Hall -> Watery Hall Access
     ({52, 53}, None),  # Research Lab Aether
-    ({56, 57}, None),  # Storage Cave + Security Cave
-    ({44}, 46),  # Quarantine Cave -> Quarantine Monitor
-    ({73}, 74),  # Main Quarry -> Security Access A
 ]
 
 
