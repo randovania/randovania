@@ -5059,6 +5059,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5077,25 +5084,28 @@
                     "dock_type": 0,
                     "dock_weakness_index": 3,
                     "connections": {
-                        "Event - Omega Pirate": {
-                            "type": "and",
+                        "Door to Elite Quarters Access": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Have all Beams"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": 0,
-                                            "index": 13,
+                                            "type": 1,
+                                            "index": 31,
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5132,6 +5142,13 @@
                             }
                         }
                     }
+                },
+                {
+                    "name": "Fight Trigger",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {}
                 }
             ]
         },
