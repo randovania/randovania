@@ -20,11 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New Nothing model.
 - Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
 - Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
-- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer
+- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer.
+- Fixed: Qol scan for Ice Ruins West pickup.
+- Fixed: Warp-to-start crash.
 
 #### Cutscene Skips
 
-- Added: cutscene skip for arboretum to all Minor and above.
+- Added: Cutscene skip for arboretum gate (competitive+).
 - Added: Mine Security Station now longer force switches to Combat Visor.
 - Changed: Shorelines Tower cutscene skip is now Minor.
 - Changed: Workstation cutscene is now Competitive.
