@@ -278,6 +278,7 @@ def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterat
 
 
 def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+    # elements must be sorted so the N-th element is smaller than N+1-th
     assert _is_sorted(elements)
     assert _is_sorted(array)
     assert len(array) == len(set(array))
