@@ -35,8 +35,8 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
-    from randovania.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
-    from randovania.gui.preset_settings.prime_patches_tab import PresetPrimePatches
+    from randovania.gui.preset_settings.prime1.prime_goal_tab import PresetPrimeGoal
+    from randovania.gui.preset_settings.prime1.prime_patches_tab import PresetPrimePatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
     return [
@@ -61,11 +61,11 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
-    from randovania.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
-    from randovania.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
-    from randovania.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
-    from randovania.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
-    from randovania.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
+    from randovania.gui.preset_settings.prime2.echoes_goal_tab import PresetEchoesGoal
+    from randovania.gui.preset_settings.prime2.echoes_hints_tab import PresetEchoesHints
+    from randovania.gui.preset_settings.prime2.echoes_translators_tab import PresetEchoesTranslators
+    from randovania.gui.preset_settings.prime2.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
+    from randovania.gui.preset_settings.prime2.echoes_patches_tab import PresetEchoesPatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
     return [
