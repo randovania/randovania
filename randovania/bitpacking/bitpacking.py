@@ -417,6 +417,18 @@ def _pack_encode_results(values: List[Tuple[int, int]]):
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
 
 
+def pack_results_and_bit_count(it: Iterator[Tuple[int, int]]):
+    values = [
+        (value_argument, value_format)
+        for value_argument, value_format in it
+    ]
+    bit_count = sum(
+        _bits_for_number(v)
+        for _, v in values
+    )
+    return _pack_encode_results(values), bit_count
+
+
 def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
     if metadata is None:
         metadata = {}
