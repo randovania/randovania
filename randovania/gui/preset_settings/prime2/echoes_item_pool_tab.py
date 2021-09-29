@@ -2,7 +2,7 @@ from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetIt
 from typing import List
 from PySide2 import QtWidgets
 
-from split_ammo_widget import SplitAmmoWidget
+from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.games.game import RandovaniaGame
