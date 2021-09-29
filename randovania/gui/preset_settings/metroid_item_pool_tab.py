@@ -53,7 +53,7 @@ class MetroidPresetItemPool(PresetItemPool):
 
     def _create_pickup_style_box(self, sizePolicy):
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
-        self.item_pool_layout.addWidget(self.pickup_style_widget)
+        self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
         #widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
     def _create_energy_tank_box(self):
