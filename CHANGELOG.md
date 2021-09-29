@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
 - Added: Tricks for climbing Research Lab Aether NSJ 
 - Added: Tricks for traversing Magmoor Workstation bombless NSJ
+- Added: More detailed boss/combat logic
 - Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
 - Fixed: Backwards Lower Mines logic
 - Fixed: Ice Ruins West NSJ logic now accounts for adult sheegoth layer
