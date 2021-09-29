@@ -38,7 +38,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.prime1.prime_goal_tab import PresetPrimeGoal
     from randovania.gui.preset_settings.prime1.prime_patches_tab import PresetPrimePatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+    from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetPatcherEnergy(editor, game_enum),
@@ -48,7 +48,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPrimeGoal(editor),
         PresetPrimePatches(editor),
         PresetLocationPool(editor, game_description),
-        PresetItemPool(editor),
+        MetroidPresetItemPool(editor),
     ]
 
 
@@ -67,7 +67,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.prime2.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
     from randovania.gui.preset_settings.prime2.echoes_patches_tab import PresetEchoesPatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+    from randovania.gui.preset_settings.prime2.echoes_item_pool_tab import EchoesPresetItemPool
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetPatcherEnergy(editor, game_enum),
@@ -80,7 +80,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetEchoesBeamConfiguration(editor),
         PresetEchoesPatches(editor),
         PresetLocationPool(editor, game_description),
-        PresetItemPool(editor),
+        EchoesPresetItemPool(editor),
     ]
 
 
@@ -94,7 +94,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+    from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetPatcherEnergy(editor, game_enum),
@@ -102,7 +102,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetStartingArea(editor, game_description),
         PresetLogicDamage(editor),
         PresetLocationPool(editor, game_description),
-        PresetItemPool(editor),
+        MetroidPresetItemPool(editor),
     ]
 
 
@@ -112,13 +112,13 @@ def super_metroid_preset_tabs(editor: PresetEditor, window_manager: WindowManage
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    # from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+    # from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetStartingArea(editor, game_description),
         PresetLocationPool(editor, game_description),
-        # PresetItemPool(editor),
+        # MetroidPresetItemPool(editor),
     ]
 
 

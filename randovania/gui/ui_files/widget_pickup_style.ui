@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PickupStyleWidget</class>
+ <widget class="QDialog" name="PickupStyleWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>534</width>
+    <height>116</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Item Configuration</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="pickup_style_box">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Pickup style</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="ScrollProtectedComboBox" name="pickup_model_combo">
+        <item>
+         <property name="text">
+          <string>Use correct item model, scan and name</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Use correct scan and name, hide the model</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Use correct name, hide the model and scan</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hide the model, scan and name</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="pickup_data_source_label">
+        <property name="text">
+         <string>When hiding some part of the pickup, it's replaced with:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="ScrollProtectedComboBox" name="pickup_data_source_combo">
+        <item>
+         <property name="text">
+          <string>Energy Transfer Module/Nothing's data</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>A random item data</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>The data of the pickup in that place</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedComboBox</class>
+   <extends>QComboBox</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
