@@ -53,6 +53,10 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
                     )
                 )
             )
+            self.provided_ammo_spinbox.setMaximum(min(
+                resources_database.get_item(ammo_index).max_capacity
+                for ammo_index in item.ammo_index
+            ))
         else:
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
