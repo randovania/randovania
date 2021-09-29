@@ -5,12 +5,10 @@ from randovania.layout.preset import Preset
 
 
 class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
 

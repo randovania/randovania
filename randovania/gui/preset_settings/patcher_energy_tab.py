@@ -11,12 +11,10 @@ from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor, game_enum: RandovaniaGame):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
         self.game_enum = game_enum
 
         def _persist_float(attribute_name: str):

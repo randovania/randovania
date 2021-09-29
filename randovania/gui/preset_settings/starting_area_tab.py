@@ -13,15 +13,13 @@ from randovania.layout.preset import Preset
 
 
 class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
-    _editor: PresetEditor
 
     _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
         self.game_description = game
 
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)

@@ -49,10 +49,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _split_ammo_widgets: List[SplitAmmoWidget]
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
 
-        self._editor = editor
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         self.item_pool_layout.setAlignment(QtCore.Qt.AlignTop)
 
