@@ -1,5 +1,5 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QGridLayout, QLayout, QToolButton, QWidget, QFrame, QScrollArea, QSizePolicy
+from PySide2.QtWidgets import QGridLayout, QLayout, QToolButton, QVBoxLayout, QWidget, QFrame, QScrollArea, QSizePolicy
 
 class Foldable(QWidget):
     _mainLayout: QGridLayout
@@ -31,24 +31,20 @@ class Foldable(QWidget):
         self._headerLine.setFrameShape(QFrame.HLine)
         self._headerLine.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
 
-        self._contentArea = QScrollArea(self)
-        self._contentArea.setStyleSheet("QScrollArea { border: none; }");
-        self._contentArea.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self._contentArea = QFrame(self)
+        self._contentArea.setStyleSheet("QFrame { border: none; }")
+        self._contentArea.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self._mainLayout = QGridLayout()
+        self._mainLayout = QGridLayout(self)
         self._mainLayout.setVerticalSpacing(0)
         self._mainLayout.setContentsMargins(0, 0, 0, 0)
         self._mainLayout.addWidget(self._toggleButton, 0, 0, 1, 1, Qt.AlignLeft)
         self._mainLayout.addWidget(self._headerLine, 0, 1, 1, 1)
-        self._mainLayout.addWidget(self._contentArea, 1, 0, 1, 3)
-        self.setLayout(self._mainLayout)
+        self._mainLayout.addWidget(self._contentArea, 1, 0, 1, 2)
 
     @property
-    def contents_height(self):
-        if self._contentArea.layout() is None:
-            return 0
-        else:
-            return self._contentArea.layout().sizeHint().height()
+    def contents(self):
+        return self._contentArea
 
     def _on_click(self, checked: bool):
         if self._folded:
@@ -58,14 +54,12 @@ class Foldable(QWidget):
 
     def _unfold(self):
         self._folded = False
-        self._contentArea.setMaximumHeight(self.contents_height)
-        self._contentArea.setMinimumHeight(self.contents_height)
+        self._contentArea.show()
         self._toggleButton.setArrowType(Qt.ArrowType.DownArrow)
 
     def _fold(self):
         self._folded = True
-        self._contentArea.setMaximumHeight(0)
-        self._contentArea.setMinimumHeight(0)
+        self._contentArea.hide()
         self._toggleButton.setArrowType(Qt.ArrowType.RightArrow)
 
     def set_content_layout(self, content_layout: QLayout):
