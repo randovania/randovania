@@ -19,12 +19,10 @@ _BEAMS = {
 
 
 class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         def _add_header(text: str, col: int):
             label = QtWidgets.QLabel(self.beam_configuration_group)
