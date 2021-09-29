@@ -11,12 +11,10 @@ from randovania.layout.preset import Preset
 
 
 class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 

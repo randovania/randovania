@@ -21,12 +21,11 @@ from randovania.gui.lib import common_qt_lib
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
+
         self.game_description = game_description
         self._window_manager = window_manager
 
