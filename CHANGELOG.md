@@ -19,10 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New Nothing model.
 - Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
-- Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
 - Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer.
 - Fixed: Qol scan for Ice Ruins West pickup.
 - Fixed: Warp-to-start crash.
+- Changed: Fewer forced popup alert for multiworld purpose, and popups now lasts 3s instead of 5s.
 
 #### Cutscene Skips
 
@@ -36,11 +36,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime - Logic Database
 
 - Added: Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
-- Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
-- Added additional Lower Mines NSJ logic
-- Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
-- Fixed Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
-- Fixed Backwards Lower Mines logic
+- Added: Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
+- Added: Additional Lower Mines NSJ logic.
+- Added: Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
+- Added: Tricks for climbing Research Lab Aether NSJ 
+- Added: Tricks for traversing Magmoor Workstation bombless NSJ
+- Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Fixed: Backwards Lower Mines logic
 - Fixed: Ice Ruins West NSJ logic now accounts for adult sheegoth layer
 - Fixed: Added missing requirements for releasing the metroid in Research Lab Aether
 
