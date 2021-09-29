@@ -7,21 +7,21 @@ from randovania.layout.prime2.translator_configuration import TranslatorConfigur
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00', "json": {"translator_requirement": {}}},
-        {"encoded": b'@', "json": TranslatorConfiguration.default().with_vanilla_colors().as_json},
-        {"encoded": b'\x80', "json": TranslatorConfiguration.default().with_full_random().as_json},
-        {"encoded": b'\xc0\x00\xc0\n%$\xd8', "json": {"translator_requirement": {
+        {"encoded": b'\x00', "bit_count": 2, "json": {"translator_requirement": {}}},
+        {"encoded": b'@', "bit_count": 2, "json": TranslatorConfiguration.default().with_vanilla_colors().as_json},
+        {"encoded": b'\x80', "bit_count": 2, "json": TranslatorConfiguration.default().with_full_random().as_json},
+        {"encoded": b'\xc0\x00\xc0\n%$\xd8', "bit_count": 53, "json": {"translator_requirement": {
             "5": "random"
         }}},
     ],
-    name="configuration_with_data")
-def _configuration_with_data(request):
-    return request.param["encoded"], TranslatorConfiguration.from_json(request.param["json"])
+    name="translator_data")
+def _translator_data(request):
+    return request.param["encoded"], request.param["bit_count"], TranslatorConfiguration.from_json(request.param["json"])
 
 
-def test_decode(configuration_with_data):
+def test_decode(translator_data):
     # Setup
-    data, expected = configuration_with_data
+    data, _, expected = translator_data
 
     # Run
     decoder = BitPackDecoder(data)
@@ -31,18 +31,16 @@ def test_decode(configuration_with_data):
     assert result == expected
 
 
-def test_encode(configuration_with_data):
+def test_encode(translator_data):
     # Setup
-    expected, value = configuration_with_data
+    expected_bytes, expected_bit_count, value = translator_data
 
     # Run
-    result = bitpacking._pack_encode_results([
-        (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode({})
-    ])
+    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode({}))
 
     # Assert
-    assert result == expected
+    assert result == expected_bytes
+    assert bit_count == expected_bit_count
 
 
 def test_blank_from_json():

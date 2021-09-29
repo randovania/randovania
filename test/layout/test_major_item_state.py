@@ -9,16 +9,16 @@ from randovania.layout.base.major_item_state import MajorItemState
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x04', "json": {}},
-        {"encoded": b'\x14', "json": {"num_shuffled_pickups": 1}},
-        {"encoded": b'$', "json": {"num_shuffled_pickups": 2}},
-        {"encoded": b'4', "json": {"num_shuffled_pickups": 3}},
-        {"encoded": b'Me', "json": {"num_shuffled_pickups": 99}},
+        {"encoded": b'\x04', "bit_count": 6, "json": {}},
+        {"encoded": b'\x14', "bit_count": 6, "json": {"num_shuffled_pickups": 1}},
+        {"encoded": b'$', "bit_count": 6, "json": {"num_shuffled_pickups": 2}},
+        {"encoded": b'4', "bit_count": 6, "json": {"num_shuffled_pickups": 3}},
+        {"encoded": b'Me', "bit_count": 16, "json": {"num_shuffled_pickups": 99}},
 
-        {"encoded": b'EP', "category": "energy_tank", "json": {"num_shuffled_pickups": 6,
+        {"encoded": b'EP', "bit_count": 12, "category": "energy_tank", "json": {"num_shuffled_pickups": 6,
                                                                "num_included_in_starting_items": 10}},
 
-        {"encoded": b'\x076D', "ammo_index": (10, 20), "json": {"included_ammo": [230, 200]}},
+        {"encoded": b'\x076D', "bit_count": 22, "ammo_index": (10, 20), "json": {"included_ammo": [230, 200]}},
     ],
     name="state_with_data")
 def _state_with_data(request, echoes_item_database):
@@ -46,12 +46,12 @@ def _state_with_data(request, echoes_item_database):
         original_index=None,
         probability_offset=0,
     )
-    return item, request.param["encoded"], MajorItemState.from_json(request.param["json"])
+    return item, request.param["encoded"], request.param["bit_count"], MajorItemState.from_json(request.param["json"])
 
 
 def test_decode(state_with_data):
     # Setup
-    item, data, expected = state_with_data
+    item, data, _, expected = state_with_data
 
     # Run
     decoder = BitPackDecoder(data)
@@ -63,16 +63,14 @@ def test_decode(state_with_data):
 
 def test_encode(state_with_data):
     # Setup
-    item, expected, value = state_with_data
+    item, expected_bytes, expected_bit_count, value = state_with_data
 
     # Run
-    result = bitpacking._pack_encode_results([
-        (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode(item)
-    ])
+    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode(item))
 
     # Assert
-    assert result == expected
+    assert result == expected_bytes
+    assert bit_count == expected_bit_count
 
 
 def test_blank_as_json():
