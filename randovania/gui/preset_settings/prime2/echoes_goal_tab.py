@@ -9,12 +9,10 @@ from randovania.layout.preset import Preset
 
 
 class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)

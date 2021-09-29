@@ -8,12 +8,10 @@ from randovania.layout.prime1.artifact_mode import LayoutArtifactMode
 
 
 class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.slider.valueChanged.connect(self._on_slider_changed)
