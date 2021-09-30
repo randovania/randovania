@@ -20,6 +20,17 @@ class ItemCategory:
         )
 
     @property
+    def as_json(self) -> dict:
+        result = {
+            "long_name": self.long_name,
+            "hint_details": list(self.hint_details),
+            "is_major": self.is_major,
+        }
+        if self.is_key:
+            result["is_key"] = self.is_key
+        return result
+
+    @property
     def general_details(self) -> Tuple[str, str]:
         if self.is_major:
             return "a ", "major upgrade"
