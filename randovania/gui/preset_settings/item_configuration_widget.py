@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QDialog, QWidget
+from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
 
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -10,17 +10,15 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.base.major_item_state import MajorItemState
 
 
-class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
+class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     Changed = Signal()
 
     def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState,
                  resources_database: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
-        set_default_window_icon(self)
         self._item = item
 
-        self.setWindowTitle(f"Item: {item.name}")
         self.item_name_label.setText(item.name)
 
         # Apply transparency on the separator line
