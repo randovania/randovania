@@ -27,7 +27,10 @@
                     "connections": {
                         "Door to Phazon Quarry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -48,7 +51,10 @@
                     "connections": {
                         "Door to Save Station": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Train to Command Center - Transit Station 4-A": {
                             "type": "resource",
@@ -75,7 +81,10 @@
                     "connections": {
                         "Door to Phazon Quarry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -105,7 +114,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -126,30 +138,36 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 119,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 119,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 121,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 121,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         },
                         "Event - Balcony Barrier": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Event - Drill Wall (Upper)": {
                             "type": "resource",
@@ -179,201 +197,237 @@
                     "connections": {
                         "Door to Mine Lift": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 120,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 120,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 32,
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 32,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 33,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 1,
-                                                        "index": 119,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": [
-                                                        {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 4,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 1,
+                                                                    "index": 119,
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "and",
-                                                            "data": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 16,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 2,
-                                                                        "index": 14,
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Screw Attack (Space Jump)"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": 2,
+                                                                                            "index": 4,
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": 0,
+                                                                                            "index": 16,
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": 2,
+                                                                                            "index": 14,
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
-                                                            ]
-                                                        }
-                                                    ]
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         },
                         "Door to Drill Shaft 2": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 121,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 119,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 121,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 119,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 32,
+                                                        "index": 15,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 5,
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 32,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 5,
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 119,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 119,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Event - Drill Halfpipe": {
                             "type": "resource",
@@ -395,7 +449,10 @@
                         },
                         "Event - Pirate Fight": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -409,7 +466,10 @@
                     "connections": {
                         "Door to Drill Shaft 2": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -423,7 +483,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -436,7 +499,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -449,7 +515,10 @@
                     "connections": {
                         "Pickup (Energy Cell)": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -462,7 +531,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -475,7 +547,10 @@
                     "connections": {
                         "Door to Drill Shaft 2": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -488,7 +563,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -518,40 +596,46 @@
                     "connections": {
                         "Door to Main Cavern": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 124,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 2,
-                                                "amount": 2,
-                                                "negate": false
-                                            }
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 124,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 2,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -594,7 +678,10 @@
                     "connections": {
                         "Door to Main Cavern": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -633,62 +720,68 @@
                         },
                         "Event - Open Shaft": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 34,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 33,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Hazard Shield"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 7,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 34,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 33,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -709,53 +802,62 @@
                     "connections": {
                         "Door to Phazon Quarry": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 122,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Hazard Shield"
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 122,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Screw Attack (Space Jump)"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 16,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 3,
-                                                        "index": 1,
-                                                        "amount": 50,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 16,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 3,
+                                                                    "index": 1,
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -768,7 +870,10 @@
                     "connections": {
                         "Door to Phazon Harvesting": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -798,126 +903,51 @@
                     "connections": {
                         "Door to Drill Shaft 1": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 86,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Hazard Shield"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 16,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 3,
-                                                                "index": 1,
-                                                                "amount": 250,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 86,
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 4,
-                                                "amount": 3,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Hazard Shield"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 86,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 16,
-                                                                "amount": 3,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "or",
-                                                            "data": [
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 3,
-                                                                        "index": 1,
-                                                                        "amount": 450,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "and",
-                                                                    "data": [
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Hazard Shield"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": 0,
-                                                                                "index": 33,
+                                                                                "type": 2,
+                                                                                "index": 16,
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -933,19 +963,124 @@
                                                                         }
                                                                     ]
                                                                 }
-                                                            ]
-                                                        }
-                                                    ]
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 86,
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Hazard Shield"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 16,
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": 3,
+                                                                                            "index": 1,
+                                                                                            "amount": 450,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 0,
+                                                                                                        "index": 33,
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": 3,
+                                                                                                        "index": 1,
+                                                                                                        "amount": 250,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Event - Walkway Destroyed": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -966,63 +1101,78 @@
                     "connections": {
                         "Door to Mine Lift": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Hazard Shield"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "or",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hazard Shield"
+                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 15,
+                                                        "type": 2,
+                                                        "index": 16,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "template",
-                                                            "data": "Use Screw Attack (No Space Jump)"
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 11,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 15,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (No Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 11,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1035,7 +1185,10 @@
                     "connections": {
                         "Door to Mine Lift": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1065,58 +1218,64 @@
                     "connections": {
                         "Door to Main Cavern": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 33,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 5,
-                                                "amount": 3,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 11,
-                                                "amount": 3,
-                                                "negate": false
-                                            }
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 11,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1137,7 +1296,10 @@
                     "connections": {
                         "Door to Phazon Harvesting": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1167,90 +1329,102 @@
                     "connections": {
                         "Event - Clean Landing Site": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 4,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 3,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Enter Hypermode"
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 1,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 32,
+                                                        "index": 4,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 10,
-                                                                "amount": 1,
-                                                                "negate": false
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Enter Hypermode"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 32,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 10,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 16,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 33,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 16,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         },
                         "Samus Ship": {
                             "type": "resource",
@@ -1272,7 +1446,10 @@
                     "connections": {
                         "Door to Phazon Mine Entry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1293,7 +1470,10 @@
                     "connections": {
                         "Door to Phazon Mine Entry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1323,7 +1503,10 @@
                     "connections": {
                         "Door to Phazon Mine Entry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1370,7 +1553,10 @@
                     "connections": {
                         "Door to Drill Shaft 1": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Door to Drill Shaft 2": {
                             "type": "resource",
@@ -1383,7 +1569,10 @@
                         },
                         "Pickup (Nova Beam)": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Event - Phazite Wall": {
                             "type": "template",
@@ -1414,7 +1603,10 @@
                     "connections": {
                         "Door to Phazon Mine Entry": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1444,7 +1636,10 @@
                     "connections": {
                         "Save Station": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1456,7 +1651,10 @@
                     "connections": {
                         "Door to Transit Station 4-B\nLeads to Command Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1486,7 +1684,10 @@
                     "connections": {
                         "Door to Main Cavern": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1507,44 +1708,53 @@
                     "connections": {
                         "Door to Landing Site Charlie": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 14,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 2,
-                                                "index": 9,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 2,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 14,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 9,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1558,7 +1768,10 @@
                     "connections": {
                         "Door to Main Cavern": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

@@ -5,12 +5,10 @@ from randovania.layout.preset import Preset
 
 
 class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
 
@@ -21,13 +19,6 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
     @property
     def uses_patches_tab(self) -> bool:
         return True
-
-    def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
-            with self._editor as options:
-                setattr(options, attribute_name, bool(value))
-
-        return persist
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration

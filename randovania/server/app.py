@@ -1,6 +1,8 @@
+import logging
 from distutils.version import StrictVersion
 from enum import Enum
 from logging.config import dictConfig
+from typing import Dict
 
 import flask
 import werkzeug.middleware.proxy_fix
@@ -31,6 +33,20 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             shorter_server = "{}.{}".format(*server.version[:2])
             raise ConnectionRefusedError(f"Incompatible client version '{shorter_client}', "
                                          f"expected '{shorter_server}'")
+
+
+def check_client_headers(expected_headers: Dict[str, str], environ: Dict[str, str]):
+    wrong_headers = {}
+    for name, expected in expected_headers.items():
+        value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))
+        if value != expected:
+            wrong_headers[name] = value
+
+    if wrong_headers:
+        raise ConnectionRefusedError("\n".join(
+            f"Expected '{expected_headers[name]}' for '{name}', got '{value}'"
+            for name, value in wrong_headers.items()
+        ))
 
 
 def create_app():
@@ -84,29 +100,23 @@ def create_app():
 
     @sio.sio.server.on("connect")
     def connect(sid, environ):
-        if "HTTP_X_RANDOVANIA_VERSION" not in environ:
-            raise ConnectionRefusedError("unknown client version")
+        try:
+            if "HTTP_X_RANDOVANIA_VERSION" not in environ:
+                raise ConnectionRefusedError("unknown client version")
 
-        client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
-        check_client_version(version_checking, client_app_version, server_version)
+            client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
+            check_client_version(version_checking, client_app_version, server_version)
+            check_client_headers(expected_headers, environ)
+            connected_clients.inc()
 
-        wrong_headers = {}
-        for name, expected in expected_headers.items():
-            value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))
-            if value != expected:
-                wrong_headers[name] = value
+            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+            app.logger.info(f"Client at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
+                            f"version {client_app_version} connected.")
 
-        if wrong_headers:
-            raise ConnectionRefusedError("\n".join(
-                f"Expected '{expected_headers[name]}' for '{name}', got '{value}'"
-                for name, value in wrong_headers.values()
-            ))
-
-        connected_clients.inc()
-
-        forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
-        app.logger.info(f"Client at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
-                        f"version {client_app_version} connected.")
+        except Exception as e:
+            logging.exception(f"Unknown exception when testing the client's headers: {e}")
+            raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\n"
+                                         f"Please file a bug report.")
 
     @sio.sio.server.on("disconnect")
     def disconnect(sid):

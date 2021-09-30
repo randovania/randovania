@@ -1,4 +1,5 @@
 import functools
+import logging
 import math
 from pathlib import Path
 from typing import List, Dict, Optional, NamedTuple
@@ -262,6 +263,8 @@ class DatabaseCommandCog(commands.Cog):
 
                 if len(body) + len(new_entry) < 1024:
                     body += new_entry
+                else:
+                    logging.warning("Unable to add new entry: %d", len(new_entry))
 
             embed.add_field(
                 name=name,

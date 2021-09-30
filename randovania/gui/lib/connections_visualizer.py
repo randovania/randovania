@@ -1,3 +1,4 @@
+import re
 from typing import Optional, List, Tuple
 
 from PySide2.QtCore import Qt
@@ -174,6 +175,13 @@ class ConnectionsVisualizer:
                 parents[depth + 1] = (group_box, vertical_layout)
             else:
                 label = QLabel(parents[depth][0])
+
+                # This is a comment!
+                if text.startswith("# "):
+                    text = re.sub(r"(https?://[^\s]+)", r'<a href="\1">\1</a>', text[2:])
+                    label.setStyleSheet("font-weight: bold; color: green")
+                    label.setOpenExternalLinks(True)
+
                 label.setText(text)
                 label.setWordWrap(True)
                 self._elements.append(label)

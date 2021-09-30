@@ -38,6 +38,8 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         border: 1px solid #32414B;
     }
         """
+    
+    style += "QScrollArea { border: default; }"
 
     if active:
         new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)

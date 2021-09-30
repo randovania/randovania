@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBo
     QLineEdit
 
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd, RequirementTemplate
+    RequirementOr, RequirementAnd, RequirementTemplate, RequirementArrayBase
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -148,7 +148,7 @@ class ResourceRequirementEditor:
 
 class ArrayRequirementEditor:
     def __init__(self, parent: QWidget, parent_layout: QVBoxLayout, resource_database: ResourceDatabase,
-                 requirement: Union[RequirementOr, RequirementAnd]):
+                 requirement: RequirementArrayBase):
         self._editors = []
         self.resource_database = resource_database
         self._array_type = type(requirement)
@@ -164,6 +164,11 @@ class ArrayRequirementEditor:
         self.new_item_button.setMaximumWidth(75)
         self.new_item_button.setText("New Row")
         self.new_item_button.clicked.connect(self.new_item)
+
+        self.comment_text_box = QLineEdit(self.group_box)
+        self.comment_text_box.setText(requirement.comment or "")
+        self.comment_text_box.setPlaceholderText("Comment")
+        self.item_layout.addWidget(self.comment_text_box)
 
         for item in requirement.items:
             self._create_item(item)
@@ -192,11 +197,18 @@ class ArrayRequirementEditor:
         self.new_item_button.deleteLater()
 
     @property
-    def current_requirement(self) -> Union[RequirementOr, RequirementAnd]:
-        return self._array_type([
-            editor.current_requirement
-            for editor in self._editors
-        ])
+    def current_requirement(self) -> RequirementArrayBase:
+        comment = self.comment_text_box.text().strip()
+        if comment == "":
+            comment = None
+
+        return self._array_type(
+            [
+                editor.current_requirement
+                for editor in self._editors
+            ],
+            comment=comment,
+        )
 
 
 class TemplateRequirementEditor:
@@ -271,7 +283,7 @@ class RequirementEditor:
         if isinstance(requirement, ResourceRequirement):
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
 
-        elif isinstance(requirement, (RequirementOr, RequirementAnd)):
+        elif isinstance(requirement, RequirementArrayBase):
             self._editor = ArrayRequirementEditor(self.parent, self.parent_layout, self.resource_database, requirement)
 
         elif isinstance(requirement, RequirementTemplate):
@@ -287,7 +299,7 @@ class RequirementEditor:
         if isinstance(current_requirement, ResourceRequirement):
             self._last_resource = current_requirement
 
-        elif isinstance(current_requirement, (RequirementOr, RequirementAnd)):
+        elif isinstance(current_requirement, RequirementArrayBase):
             self._last_items = current_requirement.items
 
         elif isinstance(current_requirement, RequirementTemplate):
