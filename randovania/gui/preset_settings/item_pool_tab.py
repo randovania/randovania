@@ -2,7 +2,7 @@ import collections
 import dataclasses
 import functools
 from functools import partial
-from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
+from randovania.gui.lib.foldable import Foldable
 from typing import Dict, Tuple, List
 
 from PySide2 import QtWidgets, QtCore
@@ -15,20 +15,17 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
-from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
-from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget, AmmoPickupWidgets
+from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.ammo_state import AmmoState
-from randovania.layout.base.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED, MajorItemState
-from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
+from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -199,14 +196,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         all_categories = list(item_database.item_categories.values())
         for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = QtWidgets.QGroupBox(self.scroll_area_contents)
-            category_box.setTitle(major_item_category.long_name)
-            category_box.setSizePolicy(size_policy)
+            category_box = Foldable(major_item_category.long_name)
             category_box.setObjectName(f"category_box {major_item_category}")
-
-            category_layout = QtWidgets.QGridLayout(category_box)
+            category_layout = QtWidgets.QGridLayout()
             category_layout.setObjectName(f"category_layout {major_item_category}")
-
+            category_box.set_content_layout(category_layout)
+            
             self.item_pool_layout.addWidget(category_box)
             self._boxes_for_category[major_item_category.name] = category_box, category_layout, {}
 
@@ -225,6 +220,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 combo.addItem(item.name, item)
             combo.currentIndexChanged.connect(partial(self._on_default_item_updated, category, combo))
             layout.addWidget(combo, 0, 1)
+
+            if len(possibilities) <= 1:
+                label.hide()
+                combo.hide()
 
             self._default_items[category] = combo
 
@@ -246,8 +245,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
             row = category_layout.rowCount()
-            category_layout.addWidget(widget, row, 0, 1, -1)
+            if row > 1:
+                # Show the transparent separator line if it's not the first element
+                widget.separator_line.show()
 
+            category_layout.addWidget(widget, row, 0, 1, 2)
             elements[major_item] = widget
 
     def _on_major_item_updated(self, item_widget: ItemConfigurationWidget):
