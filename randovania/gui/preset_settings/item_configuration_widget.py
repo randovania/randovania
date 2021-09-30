@@ -27,6 +27,8 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
         transparent = QGraphicsOpacityEffect(self.separator_line)
         transparent.setOpacity(0.33)
         self.separator_line.setGraphicsEffect(transparent)
+        self.separator_line.hide()
+
         # connect
         self.excluded_radio.toggled.connect(self._on_select_excluded)
         self.vanilla_radio.toggled.connect(self._on_select_vanilla)
