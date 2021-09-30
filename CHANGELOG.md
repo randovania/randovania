@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.4] - Unreleased
 
+- Changed: Force one specific certificate root when connecting to the server.
+
 ## [3.1.3] - 2021-09-19
 
 - Added: Dialog that shows all enabled tricks in a preset and a list of all rooms that have some combination of tricks that ends up active in that preset.
