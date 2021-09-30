@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QDialog, QWidget
+from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
 
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -10,18 +10,22 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.base.major_item_state import MajorItemState
 
 
-class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
+class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     Changed = Signal()
 
     def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState,
                  resources_database: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
-        set_default_window_icon(self)
         self._item = item
 
-        self.setWindowTitle(f"Item: {item.name}")
         self.item_name_label.setText(item.name)
+
+        # Apply transparency on the separator line
+        transparent = QGraphicsOpacityEffect(self.separator_line)
+        transparent.setOpacity(0.33)
+        self.separator_line.setGraphicsEffect(transparent)
+        self.separator_line.hide()
 
         # connect
         self.excluded_radio.toggled.connect(self._on_select_excluded)
@@ -45,14 +49,14 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
                 break
 
         if item.ammo_index:
+            ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
             self.provided_ammo_label.setText(
-                "<html><head/><body><p>Provided Ammo ({})</p></body></html>".format(
-                    " and ".join(
-                        resources_database.get_item(ammo_index).long_name
-                        for ammo_index in item.ammo_index
-                    )
-                )
+                "<html><head/><body><p>{} provided by {}</p></body></html>".format(ammo_names, item.name)
             )
+            self.provided_ammo_spinbox.setMaximum(min(
+                resources_database.get_item(ammo_index).max_capacity
+                for ammo_index in item.ammo_index
+            ))
         else:
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
