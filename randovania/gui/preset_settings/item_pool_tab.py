@@ -226,6 +226,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             combo.currentIndexChanged.connect(partial(self._on_default_item_updated, category, combo))
             layout.addWidget(combo, 0, 1)
 
+            if len(possibilities) <= 1:
+                label.hide()
+                combo.hide()
+
             self._default_items[category] = combo
 
     def _on_default_item_updated(self, category: ItemCategory, combo: QtWidgets.QComboBox, _):
