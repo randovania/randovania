@@ -619,7 +619,7 @@ def test_create_patch_data(test_files_dir):
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'curr_increase': 14, 'max_increase': 14, 'respawn': False, 'modalHudmemo': True
+                     'curr_increase': 14, 'max_increase': 14, 'respawn': False
                      }]},
             'Tower Chamber': {
                 'pickups': [
@@ -740,7 +740,7 @@ def test_create_patch_data(test_files_dir):
                     'curr_increase': 35, 'max_increase': 35, 'respawn': False
                 }]}}}
 
-    assert data == {
+    expected_data = {
         'seed': 1499122484,
         'hasSpoiler': True,
         'preferences': {
@@ -962,6 +962,7 @@ def test_create_patch_data(test_files_dir):
         },
     }
 
+    assert data == expected_data
 
 def test_patch_game(mocker, tmp_path):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={

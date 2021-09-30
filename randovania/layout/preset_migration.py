@@ -12,7 +12,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 13
+CURRENT_PRESET_VERSION = 14
 
 
 class InvalidPreset(Exception):
@@ -149,7 +149,7 @@ def _migrate_v5(preset: dict) -> dict:
         "num_shuffled_pickups": 0,
         "num_included_in_starting_items": 0,
         "included_ammo": [],
-        "allowed_as_random_starting_item": True
+        "allowed_as_random_starting_item": True,
     }
     included_item = {
         **excluded_item,
@@ -346,6 +346,13 @@ def _migrate_v12(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v13(preset: dict) -> dict:
+    for config in preset["configuration"]["major_items_configuration"]["items_state"].values():
+        config.pop("allowed_as_random_starting_item", None)
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -359,6 +366,7 @@ _MIGRATIONS = {
     10: _migrate_v10,
     11: _migrate_v11,
     12: _migrate_v12,
+    13: _migrate_v13,
 }
 
 

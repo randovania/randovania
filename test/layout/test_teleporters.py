@@ -9,7 +9,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration, Teleporte
     TeleporterTargetList
 
 
-def _m(encoded: bytes, mode: str = "vanilla", skip_final_bosses=False,
+def _m(encoded: bytes, bit_count: int, mode: str = "vanilla", skip_final_bosses=False,
        allow_unvisited_room_names=True, excluded_teleporters=None, excluded_targets=None):
     if excluded_teleporters is None:
         excluded_teleporters = []
@@ -17,6 +17,7 @@ def _m(encoded: bytes, mode: str = "vanilla", skip_final_bosses=False,
         excluded_targets = []
     return {
         "encoded": encoded,
+        "bit_count": bit_count,
         "json": {
             "mode": mode,
             "skip_final_bosses": skip_final_bosses,
@@ -35,10 +36,10 @@ def _a(world, area, instance_id=None):
 
 @pytest.fixture(
     params=[
-        _m(b'\x08'),
-        _m(b'\x18', skip_final_bosses=True),
-        _m(b'\xb1', mode="one-way-elevator"),
-        _m(b'\xb81d', mode="one-way-elevator", excluded_teleporters=[_a(1119434212, 1473133138, 122)]),
+        _m(b'\x08', 5),
+        _m(b'\x18', 5, skip_final_bosses=True),
+        _m(b'\xb1', 8, mode="one-way-elevator"),
+        _m(b'\xb81d', 22, mode="one-way-elevator", excluded_teleporters=[_a(1119434212, 1473133138, 122)]),
     ],
     name="with_data")
 def _with_data(request):
@@ -50,12 +51,13 @@ def _with_data(request):
         excluded_teleporters=TeleporterList(frozenset(), game),
         excluded_targets=TeleporterTargetList(frozenset(), game),
     )
-    return reference, request.param["encoded"], TeleporterConfiguration.from_json(request.param["json"], game=game)
+    return (reference, request.param["encoded"], request.param["bit_count"],
+            TeleporterConfiguration.from_json(request.param["json"], game=game))
 
 
 def test_decode(with_data):
     # Setup
-    reference, data, expected = with_data
+    reference, data, _, expected = with_data
 
     # Run
     decoder = BitPackDecoder(data)
@@ -67,13 +69,11 @@ def test_decode(with_data):
 
 def test_encode(with_data):
     # Setup
-    reference, expected, value = with_data
+    reference, expected_bytes, expected_bit_count, value = with_data
 
     # Run
-    result = bitpacking._pack_encode_results([
-        (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode({"reference": reference})
-    ])
+    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode({"reference": reference}))
 
     # Assert
-    assert result == expected
+    assert result == expected_bytes
+    assert bit_count == expected_bit_count

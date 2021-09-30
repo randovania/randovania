@@ -24,12 +24,10 @@ _FIELDS = [
 
 
 class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         self.description_label.setText(self.description_label.text().replace("color:#0000ff;", ""))
 
