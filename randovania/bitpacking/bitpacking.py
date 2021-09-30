@@ -278,6 +278,7 @@ def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterat
 
 
 def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+    # elements must be sorted so the N-th element is smaller than N+1-th
     assert _is_sorted(elements)
     assert _is_sorted(array)
     assert len(array) == len(set(array))
@@ -414,6 +415,18 @@ def _format_string_for(values: List[Tuple[int, int]]) -> str:
 def _pack_encode_results(values: List[Tuple[int, int]]):
     f = _format_string_for(values)
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
+
+
+def pack_results_and_bit_count(it: Iterator[Tuple[int, int]]):
+    values = [
+        (value_argument, value_format)
+        for value_argument, value_format in it
+    ]
+    bit_count = sum(
+        _bits_for_number(v)
+        for _, v in values
+    )
+    return _pack_encode_results(values), bit_count
 
 
 def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
