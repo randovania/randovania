@@ -23,6 +23,10 @@ class ItemConfigurationWidget(QDialog, Ui_ItemConfigurationPopup):
         self.setWindowTitle(f"Item: {item.name}")
         self.item_name_label.setText(item.name)
 
+        # Apply transparency on the separator line
+        transparent = QGraphicsOpacityEffect(self.separator_line)
+        transparent.setOpacity(0.33)
+        self.separator_line.setGraphicsEffect(transparent)
         # connect
         self.excluded_radio.toggled.connect(self._on_select_excluded)
         self.vanilla_radio.toggled.connect(self._on_select_vanilla)
