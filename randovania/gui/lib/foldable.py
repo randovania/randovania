@@ -32,7 +32,8 @@ class Foldable(QWidget):
         self._headerLine.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
 
         self._contentArea = QFrame(self)
-        self._contentArea.setStyleSheet("QFrame { border: none; }")
+        self._contentArea.setObjectName("foldable_contentArea")
+        self._contentArea.setStyleSheet("#foldable_contentArea { border: none; }")
         self._contentArea.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self._mainLayout = QGridLayout(self)
