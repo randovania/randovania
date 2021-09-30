@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.1.4] - Unreleased
 
 - Changed: Force one specific certificate root when connecting to the server.
+- Fixed: Checking for updated versions will no longer close Randovania when no internet connectivity is present. 
+- Fixed: The server will properly reject clients with mismatched versions.
 
 ## [3.1.3] - 2021-09-19
 
