@@ -85,7 +85,7 @@ minimal_logic_custom_item_count = {
         # Energy Tank
         20: 14,
         # Ship Missile
-        45, 11
+        45: 11
     },
 }
 
