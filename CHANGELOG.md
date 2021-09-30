@@ -8,45 +8,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **Major** - Added: The Logic Database can now have comments in requirements.
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
+- Changed: Force one specific certificate root when connecting to the server.
 - Changed: Custom elevator names across both games now used throughout the entire UI
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
+- Changed: Customizing the item pool causes permalinks to not get as long as before.
+- Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
+- Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
 
 ### Metroid Prime - Patcher Changes
 
 - Added: New Nothing model.
 - Added: Missile Expansions for yourself has a 1 in 1024 of being shiny.
-- Changed: Forced popup alert for multiworld purpose now lasts 3s instead of 5s.
-- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer
+- Fixed: Mine security station softlock so that defeating the purple pirates first doesn't fail to switch the room to the non-cutscene layer.
+- Fixed: Qol scan for Ice Ruins West pickup.
+- Fixed: Warp-to-start crash.
+- Changed: Fewer forced popup alert for multiworld purpose, and popups now lasts 3s instead of 5s.
 
 #### Cutscene Skips
 
-- Added: cutscene skip for arboretum to all Minor and above.
+- Added: Cutscene skip for arboretum gate (competitive+).
 - Added: Mine Security Station now longer force switches to Combat Visor.
 - Changed: Shorelines Tower cutscene skip is now Minor.
 - Changed: Workstation cutscene is now Competitive.
 - Changed: Wave panel cutscene in Main Quarry is now Competitive.
 - Changed: Elevator leaving cutscenes back are now Major.
 
+### Metroid Prime 2: Echoes - Patcher Changes
+- Fixed: Scanning hints now displays the correct, edited categories.
+
 ### Metroid Prime - Logic Database
 
-- Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
-- Fixed shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
-- Added Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
-- Fixed Backwards Lower Mines logic
-- Added additional Lower Mines NSJ logic
-- Added Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
+- Added: Method of reaching pickup in Root Cave from Arbor Chamber with a Dash (Intermediate and above).
+- Added: Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
+- Added: Additional Lower Mines NSJ logic.
+- Added: Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
+- Added: Tricks for climbing Research Lab Aether NSJ 
+- Added: Tricks for traversing Magmoor Workstation bombless NSJ
+- Added: More detailed boss/combat logic
+- Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
+- Fixed: Backwards Lower Mines logic
+- Fixed: Ice Ruins West NSJ logic now accounts for adult sheegoth layer
+- Fixed: Added missing requirements for releasing the metroid in Research Lab Aether
 
 ### Metroid Prime 2: Echoes - Logic Database
 
 - Added: Method of climbing halfpipe in Meeting Grounds with Space Jump, Screw Attack, and Standable Terrain (Beginner and above)
-- Changed: Simplified Meeting Grounds logic slightly, by removing the redundant Top of Halfpipe node
-- Changed: Killing Quad MBs now uses a template, as it's a complex set of requirements repeated in three separate rooms
 - Added: Method of killing Quad MBs using Bombs or Power Bombs and Combat (Beginner)
 - Added: Method of killing Quad MBs using Screw Attack (Space Jump) and Knowledge (Beginner)
 - Added: Requirement to either kill the Quad MBs or defeat Spider Guardian in order to collect the item in Hall of Combat Mastery in the intended way
+- Fixed: A few broken Dark Forgotten Bridge paths have now been fixed.
+- Changed: Simplified Meeting Grounds logic slightly, by removing the redundant Top of Halfpipe node
+- Changed: Killing Quad MBs now uses a template, as it's a complex set of requirements repeated in three separate rooms
 
 ### Discord Bot (Caretaker Class Drone)
 

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Tuple
 
+
 @dataclass(frozen=True, order=True)
 class ItemCategory:
     name: str
@@ -20,6 +21,17 @@ class ItemCategory:
         )
 
     @property
+    def as_json(self) -> dict:
+        result = {
+            "long_name": self.long_name,
+            "hint_details": list(self.hint_details),
+            "is_major": self.is_major,
+        }
+        if self.is_key:
+            result["is_key"] = self.is_key
+        return result
+
+    @property
     def general_details(self) -> Tuple[str, str]:
         if self.is_major:
             return "a ", "major upgrade"
@@ -27,7 +39,7 @@ class ItemCategory:
             return "a ", "key"
         else:
             return "an ", "expansion"
-    
+
     @property
     def is_expansion(self) -> bool:
         return self.name == "expansion"
@@ -36,13 +48,13 @@ class ItemCategory:
 USELESS_ITEM_CATEGORY = ItemCategory(
     name="useless",
     long_name="",
-    hint_details=["an ", "Energy Transfer Module"],
+    hint_details=("an ", "Energy Transfer Module"),
     is_major=False
 )
 
 GENERIC_KEY_CATEGORY = ItemCategory(
     name="key",
     long_name="",
-    hint_details=["a ", "key"],
+    hint_details=("a ", "key"),
     is_major=False
 )

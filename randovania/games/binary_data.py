@@ -12,7 +12,7 @@ from randovania.games.game import RandovaniaGame
 X = TypeVar('X')
 current_format_version = 8
 
-_IMPOSSIBLE_SET = {"type": "or", "data": []}
+_IMPOSSIBLE_SET = {"type": "or", "data": {"comment": None, "items": []}}
 
 
 def convert_to_raw_python(value) -> Any:
@@ -183,8 +183,13 @@ ConstructRequirement = Struct(
     type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
     data=Switch(lambda this: this.type, requirement_type_map)
 )
-requirement_type_map["and"] = PrefixedArray(VarInt, ConstructRequirement)
-requirement_type_map["or"] = PrefixedArray(VarInt, ConstructRequirement)
+ConstructRequirementArray = Struct(
+    comment=OptionalValue(CString("utf8")),
+    items=PrefixedArray(VarInt, ConstructRequirement),
+)
+
+requirement_type_map["and"] = ConstructRequirementArray
+requirement_type_map["or"] = ConstructRequirementArray
 
 ConstructDockWeakness = Struct(
     index=VarInt,

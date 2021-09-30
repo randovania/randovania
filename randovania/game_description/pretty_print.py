@@ -4,7 +4,7 @@ from typing import Union, Iterator, Tuple, TextIO
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, RequirementOr, \
-    RequirementTemplate, Requirement
+    RequirementTemplate, Requirement, RequirementArrayBase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockType
@@ -23,7 +23,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
         return requirement.pretty_text
 
 
-def pretty_print_requirement_array(requirement: Union[RequirementAnd, RequirementOr],
+def pretty_print_requirement_array(requirement: RequirementArrayBase,
                                    level: int) -> Iterator[Tuple[int, str]]:
     if len(requirement.items) == 1:
         yield from pretty_print_requirement(requirement.items[0], level)
@@ -31,7 +31,7 @@ def pretty_print_requirement_array(requirement: Union[RequirementAnd, Requiremen
 
     resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
     template_requirements = [item for item in requirement.items if isinstance(item, RequirementTemplate)]
-    other_requirements = [item for item in requirement.items if isinstance(item, (RequirementAnd, RequirementOr))]
+    other_requirements = [item for item in requirement.items if isinstance(item, RequirementArrayBase)]
     assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
 
     pretty_resources = [
@@ -42,17 +42,17 @@ def pretty_print_requirement_array(requirement: Union[RequirementAnd, Requiremen
 
     if isinstance(requirement, RequirementOr):
         title = "Any"
-        combinator = " or "
     else:
         title = "All"
-        combinator = " and "
 
-    if len(other_requirements) == 0:
-        yield level, combinator.join(pretty_resources + sorted_templates)
+    if len(other_requirements) == 0 and requirement.comment is None:
+        yield level, requirement.combinator().join(pretty_resources + sorted_templates)
     else:
         yield level, f"{title} of the following:"
+        if requirement.comment is not None:
+            yield level + 1, f"# {requirement.comment}"
         if pretty_resources or sorted_templates:
-            yield level + 1, combinator.join(pretty_resources + sorted_templates)
+            yield level + 1, requirement.combinator().join(pretty_resources + sorted_templates)
         for item in other_requirements:
             yield from pretty_print_requirement(item, level + 1)
 
@@ -64,7 +64,7 @@ def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterat
     elif requirement == Requirement.trivial():
         yield level, "Trivial"
 
-    elif isinstance(requirement, (RequirementAnd, RequirementOr)):
+    elif isinstance(requirement, RequirementArrayBase):
         yield from pretty_print_requirement_array(requirement, level)
 
     elif isinstance(requirement, ResourceRequirement):

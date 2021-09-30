@@ -25,16 +25,17 @@ def game_description_for(game: RandovaniaGame) -> GameDescription:
     return result
 
 
-def _read_item_database_in_path(path: Path) -> item_database.ItemDatabase:
+def _read_item_database_in_path(path: Path, game: RandovaniaGame) -> item_database.ItemDatabase:
     with path.joinpath("item-database.json").open() as database_file:
         item_database_data = json.load(database_file)
 
-    return item_database.read_database(item_database_data)
+    return item_database.read_database(item_database_data, game)
 
 
 @functools.lru_cache()
 def item_database_for_game(game: RandovaniaGame):
-    return _read_item_database_in_path(get_data_path().joinpath("item_database", game.value))
+    return _read_item_database_in_path(get_data_path().joinpath("item_database", game.value),
+                                       game)
 
 
 @functools.lru_cache()

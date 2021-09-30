@@ -15,12 +15,10 @@ from randovania.layout.prime2.translator_configuration import LayoutTranslatorRe
 
 
 class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
-    _editor: PresetEditor
 
     def __init__(self, editor: PresetEditor):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
 
         randomizer_data = randovania.games.patchers.claris_patcher.decode_randomizer_data()
 

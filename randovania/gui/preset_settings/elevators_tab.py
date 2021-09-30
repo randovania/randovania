@@ -22,16 +22,14 @@ from randovania.lib import enum_lib
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
-    _editor: PresetEditor
     _elevator_source_for_location: Dict[Teleporter, QtWidgets.QCheckBox]
     _elevator_source_destination: Dict[Teleporter, Optional[Teleporter]]
     _elevator_target_for_world: Dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: Dict[int, QtWidgets.QCheckBox]
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__()
+        super().__init__(editor)
         self.setupUi(self)
-        self._editor = editor
         self.game_description = game
 
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
