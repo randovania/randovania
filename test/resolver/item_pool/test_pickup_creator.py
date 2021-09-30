@@ -9,6 +9,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
     ResourceLock, PickupModel
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
+from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -30,6 +31,7 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
     )
 
     major_item = MajorItem(
+        game=echoes_resource_database.game_enum,
         name="The Item",
         item_category=less_generic_item_category,
         broad_category=generic_item_category,

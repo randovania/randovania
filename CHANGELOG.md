@@ -15,7 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Custom elevator names across both games now used throughout the entire UI
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
+- Changed: Customizing the item pool causes permalinks to not get as long as before.
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
+- Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
 
 ### Metroid Prime - Patcher Changes
 
@@ -34,6 +36,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Workstation cutscene is now Competitive.
 - Changed: Wave panel cutscene in Main Quarry is now Competitive.
 - Changed: Elevator leaving cutscenes back are now Major.
+
+### Metroid Prime 2: Echoes - Patcher Changes
+- Fixed: Scanning hints now displays the correct, edited categories.
 
 ### Metroid Prime - Logic Database
 

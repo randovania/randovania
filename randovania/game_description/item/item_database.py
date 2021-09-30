@@ -4,6 +4,7 @@ from typing import Dict, Tuple
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
+from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)
@@ -14,11 +15,10 @@ class ItemDatabase:
     default_items: Dict[ItemCategory, Tuple[MajorItem, ...]]
 
 
-def read_database(database_data: Dict) -> ItemDatabase:
+def read_database(database_data: Dict, game: RandovaniaGame) -> ItemDatabase:
     """
-
-    :param major_items_data:
-    :param ammo_data:
+    :param database_data:
+    :param game:
     :return:
     """
     item_categories = {
@@ -27,7 +27,7 @@ def read_database(database_data: Dict) -> ItemDatabase:
     }
 
     major_items = {
-        name: MajorItem.from_json(name, value, item_categories)
+        name: MajorItem.from_json(name, value, game, item_categories)
         for name, value in database_data["items"].items()
     }
 

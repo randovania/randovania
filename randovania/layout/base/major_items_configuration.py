@@ -1,6 +1,6 @@
 import copy
 import dataclasses
-from typing import Dict, Iterator, Tuple, List
+from typing import Dict, Iterator, Tuple, List, TypeVar, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -10,15 +10,40 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
 
-RANDOM_STARTING_ITEMS_LIMIT = 31
+T = TypeVar("T")
+
+
+def _check_matching_items(actual: Iterable[T], reference: Iterable[T]):
+    actual_items = set(actual)
+    reference_items = set(reference)
+    if actual_items != reference_items:
+        raise ValueError(f"Non-matching keys: Has {actual_items}, expected {reference_items}.")
 
 
 @dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
+    game: RandovaniaGame
     items_state: Dict[MajorItem, MajorItemState]
     default_items: Dict[ItemCategory, MajorItem]
     minimum_random_starting_items: int
     maximum_random_starting_items: int
+
+    def __post_init__(self):
+        item_database = default_database.item_database_for_game(self.game)
+
+        _check_matching_items(self.items_state.keys(), item_database.major_items.values())
+        _check_matching_items(self.default_items.keys(), item_database.default_items.keys())
+
+        for item, state in self.items_state.items():
+            state.check_consistency(item)
+
+        for category, options in item_database.default_items.items():
+            if category not in self.default_items:
+                raise ValueError(f"Category {category} is missing an item.")
+
+            if self.default_items[category] not in options:
+                raise ValueError(f"Category {category} has {self.default_items[category]} as default item, "
+                                 f"but that's not a valid option.")
 
     @property
     def as_json(self) -> dict:
@@ -47,14 +72,13 @@ class MajorItemsConfiguration(BitPackValue):
                 state = MajorItemState()
             items_state[item] = state
 
-        default_items = {}
-        for category, options in item_database.default_items.items():
-            default_items[category] = item_database.major_items[value["default_items"][category.name]]
-            if default_items[category] not in options:
-                raise ValueError(f"Category {category} has {default_items[category]} as default item, "
-                                 f"but that's not a valid option.")
+        default_items = {
+            category: item_database.major_items[value["default_items"][category.name]]
+            for category, _ in item_database.default_items.items()
+        }
 
         return cls(
+            game=game,
             items_state=items_state,
             default_items=default_items,
             minimum_random_starting_items=value["minimum_random_starting_items"],
@@ -64,17 +88,16 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        result: List[Tuple[int, MajorItem, MajorItemState]] = []
-        for i, (item, state) in enumerate(self.items_state.items()):
-            if state != reference.items_state[item]:
-                result.append((i, item, state))
+        name_to_item: Dict[str, MajorItem] = {item.name: item for item in self.items_state.keys()}
 
-        yield len(result), len(self.items_state)
-        for index, _, _ in result:
-            yield index, len(self.items_state)
-
-        for index, item, state in result:
-            yield from state.bit_pack_encode(item)
+        modified_items = sorted(
+            item.name for item, state in self.items_state.items()
+            if state != reference.items_state[item]
+        )
+        yield from bitpacking.pack_sorted_array_elements(modified_items, sorted(name_to_item.keys()))
+        for item_name in modified_items:
+            item = name_to_item[item_name]
+            yield from self.items_state[item].bit_pack_encode(item, reference=reference.items_state[item])
 
         # default_items
         for category, default in self.default_items.items():
@@ -82,26 +105,21 @@ class MajorItemsConfiguration(BitPackValue):
             yield from bitpacking.pack_array_element(default, all_major)
 
         # random starting items
-        yield self.minimum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
-        yield self.maximum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
+        yield from bitpacking.encode_big_int(self.minimum_random_starting_items)
+        yield from bitpacking.encode_big_int(self.maximum_random_starting_items)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "MajorItemsConfiguration":
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        num_items = decoder.decode_single(len(reference.items_state))
-        indices_with_custom = {
-            decoder.decode_single(len(reference.items_state))
-            for _ in range(num_items)
-        }
+        name_to_item: Dict[str, MajorItem] = {item.name: item for item in reference.items_state.keys()}
+        modified_items = bitpacking.decode_sorted_array_elements(decoder, sorted(name_to_item.keys()))
 
-        items_state = {}
-
-        for index, item in enumerate(reference.items_state.keys()):
-            if index in indices_with_custom:
-                items_state[item] = MajorItemState.bit_pack_unpack(decoder, item)
-            else:
-                items_state[item] = reference.items_state[item]
+        items_state = copy.copy(reference.items_state)
+        for item_name in modified_items:
+            item = name_to_item[item_name]
+            items_state[item] = MajorItemState.bit_pack_unpack(decoder, item,
+                                                               reference=reference.items_state[item])
 
         # default_items
         default_items = {}
@@ -110,12 +128,16 @@ class MajorItemsConfiguration(BitPackValue):
             default_items[category] = decoder.decode_element(all_major)
 
         # random starting items
-        minimum, maximum = decoder.decode(RANDOM_STARTING_ITEMS_LIMIT, RANDOM_STARTING_ITEMS_LIMIT)
+        minimum = bitpacking.decode_big_int(decoder)
+        maximum = bitpacking.decode_big_int(decoder)
 
-        return cls(items_state,
-                   default_items=default_items,
-                   minimum_random_starting_items=minimum,
-                   maximum_random_starting_items=maximum)
+        return cls(
+            game=reference.game,
+            items_state=items_state,
+            default_items=default_items,
+            minimum_random_starting_items=minimum,
+            maximum_random_starting_items=maximum,
+        )
 
     def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
         return self.replace_states({

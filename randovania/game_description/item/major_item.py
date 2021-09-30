@@ -3,10 +3,12 @@ from typing import Dict, Optional, Tuple
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)
 class MajorItem:
+    game: RandovaniaGame
     name: str
     item_category: ItemCategory
     broad_category: ItemCategory
@@ -20,9 +22,15 @@ class MajorItem:
     probability_multiplier: float = 1
     warning: Optional[str] = None
 
+    def __post_init__(self):
+        if not self.progression and not self.ammo_index:
+            raise ValueError(f"Item {self.name} has no progression nor ammo.")
+
     @classmethod
-    def from_json(cls, name: str, value: dict, item_categories: Dict[str, ItemCategory]) -> "MajorItem":
+    def from_json(cls, name: str, value: dict, game: RandovaniaGame,
+                  item_categories: Dict[str, ItemCategory]) -> "MajorItem":
         return cls(
+            game=game,
             name=name,
             item_category=item_categories[value["item_category"]],
             broad_category=item_categories[value["broad_category"]],

@@ -63,6 +63,9 @@ Options: -hivw
 
 4. VERSION HISTORY
 
+v5.1.1 - Hack 10:
+- Fix: `logbook_patches` now changes both ScanTree and ScanHierarchy connections
+
 v5.1.1 - Hack 9:
 - Add `-data:<path>` argument to override path to RandomizerData.json
 

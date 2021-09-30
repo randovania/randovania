@@ -31,14 +31,13 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00\x00', "replace": {}},
-        {"encoded": b'\x05)\x00\x00\x00', "replace": {
+        {"encoded": b'\x03\x1b\xa0\x00', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
                     "num_shuffled_pickups": 1,
                     "num_included_in_starting_items": 0,
                     "included_ammo": [],
-                    "allowed_as_random_starting_item": False
                 }
             }
         }},
