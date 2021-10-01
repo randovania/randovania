@@ -41,6 +41,30 @@ _echoes_items_to_not_add_in_minimal_logic = {
     29, 30, 31, 101, 102, 103, 104, 105, 106
 }
 
+_corruption_items_to_not_add_in_minimal_logic = {
+    # Plasma Beam, Nova Beam
+    1,
+    2,
+
+    # Grapple Lasso
+    7,
+
+    # Grapple Voltage
+    9,
+    
+    # X-Ray Visor
+    14,
+
+    # Energy Tank
+    20,
+    
+    # Hypermode
+    35,
+
+    # Hyper Grapple
+    39
+}
+
 minimal_logic_custom_item_count = {
     RandovaniaGame.METROID_PRIME: {},
     RandovaniaGame.METROID_PRIME_ECHOES: {
@@ -54,6 +78,14 @@ minimal_logic_custom_item_count = {
         45: 100,
         # Light Ammo
         46: 100
+    },
+    RandovaniaGame.METROID_PRIME_CORRUPTION: {
+        # Missile
+        4: 100,
+        # Energy Tank
+        20: 14,
+        # Ship Missile
+        45: 11
     },
 }
 
@@ -107,6 +139,17 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
         # Dark Samus 3 and 4 (93), otherwise we're done automatically (TODO: get this from database)
         # Chykka (28), otherwise we can't collect Dark Visor
         events_to_skip = {28, 93}
+
+    if resource_database.game_enum == RandovaniaGame.METROID_PRIME_CORRUPTION:
+        item_db = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
+
+        items_to_skip = copy.copy(_corruption_items_to_not_add_in_minimal_logic)
+        if major_items.items_state[item_db.major_items["Progressive Beam"]].num_shuffled_pickups == 0:
+            items_to_skip.remove(1)
+
+        # Ignoring these events:
+        # Aurora Unit 313 (19), otherwise we're done automatically (TODO: get this from database)
+        events_to_skip = {19}
 
     for event in resource_database.event:
         if event.index not in events_to_skip:

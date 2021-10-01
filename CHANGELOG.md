@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: The Logic Database can now have comments in requirements.
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
+- Added: Minimal Logic added for Metroid Prime 3 (Not in currently editable in GUI).
 - Changed: Force one specific certificate root when connecting to the server.
 - Changed: Custom elevator names across both games now used throughout the entire UI
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
