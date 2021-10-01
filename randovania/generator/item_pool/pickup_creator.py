@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from randovania.game_description import default_database
 from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
@@ -66,7 +66,7 @@ def create_major_item(item: MajorItem,
 
 
 def create_ammo_expansion(ammo: Ammo,
-                          ammo_count: List[int],
+                          ammo_count: Tuple[int, ...],
                           requires_major_item: bool,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:

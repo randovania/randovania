@@ -65,9 +65,9 @@ class Preset(BitPackValue):
                     reference_versioned = manager.default_preset_for_game(reference.game)
                 reference = reference_versioned.get_preset()
 
-        included_presets = [versioned.get_preset() for versioned in manager.included_presets.values()]
+        included_preset_uuids = [versioned.uuid for versioned in manager.included_presets.values()]
         yield from bitpacking.encode_bool(is_custom_preset)
-        yield from bitpacking.pack_array_element(reference, included_presets)
+        yield from bitpacking.pack_array_element(reference.uuid, included_preset_uuids)
         if is_custom_preset:
             yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
         yield _dictionary_byte_hash(self.configuration.game_data), 256
@@ -77,10 +77,10 @@ class Preset(BitPackValue):
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
-        included_presets = [versioned.get_preset() for versioned in manager.included_presets.values()]
+        included_presets = [versioned for versioned in manager.included_presets.values()]
 
         is_custom_preset = bitpacking.decode_bool(decoder)
-        reference = decoder.decode_element(included_presets)
+        reference = decoder.decode_element(included_presets).get_preset()
         if is_custom_preset:
             preset = Preset(
                 name="{} Custom".format(reference.name),

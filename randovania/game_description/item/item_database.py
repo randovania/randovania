@@ -32,7 +32,7 @@ def read_database(database_data: Dict, game: RandovaniaGame) -> ItemDatabase:
     }
 
     ammo = {
-        name: Ammo.from_json(name, value, item_categories)
+        name: Ammo.from_json(name, value, game, item_categories)
         for name, value in database_data["ammo"].items()
     }
 
