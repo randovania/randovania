@@ -57,6 +57,17 @@ _corruption_items_to_not_add_in_minimal_logic = {
 
     # Energy Tank
     20,
+
+    # Energy Cells
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
     
     # Hypermode
     35,
