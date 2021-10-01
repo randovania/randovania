@@ -4,12 +4,13 @@ from typing import Dict, Tuple, Optional
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True, order=True)
 class Ammo:
+    game: RandovaniaGame
     name: str
-    maximum: int
     model_name: str
     items: Tuple[int, ...]
     broad_category: ItemCategory
@@ -28,10 +29,11 @@ class Ammo:
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
     @classmethod
-    def from_json(cls, name: str, value: dict, item_categories: Dict[str, ItemCategory]) -> "Ammo":
+    def from_json(cls, name: str, value: dict, game: RandovaniaGame,
+                  item_categories: Dict[str, ItemCategory]) -> "Ammo":
         return cls(
+            game=game,
             name=name,
-            maximum=value["maximum"],
             model_name=value["model_name"],
             items=tuple(value["items"]),
             broad_category=item_categories[value["broad_category"]],
@@ -42,7 +44,6 @@ class Ammo:
     @property
     def as_json(self) -> dict:
         result = {
-            "maximum": self.maximum,
             "model_name": self.model_name,
             "items": list(self.items),
             "broad_category": self.broad_category.name,
@@ -65,9 +66,10 @@ class Ammo:
             )
         return None
 
+
 AMMO_ITEM_CATEGORY = ItemCategory(
     name="expansion",
     long_name="",
-    hint_details=["an ", "expansion"],
+    hint_details=("an ", "expansion"),
     is_major=False
 )
