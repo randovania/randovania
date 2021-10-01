@@ -67,7 +67,7 @@ _corruption_items_to_not_add_in_minimal_logic = {
     28,
     29,
     30,
-    31
+    31,
     
     # Hypermode
     35,
