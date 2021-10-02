@@ -9,7 +9,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.node import Node, PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
 from randovania.gui.lib import common_qt_lib
@@ -25,13 +25,15 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
     _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
-    _row_widget_for_node: dict
+    _row_widget_for_node: Dict[Node, LocationPoolRowWidget]
+    _during_batch_update: bool
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
         super().__init__(editor)
         self.setupUi(self)
         self.game_description = game
-        
+        self._during_batch_update = False
+
         self._row_widget_for_node = {}
         
         self.check_major_minor.stateChanged.connect(self._on_update_randomization_mode)
@@ -95,7 +97,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
     def on_preset_changed(self, preset: Preset):
         available_locations = preset.configuration.available_locations
 
-        self.during_batch_update = True
+        self._during_batch_update = True
 
         self.check_major_minor.setChecked(available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
 
@@ -103,7 +105,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
             can_have_progression = node.pickup_index not in available_locations.excluded_indices
             row_widget.set_can_have_progression(can_have_progression)
 
-        self.during_batch_update = False
+        self._during_batch_update = False
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:
@@ -119,7 +121,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
                     
 
     def _on_location_changed(self, row_widget: LocationPoolRowWidget):
-        if self.during_batch_update:
+        if self._during_batch_update:
             return
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(row_widget.node.pickup_index,
