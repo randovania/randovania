@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.1.4] - Unreleased
+## [3.1.5] - Unreleased
+
+- Fixed: Certain invalid permalinks are now properly recognized as invalid.
+
+## [3.1.4] - 2021-09-19
 
 - Changed: Force one specific certificate root when connecting to the server.
 - Fixed: Checking for updated versions will no longer close Randovania when no internet connectivity is present. 
