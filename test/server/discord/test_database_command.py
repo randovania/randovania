@@ -12,8 +12,8 @@ from randovania.server.discord.database_command import DatabaseCommandCog, Split
 async def test_on_ready():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
-    slash = AsyncMock()
-    cog.bot.slash = slash
+    slash = cog.bot.slash
+    slash.sync_all_commands = AsyncMock()
 
     # Run
     await cog.on_ready()
@@ -42,7 +42,7 @@ async def test_database_command():
     area = MagicMock()
     area.name = "The Area"
     cog._split_worlds[RandovaniaGame.METROID_PRIME_CORRUPTION] = [
-        (MagicMock(), "The World", [area]),
+        SplitWorld(MagicMock(), "The World", [area]),
     ]
 
     ctx = AsyncMock()
@@ -65,7 +65,7 @@ async def test_on_database_world_selected():
     area.name = "The Area"
     cog._split_worlds[RandovaniaGame.METROID_PRIME_CORRUPTION] = [
         tuple(),
-        (MagicMock(), "The World", [area]),
+        SplitWorld(MagicMock(), "The World", [area]),
     ]
 
     ctx = AsyncMock()
