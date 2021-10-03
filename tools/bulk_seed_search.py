@@ -2,12 +2,19 @@ import argparse
 import collections
 import json
 import re
+import typing
 from pathlib import Path
 
-import tqdm
-import typing
-
 from randovania.layout.layout_description import LayoutDescription
+
+
+def iterate_with_log(x):
+    try:
+        import tqdm
+        return tqdm.tqdm(x)
+    except ImportError:
+        print("WARNING: tqdm not found. Use `pip install tqdm` to have progress feedback.")
+        return x
 
 
 def read_json(path: Path) -> dict:
@@ -31,7 +38,7 @@ def create_report(seeds_dir: str, output_file: str):
 
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
-    for seed in tqdm.tqdm(seed_files):
+    for seed in iterate_with_log(seed_files):
         seed = typing.cast(Path, seed)
         try:
             seed_data = read_json(seed)
