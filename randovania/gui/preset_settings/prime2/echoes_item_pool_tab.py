@@ -1,14 +1,15 @@
-from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 from typing import List
+
 from PySide2 import QtWidgets
 
-from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
+from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
+
 
 class EchoesPresetItemPool(MetroidPresetItemPool):
     _split_ammo_widgets: List[SplitAmmoWidget]
