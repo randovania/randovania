@@ -8,7 +8,7 @@ import discord
 import graphviz
 from discord import Embed
 from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
+from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
 from discord_slash.utils import manage_commands, manage_components
 
 from randovania.game_description import default_database, pretty_print
@@ -31,9 +31,17 @@ def render_area_with_graphviz(area: Area) -> Optional[Path]:
     for node in area.nodes:
         dot.node(node.name)
 
+    known_edges = set()
     for source, target in area.connections.items():
         for target_node, requirement in target.items():
-            dot.edge(source.name, target_node.name)
+            direction = None
+            if source in area.connections.get(target_node):
+                direction = "both"
+                known_edges.add((target_node.name, source.name))
+
+            if (source.name, target_node.name) not in known_edges:
+                dot.edge(source.name, target_node.name, dir=direction)
+                known_edges.add((source.name, target_node.name))
 
     try:
         return Path(dot.render(format="png", cleanup=True))
