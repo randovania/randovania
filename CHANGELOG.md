@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
 - Fixed: Certain invalid permalinks are now properly recognized as invalid.
 - Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
+- Removed: Menu option to open STB's Echoes item tracker in a new window.
 
 ### Metroid Prime - Patcher Changes
 

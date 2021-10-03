@@ -157,7 +157,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
             self.menu_action_edits.append(action)
 
-        self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
@@ -455,28 +454,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
             return
 
         self._map_tracker.show()
-
-    def _open_item_tracker(self):
-        # Importing this at root level seems to crash linux tests :(
-        from PySide2.QtWebEngineWidgets import QWebEngineView
-
-        tracker_window = QtWidgets.QMainWindow()
-        tracker_window.setWindowTitle("Item Tracker")
-        tracker_window.resize(370, 380)
-
-        web_view = QWebEngineView(tracker_window)
-        tracker_window.setCentralWidget(web_view)
-
-        self.web_view = web_view
-
-        def update_window_icon():
-            tracker_window.setWindowIcon(web_view.icon())
-
-        web_view.iconChanged.connect(update_window_icon)
-        web_view.load(QUrl("https://spaghettitoastbook.github.io/echoes/tracker/"))
-
-        tracker_window.show()
-        self._item_tracker_window = tracker_window
 
     # Difficulties stuff
 
