@@ -194,15 +194,15 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
     temporary_a = echoes_resource_database.get_item(71)
 
     ammo = Ammo(
+        game=echoes_resource_database.game_enum,
         name="The Item",
-        maximum=100,
         items=(42,),
         broad_category=USELESS_ITEM_CATEGORY,
         unlocked_by=73,
         temporary=71,
         model_name="AmmoModel",
     )
-    ammo_count = [11, 150]
+    ammo_count = (11, 150)
 
     # Run
     result = randovania.generator.item_pool.pickup_creator.create_ammo_expansion(

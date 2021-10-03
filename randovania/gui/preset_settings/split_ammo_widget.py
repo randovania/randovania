@@ -1,3 +1,4 @@
+import math
 from typing import Iterable, Dict, NamedTuple, Optional
 
 from PySide2 import QtWidgets
@@ -26,6 +27,13 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self._last_check_state = (True, False)
         self.clicked.connect(self.change_split)
+
+        invalid_split = [split for split in self.split_ammo if len(split.items) != 1]
+        if invalid_split:
+            raise ValueError(f"The following split ammo have more than one item associated: {invalid_split}")
+
+        if len(unified_ammo.items) != len(self.split_ammo):
+            raise ValueError("The unified ammo should have as many items as there are split ammo items.")
 
     def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]):
         ammo_configuration = preset.configuration.ammo_configuration
@@ -57,16 +65,40 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
                 ammo_configuration.items_state[ammo].pickup_count
                 for ammo in (self.unified_ammo, *self.split_ammo)
             )
-            if has_split:
-                split_state = AmmoState(pickup_count=current_total // len(self.split_ammo))
-                unified_state = AmmoState()
-            else:
-                split_state = AmmoState()
-                unified_state = AmmoState(pickup_count=current_total)
 
-            new_states = {self.unified_ammo: unified_state}
-            for ammo in self.split_ammo:
-                new_states[ammo] = split_state
+            new_states = {}
+            if has_split:
+                ref = ammo_configuration.items_state[self.unified_ammo]
+                for i, split in enumerate(self.split_ammo):
+                    new_count = current_total // len(self.split_ammo)
+                    new_states[split] = AmmoState(
+                        ammo_count=(math.ceil(
+                            ref.ammo_count[i] * (current_total / new_count),
+                        ),),
+                        pickup_count=new_count,
+                    )
+                new_states[self.unified_ammo] = AmmoState(
+                    ammo_count=tuple(0 for _ in self.unified_ammo.items),
+                    pickup_count=0,
+                )
+
+            else:
+                for split in self.split_ammo:
+                    new_states[split] = AmmoState(
+                        ammo_count=(0,),
+                        pickup_count=0
+                    )
+                new_states[self.unified_ammo] = AmmoState(
+                    ammo_count=tuple(
+                        math.ceil(
+                            ammo_configuration.items_state[split].ammo_count[0] * (
+                                    ammo_configuration.items_state[split].pickup_count / current_total
+                            )
+                        )
+                        for split in self.split_ammo
+                    ),
+                    pickup_count=current_total,
+                )
 
             editor.ammo_configuration = ammo_configuration.replace_states(new_states)
             self._last_check_state = (has_split, not has_split)
