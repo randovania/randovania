@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Elevator leaving cutscenes back are now Major.
 
 ### Metroid Prime 2: Echoes - Patcher Changes
+
 - Fixed: Scanning hints now displays the correct, edited categories.
 
 ### Metroid Prime - Logic Database
@@ -69,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Discord Bot (Caretaker Class Drone)
 
-- Nothing.
+- Changed: Room images uses two-way arrows if a connection is two-way, instead of two arrows.
 
 ## [3.1.4] - Unreleased
 
