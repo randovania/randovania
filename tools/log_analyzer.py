@@ -11,8 +11,6 @@ from pathlib import Path
 from statistics import stdev
 from typing import Dict, Tuple, Optional, List, Iterable, Set
 
-import tqdm as tqdm
-
 from randovania.game_description.default_database import game_description_for
 from randovania.game_description.world.node import PickupNode, LogbookNode
 from randovania.games.game import RandovaniaGame
@@ -41,6 +39,15 @@ def is_non_major_progression(x: str):
         if x == item.lower():
             return True
     return False
+
+
+def iterate_with_log(x):
+    try:
+        import tqdm
+        return tqdm.tqdm(x)
+    except ImportError:
+        print("WARNING: tqdm not found. Use `pip install tqdm` to have progress feedback.")
+        return x
 
 
 def read_json(path: Path) -> dict:
@@ -189,7 +196,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
-    for seed in tqdm.tqdm(seed_files):
+    for seed in iterate_with_log(seed_files):
         try:
             seed_data = read_json(seed)
         except json.JSONDecodeError:
