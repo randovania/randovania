@@ -61,14 +61,7 @@
                             }
                         },
                         "Samus Ship (Catch.)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Ghor": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -78,24 +71,29 @@
                                             "type": 1,
                                             "index": 72,
                                             "amount": 1,
-                                            "negate": false
+                                            "negate": true
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Enter Hypermode"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 8,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 17,
-                                                        "amount": 2,
+                                                        "type": 0,
+                                                        "index": 1,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -103,6 +101,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Before Ghor": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 72,
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -162,22 +169,48 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": 0,
-                                            "index": 1,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": 1,
                                             "index": 72,
                                             "amount": 1,
                                             "negate": true
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 1,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 8,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Before Ghor": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 72,
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -194,6 +227,35 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Before Ghor",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Event - Ghor": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Enter Hypermode"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 2,
+                                            "index": 17,
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
