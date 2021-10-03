@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
 - Changed: Customizing the item pool causes permalinks to not get as long as before.
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
+- Fixed: Certain invalid permalinks are now properly recognized as invalid.
 - Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
 
 ### Metroid Prime - Patcher Changes
