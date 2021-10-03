@@ -5,6 +5,8 @@ import operator
 from dataclasses import dataclass
 from typing import Iterator, Tuple, Dict, Iterable
 
+import bitstruct
+
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
 from randovania.interface_common.preset_manager import PresetManager
@@ -163,7 +165,7 @@ class Permalink(BitPackValue):
 
             return cls.from_bytes(b)
 
-        except binascii.Error as e:
+        except (binascii.Error, bitstruct.Error) as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
                 permalink=param,
                 error=e,
