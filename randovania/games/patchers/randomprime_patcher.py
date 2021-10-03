@@ -146,8 +146,8 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "model": model_name,
         "scanText": scan_text,
         "hudmemoText": hud_text,
-        "curr_increase": count,
-        "max_increase": count,
+        "currIncrease": count,
+        "maxIncrease": count,
         "respawn": False
     }
     if modal_hud_override:
