@@ -33,6 +33,7 @@ def test_simple_round_trip():
             "Default": [
             ]
         },
+        "minimal_logic": None,
         "victory_condition": {
             "type": "and",
             "data": {"comment": None, "items": []},

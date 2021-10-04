@@ -162,7 +162,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     ])
     game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, Requirement.impossible(),
-                           None, {}, world_list)
+                           None, {}, None, world_list)
 
     patches = game.create_game_patches()
     patches = patches.assign_gate_assignment({

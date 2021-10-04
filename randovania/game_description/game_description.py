@@ -1,7 +1,8 @@
 """Classes that describes the raw data of a game world."""
 import copy
+import dataclasses
 import typing
-from typing import Iterator, FrozenSet, Dict, Optional, List
+from typing import Iterator, FrozenSet, Dict, Optional, List, Tuple
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
@@ -36,6 +37,19 @@ def _calculate_dangerous_resources_in_areas(
                 yield from requirement.as_set(database).dangerous_resources
 
 
+@dataclasses.dataclass(frozen=True)
+class IndexWithReason:
+    index: int
+    reason: Optional[str]
+
+
+@dataclasses.dataclass(frozen=True)
+class MinimalLogicData:
+    items_to_exclude: List[IndexWithReason]
+    custom_item_amount: Dict[int, int]
+    events_to_exclude: List[IndexWithReason]
+
+
 class GameDescription:
     game: RandovaniaGame
     dock_weakness_database: DockWeaknessDatabase
@@ -44,6 +58,7 @@ class GameDescription:
     victory_condition: Requirement
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
+    minimal_logic: Optional[MinimalLogicData]
     _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
     world_list: WorldList
     mutable: bool = False
@@ -57,6 +72,7 @@ class GameDescription:
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
             initial_states=copy.copy(self.initial_states),
+            minimal_logic=self.minimal_logic,
         )
         new_game._dangerous_resources = self._dangerous_resources
         return new_game
@@ -69,6 +85,7 @@ class GameDescription:
                  victory_condition: Requirement,
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
+                 minimal_logic: Optional[MinimalLogicData],
                  world_list: WorldList,
                  ):
         self.game = game
@@ -78,6 +95,7 @@ class GameDescription:
         self.victory_condition = victory_condition
         self.starting_location = starting_location
         self.initial_states = initial_states
+        self.minimal_logic = minimal_logic
         self.world_list = world_list
 
     def patch_requirements(self, resources, damage_multiplier: float):
