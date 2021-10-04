@@ -47,7 +47,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
 
-        if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
+        if self.game_enum not in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION}:
             for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
                 w.setVisible(False)
 

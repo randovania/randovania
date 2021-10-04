@@ -9,15 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - **Major** - Added: The Logic Database can now have comments in requirements.
+- **Major** - Changed: Expansions contents are now configured directly, instead of being calculated from a target. 
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
+- Added: Support for Minimal Logic has been added for Metroid Prime 3.
 - Changed: Force one specific certificate root when connecting to the server.
 - Changed: Custom elevator names across both games now used throughout the entire UI
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
 - Changed: Customizing the item pool causes permalinks to not get as long as before.
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
+- Fixed: Certain invalid permalinks are now properly recognized as invalid.
 - Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
+- Removed: Menu option to open STB's Echoes item tracker in a new window.
 
 ### Metroid Prime - Patcher Changes
 
@@ -38,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Elevator leaving cutscenes back are now Major.
 
 ### Metroid Prime 2: Echoes - Patcher Changes
+
 - Fixed: Scanning hints now displays the correct, edited categories.
 
 ### Metroid Prime - Logic Database
@@ -66,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Discord Bot (Caretaker Class Drone)
 
-- Nothing.
+- Changed: Room images uses two-way arrows if a connection is two-way, instead of two arrows.
 
 ## [3.1.4] - Unreleased
 
