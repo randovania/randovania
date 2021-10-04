@@ -19,6 +19,19 @@ from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
 from randovania.gui.lib import common_qt_lib
 
+_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT = {
+    RandovaniaGame.METROID_PRIME: (
+        "TODO: Minimal logic description for Prime."
+    ),
+    RandovaniaGame.METROID_PRIME_ECHOES: (
+        "Randovania will only check that Screw Attack, Dark Visor and Light Suit won't all be behind "
+        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible."
+    ),
+    RandovaniaGame.METROID_PRIME_CORRUPTION: (
+        "TODO: Minimal logic description for Corruption."
+    ),
+}
+
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
@@ -47,9 +60,13 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
 
-        if self.game_enum not in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION}:
-            for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
-                w.setVisible(False)
+        for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
+            w.setVisible(self.game_enum in _GAME_SPECIFIC_MINIMAL_LOGIC_TEXT)
+        self.trick_level_minimal_logic_label.setText(
+            self.trick_level_minimal_logic_label.text().format(
+                game_specific_text=_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT.get(self.game_enum, "Unknown text")
+            )
+        )
 
         if self.game_enum != RandovaniaGame.METROID_PRIME:
             for w in [self.underwater_abuse_check, self.underwater_abuse_label]:
