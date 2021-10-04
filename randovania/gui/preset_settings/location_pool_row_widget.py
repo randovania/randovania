@@ -16,11 +16,11 @@ class LocationPoolRowWidget(QDialog, Ui_LocationPoolRowWidget):
         self.node = node
         self.label_location_name.setText(location_name)
 
-        self.radio_vanilla.setEnabled(False)
+        self.radio_vanilla.setVisible(False)
         self.radio_vanilla.setToolTip("Not yet implemented, coming soon")
-        self.radio_fixed.setEnabled(False)
+        self.radio_fixed.setVisible(False)
         self.radio_fixed.setToolTip("Not yet implemented, coming soon")
-        self.combo_fixed_item.setEnabled(False)
+        self.combo_fixed_item.setVisible(False)
         self.combo_fixed_item.setToolTip("Not yet implemented, coming soon")
 
         self.radio_vanilla.toggled.connect(self._on_radio_changed)

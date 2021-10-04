@@ -59,19 +59,6 @@
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>12</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
      <item>
       <widget class="QRadioButton" name="radio_shuffled">
        <property name="sizePolicy">
@@ -93,6 +80,12 @@
      </item>
      <item>
       <widget class="QRadioButton" name="radio_shuffled_no_progression">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="toolTip">
         <string>This location is shuffled, but cannot contain a item required for progression</string>
        </property>
@@ -101,6 +94,19 @@
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>12</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QRadioButton" name="radio_vanilla">
        <property name="sizePolicy">
