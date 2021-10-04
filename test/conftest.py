@@ -1,6 +1,7 @@
 import dataclasses
 import json
 from pathlib import Path
+import uuid
 from randovania.game_description.item.item_category import ItemCategory
 from unittest.mock import MagicMock
 
@@ -41,6 +42,16 @@ def preset_manager(tmp_path) -> PresetManager:
 def default_preset() -> Preset:
     return PresetManager(None).default_preset.get_preset()
 
+@pytest.fixture(scope="session")
+def customized_preset(default_preset) -> Preset:
+    return Preset(
+        name="{} Custom".format(default_preset.name),
+        description="A customized preset.",
+        uuid=uuid.uuid4(),
+        base_preset_uuid=default_preset.uuid,
+        game=default_preset.game,
+        configuration=default_preset.configuration
+    )
 
 @pytest.fixture(scope="session")
 def default_echoes_preset() -> Preset:
