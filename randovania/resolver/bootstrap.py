@@ -19,6 +19,29 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.resolver.state import State, StateGameData
 
+_prime_items_to_not_add_in_minimal_logic = {
+    # Ice Beam
+    1,
+    
+    # Wave Beam
+    2,
+
+    # Plasma Beam
+    3,
+
+    # Morph Ball Bomb
+    6,
+
+    # Morph Ball
+    16,
+
+    # Phazon Suit
+    23,
+
+    # Artifacts
+    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+}
+
 _echoes_items_to_not_add_in_minimal_logic = {
     # Dark Visor
     10,
@@ -59,15 +82,7 @@ _corruption_items_to_not_add_in_minimal_logic = {
     20,
 
     # Energy Cells
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29,
-    30,
-    31,
+    23, 24, 25, 26, 27, 28, 29, 30, 31,
     
     # Hypermode
     35,
@@ -77,7 +92,14 @@ _corruption_items_to_not_add_in_minimal_logic = {
 }
 
 minimal_logic_custom_item_count = {
-    RandovaniaGame.METROID_PRIME: {},
+    RandovaniaGame.METROID_PRIME: {
+        # Missile
+        4: 100,
+        # Power Bomb
+        7: 8,
+        # Energy Tank
+        24: 14
+    },
     RandovaniaGame.METROID_PRIME_ECHOES: {
         # Energy Tank
         42: 14,
@@ -136,6 +158,15 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
     items_to_skip = set()
     events_to_skip = set()
     custom_item_count = minimal_logic_custom_item_count.get(resource_database.game_enum, {})
+
+    if resource_database.game_enum == RandovaniaGame.METROID_PRIME:
+        item_db = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME)
+
+        items_to_skip = copy.copy(_prime_items_to_not_add_in_minimal_logic)
+
+        # Ignoring these events:
+        # Credits (43), otherwise we're done automatically (TODO: get this from database)
+        events_to_skip = {43}
 
     if resource_database.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
         item_db = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
