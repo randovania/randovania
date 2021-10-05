@@ -13,8 +13,7 @@ def test_set_dark_theme_no_change(skip_qtbot):
 
 @pytest.mark.parametrize("active", [False, True])
 def test_set_dark_theme_change(skip_qtbot, active, mocker):
-    import qdarkstyle
-    mock_load_stylesheet: MagicMock = mocker.patch("qdarkstyle.load_stylesheet", return_value="")
+    mock_load_stylesheet: MagicMock = mocker.patch("qdarktheme.load_stylesheet", return_value="")
 
     app = MagicMock()
     app.palette.return_value = QtGui.QPalette()
@@ -22,8 +21,6 @@ def test_set_dark_theme_change(skip_qtbot, active, mocker):
     theme._current_dark_theme = not active
     theme.set_dark_theme(active, app=app)
 
-    mock_load_stylesheet.assert_called_once_with(qt_api='pyside2',
-                                                 palette=qdarkstyle.DarkPalette if active
-                                                 else qdarkstyle.LightPalette)
+    mock_load_stylesheet.assert_called_once_with(theme="dark" if active else "light")
     app.setStyleSheet.assert_called_once()
     app.setPalette.assert_called_once()
