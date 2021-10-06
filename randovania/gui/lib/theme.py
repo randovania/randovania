@@ -13,13 +13,13 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         app = QtWidgets.QApplication.instance()
     new_palette = QtGui.QPalette(app.palette())
 
-    import qdarkstyle
+    import qdarktheme
     if active:
-        palette = qdarkstyle.DarkPalette
+        palette = "dark"
     else:
-        palette = qdarkstyle.LightPalette
+        palette = "light"
 
-    style = qdarkstyle.load_stylesheet(qt_api='pyside2', palette=palette)
+    style = qdarktheme.load_stylesheet(theme=palette)
     if compact:
         style += """
     QGroupBox {
