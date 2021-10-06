@@ -92,7 +92,7 @@ setup(
             'nod>=1.5',
             'pid>=3.0.0',
             'pypresence',
-            'qdarkstyle',
+            'pyqtdarktheme',
         ],
         "server": [
             "cryptography",
