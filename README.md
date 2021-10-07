@@ -48,7 +48,7 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ### Dependencies
 
-* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe)
+* [Python 3.10 64-bit](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ### Setup
