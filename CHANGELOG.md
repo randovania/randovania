@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Customizing the item pool causes permalinks to not get as long as before.
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
 - Fixed: Certain invalid permalinks are now properly recognized as invalid.
+- Fixed: In connections editor, changing a requirement to "And/Or" no longer places ui elements in the wrong place.
 - Removed: Metroid Prime 2: Echoes FAQ entry about the weird hint categories, as the issue has been fixed.
 - Removed: Menu option to open STB's Echoes item tracker in a new window.
 
