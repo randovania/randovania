@@ -147,15 +147,18 @@ class ResourceRequirementEditor:
 
 
 class ArrayRequirementEditor:
-    def __init__(self, parent: QWidget, parent_layout: QVBoxLayout, resource_database: ResourceDatabase,
-                 requirement: RequirementArrayBase):
+    def __init__(self, parent: QWidget, parent_layout: QVBoxLayout, line_layout: QHBoxLayout,
+                 resource_database: ResourceDatabase, requirement: RequirementArrayBase):
         self._editors = []
         self.resource_database = resource_database
         self._array_type = type(requirement)
 
+        # the parent is added to a layout which is added to parent_layout, so we
+        index = parent_layout.indexOf(line_layout) + 1
+
         self.group_box = QGroupBox(parent)
         self.group_box.setStyleSheet("QGroupBox { margin-top: 2px; }")
-        parent_layout.addWidget(self.group_box)
+        parent_layout.insertWidget(index, self.group_box)
         self.item_layout = QVBoxLayout(self.group_box)
         self.item_layout.setContentsMargins(8, 2, 2, 6)
         self.item_layout.setAlignment(Qt.AlignTop)
@@ -165,10 +168,10 @@ class ArrayRequirementEditor:
         self.new_item_button.setText("New Row")
         self.new_item_button.clicked.connect(self.new_item)
 
-        self.comment_text_box = QLineEdit(self.group_box)
+        self.comment_text_box = QLineEdit(parent)
         self.comment_text_box.setText(requirement.comment or "")
         self.comment_text_box.setPlaceholderText("Comment")
-        self.item_layout.addWidget(self.comment_text_box)
+        line_layout.addWidget(self.comment_text_box)
 
         for item in requirement.items:
             self._create_item(item)
@@ -192,6 +195,7 @@ class ArrayRequirementEditor:
 
     def deleteLater(self):
         self.group_box.deleteLater()
+        self.comment_text_box.deleteLater()
         for editor in self._editors:
             editor.deleteLater()
         self.new_item_button.deleteLater()
@@ -284,7 +288,8 @@ class RequirementEditor:
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
 
         elif isinstance(requirement, RequirementArrayBase):
-            self._editor = ArrayRequirementEditor(self.parent, self.parent_layout, self.resource_database, requirement)
+            self._editor = ArrayRequirementEditor(self.parent, self.parent_layout, self.line_layout,
+                                                  self.resource_database, requirement)
 
         elif isinstance(requirement, RequirementTemplate):
             self._editor = TemplateRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
