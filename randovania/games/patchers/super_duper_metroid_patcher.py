@@ -67,9 +67,9 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
 
 def _json_to_pickup_placement_data(pickup: dict) -> SuperDuperMetroid.ROM_Patcher.PickupPlacementData:
     return SuperDuperMetroid.ROM_Patcher.PickupPlacementData(
-        quantityGiven=pickup["quantity"],
-        pickupIndex=pickup["pickup_index"],
-        itemName=pickup["item_name"],
+        quantity_given=pickup["quantity"],
+        pickup_index=pickup["pickup_index"],
+        item_name=pickup["item_name"],
     )
 
 
@@ -196,22 +196,22 @@ class SuperDuperMetroidPatcher(Patcher):
             _json_to_pickup_placement_data(pickup)
             for pickup in patch_data["item_list"]
         ]
-        startingItems = [
+        starting_items = [
             SuperDuperMetroid.ROM_Patcher.PickupPlacementData(
-                quantityGiven=quantity,
-                pickupIndex=-1,
-                itemName=name,
+                quantity_given=quantity,
+                pickup_index=-1,
+                item_name=name,
             )
             for name, quantity in patch_data["starting_items"]
         ]
 
         patches_to_apply = ["InstantG4", "MaxAmmoDisplay"]
-        SuperDuperMetroid.ROM_Patcher.patchROM(
+        SuperDuperMetroid.ROM_Patcher.patch_rom(
             os.fspath(temporary_output),
-            itemList=item_list,
-            startingItems=startingItems,
-            introOptionChoice="Skip Intro And Ceres",
-            staticPatches=patches_to_apply,
+            item_list=item_list,
+            starting_items=starting_items,
+            skip_intro=True,
+            static_patches=patches_to_apply,
         )
 
         shutil.copy2(temporary_output, output_file)
