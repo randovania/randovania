@@ -39,11 +39,19 @@ class FieldToCheck(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class Element:
-    label: Union[QLabel, ClickableLabel]
+    labels: List[Union[QLabel, ClickableLabel, ClickableLabel]]
     resources: List[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
     field_to_check: FieldToCheck
+
+    def __post_init__(self):
+        if len(self.labels) > 1 and len(self.labels) != len(self.resources):
+            raise ValueError("Label has {} progressive icons, but has {} resources ({}).".format(
+                len(self.labels),
+                len(self.resources),
+                str([r.long_name for r in self.resources])
+            ))
 
 
 class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
@@ -108,28 +116,51 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
     def _update_tracker_from_hook(self, inventory: Dict[ItemResourceInfo, InventoryItem]):
         for element in self._tracker_elements:
-            amount = 0
-            capacity = 0
-            max_capacity = 0
-            for resource in element.resources:
-                current = inventory.get(resource, InventoryItem(0, 0))
-                amount += current.amount
-                capacity += current.capacity
-                max_capacity += resource.max_capacity
+            if len(element.labels) > 1:
+                satisfied = False
+                for i, resource in reversed(list(enumerate(element.resources))):
+                    current = inventory.get(resource, InventoryItem(0, 0))
+                    fields = {"amount": current.amount, "capacity": current.capacity,
+                              "max_capacity": resource.max_capacity}
 
-            fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
+                    if satisfied:
+                        element.labels[i].setVisible(False)
 
-            if isinstance(element.label, ClickableLabel):
-                value_target = element.minimum_to_check
-                value = fields[element.field_to_check.value]
+                    elif fields[element.field_to_check.value] >= element.minimum_to_check:
+                        # This tier is satisfied
+                        satisfied = True
+                        element.labels[i].setVisible(True)
+                        element.labels[i].set_checked(True)
+                    else:
+                        element.labels[i].setVisible(False)
 
-                element.label.set_checked(max_capacity == 0 or value >= value_target)
+                if not satisfied:
+                    element.labels[0].setVisible(True)
+                    element.labels[0].set_checked(False)
+
             else:
-                element.label.setText(element.text_template.format(
-                    amount=amount,
-                    capacity=capacity,
-                    max_capacity=max_capacity,
-                ))
+                label = element.labels[0]
+
+                amount = 0
+                capacity = 0
+                max_capacity = 0
+                for resource in element.resources:
+                    current = inventory.get(resource, InventoryItem(0, 0))
+                    amount += current.amount
+                    capacity += current.capacity
+                    max_capacity += resource.max_capacity
+
+                if isinstance(label, ClickableLabel):
+                    fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
+                    value_target = element.minimum_to_check
+                    value = fields[element.field_to_check.value]
+                    label.set_checked(max_capacity == 0 or value >= value_target)
+                else:
+                    label.setText(element.text_template.format(
+                        amount=amount,
+                        capacity=capacity,
+                        max_capacity=max_capacity,
+                    ))
 
     def _on_action_select_tracker(self):
         with self.options as options:
@@ -161,7 +192,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
     def delete_tracker(self):
         for element in self._tracker_elements:
-            element.label.deleteLater()
+            for l in element.labels:
+                l.deleteLater()
 
         self._tracker_elements.clear()
 
@@ -183,21 +215,32 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             minimum_to_check = element.get("minimum_to_check", 1)
             field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
+            labels = []
             if "image_path" in element:
-                image_path = get_data_path().joinpath(element["image_path"])
-                if not image_path.exists():
-                    logging.error("Tracker asset not found: %s", image_path)
-                pixmap = QPixmap(str(image_path))
+                paths = element["image_path"]
+                if not isinstance(paths, list):
+                    paths = [paths]
 
-                label = ClickableLabel(self.inventory_group, paint_with_opacity(pixmap, 0.3),
-                                       paint_with_opacity(pixmap, 1.0))
-                label.set_checked(False)
-                label.set_ignore_mouse_events(True)
+                visible = True
+                for path in paths:
+                    image_path = get_data_path().joinpath(path)
+                    if not image_path.exists():
+                        logging.error("Tracker asset not found: %s", image_path)
+                    pixmap = QPixmap(str(image_path))
+
+                    label = ClickableLabel(self.inventory_group, paint_with_opacity(pixmap, 0.3),
+                                           paint_with_opacity(pixmap, 1.0))
+                    label.set_checked(False)
+                    label.set_ignore_mouse_events(True)
+                    label.setVisible(visible)
+                    visible = False
+                    labels.append(label)
 
             elif "label" in element:
                 label = QLabel(self.inventory_group)
                 label.setAlignment(Qt.AlignCenter)
                 text_template = element["label"]
+                labels.append(label)
 
             else:
                 raise ValueError(f"Invalid element: {element}")
@@ -206,8 +249,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element["resources"]
             ]
-            self._tracker_elements.append(Element(label, resources, text_template, minimum_to_check, field_to_check))
-            self.inventory_layout.addWidget(label, element["row"], element["column"])
+            self._tracker_elements.append(Element(labels, resources, text_template, minimum_to_check, field_to_check))
+            for l in labels:
+                self.inventory_layout.addWidget(l, element["row"], element["column"])
 
         self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
