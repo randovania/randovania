@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
 - Added: Support for Minimal Logic has been added for Metroid Prime and Metroid Prime 3.
+- Added: New auto tracker layouts for Metroid Prime 2, with two lines and three lines.
 - Changed: Force one specific certificate root when connecting to the server.
 - Changed: Custom elevator names across both games now used throughout the entire UI
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
