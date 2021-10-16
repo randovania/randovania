@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.2.1] - Unreleased
 
-- Nothing.
+- Fixed: The spin box for starting Energy Tanks no longer goes above 14.
 
 ## [3.2.0] - 2021-10-16
 
