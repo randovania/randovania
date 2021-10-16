@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>566</width>
-    <height>450</height>
+    <height>227</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -28,17 +28,57 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
+    <item>
+     <widget class="QLabel" name="item_pool_count_label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>If there are fewer than 119 items, the rest of the item locations will contain Energy Transfer Modules.</string>
+      </property>
+      <property name="text">
+       <string>Items in pool: #/119</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Minimum</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>3</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item>
      <widget class="QScrollArea" name="scroll_area">
       <property name="frameShape">
@@ -64,8 +104,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>566</width>
-         <height>450</height>
+         <width>556</width>
+         <height>183</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="item_pool_layout">
@@ -82,30 +122,6 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="item_pool_count_label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>If there are fewer than 119 items, the rest of the item locations will contain Energy Transfer Modules.</string>
-          </property>
-          <property name="text">
-           <string>Items in pool: #/119</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="multi_pickup_placement_check">
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the new version of the pickup placement logic, which is able to place multiple pickups at once to solve a requirement, like both Seeker Launcher and Dark Visor. Not tested yet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -116,100 +132,17 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="pickup_style_box">
+         <widget class="QGroupBox" name="random_starting_box">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="title">
-           <string>Pickup style</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="ScrollProtectedComboBox" name="pickup_model_combo">
-             <item>
-              <property name="text">
-               <string>Use correct item model, scan and name</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Use correct scan and name, hide the model</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Use correct name, hide the model and scan</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Hide the model, scan and name</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="pickup_data_source_label">
-             <property name="text">
-              <string>When hiding some part of the pickup, it's replaced with:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="ScrollProtectedComboBox" name="pickup_data_source_combo">
-             <item>
-              <property name="text">
-               <string>Energy Transfer Module/Nothing's data</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>A random item data</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>The data of the pickup in that place</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="random_starting_box">
-          <property name="title">
            <string>Random Starting Items</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="2" column="1">
-            <widget class="ScrollProtectedSpinBox" name="maximum_starting_spinbox">
-             <property name="maximum">
-              <number>30</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="maximum_starting_label">
-             <property name="text">
-              <string>Start with at most this many items:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="random_starting_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting items if necessary to make the seed possible.&lt;br/&gt;The first value controls how many items are always added.&lt;br/&gt;The second value controls how many items the seed can have before it fails to generate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="ScrollProtectedSpinBox" name="minimum_starting_spinbox">
              <property name="maximum">
@@ -224,6 +157,36 @@
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="random_starting_label">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting items if necessary to make the seed possible.&lt;br/&gt;The first value controls how many items are always added.&lt;br/&gt;The second value controls how many items the seed can have before it fails to generate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="ScrollProtectedSpinBox" name="maximum_starting_spinbox">
+             <property name="maximum">
+              <number>30</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="maximum_starting_label">
+             <property name="text">
+              <string>Start with at most this many items:</string>
              </property>
             </widget>
            </item>
@@ -242,11 +205,6 @@
   <customwidget>
    <class>ScrollProtectedSpinBox</class>
    <extends>QSpinBox</extends>
-   <header>randovania/gui/lib/scroll_protected.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ScrollProtectedComboBox</class>
-   <extends>QComboBox</extends>
    <header>randovania/gui/lib/scroll_protected.h</header>
   </customwidget>
  </customwidgets>

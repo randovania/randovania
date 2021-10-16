@@ -750,117 +750,126 @@
         "requirement_template": {
             "Shoot Super Missile": {
                 "type": "and",
-                "data": [
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 0,
-                            "amount": 1,
-                            "negate": false
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 0,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 4,
+                                "amount": 5,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 10,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 11,
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 4,
-                            "amount": 5,
-                            "negate": false
-                        }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 10,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 11,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    }
-                ]
+                    ]
+                }
             },
             "Have all Beams": {
                 "type": "and",
-                "data": [
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 0,
-                            "amount": 1,
-                            "negate": false
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 0,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 2,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 1,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 3,
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 2,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 1,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 3,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    }
-                ]
+                    ]
+                }
             },
             "Heat-Resisting Suit": {
                 "type": "or",
-                "data": [
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 21,
-                            "amount": 1,
-                            "negate": false
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 21,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 22,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 23,
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 22,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    },
-                    {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 23,
-                            "amount": 1,
-                            "negate": false
-                        }
-                    }
-                ]
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -919,19 +928,118 @@
     "initial_states": {
         "Item Loss Disabled": []
     },
-    "victory_condition": {
-        "type": "or",
-        "data": [
+    "minimal_logic": {
+        "items_to_exclude": [
             {
-                "type": "resource",
-                "data": {
-                    "type": 1,
-                    "index": 43,
-                    "amount": 1,
-                    "negate": false
-                }
+                "index": 1,
+                "when_shuffled": null
+            },
+            {
+                "index": 2,
+                "when_shuffled": null
+            },
+            {
+                "index": 3,
+                "when_shuffled": null
+            },
+            {
+                "index": 6,
+                "when_shuffled": null
+            },
+            {
+                "index": 16,
+                "when_shuffled": null
+            },
+            {
+                "index": 23,
+                "when_shuffled": null
+            },
+            {
+                "index": 29,
+                "when_shuffled": null
+            },
+            {
+                "index": 30,
+                "when_shuffled": null
+            },
+            {
+                "index": 31,
+                "when_shuffled": null
+            },
+            {
+                "index": 32,
+                "when_shuffled": null
+            },
+            {
+                "index": 33,
+                "when_shuffled": null
+            },
+            {
+                "index": 34,
+                "when_shuffled": null
+            },
+            {
+                "index": 35,
+                "when_shuffled": null
+            },
+            {
+                "index": 36,
+                "when_shuffled": null
+            },
+            {
+                "index": 37,
+                "when_shuffled": null
+            },
+            {
+                "index": 38,
+                "when_shuffled": null
+            },
+            {
+                "index": 39,
+                "when_shuffled": null
+            },
+            {
+                "index": 40,
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "index": 4,
+                "value": 100
+            },
+            {
+                "index": 7,
+                "value": 8
+            },
+            {
+                "index": 24,
+                "value": 14
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "index": 43,
+                "reason": "victory condition"
             }
         ]
+    },
+    "victory_condition": {
+        "type": "or",
+        "data": {
+            "comment": null,
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": 1,
+                        "index": 43,
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
+        }
     },
     "dock_weakness_database": {
         "door": [
@@ -941,7 +1049,10 @@
                 "lock_type": 0,
                 "requirement": {
                     "type": "and",
-                    "data": []
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
                 }
             },
             {
@@ -1006,7 +1117,10 @@
                 "lock_type": 0,
                 "requirement": {
                     "type": "or",
-                    "data": []
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
                 }
             }
         ],

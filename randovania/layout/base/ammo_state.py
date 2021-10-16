@@ -3,29 +3,57 @@ from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.game_description import default_database
+from randovania.game_description.item.ammo import Ammo
 
 
 @dataclasses.dataclass(frozen=True)
 class AmmoState(BitPackValue):
-    variance: int = 0
+    ammo_count: Tuple[int, ...] = (0,)
     pickup_count: int = 0
     requires_major_item: bool = True
 
-    @classmethod
-    def maximum_pickup_count(cls) -> int:
-        return 99
-
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield self.pickup_count, self.maximum_pickup_count() + 1
-        yield from bitpacking.encode_bool(self.requires_major_item)
+        ammo: Ammo = metadata["ammo"]
+        db = default_database.resource_database_for(ammo.game)
+
+        for count, ammo_index in zip(self.ammo_count, ammo.items):
+            ammo_item = db.get_item(ammo_index)
+            yield from bitpacking.encode_int_with_limits(
+                count,
+                (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
+            )
+
+        yield from bitpacking.encode_big_int(self.pickup_count)
+        if ammo.unlocked_by is not None:
+            yield from bitpacking.encode_bool(self.requires_major_item)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "AmmoState":
-        pickup_count = decoder.decode_single(cls.maximum_pickup_count() + 1)
-        requires_major_item = bitpacking.decode_bool(decoder)
+        ammo: Ammo = metadata["ammo"]
+        db = default_database.resource_database_for(ammo.game)
+
+        # Ammo Count
+        ammo_count = []
+        for ammo_index in ammo.items:
+            ammo_item = db.get_item(ammo_index)
+            ammo_count.append(
+                bitpacking.decode_int_with_limits(
+                    decoder,
+                    (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
+                )
+            )
+
+        # Pickup Count
+        pickup_count = bitpacking.decode_big_int(decoder)
+
+        # Require Major Item
+        requires_major_item = True
+        if ammo.unlocked_by is not None:
+            requires_major_item = bitpacking.decode_bool(decoder)
 
         return cls(
-            variance=0,
+            ammo_count=tuple(ammo_count),
             pickup_count=pickup_count,
             requires_major_item=requires_major_item,
         )
@@ -38,6 +66,8 @@ class AmmoState(BitPackValue):
             value = getattr(self, field.name)
             result[field.name] = value
 
+        result["ammo_count"] = list(result["ammo_count"])
+
         return result
 
     @classmethod
@@ -47,5 +77,8 @@ class AmmoState(BitPackValue):
         for field in dataclasses.fields(cls):
             if field.name in value:
                 kwargs[field.name] = value[field.name]
+
+        if "ammo_count" in kwargs:
+            kwargs["ammo_count"] = tuple(kwargs["ammo_count"])
 
         return cls(**kwargs)

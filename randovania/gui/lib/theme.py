@@ -1,5 +1,10 @@
+import importlib
+from pathlib import Path
+
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import Qt
+
+import randovania
 
 _current_dark_theme = None
 
@@ -18,6 +23,12 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         palette = "dark"
     else:
         palette = "light"
+
+    if randovania.is_frozen():
+        # HACK: when frozen with pyinstaller, __spec__.origin is None which causes importlib.resources to not find where
+        # the stylesheet.qss to be found
+        x = Path(__file__).parents[3].joinpath("qdarktheme/dist", palette, "__init__.py")
+        importlib.import_module(f"qdarktheme.dist.{palette}").__spec__.origin = x
 
     style = qdarktheme.load_stylesheet(theme=palette)
     if compact:
@@ -38,6 +49,8 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         border: 1px solid #32414B;
     }
         """
+    
+    style += "QScrollArea { border: default; }"
 
     if active:
         new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)

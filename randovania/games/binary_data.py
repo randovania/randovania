@@ -12,7 +12,7 @@ from randovania.games.game import RandovaniaGame
 X = TypeVar('X')
 current_format_version = 8
 
-_IMPOSSIBLE_SET = {"type": "or", "data": []}
+_IMPOSSIBLE_SET = {"type": "or", "data": {"comment": None, "items": []}}
 
 
 def convert_to_raw_python(value) -> Any:
@@ -70,6 +70,7 @@ def decode(binary_io: BinaryIO) -> Dict:
         "resource_database",
         "starting_location",
         "initial_states",
+        "minimal_logic",
         "victory_condition",
         "dock_weakness_database",
         "worlds",
@@ -126,6 +127,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
     data.pop("victory_condition")
     data.pop("starting_location")
     data.pop("initial_states")
+    data.pop("minimal_logic")
 
     if data:
         raise ValueError(f"Unexpected fields remaining in data: {list(data.keys())}")
@@ -183,8 +185,13 @@ ConstructRequirement = Struct(
     type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
     data=Switch(lambda this: this.type, requirement_type_map)
 )
-requirement_type_map["and"] = PrefixedArray(VarInt, ConstructRequirement)
-requirement_type_map["or"] = PrefixedArray(VarInt, ConstructRequirement)
+ConstructRequirementArray = Struct(
+    comment=OptionalValue(CString("utf8")),
+    items=PrefixedArray(VarInt, ConstructRequirement),
+)
+
+requirement_type_map["and"] = ConstructRequirementArray
+requirement_type_map["or"] = ConstructRequirementArray
 
 ConstructDockWeakness = Struct(
     index=VarInt,
@@ -290,6 +297,21 @@ ConstructWorld = Struct(
 
 ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
 
+ConstructMinimalLogicDatabase = Struct(
+    items_to_exclude=PrefixedArray(VarInt, Struct(
+        index=VarInt,
+        when_shuffled=OptionalValue(CString("utf8")),
+    )),
+    custom_item_amount=PrefixedArray(VarInt, Struct(
+        index=VarInt,
+        value=VarInt,
+    )),
+    events_to_exclude=PrefixedArray(VarInt, Struct(
+        index=VarInt,
+        reason=OptionalValue(CString("utf8")),
+    )),
+)
+
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
@@ -300,6 +322,7 @@ ConstructGame = Struct(
         portal=PrefixedArray(VarInt, ConstructDockWeakness),
         morph_ball=PrefixedArray(VarInt, ConstructDockWeakness),
     ),
+    minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
     victory_condition=ConstructRequirement,
     starting_location=Struct(
         world_asset_id=VarInt,

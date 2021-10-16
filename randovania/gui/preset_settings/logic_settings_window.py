@@ -8,16 +8,8 @@ from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWi
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-
-
-def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
-    if checked:
-        with options:
-            setattr(options, field_name, new_value)
-
 
 def dark_world_flags(world: World):
     yield False

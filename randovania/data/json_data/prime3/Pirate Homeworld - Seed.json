@@ -27,7 +27,10 @@
                     "connections": {
                         "Samus Ship": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -48,81 +51,90 @@
                     "connections": {
                         "Door to Core Access": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 16,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 12,
+                                                        "index": 16,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 0,
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 12,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 33,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 4,
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 0,
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -203,16 +215,19 @@
                     "connections": {
                         "Event - Omega Ridley": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "template",
-                                    "data": "Enter Hypermode"
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
-                                }
-                            ]
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Enter Hypermode"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Phazite (X-Ray and Nova)"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -243,21 +258,24 @@
                     "connections": {
                         "Teleporter to Pirate Homeworld": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "template",
-                                    "data": "Use Grapple Voltage (Lasso and Voltage)"
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 39,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Grapple Voltage (Lasso and Voltage)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 39,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -270,7 +288,10 @@
                     "connections": {
                         "Pickup (Hyper Grapple)": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

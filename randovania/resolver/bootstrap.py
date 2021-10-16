@@ -19,51 +19,6 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.resolver.state import State, StateGameData
 
-_echoes_items_to_not_add_in_minimal_logic = {
-    # Dark Visor
-    10,
-
-    # Dark Suit, Light Suit
-    13,
-    14,
-
-    # Grapple, Screw Attack
-    23,
-    27,
-
-    # Dark Agon Temple Keys
-    32, 33, 34,
-
-    # Dark Torvus Temple Keys
-    35, 36, 37,
-
-    # Sky Temple Keys
-    29, 30, 31, 101, 102, 103, 104, 105, 106
-}
-
-minimal_logic_custom_item_count = {
-    RandovaniaGame.METROID_PRIME: {},
-    RandovaniaGame.METROID_PRIME_ECHOES: {
-        # Energy Tank
-        42: 14,
-        # Power Bomb
-        43: 10,
-        # Missile
-        44: 100,
-        # Dark Ammo
-        45: 100,
-        # Light Ammo
-        46: 100
-    },
-}
-
-_events_for_vanilla_item_loss_from_ship = {
-    2,
-    4,
-    71,
-    78,
-}
-
 
 def trick_resources_for_configuration(configuration: TrickLevelConfiguration,
                                       resource_database: ResourceDatabase,
@@ -87,26 +42,23 @@ def trick_resources_for_configuration(configuration: TrickLevelConfiguration,
 
 
 def _add_minimal_logic_initial_resources(resources: CurrentResources,
-                                         resource_database: ResourceDatabase,
+                                         game: GameDescription,
                                          major_items: MajorItemsConfiguration,
                                          ) -> None:
+    resource_database = game.resource_database
+
+    if game.minimal_logic is None:
+        raise ValueError(f"Minimal logic enabled, but {game.game} doesn't have support for it.")
+
+    item_db = default_database.item_database_for_game(game.game)
+
     items_to_skip = set()
-    events_to_skip = set()
-    custom_item_count = minimal_logic_custom_item_count.get(resource_database.game_enum, {})
+    for it in game.minimal_logic.items_to_exclude:
+        if it.reason is None or major_items.items_state[item_db.major_items[it.reason]].num_shuffled_pickups != 0:
+            items_to_skip.add(it.index)
 
-    if resource_database.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
-        item_db = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-
-        items_to_skip = copy.copy(_echoes_items_to_not_add_in_minimal_logic)
-        if major_items.items_state[item_db.major_items["Progressive Grapple"]].num_shuffled_pickups == 0:
-            items_to_skip.remove(23)
-        if major_items.items_state[item_db.major_items["Progressive Suit"]].num_shuffled_pickups == 0:
-            items_to_skip.remove(13)
-
-        # Ignoring these events:
-        # Dark Samus 3 and 4 (93), otherwise we're done automatically (TODO: get this from database)
-        # Chykka (28), otherwise we can't collect Dark Visor
-        events_to_skip = {28, 93}
+    custom_item_count = game.minimal_logic.custom_item_amount
+    events_to_skip = {it.index for it in game.minimal_logic.events_to_exclude}
 
     for event in resource_database.event:
         if event.index not in events_to_skip:
@@ -289,7 +241,7 @@ def logic_bootstrap(configuration: AnyGameConfiguration,
 
     if configuration.trick_level.minimal_logic:
         _add_minimal_logic_initial_resources(starting_state.resources,
-                                             game.resource_database,
+                                             game,
                                              configuration.major_items_configuration)
 
     static_resources = trick_resources_for_configuration(configuration.trick_level,

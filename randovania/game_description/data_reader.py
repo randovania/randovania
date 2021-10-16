@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
-from typing import List, Callable, TypeVar, Tuple, Dict
+from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
 
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction
@@ -87,21 +87,27 @@ def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
         data["amount"], data["negate"])
 
 
-def read_requirement_and(data: Dict,
-                         resource_database: ResourceDatabase,
-                         ) -> RequirementAnd:
-    return RequirementAnd([
-        read_requirement(item, resource_database)
-        for item in data["data"]
-    ])
+def read_requirement_array(data: Dict,
+                           resource_database: ResourceDatabase,
+                           cls: Type[X],
+                           ) -> X:
+    # Old version
+    if isinstance(data["data"], list):
+        return cls(
+            [
+                read_requirement(item, resource_database)
+                for item in data["data"]
+            ],
+            None
+        )
 
-
-def read_requirement_or(data: Dict,
-                        resource_database: ResourceDatabase) -> RequirementOr:
-    return RequirementOr([
-        read_requirement(item, resource_database)
-        for item in data["data"]
-    ])
+    return cls(
+        [
+            read_requirement(item, resource_database)
+            for item in data["data"]["items"]
+        ],
+        data["data"]["comment"],
+    )
 
 
 def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -> RequirementTemplate:
@@ -114,10 +120,10 @@ def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Require
         return read_resource_requirement(data, resource_database)
 
     elif req_type == "and":
-        return read_requirement_and(data, resource_database)
+        return read_requirement_array(data, resource_database, RequirementAnd)
 
     elif req_type == "or":
-        return read_requirement_or(data, resource_database)
+        return read_requirement_array(data, resource_database, RequirementOr)
 
     elif req_type == "template":
         return read_requirement_template(data, resource_database)
@@ -353,6 +359,26 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
     }
 
 
+def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
+    if data is None:
+        return None
+
+    return MinimalLogicData(
+        items_to_exclude=[
+            IndexWithReason(it["index"], it.get("when_shuffled"))
+            for it in data["items_to_exclude"]
+        ],
+        custom_item_amount={
+            it["index"]: it["value"]
+            for it in data["custom_item_amount"]
+        },
+        events_to_exclude=[
+            IndexWithReason(it["index"], it.get("reason"))
+            for it in data["events_to_exclude"]
+        ],
+    )
+
+
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
     game = RandovaniaGame(data["game"])
 
@@ -365,6 +391,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = AreaLocation.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
+    minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 
     return world_reader, GameDescription(
         game=game,
@@ -374,6 +401,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
         victory_condition=victory_condition,
         starting_location=starting_location,
         initial_states=initial_states,
+        minimal_logic=minimal_logic,
     )
 
 
