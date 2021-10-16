@@ -418,6 +418,8 @@ Asset id: 3305828730
   * Ice Door to Ventilation Shaft/Door to Elite Control
   > Door to Elite Control Access
       After Elite Control Barriers
+  > Event - Elite Control Barriers Lowered
+      Scan Visor and Enabled Backwards Lower Mines
 
 > Event - Elite Control Barriers Lowered; Heals? False
   * Event Elite Control Barriers
@@ -490,7 +492,9 @@ Asset id: 2905505465
                   Spider Ball and Standable Terrain (Expert) and Bomb Jump (Expert)
                   L-Jump (Expert) and Standable Terrain (Hypermode) and Complex Bomb Jump (Hypermode)
   > Door to Processing Center Access
-      Trivial
+      Any of the following:
+          Phazon Suit
+          Movement (Beginner) and Phazon Damage ≥ 45
   > Pickup (Missile)
       Power Bomb and Morph Ball
 
@@ -499,7 +503,10 @@ Asset id: 2905505465
   > Door to Maintenance Tunnel
       Any of the following:
           All of the following:
-              Space Jump Boots and Phazon Damage ≥ 45
+              Space Jump Boots
+              Any of the following:
+                  Phazon Suit
+                  Movement (Beginner) and Phazon Damage ≥ 45
               Any of the following:
                   Standable Terrain (Beginner)
                   Morph Ball Bomb and Morph Ball and Spider Ball
@@ -561,12 +568,21 @@ Asset id: 3983402811
 > Door to Phazon Processing Center; Heals? False
   * Plasma Door to Phazon Processing Center/Door to Processing Center Access
   > Door to Elite Quarters
-      After Processing Center Access Barrier or Enabled Backwards Lower Mines
+      All of the following:
+          After Processing Center Access Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 99
 
 > Door to Elite Quarters; Heals? False; Spawn Point
   * Plasma Door to Elite Quarters/Door to Processing Center Access
   > Door to Phazon Processing Center
-      After Processing Center Access Barrier
+      All of the following:
+          After Processing Center Access Barrier
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 199
+              Movement (Intermediate) and Phazon Damage ≥ 99
   > Event - Processing Center Access Barrier Opened
       Scan Visor
   > Pickup (Energy Tank)
@@ -627,22 +643,15 @@ Asset id: 961790803
   * Plasma Door to Elite Quarters Access/Door to Elite Quarters
   > Door to Processing Center Access
       Scan Visor and After Omega Pirate
-  > Event - Omega Pirate
-      All of the following:
-          X-Ray Visor
-          Any of the following:
-              Charge Beam and Have all Beams
-              All of the following:
-                  Charge Beam and Combat (Beginner)
-                  Any of the following:
-                      Plasma Beam
-                      Missile ≥ 50 and Super Missile
-              Power Bomb ≥ 3 and Morph Ball and Combat (Advanced)
+  > Fight Trigger
+      Trivial
 
 > Door to Processing Center Access; Heals? False
   * Plasma Door to Processing Center Access/Door to Elite Quarters
-  > Event - Omega Pirate
-      X-Ray Visor and Have all Beams
+  > Door to Elite Quarters Access
+      After Omega Pirate
+  > Fight Trigger
+      Trivial
 
 > Event - Omega Pirate; Heals? False
   * Event Omega Pirate
@@ -654,11 +663,31 @@ Asset id: 961790803
   > Door to Elite Quarters Access
       Trivial
 
+> Fight Trigger; Heals? False
+  > Event - Omega Pirate
+      All of the following:
+          X-Ray Visor
+          Any of the following:
+              Combat (Hypermode)
+              Charge Beam and Normal Damage ≥ 300 and Have all Beams
+              All of the following:
+                  Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+                  Any of the following:
+                      # 1-Cycle Strats
+                      Plasma Beam
+                      Missile ≥ 30 and Super Missile
+              Power Bomb ≥ 3 and Morph Ball and Combat (Advanced)
+              Combat (Expert) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 800
+
 ----------------
 Central Dynamo
 Asset id: 4272124642
 > Door to Dynamo Access; Heals? False; Spawn Point
   * Ice Door to Dynamo Access/Door to Central Dynamo
+  > Door to Quarantine Access A
+      Power Bomb and Morph Ball and Knowledge (Beginner)
   > Door to Save Station Mines B
       After Invisible Drone
   > Event - Security Drone
@@ -702,6 +731,8 @@ Asset id: 1899248703
   * Plasma Door to Elite Quarters/Door to Elite Quarters Access
   > Door to Metroid Quarantine B
       After Elite Quarters Access Barrier
+  > Event - Elite Quarters Access Barrier Opened
+      Enabled Backwards Lower Mines
 
 > Event - Elite Quarters Access Barrier Opened; Heals? False
   * Event Elite Quarters Access Barrier
@@ -773,6 +804,8 @@ Asset id: 3141205070
           Scan Visor and Combat/Scan Dash (Beginner) and Standable Terrain (Beginner)
   > Pickup (Missile)
       Shoot Super Missile
+  > Event - Metroid Quarantine B Barrier Lowered
+      Scan Visor and Enabled Backwards Lower Mines
   > Front of Barrier
       After Metroid Quarantine B Barrier
 
@@ -791,6 +824,7 @@ Asset id: 3141205070
       Any of the following:
           Space Jump Boots
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Beginner) and Phazon Damage ≥ 50
   > Door to Save Station Mines C
       After Metroid Quarantine B Barrier
   > Event - Metroid Quarantine B Barrier Lowered
@@ -815,6 +849,13 @@ Asset id: 4211416922
 
 > Door to Elevator Access B; Heals? False
   * Ice Door to Elevator Access B/Door to Metroid Quarantine A
+  > Door to Quarantine Access A
+      All of the following:
+          After Metroid Quarantine A Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 200
+              Slope Jump (Intermediate) and Phazon Damage ≥ 150
   > Front of Spider Track
       Any of the following:
           Space Jump Boots or Combat/Scan Dash (Advanced)
@@ -873,6 +914,8 @@ Asset id: 340985721
       Any of the following:
           Space Jump Boots
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          X-Ray Visor and Combat/Scan Dash (Beginner) and L-Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Advanced) and Phazon Damage ≥ 300
 
 > Door to Fungal Hall B; Heals? False; Spawn Point
   * Plasma Door to Fungal Hall B/Door to Quarantine Access B
@@ -880,6 +923,7 @@ Asset id: 340985721
       Any of the following:
           Space Jump Boots
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Beginner) and Phazon Damage ≥ 100
 
 ----------------
 Save Station Mines C
@@ -975,7 +1019,15 @@ Asset id: 3153742515
 > Door to Fungal Hall B; Heals? False
   * Plasma Door to Fungal Hall B/Door to Phazon Mining Tunnel
   > Door to Fungal Hall A
-      Morph Ball Bomb and Power Bomb and Morph Ball
+      All of the following:
+          Power Bomb and Morph Ball
+          Any of the following:
+              Boost Ball
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 30
   > Pickup (Artifact of Newborn)
       All of the following:
           Morph Ball Bomb and Morph Ball
@@ -995,8 +1047,12 @@ Asset id: 3153742515
       All of the following:
           Power Bomb and Morph Ball
           Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Movement (Beginner)
+              Boost Ball
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 30
 
 > Pickup (Artifact of Newborn); Heals? False
   * Pickup 88; Major Location? True

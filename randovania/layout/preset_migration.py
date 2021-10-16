@@ -1,6 +1,7 @@
 import copy
 import io
 import json
+import math
 import uuid
 from pathlib import Path
 from typing import Optional, Dict
@@ -12,7 +13,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 13
+CURRENT_PRESET_VERSION = 14
 
 
 class InvalidPreset(Exception):
@@ -149,7 +150,7 @@ def _migrate_v5(preset: dict) -> dict:
         "num_shuffled_pickups": 0,
         "num_included_in_starting_items": 0,
         "included_ammo": [],
-        "allowed_as_random_starting_item": True
+        "allowed_as_random_starting_item": True,
     }
     included_item = {
         **excluded_item,
@@ -346,6 +347,68 @@ def _migrate_v12(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v13(preset: dict) -> dict:
+    for config in preset["configuration"]["major_items_configuration"]["items_state"].values():
+        config.pop("allowed_as_random_starting_item", None)
+
+    maximum_ammo = preset["configuration"]["ammo_configuration"].pop("maximum_ammo")
+    ammo_ids = {
+        "prime1": {
+            "Missile Expansion": ["4"],
+            "Power Bomb Expansion": ["7"],
+        },
+        "prime2": {
+            "Missile Expansion": ["44"],
+            "Power Bomb Expansion": ["43"],
+            "Dark Ammo Expansion": ["45"],
+            "Light Ammo Expansion": ["46"],
+            "Beam Ammo Expansion": ["45", "46"],
+        },
+        "prime3": {
+            "Missile Expansion": ["4"],
+            "Ship Missile Expansion": ["45"],
+        },
+        "super_metroid": {
+            "Missile Expansion": ["5"],
+            "Super Missile Expansion": ["6"],
+            "Power Bomb Expansion": ["7"],
+        },
+    }[preset["game"]]
+    main_items = {
+        "prime1": {
+            "Missile Launcher": ["4"],
+            "Power Bomb": ["7"],
+        },
+        "prime2": {
+            "Dark Beam": ["45"],
+            "Light Beam": ["46"],
+            "Annihilator Beam": ["45", "46"],
+            "Missile Launcher": ["44"],
+            "Seeker Launcher": ["44"],
+            "Power Bomb": ["43"],
+        },
+        "prime3": {
+            "Missile Launcher": ["4"],
+            "Ship Missile": ["45"],
+        },
+        "super_metroid": {},
+    }
+
+    for item, ids in main_items[preset["game"]].items():
+        item_state = preset["configuration"]["major_items_configuration"]["items_state"][item]
+        for ammo_id, ammo in zip(ids, item_state["included_ammo"]):
+            maximum_ammo[ammo_id] -= ammo
+
+    for name, config in preset["configuration"]["ammo_configuration"]["items_state"].items():
+        config["ammo_count"] = [
+            math.ceil(maximum_ammo[ammo_id] / max(config["pickup_count"], 1))
+            for ammo_id in ammo_ids[name]
+        ]
+        config.pop("variance")
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -359,6 +422,7 @@ _MIGRATIONS = {
     10: _migrate_v10,
     11: _migrate_v11,
     12: _migrate_v12,
+    13: _migrate_v13,
 }
 
 

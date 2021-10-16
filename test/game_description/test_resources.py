@@ -2,7 +2,6 @@ import dataclasses
 
 import pytest
 
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
     ResourceLock

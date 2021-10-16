@@ -1,6 +1,8 @@
 import dataclasses
 import json
 from pathlib import Path
+import uuid
+from randovania.game_description.item.item_category import ItemCategory
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,7 +11,6 @@ import randovania.games.patchers.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -41,6 +42,16 @@ def preset_manager(tmp_path) -> PresetManager:
 def default_preset() -> Preset:
     return PresetManager(None).default_preset.get_preset()
 
+@pytest.fixture(scope="session")
+def customized_preset(default_preset) -> Preset:
+    return Preset(
+        name="{} Custom".format(default_preset.name),
+        description="A customized preset.",
+        uuid=uuid.uuid4(),
+        base_preset_uuid=default_preset.uuid,
+        game=default_preset.game,
+        configuration=default_preset.configuration
+    )
 
 @pytest.fixture(scope="session")
 def default_echoes_preset() -> Preset:
@@ -98,15 +109,24 @@ def game_enum(request) -> RandovaniaGame:
 
 
 @pytest.fixture()
-def blank_pickup() -> PickupEntry:
+def generic_item_category() -> ItemCategory:
+    return ItemCategory(
+        name="generic",
+        long_name="Generic Item Category",
+        hint_details=("an ", "unspecified item"),
+        is_major=False
+    )
+
+@pytest.fixture()
+def blank_pickup(echoes_item_database) -> PickupEntry:
     return PickupEntry(
         name="Blank Pickup",
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        item_category=ItemCategory.SUIT,
-        broad_category=ItemCategory.LIFE_SUPPORT,
+        item_category=echoes_item_database.item_categories["suit"],
+        broad_category=echoes_item_database.item_categories["life_support"],
         progression=(),
         resource_lock=None,
         unlocks_resource=False,

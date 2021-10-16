@@ -27,7 +27,10 @@
                     "connections": {
                         "Pickup (Grapple Lasso)": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Samus Ship": {
                             "type": "resource",
@@ -40,39 +43,42 @@
                         },
                         "Event - Gate Opened": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "template",
-                                    "data": "Enter Hypermode"
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Enter Hypermode"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 38,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 2,
+                                            "index": 13,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 38,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 2,
-                                        "index": 13,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -86,86 +92,119 @@
                     "connections": {
                         "Samus Ship": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 8,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 8,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Screw Attack (Space Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 33,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 5,
-                                                                "amount": 2,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 5,
-                                                                "amount": 3,
-                                                                "negate": false
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 5,
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 5,
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
-                                                        }
-                                                    ]
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -179,7 +218,10 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Samus Ship": {
                             "type": "resource",
@@ -199,7 +241,10 @@
                     "node_type": "player_ship",
                     "is_unlocked": {
                         "type": "and",
-                        "data": []
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
                     },
                     "connections": {
                         "Door to Hub Access": {
@@ -213,86 +258,119 @@
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 8,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 32,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Screw Attack (Space Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 8,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 0,
-                                                                "index": 33,
-                                                                "amount": 1,
-                                                                "negate": false
-                                                            }
-                                                        },
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 5,
-                                                                "amount": 2,
-                                                                "negate": false
-                                                            }
-                                                        }
-                                                    ]
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": [
-                                                        {
-                                                            "type": "resource",
-                                                            "data": {
-                                                                "type": 2,
-                                                                "index": 5,
-                                                                "amount": 3,
-                                                                "negate": false
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 2,
+                                                                                "index": 5,
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 5,
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
-                                                        }
-                                                    ]
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Pickup (Grapple Lasso)": {
                             "type": "resource",
@@ -305,7 +383,10 @@
                         },
                         "Event - Gate Opened": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -318,7 +399,10 @@
                     "connections": {
                         "Samus Ship": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -348,67 +432,79 @@
                     "connections": {
                         "Door to Generator A": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 92,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 92,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Event - Lasso Lock Removed": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 7,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -429,35 +525,41 @@
                     "connections": {
                         "Door to Cargo Dock A": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 92,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 15,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 92,
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    ]
-                                }
-                            ]
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -470,7 +572,10 @@
                     "connections": {
                         "Door to Generator A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -500,30 +605,36 @@
                     "connections": {
                         "Door to Conduit C": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 4,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 5,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -544,7 +655,10 @@
                     "connections": {
                         "Door to Cargo Hub": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -558,7 +672,10 @@
                     "connections": {
                         "Door to Cargo Hub": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -649,7 +766,10 @@
                     "connections": {
                         "Save Station": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -670,21 +790,24 @@
                     "connections": {
                         "Save Station": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bomb Jump/Spring Space Jump (Beginner)"
                                     }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -696,25 +819,31 @@
                     "connections": {
                         "Door to Cargo Dock C": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Door to Generator C": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 15,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bomb Jump/Spring Space Jump (Beginner)"
                                     }
-                                },
-                                {
-                                    "type": "template",
-                                    "data": "Bomb Jump/Spring Space Jump (Beginner)"
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 }
@@ -794,11 +923,14 @@
                     "coordinates": null,
                     "node_type": "pickup",
                     "pickup_index": 6,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Door to Cargo Hub": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -881,7 +1013,10 @@
                     "connections": {
                         "Door to Docking Hub Alpha": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -911,7 +1046,10 @@
                     "connections": {
                         "Door to Substation East": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -932,11 +1070,17 @@
                     "connections": {
                         "Door to Munitions Storage": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Door to Cargo Dock A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -957,7 +1101,10 @@
                     "connections": {
                         "Door to Substation East": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -987,7 +1134,10 @@
                     "connections": {
                         "Door to Cargo Hub": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1008,7 +1158,10 @@
                     "connections": {
                         "Door to Conduit B": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "resource",
@@ -1031,7 +1184,10 @@
                     "connections": {
                         "Door to Conduit B": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1061,11 +1217,17 @@
                     "connections": {
                         "Door to Cargo Dock B": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Door to Data Storage": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1086,7 +1248,10 @@
                     "connections": {
                         "Door to Substation West": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1107,7 +1272,10 @@
                     "connections": {
                         "Door to Substation West": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1162,30 +1330,36 @@
                     "connections": {
                         "Door to Generator A Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 34,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 34,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         },
                         "Samus Ship": {
                             "type": "resource",
@@ -1198,7 +1372,10 @@
                         },
                         "Event - Cargo Dock A Visited": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1219,7 +1396,10 @@
                     "connections": {
                         "Door to Conduit A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1233,7 +1413,10 @@
                     "connections": {
                         "Door to Conduit A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1254,7 +1437,10 @@
                     "connections": {
                         "Door to Conduit A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1267,7 +1453,10 @@
                     "connections": {
                         "Door to Conduit A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1297,7 +1486,10 @@
                     "connections": {
                         "Door to Maintenance Station": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1318,7 +1510,10 @@
                     "connections": {
                         "Door to Cargo Dock C": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1348,54 +1543,63 @@
                     "connections": {
                         "Event - Metroid Hatcher": {
                             "type": "or",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 7,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 14,
+                                                        "index": 2,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 9,
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 14,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 9,
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1405,11 +1609,14 @@
                     "coordinates": null,
                     "node_type": "pickup",
                     "pickup_index": 9,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Door to Generator B Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1457,7 +1664,10 @@
                     "connections": {
                         "Room Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1522,7 +1732,10 @@
                     "connections": {
                         "Room Center": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1561,7 +1774,10 @@
                         },
                         "Event - Cargo Dock B Unlocked": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1591,30 +1807,36 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 140,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 140,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         },
                         "Door to Tower Elevator": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1635,7 +1857,10 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1656,26 +1881,29 @@
                     "connections": {
                         "Door to Substation East": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 140,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 140,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         },
                         "Door to Substation West": {
                             "type": "resource",
@@ -1697,63 +1925,72 @@
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 10,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": [
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 7,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 3,
+                                                        "type": 0,
+                                                        "index": 10,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 3,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 0,
+                                                                    "index": 33,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    ]
-                                }
-                            ]
+                                    }
+                                ]
+                            }
                         },
                         "Event - Lasso Rubble Removed": {
                             "type": "resource",
@@ -1818,7 +2055,10 @@
                     "connections": {
                         "Door to Substation East": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1832,7 +2072,10 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1845,7 +2088,10 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1858,7 +2104,10 @@
                     "connections": {
                         "Door to Hub Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1888,26 +2137,29 @@
                     "connections": {
                         "Dock to Generator Shaft": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 10,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -1928,7 +2180,10 @@
                     "connections": {
                         "Door to Generator C Access": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1958,35 +2213,38 @@
                     "connections": {
                         "Door to Conduit C": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 2,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 10,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 2,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 },
@@ -2007,26 +2265,29 @@
                     "connections": {
                         "Door to Generator C Access": {
                             "type": "and",
-                            "data": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 32,
-                                        "amount": 1,
-                                        "negate": false
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
-                                },
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 10,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     }
                 }
@@ -2056,7 +2317,10 @@
                     "connections": {
                         "Map Station": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2068,7 +2332,10 @@
                     "connections": {
                         "Door to Conduit A": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -2123,7 +2390,10 @@
                     "connections": {
                         "Event - Meta Ridley": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2136,7 +2406,10 @@
                     "connections": {
                         "Dock to Generator C": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -2166,7 +2439,10 @@
                     "connections": {
                         "Door to Control Tower": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2187,7 +2463,10 @@
                     "connections": {
                         "Door to Cargo Hub": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -2217,7 +2496,10 @@
                     "connections": {
                         "Event - Activate Cannon": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2230,7 +2512,10 @@
                     "connections": {
                         "Door to Tower Elevator": {
                             "type": "and",
-                            "data": []
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

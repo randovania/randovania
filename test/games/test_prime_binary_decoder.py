@@ -33,9 +33,10 @@ def test_simple_round_trip():
             "Default": [
             ]
         },
+        "minimal_logic": None,
         "victory_condition": {
             "type": "and",
-            "data": []
+            "data": {"comment": None, "items": []},
         },
         "dock_weakness_database": {
             "door": [],
@@ -120,8 +121,8 @@ def test_full_data_encode_is_equal(game_enum):
 
 
 @pytest.mark.parametrize("req", [
-    {"type": "or", "data": []},
-    {"type": "and", "data": []},
+    {"type": "or", "data": {"comment": None, "items": []}},
+    {"type": "and", "data": {"comment": None, "items": []}},
     {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
     {"type": "template", "data": "Example Template"},
 ])
@@ -138,14 +139,17 @@ def test_encode_requirement_complex():
     # Setup
     req = {
         "type": "and",
-        "data": [
-            {"type": "or", "data": []},
-            {"type": "and", "data": []},
-            {"type": "or", "data": []},
-            {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
-            {"type": "or", "data": []},
-            {"type": "template", "data": "Example Template"},
-        ]
+        "data": {
+            "comment": None,
+            "items": [
+                {"type": "or", "data": {"comment": None, "items": []}},
+                {"type": "and", "data": {"comment": None, "items": []}},
+                {"type": "or", "data": {"comment": None, "items": []}},
+                {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
+                {"type": "or", "data": {"comment": None, "items": []}},
+                {"type": "template", "data": "Example Template"},
+            ]
+        }
     }
 
     # Run
@@ -171,7 +175,7 @@ def test_encode_resource_database():
         "requirement_template": {
             "Foo": {
                 "type": "or",
-                "data": []
+                "data": {"comment": None, "items": []}
             }
         },
         "damage_reductions": [],
@@ -182,4 +186,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x01\x00\x01\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00\x01\x00\x01\x00'

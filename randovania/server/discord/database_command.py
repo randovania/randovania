@@ -1,4 +1,5 @@
 import functools
+import logging
 import math
 from pathlib import Path
 from typing import List, Dict, Optional, NamedTuple
@@ -7,7 +8,7 @@ import discord
 import graphviz
 from discord import Embed
 from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
+from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
 from discord_slash.utils import manage_commands, manage_components
 
 from randovania.game_description import default_database, pretty_print
@@ -30,13 +31,22 @@ def render_area_with_graphviz(area: Area) -> Optional[Path]:
     for node in area.nodes:
         dot.node(node.name)
 
+    known_edges = set()
     for source, target in area.connections.items():
         for target_node, requirement in target.items():
-            dot.edge(source.name, target_node.name)
+            direction = None
+            if source in area.connections.get(target_node):
+                direction = "both"
+                known_edges.add((target_node.name, source.name))
+
+            if (source.name, target_node.name) not in known_edges:
+                dot.edge(source.name, target_node.name, dir=direction)
+                known_edges.add((source.name, target_node.name))
 
     try:
         return Path(dot.render(format="png", cleanup=True))
-    except graphviz.backend.ExecutableNotFound:
+    except graphviz.backend.ExecutableNotFound as e:
+        logging.info("Unable to render graph for %s: %s", area.name, str(e))
         return None
 
 
@@ -131,6 +141,7 @@ class DatabaseCommandCog(commands.Cog):
             placeholder="Choose your region",
         ))
         embed = Embed(title=f"{game.long_name} Database", description="Choose the world subset to visualize.")
+        logging.info("Responding requesting list of worlds for game %s.", game.long_name)
         return embed, [action_row],
 
     async def database_command(self, ctx: SlashContext, game: str):
@@ -178,6 +189,7 @@ class DatabaseCommandCog(commands.Cog):
 
         embed = Embed(title=f"{game.long_name} Database",
                       description=f"Choose the room in {world_name} to visualize.")
+        logging.info("Responding to area selection for section %s with %d options.", world_name, len(areas))
         await ctx.edit_origin(
             embed=embed,
             components=[
@@ -223,6 +235,7 @@ class DatabaseCommandCog(commands.Cog):
         if image_path is not None:
             files.append(discord.File(image_path))
 
+        logging.info("Responding to area for %s with %d attachments.", area.name, len(files))
         await ctx.send(
             content=f"Requested by {ctx.author.display_name}.",
             embed=embed,
@@ -262,6 +275,8 @@ class DatabaseCommandCog(commands.Cog):
 
                 if len(body) + len(new_entry) < 1024:
                     body += new_entry
+                else:
+                    logging.warning("Unable to add new entry: %d", len(new_entry))
 
             embed.add_field(
                 name=name,
@@ -269,6 +284,7 @@ class DatabaseCommandCog(commands.Cog):
                 inline=False,
             )
 
+        logging.info("Updating visible nodes of %s: %s", area.name, str(ctx.selected_options))
         await ctx.edit_origin(
             embed=embed,
         )

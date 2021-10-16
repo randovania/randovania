@@ -2,11 +2,60 @@ import json
 import os
 from unittest.mock import MagicMock, ANY
 
+import pytest
+
 import randovania
-from randovania.games.patchers.randomprime_patcher import RandomprimePatcher
+from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
+from randovania.games.patchers.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
+from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
+
+
+@pytest.mark.parametrize("other_player", [False, True])
+def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database, other_player: bool):
+    # Setup
+    rng = MagicMock()
+    rng.randint.return_value = 0
+    detail = pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(15),
+        scan_text="Your Missile Expansion. Provides 5 Missiles",
+        hud_text=["Missile Expansion acquired!"],
+        conditional_resources=[ConditionalResources(
+            None, None, (
+                (prime1_resource_database.get_item_by_name("Missile"), 6),
+            ),
+        )],
+        conversion=[],
+        model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
+        other_player=other_player,
+    )
+    if other_player:
+        shiny_stuff = {
+            'model': 'Missile',
+            'scanText': 'Your Missile Expansion. Provides 5 Missiles',
+            'hudmemoText': 'Missile Expansion acquired!',
+        }
+    else:
+        shiny_stuff = {
+            'model': 'Shiny Missile',
+            'scanText': 'Your Shiny Missile Expansion. Provides 5 Missiles',
+            'hudmemoText': 'Shiny Missile Expansion acquired!',
+        }
+
+    # Run
+    result = prime1_pickup_details_to_patcher(detail, False, rng)
+
+    # Assert
+    assert result == {
+        'type': 'Missile',
+        'currIncrease': 6, 'maxIncrease': 6,
+        'respawn': False,
+        **shiny_stuff,
+    }
 
 
 def test_create_patch_data(test_files_dir):
@@ -33,14 +82,14 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False},
                     {
                         'type': 'Unknown Item 1',
                         'model': 'Nothing',
                         'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                         'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                        'count': 37,
+                        'currIncrease': 37, 'maxIncrease': 37,
                         'respawn': False}]},
             'Chozo Ice Temple': {
                 'pickups': [
@@ -49,7 +98,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Energy Tank',
                         'scanText': "Echoes's Energy Tank",
                         'hudmemoText': 'Sent Energy Tank to Echoes!',
-                        'count': 38,
+                        'currIncrease': 38, 'maxIncrease': 38,
                         'respawn': False}]},
             'Ice Ruins West': {
                 'pickups': [
@@ -58,7 +107,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 39,
+                        'currIncrease': 39, 'maxIncrease': 39,
                         'respawn': False}]},
             'Ice Ruins East': {
                 'pickups': [
@@ -67,14 +116,14 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False},
                     {
                         'type': 'Unknown Item 1',
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 41,
+                        'currIncrease': 41, 'maxIncrease': 41,
                         'respawn': False}]},
             'Chapel of the Elders': {
                 'pickups': [
@@ -83,7 +132,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Ruined Courtyard': {
                 'pickups': [
@@ -92,7 +141,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Phendrana Canyon': {
                 'pickups': [
@@ -101,7 +150,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Energy Tank',
                         'scanText': "Echoes's Energy Tank",
                         'hudmemoText': 'Sent Energy Tank to Echoes!',
-                        'count': 44,
+                        'currIncrease': 44, 'maxIncrease': 44,
                         'respawn': False}]},
             'Quarantine Cave': {
                 'pickups': [
@@ -110,7 +159,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Energy Tank',
                         'scanText': 'Your Energy Tank',
                         'hudmemoText': 'Energy Tank acquired!',
-                        'count': 1,
+                        'currIncrease': 1, 'maxIncrease': 1,
                         'respawn': False}]},
             'Research Lab Hydra': {
                 'pickups': [
@@ -119,7 +168,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Quarantine Monitor': {
                 'pickups': [
@@ -128,7 +177,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 47,
+                        'currIncrease': 47, 'maxIncrease': 47,
                         'respawn': False}]},
             'Observatory': {
                 'pickups': [
@@ -137,7 +186,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Transport Access': {
                 'pickups': [
@@ -146,7 +195,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Control Tower': {
                 'pickups': [
@@ -155,7 +204,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 50,
+                        'currIncrease': 50, 'maxIncrease': 50,
                         'respawn': False}]},
             'Research Core': {
                 'pickups': [
@@ -164,7 +213,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Energy Tank',
                         'scanText': 'Your Energy Tank',
                         'hudmemoText': 'Energy Tank acquired!',
-                        'count': 1,
+                        'currIncrease': 1, 'maxIncrease': 1,
                         'respawn': False}]},
             'Frost Cave': {
                 'pickups': [
@@ -173,7 +222,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Energy Tank',
                         'scanText': 'Your Energy Tank',
                         'hudmemoText': 'Energy Tank acquired!',
-                        'count': 1,
+                        'currIncrease': 1, 'maxIncrease': 1,
                         'respawn': False}]},
             'Research Lab Aether': {
                 'pickups': [
@@ -182,7 +231,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 53,
+                        'currIncrease': 53, 'maxIncrease': 53,
                         'modalHudmemo': True,
                         'respawn': False},
                     {
@@ -190,7 +239,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Power Bomb Expansion',
                         'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                         'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                        'count': 54, 'modalHudmemo': True,
+                        'currIncrease': 54, 'maxIncrease': 54, 'modalHudmemo': True,
                         'respawn': False}]},
             'Gravity Chamber': {
                 'pickups': [
@@ -199,14 +248,14 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False},
                     {
                         'type': 'Unknown Item 1',
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 56,
+                        'currIncrease': 56, 'maxIncrease': 56,
                         'respawn': False}]},
             'Storage Cave': {
                 'pickups': [
@@ -215,7 +264,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                         'hudmemoText': 'Missile Expansion acquired!',
-                        'count': 5,
+                        'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Security Cave': {
                 'pickups': [
@@ -224,7 +273,7 @@ def test_create_patch_data(test_files_dir):
                         'model': 'Missile',
                         'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                         'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                        'count': 58,
+                        'currIncrease': 58, 'maxIncrease': 58,
                         'respawn': False}]}}}
     magmoor = {
         'transports': {
@@ -237,58 +286,60 @@ def test_create_patch_data(test_files_dir):
             'Lava Lake': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Morph Ball Bomb', 'scanText': "Echoes's Morph Ball Bomb",
-                     'hudmemoText': 'Sent Morph Ball Bomb to Echoes!', 'count': 91, 'respawn': False}]},
+                     'hudmemoText': 'Sent Morph Ball Bomb to Echoes!', 'currIncrease': 91, 'maxIncrease': 91,
+                     'respawn': False}]},
             'Triclops Pit': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Power Bomb Expansion',
                      'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                      'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                     'count': 92, 'respawn': False}]},
+                     'currIncrease': 92, 'maxIncrease': 92, 'respawn': False}]},
             'Storage Cavern': {
                 'pickups': [
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
                      'hudmemoText': 'Energy Tank acquired!',
-                     'count': 1, 'respawn': False}]},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Transport Tunnel A': {
                 'pickups': [{'type': 'Missile', 'model': 'Missile',
                              'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                              'hudmemoText': 'Missile Expansion acquired!',
-                             'count': 5, 'respawn': False}]},
+                             'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]},
             'Warrior Shrine': {
                 'pickups': [{'type': 'Unknown Item 1', 'model': 'Nothing',
                              'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                              'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                             'count': 95, 'respawn': False}]},
+                             'currIncrease': 95, 'maxIncrease': 95, 'respawn': False}]},
             'Shore Tunnel': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 96, 'respawn': False}]},
+                     'currIncrease': 96, 'maxIncrease': 96, 'respawn': False}]},
             'Fiery Shores': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
-                     'hudmemoText': 'Sent Missile Expansion to Echoes!', 'count': 97,
+                     'hudmemoText': 'Sent Missile Expansion to Echoes!', 'currIncrease': 97, 'maxIncrease': 97,
                      'respawn': False},
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
-                     'hudmemoText': 'Energy Tank acquired!', 'count': 1,
+                     'hudmemoText': 'Energy Tank acquired!', 'currIncrease': 1, 'maxIncrease': 1,
                      'respawn': False}
                 ]},
             'Plasma Processing': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
-                     'hudmemoText': 'Sent Missile Expansion to Echoes!', 'count': 99,
+                     'hudmemoText': 'Sent Missile Expansion to Echoes!', 'currIncrease': 99, 'maxIncrease': 99,
                      'respawn': False}
                 ]},
             'Magmoor Workstation': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
-                     'hudmemoText': 'Missile Expansion acquired!', 'count': 5, 'respawn': False}
+                     'hudmemoText': 'Missile Expansion acquired!', 'currIncrease': 5, 'maxIncrease': 5,
+                     'respawn': False}
                 ]
             }
         }}
@@ -302,107 +353,107 @@ def test_create_patch_data(test_files_dir):
                     {
                         'type': 'Missile', 'model': 'Missile',
                         'scanText': 'Your Missile Expansion. Provides 5 Missiles',
-                        'hudmemoText': 'Missile Expansion acquired!', 'count': 5,
+                        'hudmemoText': 'Missile Expansion acquired!', 'currIncrease': 5, 'maxIncrease': 5,
                         'respawn': False}]},
             'Security Access A': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                      'scanText': "Echoes's Energy Tank",
-                     'hudmemoText': 'Sent Energy Tank to Echoes!', 'count': 75,
+                     'hudmemoText': 'Sent Energy Tank to Echoes!', 'currIncrease': 75, 'maxIncrease': 75,
                      'respawn': False}]},
             'Storage Depot B': {
                 'pickups': [
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
-                     'hudmemoText': 'Energy Tank acquired!', 'count': 1,
+                     'hudmemoText': 'Energy Tank acquired!', 'currIncrease': 1, 'maxIncrease': 1,
                      'respawn': False}]},
             'Storage Depot A': {
                 'pickups': [
                     {'type': 'Spider Ball', 'model': 'Spider Ball',
                      'scanText': 'Your Spider Ball',
-                     'hudmemoText': 'Spider Ball acquired!', 'count': 1,
+                     'hudmemoText': 'Spider Ball acquired!', 'currIncrease': 1, 'maxIncrease': 1,
                      'respawn': False}]},
             'Elite Research': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Sonic Boom",
                      'hudmemoText': 'Sent Sonic Boom to Echoes!',
-                     'count': 78, 'respawn': False},
+                     'currIncrease': 78, 'maxIncrease': 78, 'respawn': False},
                     {'type': 'Nothing', 'model': 'Nothing',
                      'scanText': 'Your Nothing',
                      'hudmemoText': 'Nothing acquired!',
-                     'count': 0, 'respawn': False}
+                     'currIncrease': 0, 'maxIncrease': 0, 'respawn': False}
                 ]},
             'Elite Control Access': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 80, 'respawn': False}
+                     'currIncrease': 80, 'maxIncrease': 80, 'respawn': False}
                 ]},
             'Ventilation Shaft': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}
                 ]},
             'Phazon Processing Center': {
                 'pickups': [
                     {'type': 'Power Bomb', 'model': 'Power Bomb Expansion',
                      'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb',
                      'hudmemoText': 'Power Bomb Expansion acquired!',
-                     'count': 1, 'respawn': False}]},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Processing Center Access': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}]},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]},
             'Elite Quarters': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                     'count': 84, 'respawn': False}]},
+                     'currIncrease': 84, 'maxIncrease': 84, 'respawn': False}]},
             'Central Dynamo': {
                 'pickups': [
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
-                     'hudmemoText': 'Energy Tank acquired!', 'count': 1,
+                     'hudmemoText': 'Energy Tank acquired!', 'currIncrease': 1, 'maxIncrease': 1,
                      'respawn': False}]},
             'Metroid Quarantine B': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Darkburst",
                      'hudmemoText': 'Sent Darkburst to Echoes!',
-                     'count': 86, 'respawn': False}
+                     'currIncrease': 86, 'maxIncrease': 86, 'respawn': False}
                 ]},
             'Metroid Quarantine A': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 87, 'respawn': False}]},
+                     'currIncrease': 87, 'maxIncrease': 87, 'respawn': False}]},
             'Fungal Hall B': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                     'count': 88, 'respawn': False}]},
+                     'currIncrease': 88, 'maxIncrease': 88, 'respawn': False}]},
             'Phazon Mining Tunnel': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}
                 ]},
             'Fungal Hall Access': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                      'scanText': "Echoes's Energy Tank",
                      'hudmemoText': 'Sent Energy Tank to Echoes!',
-                     'count': 90, 'respawn': False}]}}}
+                     'currIncrease': 90, 'maxIncrease': 90, 'respawn': False}]}}}
     overworld = {
         'transports': {
             'Artifact Temple': 'Crater Entry Point',
@@ -414,74 +465,74 @@ def test_create_patch_data(test_files_dir):
         'rooms': {'Landing Site': {'pickups': [
             {'type': 'Varia Suit', 'model': 'Varia Suit',
              'scanText': 'Your Varia Suit',
-             'hudmemoText': 'Varia Suit acquired!', 'count': 1,
+             'hudmemoText': 'Varia Suit acquired!', 'currIncrease': 1, 'maxIncrease': 1,
              'respawn': False}]}, 'Alcove': {'pickups': [
             {'type': 'X-Ray Visor', 'model': 'X-Ray Visor',
              'scanText': 'Your X-Ray Visor',
-             'hudmemoText': 'X-Ray Visor acquired!', 'count': 1,
+             'hudmemoText': 'X-Ray Visor acquired!', 'currIncrease': 1, 'maxIncrease': 1,
              'respawn': False}]}, 'Frigate Crash Site': {'pickups': [
             {'type': 'Unknown Item 1', 'model': 'Nothing',
              'scanText': "Echoes's Emerald Translator",
              'hudmemoText': 'Sent Emerald Translator to Echoes!',
-             'count': 61, 'respawn': False}]}, 'Overgrown Cavern': {
+             'currIncrease': 61, 'maxIncrease': 61, 'respawn': False}]}, 'Overgrown Cavern': {
             'pickups': [{'type': 'Missile', 'model': 'Missile',
                          'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                          'hudmemoText': 'Missile Expansion acquired!',
-                         'count': 5, 'respawn': False}]}, 'Root Cave': {
+                         'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]}, 'Root Cave': {
             'pickups': [{'type': 'Plasma Beam', 'model': 'Plasma Beam',
                          'scanText': 'Your Plasma Beam',
                          'hudmemoText': 'Plasma Beam acquired!',
-                         'count': 1, 'respawn': False}]},
+                         'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Artifact Temple': {'pickups': [
                 {'type': 'Unknown Item 1', 'model': 'Nothing',
                  'scanText': "Echoes's Violet Translator",
                  'hudmemoText': 'Sent Violet Translator to Echoes!',
-                 'count': 64, 'respawn': False, 'modalHudmemo': True
+                 'currIncrease': 64, 'maxIncrease': 64, 'respawn': False, 'modalHudmemo': True
                  }]},
             'Transport Tunnel B': {'pickups': [
                 {'type': 'Artifact of Wild',
                  'model': 'Artifact of Wild',
                  'scanText': 'Your Artifact of Wild',
                  'hudmemoText': 'Artifact of Wild acquired!',
-                 'count': 1, 'respawn': False}]},
+                 'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Arbor Chamber': {'pickups': [
                 {'type': 'Unknown Item 1', 'model': 'Nothing',
                  'scanText': "Echoes's Screw Attack",
                  'hudmemoText': 'Sent Screw Attack to Echoes!',
-                 'count': 66, 'respawn': False}]},
+                 'currIncrease': 66, 'maxIncrease': 66, 'respawn': False}]},
             'Cargo Freight Lift to Deck Gamma': {'pickups': [
                 {'type': 'Phazon Suit', 'model': 'Phazon Suit',
                  'scanText': 'Your Phazon Suit',
                  'hudmemoText': 'Phazon Suit acquired!',
-                 'count': 1, 'respawn': False}]},
+                 'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Biohazard Containment': {'pickups': [
                 {'type': 'Unknown Item 1', 'model': 'Nothing',
                  'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                  'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                 'count': 68, 'respawn': False}]},
+                 'currIncrease': 68, 'maxIncrease': 68, 'respawn': False}]},
             'Hydro Access Tunnel': {'pickups': [
                 {'type': 'Missile', 'model': 'Missile',
                  'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                  'hudmemoText': 'Missile Expansion acquired!',
-                 'count': 5, 'respawn': False}]},
+                 'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]},
             'Great Tree Chamber': {'pickups': [
                 {'type': 'Energy Tank', 'model': 'Energy Tank',
                  'scanText': 'Your Energy Tank',
                  'hudmemoText': 'Energy Tank acquired!',
-                 'count': 1, 'respawn': False}]},
+                 'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Life Grove Tunnel': {'pickups': [
                 {'type': 'Unknown Item 1', 'model': 'Nothing',
                  'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                  'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                 'count': 71, 'respawn': False}]}, 'Life Grove': {
+                 'currIncrease': 71, 'maxIncrease': 71, 'respawn': False}]}, 'Life Grove': {
                 'pickups': [{'type': 'Boost Ball', 'model': 'Boost Ball',
                              'scanText': 'Your Boost Ball',
                              'hudmemoText': 'Boost Ball acquired!',
-                             'count': 1, 'respawn': False},
+                             'currIncrease': 1, 'maxIncrease': 1, 'respawn': False},
                             {'type': 'Missile', 'model': 'Missile',
                              'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                              'hudmemoText': 'Missile Expansion acquired!',
-                             'count': 5, 'respawn': False}]}}}
+                             'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]}}}
     chozo = {
         'transports': {
             'Chozo Ruins West\x00(Main Plaza)': 'Tallon Overworld South\x00(Great Tree Hall, Upper)',
@@ -494,202 +545,202 @@ def test_create_patch_data(test_files_dir):
                 'pickups': [
                     {'type': 'Power Bomb', 'model': 'Power Bomb Expansion',
                      'scanText': 'Your Power Bomb Expansion. Provides 1 Power Bomb',
-                     'hudmemoText': 'Power Bomb Expansion acquired!', 'count': 1,
+                     'hudmemoText': 'Power Bomb Expansion acquired!', 'currIncrease': 1, 'maxIncrease': 1,
                      'respawn': False},
                     {'type': 'Power Bomb', 'model': 'Power Bomb',
                      'scanText': 'Your Power Bomb',
-                     'hudmemoText': 'Power Bomb acquired!', 'count': 4,
+                     'hudmemoText': 'Power Bomb acquired!', 'currIncrease': 4, 'maxIncrease': 4,
                      'respawn': False},
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False},
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}
                 ]},
             'Ruined Fountain': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 5, 'respawn': False}]
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]
             },
             'Ruined Shrine': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 6, 'respawn': False, 'modalHudmemo': True},
+                     'currIncrease': 6, 'maxIncrease': 6, 'respawn': False, 'modalHudmemo': True},
                     {'type': 'Unknown Item 1', 'model': 'Power Bomb Expansion',
                      'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                      'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                     'count': 7, 'respawn': False, 'modalHudmemo': True},
+                     'currIncrease': 7, 'maxIncrease': 7, 'respawn': False, 'modalHudmemo': True},
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 8, 'respawn': False, 'modalHudmemo': True}]
+                     'currIncrease': 8, 'maxIncrease': 8, 'respawn': False, 'modalHudmemo': True}]
             },
             'Vault': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 9, 'respawn': False}
+                     'currIncrease': 9, 'maxIncrease': 9, 'respawn': False}
                 ]},
             'Training Chamber': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                      'scanText': "Echoes's Energy Tank",
                      'hudmemoText': 'Sent Energy Tank to Echoes!',
-                     'count': 10, 'respawn': False}]},
+                     'currIncrease': 10, 'maxIncrease': 10, 'respawn': False}]},
             'Ruined Nursery': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}
                 ]},
             'Training Chamber Access': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 12, 'respawn': False}]},
+                     'currIncrease': 12, 'maxIncrease': 12, 'respawn': False}]},
             'Magma Pool': {
                 'pickups': [
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
                      'hudmemoText': 'Energy Tank acquired!',
-                     'count': 1, 'respawn': False}]},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Tower of Light': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 14, 'respawn': False, 'modalHudmemo': True
+                     'currIncrease': 14, 'maxIncrease': 14, 'respawn': False
                      }]},
             'Tower Chamber': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Power Bomb Expansion',
                      'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                      'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                     'count': 15, 'respawn': False}]},
+                     'currIncrease': 15, 'maxIncrease': 15, 'respawn': False}]},
             'Ruined Gallery': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False},
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 17, 'respawn': False}
+                     'currIncrease': 17, 'maxIncrease': 17, 'respawn': False}
                 ]},
             'Transport Access North': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 18, 'respawn': False, 'modalHudmemo': True
+                     'currIncrease': 18, 'maxIncrease': 18, 'respawn': False, 'modalHudmemo': True
                      }]},
             'Gathering Hall': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}]},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]},
             'Hive Totem': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 20, 'respawn': False, 'modalHudmemo': True,
+                     'currIncrease': 20, 'maxIncrease': 20, 'respawn': False, 'modalHudmemo': True,
                      }]},
             'Sunchamber': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False},
                     {'type': 'Wavebuster', 'model': 'Wavebuster',
                      'scanText': 'Your Wavebuster',
                      'hudmemoText': 'Wavebuster acquired!',
-                     'count': 1, 'respawn': False}]},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Watery Hall Access': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 23, 'respawn': False}]},
+                     'currIncrease': 23, 'maxIncrease': 23, 'respawn': False}]},
             'Watery Hall': {
                 'pickups': [
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
                      'hudmemoText': 'Energy Tank acquired!',
-                     'count': 1, 'respawn': False},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False},
                     {'type': 'Energy Tank', 'model': 'Energy Tank',
                      'scanText': 'Your Energy Tank',
                      'hudmemoText': 'Energy Tank acquired!',
-                     'count': 1, 'respawn': False}]},
+                     'currIncrease': 1, 'maxIncrease': 1, 'respawn': False}]},
             'Dynamo': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 26, 'respawn': False},
+                     'currIncrease': 26, 'maxIncrease': 26, 'respawn': False},
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False}]
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False}]
             },
             'Burn Dome': {
                 'pickups': [
                     {'type': 'Missile', 'model': 'Missile',
                      'scanText': 'Your Missile Expansion. Provides 5 Missiles',
                      'hudmemoText': 'Missile Expansion acquired!',
-                     'count': 5, 'respawn': False},
+                     'currIncrease': 5, 'maxIncrease': 5, 'respawn': False},
                     {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                      'scanText': "Echoes's Energy Tank",
                      'hudmemoText': 'Sent Energy Tank to Echoes!',
-                     'count': 29, 'respawn': False}]},
+                     'currIncrease': 29, 'maxIncrease': 29, 'respawn': False}]},
             'Furnace': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Light Ammo Expansion. Provides 20 Light Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Light Ammo Expansion to Echoes!',
-                     'count': 30, 'respawn': False},
+                     'currIncrease': 30, 'maxIncrease': 30, 'respawn': False},
                     {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                      'scanText': "Echoes's Energy Tank",
                      'hudmemoText': 'Sent Energy Tank to Echoes!',
-                     'count': 31, 'respawn': False}]},
+                     'currIncrease': 31, 'maxIncrease': 31, 'respawn': False}]},
             'Hall of the Elders': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Missile',
                      'scanText': "Echoes's Missile Expansion. Provides 5 Missiles and 1 Item Percentage",
                      'hudmemoText': 'Sent Missile Expansion to Echoes!',
-                     'count': 32, 'respawn': False}]}, 'Crossway': {
+                     'currIncrease': 32, 'maxIncrease': 32, 'respawn': False}]}, 'Crossway': {
                 'pickups': [
                     {'type': 'Unknown Item 1', 'model': 'Nothing',
                      'scanText': "Echoes's Dark Ammo Expansion. Provides 20 Dark Ammo and 1 Item Percentage",
                      'hudmemoText': 'Sent Dark Ammo Expansion to Echoes!',
-                     'count': 33, 'respawn': False}]},
+                     'currIncrease': 33, 'maxIncrease': 33, 'respawn': False}]},
             'Elder Chamber': {'pickups': [
                 {'type': 'Unknown Item 1', 'model': 'Energy Tank',
                  'scanText': "Echoes's Energy Tank",
                  'hudmemoText': 'Sent Energy Tank to Echoes!',
-                 'count': 34, 'respawn': False}]},
+                 'currIncrease': 34, 'maxIncrease': 34, 'respawn': False}]},
             'Antechamber': {
                 'pickups': [{
                     'type': 'Unknown Item 1',
                     'model': 'Power Bomb Expansion',
                     'scanText': "Echoes's Power Bomb Expansion. Provides 1 Power Bomb and 1 Item Percentage",
                     'hudmemoText': 'Sent Power Bomb Expansion to Echoes!',
-                    'count': 35, 'respawn': False
+                    'currIncrease': 35, 'maxIncrease': 35, 'respawn': False
                 }]}}}
 
-    assert data == {
+    expected_data = {
         'seed': 1499122484,
         'hasSpoiler': True,
         'preferences': {
@@ -911,6 +962,7 @@ def test_create_patch_data(test_files_dir):
         },
     }
 
+    assert data == expected_data
 
 def test_patch_game(mocker, tmp_path):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={

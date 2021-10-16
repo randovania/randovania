@@ -2,11 +2,11 @@ import copy
 import json
 import re
 from pathlib import Path
-from typing import List, TypeVar, Callable, Dict, Tuple, Iterator
+from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, \
-    RequirementOr, RequirementAnd, Requirement, RequirementTemplate
+    RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -32,23 +32,16 @@ def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     }
 
 
-def write_requirement_and(requirement: RequirementAnd) -> dict:
+def write_requirement_array(requirement: RequirementArrayBase, type_name: str) -> dict:
     return {
-        "type": "and",
-        "data": [
-            write_requirement(item)
-            for item in requirement.items
-        ]
-    }
-
-
-def write_requirement_or(requirement: RequirementOr) -> dict:
-    return {
-        "type": "or",
-        "data": [
-            write_requirement(item)
-            for item in requirement.items
-        ]
+        "type": type_name,
+        "data": {
+            "comment": requirement.comment,
+            "items": [
+                write_requirement(item)
+                for item in requirement.items
+            ]
+        }
     }
 
 
@@ -64,10 +57,10 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_resource_requirement(requirement)
 
     elif isinstance(requirement, RequirementOr):
-        return write_requirement_or(requirement)
+        return write_requirement_array(requirement, "or")
 
     elif isinstance(requirement, RequirementAnd):
-        return write_requirement_and(requirement)
+        return write_requirement_array(requirement, "and")
 
     elif isinstance(requirement, RequirementTemplate):
         return write_requirement_template(requirement)
@@ -345,10 +338,22 @@ def write_world(world: World) -> dict:
 def write_world_list(world_list: WorldList) -> list:
     errors = []
 
+    known_indices = {}
+
     worlds = []
     for world in world_list.worlds:
         try:
             worlds.append(write_world(world))
+
+            for node in world.all_nodes:
+                if isinstance(node, PickupNode):
+                    name = world_list.node_name(node, with_world=True, distinguish_dark_aether=True)
+                    if node.pickup_index in known_indices:
+                        errors.append(f"{name} has {node.pickup_index}, "
+                                      f"but it was already used in {known_indices[node.pickup_index]}")
+                    else:
+                        known_indices[node.pickup_index] = name
+
         except ValueError as e:
             errors.append(str(e))
 
@@ -367,6 +372,35 @@ def write_initial_states(initial_states: Dict[str, ResourceGainTuple]) -> dict:
     }
 
 
+def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
+    if db is None:
+        return None
+
+    def expand(it: IndexWithReason, field_name: str) -> dict:
+        if it.reason is not None:
+            return {"index": it.index, field_name: it.reason}
+        else:
+            return {"index": it.index}
+
+    return {
+        "items_to_exclude": [
+            {"index": it.index, "when_shuffled": it.reason}
+            for it in db.items_to_exclude
+        ],
+        "custom_item_amount": [
+            {
+                "index": index,
+                "value": value
+            }
+            for index, value in db.custom_item_amount.items()
+        ],
+        "events_to_exclude": [
+            {"index": it.index, "reason": it.reason}
+            for it in db.events_to_exclude
+        ]
+    }
+
+
 def write_game_description(game: GameDescription) -> dict:
     return {
         "game": game.game.value,
@@ -374,6 +408,7 @@ def write_game_description(game: GameDescription) -> dict:
 
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
+        "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),

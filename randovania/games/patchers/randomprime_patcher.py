@@ -29,6 +29,8 @@ from randovania.layout.prime1.prime_configuration import PrimeConfiguration
 from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
+_EASTER_EGG_SHINY_MISSILE = 1024
+
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": 0,
     "ice": 1,
@@ -95,38 +97,33 @@ _LOCATIONS_WITH_MODAL_ALERT = {
 # The location to the right is considered for the count, but it can't show a popup.
 _LOCATIONS_GROUPED_TOGETHER = [
     ({0, 1, 2, 3}, None),  # Main Plaza
-    ({8}, 3),  # Vault -> Main Plaza Ledge
     ({5, 6, 7}, None),  # Ruined Shrine (all 3)
     ({27, 28}, None),  # Burn dome
     ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
-    ({70, 71, 72}, None),  # Life Grove Tunnel + Life Grovex2
-    ({92, 81}, None),  # Processing Center Access + Phazon Processing Center
     ({23, 24}, None),  # Watery Hall
     ({25, 26}, None),  # Dynamo (the one in Chozo)
     ({55}, 54),  # Gravity Chamber: Upper -> Lower
     ({19, 17}, None),  # Hive Totem + Transport Access North
-    ({12, 11}, None),  # Magma Pool + Training Chamber Access
-    ({59, 58}, None),  # Alcove + Landing Site
-    ({61}, 60),  # Overgrown Cavern -> Frigate Crash Site
-    ({62, 65}, 64),  # Root Cave + Arbor Chamber -> Transport Tunnel B
-    ({39, 40}, None),  # Ice Ruins East
-    ({13}, 14),  # Tower of Light -> Tower Chamber
+    ({12}, 11),  # Magma Pool -> Training Chamber Access
+    ({59}, 58),  # Alcove -> Landing Site
+    ({62, 65}, None),  # Root Cave + Arbor Chamber
+    ({40}, 39),  # Ice Ruins East (spider -> ice)
     ({15, 16}, None),  # Ruined Gallery
     ({18}, 22),  # Gathering Hall -> Watery Hall Access
     ({52, 53}, None),  # Research Lab Aether
-    ({56, 57}, None),  # Storage Cave + Security Cave
-    ({44}, 46),  # Quarantine Cave -> Quarantine Monitor
-    ({73}, 74),  # Main Quarry -> Security Access A
 ]
 
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
-                                     modal_hud_override: bool) -> dict:
+                                     modal_hud_override: bool,
+                                     rng: Random) -> dict:
     if detail.model.game == RandovaniaGame.METROID_PRIME:
         model_name = detail.model.name
     else:
         model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
 
+    scan_text = detail.scan_text
+    hud_text = detail.hud_text[0]
     pickup_type = "Nothing"
     count = 0
 
@@ -137,15 +134,20 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
+    if (model_name == "Missile" and not detail.other_player
+            and "Missile Expansion" in hud_text
+            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
+        model_name = "Shiny Missile"
+        hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
         "model": model_name,
         "scanText": scan_text,
         "hudmemoText": hud_text,
-        "count": count,
+        "currIncrease": count,
+        "maxIncrease": count,
         "respawn": False
     }
     if modal_hud_override:
@@ -185,8 +187,8 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
 
 
 def _name_for_location(world_list: WorldList, location: AreaLocation) -> str:
-    if location in prime1_elevators.CUSTOM_NAMES:
-        return prime1_elevators.CUSTOM_NAMES[location]
+    if location in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
+        return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[location]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
@@ -246,13 +248,13 @@ class RandomprimePatcher(Patcher):
         }
 
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
-        useless_target = PickupTarget(pickup_creator.create_prime1_useless_pickup(db.resource_database),
+        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)
 
         pickup_list = pickup_exporter.export_all_indices(
             patches,
             useless_target,
-            db.world_list.num_pickup_nodes,
+            db.world_list,
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
@@ -276,7 +278,8 @@ class RandomprimePatcher(Patcher):
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
                             prime1_pickup_details_to_patcher(pickup_list[index.index],
-                                                             index.index in modal_hud_override)
+                                                             index.index in modal_hud_override,
+                                                             rng)
                             for index in pickup_indices
                         ],
                     }
@@ -286,7 +289,7 @@ class RandomprimePatcher(Patcher):
                         continue
 
                     target = _name_for_location(db.world_list, patches.elevator_connection[node.teleporter])
-                    source_name = prime1_elevators.CUSTOM_NAMES[node.teleporter.area_location]
+                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[node.teleporter.area_location]
                     world_data[world.name]["transports"][source_name] = target
 
         starting_memo = None

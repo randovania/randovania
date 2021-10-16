@@ -25,21 +25,17 @@ def game_description_for(game: RandovaniaGame) -> GameDescription:
     return result
 
 
-def _read_item_database_in_path(path: Path) -> item_database.ItemDatabase:
-    configuration_path = path.joinpath("configuration")
+def _read_item_database_in_path(path: Path, game: RandovaniaGame) -> item_database.ItemDatabase:
+    with path.joinpath("item-database.json").open() as database_file:
+        item_database_data = json.load(database_file)
 
-    with configuration_path.joinpath("major-items.json").open() as major_items_file:
-        major_items_data = json.load(major_items_file)
-
-    with configuration_path.joinpath("ammo.json").open() as ammo_file:
-        ammo_data = json.load(ammo_file)
-
-    return item_database.read_database(major_items_data, ammo_data)
+    return item_database.read_database(item_database_data, game)
 
 
 @functools.lru_cache()
 def item_database_for_game(game: RandovaniaGame):
-    return _read_item_database_in_path(get_data_path().joinpath("item_database", game.value))
+    return _read_item_database_in_path(get_data_path().joinpath("item_database", game.value),
+                                       game)
 
 
 @functools.lru_cache()
@@ -47,6 +43,17 @@ def default_prime2_memo_data() -> dict:
     with get_data_path().joinpath("item_database", "prime2", "memo_data.json").open("r") as memo_data_file:
         memo_data = json.load(memo_data_file)
 
-    item_database.add_memo_data_keys(memo_data)
+    TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
+
+    for i in range(1, 4):
+        for temple_key in TEMPLE_KEYS:
+            memo_data["{} {}".format(temple_key, i)] = memo_data[temple_key]
+
+    for temple_key in TEMPLE_KEYS:
+        memo_data.pop(temple_key)
+
+    for i in range(1, 10):
+        memo_data["Sky Temple Key {}".format(i)] = memo_data["Sky Temple Key"]
+    memo_data.pop("Sky Temple Key")
 
     return memo_data
