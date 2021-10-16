@@ -6,7 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [3.3.0] - Unreleased
+
+- Nothing.
+
+### Metroid Prime
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+
+## [3.2.1] - Unreleased
+
+- Nothing.
+
+## [3.2.0] - 2021-10-16
 
 - **Major** - Added: The Logic Database can now have comments in requirements.
 - **Major** - Changed: Expansions contents are now configured directly, instead of being calculated from a target. 
@@ -19,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Data Editor now raises an error if two Pickup Nodes share the same index.
 - Changed: When changing Echoes Goals, the slider of the number of keys is now hidden when "Collect Keys" goal is not selected.
 - Changed: Customizing the item pool causes permalinks to not get as long as before.
+- Changed: The Qt theme was changed, as the previous one had serious issues on certain platforms and certain elements.
 - Fixed: Items that include ammo are now configurable to provide up to the ammo's capacity.
 - Fixed: Certain invalid permalinks are now properly recognized as invalid.
 - Fixed: In connections editor, changing a requirement to "And/Or" no longer places ui elements in the wrong place.
@@ -74,11 +104,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Discord Bot (Caretaker Class Drone)
 
 - Changed: Room images uses two-way arrows if a connection is two-way, instead of two arrows.
-
-## [3.1.5] - Unreleased
-
-- Fixed: Certain invalid permalinks are now properly recognized as invalid.
-- Changed: Qt theme
 
 ## [3.1.4] - 2021-09-19
 
