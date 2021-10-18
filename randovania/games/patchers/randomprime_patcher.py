@@ -339,7 +339,6 @@ class RandomprimePatcher(Patcher):
                 "qolPickupScans": configuration.qol_pickup_scans,
                 "qolCutscenes": configuration.qol_cutscenes.value,
 
-                "obfuscateItems": False,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
                 "automaticCrashScreen": True,

@@ -747,7 +747,6 @@ def test_create_patch_data(test_files_dir):
             'artifactHintBehavior': None,
             'automaticCrashScreen': True,
             'mapDefaultState': 'default',
-            'obfuscateItems': False,
             'qolCosmetic': True,
             'qolGameBreaking': True,
             'qolCutscenes': 'original',
