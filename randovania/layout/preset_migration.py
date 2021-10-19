@@ -401,7 +401,7 @@ def _migrate_v13(preset: dict) -> dict:
 
     for name, config in preset["configuration"]["ammo_configuration"]["items_state"].items():
         config["ammo_count"] = [
-            math.ceil(maximum_ammo[ammo_id] / max(config["pickup_count"], 1))
+            math.ceil(max(maximum_ammo[ammo_id], 0) / max(config["pickup_count"], 1))
             for ammo_id in ammo_ids[name]
         ]
         config.pop("variance")
