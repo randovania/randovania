@@ -199,7 +199,7 @@ class BitPackDataclass(BitPackValue):
             field_meta["reference"] = reference_item
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
-            if any((a >= b) for (a, b) in encoded_item):
+            if any(not (0 <= a < b) for (a, b) in encoded_item):
                 raise ValueError(
                     f"Encoding field {field.name} of {type(self)} generated invalid value: {encoded_item}.")
             should_encode = True
@@ -436,9 +436,10 @@ def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
     results = []
 
     for i, (value_argument, value_format) in enumerate(value.bit_pack_encode(metadata)):
-        if value_argument >= value_format:
-            raise ValueError(f"At {i}, got {value_argument} which is bigger than limit {value_format}")
-        results.append((value_argument, value_format))
+        if 0 <= value_argument < value_format:
+            results.append((value_argument, value_format))
+        else:
+            raise ValueError(f"At {i}, got {value_argument} which not in range [0, {value_format}[")
 
     return _pack_encode_results(results)
 
