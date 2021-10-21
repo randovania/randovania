@@ -98,7 +98,7 @@ class DatabaseCommandCog(commands.Cog):
                     "game", "The game's database to check.",
                     option_type=SlashCommandOptionType.STRING,
                     required=True,
-                    choices=[manage_commands.create_choice(game.value, game.long_name)
+                    choices=[manage_commands.create_choice(game.value, game.data.long_name)
                              for game in enum_lib.iterate_enum(RandovaniaGame)]
                 )
             ],
@@ -140,8 +140,8 @@ class DatabaseCommandCog(commands.Cog):
             custom_id=f"{game.value}_world",
             placeholder="Choose your region",
         ))
-        embed = Embed(title=f"{game.long_name} Database", description="Choose the world subset to visualize.")
-        logging.info("Responding requesting list of worlds for game %s.", game.long_name)
+        embed = Embed(title=f"{game.data.long_name} Database", description="Choose the world subset to visualize.")
+        logging.info("Responding requesting list of worlds for game %s.", game.data.long_name)
         return embed, [action_row],
 
     async def database_command(self, ctx: SlashContext, game: str):
@@ -187,7 +187,7 @@ class DatabaseCommandCog(commands.Cog):
             custom_id=f"back_to_{game.value}",
         ))
 
-        embed = Embed(title=f"{game.long_name} Database",
+        embed = Embed(title=f"{game.data.long_name} Database",
                       description=f"Choose the room in {world_name} to visualize.")
         logging.info("Responding to area selection for section %s with %d options.", world_name, len(areas))
         await ctx.edit_origin(
@@ -216,7 +216,7 @@ class DatabaseCommandCog(commands.Cog):
         area = valid_items[0]
         db = default_database.game_description_for(game)
 
-        embed = Embed(title="{}: {}".format(game.long_name, db.world_list.area_name(area)))
+        embed = Embed(title="{}: {}".format(game.data.long_name, db.world_list.area_name(area)))
 
         select = manage_components.create_select(
             options=[

@@ -39,7 +39,7 @@ async def randomize_command_logic_async(args):
 
     internal_copies_path = Options.with_default_data_dir().internal_copies_path
     patcher_provider = PatcherProvider()
-    cosmetic_patches = game_to_class.GAME_TO_COSMETIC[preset.game].default()
+    cosmetic_patches = (preset.game.data.layout.cosmetic_patches or BaseCosmeticPatches).default()
     patcher = patcher_provider.patcher_for_game(preset.game)
 
     patch_data = patcher.create_patch_data(layout_description, players_config, cosmetic_patches)

@@ -6,7 +6,7 @@ from typing import Optional, List, Iterator, Tuple
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
-from randovania.layout.game_to_class import AnyGameConfiguration, GAME_TO_CONFIGURATION
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -20,7 +20,7 @@ class Preset(BitPackValue):
     description: str
     base_preset_uuid: Optional[uuid.UUID]
     game: RandovaniaGame
-    configuration: AnyGameConfiguration
+    configuration: BaseConfiguration
 
     @property
     def as_json(self) -> dict:
@@ -42,7 +42,7 @@ class Preset(BitPackValue):
             description=value["description"],
             base_preset_uuid=uuid.UUID(value["base_preset_uuid"]) if value["base_preset_uuid"] is not None else None,
             game=game,
-            configuration=GAME_TO_CONFIGURATION[game].from_json(value["configuration"]),
+            configuration=(game.data.layout.configuration or BaseConfiguration).from_json(value["configuration"]),
         )
 
     def dangerous_settings(self) -> List[str]:

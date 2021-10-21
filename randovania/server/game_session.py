@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout import game_to_class
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -476,7 +476,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             player_names=player_names,
         )
         preset = layout_description.permalink.get_preset(players_config.player_index)
-        cosmetic_patches = game_to_class.GAME_TO_COSMETIC[preset.game].from_json(arg)
+        cosmetic_patches = (preset.game.data.layout.cosmetic_patches or BaseCosmeticPatches).from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
 
         _add_audit_entry(sio, session, f"Made an ISO for row {membership.row + 1}")

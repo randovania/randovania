@@ -151,7 +151,7 @@ class RowWidget:
 
     def set_preset(self, preset: VersionedPreset, include_game: bool):
         if include_game:
-            self.name.setText(f"({preset.game.short_name}) {preset.name}")
+            self.name.setText(f"({preset.game.data.short_name}) {preset.name}")
         else:
             self.name.setText(preset.name)
         self.export_menu.setEnabled(preset.base_preset_uuid is not None)
@@ -446,7 +446,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if len(self._game_session.allowed_games) > 1:
             for g in self._game_session.allowed_games:
                 menu = QtWidgets.QMenu(row.import_menu)
-                menu.setTitle(g.long_name)
+                menu.setTitle(g.data.long_name)
                 row.import_menu.addMenu(menu)
                 _add(g, menu)
         else:
@@ -790,7 +790,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                               distinguish_dark_aether=True)
                 except KeyError as e:
                     logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
-                                   preset.game.long_name)
+                                   preset.game.data.long_name)
                     location_name = f"Invalid location: {e}"
             except IndexError:
                 logger.warning("Action %d has invalid provider_row %d", i, action.provider_row)

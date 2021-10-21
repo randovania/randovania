@@ -30,7 +30,7 @@ from randovania.resolver.exceptions import GenerationFailure
 def persist_layout(history_dir: Path, description: LayoutDescription):
     history_dir.mkdir(parents=True, exist_ok=True)
 
-    games = "-".join(sorted(game.short_name for game in description.all_games))
+    games = "-".join(sorted(game.data.short_name for game in description.all_games))
 
     date_format = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     file_path = history_dir.joinpath(
