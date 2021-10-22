@@ -2,7 +2,7 @@ from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, 
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs, prime_expected_items, prime_unexpected_items, _prime_format_params
-from randovania.games.prime1.gui.dialog import PrimeCosmeticPatchesDialog
+from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
 from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
 
 game_data: GameData = GameData(
@@ -12,10 +12,10 @@ game_data: GameData = GameData(
 
     presets = [
         {
-            "path": "presets/starter_preset.rdvpreset"
+            "path": "starter_preset.rdvpreset"
         },
         {
-            "path": "presets/fewest_changes.rdvpreset"
+            "path": "fewest_changes.rdvpreset"
         }
     ],
 

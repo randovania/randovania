@@ -12,8 +12,8 @@ from randovania.games.prime.all_prime_dol_patches import (
     BasePrimeDolVersion, HealthCapacityAddresses,
     DangerousEnergyTankAddresses
 )
-from randovania.layout.prime2.beam_configuration import BeamConfiguration
-from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 
 @dataclasses.dataclass(frozen=True)

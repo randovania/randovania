@@ -8,7 +8,7 @@ import pytest
 from randovania.gui import tracker_window
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.fixture(params=[{},

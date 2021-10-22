@@ -36,13 +36,12 @@ from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.layout.game_to_class import AnyGameConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
-from randovania.layout.prime2 import translator_configuration
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
-from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2.layout import translator_configuration
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -58,7 +57,7 @@ def _persisted_preset_path(persistence_path: Path) -> Path:
 
 
 def _load_previous_state(persistence_path: Path,
-                         game_configuration: AnyGameConfiguration,
+                         game_configuration: BaseConfiguration,
                          ) -> Optional[dict]:
     previous_layout_path = _persisted_preset_path(persistence_path)
     try:
@@ -102,7 +101,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker configuration
     logic: Logic
     game_description: GameDescription
-    game_configuration: EchoesConfiguration
+    game_configuration: BaseConfiguration
     persistence_path: Path
     _initial_state: State
     _elevator_id_to_combo: Dict[Teleporter, QtWidgets.QComboBox]

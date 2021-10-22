@@ -3,7 +3,7 @@ from randovania.games.prime3.generator.item_pool.pool_creator import corruption_
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.games.prime3.gui.preset_settings import _corruption_format_params, corruption_unexpected_items, prime3_preset_tabs, corruption_expected_items
-from randovania.games.prime3.gui.dialog import CorruptionCosmeticPatchesDialog
+from randovania.games.prime3.gui.dialog.corruption_cosmetic_patches_dialog import CorruptionCosmeticPatchesDialog
 
 game_data: GameData = GameData(
     short_name = "Corruption",
@@ -12,7 +12,7 @@ game_data: GameData = GameData(
 
     presets = [
         {
-            "path": "presets/starter_preset.rdvpreset"
+            "path": "starter_preset.rdvpreset"
         }
     ],
 

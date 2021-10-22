@@ -18,7 +18,8 @@ from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 _ETM_NAME = "Energy Transfer Module"
 
@@ -133,7 +134,7 @@ def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> Pi
 
 
 def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: GameDescription,
-                  game_modifications: dict, configuration: EchoesConfiguration) -> GamePatches:
+                  game_modifications: dict, configuration: BaseConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
     :param player_index:
@@ -230,7 +231,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
 
 def decode(game_modifications: List[dict],
-           layout_configurations: Dict[int, EchoesConfiguration],
+           layout_configurations: Dict[int, BaseConfiguration],
            ) -> Dict[int, GamePatches]:
     all_games = {index: default_database.game_description_for(configuration.game)
                  for index, configuration in layout_configurations.items()}

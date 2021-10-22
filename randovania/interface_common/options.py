@@ -11,9 +11,7 @@ from randovania.game_connection.memory_executor_choice import MemoryExecutorChoi
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.layout import game_to_class
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.layout.game_to_class import AnyCosmeticPatches
 
 T = TypeVar("T")
 
@@ -59,7 +57,7 @@ def decode_if_not_none(value, decoder):
 
 @dataclasses.dataclass(frozen=True)
 class PerGameOptions:
-    cosmetic_patches: AnyCosmeticPatches
+    cosmetic_patches: BaseCosmeticPatches
     input_path: Optional[Path] = None
     output_directory: Optional[Path] = None
     output_format: Optional[str] = None

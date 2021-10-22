@@ -105,11 +105,11 @@ def _prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[st
 
     return template_strings
 
-expected_items = {
+prime_expected_items = {
     "Combat Visor",
     "Scan Visor",
     "Power Beam"
 }
 
-def unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
-    return expected_items
+def prime_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
+    return prime_expected_items

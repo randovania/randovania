@@ -3,7 +3,7 @@ from randovania.games.prime2.generator.item_pool.pool_creator import echoes_spec
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.gui.preset_settings import _echoes_format_params, echoes_unexpected_items, prime2_preset_tabs, echoes_expected_items
-from randovania.games.prime2.gui.dialog import EchoesCosmeticPatchesDialog
+from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 
 game_data: GameData = GameData(
     short_name = "Echoes",
@@ -12,13 +12,13 @@ game_data: GameData = GameData(
 
     presets = [
         {
-            "path": "presets/starter_preset.rdvpreset"
+            "path": "starter_preset.rdvpreset"
         },
         {
-            "path": "presets/darkszero_deluxe.rdvpreset"
+            "path": "darkszero_deluxe.rdvpreset"
         },
         {
-            "path": "presets/fewest_changes.rdvpreset"
+            "path": "fewest_changes.rdvpreset"
         }
     ],
 

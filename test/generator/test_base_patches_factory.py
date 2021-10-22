@@ -15,7 +15,7 @@ from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])

@@ -17,8 +17,8 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.super_metroid.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.layout.super_metroid.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
+from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 

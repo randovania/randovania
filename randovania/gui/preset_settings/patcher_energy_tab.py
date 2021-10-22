@@ -6,8 +6,8 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):

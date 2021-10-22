@@ -12,7 +12,7 @@ game_data: GameData = GameData(
 
     presets = [
         {
-            "path": "presets/starter_preset.rdvpreset"
+            "path": "starter_preset.rdvpreset"
         }
     ],
 

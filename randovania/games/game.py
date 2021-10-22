@@ -2,7 +2,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 import importlib
+from pathlib import Path
 from typing import Callable, Dict, Iterable, Optional, Set, Type, TYPE_CHECKING
+from randovania import get_file_path
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 
@@ -79,5 +81,8 @@ class RandovaniaGame(BitPackEnum, Enum):
 
     @property
     def data(self) -> GameData:
-        return importlib.import_module("randovania.games", self.value).game_data
+        return importlib.import_module('.'+self.value, "randovania.games").game_data
     
+    @property
+    def data_path(self) -> Path:
+        return get_file_path().joinpath("games", self.value)

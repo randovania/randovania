@@ -7,7 +7,7 @@ from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import find_version_for_dol
 from randovania.games.prime import echoes_dol_versions, all_prime_dol_patches, echoes_dol_patches
 from randovania.games.prime.echoes_dol_patches import EchoesDolVersion, BeamConfiguration
-from randovania.layout.prime2.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 
 @dataclasses.dataclass(frozen=True)

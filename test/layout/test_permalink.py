@@ -5,26 +5,26 @@ from unittest.mock import patch, MagicMock, ANY
 import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 
 
 @patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
-def test_encode(mock_dictionary_byte_hash: MagicMock, default_preset):
+def test_encode(mock_dictionary_byte_hash: MagicMock, default_prime_preset):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        presets={0: default_preset},
+        presets={0: default_prime_preset},
     )
 
     # Run
     encoded = link.as_base64_str
 
     # Assert
-    mock_dictionary_byte_hash.assert_called_once_with(default_preset.configuration.game_data)
+    mock_dictionary_byte_hash.assert_called_once_with(default_prime_preset.configuration.game_data)
     assert encoded == "wDhwJfQnUIg4"
 
 
@@ -95,7 +95,7 @@ def test_decode_old_version(permalink: str, version: int):
 
 
 @patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
-def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
+def test_decode(mock_dictionary_byte_hash: MagicMock, default_prime_preset):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database
 
@@ -106,7 +106,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        presets={0: default_preset},
+        presets={0: default_prime_preset},
     )
 
     # Uncomment this line to quickly get the new encoded permalink

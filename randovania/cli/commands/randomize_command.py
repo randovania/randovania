@@ -2,8 +2,6 @@ import asyncio
 from argparse import ArgumentParser
 from pathlib import Path
 
-from randovania.layout import game_to_class
-
 
 def randomize_command_logic(args):
     return asyncio.run(randomize_command_logic_async(args))

@@ -3,7 +3,7 @@ import functools
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QComboBox
 
-import randovania.games.patching.patchers.claris_patcher
+import randovania.games.patchers.claris_patcher
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.gui.lib.common_qt_lib import set_combo_with_value

@@ -7,7 +7,6 @@ from randovania.games.patcher_provider import PatcherProvider
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 

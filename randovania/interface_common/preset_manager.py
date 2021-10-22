@@ -16,15 +16,12 @@ from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 
 
 def read_preset_list() -> List[Path]:
-    base_path = randovania.get_data_path().joinpath("presets")
+    preset_list = []
+    for game in RandovaniaGame:
+        base_path = game.data_path.joinpath("presets")
+        preset_list.extend([base_path.joinpath(preset["path"]) for preset in game.data.presets])
 
-    with base_path.joinpath("presets.json").open() as presets_file:
-        preset_list = json.load(presets_file)["presets"]
-
-    return [
-        base_path.joinpath(preset["path"])
-        for preset in preset_list
-    ]
+    return preset_list
 
 
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):

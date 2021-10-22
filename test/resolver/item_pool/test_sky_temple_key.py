@@ -2,8 +2,9 @@ import pytest
 
 import randovania.games.prime.echoes_items
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.generator.item_pool import sky_temple_keys, pickup_creator
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.prime2.generator.item_pool import sky_temple_keys
+from randovania.generator.item_pool import pickup_creator
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 def test_sky_temple_key_distribution_logic_all_bosses_valid(echoes_resource_database):

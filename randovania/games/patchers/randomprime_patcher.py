@@ -25,8 +25,8 @@ from randovania.games.prime.patcher_file_lib import pickup_exporter, item_names,
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime1.prime_configuration import PrimeConfiguration
-from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 _EASTER_EGG_SHINY_MISSILE = 1024

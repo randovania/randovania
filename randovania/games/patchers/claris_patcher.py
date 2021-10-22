@@ -12,7 +12,7 @@ from randovania.games.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import game_workdir
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.lib import status_update_lib
 
 
