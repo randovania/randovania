@@ -44,7 +44,7 @@ async def look_for_permalinks(message: discord.Message):
 
         if permalink.player_count == 1:
             preset = permalink.get_preset(0)
-            embed.description = "{} permalink for Randovania {}".format(preset.game.data.long_name,
+            embed.description = "{} permalink for Randovania {}".format(preset.game.long_name,
                                                                         randovania.VERSION)
             _add_preset_description_to_embed(embed, preset)
 
@@ -83,10 +83,10 @@ async def reply_for_layout_description(message: discord.Message, description: La
 
     if description.permalink.player_count == 1:
         preset = description.get_preset(0)
-        embed.description = "{}, with preset {}".format(preset.game.data.long_name, preset.name)
+        embed.description = "{}, with preset {}".format(preset.game.long_name, preset.name)
         _add_preset_description_to_embed(embed, preset)
     else:
-        games = {preset.game.data.long_name for preset in description.permalink.presets.values()}
+        games = {preset.game.long_name for preset in description.permalink.presets.values()}
         game_names = sorted(games)
 
         last_game = game_names.pop()

@@ -37,7 +37,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         EchoesPresetItemPool(editor),
     ]
 
-def _echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[str]]:
+def echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[str]]:
     major_items = configuration.major_items_configuration
     item_database = default_database.item_database_for_game(configuration.game)
 

@@ -135,7 +135,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         for game in iterate_enum(RandovaniaGame):
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
-            game_menu.setTitle(_t(game.data.long_name))
+            game_menu.setTitle(_t(game.long_name))
             self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
@@ -152,7 +152,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
             # Data Editor
             action = QtWidgets.QAction(self)
-            action.setText(_t(game.data.long_name))
+            action.setText(_t(game.long_name))
             self.menu_internal.addAction(action)
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
             self.menu_action_edits.append(action)

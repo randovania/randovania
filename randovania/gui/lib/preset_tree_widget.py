@@ -64,7 +64,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 continue
 
             root = QtWidgets.QTreeWidgetItem(self)
-            root.setText(0, game.data.long_name)
+            root.setText(0, game.long_name)
             root.setExpanded(True)
             tree_item[game] = root
 

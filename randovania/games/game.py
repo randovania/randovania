@@ -23,8 +23,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class GameLayout:
-    configuration: Optional[Type[BaseConfiguration]] = None
-    cosmetic_patches: Optional[Type[BaseCosmeticPatches]] = None
+    configuration: Type[BaseConfiguration]
+    cosmetic_patches: Type[BaseCosmeticPatches]
 
 @dataclass(frozen=True)
 class GamePresetDescriber:
@@ -64,13 +64,13 @@ class GameData:
     presets: Iterable[Dict[str, str]]
     """List of dicts mapping the key "path" to a path to the given preset."""
 
-    layout: GameLayout = GameLayout()
+    layout: GameLayout
     """"""
 
-    gui: GameGui = GameGui()
+    gui: Callable[[], GameGui]
     """"""
 
-    generator: GameGenerator = GameGenerator()
+    generator: GameGenerator
     """"""
 
     patcher: Optional[Patcher] = None
@@ -85,8 +85,26 @@ class RandovaniaGame(BitPackEnum, Enum):
 
     @property
     def data(self) -> GameData:
-        return importlib.import_module('.'+self.value+".game_data", "randovania.games").game_data
+        if self == RandovaniaGame.METROID_PRIME:
+            import randovania.games.prime1.game_data as game_module
+        elif self == RandovaniaGame.METROID_PRIME_ECHOES:
+            import randovania.games.prime2.game_data as game_module
+        elif self == RandovaniaGame.METROID_PRIME_CORRUPTION:
+            import randovania.games.prime3.game_data as game_module
+        elif self == RandovaniaGame.SUPER_METROID:
+            import randovania.games.super_metroid.game_data as game_module
+        else:
+            raise ValueError(f"Missing import for game: {self.value}")
+        return game_module.game_data
     
     @property
     def data_path(self) -> Path:
         return get_file_path().joinpath("games", self.value)
+    
+    @property
+    def short_name(self) -> str:
+        return self.data.short_name
+    
+    @property
+    def long_name(self) -> str:
+        return self.data.long_name

@@ -476,7 +476,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             player_names=player_names,
         )
         preset = layout_description.permalink.get_preset(players_config.player_index)
-        cosmetic_patches = (preset.game.data.layout.cosmetic_patches or BaseCosmeticPatches).from_json(arg)
+        cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
 
         _add_audit_entry(sio, session, f"Made an ISO for row {membership.row + 1}")

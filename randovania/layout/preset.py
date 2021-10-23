@@ -42,7 +42,7 @@ class Preset(BitPackValue):
             description=value["description"],
             base_preset_uuid=uuid.UUID(value["base_preset_uuid"]) if value["base_preset_uuid"] is not None else None,
             game=game,
-            configuration=(game.data.layout.configuration or BaseConfiguration).from_json(value["configuration"]),
+            configuration=game.data.layout.configuration.from_json(value["configuration"]),
         )
 
     def dangerous_settings(self) -> List[str]:

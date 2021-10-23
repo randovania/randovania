@@ -130,7 +130,7 @@ class ConnectionBackend(ConnectionBase):
                 return None
 
             if is_version:
-                self.logger.info(f"identified game as {connector.game_enum.data.long_name}: {connector.version.description}")
+                self.logger.info(f"identified game as {connector.game_enum.long_name}: {connector.version.description}")
                 return connector
 
     def get_current_inventory(self) -> Inventory:

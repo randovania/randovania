@@ -134,7 +134,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if len(all_games) > 1:
             game_name = "Crossgame Multiworld"
         else:
-            game_name = f"{list(all_games)[0].data.short_name} Randomizer"
+            game_name = f"{list(all_games)[0].short_name} Randomizer"
 
         default_name = "{} - {}.{}".format(game_name,
                                            self.layout_description.shareable_word_hash,

@@ -73,11 +73,11 @@ class PerGameOptions:
 
     @classmethod
     def default_for_game(cls, game: RandovaniaGame) -> "PerGameOptions":
-        return cls(cosmetic_patches=(game.data.layout.cosmetic_patches or BaseCosmeticPatches)())
+        return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
     def from_json(cls, value, game: RandovaniaGame) -> "PerGameOptions":
-        cosmetic_patches = (game.data.layout.cosmetic_patches or BaseCosmeticPatches).from_json(value["cosmetic_patches"])
+        cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return PerGameOptions(
             cosmetic_patches=cosmetic_patches,
             input_path=decode_if_not_none(value["input_path"], Path),

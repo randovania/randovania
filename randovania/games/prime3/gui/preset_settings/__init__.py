@@ -27,7 +27,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         MetroidPresetItemPool(editor),
     ]
 
-def _corruption_format_params(configuration: CorruptionConfiguration) -> Dict[str, List[str]]:
+def corruption_format_params(configuration: CorruptionConfiguration) -> Dict[str, List[str]]:
     major_items = configuration.major_items_configuration
     template_strings = _format_params_base(configuration)
 

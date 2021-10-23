@@ -37,7 +37,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         per_game = options.options_for_game(self._game)
 
         description_text = "<html><head/><body><p>In order to create the randomized game, an ISO file of {} for the Nintendo Gamecube is necessary.</p>".format(
-            game.data.long_name)
+            game.long_name)
         if not patcher.uses_input_file_directly:
             description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
         description_text += "</body></html>"

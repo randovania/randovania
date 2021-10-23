@@ -61,7 +61,7 @@ class GameConnection(QObject, ConnectionBackend):
     @property
     def current_game_name(self) -> Optional[str]:
         if self.connector is not None:
-            return self.connector.game_enum.data.long_name
+            return self.connector.game_enum.long_name
 
     @property
     def name(self) -> str:

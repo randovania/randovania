@@ -152,7 +152,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
 
         self._game_checks = set()
         for game in _SUPPORTED_GAME_URLS:
-            game_checkbox = QCheckBox(game.data.long_name)
+            game_checkbox = QCheckBox(game.long_name)
             game_checkbox.setChecked(True)
             self.game_check_layout.addWidget(game_checkbox)
             game_checkbox.stateChanged.connect(self.update_list)
@@ -249,7 +249,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             goal = QTableWidgetItem(session.goal)
             info = QTableWidgetItem(session.info)
             opened_at = QTableWidgetItem(session.opened_at.astimezone().strftime("%c"))
-            game_name = QTableWidgetItem(session.game.data.short_name)
+            game_name = QTableWidgetItem(session.game.short_name)
 
             name.setData(Qt.UserRole, session)
             self.table_widget.setItem(i, 0, name)

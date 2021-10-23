@@ -300,7 +300,7 @@ def render_worlds_graph_logic(args):
     from randovania.game_description.world.node import PickupNode, DockNode, TeleporterNode
 
     gd = load_game_description(args)
-    dot = graphviz.Digraph(comment=gd.game.data.long_name)
+    dot = graphviz.Digraph(comment=gd.game.long_name)
 
     worlds = list(gd.world_list.worlds)
 

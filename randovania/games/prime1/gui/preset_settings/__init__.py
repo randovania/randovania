@@ -15,8 +15,8 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
-    from .prime_goal_tab import PresetPrimeGoal
-    from .prime_patches_tab import PresetPrimePatches
+    from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
+    from randovania.games.prime1.gui.preset_settings.prime_patches_tab import PresetPrimePatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     return [
@@ -38,7 +38,7 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.ORIGINAL: None,
 }
 
-def _prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str]]:
+def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str]]:
     template_strings = _format_params_base(configuration)
     cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
 
