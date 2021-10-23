@@ -61,7 +61,7 @@ game to have proper pickups:
 
 ### Exporting games
 
-In order to export a game, a patcher is required. Typically, the patcher will be included in Randovania for seamless exports. Some games, however, may prefer an alternative implementation: refer to Corruption as an example of exporting data to be passed to a standalone patcher.
+In order to export a game, a patcher is required. Typically, the patcher will be included in Randovania for seamless exports. This is a requirement for non-experimental games. Experimental games, however, may prefer an alternative implementation: refer to Corruption as an example of exporting data to be passed to a standalone patcher.
 
 **TODO**: details
 
