@@ -11,7 +11,7 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
     MemoryOperationExecutor
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_dol_versions
+from randovania.games.prime2.patcher import echoes_dol_versions
 
 
 @pytest.fixture(name="backend")

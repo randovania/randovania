@@ -60,7 +60,7 @@ def _find_area_with_teleporter(world_list: WorldList, teleporter: Teleporter) ->
 
 
 def _name_for_gate(gate: TranslatorGate) -> str:
-    from randovania.games.patchers import claris_patcher
+    from randovania.games.prime2.patcher import claris_patcher
     for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Index"] == gate.index:
             return items["Name"]
@@ -68,7 +68,7 @@ def _name_for_gate(gate: TranslatorGate) -> str:
 
 
 def _find_gate_with_name(gate_name: str) -> TranslatorGate:
-    from randovania.games.patchers import claris_patcher
+    from randovania.games.prime2.patcher import claris_patcher
     for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Name"] == gate_name:
             return TranslatorGate(items["Index"])

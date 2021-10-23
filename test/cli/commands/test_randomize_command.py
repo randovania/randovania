@@ -21,7 +21,7 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
 
-    mock_provider_for: MagicMock = mocker.patch("randovania.games.patcher_provider.PatcherProvider.patcher_for_game")
+    mock_provider_for: MagicMock = mocker.patch("randovania.patching.patcher_provider.PatcherProvider.patcher_for_game")
     patcher: MagicMock = mock_provider_for.return_value
 
     args = MagicMock()

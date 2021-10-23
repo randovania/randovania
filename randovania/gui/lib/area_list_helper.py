@@ -3,7 +3,7 @@ from typing import List, Callable, FrozenSet, Dict
 
 from PySide2 import QtWidgets, QtCore
 
-from randovania.games.prime import elevators
+from randovania.patching.prime import elevators
 from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.world import World

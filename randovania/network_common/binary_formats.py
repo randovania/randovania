@@ -1,6 +1,6 @@
 from construct import PrefixedArray, VarInt, Struct, CString, Flag
 
-from randovania.games.binary_data import OptionalValue
+from randovania.patching.binary_data import OptionalValue
 
 BinStr = CString("utf-8")
 

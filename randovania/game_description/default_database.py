@@ -8,7 +8,7 @@ from randovania.game_description.data_reader import read_resource_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item import item_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.games import default_data
+from randovania.patching import default_data
 from randovania.games.game import RandovaniaGame
 
 

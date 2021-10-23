@@ -4,7 +4,7 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.games import default_data
+from randovania.patching import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration

@@ -14,7 +14,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.patcher_file_lib import item_names
+from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib

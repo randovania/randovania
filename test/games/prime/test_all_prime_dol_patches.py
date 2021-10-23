@@ -4,7 +4,7 @@ import pytest
 
 from randovania.dol_patching import assembler
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import all_prime_dol_patches
+from randovania.patching.prime import all_prime_dol_patches
 
 
 @pytest.fixture(name="string_display")

@@ -30,7 +30,7 @@ from randovania.game_description.world.node import Node, ResourceNode, Translato
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import elevators
+from randovania.patching.prime import elevators
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow

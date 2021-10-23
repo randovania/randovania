@@ -8,7 +8,7 @@ def randomize_command_logic(args):
 
 
 async def randomize_command_logic_async(args):
-    from randovania.games.patcher_provider import PatcherProvider
+    from randovania.patching.patcher_provider import PatcherProvider
     from randovania.generator import generator
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration

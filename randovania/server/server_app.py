@@ -10,7 +10,7 @@ from cryptography.fernet import Fernet
 from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
-from randovania.games.patcher_provider import PatcherProvider
+from randovania.patching.patcher_provider import PatcherProvider
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger

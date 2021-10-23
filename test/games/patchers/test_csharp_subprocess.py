@@ -5,14 +5,14 @@ from unittest.mock import patch, MagicMock, call
 
 import pytest
 
-from randovania.games.patchers import csharp_subprocess
+from randovania.games.prime2.patcher import csharp_subprocess
 
 
 @pytest.fixture(
     params=[False, True],
     name="mock_is_windows")
 def _mock_is_windows(request):
-    with patch("randovania.games.patchers.csharp_subprocess.is_windows", return_value=request.param):
+    with patch("randovania.games.prime2.patcher.csharp_subprocess.is_windows", return_value=request.param):
         yield request.param
 
 

@@ -16,7 +16,7 @@ import tenacity
 from randovania import VERSION
 from randovania.cli import prime_database
 from randovania.games.game import RandovaniaGame
-from randovania.games import default_data
+from randovania.patching import default_data
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]

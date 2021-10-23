@@ -13,8 +13,9 @@ from randovania.game_connection.memory_executor_choice import MemoryExecutorChoi
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import (echoes_dol_versions, prime1_dol_versions,
-                                    corruption_dol_versions)
+from randovania.games.prime1.patcher import prime1_dol_versions
+from randovania.games.prime2.patcher import echoes_dol_versions
+from randovania.games.prime3.patcher import corruption_dol_versions
 
 PermanentPickups = Tuple[Tuple[str, PickupEntry], ...]
 

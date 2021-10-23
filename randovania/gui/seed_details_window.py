@@ -15,7 +15,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.patcher_file_lib import item_names
+from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
@@ -157,7 +157,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.open()
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.patchers import gollop_corruption_patcher
+        from randovania.games.prime3.patcher import gollop_corruption_patcher
 
         cosmetic = self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches
         preset = self.layout_description.permalink.get_preset(self.current_player_index)

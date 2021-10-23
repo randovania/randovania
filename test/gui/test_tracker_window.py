@@ -96,28 +96,28 @@ def test_load_previous_state_success(tmp_path: Path, default_preset):
 
 
 @pytest.mark.parametrize("shuffle_advanced", [False, True])
-def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_preset, shuffle_advanced):
+def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset, shuffle_advanced):
     if shuffle_advanced:
         translator_requirement = copy.copy(
-            default_preset.configuration.translator_configuration.translator_requirement)
+            default_echoes_preset.configuration.translator_configuration.translator_requirement)
         for gate in translator_requirement.keys():
             translator_requirement[gate] = LayoutTranslatorRequirement.RANDOM
             break
 
-        new_gate = dataclasses.replace(default_preset.configuration.translator_configuration,
+        new_gate = dataclasses.replace(default_echoes_preset.configuration.translator_configuration,
                                        translator_requirement=translator_requirement)
         layout_config = dataclasses.replace(
-            default_preset.configuration,
+            default_echoes_preset.configuration,
             elevators=dataclasses.replace(
-                default_preset.configuration.elevators,
+                default_echoes_preset.configuration.elevators,
                 mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
             ),
             translator_configuration=new_gate)
 
-        preset = dataclasses.replace(default_preset.fork(), configuration=layout_config)
+        preset = dataclasses.replace(default_echoes_preset.fork(), configuration=layout_config)
 
     else:
-        preset = default_preset
+        preset = default_echoes_preset
 
     state = {
         "actions": [

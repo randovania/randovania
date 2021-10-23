@@ -54,19 +54,19 @@ def test_decode_invalid(invalid: str):
 ])
 def test_round_trip(spoiler: bool,
                     layout: dict,
-                    default_preset,
+                    default_echoes_preset,
                     mocker):
     # Setup
     random_uuid = uuid.uuid4()
     mocker.patch("uuid.uuid4", return_value=random_uuid)
 
     preset = Preset(
-        name="{} Custom".format(default_preset.name),
+        name="{} Custom".format(default_echoes_preset.name),
         description="A customized preset.",
         uuid=random_uuid,
-        base_preset_uuid=default_preset.uuid,
-        game=default_preset.game,
-        configuration=dataclasses.replace(default_preset.configuration, **layout),
+        base_preset_uuid=default_echoes_preset.uuid,
+        game=default_echoes_preset.game,
+        configuration=dataclasses.replace(default_echoes_preset.configuration, **layout),
     )
 
     link = Permalink(

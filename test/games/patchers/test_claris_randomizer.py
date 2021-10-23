@@ -5,8 +5,8 @@ from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
-from randovania.games.patchers import claris_randomizer
-from randovania.games.patchers.exceptions import ExportFailure
+from randovania.games.prime2.patcher import claris_randomizer
+from randovania.patching.patchers.exceptions import ExportFailure
 from randovania.layout.layout_description import LayoutDescription
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
@@ -32,7 +32,7 @@ def _valid_tmp_game_root(tmp_path):
     return game_root
 
 
-@patch("randovania.games.patchers.csharp_subprocess.process_command", autospec=True)
+@patch("randovania.games.prime2.patcher.csharp_subprocess.process_command", autospec=True)
 def test_run_with_args_success(mock_process_command: MagicMock,
                                ):
     # Setup
@@ -64,7 +64,7 @@ def test_run_with_args_success(mock_process_command: MagicMock,
     ])
 
 
-@patch("randovania.games.patchers.csharp_subprocess.process_command", autospec=True)
+@patch("randovania.games.prime2.patcher.csharp_subprocess.process_command", autospec=True)
 def test_run_with_args_failure(mock_process_command: MagicMock):
     # Setup
     input_data = "asdf"
@@ -96,8 +96,8 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
     assert str(error.value) == "External tool did not send '{}'.".format(finish_string)
 
 
-@patch("randovania.games.patchers.claris_randomizer.validate_game_files_path", autospec=True)
-@patch("randovania.games.patchers.claris_randomizer.get_data_path", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_randomizer.validate_game_files_path", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_randomizer.get_data_path", autospec=True)
 def test_base_args(mock_get_data_path: MagicMock,
                    mock_validate_game_files_path: MagicMock,
                    ):
@@ -189,8 +189,8 @@ def test_create_pak_backups(mock_copy: MagicMock,
     ])
 
 
-@patch("randovania.games.patchers.claris_randomizer._run_with_args", autospec=True)
-@patch("randovania.games.patchers.claris_randomizer.get_data_path", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_randomizer._run_with_args", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_randomizer.get_data_path", autospec=True)
 def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
                                mock_run_with_args: MagicMock,
                                tmpdir,
@@ -222,13 +222,13 @@ def test_apply_patcher_file(
 ):
     # Setup
     mock_add_menu_mod_to_files: MagicMock = mocker.patch(
-        "randovania.games.patchers.claris_randomizer._add_menu_mod_to_files", autospec=True
+        "randovania.games.prime2.patcher.claris_randomizer._add_menu_mod_to_files", autospec=True
     )
     mock_run_with_args: MagicMock = mocker.patch(
-        "randovania.games.patchers.claris_randomizer._run_with_args", autospec=True
+        "randovania.games.prime2.patcher.claris_randomizer._run_with_args", autospec=True
     )
     mock_apply_patches: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patcher.apply_patches", autospec=True
+        "randovania.games.prime2.patcher.echoes_dol_patcher.apply_patches", autospec=True
     )
     mock_create_progress_update_from_successive_messages: MagicMock = mocker.patch(
         "randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True
@@ -237,7 +237,7 @@ def test_apply_patcher_file(
     game_root = valid_tmp_game_root
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
-    mock_data_from_json = mocker.patch("randovania.games.prime.echoes_dol_patcher.EchoesDolPatchesData.from_json")
+    mock_data_from_json = mocker.patch("randovania.games.prime2.patcher.echoes_dol_patcher.EchoesDolPatchesData.from_json")
 
     patcher_data = {
         "menu_mod": include_menu_mod,

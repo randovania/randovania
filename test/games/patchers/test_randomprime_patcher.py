@@ -8,8 +8,8 @@ import randovania
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.patchers.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
-from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches

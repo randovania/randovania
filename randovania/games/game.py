@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+    from randovania.patching.patcher import Patcher
 
 @dataclass(frozen=True)
 class GameLayout:
@@ -72,6 +73,9 @@ class GameData:
     generator: GameGenerator = GameGenerator()
     """"""
 
+    patcher: Optional[Patcher] = None
+    """"""
+
 
 class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME = "prime1"
@@ -81,7 +85,7 @@ class RandovaniaGame(BitPackEnum, Enum):
 
     @property
     def data(self) -> GameData:
-        return importlib.import_module('.'+self.value, "randovania.games").game_data
+        return importlib.import_module('.'+self.value+".game_data", "randovania.games").game_data
     
     @property
     def data_path(self) -> Path:

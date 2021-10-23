@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock, ANY, call
 
 import pytest
 
-from randovania.games.patchers.gamecube import iso_packager
+from randovania.patching.patchers.gamecube import iso_packager
 
 work_around_pytest_qt_bug = False  # TODO: pytest-qt bug
 
@@ -184,7 +184,7 @@ def test_shared_process_code_failure():
     assert str(exception.value) == "You got an error!"
 
 
-@patch("randovania.games.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
+@patch("randovania.patching.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
 def test_unpack_iso_success(mock_shared_process_code: MagicMock,
                             ):
     # Setup
@@ -206,7 +206,7 @@ def test_unpack_iso_success(mock_shared_process_code: MagicMock,
     )
 
 
-@patch("randovania.games.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
+@patch("randovania.patching.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
 def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
                             ):
     # Setup
@@ -228,9 +228,9 @@ def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
 
 
 @pytest.mark.parametrize("iso_too_big", [False, True])
-@patch("randovania.games.patchers.gamecube.iso_packager.nod")
-@patch("randovania.games.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
-@patch("randovania.games.patchers.gamecube.iso_packager.validate_game_files_path", autospec=True)
+@patch("randovania.patching.patchers.gamecube.iso_packager.nod")
+@patch("randovania.patching.patchers.gamecube.iso_packager._shared_process_code", autospec=True)
+@patch("randovania.patching.patchers.gamecube.iso_packager.validate_game_files_path", autospec=True)
 def test_pack_iso(mock_validate_game_files_path: MagicMock,
                   mock_shared_process_code: MagicMock,
                   mock_nod: MagicMock,
@@ -277,8 +277,8 @@ def test_pack_iso(mock_validate_game_files_path: MagicMock,
         )
 
 
-@patch("randovania.games.patchers.gamecube.iso_packager.nod")
-@patch("randovania.games.patchers.gamecube.iso_packager.validate_game_files_path", autospec=True)
+@patch("randovania.patching.patchers.gamecube.iso_packager.nod")
+@patch("randovania.patching.patchers.gamecube.iso_packager.validate_game_files_path", autospec=True)
 def test_pack_iso_invalid_version(mock_validate_game_files_path: MagicMock,
                                   mock_nod: MagicMock,
                                   ):
@@ -301,6 +301,6 @@ def test_can_process_iso_success():
 
 def test_can_process_iso_failure():
     with patch.dict(sys.modules, nod=None):
-        del sys.modules["randovania.games.patchers.gamecube.iso_packager"]
-        from randovania.games.patchers.gamecube.iso_packager import can_process_iso
+        del sys.modules["randovania.patching.patchers.gamecube.iso_packager"]
+        from randovania.patching.patchers.gamecube.iso_packager import can_process_iso
         assert not can_process_iso()
