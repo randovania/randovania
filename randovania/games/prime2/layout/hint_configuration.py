@@ -36,7 +36,8 @@ class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck):
         params = {}
 
         if "sky_temple_keys" in value:
-            params["sky_temple_keys"] = SkyTempleKeyHintMode(value["sky_temple_keys"])
+            params["sky_temple_keys"] = SkyTempleKeyHintMode(
+                value["sky_temple_keys"])
 
         if "item_hints" in value:
             params["item_hints"] = value["item_hints"]

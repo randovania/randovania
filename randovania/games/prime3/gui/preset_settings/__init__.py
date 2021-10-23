@@ -6,6 +6,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 
+
 def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     game_enum = editor.game
     game_description = default_database.game_description_for(game_enum)
@@ -26,6 +27,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
     ]
+
 
 def corruption_format_params(configuration: CorruptionConfiguration) -> Dict[str, List[str]]:
     major_items = configuration.major_items_configuration
@@ -59,6 +61,7 @@ def corruption_format_params(configuration: CorruptionConfiguration) -> Dict[str
 
     return template_strings
 
+
 corruption_expected_items = {
     "Scan Visor",
     "Morph Ball",
@@ -67,6 +70,7 @@ corruption_expected_items = {
     "Charge Beam",
     "Space Jump Boots",
 }
+
 
 def corruption_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
     unexpected_items = corruption_expected_items
@@ -82,5 +86,5 @@ def corruption_unexpected_items(configuration: MajorItemsConfiguration) -> List[
         unexpected_items.add("Seeker Missile")
     else:
         unexpected_items.add("Progressive Missile")
-    
+
     return unexpected_items

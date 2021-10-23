@@ -180,7 +180,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
     specific_patches["always_up_great_temple"] = elevator_shuffle_mode != TeleporterShuffleMode.VANILLA
 
 
-def _create_elevator_scan_port_patches(game:RandovaniaGame, world_list: WorldList, elevator_connection: ElevatorConnection,
+def _create_elevator_scan_port_patches(game: RandovaniaGame, world_list: WorldList, elevator_connection: ElevatorConnection,
                                        ) -> Iterator[dict]:
     nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
 
@@ -188,7 +188,8 @@ def _create_elevator_scan_port_patches(game:RandovaniaGame, world_list: WorldLis
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = elevators.get_elevator_or_area_name(game, world_list, elevator_connection[teleporter], True)
+        target_area_name = elevators.get_elevator_or_area_name(
+            game, world_list, elevator_connection[teleporter], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
@@ -262,6 +263,7 @@ def _logbook_title_string_patches():
         },
     ]
 
+
 def _akul_testament_string_patch():
     # update after each tournament! ordered from newest to oldest
     champs = [
@@ -276,7 +278,8 @@ def _akul_testament_string_patch():
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champstring = '\n'.join([f'{champ["title"]}: {hint_lib.color_text(hint_lib.TextColor.PLAYER, champ["name"])}' for champ in champs])
+    champstring = '\n'.join(
+        [f'{champ["title"]}: {hint_lib.color_text(hint_lib.TextColor.PLAYER, champ["name"])}' for champ in champs])
     latest = champstring.partition("\n")[0]
 
     return [
@@ -289,6 +292,7 @@ def _akul_testament_string_patch():
             ],
         },
     ]
+
 
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
@@ -311,7 +315,8 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        hints.create_hints(all_patches, players_config, game.world_list, area_namers, rng)
+        hints.create_hints(all_patches, players_config,
+                           game.world_list, area_namers, rng)
     )
 
     # Sky Temple Keys
@@ -325,11 +330,10 @@ def _create_string_patches(hint_config: HintConfiguration,
             stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
 
     # Elevator Scans
-    string_patches.extend(_create_elevator_scan_port_patches(game.game, game.world_list, patches.elevator_connection))
+    string_patches.extend(_create_elevator_scan_port_patches(
+        game.game, game.world_list, patches.elevator_connection))
 
     string_patches.extend(_logbook_title_string_patches())
-
-    
 
     return string_patches
 
@@ -337,7 +341,8 @@ def _create_string_patches(hint_config: HintConfiguration,
 def _create_starting_popup(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
                            starting_items: CurrentResources) -> list:
-    extra_items = item_names.additional_starting_items(layout_configuration, resource_database, starting_items)
+    extra_items = item_names.additional_starting_items(
+        layout_configuration, resource_database, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
@@ -429,7 +434,8 @@ def create_patcher_file(description: LayoutDescription,
     area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
                    for index, preset in description.permalink.presets.items()}
 
-    game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+    game = default_database.game_description_for(
+        RandovaniaGame.METROID_PRIME_ECHOES)
 
     result = {}
     _add_header_data_to_result(description, result)
@@ -448,9 +454,11 @@ def create_patcher_file(description: LayoutDescription,
         "&push;&main-color=#33ffd6;{}&pop;",
     )
 
-    [item_category_visors] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "visor"]
-    [item_category_beams] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name == "beam"]
-    
+    [item_category_visors] = [cat for cat in configuration.major_items_configuration.default_items.keys()
+                              if cat.name == "visor"]
+    [item_category_beams] = [cat for cat in configuration.major_items_configuration.default_items.keys()
+                             if cat.name == "beam"]
+
     result["menu_mod"] = configuration.menu_mod
     result["dol_patches"] = EchoesDolPatchesData(
         energy_per_tank=configuration.energy_per_tank,
@@ -468,18 +476,22 @@ def create_patcher_file(description: LayoutDescription,
     ).as_json
 
     # Add Spawn Point
-    result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
+    result["spawn_point"] = _create_spawn_point_field(
+        patches, game.resource_database)
 
-    result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
+    result["starting_popup"] = _create_starting_popup(
+        configuration, game.resource_database, patches.starting_items)
 
     # Add the pickups
-    result["pickups"] = _create_pickup_list(cosmetic_patches, configuration, game, patches, players_config, rng)
+    result["pickups"] = _create_pickup_list(
+        cosmetic_patches, configuration, game, patches, players_config, rng)
 
     # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game)
 
     # Add translators
-    result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
+    result["translator_gates"] = _create_translator_gates_field(
+        patches.translator_gates)
 
     # Scan hints
     result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,
@@ -530,7 +542,8 @@ def create_patcher_file(description: LayoutDescription,
     result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
     result["maps_to_never_reveal"] = exclude_map_ids
 
-    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators.mode)
+    _apply_translator_gate_patches(
+        result["specific_patches"], configuration.elevators.mode)
 
     return result
 
@@ -554,7 +567,8 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         rng,
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(game, memo_data, players_config),
+        exporter=pickup_exporter.create_pickup_exporter(
+            game, memo_data, players_config),
         visual_etm=pickup_creator.create_visual_etm(),
     )
 

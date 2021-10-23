@@ -21,32 +21,42 @@ if TYPE_CHECKING:
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
 
+
 @dataclass(frozen=True)
 class GameLayout:
     configuration: Type[BaseConfiguration]
     cosmetic_patches: Type[BaseCosmeticPatches]
 
+
 @dataclass(frozen=True)
 class GamePresetDescriber:
     expected_items: Set[str] = frozenset()
-    unexpected_items: Callable[[MajorItemsConfiguration], Set[str]] = lambda config: frozenset()
+    unexpected_items: Callable[[MajorItemsConfiguration],
+                               Set[str]] = lambda config: frozenset()
     format_params: Optional[Callable[[BaseConfiguration], None]] = None
+
 
 def no_tab_provider(preset, window):
     raise NotImplementedError()
 
+
 @dataclass(frozen=True)
 class GameGui:
-    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]] = no_tab_provider
+    tab_provider: Callable[[PresetEditor, WindowManager],
+                           Iterable[PresetTab]] = no_tab_provider
     cosmetic_dialog: Optional[Type[BaseCosmeticPatchesDialog]] = None
     preset_describer: GamePresetDescriber = GamePresetDescriber()
+
 
 def no_item_pool_creator(results, configuration, db):
     pass
 
+
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None] = no_tab_provider
+    item_pool_creator: Callable[[
+        PoolResults, BaseConfiguration, ResourceDatabase], None] = no_tab_provider
+
 
 @dataclass(frozen=True)
 class GameData:
@@ -96,15 +106,15 @@ class RandovaniaGame(BitPackEnum, Enum):
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data
-    
+
     @property
     def data_path(self) -> Path:
         return get_file_path().joinpath("games", self.value)
-    
+
     @property
     def short_name(self) -> str:
         return self.data.short_name
-    
+
     @property
     def long_name(self) -> str:
         return self.data.long_name

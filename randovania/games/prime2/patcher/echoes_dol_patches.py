@@ -106,7 +106,8 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     instructions_to_fill = instructions_space - len(patch)
 
     if instructions_to_fill < 0:
-        raise RuntimeError(f"Our patch ({len(patch)}) is bigger than the space we have ({instructions_space}).")
+        raise RuntimeError(
+            f"Our patch ({len(patch)}) is bigger than the space we have ({instructions_space}).")
 
     for i in range(instructions_to_fill):
         patch.append(nop())
@@ -126,7 +127,8 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
         for beam_index, beam_ammo_types in enumerate(ammo_types):
             instructions = []
             if beam_index + 1 < len(ammo_types):
-                instructions.append(bdnz(f"_before_get_ammo_type_{beam_index + 1}_{index}"))
+                instructions.append(
+                    bdnz(f"_before_get_ammo_type_{beam_index + 1}_{index}"))
 
             if beam_ammo_types[index] == -1:
                 instructions.extend([
@@ -139,11 +141,13 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
                     b(label),
                 ])
 
-            instructions[0].with_label(f"_before_get_ammo_type_{beam_index}_{index}")
+            instructions[0].with_label(
+                f"_before_get_ammo_type_{beam_index}_{index}")
             body.extend(instructions)
 
         body.extend([
-            or_(r3, r31, r31).with_label(label),  # arg1 = playerState, arg2 is already there
+            # arg1 = playerState, arg2 is already there
+            or_(r3, r31, r31).with_label(label),
             li(r5, 1),  # arg3 = true, allow multiplayer ammo stuff
             bl("CPlayerState::GetItemAmount"),  # r3 = ammoCount
         ])
@@ -151,7 +155,8 @@ def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, i
         return body
 
     get_uncharged_cost = [
-        custom_ppc.load_unsigned_32bit(r4, symbols["BeamIdToChargedShotAmmoCost"]),
+        custom_ppc.load_unsigned_32bit(
+            r4, symbols["BeamIdToChargedShotAmmoCost"]),
         lwz(r5, 0x774, r30),  # r5 = get current beam
         rlwinm(r5, r5, 0x2, 0x0, 0x1d),  # r5 *= 4
         lwzx(r4, r4, r5),  # ammoCost_r4 = UnchargedCosts_r4[currentBeam]
@@ -244,13 +249,15 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration
         b("update_out_beam_type"),
 
         # Dark Beam
-        bdnz("light_beam").with_label("dark_beam"),  # if (--count_register > 0) goto
+        # if (--count_register > 0) goto
+        bdnz("light_beam").with_label("dark_beam"),
         li(r3, ammo_types[1][0]),
         li(r9, ammo_types[1][1]),
         b("update_out_beam_type"),
 
         # Light Beam
-        bdnz("annihilator_beam").with_label("light_beam"),  # if (--count_register > 0) goto
+        bdnz("annihilator_beam").with_label(
+            "light_beam"),  # if (--count_register > 0) goto
         li(r3, ammo_types[2][0]),
         li(r9, ammo_types[2][1]),
         b("update_out_beam_type"),
@@ -260,7 +267,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration
         li(r9, ammo_types[3][1]),
 
         # update_out_beam_type
-        stw(r3, 0x0, r27).with_label("update_out_beam_type"),  # *outBeamAmmoTypeA = r3
+        stw(r3, 0x0, r27).with_label(
+            "update_out_beam_type"),  # *outBeamAmmoTypeA = r3
         stw(r9, 0x0, r28),  # *outBeamAmmoTypeB = r9
 
         b(patch_addresses.get_beam_ammo_type_and_costs + offset_to_body_end),
@@ -288,7 +296,8 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration
     dol_file.write("g_ChargeComboMissileCosts", missile_costs_patch)
     dol_file.write_instructions(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset,
                                 ammo_type_patch)
-    dol_file.write_instructions("CPlayerGun::IsOutOfAmmoToShoot", _is_out_of_ammo_patch(dol_file.symbols, ammo_types))
+    dol_file.write_instructions(
+        "CPlayerGun::IsOutOfAmmoToShoot", _is_out_of_ammo_patch(dol_file.symbols, ammo_types))
 
 
 def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
@@ -297,8 +306,10 @@ def apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
                                dol_file: DolFile):
     offset = patch_addresses.heal_per_frame_constant - sda2_base
 
-    dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))
-    dol_file.write_instructions(patch_addresses.increment_health_fmr, [lfs(f1, offset, r2)])
+    dol_file.write(patch_addresses.heal_per_frame_constant,
+                   struct.pack(">f", heal_per_second / 60))
+    dol_file.write_instructions(
+        patch_addresses.increment_health_fmr, [lfs(f1, offset, r2)])
 
 
 def apply_starting_visor_patch(addresses: StartingBeamVisorAddresses, default_items: dict, dol_file: DolFile):
@@ -356,7 +367,8 @@ class EchoesDolVersion(BasePrimeDolVersion):
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
-    resource_database = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).resource_database
+    resource_database = default_database.game_description_for(
+        RandovaniaGame.METROID_PRIME_ECHOES).resource_database
 
     dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
 

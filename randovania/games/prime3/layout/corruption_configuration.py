@@ -8,7 +8,8 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 @dataclasses.dataclass(frozen=True)
 class CorruptionConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
-    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    energy_per_tank: int = dataclasses.field(
+        metadata={"min": 1, "max": 1000, "precision": 1})
     start_with_corrupted_hypermode: bool = False
 
     @classmethod

@@ -4,26 +4,28 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
 from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
 
+
 def _prime_gui():
     from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs, prime_expected_items, prime_unexpected_items, prime_format_params
     from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
 
     return GameGui(
-        tab_provider = prime1_preset_tabs,
-        cosmetic_dialog = PrimeCosmeticPatchesDialog,
-        preset_describer = GamePresetDescriber(
-            expected_items = prime_expected_items,
-            unexpected_items = prime_unexpected_items,
-            format_params = prime_format_params
+        tab_provider=prime1_preset_tabs,
+        cosmetic_dialog=PrimeCosmeticPatchesDialog,
+        preset_describer=GamePresetDescriber(
+            expected_items=prime_expected_items,
+            unexpected_items=prime_unexpected_items,
+            format_params=prime_format_params
         )
     )
 
-game_data: GameData = GameData(
-    short_name = "Prime",
-    long_name = "Metroid Prime",
-    experimental = False,
 
-    presets = [
+game_data: GameData = GameData(
+    short_name="Prime",
+    long_name="Metroid Prime",
+    experimental=False,
+
+    presets=[
         {
             "path": "starter_preset.rdvpreset"
         },
@@ -32,16 +34,16 @@ game_data: GameData = GameData(
         }
     ],
 
-    layout = GameLayout(
-        configuration = PrimeConfiguration,
-        cosmetic_patches = PrimeCosmeticPatches
+    layout=GameLayout(
+        configuration=PrimeConfiguration,
+        cosmetic_patches=PrimeCosmeticPatches
     ),
 
-    gui = _prime_gui,
+    gui=_prime_gui,
 
-    generator = GameGenerator(
-        item_pool_creator = prime1_specific_pool
+    generator=GameGenerator(
+        item_pool_creator=prime1_specific_pool
     ),
 
-    patcher = RandomprimePatcher()
+    patcher=RandomprimePatcher()
 )

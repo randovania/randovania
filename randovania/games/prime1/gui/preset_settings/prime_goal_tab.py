@@ -42,4 +42,5 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
     def on_preset_changed(self, preset: Preset):
         artifacts = preset.configuration.artifact_target
         self.slider.setValue(artifacts.num_artifacts)
-        self.min_progression_spin.setValue(preset.configuration.artifact_minimum_progression)
+        self.min_progression_spin.setValue(
+            preset.configuration.artifact_minimum_progression)

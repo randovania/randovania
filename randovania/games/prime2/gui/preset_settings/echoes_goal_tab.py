@@ -16,12 +16,15 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
-        self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
+        self.skytemple_combo.setItemData(
+            1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
         self.skytemple_combo.setItemData(2, int)
 
         self.skytemple_combo.options_field_name = "layout_configuration_sky_temple_keys"
-        self.skytemple_combo.currentIndexChanged.connect(self._on_sky_temple_key_combo_changed)
-        self.skytemple_slider.valueChanged.connect(self._on_sky_temple_key_combo_slider_changed)
+        self.skytemple_combo.currentIndexChanged.connect(
+            self._on_sky_temple_key_combo_changed)
+        self.skytemple_slider.valueChanged.connect(
+            self._on_sky_temple_key_combo_slider_changed)
 
         # Default to False, since the slider defaults to a non-collect keys value.
         self._set_slider_visible(False)
@@ -38,7 +41,8 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         combo_enum = self.skytemple_combo.currentData()
         with self._editor as editor:
             if combo_enum is int:
-                new_value = LayoutSkyTempleKeyMode(self.skytemple_slider.value())
+                new_value = LayoutSkyTempleKeyMode(
+                    self.skytemple_slider.value())
                 self._set_slider_visible(True)
             else:
                 new_value = combo_enum

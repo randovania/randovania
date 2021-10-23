@@ -35,6 +35,8 @@ class EchoesUserPreferences(JsonDataclass):
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
             if "min" in field.metadata and value < field.metadata["min"]:
-                raise ValueError(f'Value {value} for field "{field.name}" is less than minimum {field.metadata["min"]}')
+                raise ValueError(
+                    f'Value {value} for field "{field.name}" is less than minimum {field.metadata["min"]}')
             if "max" in field.metadata and value > field.metadata["max"]:
-                raise ValueError(f'Value {value} for field "{field.name}" is less than maximum {field.metadata["max"]}')
+                raise ValueError(
+                    f'Value {value} for field "{field.name}" is less than maximum {field.metadata["max"]}')

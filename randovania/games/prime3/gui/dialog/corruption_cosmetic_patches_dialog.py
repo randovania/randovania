@@ -24,14 +24,18 @@ class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCo
     def connect_signals(self):
         super().connect_signals()
 
-        self.random_door_colors_check.stateChanged.connect(self._persist_option_then_notify("random_door_colors"))
-        self.random_welding_colors_check.stateChanged.connect(self._persist_option_then_notify("random_welding_colors"))
+        self.random_door_colors_check.stateChanged.connect(
+            self._persist_option_then_notify("random_door_colors"))
+        self.random_welding_colors_check.stateChanged.connect(
+            self._persist_option_then_notify("random_welding_colors"))
         self.suit_combo.currentIndexChanged.connect(self._on_suit_update)
 
     def on_new_cosmetic_patches(self, patches: CorruptionCosmeticPatches):
         self.random_door_colors_check.setChecked(patches.random_door_colors)
-        self.random_welding_colors_check.setChecked(patches.random_welding_colors)
-        self.suit_combo.setCurrentIndex(self.suit_combo.findData(patches.player_suit))
+        self.random_welding_colors_check.setChecked(
+            patches.random_welding_colors)
+        self.suit_combo.setCurrentIndex(
+            self.suit_combo.findData(patches.player_suit))
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):

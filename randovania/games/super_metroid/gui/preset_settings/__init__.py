@@ -2,6 +2,7 @@ from randovania.game_description import default_database
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor
 
+
 def super_metroid_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     game_enum = editor.game
     game_description = default_database.game_description_for(game_enum)

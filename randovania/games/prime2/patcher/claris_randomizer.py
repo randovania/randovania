@@ -117,7 +117,8 @@ def restore_pak_backups(
     pak_folder = backup_files_path.joinpath("paks")
     files_folder = game_root.joinpath("files")
     for i, pak in enumerate(_ECHOES_PAKS):
-        progress_update("Restoring {} from backup".format(pak), i / len(_ECHOES_PAKS))
+        progress_update("Restoring {} from backup".format(pak),
+                        i / len(_ECHOES_PAKS))
         shutil.copy(pak_folder.joinpath(pak), files_folder.joinpath(pak))
 
     files_folder.joinpath("menu_mod.txt").unlink(missing_ok=True)

@@ -6,6 +6,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 
+
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     game_enum = editor.game
     game_description = default_database.game_description_for(game_enum)
@@ -31,6 +32,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         MetroidPresetItemPool(editor),
     ]
 
+
 _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",
     LayoutCutsceneMode.MINOR: "Minor cutscene removal",
@@ -38,18 +40,21 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.ORIGINAL: None,
 }
 
+
 def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str]]:
     template_strings = _format_params_base(configuration)
     cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
 
     extra_message_tree = {
         "Difficulty": [
-            {"Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage): configuration.heat_damage != 10.0},
+            {"Heat Damage: {:.2f} dmg/s".format(
+                configuration.heat_damage): configuration.heat_damage != 10.0},
             {f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100},
         ],
         "Gameplay": [
             {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
-            {"Underwater movement without Gravity allowed": configuration.allow_underwater_movement_without_gravity},
+            {"Underwater movement without Gravity allowed":
+                configuration.allow_underwater_movement_without_gravity},
         ],
         "Quality of Life": [
             {
@@ -97,7 +102,8 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
         if flag
     ]
     if backwards:
-        template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
+        template_strings["Game Changes"].append(
+            "Allowed backwards: {}".format(", ".join(backwards)))
 
     # Artifacts
     template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "
@@ -105,11 +111,13 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
 
     return template_strings
 
+
 prime_expected_items = {
     "Combat Visor",
     "Scan Visor",
     "Power Beam"
 }
+
 
 def prime_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
     return prime_expected_items

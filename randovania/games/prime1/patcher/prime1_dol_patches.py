@@ -44,8 +44,10 @@ class Prime1DolVersion(BasePrimeDolVersion):
                 decr_pickup=symbols["DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei"],
             ),
         )
-        object.__setattr__(self, "state_for_world", symbols["StateForWorld__10CGameStateFUi"])
-        object.__setattr__(self, "set_layer_active", symbols["SetLayerActive__16CWorldLayerStateFiib"])
+        object.__setattr__(self, "state_for_world",
+                           symbols["StateForWorld__10CGameStateFUi"])
+        object.__setattr__(self, "set_layer_active",
+                           symbols["SetLayerActive__16CWorldLayerStateFiib"])
 
 
 def set_artifact_layer_active_patch(addresses: Prime1DolVersion, layer_id: int, active: bool,
@@ -55,7 +57,8 @@ def set_artifact_layer_active_patch(addresses: Prime1DolVersion, layer_id: int, 
 
     for_another_world = [
         # Get the LayerState via the CGameState
-        lwz(r3, addresses.game_state_pointer - addresses.sda13_base, r13),  # get g_GameState
+        lwz(r3, addresses.game_state_pointer - \
+            addresses.sda13_base, r13),  # get g_GameState
         # r4 already have the asset id
         bl(addresses.state_for_world),  # CGameState::StateForWorld
         lwz(r3, 0x14, r3),  # worldState->layerState

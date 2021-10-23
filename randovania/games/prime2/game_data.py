@@ -4,26 +4,28 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher.claris_patcher import ClarisPatcher
 
+
 def _echoes_gui():
     from randovania.games.prime2.gui.preset_settings import echoes_format_params, echoes_unexpected_items, prime2_preset_tabs, echoes_expected_items
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 
     return GameGui(
-        tab_provider = prime2_preset_tabs,
-        cosmetic_dialog = EchoesCosmeticPatchesDialog,
-        preset_describer = GamePresetDescriber(
-            expected_items = echoes_expected_items,
-            unexpected_items = echoes_unexpected_items,
-            format_params = echoes_format_params
+        tab_provider=prime2_preset_tabs,
+        cosmetic_dialog=EchoesCosmeticPatchesDialog,
+        preset_describer=GamePresetDescriber(
+            expected_items=echoes_expected_items,
+            unexpected_items=echoes_unexpected_items,
+            format_params=echoes_format_params
         )
     )
 
-game_data: GameData = GameData(
-    short_name = "Echoes",
-    long_name = "Metroid Prime 2: Echoes",
-    experimental = False,
 
-    presets = [
+game_data: GameData = GameData(
+    short_name="Echoes",
+    long_name="Metroid Prime 2: Echoes",
+    experimental=False,
+
+    presets=[
         {
             "path": "starter_preset.rdvpreset"
         },
@@ -35,16 +37,16 @@ game_data: GameData = GameData(
         }
     ],
 
-    layout = GameLayout(
-        configuration = EchoesConfiguration,
-        cosmetic_patches = EchoesCosmeticPatches
+    layout=GameLayout(
+        configuration=EchoesConfiguration,
+        cosmetic_patches=EchoesCosmeticPatches
     ),
 
-    gui = _echoes_gui,
+    gui=_echoes_gui,
 
-    generator = GameGenerator(
-        item_pool_creator = echoes_specific_pool
+    generator=GameGenerator(
+        item_pool_creator=echoes_specific_pool
     ),
 
-    patcher = ClarisPatcher()
+    patcher=ClarisPatcher()
 )

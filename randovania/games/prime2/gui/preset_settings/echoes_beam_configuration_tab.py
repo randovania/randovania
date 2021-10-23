@@ -116,11 +116,14 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
     def _on_ammo_type_combo_changed(self, beam: str, combo: QComboBox, is_ammo_b: bool, _):
         with self._editor as editor:
             beam_configuration = editor.configuration.beam_configuration
-            old_config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
+            old_config: BeamAmmoConfiguration = getattr(
+                beam_configuration, beam)
             if is_ammo_b:
-                new_config = dataclasses.replace(old_config, ammo_b=combo.currentData())
+                new_config = dataclasses.replace(
+                    old_config, ammo_b=combo.currentData())
             else:
-                new_config = dataclasses.replace(old_config, ammo_a=combo.currentData())
+                new_config = dataclasses.replace(
+                    old_config, ammo_a=combo.currentData())
 
             editor.set_configuration_field("beam_configuration",
                                            dataclasses.replace(beam_configuration, **{beam: new_config}))
@@ -139,8 +142,10 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
         for beam in _BEAMS:
             config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
 
-            self._beam_ammo_a[beam].setCurrentIndex(self._beam_ammo_a[beam].findData(config.ammo_a))
-            self._beam_ammo_b[beam].setCurrentIndex(self._beam_ammo_b[beam].findData(config.ammo_b))
+            self._beam_ammo_a[beam].setCurrentIndex(
+                self._beam_ammo_a[beam].findData(config.ammo_a))
+            self._beam_ammo_b[beam].setCurrentIndex(
+                self._beam_ammo_b[beam].findData(config.ammo_b))
             self._beam_ammo_b[beam].setEnabled(config.ammo_a != -1)
             self._beam_uncharged[beam].setValue(config.uncharged_cost)
             self._beam_charged[beam].setValue(config.charged_cost)

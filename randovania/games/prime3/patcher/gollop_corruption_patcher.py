@@ -189,7 +189,8 @@ STARTING_ITEMS_NAME_ALIAS = {
     "ShipMissileAmount": "ShipMissile",
     "ShipMissileCapacity": "ShipMissile",
 }
-_TWO_BYTE_VALUES = {STARTING_ITEMS_ORDER.index("MissileAmount"), STARTING_ITEMS_ORDER.index("MissileCapacity")}
+_TWO_BYTE_VALUES = {STARTING_ITEMS_ORDER.index(
+    "MissileAmount"), STARTING_ITEMS_ORDER.index("MissileCapacity")}
 
 
 def layout_string_for_items(item_names: List[str]) -> str:
@@ -217,10 +218,12 @@ def starting_items_for(resources: CurrentResources, hypermode_original: int) -> 
     capacity_by_short_name["HyperModeOriginal"] = hypermode_original
 
     result_values = [
-        capacity_by_short_name.get(STARTING_ITEMS_NAME_ALIAS.get(item, item), 0)
+        capacity_by_short_name.get(
+            STARTING_ITEMS_NAME_ALIAS.get(item, item), 0)
         for item in STARTING_ITEMS_ORDER
     ]
     return "custom " + "".join([
-        "{:02x}".format(value) if index in _TWO_BYTE_VALUES else "{:x}".format(value)
+        "{:02x}".format(
+            value) if index in _TWO_BYTE_VALUES else "{:x}".format(value)
         for index, value in enumerate(result_values)
     ])
