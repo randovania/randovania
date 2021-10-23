@@ -1,7 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
-import importlib
 from pathlib import Path
 from typing import Callable, Dict, Iterable, Optional, Set, Type, TYPE_CHECKING
 from randovania import get_file_path
@@ -25,37 +24,43 @@ if TYPE_CHECKING:
 @dataclass(frozen=True)
 class GameLayout:
     configuration: Type[BaseConfiguration]
+    """Logic and gameplay settings such as elevator shuffling."""
+
     cosmetic_patches: Type[BaseCosmeticPatches]
+    """Cosmetic settings such as item icons on maps."""
 
 
 @dataclass(frozen=True)
 class GamePresetDescriber:
     expected_items: Set[str] = frozenset()
+    """Items most presets will start with. Only displayed when shuffled."""
+
     unexpected_items: Callable[[MajorItemsConfiguration],
                                Set[str]] = lambda config: frozenset()
+    """Items not expected to be shuffled. Includes `expected_items` as well as configurable items such as progressive items."""
+
     format_params: Optional[Callable[[BaseConfiguration], None]] = None
-
-
-def no_tab_provider(preset, window):
-    raise NotImplementedError()
+    """Function providing any game-specific information to display in presets such as the goal."""
 
 
 @dataclass(frozen=True)
 class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager],
-                           Iterable[PresetTab]] = no_tab_provider
-    cosmetic_dialog: Optional[Type[BaseCosmeticPatchesDialog]] = None
+                           Iterable[PresetTab]]
+    """Provides a set of tabs for configuring the game's logic and gameplay settings."""
+
+    cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
+    """Dialog box for editing the game's cosmetic settings."""
+
     preset_describer: GamePresetDescriber = GamePresetDescriber()
-
-
-def no_item_pool_creator(results, configuration, db):
-    pass
+    """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
 
 @dataclass(frozen=True)
 class GameGenerator:
     item_pool_creator: Callable[[
-        PoolResults, BaseConfiguration, ResourceDatabase], None] = no_tab_provider
+        PoolResults, BaseConfiguration, ResourceDatabase], None]
+    """Extends the base item pools with any specific item pools such as Artifacts."""
 
 
 @dataclass(frozen=True)
@@ -72,19 +77,19 @@ class GameData:
     """Controls whether the "Experimental Games" setting must be enabled in order to see the game in Randovania. Default to True until given approval."""
 
     presets: Iterable[Dict[str, str]]
-    """List of dicts mapping the key "path" to a path to the given preset."""
+    """List of at least one dict mapping the key "path" to a path to the given preset."""
 
     layout: GameLayout
-    """"""
+    """Contains game-specific settings available for presets."""
 
     gui: Callable[[], GameGui]
-    """"""
+    """Contains game-specific GUI windows."""
 
     generator: GameGenerator
-    """"""
+    """Contains game-specific generation data."""
 
     patcher: Optional[Patcher] = None
-    """"""
+    """(Optional) The class responsible for patching a game and building a new .iso."""
 
 
 class RandovaniaGame(BitPackEnum, Enum):
