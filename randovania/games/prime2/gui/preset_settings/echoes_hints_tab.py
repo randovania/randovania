@@ -21,8 +21,7 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
         for i, stk_hint_mode in enumerate(SkyTempleKeyHintMode):
             self.hint_sky_temple_key_combo.setItemData(i, stk_hint_mode)
 
-        self.hint_sky_temple_key_combo.currentIndexChanged.connect(
-            self._on_stk_combo_changed)
+        self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
 
     @property
     def uses_patches_tab(self) -> bool:
@@ -36,5 +35,4 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
                                     sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
 
     def on_preset_changed(self, preset: Preset):
-        set_combo_with_value(self.hint_sky_temple_key_combo,
-                             preset.configuration.hints.sky_temple_keys)
+        set_combo_with_value(self.hint_sky_temple_key_combo, preset.configuration.hints.sky_temple_keys)

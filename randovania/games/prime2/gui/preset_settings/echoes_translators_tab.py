@@ -23,14 +23,11 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         randomizer_data = randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
 
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
-        self.translator_randomize_all_button.clicked.connect(
-            self._on_randomize_all_gates_pressed)
+        self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_randomize_all_with_unlocked_button.clicked.connect(
             self._on_randomize_all_gates_with_unlocked_pressed)
-        self.translator_vanilla_actual_button.clicked.connect(
-            self._on_vanilla_actual_gates_pressed)
-        self.translator_vanilla_colors_button.clicked.connect(
-            self._on_vanilla_colors_gates_pressed)
+        self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
+        self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
 
         self._combo_for_gate = {}
 
@@ -43,8 +40,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
             combo.gate = TranslatorGate(gate["Index"])
             for item in iterate_enum(LayoutTranslatorRequirement):
                 combo.addItem(item.long_name, item)
-            combo.currentIndexChanged.connect(
-                functools.partial(self._on_gate_combo_box_changed, combo))
+            combo.currentIndexChanged.connect(functools.partial(self._on_gate_combo_box_changed, combo))
 
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
             self._combo_for_gate[combo.gate] = combo
@@ -87,5 +83,4 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
     def on_preset_changed(self, preset: Preset):
         translator_configuration = preset.configuration.translator_configuration
         for gate, combo in self._combo_for_gate.items():
-            set_combo_with_value(
-                combo, translator_configuration.translator_requirement[gate])
+            set_combo_with_value(combo, translator_configuration.translator_requirement[gate])

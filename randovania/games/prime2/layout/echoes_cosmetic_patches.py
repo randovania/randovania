@@ -13,8 +13,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     unvisited_room_names: bool = True
     pickup_markers: bool = True
     teleporter_sounds: bool = True
-    user_preferences: EchoesUserPreferences = dataclasses.field(
-        default_factory=EchoesUserPreferences)
+    user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
     convert_other_game_assets: bool = False
 
     @classmethod

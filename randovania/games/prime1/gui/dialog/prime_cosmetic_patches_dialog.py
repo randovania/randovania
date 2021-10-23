@@ -21,10 +21,8 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
     def connect_signals(self):
         super().connect_signals()
 
-        self.qol_cosmetic_check.stateChanged.connect(
-            self._persist_option_then_notify("qol_cosmetic"))
-        self.open_map_check.stateChanged.connect(
-            self._persist_option_then_notify("open_map"))
+        self.qol_cosmetic_check.stateChanged.connect(self._persist_option_then_notify("qol_cosmetic"))
+        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
 
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches):
         self.qol_cosmetic_check.setChecked(patches.qol_cosmetic)

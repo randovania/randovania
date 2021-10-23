@@ -59,8 +59,7 @@ def process_command(args: List[str], input_data: str, read_callback: Callable[[s
 
     if IO_LOOP is None:
         if is_windows():
-            asyncio.set_event_loop_policy(
-                asyncio.WindowsProactorEventLoopPolicy())
+            asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
         asyncio.run(work)
     else:
         asyncio.run_coroutine_threadsafe(work, IO_LOOP).result()

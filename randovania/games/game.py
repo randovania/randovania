@@ -35,8 +35,7 @@ class GamePresetDescriber:
     expected_items: Set[str] = frozenset()
     """Items most presets will start with. Only displayed when shuffled."""
 
-    unexpected_items: Callable[[MajorItemsConfiguration],
-                               Set[str]] = lambda config: frozenset()
+    unexpected_items: Callable[[MajorItemsConfiguration], Set[str]] = lambda config: frozenset()
     """Items not expected to be shuffled. Includes `expected_items` as well as configurable items such as progressive items."""
 
     format_params: Optional[Callable[[BaseConfiguration], None]] = None
@@ -45,8 +44,7 @@ class GamePresetDescriber:
 
 @dataclass(frozen=True)
 class GameGui:
-    tab_provider: Callable[[PresetEditor, WindowManager],
-                           Iterable[PresetTab]]
+    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
@@ -58,8 +56,7 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[
-        PoolResults, BaseConfiguration, ResourceDatabase], None]
+    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
 
 

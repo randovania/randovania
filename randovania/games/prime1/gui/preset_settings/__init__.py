@@ -47,14 +47,12 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
 
     extra_message_tree = {
         "Difficulty": [
-            {"Heat Damage: {:.2f} dmg/s".format(
-                configuration.heat_damage): configuration.heat_damage != 10.0},
+            {"Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage): configuration.heat_damage != 10.0},
             {f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100},
         ],
         "Gameplay": [
             {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
-            {"Underwater movement without Gravity allowed":
-                configuration.allow_underwater_movement_without_gravity},
+            {"Underwater movement without Gravity allowed": configuration.allow_underwater_movement_without_gravity},
         ],
         "Quality of Life": [
             {
@@ -102,8 +100,7 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
         if flag
     ]
     if backwards:
-        template_strings["Game Changes"].append(
-            "Allowed backwards: {}".format(", ".join(backwards)))
+        template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
 
     # Artifacts
     template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "

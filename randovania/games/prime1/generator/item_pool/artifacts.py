@@ -24,8 +24,7 @@ def add_artifacts(resource_database: ResourceDatabase,
     artifacts_to_place = mode.value
 
     for i in range(artifacts_to_place):
-        item_pool.append(pickup_creator.create_artifact(
-            i, artifact_minimum_progression, resource_database))
+        item_pool.append(pickup_creator.create_artifact(i, artifact_minimum_progression, resource_database))
 
     first_automatic_artifact = artifacts_to_place
 

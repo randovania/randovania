@@ -55,15 +55,12 @@ class EchoesConfiguration(BaseConfiguration):
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration
     beam_configuration: BeamConfiguration
-    energy_per_tank: int = dataclasses.field(
-        metadata={"min": 1, "max": 1000, "precision": 1})
+    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     safe_zone: LayoutSafeZone
     menu_mod: bool
     warp_to_start: bool
-    varia_suit_damage: float = dataclasses.field(
-        metadata={"min": 0.1, "max": 60.0, "precision": 3.0})
-    dark_suit_damage: float = dataclasses.field(
-        metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
+    varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 3.0})
+    dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
 
     allow_jumping_on_dark_water: bool

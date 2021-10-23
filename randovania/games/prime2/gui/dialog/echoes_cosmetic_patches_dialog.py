@@ -12,8 +12,7 @@ from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPre
 def update_label_with_slider(label: QLabel, slider: QSlider):
     if label.display_as_percentage:
         min_value = slider.minimum()
-        percentage = (slider.value() - min_value) / \
-            (slider.maximum() - min_value)
+        percentage = (slider.value() - min_value) / (slider.maximum() - min_value)
         label.setText(f"{percentage * 100: 3.0f}%")
     else:
         label.setText(str(slider.value()))
@@ -53,43 +52,32 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
     def connect_signals(self):
         super().connect_signals()
 
-        self.remove_hud_popup_check.stateChanged.connect(
-            self._persist_option_then_notify("disable_hud_popup"))
-        self.faster_credits_check.stateChanged.connect(
-            self._persist_option_then_notify("speed_up_credits"))
-        self.open_map_check.stateChanged.connect(
-            self._persist_option_then_notify("open_map"))
-        self.unvisited_room_names_check.stateChanged.connect(
-            self._persist_option_then_notify("unvisited_room_names"))
-        self.pickup_markers_check.stateChanged.connect(
-            self._persist_option_then_notify("pickup_markers"))
-        self.elevator_sound_check.stateChanged.connect(
-            self._persist_option_then_notify("teleporter_sounds"))
+        self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("disable_hud_popup"))
+        self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
+        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.unvisited_room_names_check.stateChanged.connect(self._persist_option_then_notify("unvisited_room_names"))
+        self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
+        self.elevator_sound_check.stateChanged.connect(self._persist_option_then_notify("teleporter_sounds"))
 
-        self.sound_mode_combo.currentIndexChanged.connect(
-            self._on_sound_mode_update)
+        self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
 
         for field_name, slider in self.field_to_slider_mapping.items():
-            slider.valueChanged.connect(
-                partial(self._on_slider_update, slider, field_name))
+            slider.valueChanged.connect(partial(self._on_slider_update, slider, field_name))
 
         for field_name, check in self.field_to_check_mapping.items():
-            check.stateChanged.connect(
-                partial(self._on_check_update, check, field_name))
+            check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
     def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
         self.open_map_check.setChecked(patches.open_map)
-        self.unvisited_room_names_check.setChecked(
-            patches.unvisited_room_names)
+        self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.elevator_sound_check.setChecked(patches.teleporter_sounds)
         self.on_new_user_preferences(patches.user_preferences)
 
     def on_new_user_preferences(self, user_preferences: EchoesUserPreferences):
-        self.sound_mode_combo.setCurrentIndex(
-            self.sound_mode_combo.findData(user_preferences.sound_mode))
+        self.sound_mode_combo.setCurrentIndex(self.sound_mode_combo.findData(user_preferences.sound_mode))
 
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:
@@ -98,8 +86,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
                 slider.setMaximum(field.metadata["max"])
                 slider.setValue(getattr(user_preferences, field.name))
 
-                value_label: QLabel = getattr(
-                    self, f"{field.name}_value_label")
+                value_label: QLabel = getattr(self, f"{field.name}_value_label")
                 value_label.display_as_percentage = field.metadata["display_as_percentage"]
                 update_label_with_slider(value_label, slider)
 
@@ -142,8 +129,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
             self.preferences,
             **{field_name: slider.value()}
         )
-        update_label_with_slider(
-            getattr(self, f"{field_name}_value_label"), slider)
+        update_label_with_slider(getattr(self, f"{field_name}_value_label"), slider)
 
     def _on_check_update(self, check: QCheckBox, field_name: str, _):
         self.preferences = dataclasses.replace(

@@ -20,8 +20,7 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     @property
     def item_index(self) -> int:
         if self in (LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED):
-            raise ValueError(
-                "The random Requirement shouldn't be used for item_index")
+            raise ValueError("The random Requirement shouldn't be used for item_index")
         return ITEM_INDICES[self]
 
     @property
@@ -81,8 +80,7 @@ class TranslatorConfiguration(BitPackValue):
         if translator_requirement is None:
             translator_requirement = {}
             for gate in templates[0].keys():
-                translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(
-                    decoder, {})
+                translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(decoder, {})
 
         return cls(
             translator_requirement,
@@ -105,8 +103,7 @@ class TranslatorConfiguration(BitPackValue):
 
         translator_requirement = copy.copy(default.translator_requirement)
         for key, item in params.pop("translator_requirement").items():
-            translator_requirement[TranslatorGate(
-                int(key))] = LayoutTranslatorRequirement(item)
+            translator_requirement[TranslatorGate(int(key))] = LayoutTranslatorRequirement(item)
 
         return cls(translator_requirement, **params)
 

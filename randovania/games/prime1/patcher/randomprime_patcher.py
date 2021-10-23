@@ -121,8 +121,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     if detail.model.game == RandovaniaGame.METROID_PRIME:
         model_name = detail.model.name
     else:
-        model_name = _MODEL_MAPPING.get(
-            (detail.model.game, detail.model.name), "Nothing")
+        model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
 
     scan_text = detail.scan_text
     hud_text = detail.hud_text[0]
@@ -140,10 +139,8 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
             and "Missile Expansion" in hud_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
         model_name = "Shiny Missile"
-        hud_text = hud_text.replace(
-            "Missile Expansion", "Shiny Missile Expansion")
-        scan_text = scan_text.replace(
-            "Missile Expansion", "Shiny Missile Expansion")
+        hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
@@ -241,15 +238,13 @@ class RandomprimePatcher(Patcher):
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: PrimeCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
-        db = default_database.game_description_for(
-            RandovaniaGame.METROID_PRIME)
+        db = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
         preset = description.permalink.get_preset(players_config.player_index)
         configuration = typing.cast(PrimeConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
 
         area_namers = {
-            index: hint_lib.AreaNamer(
-                default_database.game_description_for(player_preset.game).world_list)
+            index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
             for index, player_preset in description.permalink.presets.items()
         }
 
@@ -264,8 +259,7 @@ class RandomprimePatcher(Patcher):
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(
-                db, pickup_exporter.GenericAcquiredMemo(), players_config),
+            exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
@@ -280,8 +274,7 @@ class RandomprimePatcher(Patcher):
                 "rooms": {}
             }
             for area in world.areas:
-                pickup_indices = sorted(
-                    node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
+                pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
                 if pickup_indices:
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
@@ -296,10 +289,8 @@ class RandomprimePatcher(Patcher):
                     if not isinstance(node, TeleporterNode) or not node.editable:
                         continue
 
-                    target = _name_for_location(
-                        db.world_list, patches.elevator_connection[node.teleporter])
-                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[
-                        node.teleporter.area_location]
+                    target = _name_for_location(db.world_list, patches.elevator_connection[node.teleporter])
+                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[node.teleporter.area_location]
                     world_data[world.name]["transports"][source_name] = target
 
         starting_memo = None
@@ -328,8 +319,7 @@ class RandomprimePatcher(Patcher):
         ]
         resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             description.all_patches, players_config, area_namers, False,
-            [db.resource_database.get_item(index)
-             for index in prime_items.ARTIFACT_ITEMS],
+            [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
             hint_lib.TextColor.PRIME1_ITEM,
             hint_lib.TextColor.PRIME1_LOCATION,
         )
@@ -369,8 +359,7 @@ class RandomprimePatcher(Patcher):
                 "multiworldDolPatches": True,
 
                 "startingItems": {
-                    name: _starting_items_value_for(
-                        db.resource_database, patches.starting_items, index)
+                    name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
                     for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
                 },
 
@@ -399,8 +388,7 @@ class RandomprimePatcher(Patcher):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: patches.starting_items.get(
-                        artifact, 0) == 0
+                    artifact.long_name: patches.starting_items.get(artifact, 0) == 0
                     for artifact in artifacts
                 },
             },
@@ -432,13 +420,11 @@ class RandomprimePatcher(Patcher):
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
-            output_file.with_name(
-                f"{output_file.stem}-patcher.json").write_text(patch_as_str)
+            output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
 
         os.environ["RUST_BACKTRACE"] = "1"
 
         py_randomprime.patch_iso_raw(
             patch_as_str,
-            py_randomprime.ProgressNotifier(
-                lambda percent, msg: progress_update(msg, percent)),
+            py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
         )

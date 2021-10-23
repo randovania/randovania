@@ -44,8 +44,7 @@ def echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[s
     item_database = default_database.item_database_for_game(configuration.game)
 
     template_strings = _format_params_base(configuration)
-    unified_ammo = configuration.ammo_configuration.items_state[
-        item_database.ammo["Beam Ammo Expansion"]]
+    unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
 
     # Difficulty
     if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
@@ -54,12 +53,10 @@ def echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[s
         ))
 
     if configuration.energy_per_tank != 100:
-        template_strings["Difficulty"].append(
-            f"Energy Tank: {configuration.energy_per_tank} energy")
+        template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
 
     if configuration.safe_zone.heal_per_second != 1:
-        template_strings["Difficulty"].append(
-            f"Safe Zone: {configuration.safe_zone.heal_per_second:.2f} energy/s")
+        template_strings["Difficulty"].append(f"Safe Zone: {configuration.safe_zone.heal_per_second:.2f} energy/s")
 
     extra_message_tree = {
         "Item Pool": [
@@ -95,11 +92,9 @@ def echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[s
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
         template_strings["Item Pool"].append("Sky Temple Keys at all bosses")
     elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-        template_strings["Item Pool"].append(
-            "Sky Temple Keys at all guardians")
+        template_strings["Item Pool"].append("Sky Temple Keys at all guardians")
     else:
-        template_strings["Item Pool"].append(
-            f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
+        template_strings["Item Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
 
     return template_strings
 

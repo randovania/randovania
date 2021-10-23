@@ -26,13 +26,11 @@ class EchoesDolPatchesData(JsonDataclass):
 def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
     dol_file = DolFile(_get_dol_path(game_root))
 
-    version = typing.cast(EchoesDolVersion, find_version_for_dol(
-        dol_file, echoes_dol_versions.ALL_VERSIONS))
+    version = typing.cast(EchoesDolVersion, find_version_for_dol(dol_file, echoes_dol_versions.ALL_VERSIONS))
 
     dol_file.set_editable(True)
     with dol_file:
-        all_prime_dol_patches.apply_remote_execution_patch(
-            version.string_display, dol_file)
+        all_prime_dol_patches.apply_remote_execution_patch(version.string_display, dol_file)
         all_prime_dol_patches.apply_energy_tank_capacity_patch(version.health_capacity, patches_data.energy_per_tank,
                                                                dol_file)
         all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(version.sda2_base, version.dangerous_energy_tank,
@@ -40,10 +38,8 @@ def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
                                                                    version.game, dol_file)
 
         echoes_dol_patches.apply_fixes(version, dol_file)
-        echoes_dol_patches.apply_unvisited_room_names(
-            version, dol_file, patches_data.unvisited_room_names)
-        echoes_dol_patches.apply_teleporter_sounds(
-            version, dol_file, patches_data.teleporter_sounds)
+        echoes_dol_patches.apply_unvisited_room_names(version, dol_file, patches_data.unvisited_room_names)
+        echoes_dol_patches.apply_teleporter_sounds(version, dol_file, patches_data.teleporter_sounds)
 
         echoes_dol_patches.apply_game_options_patch(version.game_options_constructor_address,
                                                     patches_data.user_preferences, dol_file)

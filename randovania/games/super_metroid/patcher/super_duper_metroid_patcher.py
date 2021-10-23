@@ -105,8 +105,7 @@ class SuperDuperMetroidPatcher(Patcher):
         """
         Deletes any copy of the game in the internal storage.
         """
-        game_files_path.joinpath(
-            "super_metroid", "vanilla.smc").unlink(missing_ok=True)
+        game_files_path.joinpath("super_metroid", "vanilla.smc").unlink(missing_ok=True)
 
     def default_output_file(self, seed_hash: str) -> str:
         """
@@ -132,11 +131,9 @@ class SuperDuperMetroidPatcher(Patcher):
         :return:
         """
         patches = description.all_patches[players_config.player_index]
-        db = default_database.game_description_for(
-            RandovaniaGame.SUPER_METROID)
+        db = default_database.game_description_for(RandovaniaGame.SUPER_METROID)
         preset = description.permalink.get_preset(players_config.player_index)
-        configuration = typing.cast(
-            SuperMetroidConfiguration, preset.configuration)
+        configuration = typing.cast(SuperMetroidConfiguration, preset.configuration)
         rng = Random(description.permalink.seed_number)
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
@@ -149,8 +146,7 @@ class SuperDuperMetroidPatcher(Patcher):
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(
-                db, pickup_exporter.GenericAcquiredMemo(), players_config),
+            exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
@@ -160,8 +156,7 @@ class SuperDuperMetroidPatcher(Patcher):
                 for detail in pickup_list
             ],
             "starting_items": {
-                item.long_name: quantity *
-                _multiplier_for_item.get(item.long_name, 1)
+                item.long_name: quantity * _multiplier_for_item.get(item.long_name, 1)
                 for item, quantity in patches.starting_items.items()
             },
         }
@@ -177,10 +172,8 @@ class SuperDuperMetroidPatcher(Patcher):
         :param progress_update: Pushes updates as slow operations are done.
         :return: None
         """
-        internal_copy = internal_copies_path.joinpath(
-            "super_metroid", "vanilla.smc")
-        temporary_output = internal_copies_path.joinpath(
-            "super_metroid", "modified.smc")
+        internal_copy = internal_copies_path.joinpath("super_metroid", "vanilla.smc")
+        temporary_output = internal_copies_path.joinpath("super_metroid", "modified.smc")
 
         if input_file is not None:
             vanilla_bytes = input_file.read_bytes()

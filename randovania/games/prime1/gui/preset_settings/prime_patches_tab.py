@@ -29,16 +29,14 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
         super().__init__(editor)
         self.setupUi(self)
 
-        self.description_label.setText(
-            self.description_label.text().replace("color:#0000ff;", ""))
+        self.description_label.setText(self.description_label.text().replace("color:#0000ff;", ""))
 
         # Signals
         self.cutscene_combo.setItemData(0, LayoutCutsceneMode.ORIGINAL)
         self.cutscene_combo.setItemData(1, LayoutCutsceneMode.COMPETITIVE)
         self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MINOR)
         self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
-        signal_handling.on_combo(
-            self.cutscene_combo, self._on_cutscene_changed)
+        signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
 
@@ -60,7 +58,5 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(
-                self, f"{f}_check")).setChecked(getattr(config, f))
-        signal_handling.combo_set_to_value(
-            self.cutscene_combo, config.qol_cutscenes)
+            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+        signal_handling.combo_set_to_value(self.cutscene_combo, config.qol_cutscenes)

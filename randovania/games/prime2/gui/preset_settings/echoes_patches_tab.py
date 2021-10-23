@@ -10,14 +10,11 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         super().__init__(editor)
         self.setupUi(self)
 
-        self.include_menu_mod_label.setText(
-            self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
+        self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
 
         # Signals
-        self.warp_to_start_check.stateChanged.connect(
-            self._persist_option_then_notify("warp_to_start"))
-        self.include_menu_mod_check.stateChanged.connect(
-            self._persist_option_then_notify("include_menu_mod"))
+        self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
+        self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
     @property
     def uses_patches_tab(self) -> bool:

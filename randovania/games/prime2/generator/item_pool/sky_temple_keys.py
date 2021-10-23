@@ -30,25 +30,21 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
             locations_to_place += _SUB_GUARDIAN_INDICES
 
         for key_number, location in enumerate(locations_to_place):
-            new_assignment[location] = create_sky_temple_key(
-                key_number, resource_database)
+            new_assignment[location] = create_sky_temple_key(key_number, resource_database)
         first_automatic_key = len(locations_to_place)
 
     else:
         keys_to_place = mode.value
         if not isinstance(keys_to_place, int):
-            raise InvalidConfiguration(
-                "Unknown Sky Temple Key mode: {}".format(mode))
+            raise InvalidConfiguration("Unknown Sky Temple Key mode: {}".format(mode))
 
         for key_number in range(keys_to_place):
-            item_pool.append(create_sky_temple_key(
-                key_number, resource_database))
+            item_pool.append(create_sky_temple_key(key_number, resource_database))
         first_automatic_key = keys_to_place
 
     for automatic_key_number in range(first_automatic_key, 9):
         add_resource_gain_to_current_resources(
-            create_sky_temple_key(automatic_key_number,
-                                  resource_database).all_resources,
+            create_sky_temple_key(automatic_key_number, resource_database).all_resources,
             initial_resources
         )
 

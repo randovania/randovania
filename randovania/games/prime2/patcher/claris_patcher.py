@@ -41,8 +41,7 @@ class ClarisPatcher(Patcher):
         return False
 
     def has_internal_copy(self, internal_copies_path: Path) -> bool:
-        result = game_workdir.discover_game(
-            internal_copies_path.joinpath("prime2", "contents"))
+        result = game_workdir.discover_game(internal_copies_path.joinpath("prime2", "contents"))
         if result is not None:
             game_id, _ = result
             if game_id.startswith("G2M"):
@@ -73,13 +72,11 @@ class ClarisPatcher(Patcher):
                    internal_copies_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
         updaters = status_update_lib.split_progress_update(progress_update, 4)
 
-        contents_files_path = internal_copies_path.joinpath(
-            "prime2", "contents")
+        contents_files_path = internal_copies_path.joinpath("prime2", "contents")
         backup_files_path = internal_copies_path.joinpath("prime2", "vanilla")
 
         if input_file is not None:
-            unpack_updaters = status_update_lib.split_progress_update(
-                updaters[0], 2)
+            unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
             self.delete_internal_copy(internal_copies_path)
             iso_packager.unpack_iso(
                 iso=input_file,
@@ -106,16 +103,14 @@ class ClarisPatcher(Patcher):
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
             contents_files_path,
-            "Metroid Prime 2: Randomizer - {}".format(
-                patch_data["shareable_hash"]),
+            "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
             patch_data["publisher_id"]
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
         if patch_data.pop("convert_other_game_assets", False):
             from randovania.patching.prime import asset_conversion
-            asset_conversion.convert_prime1_pickups(
-                contents_files_path, randomizer_data, updaters[1])
+            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
 
         claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
@@ -134,8 +129,7 @@ class ClarisPatcher(Patcher):
 
 @functools.lru_cache()
 def decode_randomizer_data() -> dict:
-    randomizer_data_path = get_data_path().joinpath(
-        "ClarisPrimeRandomizer", "RandomizerData.json")
+    randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
 
     with randomizer_data_path.open() as randomizer_data_file:
         return json.load(randomizer_data_file)
