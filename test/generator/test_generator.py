@@ -5,7 +5,9 @@ from mock import MagicMock, patch, call, AsyncMock
 
 import randovania
 from randovania.generator import generator
+from randovania.generator.filler.runner import FillerPlayerResult
 from randovania.layout.layout_description import LayoutDescription
+from randovania.resolver.exceptions import InvalidConfiguration
 
 
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
@@ -57,3 +59,19 @@ async def test_create_patches(mock_random: MagicMock,
         all_patches=mock_distribute_remaining_items.return_value,
         item_order=filler_result.action_log,
     )
+
+
+def test_distribute_remaining_items_no_locations_left(echoes_game_description):
+    # Setup
+    rng = MagicMock()
+    player_result = FillerPlayerResult(
+        game=echoes_game_description,
+        patches=echoes_game_description.create_game_patches(),
+        unassigned_pickups=[MagicMock()] * 1000,
+    )
+    filler_results = {0: player_result}
+
+    # Run
+    with pytest.raises(InvalidConfiguration,
+                       match=r"Received 1000 remaining pickups, but there's only \d+ unassigned locations."):
+        generator._distribute_remaining_items(rng, filler_results)
