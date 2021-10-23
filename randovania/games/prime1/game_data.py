@@ -5,6 +5,7 @@ from randovania.games.prime1.generator.item_pool.pool_creator import prime1_spec
 from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
 from randovania.games.prime1.layout.preset_describer import prime_expected_items, prime_unexpected_items, prime_format_params
 
+
 def _prime_gui():
     from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
     from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog

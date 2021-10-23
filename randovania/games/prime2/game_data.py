@@ -5,6 +5,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.patcher.claris_patcher import ClarisPatcher
 from randovania.games.prime2.layout.preset_describer import echoes_format_params, echoes_unexpected_items, echoes_expected_items
 
+
 def _echoes_gui():
     from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog

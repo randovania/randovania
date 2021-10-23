@@ -10,6 +10,7 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.ORIGINAL: None,
 }
 
+
 def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str]]:
     template_strings = _format_params_base(configuration)
     cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]

@@ -4,6 +4,7 @@ from randovania.games.prime3.layout.corruption_configuration import CorruptionCo
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.games.prime3.layout.preset_describer import corruption_format_params, corruption_unexpected_items, corruption_expected_items
 
+
 def _corruption_gui():
     from randovania.games.prime3.gui.preset_settings import prime3_preset_tabs
     from randovania.games.prime3.gui.dialog.corruption_cosmetic_patches_dialog import CorruptionCosmeticPatchesDialog
