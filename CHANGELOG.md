@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Errors from the Prime 1 patcher are now properly displayed in error messages.
 - Fixed: Converting presets from previous games should no longer cause invalid expansion ammo count.
 - Fixed: Converting presets with multiple major items that give ammo no longer cause incorrect per-expansion ammo count.
+- Fixed: Safety check that there's enough available locations for all non-progression at the end of generation has been re-added.
 - Changed: Improved error message for certain kinds of invalid permalinks.
 - Changed: Presets with negative ammo count for expansions are invalid.
 
