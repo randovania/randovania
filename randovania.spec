@@ -1,8 +1,12 @@
 # -*- mode: python -*-
 
 import randovania
+from randovania.games.game import RandovaniaGame
 block_cipher = None
 icon_path = "randovania/data/icons/sky_temple_key_NqN_icon.ico"
+
+item_databases = [(f'randovania/games/{game.value}/item_database', f'games/{game.value}/item_database') for game in RandovaniaGame]
+presets = [(f'randovania/games/{game.value}/presets', f'games/{game.value}/presets') for game in RandovaniaGame]
 
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
@@ -15,9 +19,9 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/gui_assets", "data/gui_assets"),
                  ("randovania/data/hash_words", "data/hash_words"),
                  ("randovania/data/icons", "data/icons"),
-                 ("randovania/data/item_database", "data/item_database"),
-                 ("randovania/data/presets", "data/presets"),
                  ("randovania/data/nintendont", "data/nintendont"),
+                 *item_databases,
+                 *presets,
              ],
              hiddenimports=[
                 "mock",
