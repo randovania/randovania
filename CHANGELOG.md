@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Errors from the Prime 1 patcher are now properly displayed in error messages.
 - Fixed: Converting presets from previous games should no longer cause invalid expansion ammo count.
 - Fixed: Converting presets with multiple major items that give ammo no longer cause incorrect per-expansion ammo count.
+- Fixed: Changing the default beam in Echoes no longer throws an error with invalid included ammo.
 - Fixed: Sky Temple Keys on Guardians/Sub-Guardians are now properly counted for the item pool size.
 - Fixed: Sky Temple Keys on Guardians/Sub-Guardians now appears on the preset description.
 - Fixed: Safety check that there's enough available locations for all non-progression at the end of generation has been re-added.
