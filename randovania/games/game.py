@@ -9,7 +9,6 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 
 if TYPE_CHECKING:
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-    from randovania.gui.lib.preset_describer import _format_params_base
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -19,15 +18,6 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
-
-
-@dataclass(frozen=True)
-class GameLayout:
-    configuration: Type[BaseConfiguration]
-    """Logic and gameplay settings such as elevator shuffling."""
-
-    cosmetic_patches: Type[BaseCosmeticPatches]
-    """Cosmetic settings such as item icons on maps."""
 
 
 @dataclass(frozen=True)
@@ -43,15 +33,24 @@ class GamePresetDescriber:
 
 
 @dataclass(frozen=True)
+class GameLayout:
+    configuration: Type[BaseConfiguration]
+    """Logic and gameplay settings such as elevator shuffling."""
+
+    cosmetic_patches: Type[BaseCosmeticPatches]
+    """Cosmetic settings such as item icons on maps."""
+
+    preset_describer: GamePresetDescriber = GamePresetDescriber()
+    """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
+
+
+@dataclass(frozen=True)
 class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
-
-    preset_describer: GamePresetDescriber = GamePresetDescriber()
-    """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
 
 @dataclass(frozen=True)

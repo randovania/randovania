@@ -50,7 +50,7 @@ def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) ->
 
 
 def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem, MajorItemState]) -> List[str]:
-    expected_items = game.data.gui().preset_describer.expected_items
+    expected_items = game.data.layout.preset_describer.expected_items
     starting_items = []
 
     for major_item, item_state in items_state.items():
@@ -79,7 +79,7 @@ def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem,
 def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfiguration) -> List[str]:
     item_pool = []
 
-    unexpected_items = game.data.gui().preset_describer.unexpected_items(configuration)
+    unexpected_items = game.data.layout.preset_describer.unexpected_items(configuration)
 
     for major_item, item_state in configuration.items_state.items():
         if major_item.required:
@@ -177,7 +177,7 @@ def fill_template_strings_from_tree(template_strings: Dict[str, List[str]], tree
 def describe(preset: Preset) -> Iterable[PresetDescription]:
     configuration = preset.configuration
 
-    template_strings = (preset.game.data.gui().preset_describer.format_params or _format_params_base)(configuration)
+    template_strings = (preset.game.data.layout.preset_describer.format_params or _format_params_base)(configuration)
 
     if configuration.multi_pickup_placement:
         template_strings["Item Placement"].append("Multi-pickup placement")

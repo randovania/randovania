@@ -53,8 +53,8 @@ async def test_export_iso(skip_qtbot, mocker):
 
 def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     # Setup
-    mock_describer = mocker.patch("randovania.gui.lib.preset_describer.describe", return_value=["a", "b", "c", "d"])
-    mock_merge = mocker.patch("randovania.gui.lib.preset_describer.merge_categories", return_value="<description>")
+    mock_describer = mocker.patch("randovania.layout.preset_describer.describe", return_value=["a", "b", "c", "d"])
+    mock_merge = mocker.patch("randovania.layout.preset_describer.merge_categories", return_value="<description>")
 
     options = MagicMock()
     description = MagicMock()
