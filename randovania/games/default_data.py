@@ -6,7 +6,7 @@ from typing import Tuple
 from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.games.game import RandovaniaGame
-from randovania.patching.binary_data import decode_file_path
+from randovania.games.binary_data import decode_file_path
 
 
 @functools.lru_cache()

@@ -9,7 +9,7 @@ import pytest
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
-from randovania.patching.binary_data import convert_to_raw_python
+from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset

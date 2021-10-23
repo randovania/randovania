@@ -14,7 +14,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.patching import default_data
+from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.base_configuration import BaseConfiguration

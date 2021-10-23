@@ -6,7 +6,7 @@ import pytest
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
-from randovania.patching import binary_data
+from randovania.games import binary_data
 
 
 def test_simple_round_trip():
