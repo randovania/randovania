@@ -31,7 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 
-## [3.2.1] - Unreleased
+## [3.2.2] - Unreleased
+
+- Nothing.
+
+## [3.2.1] - 2021-10-23
 
 - Fixed: The spin box for starting Energy Tanks no longer goes above 14.
 - Fixed: Errors from the Prime 1 patcher are now properly displayed in error messages.
