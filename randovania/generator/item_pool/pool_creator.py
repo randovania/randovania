@@ -88,7 +88,11 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
     """
     game_description = default_database.game_description_for(layout.game)
     num_pickup_nodes = game_description.world_list.num_pickup_nodes
-    pool_pickup = calculate_pool_results(layout, game_description.resource_database).pickups
+
+    pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items
+
+    pool_count = len(pool_pickups) + len(pool_assignment)
     maximum_size = num_pickup_nodes + min_starting_items
-    return len(pool_pickup), maximum_size
+
+    return pool_count, maximum_size
