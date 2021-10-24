@@ -60,7 +60,7 @@ async def export_game(
         box = QtWidgets.QMessageBox(
             QtWidgets.QMessageBox.Critical,
             "Unable to export game",
-            message + " Press show 'Show Details' for more information.",
+            message + ".\nPress show 'Show Details' for more information.",
             QtWidgets.QMessageBox.Ok,
         )
         common_qt_lib.set_default_window_icon(box)

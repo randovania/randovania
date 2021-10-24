@@ -206,11 +206,17 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             self._default_items[category] = combo
 
     def _on_default_item_updated(self, category: ItemCategory, combo: QtWidgets.QComboBox, _):
+        item: MajorItem = combo.currentData()
         with self._editor as editor:
             new_config = editor.major_items_configuration
-            new_config = new_config.replace_default_item(category, combo.currentData())
-            new_config = new_config.replace_state_for_item(combo.currentData(),
-                                                           MajorItemState(num_included_in_starting_items=1))
+            new_config = new_config.replace_default_item(category, item)
+            new_config = new_config.replace_state_for_item(
+                item,
+                MajorItemState(
+                    num_included_in_starting_items=1,
+                    included_ammo=new_config.items_state[item].included_ammo
+                ),
+            )
             editor.major_items_configuration = new_config
 
     def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):

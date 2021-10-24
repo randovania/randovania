@@ -1,8 +1,7 @@
-from typing import Optional, List, Tuple
+from typing import Optional, Tuple
 
-from randovania.game_description import default_database
-from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase

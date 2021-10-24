@@ -1,15 +1,14 @@
 import pytest
 
-from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY, ItemCategory
-import randovania.generator.item_pool.ammo
-import randovania.generator.item_pool.pickup_creator
 from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY, Ammo
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.resources.pickup_entry import PickupEntry, \
-    ResourceLock, PickupModel
+from randovania.game_description.resources.pickup_entry import (
+    PickupEntry,
+    ResourceLock,
+    PickupModel,
+)
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
-from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -62,9 +61,9 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         )
 
     # Run
-    result = randovania.generator.item_pool.pickup_creator.create_major_item(major_item, state, percentage,
-                                                                             echoes_resource_database,
-                                                                             None, False)
+    result = pickup_creator.create_major_item(major_item, state, percentage,
+                                              echoes_resource_database,
+                                              None, False)
 
     # Assert
     assert result == PickupEntry(
@@ -102,7 +101,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
     )
 
     # Run
-    result = randovania.generator.item_pool.pickup_creator.create_major_item(
+    result = pickup_creator.create_major_item(
         echoes_item_database.major_items["Missile Launcher"],
         state,
         True,
@@ -154,7 +153,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
     )
 
     # Run
-    result = randovania.generator.item_pool.pickup_creator.create_major_item(
+    result = pickup_creator.create_major_item(
         echoes_item_database.major_items["Seeker Launcher"],
         state,
         True,
@@ -205,7 +204,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
     ammo_count = (11, 150)
 
     # Run
-    result = randovania.generator.item_pool.pickup_creator.create_ammo_expansion(
+    result = pickup_creator.create_ammo_expansion(
         ammo, ammo_count, requires_major_item, echoes_resource_database)
 
     # Assert
@@ -267,4 +266,3 @@ def test_missile_expansion_before_launcher(include_before, echoes_item_database,
         assert resources == {percent: 3, temporary: 0, missile_launcher: 1, missile: 15}
     else:
         assert resources == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
-
