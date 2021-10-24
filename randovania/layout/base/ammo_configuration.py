@@ -13,6 +13,10 @@ from randovania.layout.base.ammo_state import AmmoState
 class AmmoConfiguration(bitpacking.BitPackValue):
     items_state: Dict[Ammo, AmmoState]
 
+    def __post_init__(self):
+        for ammo, state in self.items_state.items():
+            state.check_consistency(ammo)
+
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         default: AmmoConfiguration = metadata["reference"]
 
