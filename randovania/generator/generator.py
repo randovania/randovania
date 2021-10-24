@@ -20,7 +20,6 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.resolver import resolver, bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
 

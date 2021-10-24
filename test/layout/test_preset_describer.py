@@ -1,7 +1,9 @@
 import dataclasses
 
-from randovania.gui.lib import preset_describer
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.game import RandovaniaGame
+
+from randovania.layout import preset_describer
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 def test_echoes_format_params(default_layout_configuration):
@@ -12,8 +14,8 @@ def test_echoes_format_params(default_layout_configuration):
     )
 
     # Run
-    result = preset_describer._echoes_format_params(layout_configuration)
-
+    result = RandovaniaGame.METROID_PRIME_ECHOES.data.layout.preset_describer.format_params(layout_configuration)
+    
     # Assert
     assert result == {
         'Difficulty': [
