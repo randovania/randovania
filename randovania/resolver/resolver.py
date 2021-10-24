@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.world.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug, event_pickup, bootstrap
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.event_pickup import EventPickupNode
@@ -168,7 +168,7 @@ def _quiet_print(s):
     pass
 
 
-async def resolve(configuration: EchoesConfiguration,
+async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,
                   status_update: Optional[Callable[[str], None]] = None
                   ) -> Optional[State]:

@@ -10,7 +10,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import elevators
+from randovania.patching.prime import elevators
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.area_list_helper import AreaListHelper

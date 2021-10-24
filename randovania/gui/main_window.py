@@ -13,7 +13,7 @@ from qasync import asyncSlot
 from randovania import VERSION
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.games.patcher_provider import PatcherProvider
+from randovania.patching.patcher_provider import PatcherProvider
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
