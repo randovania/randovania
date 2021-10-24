@@ -1,7 +1,7 @@
 import dataclasses
 
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 def test_calculate_pool_item_count(default_layout_configuration):

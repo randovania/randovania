@@ -19,7 +19,7 @@ from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
-from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog, game_exporter
+from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -35,6 +35,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout import preset_describer
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog

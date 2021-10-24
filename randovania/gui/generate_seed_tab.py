@@ -12,7 +12,7 @@ from PySide2.QtCore import QTimer
 from qasync import asyncSlot
 
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.window_manager import WindowManager
@@ -23,6 +23,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout import preset_describer
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
 

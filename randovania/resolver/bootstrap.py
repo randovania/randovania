@@ -13,10 +13,10 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import PlayerShipNode
 from randovania.games.game import RandovaniaGame
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-from randovania.layout.game_to_class import AnyGameConfiguration
 from randovania.resolver.state import State, StateGameData
 
 
@@ -114,7 +114,7 @@ def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentRe
     }
 
 
-def misc_resources_for_configuration(configuration: AnyGameConfiguration,
+def misc_resources_for_configuration(configuration: BaseConfiguration,
                                      resource_database: ResourceDatabase) -> CurrentResources:
     enabled_resources = set()
     if configuration.game == RandovaniaGame.METROID_PRIME:
@@ -188,7 +188,7 @@ def prime1_absolute_damage_reduction(db: ResourceDatabase, current_resources: Cu
         return 1
 
 
-def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfiguration) -> ResourceDatabase:
+def patch_resource_database(db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
     base_damage_reduction = db.base_damage_reduction
     damage_reductions = copy.copy(db.damage_reductions)
     requirement_template = copy.copy(db.requirement_template)
@@ -221,7 +221,7 @@ def patch_resource_database(db: ResourceDatabase, configuration: AnyGameConfigur
                                requirement_template=requirement_template)
 
 
-def logic_bootstrap(configuration: AnyGameConfiguration,
+def logic_bootstrap(configuration: BaseConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
                     ) -> Tuple[GameDescription, State]:

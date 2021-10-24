@@ -7,7 +7,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.games.patchers.claris_patcher
+import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -17,8 +17,8 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 
 
 @pytest.fixture(scope="session")
@@ -54,13 +54,18 @@ def customized_preset(default_preset) -> Preset:
     )
 
 @pytest.fixture(scope="session")
+def default_prime_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
+
+
+@pytest.fixture(scope="session")
 def default_echoes_preset() -> Preset:
     return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
 
 
 @pytest.fixture(scope="session")
-def default_layout_configuration() -> EchoesConfiguration:
-    return PresetManager(None).default_preset.get_preset().configuration
+def default_layout_configuration(default_echoes_preset) -> BaseConfiguration:
+    return default_echoes_preset.configuration
 
 
 @pytest.fixture(scope="session")
@@ -100,7 +105,7 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 
 @pytest.fixture(scope="session")
 def randomizer_data() -> dict:
-    return randovania.games.patchers.claris_patcher.decode_randomizer_data()
+    return  randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
 
 
 @pytest.fixture(params=RandovaniaGame)

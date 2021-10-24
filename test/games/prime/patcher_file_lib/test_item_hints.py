@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.games.prime.patcher_file_lib.hints
+import randovania.patching.prime.patcher_file_lib.hints
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair, \
@@ -15,11 +15,11 @@ from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib import hint_lib
-from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter
-from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
-from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter
+from randovania.games.prime2.patcher import echoes_items
+from randovania.patching.prime.patcher_file_lib import hint_lib
+from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter
+from randovania.patching.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
+from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -74,7 +74,7 @@ def test_create_hints_nothing(empty_patches, players_config):
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
                                                                         {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
@@ -98,7 +98,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
                                                                         {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
@@ -247,7 +247,7 @@ def test_create_hints_item_location(empty_patches, blank_pickup, item, location,
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
                                                                         {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
@@ -289,7 +289,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
                                                                         {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
@@ -324,7 +324,7 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
                                                                         {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert

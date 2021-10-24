@@ -13,7 +13,7 @@ from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
@@ -597,7 +597,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     mock_from_json_dict: MagicMock = mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.from_json_dict")
 
-    preset_as_json = json.dumps(preset_manager.default_preset.as_json)
+    preset_as_json = json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user1)
@@ -605,7 +605,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     database.GameSessionPreset.create(session=session, row=1, preset=preset_as_json)
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
 
-    new_preset = preset_manager.default_preset.get_preset()
+    new_preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
     new_preset = dataclasses.replace(new_preset,
                                      configuration=dataclasses.replace(new_preset.configuration,
                                                                        menu_mod=False))

@@ -12,12 +12,12 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.echoes_dol_patches import EchoesDolVersion
+from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
 
 
 @pytest.fixture(name="version")
 def echoes_version():
-    from randovania.games.prime import echoes_dol_versions
+    from randovania.games.prime2.patcher import echoes_dol_versions
     return echoes_dol_versions.ALL_VERSIONS[0]
 
 
@@ -133,7 +133,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
                                                   mocker, capacity):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     executor = AsyncMock()
     executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
@@ -185,9 +185,9 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
                                                        mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
+        "randovania.patching.prime.all_prime_dol_patches.increment_item_capacity_patch")
     mock_call_display_hud_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.call_display_hud_patch")
+        "randovania.patching.prime.all_prime_dol_patches.call_display_hud_patch")
 
     pickup_patches = MagicMock()
     connector._write_string_to_game_buffer = MagicMock()
@@ -236,7 +236,7 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
 async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker, generic_item_category):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     db = connector.game.resource_database
     pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
@@ -266,7 +266,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
     mock_remote_execute: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.create_remote_execution_body",
+        "randovania.patching.prime.all_prime_dol_patches.create_remote_execution_body",
         return_value=(patch_address, patch_bytes)
     )
 

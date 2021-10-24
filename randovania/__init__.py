@@ -11,13 +11,15 @@ CONFIGURATION_FILE_PATH: Optional[Path] = None
 def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
 
-
-def get_data_path() -> Path:
+def get_file_path() -> Path:
     if is_frozen():
         file_dir = Path(getattr(sys, "_MEIPASS"))
     else:
         file_dir = Path(__file__).parent
-    return file_dir.joinpath("data")
+    return file_dir
+
+def get_data_path() -> Path:
+    return get_file_path().joinpath("data")
 
 
 def _get_default_configuration_path() -> Path:

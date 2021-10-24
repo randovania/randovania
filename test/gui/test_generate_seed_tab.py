@@ -92,7 +92,7 @@ def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qt
     # Run
     item = tab.window.create_preset_tree.preset_to_item.get(preset.uuid)
     # assert item.parent().text(0) == "1"
-    if game.is_experimental and not allow_experimental:
+    if game.data.experimental and not allow_experimental:
         assert item is None
     else:
         tab.window.create_preset_tree.selectionModel().reset()

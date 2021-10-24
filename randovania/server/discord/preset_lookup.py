@@ -9,7 +9,7 @@ from discord_slash import ComponentContext, ButtonStyle
 from discord_slash.utils import manage_components
 
 import randovania
-from randovania.gui.lib import preset_describer
+from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset

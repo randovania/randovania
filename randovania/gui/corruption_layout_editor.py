@@ -4,7 +4,7 @@ from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.games.patchers.gollop_corruption_patcher import layout_string_for_items
+from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
 from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 from randovania.gui.lib import common_qt_lib
 

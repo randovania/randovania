@@ -97,7 +97,7 @@ def _comparable_dict(value):
 def test_full_data_encode_is_equal(game_enum):
     # The json data may be missing if we're running using a Pyinstaller binary
     # Setup
-    data_dir = get_data_path().joinpath("json_data", game_enum.value)
+    data_dir = game_enum.data_path.joinpath("json_data")
     if not data_dir.is_dir() and get_data_path().joinpath("binary_data", f"{game_enum.value}.bin").is_file():
         pytest.skip("Missing json-based data")
 

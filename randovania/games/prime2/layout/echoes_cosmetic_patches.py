@@ -1,0 +1,25 @@
+import dataclasses
+
+from randovania.games.game import RandovaniaGame
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
+
+
+@dataclasses.dataclass(frozen=True)
+class EchoesCosmeticPatches(BaseCosmeticPatches):
+    disable_hud_popup: bool = True
+    speed_up_credits: bool = True
+    open_map: bool = True
+    unvisited_room_names: bool = True
+    pickup_markers: bool = True
+    teleporter_sounds: bool = True
+    user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
+    convert_other_game_assets: bool = False
+
+    @classmethod
+    def default(cls) -> "EchoesCosmeticPatches":
+        return cls()
+
+    @classmethod
+    def game(cls):
+        return RandovaniaGame.METROID_PRIME_ECHOES

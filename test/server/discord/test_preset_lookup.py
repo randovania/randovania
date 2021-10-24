@@ -69,7 +69,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
     mock_create_actionrow = mocker.patch("discord_slash.utils.manage_components.create_actionrow")
 
-    mock_describe: MagicMock = mocker.patch("randovania.gui.lib.preset_describer.describe",
+    mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
                                             return_value=[
                                                 ("General", ["Foo", "Bar"]),
                                                 ("Other", ["X", "Y"]),
@@ -127,7 +127,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
 
 @pytest.mark.asyncio
 async def test_reply_for_preset(mocker):
-    mock_describe: MagicMock = mocker.patch("randovania.gui.lib.preset_describer.describe",
+    mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
                                             return_value=[
                                                 ("General", ["Foo", "Bar"]),
                                                 ("Other", ["X", "Y"]),

@@ -19,7 +19,7 @@ from randovania.game_description.resources.resource_info import (
 )
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import (all_prime_dol_patches)
+from randovania.patching.prime import (all_prime_dol_patches)
 
 
 @dataclasses.dataclass(frozen=True)

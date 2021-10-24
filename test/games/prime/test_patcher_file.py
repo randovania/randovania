@@ -17,13 +17,13 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.teleporter import Teleporter
 from randovania.games.game import RandovaniaGame
-from randovania.games.patchers import claris_patcher_file
-from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.games.prime2.patcher import claris_patcher_file
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.layout.prime2.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
@@ -431,11 +431,11 @@ def test_run_validated_hud_text():
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
-@patch("randovania.games.patchers.claris_patcher_file._logbook_title_string_patches", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.hints.create_hints", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
-@patch("randovania.games.patchers.claris_patcher_file._akul_testament_string_patch", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_patcher_file._logbook_title_string_patches", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.hints.create_hints", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_patcher_file._akul_testament_string_patch", autospec=True)
 def test_create_string_patches(
                                mock_akul_testament: MagicMock,
                                mock_stk_create_hints: MagicMock,

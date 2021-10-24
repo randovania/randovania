@@ -5,12 +5,12 @@ from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
+from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
 
 
 @pytest.fixture(name="version")
 def prime1_version():
-    from randovania.games.prime import prime1_dol_versions
+    from randovania.games.prime1.patcher import prime1_dol_versions
     return prime1_dol_versions.ALL_VERSIONS[0]
 
 
@@ -25,11 +25,11 @@ def remote_connector(version: Prime1DolVersion):
 async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
     mock_increment_capacity: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.increment_item_capacity_patch")
+        "randovania.patching.prime.all_prime_dol_patches.increment_item_capacity_patch")
     mock_artifact_layer: MagicMock = mocker.patch(
-        "randovania.games.prime.prime1_dol_patches.set_artifact_layer_active_patch")
+        "randovania.games.prime1.patcher.prime1_dol_patches.set_artifact_layer_active_patch")
 
     db = connector.game.resource_database
     if artifact:
