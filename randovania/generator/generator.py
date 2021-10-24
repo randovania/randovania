@@ -16,10 +16,10 @@ from randovania.generator.filler.filler_library import filter_unassigned_pickup_
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
+from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
 from randovania.resolver import resolver, bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
 
@@ -35,7 +35,6 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 
 def create_player_pool(rng: Random, configuration: EchoesConfiguration,
                        player_index: int, num_players: int) -> PlayerPool:
-
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
@@ -147,6 +146,13 @@ def _distribute_remaining_items(rng: Random,
 
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
+
+    if len(all_remaining_pickups) > len(unassigned_pickup_nodes):
+        raise InvalidConfiguration(
+            "Received {} remaining pickups, but there's only {} unassigned locations.".format(
+                len(all_remaining_pickups),
+                len(unassigned_pickup_nodes)
+            ))
 
     for (node_player, node), (pickup_player, pickup) in zip(unassigned_pickup_nodes, all_remaining_pickups):
         assignments[node_player][node.pickup_index] = PickupTarget(pickup, pickup_player)

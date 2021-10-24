@@ -1,5 +1,6 @@
 import copy
 import json
+import logging
 import os
 import typing
 from pathlib import Path
@@ -338,7 +339,6 @@ class RandomprimePatcher(Patcher):
                 "qolPickupScans": configuration.qol_pickup_scans,
                 "qolCutscenes": configuration.qol_cutscenes.value,
 
-                "obfuscateItems": False,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
                 "automaticCrashScreen": True,
@@ -423,7 +423,13 @@ class RandomprimePatcher(Patcher):
 
         os.environ["RUST_BACKTRACE"] = "1"
 
-        py_randomprime.patch_iso_raw(
-            patch_as_str,
-            py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
-        )
+        try:
+            py_randomprime.patch_iso_raw(
+                patch_as_str,
+                py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
+            )
+        except BaseException as e:
+            if isinstance(e, Exception):
+                raise
+            else:
+                raise RuntimeError(f"randomprime panic: {e}") from e
