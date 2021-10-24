@@ -282,9 +282,9 @@ def _echoes_format_params(configuration: EchoesConfiguration) -> Dict[str, List[
     fill_template_strings_from_tree(template_strings, extra_message_tree)
 
     # Sky Temple Keys
-    if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
+    if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
         template_strings["Item Pool"].append("Sky Temple Keys at all bosses")
-    elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+    elif configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         template_strings["Item Pool"].append("Sky Temple Keys at all guardians")
     else:
         template_strings["Item Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")

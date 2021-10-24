@@ -396,12 +396,16 @@ def _migrate_v13(preset: dict) -> dict:
 
     for item, ids in main_items[preset["game"]].items():
         item_state = preset["configuration"]["major_items_configuration"]["items_state"][item]
+        count = item_state.get("num_shuffled_pickups", 0) + item_state.get("num_included_in_starting_items", 0)
+        if item_state.get("include_copy_in_original_location", False):
+            count += 1
+
         for ammo_id, ammo in zip(ids, item_state["included_ammo"]):
-            maximum_ammo[ammo_id] -= ammo
+            maximum_ammo[ammo_id] -= ammo * count
 
     for name, config in preset["configuration"]["ammo_configuration"]["items_state"].items():
         config["ammo_count"] = [
-            math.ceil(maximum_ammo[ammo_id] / max(config["pickup_count"], 1))
+            math.ceil(max(maximum_ammo[ammo_id], 0) / max(config["pickup_count"], 1))
             for ammo_id in ammo_ids[name]
         ]
         config.pop("variance")
