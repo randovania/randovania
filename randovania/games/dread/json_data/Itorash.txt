@@ -1,0 +1,69 @@
+----------------
+Main Room
+Asset id: I1
+> Elevator to Hanubia; Heals? False; Spawn Point
+  * Teleporter to Hanubia - Elevator to Itorash
+  > Door to Save Station
+      Any of the following:
+          Speed Booster or Spin Boost or Space Jump
+          Infinite Bomb Jump (Beginner) and Vertical Bomb Jump
+
+> Door to Save Station; Heals? False
+  * Power Beam Door to Save Station/Door to Main Room
+  > Elevator to Hanubia
+      Any of the following:
+          Speed Booster or Spin Boost or Space Jump
+          Infinite Bomb Jump (Beginner) and Vertical Bomb Jump
+  > Total Refill Station
+      Trivial
+
+> Total Refill Station; Heals? True
+  > Door to Save Station
+      Trivial
+
+----------------
+Save Station
+Asset id: I2
+> Door to Main Room; Heals? False; Spawn Point
+  * Power Beam Door to Main Room/Door to Save Station
+  > Door to Elevator to Raven Beak
+      Trivial
+
+> Door to Elevator to Raven Beak; Heals? False
+  * Power Beam Door to Elevator to Raven Beak/Door to Save Station
+  > Door to Main Room
+      Trivial
+
+----------------
+Elevator to Raven Beak
+Asset id: RBE
+> Door to Save Station; Heals? False
+  * Power Beam Door to Save Station/Door to Elevator to Raven Beak
+  > Elevator to Raven Beak Arena
+      All of the following:
+          Morph Ball and Power Bomb
+          Any of the following:
+              Speed Booster or Spin Boost or Space Jump
+              Infinite Bomb Jump (Beginner) and Vertical Bomb Jump
+
+> Elevator to Raven Beak Arena; Heals? False; Spawn Point
+  * Teleporter to Itorash - Raven Beak Arena
+  > Door to Save Station
+      Trivial
+
+----------------
+Raven Beak Arena
+Asset id: RB
+> Before Fight; Heals? False; Spawn Point
+  > Escape Sequence
+      All of the following:
+          # TODO: accurate boss requirements incl. Combat tricks
+          Wave Beam and Shoot Beam
+
+> Boss - Raven Beak; Heals? False
+  > Escape Sequence
+      Trivial
+
+> Escape Sequence; Heals? True
+  * Teleporter to Hanubia - Escape (TODO)
+

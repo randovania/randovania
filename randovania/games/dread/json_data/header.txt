@@ -1,0 +1,71 @@
+====================
+Templates
+
+* Shoot Beam:
+      Power Beam or Wide Beam or Plasma Beam or Wave Beam or Hyper Beam
+
+* Shoot Charge Beam:
+      All of the following:
+          Shoot Beam
+          Charge Beam or Diffusion Beam
+
+* Shoot Super Missile:
+      Missiles and Super Missiles
+
+* Shoot Ice Missile:
+      Missiles and Ice Missiles
+
+* Push Wide Beam Block:
+      Wide Beam and Shoot Charge Beam
+
+* Activate Storm Missile Locks:
+      Missiles ≥ 15 and Storm Missiles
+
+* Vertical Bomb Jump:
+      All of the following:
+          Morph Ball
+          Bomb or Cross Bomb
+
+====================
+Dock Weaknesses
+
+> DockType.DOOR
+  * (0) Access Open; Lock type: FRONT_ALWAYS_BACK_FREE
+      Trivial
+
+  * (1) Access Closed; Lock type: FRONT_ALWAYS_BACK_FREE
+      Impossible
+
+  * (2) Power Beam Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Shoot Beam
+
+  * (3) Charge Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Charge Beam
+
+  * (4) Wide Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Wide Beam
+
+  * (5) Plasma Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Plasma Beam
+
+  * (6) Wave Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Wave Beam
+
+  * (7) Missile Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Missiles
+
+  * (8) Super Missile Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Super Missile
+
+  * (9) Sensor Lock Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Phantom Cloak
+
+> DockType.MORPH_BALL_DOOR
+  * (0) Morph Ball Tunnel; Lock type: FRONT_ALWAYS_BACK_FREE
+      Morph Ball
+
+> DockType.OTHER
+  * (0) Other Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Trivial
+
+> DockType.PORTAL
