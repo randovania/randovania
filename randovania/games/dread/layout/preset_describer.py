@@ -1,0 +1,67 @@
+from typing import Dict, List
+from randovania.game_description import default_database
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, message_for_required_mains
+from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+
+def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str]]:
+    major_items = configuration.major_items_configuration
+
+    template_strings = _format_params_base(configuration)
+
+    if configuration.energy_per_tank != 100:
+        template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
+    
+    extra_message_tree = {
+        "Item Pool": [
+            {
+                "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
+                "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
+                "Progressive Missiles": has_shuffled_item(major_items, "Progressive Missiles"),
+                "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit")
+            }
+        ],
+        "Gameplay": [
+            {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
+        ],
+        "Game Changes": [
+            {"Adam dialog removed": configuration.disable_adam_convos}
+        ]
+    }
+    fill_template_strings_from_tree(template_strings, extra_message_tree)
+
+    return template_strings
+
+dread_expected_items = {}
+
+def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
+    unexpected_items = dread_expected_items | {"Hyper Beam", "Metroid Suit"}
+
+    if has_shuffled_item(configuration, "Progressive Beam"):
+        unexpected_items.add("Wide Beam")
+        unexpected_items.add("Plasma Beam")
+        unexpected_items.add("Wave Beam")
+    else:
+        unexpected_items.add("Progressive Beam")
+
+    if has_shuffled_item(configuration, "Progressive Charge Beam"):
+        unexpected_items.add("Charge Beam")
+        unexpected_items.add("Diffusion Beam")
+    else:
+        unexpected_items.add("Progressive Charge Beam")
+
+    if has_shuffled_item(configuration, "Progressive Missiles"):
+        unexpected_items.add("Missiles")
+        unexpected_items.add("Super Missiles")
+        unexpected_items.add("Ice Missiles")
+    else:
+        unexpected_items.add("Progressive Missiles")
+
+    if has_shuffled_item(configuration, "Progressive Suit"):
+        unexpected_items.add("Varia Suit")
+        unexpected_items.add("Gravity Suit")
+    else:
+        unexpected_items.add("Progressive Suit")
+
+    return unexpected_items
+
