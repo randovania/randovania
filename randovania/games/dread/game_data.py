@@ -1,7 +1,8 @@
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
+from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, dread_unexpected_items
 
 def _dread_gui():
     pass
@@ -18,8 +19,13 @@ game_data: GameData = GameData(
     ],
 
     layout=GameLayout(
-        configuration=BaseConfiguration,
-        cosmetic_patches=BaseCosmeticPatches
+        configuration=DreadConfiguration,
+        cosmetic_patches=DreadCosmeticPatches,
+        preset_describer=GamePresetDescriber(
+            expected_items=dread_expected_items,
+            unexpected_items=dread_unexpected_items,
+            format_params=dread_format_params
+        )
     ),
 
     gui=_dread_gui,
