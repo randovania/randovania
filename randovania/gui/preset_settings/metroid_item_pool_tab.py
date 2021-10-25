@@ -122,6 +122,31 @@ class MetroidPresetItemPool(PresetItemPool):
                 "Progressive Beam",
                 ("Plasma Beam", "Nova Beam"),
             ))
+        elif self.game == RandovaniaGame.METROID_DREAD:
+            all_progressive.append((
+                "Progressive Beam",
+                ("Wide Beam", "Plasma Beam", "Wave Beam")
+            ))
+            all_progressive.append((
+                "Progressive Charge Beam",
+                ("Charge Beam", "Diffusion Beam")
+            ))
+            all_progressive.append((
+                "Progressive Missiles",
+                ("Super Missiles", "Ice Missiles")
+            ))
+            all_progressive.append((
+                "Progressive Suit",
+                ("Varia Suit", "Gravity Suit")
+            ))
+            all_progressive.append((
+                "Progressive Bomb",
+                ("Bomb", "Cross Bomb")
+            ))
+            all_progressive.append((
+                "Progressive Spin",
+                ("Spin Boost", "Space Jump")
+            ))
 
         for (progressive_item_name, non_progressive_items) in all_progressive:
             progressive_item = item_database.major_items[progressive_item_name]

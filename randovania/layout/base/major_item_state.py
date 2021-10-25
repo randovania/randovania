@@ -21,26 +21,26 @@ class MajorItemState:
         db = default_database.resource_database_for(item.game)
 
         if item.required:
-            if self != MajorItemState(num_included_in_starting_items=1):
-                raise ValueError("Required items must be included in starting items.")
+            if not self.num_included_in_starting_items:
+                raise ValueError(f"Required items must be included in starting items. ({item.name})")
 
         if self.num_included_in_starting_items > 0:
             if len(item.progression) > 1:
-                raise ValueError("Progressive items cannot be starting item.")
+                raise ValueError(f"Progressive items cannot be starting item. ({item.name})")
 
             for progression in item.progression:
                 if self.num_included_in_starting_items > db.get_item(progression).max_capacity:
-                    raise ValueError("More starting copies than the item's max copy.")
+                    raise ValueError(f"More starting copies than the item's max copy. ({item.name})")
 
         if self.include_copy_in_original_location and item.original_index is None:
-            raise ValueError("Custom item cannot be vanilla.")
+            raise ValueError(f"Custom item cannot be vanilla. ({item.name})")
 
         if len(self.included_ammo) != len(item.ammo_index):
-            raise ValueError("Mismatched included_ammo array size")
+            raise ValueError(f"Mismatched included_ammo array size. ({item.name})")
 
         for ammo_index, ammo in zip(item.ammo_index, self.included_ammo):
             if ammo > db.get_item(ammo_index).max_capacity:
-                raise ValueError(f"Including more than maximum capacity for ammo {ammo_index}")
+                raise ValueError(f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
 
     @property
     def as_json(self) -> dict:
