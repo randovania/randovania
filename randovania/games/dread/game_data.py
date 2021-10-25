@@ -5,7 +5,13 @@ from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPa
 from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, dread_unexpected_items
 
 def _dread_gui():
-    pass
+    from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
+    from randovania.games.dread.gui.preset_settings import dread_preset_tabs
+
+    return GameGui(
+        tab_provider=dread_preset_tabs,
+        cosmetic_dialog=DreadCosmeticPatchesDialog
+    )
 
 game_data: GameData = GameData(
     short_name="Dread",
