@@ -281,6 +281,12 @@
                 "long_name": "Single-wall Wall Jump",
                 "short_name": "SWJ",
                 "description": ""
+            },
+            {
+                "index": 9,
+                "long_name": "Slide Jump",
+                "short_name": "Slide",
+                "description": ""
             }
         ],
         "damage": [
@@ -322,7 +328,13 @@
                 "short_name": "1.0.1"
             }
         ],
-        "misc": [],
+        "misc": [
+            {
+                "index": 0,
+                "long_name": "Separate Beam Behaviors",
+                "short_name": "SeparateBeams"
+            }
+        ],
         "requirement_template": {
             "Shoot Beam": {
                 "type": "or",
@@ -377,6 +389,109 @@
                     ]
                 }
             },
+            "Shoot Wide Beam": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 1,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 5,
+                                            "index": 0,
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Plasma Beam": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 2,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 5,
+                                            "index": 0,
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
             "Shoot Charge Beam": {
                 "type": "and",
                 "data": {
@@ -387,29 +502,33 @@
                             "data": "Shoot Beam"
                         },
                         {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 0,
-                                            "index": 5,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 0,
-                                            "index": 6,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": 0,
+                                "index": 5,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Diffusion Beam": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Charge Beam"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 6,
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     ]
@@ -430,12 +549,29 @@
                             }
                         },
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": 0,
-                                "index": 9,
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 9,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -514,7 +650,7 @@
                     ]
                 }
             },
-            "Vertical Bomb Jump": {
+            "Lay Bomb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -556,6 +692,32 @@
                         }
                     ]
                 }
+            },
+            "Use Spin Boost": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 25,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 25,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -564,6 +726,10 @@
                 "reductions": [
                     {
                         "index": 16,
+                        "multiplier": 0.0
+                    },
+                    {
+                        "index": 17,
                         "multiplier": 0.0
                     }
                 ]
@@ -657,13 +823,8 @@
                 "name": "Wide Beam Door",
                 "lock_type": 1,
                 "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": 0,
-                        "index": 1,
-                        "amount": 1,
-                        "negate": false
-                    }
+                    "type": "template",
+                    "data": "Shoot Wide Beam"
                 }
             },
             {
@@ -671,13 +832,8 @@
                 "name": "Plasma Beam Door",
                 "lock_type": 1,
                 "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": 0,
-                        "index": 2,
-                        "amount": 1,
-                        "negate": false
-                    }
+                    "type": "template",
+                    "data": "Shoot Plasma Beam"
                 }
             },
             {
