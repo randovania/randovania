@@ -207,7 +207,11 @@
             }
         ],
         "events": [
-
+            {
+                "index": 1,
+                "long_name": "Generic Event",
+                "short_name": "Event1"
+            }
         ],
         "tricks": [
             {
@@ -278,11 +282,16 @@
             },
             {
                 "index": 3,
+                "long_name": "Lava Damage",
+                "short_name": "Lava"
+            },
+            {
+                "index": 4,
                 "long_name": "Cold Damage",
                 "short_name": "Cold"
             },
             {
-                "index": 4,
+                "index": 5,
                 "long_name": "Out of Bounds Damage",
                 "short_name": "OOB"
             }
@@ -299,9 +308,7 @@
                 "short_name": "1.0.1"
             }
         ],
-        "misc": [
-
-        ],
+        "misc": [],
         "requirement_template": {
             "Shoot Beam": {
                 "type": "or",
@@ -320,8 +327,8 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 1,
-                                "index": 0,
+                                "type": 0,
+                                "index": 1,
                                 "amount": 1,
                                 "negate": false
                             }
@@ -329,8 +336,8 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 2,
-                                "index": 0,
+                                "type": 0,
+                                "index": 2,
                                 "amount": 1,
                                 "negate": false
                             }
@@ -338,8 +345,8 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 3,
-                                "index": 0,
+                                "type": 0,
+                                "index": 3,
                                 "amount": 1,
                                 "negate": false
                             }
@@ -347,8 +354,8 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 4,
-                                "index": 0,
+                                "type": 0,
+                                "index": 4,
                                 "amount": 1,
                                 "negate": false
                             }
@@ -411,7 +418,7 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 1,
+                                "type": 0,
                                 "index": 9,
                                 "amount": 1,
                                 "negate": false
@@ -437,7 +444,7 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 1,
+                                "type": 0,
                                 "index": 10,
                                 "amount": 1,
                                 "negate": false
@@ -453,7 +460,7 @@
                     "items": [
                         {
                             "type": "template",
-                            "data":"Shoot Charge Beam"
+                            "data": "Shoot Charge Beam"
                         },
                         {
                             "type": "resource",
@@ -484,7 +491,7 @@
                         {
                             "type": "resource",
                             "data": {
-                                "type": 1,
+                                "type": 0,
                                 "index": 11,
                                 "amount": 1,
                                 "negate": false
@@ -492,10 +499,79 @@
                         }
                     ]
                 }
+            },
+            "Vertical Bomb Jump": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 19,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 20,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 21,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
-
+            {
+                "index": 2,
+                "reductions": [
+                    {
+                        "index": 16,
+                        "multiplier": 0.0
+                    }
+                ]
+            },
+            {
+                "index": 3,
+                "reductions": [
+                    {
+                        "index": 17,
+                        "multiplier": 0.0
+                    }
+                ]
+            },
+            {
+                "index": 4,
+                "reductions": [
+                    {
+                        "index": 17,
+                        "multiplier": 0.0
+                    }
+                ]
+            }
         ],
         "energy_tank_item_index": 28,
         "item_percentage_index": null,
@@ -505,11 +581,11 @@
         "world_asset_id": null,
         "area_asset_id": null
     },
-    "initial_states": {
-
-    },
+    "initial_states": {},
     "minimal_logic": {
-
+        "items_to_exclude": [],
+        "custom_item_amount": [],
+        "events_to_exclude": []
     },
     "victory_condition": {
         "type": "and",
@@ -642,6 +718,7 @@
                 }
             }
         ],
+        "portal": [],
         "morph_ball": [
             {
                 "index": 0,

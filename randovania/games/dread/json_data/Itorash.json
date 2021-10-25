@@ -1,0 +1,417 @@
+{
+    "name": "Itorash",
+    "dark_name": null,
+    "asset_id": "I",
+    "areas": [
+        {
+            "name": "Main Room",
+            "in_dark_aether": false,
+            "asset_id": "I1",
+            "default_node_index": 0,
+            "valid_starting_location": false,
+            "nodes": [
+                {
+                    "name": "Elevator to Hanubia",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": "H",
+                    "destination_area_asset_id": "HI",
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 26,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Vertical Bomb Jump"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 25,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 24,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Save Station",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "I2",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Elevator to Hanubia": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 25,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 24,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 26,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Vertical Bomb Jump"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Total Refill Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Total Refill Station",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Save Station",
+            "in_dark_aether": false,
+            "asset_id": "I2",
+            "default_node_index": 0,
+            "valid_starting_location": false,
+            "nodes": [
+                {
+                    "name": "Door to Main Room",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "I1",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Elevator to Raven Beak",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "RBE",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Main Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Elevator to Raven Beak",
+            "in_dark_aether": false,
+            "asset_id": "RBE",
+            "default_node_index": 1,
+            "valid_starting_location": false,
+            "nodes": [
+                {
+                    "name": "Door to Save Station",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "I2",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Elevator to Raven Beak Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 22,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 19,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 26,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 25,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 4,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Vertical Bomb Jump"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 24,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Elevator to Raven Beak Arena",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": "I",
+                    "destination_area_asset_id": "RB",
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Raven Beak Arena",
+            "in_dark_aether": false,
+            "asset_id": "RB",
+            "default_node_index": 0,
+            "valid_starting_location": false,
+            "nodes": [
+                {
+                    "name": "Before Fight",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: accurate boss requirements incl. Combat tricks",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Boss - Raven Beak",
+                    "heal": false,
+                    "coordinates": null,
+                    "node_type": "generic",
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Escape Sequence",
+                    "heal": true,
+                    "coordinates": null,
+                    "node_type": "teleporter",
+                    "destination_world_asset_id": "H",
+                    "destination_area_asset_id": "Escape",
+                    "teleporter_instance_id": null,
+                    "scan_asset_id": null,
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {}
+                }
+            ]
+        }
+    ]
+}

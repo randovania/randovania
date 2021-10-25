@@ -93,6 +93,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME_ECHOES = "prime2"
     METROID_PRIME_CORRUPTION = "prime3"
     SUPER_METROID = "super_metroid"
+    METROID_DREAD = "dread"
 
     @property
     def data(self) -> GameData:
@@ -104,6 +105,8 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.prime3.game_data as game_module
         elif self == RandovaniaGame.SUPER_METROID:
             import randovania.games.super_metroid.game_data as game_module
+        elif self == RandovaniaGame.METROID_DREAD:
+            import randovania.games.dread.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data
