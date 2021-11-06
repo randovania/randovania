@@ -23,7 +23,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_001",
+                    "connected_dock_index": 2,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -40,7 +45,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 0,
+                    "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_008",
                     "connected_dock_index": 2,
                     "dock_type": 2,
@@ -116,7 +121,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_009",
+                    "connected_dock_index": 0,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -132,7 +142,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": "collision_camera_000",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -175,89 +190,6 @@
                     [
                         1100.0,
                         3700.0
-                    ]
-                ]
-            }
-        },
-        {
-            "name": "collision_camera_001_B",
-            "in_dark_aether": false,
-            "asset_id": "collision_camera_001_B",
-            "default_node_index": null,
-            "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door (doorpowerpower_002)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2950.0,
-                        "y": 4900.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (doorpowerpower_008)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2950.0,
-                        "y": 6700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Pickup (item_missiletank_006)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -650.0,
-                        "y": 7200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "node_type": "pickup",
-                    "pickup_index": 92,
-                    "major_location": false,
-                    "connections": {}
-                }
-            ],
-            "extra": {
-                "total_boundings": {
-                    "x1": -3000.0,
-                    "x2": 1100.0,
-                    "y1": 4625.0,
-                    "y2": 7600.0
-                },
-                "polygon": [
-                    [
-                        1100.0,
-                        7600.0
-                    ],
-                    [
-                        -3000.0,
-                        7600.0
-                    ],
-                    [
-                        -3000.0,
-                        4625.0
-                    ],
-                    [
-                        1100.0,
-                        4625.0
                     ]
                 ]
             }
@@ -790,7 +722,7 @@
                     "node_type": "dock",
                     "dock_index": 0,
                     "connected_area_asset_id": "collision_camera_009",
-                    "connected_dock_index": 0,
+                    "connected_dock_index": 1,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -832,7 +764,7 @@
                     "node_type": "dock",
                     "dock_index": 2,
                     "connected_area_asset_id": "collision_camera_000",
-                    "connected_dock_index": 1,
+                    "connected_dock_index": 2,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -930,7 +862,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_001",
+                    "connected_dock_index": 2,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -947,7 +884,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 0,
+                    "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_008",
                     "connected_dock_index": 1,
                     "dock_type": 2,
@@ -2419,6 +2356,22 @@
                     "connections": {}
                 },
                 {
+                    "name": "Pickup (item_powerbombtank_000)",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3850.0,
+                        "y": -12300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
+                    },
+                    "node_type": "pickup",
+                    "pickup_index": 85,
+                    "major_location": false,
+                    "connections": {}
+                },
+                {
                     "name": "Door (doorpowerpower_016)",
                     "heal": false,
                     "coordinates": {
@@ -2461,8 +2414,16 @@
                         -12150.0
                     ],
                     [
-                        4100.0,
+                        3500.0,
                         -12150.0
+                    ],
+                    [
+                        3500.0,
+                        -12500.0
+                    ],
+                    [
+                        4100.0,
+                        -12500.0
                     ]
                 ]
             }
