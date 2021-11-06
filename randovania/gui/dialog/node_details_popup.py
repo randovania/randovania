@@ -284,14 +284,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             location = NodeLocation(self.location_x_spin.value(),
                                     self.location_y_spin.value(),
                                     self.location_z_spin.value())
+        extra = self.node.extra
         index = self.node.index
 
         if node_type == GenericNode:
-            return GenericNode(name, heal, location, index)
+            return GenericNode(name, heal, location, extra, index)
 
         elif node_type == DockNode:
             return DockNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 self.dock_index_spin.value(),
                 DockConnection(self.dock_connection_area_combo.currentData().area_asset_id,
                                self.dock_connection_node_combo.currentData()),
@@ -300,7 +301,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PickupNode:
             return PickupNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 PickupIndex(self.pickup_index_spin.value()),
                 self.major_location_check.isChecked(),
             )
@@ -319,7 +320,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 teleporter = None
 
             return TeleporterNode(
-                name, heal, location, index, teleporter,
+                name, heal, location, extra, index, teleporter,
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
                 int(scan_asset_id, 0) if scan_asset_id != "" else None,
@@ -332,13 +333,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             if event is None:
                 raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 event,
             )
 
         elif node_type == TranslatorGateNode:
             return TranslatorGateNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 TranslatorGate(self.translator_gate_spin.value()),
                 self._get_scan_visor()
             )
@@ -358,7 +359,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 hint_index = None
 
             return LogbookNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 int(self.logbook_string_asset_id_edit.text(), 0),
                 self._get_scan_visor(),
                 lore_type,
@@ -368,7 +369,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PlayerShipNode:
             return PlayerShipNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 self._unlocked_by_requirement,
                 self._get_command_visor()
             )

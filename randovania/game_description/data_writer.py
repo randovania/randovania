@@ -312,7 +312,7 @@ def write_area(area: Area) -> dict:
         "default_node_index": area.default_node_index,
         "valid_starting_location": area.valid_starting_location,
         "nodes": nodes,
-        "misc": area.misc,
+        "extra": area.extra,
     }
 
 
