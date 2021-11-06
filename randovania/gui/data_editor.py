@@ -255,7 +255,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_spawn_check.setChecked(is_default_spawn)
         self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
 
-        msg = pretty_print.pretty_print_node_type(node, self.world_list)
+        try:
+            msg = pretty_print.pretty_print_node_type(node, self.world_list)
+        except Exception as e:
+            msg = f"Unable to describe node: {e}"
+
         if isinstance(node, DockNode):
             try:
                 other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
@@ -268,10 +272,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 pass
 
         elif isinstance(node, TeleporterNode):
-            other = self.world_list.area_by_area_location(node.default_connection)
-            name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
-            pretty_name = msg.replace("Teleporter to ", "")
-            msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
+            try:
+                other = self.world_list.area_by_area_location(node.default_connection)
+                name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
+                pretty_name = msg.replace("Teleporter to ", "")
+                msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
+            except Exception as e:
+                msg = f'Teleporter to {node.default_connection} (Unknown area due to {e}).'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)

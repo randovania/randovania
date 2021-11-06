@@ -18,4 +18,8 @@ class AreaLocation:
         return cls(value["world_asset_id"], value["area_asset_id"])
 
     def __repr__(self):
-        return "world 0x{:02X}/area 0x{:02X}".format(self.world_asset_id, self.area_asset_id)
+        try:
+            return "world 0x{:02X}/area 0x{:02X}".format(self.world_asset_id, self.area_asset_id)
+        except ValueError:
+            # non-int ids
+            return "world {}/area {}".format(self.world_asset_id, self.area_asset_id)
