@@ -217,6 +217,7 @@ def write_node(node: Node) -> dict:
         "name": node.name,
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
+        "extra": node.extra,
     }
 
     if isinstance(node, GenericNode):
@@ -260,12 +261,12 @@ def write_node(node: Node) -> dict:
         data["lore_type"] = node.lore_type.value
 
         if node.lore_type == LoreType.LUMINOTH_LORE:
-            data["extra"] = node.required_translator.index
+            data["lore_extra"] = node.required_translator.index
 
         elif node.lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-            data["extra"] = node.hint_index
+            data["lore_extra"] = node.hint_index
         else:
-            data["extra"] = 0
+            data["lore_extra"] = 0
 
     elif isinstance(node, PlayerShipNode):
         data["node_type"] = "player_ship"
@@ -310,7 +311,8 @@ def write_area(area: Area) -> dict:
         "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
         "valid_starting_location": area.valid_starting_location,
-        "nodes": nodes
+        "nodes": nodes,
+        "misc": area.misc,
     }
 
 

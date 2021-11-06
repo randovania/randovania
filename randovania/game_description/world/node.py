@@ -1,9 +1,8 @@
 import dataclasses
+import typing
 from enum import Enum
-from typing import Optional, NamedTuple, Tuple
+from typing import Optional, NamedTuple, Tuple, Dict
 
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeakness, DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement, RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -14,6 +13,8 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.dock import DockWeakness, DockConnection
 from randovania.game_description.world.teleporter import Teleporter
 
 
@@ -28,6 +29,7 @@ class Node:
     name: str
     heal: bool
     location: Optional[NodeLocation]
+    extra: Dict[str, typing.Any]
     index: int
 
     def __lt__(self, other):
