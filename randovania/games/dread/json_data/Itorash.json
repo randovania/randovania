@@ -1,13 +1,96 @@
 {
     "name": "Itorash",
     "dark_name": null,
-    "asset_id": "I",
+    "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
     "areas": [
+        {
+            "name": "Save Station",
+            "in_dark_aether": false,
+            "asset_id": "collision_camera_000",
+            "default_node_index": null,
+            "valid_starting_location": false,
+            "nodes": [
+                {
+                    "name": "Door to Elevator to Raven Beak",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_001",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Main Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Door to Main Room",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_002",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            ],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1400.0,
+                    "x2": 3500.0,
+                    "y1": -4600.0,
+                    "y2": -3500.0
+                },
+                "polygon": [
+                    [
+                        3500.0,
+                        -3500.0
+                    ],
+                    [
+                        1400.0,
+                        -3500.0
+                    ],
+                    [
+                        1400.0,
+                        -4600.0
+                    ],
+                    [
+                        3500.0,
+                        -4600.0
+                    ]
+                ]
+            }
+        },
         {
             "name": "Main Room",
             "in_dark_aether": false,
-            "asset_id": "I1",
-            "default_node_index": 0,
+            "asset_id": "collision_camera_001",
+            "default_node_index": null,
             "valid_starting_location": false,
             "nodes": [
                 {
@@ -15,7 +98,7 @@
                     "heal": false,
                     "coordinates": null,
                     "node_type": "teleporter",
-                    "destination_world_asset_id": "H",
+                    "destination_world_asset_id": "maps/levels/c10_samus/s080_shipyard/s080_shipyard.brfld",
                     "destination_area_asset_id": "HI",
                     "teleporter_instance_id": null,
                     "scan_asset_id": null,
@@ -83,13 +166,17 @@
                 {
                     "name": "Door to Save Station",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 1450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
                     "node_type": "dock",
-                    "dock_index": 1,
-                    "connected_area_asset_id": "I2",
-                    "connected_dock_index": 0,
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_000",
+                    "connected_dock_index": 1,
                     "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_weakness_index": 1,
                     "connections": {
                         "Elevator to Hanubia": {
                             "type": "or",
@@ -171,72 +258,53 @@
                         }
                     }
                 }
-            ]
-        },
-        {
-            "name": "Save Station",
-            "in_dark_aether": false,
-            "asset_id": "I2",
-            "default_node_index": 0,
-            "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Room",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "dock",
-                    "dock_index": 0,
-                    "connected_area_asset_id": "I1",
-                    "connected_dock_index": 1,
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
-                    "connections": {
-                        "Door to Elevator to Raven Beak": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+            ],
+            "extra": {
+                "total_boundings": {
+                    "x1": -5900.0,
+                    "x2": 1500.0,
+                    "y1": -4800.0,
+                    "y2": -1100.0
                 },
-                {
-                    "name": "Door to Elevator to Raven Beak",
-                    "heal": false,
-                    "coordinates": null,
-                    "node_type": "dock",
-                    "dock_index": 1,
-                    "connected_area_asset_id": "RBE",
-                    "connected_dock_index": 0,
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
-                    "connections": {
-                        "Door to Main Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            ]
+                "polygon": [
+                    [
+                        1500.0,
+                        -1100.0
+                    ],
+                    [
+                        -5900.0,
+                        -1100.0
+                    ],
+                    [
+                        -5900.0,
+                        -4800.0
+                    ],
+                    [
+                        1500.0,
+                        -4800.0
+                    ]
+                ]
+            }
         },
         {
             "name": "Elevator to Raven Beak",
             "in_dark_aether": false,
-            "asset_id": "RBE",
-            "default_node_index": 1,
+            "asset_id": "collision_camera_002",
+            "default_node_index": null,
             "valid_starting_location": false,
             "nodes": [
                 {
                     "name": "Door to Save Station",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": "I2",
-                    "connected_dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_000",
+                    "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
@@ -329,8 +397,8 @@
                     "heal": false,
                     "coordinates": null,
                     "node_type": "teleporter",
-                    "destination_world_asset_id": "I",
-                    "destination_area_asset_id": "RB",
+                    "destination_world_asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
+                    "destination_area_asset_id": "collision_camera_004",
                     "teleporter_instance_id": null,
                     "scan_asset_id": null,
                     "keep_name_when_vanilla": false,
@@ -345,13 +413,73 @@
                         }
                     }
                 }
-            ]
+            ],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3400.0,
+                    "x2": 6700.0,
+                    "y1": -4600.0,
+                    "y2": -2400.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        -2400.0
+                    ],
+                    [
+                        3400.0,
+                        -2400.0
+                    ],
+                    [
+                        3400.0,
+                        -4600.0
+                    ],
+                    [
+                        6700.0,
+                        -4600.0
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "Elevator Cutscene",
+            "in_dark_aether": false,
+            "asset_id": "collision_camera_003",
+            "default_node_index": null,
+            "valid_starting_location": false,
+            "nodes": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3400.0,
+                    "x2": 6700.0,
+                    "y1": -2500.0,
+                    "y2": 1900.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        1900.0
+                    ],
+                    [
+                        3400.0,
+                        1900.0
+                    ],
+                    [
+                        3400.0,
+                        -2500.0
+                    ],
+                    [
+                        6700.0,
+                        -2500.0
+                    ]
+                ]
+            }
         },
         {
             "name": "Raven Beak Arena",
             "in_dark_aether": false,
-            "asset_id": "RB",
-            "default_node_index": 0,
+            "asset_id": "collision_camera_004",
+            "default_node_index": null,
             "valid_starting_location": false,
             "nodes": [
                 {
@@ -403,7 +531,7 @@
                     "heal": true,
                     "coordinates": null,
                     "node_type": "teleporter",
-                    "destination_world_asset_id": "H",
+                    "destination_world_asset_id": "maps/levels/c10_samus/s080_shipyard/s080_shipyard.brfld",
                     "destination_area_asset_id": "Escape",
                     "teleporter_instance_id": null,
                     "scan_asset_id": null,
@@ -411,7 +539,101 @@
                     "editable": false,
                     "connections": {}
                 }
-            ]
+            ],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3000.0,
+                    "x2": 7100.0,
+                    "y1": 1800.0,
+                    "y2": 4000.0
+                },
+                "polygon": [
+                    [
+                        7100.0,
+                        4000.0
+                    ],
+                    [
+                        3000.0,
+                        4000.0
+                    ],
+                    [
+                        3000.0,
+                        1800.0
+                    ],
+                    [
+                        7100.0,
+                        1800.0
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "collision_camera_005",
+            "in_dark_aether": false,
+            "asset_id": "collision_camera_005",
+            "default_node_index": null,
+            "valid_starting_location": false,
+            "nodes": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 300.0,
+                    "x2": 2400.0,
+                    "y1": 1800.0,
+                    "y2": 2900.0
+                },
+                "polygon": [
+                    [
+                        2400.0,
+                        2900.0
+                    ],
+                    [
+                        300.0,
+                        2900.0
+                    ],
+                    [
+                        300.0,
+                        1800.0
+                    ],
+                    [
+                        2400.0,
+                        1800.0
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "collision_camera_900",
+            "in_dark_aether": false,
+            "asset_id": "collision_camera_900",
+            "default_node_index": null,
+            "valid_starting_location": false,
+            "nodes": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -27000.0,
+                    "x2": -13000.0,
+                    "y1": 6000.0,
+                    "y2": 19000.0
+                },
+                "polygon": [
+                    [
+                        -13000.0,
+                        19000.0
+                    ],
+                    [
+                        -27000.0,
+                        19000.0
+                    ],
+                    [
+                        -27000.0,
+                        6000.0
+                    ],
+                    [
+                        -13000.0,
+                        6000.0
+                    ]
+                ]
+            }
         }
     ]
 }
