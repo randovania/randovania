@@ -1,4 +1,5 @@
 import dataclasses
+import typing
 from typing import List, Dict, Optional, Iterator, Tuple
 
 from randovania.game_description.world.node import Node, DockNode, PickupNode
@@ -15,6 +16,7 @@ class Area:
     valid_starting_location: bool
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
+    extra: Dict[str, typing.Any]
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_node_with_dock_index", {})

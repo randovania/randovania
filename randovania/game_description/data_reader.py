@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
 
+from frozendict import frozendict
+
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
@@ -171,8 +173,10 @@ def read_dock_weakness_database(data: Dict,
         door=door_types,
         morph_ball=morph_ball_types,
         other=[
-            DockWeakness(0, "Other Door", DockLockType.FRONT_ALWAYS_BACK_FREE, Requirement.trivial(),
-                         DockType.OTHER)
+            DockWeakness(0, "Open Passage", DockLockType.FRONT_ALWAYS_BACK_FREE,
+                         Requirement.trivial(), DockType.OTHER),
+            DockWeakness(1, "Not Determined", DockLockType.FRONT_ALWAYS_BACK_FREE,
+                         Requirement.impossible(), DockType.OTHER),
         ],
         portal=portal_types)
 
@@ -211,25 +215,40 @@ class WorldReader:
     def read_node(self, data: Dict) -> Node:
         name: str = data["name"]
         self.generic_index += 1
+
         try:
-            heal: bool = data["heal"]
-            node_type: int = data["node_type"]
             location = None
             if data["coordinates"] is not None:
                 location = location_from_json(data["coordinates"])
 
+            generic_args = {
+                "name": name,
+                "heal": data["heal"],
+                "location": location,
+                "extra": frozendict(data.get("extra", {})),
+                "index": self.generic_index,
+            }
+            node_type: int = data["node_type"]
+
             if node_type == "generic":
-                return GenericNode(name, heal, location, self.generic_index)
+                return GenericNode(**generic_args)
 
             elif node_type == "dock":
-                return DockNode(name, heal, location, self.generic_index, data["dock_index"],
-                                DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
-                                self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
-                                                                                  data["dock_weakness_index"]))
+                return DockNode(
+                    **generic_args,
+                    dock_index=data["dock_index"],
+                    default_connection=DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
+                    default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
+                        DockType(data["dock_type"]),
+                        data["dock_weakness_index"],
+                    ))
 
             elif node_type == "pickup":
-                return PickupNode(name, heal, location, self.generic_index, PickupIndex(data["pickup_index"]),
-                                  data["major_location"])
+                return PickupNode(
+                    **generic_args,
+                    pickup_index=PickupIndex(data["pickup_index"]),
+                    major_location=data["major_location"],
+                )
 
             elif node_type == "teleporter":
                 instance_id = data["teleporter_instance_id"]
@@ -237,46 +256,56 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-                return TeleporterNode(name, heal, location, self.generic_index,
-                                      Teleporter(self.current_world, self.current_area, instance_id),
-                                      AreaLocation(destination_world_asset_id, destination_area_asset_id),
-                                      data["scan_asset_id"],
-                                      data["keep_name_when_vanilla"],
-                                      data["editable"],
-                                      )
+                return TeleporterNode(
+                    **generic_args,
+                    teleporter=Teleporter(self.current_world, self.current_area, instance_id),
+                    default_connection=AreaLocation(destination_world_asset_id, destination_area_asset_id),
+                    scan_asset_id=data["scan_asset_id"],
+                    keep_name_when_vanilla=data["keep_name_when_vanilla"],
+                    editable=data["editable"],
+                )
 
             elif node_type == "event":
-                return EventNode(name, heal, location, self.generic_index,
-                                 self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
+                return EventNode(
+                    **generic_args,
+                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"])
+                )
 
             elif node_type == "translator_gate":
-                return TranslatorGateNode(name, heal, location, self.generic_index,
-                                          TranslatorGate(data["gate_index"]),
-                                          self._get_scan_visor())
+                return TranslatorGateNode(
+                    **generic_args,
+                    gate=TranslatorGate(data["gate_index"]),
+                    scan_visor=self._get_scan_visor(),
+                )
 
             elif node_type == "logbook":
                 lore_type = LoreType(data["lore_type"])
 
                 if lore_type == LoreType.LUMINOTH_LORE:
-                    required_translator = self.resource_database.get_item(data["extra"])
+                    required_translator = self.resource_database.get_item(data["lore_extra"])
                 else:
                     required_translator = None
 
                 if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-                    hint_index = data["extra"]
+                    hint_index = data["lore_extra"]
                 else:
                     hint_index = None
 
-                return LogbookNode(name, heal, location, self.generic_index, data["string_asset_id"],
-                                   self._get_scan_visor(),
-                                   lore_type,
-                                   required_translator,
-                                   hint_index)
+                return LogbookNode(
+                    **generic_args,
+                    string_asset_id=data["string_asset_id"],
+                    scan_visor=self._get_scan_visor(),
+                    lore_type=lore_type,
+                    required_translator=required_translator,
+                    hint_index=hint_index,
+                )
 
             elif node_type == "player_ship":
-                return PlayerShipNode(name, heal, location, self.generic_index,
-                                      read_requirement(data["is_unlocked"], self.resource_database),
-                                      self._get_command_visor())
+                return PlayerShipNode(
+                    **generic_args,
+                    is_unlocked=read_requirement(data["is_unlocked"], self.resource_database),
+                    item_to_summon=self._get_command_visor(),
+                )
 
             else:
                 raise Exception(f"Unknown type: {node_type}")
@@ -308,7 +337,7 @@ class WorldReader:
         try:
             return Area(area_name, data["in_dark_aether"], data["asset_id"], data["default_node_index"],
                         data["valid_starting_location"],
-                        nodes, connections)
+                        nodes, connections, data.get("extra"))
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
