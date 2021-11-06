@@ -1181,23 +1181,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (DoorFrame_001)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5150.0,
-                        "y": 2200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorframe/charclasses/doorframe.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_051",
+                    "connected_dock_index": 0,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -1214,7 +1203,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 0,
+                    "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_075",
                     "connected_dock_index": 0,
                     "dock_type": 2,
@@ -1235,7 +1224,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 1,
+                    "dock_index": 2,
                     "connected_area_asset_id": "collision_camera_075",
                     "connected_dock_index": 1,
                     "dock_type": 2,
@@ -1256,7 +1245,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 2,
+                    "dock_index": 3,
                     "connected_area_asset_id": "collision_camera_069",
                     "connected_dock_index": 0,
                     "dock_type": 2,
@@ -1277,7 +1266,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 3,
+                    "dock_index": 4,
                     "connected_area_asset_id": "collision_camera_069",
                     "connected_dock_index": 1,
                     "dock_type": 2,
@@ -1314,7 +1303,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 4,
+                    "dock_index": 5,
                     "connected_area_asset_id": "collision_camera_053",
                     "connected_dock_index": 1,
                     "dock_type": 2,
@@ -1332,11 +1321,11 @@
                 "polygon": [
                     [
                         -1200.0,
-                        2700.0
+                        2200.0
                     ],
                     [
                         -5200.0,
-                        2700.0
+                        2200.0
                     ],
                     [
                         -5200.0,
@@ -1430,7 +1419,12 @@
                         "left_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000",
                         "right_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_055",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 }
             ],
@@ -2352,7 +2346,7 @@
                     "node_type": "dock",
                     "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_022",
-                    "connected_dock_index": 1,
+                    "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2409,27 +2403,6 @@
             "valid_starting_location": false,
             "nodes": [
                 {
-                    "name": "Door (Door032 (CG-CG))",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17850.0,
-                        "y": 3500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "dock",
-                    "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_023",
-                    "connected_dock_index": 0,
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                {
                     "name": "Door (Door044 (TH))",
                     "heal": false,
                     "coordinates": {
@@ -2443,7 +2416,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 1,
+                    "dock_index": 0,
                     "connected_area_asset_id": "collision_camera_021",
                     "connected_dock_index": 2,
                     "dock_type": 2,
@@ -2464,7 +2437,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 2,
+                    "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_067",
                     "connected_dock_index": 1,
                     "dock_type": 2,
@@ -2485,7 +2458,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 3,
+                    "dock_index": 2,
                     "connected_area_asset_id": "collision_camera_050",
                     "connected_dock_index": 2,
                     "dock_type": 2,
@@ -2526,82 +2499,7 @@
             "asset_id": "collision_camera_023",
             "default_node_index": null,
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door (Door032 (CG-CG))",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17850.0,
-                        "y": 3500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "dock",
-                    "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_022",
-                    "connected_dock_index": 1,
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door036 (PW-PW))",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 24850.0,
-                        "y": 3500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "dock",
-                    "dock_index": 1,
-                    "connected_area_asset_id": "collision_camera_024",
-                    "connected_dock_index": 1,
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door037 (CG-CG))",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 24850.0,
-                        "y": 2700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Pickup (Item_MissileTank007)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 20360.0,
-                        "y": 3020.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "node_type": "pickup",
-                    "pickup_index": 11,
-                    "major_location": false,
-                    "connections": {}
-                }
-            ],
+            "nodes": [],
             "extra": {
                 "total_boundings": {
                     "x1": 17800.0,
@@ -2620,11 +2518,11 @@
                     ],
                     [
                         17800.0,
-                        2300.0
+                        3500.0
                     ],
                     [
                         24900.0,
-                        2300.0
+                        3500.0
                     ]
                 ]
             }
@@ -2649,7 +2547,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_024",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -2725,27 +2628,6 @@
                     "connections": {}
                 },
                 {
-                    "name": "Door (Door036 (PW-PW))",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 24850.0,
-                        "y": 3500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "dock",
-                    "dock_index": 1,
-                    "connected_area_asset_id": "collision_camera_023",
-                    "connected_dock_index": 2,
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                {
                     "name": "Door (Door037 (CG-CG))",
                     "heal": false,
                     "coordinates": {
@@ -2758,7 +2640,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_023_B",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -2928,7 +2815,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_029",
+                    "connected_dock_index": 0,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -2944,7 +2836,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_055",
+                    "connected_dock_index": 0,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -2960,7 +2857,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 2,
+                    "connected_area_asset_id": "collision_camera_028",
+                    "connected_dock_index": 0,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 }
             ],
@@ -3011,26 +2913,10 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door056)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 4200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_999",
-                    "connected_dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_026",
+                    "connected_dock_index": 3,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3083,7 +2969,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_026",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -3100,7 +2991,7 @@
                         "right_shield": "{EMPTY}"
                     },
                     "node_type": "dock",
-                    "dock_index": 0,
+                    "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_031",
                     "connected_dock_index": 0,
                     "dock_type": 2,
@@ -3270,7 +3161,7 @@
                     "node_type": "dock",
                     "dock_index": 0,
                     "connected_area_asset_id": "collision_camera_029",
-                    "connected_dock_index": 1,
+                    "connected_dock_index": 2,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3660,22 +3551,6 @@
                     "connections": {}
                 },
                 {
-                    "name": "Door (doorclosedpower_000)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5150.0,
-                        "y": 1800.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
                     "name": "Door (DoorFrame_001)",
                     "heal": false,
                     "coordinates": {
@@ -3688,23 +3563,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Pickup (item_powerbombtank_000)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3200.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
-                    },
-                    "node_type": "pickup",
-                    "pickup_index": 19,
-                    "major_location": false,
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_051",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 }
             ],
@@ -3734,7 +3598,11 @@
                     ],
                     [
                         -5200.0,
-                        1500.0
+                        2100.0
+                    ],
+                    [
+                        -1000.0,
+                        2100.0
                     ],
                     [
                         -1000.0,
@@ -3909,7 +3777,7 @@
                     "node_type": "dock",
                     "dock_index": 2,
                     "connected_area_asset_id": "collision_camera_022",
-                    "connected_dock_index": 4,
+                    "connected_dock_index": 3,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3970,7 +3838,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_010",
+                    "connected_dock_index": 1,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -3986,7 +3859,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_048",
+                    "connected_dock_index": 2,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -4077,7 +3955,7 @@
                     "node_type": "dock",
                     "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_010",
-                    "connected_dock_index": 5,
+                    "connected_dock_index": 6,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -4210,7 +4088,12 @@
                         "left_shield": "{EMPTY}",
                         "right_shield": "{EMPTY}"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 0,
+                    "connected_area_asset_id": "collision_camera_026",
+                    "connected_dock_index": 2,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 {
@@ -4226,7 +4109,12 @@
                         "left_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000",
                         "right_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000"
                     },
-                    "node_type": "generic",
+                    "node_type": "dock",
+                    "dock_index": 1,
+                    "connected_area_asset_id": "collision_camera_011",
+                    "connected_dock_index": 2,
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 }
             ],
@@ -5194,7 +5082,7 @@
                     "node_type": "dock",
                     "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_022",
-                    "connected_dock_index": 3,
+                    "connected_dock_index": 2,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -5364,7 +5252,7 @@
                     "node_type": "dock",
                     "dock_index": 0,
                     "connected_area_asset_id": "collision_camera_010",
-                    "connected_dock_index": 3,
+                    "connected_dock_index": 4,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -5385,7 +5273,7 @@
                     "node_type": "dock",
                     "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_010",
-                    "connected_dock_index": 4,
+                    "connected_dock_index": 5,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -5841,7 +5729,7 @@
                     "node_type": "dock",
                     "dock_index": 0,
                     "connected_area_asset_id": "collision_camera_010",
-                    "connected_dock_index": 1,
+                    "connected_dock_index": 2,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -5862,7 +5750,7 @@
                     "node_type": "dock",
                     "dock_index": 1,
                     "connected_area_asset_id": "collision_camera_010",
-                    "connected_dock_index": 2,
+                    "connected_dock_index": 3,
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -7074,142 +6962,6 @@
                     [
                         -12300.0,
                         6400.0
-                    ]
-                ]
-            }
-        },
-        {
-            "name": "collision_camera_999",
-            "in_dark_aether": false,
-            "asset_id": "collision_camera_999",
-            "default_node_index": null,
-            "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Pickup (item_missiletank_003)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11550.0,
-                        "y": 4600.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "node_type": "pickup",
-                    "pickup_index": 20,
-                    "major_location": false,
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door057)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 8400.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door053)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12150.0,
-                        "y": 4800.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door054)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12150.0,
-                        "y": 4200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000",
-                        "right_shield": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door055)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 4800.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "generic",
-                    "connections": {}
-                },
-                {
-                    "name": "Door (Door056)",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 4200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
-                        "left_shield": "{EMPTY}",
-                        "right_shield": "{EMPTY}"
-                    },
-                    "node_type": "dock",
-                    "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_028",
-                    "connected_dock_index": 1,
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
-                    "connections": {}
-                }
-            ],
-            "extra": {
-                "total_boundings": {
-                    "x1": -12200.0,
-                    "x2": -8100.0,
-                    "y1": 3900.0,
-                    "y2": 9200.0
-                },
-                "polygon": [
-                    [
-                        -8100.0,
-                        9200.0
-                    ],
-                    [
-                        -12200.0,
-                        9200.0
-                    ],
-                    [
-                        -12200.0,
-                        3900.0
-                    ],
-                    [
-                        -8100.0,
-                        3900.0
                     ]
                 ]
             }
