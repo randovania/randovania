@@ -1,15 +1,27 @@
 ----------------
+Save Station
+Asset id: collision_camera_000
+> Door to Elevator to Raven Beak; Heals? False
+  * Power Beam Door to Main Room/Door to Save Station
+  > Door to Main Room
+      Trivial
+
+> Door to Main Room; Heals? False
+  * Power Beam Door to Elevator to Raven Beak/Door to Save Station
+  > Door to Elevator to Raven Beak
+      Trivial
+
+----------------
 Main Room
-Asset id: I1
-> Elevator to Hanubia; Heals? False; Spawn Point
-  * Teleporter to Hanubia - Elevator to Itorash
+Asset id: collision_camera_001
+> Elevator to Hanubia; Heals? False
   > Door to Save Station
       Any of the following:
           Speed Booster or Spin Boost or Space Jump
           Infinite Bomb Jump (Beginner) and Lay Bomb
 
 > Door to Save Station; Heals? False
-  * Power Beam Door to Save Station/Door to Main Room
+  * Power Beam Door to Save Station/Door to Elevator to Raven Beak
   > Elevator to Hanubia
       Any of the following:
           Speed Booster or Spin Boost or Space Jump
@@ -22,23 +34,10 @@ Asset id: I1
       Trivial
 
 ----------------
-Save Station
-Asset id: I2
-> Door to Main Room; Heals? False; Spawn Point
-  * Power Beam Door to Main Room/Door to Save Station
-  > Door to Elevator to Raven Beak
-      Trivial
-
-> Door to Elevator to Raven Beak; Heals? False
-  * Power Beam Door to Elevator to Raven Beak/Door to Save Station
-  > Door to Main Room
-      Trivial
-
-----------------
 Elevator to Raven Beak
-Asset id: RBE
+Asset id: collision_camera_002
 > Door to Save Station; Heals? False
-  * Power Beam Door to Save Station/Door to Elevator to Raven Beak
+  * Power Beam Door to Save Station/Door to Main Room
   > Elevator to Raven Beak Arena
       All of the following:
           Morph Ball and Power Bomb
@@ -46,15 +45,20 @@ Asset id: RBE
               Speed Booster or Spin Boost or Space Jump
               Infinite Bomb Jump (Beginner) and Lay Bomb
 
-> Elevator to Raven Beak Arena; Heals? False; Spawn Point
+> Elevator to Raven Beak Arena; Heals? False
   * Teleporter to Itorash - Raven Beak Arena
   > Door to Save Station
       Trivial
 
 ----------------
+Elevator Cutscene
+Asset id: collision_camera_003
+> Placeholder; Heals? False
+
+----------------
 Raven Beak Arena
-Asset id: RB
-> Before Fight; Heals? False; Spawn Point
+Asset id: collision_camera_004
+> Before Fight; Heals? False
   > Escape Sequence
       All of the following:
           # TODO: accurate boss requirements incl. Combat tricks
@@ -65,5 +69,14 @@ Asset id: RB
       Trivial
 
 > Escape Sequence; Heals? True
-  * Teleporter to Hanubia - Escape (TODO)
+
+----------------
+collision_camera_005 (I)
+Asset id: collision_camera_005
+> Placeholder; Heals? False
+
+----------------
+collision_camera_900 (I)
+Asset id: collision_camera_900
+> Placeholder; Heals? False
 
