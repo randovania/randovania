@@ -166,7 +166,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
-        area = self.game.world_list.area_by_area_location(node.default_connection)
+        try:
+            area = self.game.world_list.area_by_area_location(node.default_connection)
+        except KeyError:
+            area = None
 
         self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
                                                  if node.teleporter_instance_id is not None else "")
