@@ -1,4 +1,5 @@
 import copy
+import json
 from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
@@ -141,6 +142,15 @@ def OptionalValue(subcon):
     )
 
 
+JsonEncodedValue = construct.ExprAdapter(
+    CString("utf-8"),
+    # Decode
+    lambda obj, ctx: json.loads(obj),
+    # Encode
+    lambda obj, ctx: json.dumps(obj),
+)
+
+
 def _build_resource_info(**kwargs):
     return Struct(
         index=VarInt,
@@ -232,6 +242,7 @@ ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
     coordinates=OptionalValue(ConstructNodeCoordinates),
+    extra=JsonEncodedValue,
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
                              logbook=6, player_ship=7),
     data=Switch(
@@ -265,7 +276,7 @@ ConstructNode = Struct(
             "logbook": Struct(
                 string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
-                extra=VarInt,
+                lore_extra=VarInt,
             ),
             "player_ship": Struct(
                 is_unlocked=ConstructRequirement,
@@ -285,7 +296,8 @@ ConstructArea = Struct(
     connections=Array(
         lambda this: this._node_count,
         Array(lambda this: this._node_count - 1, ConstructRequirement)
-    )
+    ),
+    extra=JsonEncodedValue,
 )
 
 ConstructWorld = Struct(

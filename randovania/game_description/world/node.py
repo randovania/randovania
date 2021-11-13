@@ -3,6 +3,8 @@ import typing
 from enum import Enum
 from typing import Optional, NamedTuple, Tuple, Dict
 
+from frozendict import frozendict
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement, RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -37,6 +39,10 @@ class Node:
 
     def __hash__(self):
         return hash((self.index, self.name))
+
+    def __post_init__(self):
+        if not isinstance(self.extra, frozendict):
+            object.__setattr__(self, "extra", frozendict(self.extra))
 
     @property
     def is_resource_node(self) -> bool:
