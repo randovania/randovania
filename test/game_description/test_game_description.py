@@ -32,7 +32,8 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
                 n2: set_a
             },
             n2: {}
-        }
+        },
+        {}
     )
     area_b = Area(
         "area_b", True, 0, 0, True, [n1, n2],
@@ -41,7 +42,8 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
             n2: {
                 n1: set_b
             }
-        }
+        },
+        {}
     )
 
     # Run
