@@ -30,14 +30,16 @@ class Area:
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
         if dock_index in cache:
-            return self.nodes[cache[dock_index]]
+            cached = self.nodes[cache[dock_index]]
+            assert isinstance(cached, DockNode)
+            return cached
 
         for i, node in enumerate(self.nodes):
             if isinstance(node, DockNode) and node.dock_index == dock_index:
                 cache[dock_index] = i
                 return node
-        raise IndexError("No DockNode found with dock_index {} in {}".format(
-            dock_index, self.name))
+
+        raise IndexError("No DockNode found with dock_index {} in {}".format(dock_index, self.name))
 
     def node_with_name(self, node_name: str) -> Optional[Node]:
         """

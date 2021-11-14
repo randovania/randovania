@@ -213,8 +213,7 @@ class WorldReader:
             "Command Visor"
         )
 
-    def read_node(self, data: Dict) -> Node:
-        name: str = data["name"]
+    def read_node(self, name: str, data: Dict) -> Node:
         self.generic_index += 1
 
         try:
@@ -316,12 +315,12 @@ class WorldReader:
 
     def read_area(self, area_name: str, data: dict) -> Area:
         self.current_area = data["asset_id"]
-        nodes = read_array(data["nodes"], self.read_node)
+        nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
         connections = {}
-        for i, origin_data in enumerate(data["nodes"]):
-            origin = nodes[i]
+        for origin in nodes:
+            origin_data = data["nodes"][origin.name]
             connections[origin] = {}
 
             for target_name, target_requirement in origin_data["connections"].items():
