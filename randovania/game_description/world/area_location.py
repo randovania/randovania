@@ -3,23 +3,27 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, order=True)
 class AreaLocation:
-    world_asset_id: int
-    area_asset_id: int
+    world_name: str
+    area_name: str
+
+    @property
+    def world_asset_id(self) -> int:
+        raise KeyError("Should be using world_name")
+
+    @property
+    def area_asset_id(self) -> int:
+        raise KeyError("Should be using area_name")
 
     @property
     def as_json(self) -> dict:
         return {
-            "world_asset_id": self.world_asset_id,
-            "area_asset_id": self.area_asset_id,
+            "world_name": self.world_name,
+            "area_name": self.area_name,
         }
 
     @classmethod
     def from_json(cls, value: dict) -> "AreaLocation":
-        return cls(value["world_asset_id"], value["area_asset_id"])
+        return cls(value["world_name"], value["area_name"])
 
     def __repr__(self):
-        try:
-            return "world 0x{:02X}/area 0x{:02X}".format(self.world_asset_id, self.area_asset_id)
-        except (ValueError, TypeError):
-            # non-int ids
-            return "world {}/area {}".format(self.world_asset_id, self.area_asset_id)
+        return "world {}/area {}".format(self.world_name, self.area_name)

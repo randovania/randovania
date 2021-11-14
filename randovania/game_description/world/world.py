@@ -4,6 +4,7 @@ from typing import Iterator, Optional, Dict
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.world.node import Node
 
 
@@ -64,6 +65,11 @@ class World:
             if area.name == area_name:
                 return area
         raise KeyError("Unknown name: {}".format(area_name))
+
+    def area_by_location(self, location: AreaLocation) -> Area:
+        if self.name != location.world_name:
+            raise ValueError(f"Attempting to use AreaLocation for {location.world_name} with world {self.name}")
+        return self.area_by_name(location.area_name)
 
     def correct_name(self, in_dark_world: bool) -> str:
         if in_dark_world and self.dark_name is not None:

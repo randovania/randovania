@@ -19,6 +19,7 @@ from randovania.game_description.world.node import Node, GenericNode, DockNode, 
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 
+_current_world_name: str
 _world_name_to_asset_id: dict[str, int] = {}
 _area_name_to_asset_id: dict[str, dict[str, int]] = {}
 
@@ -230,7 +231,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
         data["dock_index"] = node.dock_index
-        data["connected_area_asset_id"] = node.default_connection.area_asset_id
+        data["connected_area_asset_id"] = _area_name_to_asset_id[_current_world_name][node.default_connection.area_name]
         data["connected_dock_index"] = node.default_connection.dock_index
         data["dock_type"] = node.default_dock_weakness.dock_type.value
         data["dock_weakness_index"] = node.default_dock_weakness.index
@@ -241,9 +242,10 @@ def write_node(node: Node) -> dict:
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
+        conn = node.default_connection
         data["node_type"] = "teleporter"
-        data["destination_world_asset_id"] = node.default_connection.world_asset_id
-        data["destination_area_asset_id"] = node.default_connection.area_asset_id
+        data["destination_world_asset_id"] = _world_name_to_asset_id[conn.world_name]
+        data["destination_area_asset_id"] = _area_name_to_asset_id[conn.world_name][conn.area_name]
         data["teleporter_instance_id"] = node.teleporter_instance_id
         data["scan_asset_id"] = extra.pop("scan_asset_id")
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
@@ -322,6 +324,9 @@ def write_area(area: Area) -> dict:
 
 
 def write_world(world: World) -> dict:
+    global _current_world_name
+    _current_world_name = world.name
+
     errors = []
     areas = []
     for area in world.areas:
@@ -418,11 +423,17 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 
 
 def write_game_description(game: GameDescription) -> dict:
+
+    starting_loc = {
+        "world_asset_id": game.world_list.world_by_area_location(game.starting_location).world_asset_id,
+        "area_asset_id": game.world_list.area_by_area_location(game.starting_location).area_asset_id,
+    }
+
     return {
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
 
-        "starting_location": game.starting_location.as_json,
+        "starting_location": starting_loc,  #game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),

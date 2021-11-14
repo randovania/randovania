@@ -75,8 +75,12 @@ class DockWeaknessDatabase(NamedTuple):
 
 @dataclass(frozen=True, order=True)
 class DockConnection:
-    area_asset_id: int
+    area_name: str
     dock_index: int
 
+    @property
+    def area_asset_id(self):
+        return
+
     def __repr__(self):
-        return "{}/{}".format(self.area_asset_id, self.dock_index)
+        return "{}/{}".format(self.area_name, self.dock_index)

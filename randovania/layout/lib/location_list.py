@@ -12,7 +12,10 @@ from randovania.games.game import RandovaniaGame
 def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area], bool]) -> List[AreaLocation]:
     world_list = default_database.game_description_for(game).world_list
     areas = [
-        AreaLocation(world.world_asset_id, area.area_asset_id)
+        AreaLocation(
+            world_name=world.name,
+            area_name=area.name,
+        )
         for world in world_list.worlds
         for area in world.areas
         if condition(area)

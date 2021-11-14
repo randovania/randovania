@@ -147,8 +147,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_index_spin.setValue(node.dock_index)
 
         # Connection
-        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.world_asset_id,
-                                                                             node.default_connection.area_asset_id))
+        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.name,
+                                                                             node.default_connection.area_name))
         self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(other_area))
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         self.dock_connection_node_combo.setCurrentIndex(
@@ -165,7 +165,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.major_location_check.setChecked(node.major_location)
 
     def fill_for_teleporter(self, node: TeleporterNode):
-        world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
+        world = self.game.world_list.world_by_area_location(node.default_connection)
         try:
             area = self.game.world_list.area_by_area_location(node.default_connection)
         except KeyError:
@@ -322,10 +322,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             else:
                 teleporter = None
 
+            dest_world: World = self.teleporter_destination_world_combo.currentData()
+            dest_area: Area = self.teleporter_destination_area_combo.currentData()
+
             return TeleporterNode(
                 name, heal, location, extra, index, teleporter,
-                AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
-                             self.teleporter_destination_area_combo.currentData().area_asset_id),
+                AreaLocation(
+                    world_name=dest_world.name,
+                    area_name=dest_area.name,
+                ),
                 int(scan_asset_id, 0) if scan_asset_id != "" else None,
                 self.teleporter_vanilla_name_edit.isChecked(),
                 self.teleporter_editable_check.isChecked(),

@@ -133,14 +133,14 @@ class WorldList:
         return self._nodes_to_area[node]
 
     def resolve_dock_connection(self, world: World, connection: DockConnection) -> Node:
-        target_area = world.area_by_asset_id(connection.area_asset_id)
+        target_area = world.area_by_name(connection.area_name)
         return target_area.node_with_dock_index(connection.dock_index)
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
         world = self.nodes_to_world(node)
         original_area = self.nodes_to_area(node)
 
-        connection = patches.dock_connection.get((original_area.area_asset_id, node.dock_index),
+        connection = patches.dock_connection.get(DockConnection(original_area.name, node.dock_index),
                                                  node.default_connection)
         if connection is not None:
             return self.resolve_dock_connection(world, connection)
@@ -176,7 +176,7 @@ class WorldList:
                 original_area = self.nodes_to_area(node)
                 target_area = self.nodes_to_area(target_node)
 
-                forward_weakness = patches.dock_weakness.get((original_area.area_asset_id, node.dock_index),
+                forward_weakness = patches.dock_weakness.get(DockConnection(original_area.name, node.dock_index),
                                                              node.default_dock_weakness)
                 requirement = forward_weakness.requirement
 
@@ -184,7 +184,7 @@ class WorldList:
 
                 if isinstance(target_node, DockNode):
                     # TODO: Target node is expected to be a dock. Should this error?
-                    back_weakness = patches.dock_weakness.get((target_area.area_asset_id, target_node.dock_index),
+                    back_weakness = patches.dock_weakness.get(DockConnection(target_area.name, target_node.dock_index),
                                                               target_node.default_dock_weakness)
                     if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
                         requirement = RequirementAnd([requirement, back_weakness.requirement])
@@ -265,19 +265,19 @@ class WorldList:
         return self._ids_to_area[location]
 
     def world_by_area_location(self, location: AreaLocation) -> World:
-        return self.world_by_asset_id(location.world_asset_id)
+        return self.world_with_name(location.world_name)
 
     def area_to_area_location(self, area: Area) -> AreaLocation:
         for world in self.worlds:
-            result = AreaLocation(world.world_asset_id, area.area_asset_id)
+            result = AreaLocation(world_name=world.name, area_name=area.name)
             if result in self._ids_to_area:
                 return result
         raise RuntimeError(f"Unknown area: {area}")
 
     def node_to_area_location(self, node: Node) -> AreaLocation:
         return AreaLocation(
-            world_asset_id=self.nodes_to_world(node).world_asset_id,
-            area_asset_id=self.nodes_to_area(node).area_asset_id,
+            world_name=self.nodes_to_world(node).name,
+            area_name=self.nodes_to_area(node).name,
         )
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
@@ -295,7 +295,7 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
 
     for world in worlds:
         for area in world.areas:
-            ids_to_area[AreaLocation(world.world_asset_id, area.area_asset_id)] = area
+            ids_to_area[AreaLocation(world.name, area.name)] = area
             for node in area.nodes:
                 if node in nodes_to_area:
                     raise ValueError(

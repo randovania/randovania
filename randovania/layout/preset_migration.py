@@ -13,7 +13,7 @@ from randovania.game_description.world.area_location import AreaLocation
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 14
+CURRENT_PRESET_VERSION = 15
 
 
 class InvalidPreset(Exception):
@@ -221,6 +221,8 @@ def _migrate_v8(preset: dict) -> dict:
     from randovania.game_description import default_database
     game = default_database.game_description_for(RandovaniaGame(preset["game"]))
 
+    # FIXME: area location is now something different, this code broke
+
     def _name_to_location(name: str):
         world_name, area_name = name.split("/", 1)
         world = game.world_list.world_with_name(world_name)
@@ -413,6 +415,29 @@ def _migrate_v13(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v14(preset: dict) -> dict:
+    from randovania.game_description import default_database
+
+    game = RandovaniaGame(preset["game"])
+    db = default_database.game_description_for(game)
+
+    def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
+        world = db.world_list.world_by_asset_id(old_loc["world_asset_id"])
+        area = world.area_by_asset_id(old_loc["area_asset_id"])
+
+        return {
+            "world_name": world.name,
+            "area_name": area.name,
+        }
+
+    preset["configuration"]["starting_location"] = [
+        _migrate_area_location(old_loc)
+        for old_loc in preset["configuration"]["starting_location"]
+    ]
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -427,6 +452,7 @@ _MIGRATIONS = {
     11: _migrate_v11,
     12: _migrate_v12,
     13: _migrate_v13,
+    14: _migrate_v14,
 }
 
 

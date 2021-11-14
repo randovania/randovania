@@ -26,8 +26,8 @@ class GamePatches:
     player_index: int
     pickup_assignment: PickupAssignment
     elevator_connection: ElevatorConnection
-    dock_connection: Dict[Tuple[int, int], Optional[DockConnection]]
-    dock_weakness: Dict[Tuple[int, int], DockWeakness]
+    dock_connection: Dict[DockConnection, Optional[DockConnection]]
+    dock_weakness: Dict[DockConnection, DockWeakness]
     translator_gates: GateAssignment
     starting_items: CurrentResources
     starting_location: AreaLocation
