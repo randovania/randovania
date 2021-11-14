@@ -4,6 +4,7 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
 
 from frozendict import frozendict
 
+from randovania.game_description import schema_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
@@ -313,7 +314,7 @@ class WorldReader:
         except Exception as e:
             raise Exception(f"In node {name}, got error: {e}")
 
-    def read_area(self, data: Dict) -> Area:
+    def read_area(self, area_name: str, data: dict) -> Area:
         self.current_area = data["asset_id"]
         nodes = read_array(data["nodes"], self.read_node)
         nodes_by_name = {node.name: node for node in nodes}
@@ -333,7 +334,6 @@ class WorldReader:
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
 
-        area_name = data["name"]
         try:
             return Area(area_name, data["in_dark_aether"], data["asset_id"], data["default_node_index"],
                         data["valid_starting_location"],
@@ -341,8 +341,8 @@ class WorldReader:
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
-    def read_area_list(self, data: List[Dict]) -> List[Area]:
-        return read_array(data, self.read_area)
+    def read_area_list(self, data: dict[str, dict]) -> List[Area]:
+        return [self.read_area(name, item) for name, item in data.items()]
 
     def read_world(self, data: Dict) -> World:
         self.current_world = data["asset_id"]
@@ -409,6 +409,8 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
+    data = schema_migration.migrate_to_current(data)
+
     game = RandovaniaGame(data["game"])
 
     resource_database = read_resource_database(game, data["resource_database"])
