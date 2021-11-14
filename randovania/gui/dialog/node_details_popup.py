@@ -1,21 +1,20 @@
-import dataclasses
+import logging
+import traceback
 
 from PySide2 import QtWidgets
 from qasync import asyncSlot
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockType, DockConnection
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockType, DockConnection
+from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.world.world import World
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog
@@ -292,11 +291,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return GenericNode(name, heal, location, extra, index)
 
         elif node_type == DockNode:
+            connection_area: Area = self.dock_connection_area_combo.currentData()
+            connection_index: int = self.dock_connection_node_combo.currentData()
+
             return DockNode(
                 name, heal, location, extra, index,
                 self.dock_index_spin.value(),
-                DockConnection(self.dock_connection_area_combo.currentData().area_name,
-                               self.dock_connection_node_combo.currentData()),
+                DockConnection(connection_area.name, connection_index),
                 self.dock_weakness_combo.currentData(),
             )
 
@@ -387,5 +388,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.create_new_node()
             self.accept()
         except Exception as e:
-            QtWidgets.QMessageBox.warning(self, "Invalid configuration",
-                                          f"Unable to save node: {e}")
+            logging.exception(f"Unable to save node: {e}")
+
+            box = QtWidgets.QMessageBox(
+                QtWidgets.QMessageBox.Warning,
+                "Invalid configuration",
+                f"Unable to save node: {e}",
+                QtWidgets.QMessageBox.Ok,
+                None,
+            )
+            box.setDefaultButton(QtWidgets.QMessageBox.Ok)
+            box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
+            common_qt_lib.set_default_window_icon(box)
+            box.exec_()
