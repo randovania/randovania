@@ -20,8 +20,7 @@ def test_invalid_node_type():
     reader = WorldReader(None, None)
 
     with pytest.raises(Exception) as e:
-        reader.read_node({
-            "name": "Broken Node",
+        reader.read_node("Broken Node", {
             "heal": True,
             "coordinates": None,
             "node_type": "something that doesn't exist"
@@ -36,8 +35,7 @@ def test_area_with_invalid_connections():
     reader = WorldReader(db, None)
 
     with pytest.raises(MissingResource) as e:
-        reader.read_area({
-            "name": "Broken Area",
+        reader.read_area("Broken Area", {
             "asset_id": 1234,
             "nodes": [
                 {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
