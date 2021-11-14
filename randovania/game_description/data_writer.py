@@ -305,14 +305,15 @@ def write_area(area: Area) -> dict:
         raise ValueError("Area {} nodes has the following errors:\n* {}".format(
             area.name, "\n* ".join(errors)))
 
+    extra = copy.copy(area.extra)
     return {
         "name": area.name,
-        "in_dark_aether": area.in_dark_aether,
-        "asset_id": area.area_asset_id,
+        "in_dark_aether": extra.pop("in_dark_aether", None),
+        "asset_id": extra.pop("asset_id"),
         "default_node_index": area.default_node_index,
         "valid_starting_location": area.valid_starting_location,
+        "extra": extra,
         "nodes": nodes,
-        "extra": area.extra,
     }
 
 
@@ -329,10 +330,12 @@ def write_world(world: World) -> dict:
         raise ValueError("World {} has the following errors:\n> {}".format(
             world.name, "\n\n> ".join(errors)))
 
+    extra = copy.copy(world.extra)
     return {
         "name": world.name,
-        "dark_name": world.dark_name,
-        "asset_id": world.world_asset_id,
+        "dark_name": extra.pop("dark_name", None),
+        "asset_id": extra.pop("asset_id"),
+        "extra": extra,
         "areas": areas,
     }
 

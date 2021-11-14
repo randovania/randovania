@@ -314,7 +314,7 @@ class WorldReader:
             raise Exception(f"In node {name}, got error: {e}")
 
     def read_area(self, area_name: str, data: dict) -> Area:
-        self.current_area = data["asset_id"]
+        self.current_area = data["extra"]["asset_id"]
         nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
@@ -334,7 +334,7 @@ class WorldReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
 
         try:
-            return Area(area_name, data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+            return Area(area_name, data["default_node_index"],
                         data["valid_starting_location"],
                         nodes, connections, data.get("extra"))
         except KeyError as e:
@@ -344,9 +344,12 @@ class WorldReader:
         return [self.read_area(name, item) for name, item in data.items()]
 
     def read_world(self, data: Dict) -> World:
-        self.current_world = data["asset_id"]
-        return World(data["name"], data["dark_name"], data["asset_id"],
-                     self.read_area_list(data["areas"]))
+        self.current_world = data["extra"]["asset_id"]
+        return World(
+            data["name"],
+            self.read_area_list(data["areas"]),
+            data["extra"]
+        )
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
         return WorldList(read_array(data, self.read_world))
