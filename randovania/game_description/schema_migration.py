@@ -10,6 +10,15 @@ def _migrate_v1(data: dict) -> dict:
             area_name = area.pop("name")
             if area_name in new_areas:
                 raise ValueError("Name conflict in {}: {}".format(world["name"], area_name))
+
+            new_nodes = {}
+            for node in area["nodes"]:
+                node_name = node.pop("name")
+                if node_name in new_nodes:
+                    raise ValueError("Name conflict in {} - {}: {}".format(world["name"], area_name, node_name))
+                new_nodes[node_name] = node
+
+            area["nodes"] = new_nodes
             new_areas[area_name] = area
 
         world["areas"] = new_areas
