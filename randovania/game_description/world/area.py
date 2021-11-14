@@ -10,8 +10,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 @dataclasses.dataclass(frozen=True)
 class Area:
     name: str
-    in_dark_aether: bool
-    area_asset_id: int
     default_node_index: Optional[int]
     valid_starting_location: bool
     nodes: List[Node]
@@ -25,7 +23,15 @@ class Area:
         return "Area[{}]".format(self.name)
 
     def __hash__(self):
-        return self.area_asset_id
+        return self.name
+
+    @property
+    def in_dark_aether(self) -> Optional[bool]:
+        return self.extra.get("in_dark_aether")
+
+    @property
+    def area_asset_id(self) -> int:
+        return self.extra["asset_id"]
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")

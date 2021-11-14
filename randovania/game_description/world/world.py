@@ -1,23 +1,31 @@
 import dataclasses
-from typing import List, Iterator, Optional, Dict
+import typing
+from typing import Iterator, Optional, Dict
 
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node
-from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclasses.dataclass(frozen=True)
 class World:
     name: str
-    dark_name: Optional[str]
-    world_asset_id: int
-    areas: List[Area]
+    areas: list[Area]
+    extra: dict[str, typing.Any]
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_area_by_asset_id", {})
 
     def __repr__(self):
         return "World[{}]".format(self.name)
+
+    @property
+    def dark_name(self) -> Optional[str]:
+        return self.extra.get("dark_name")
+
+    @property
+    def world_asset_id(self) -> int:
+        return self.extra["asset_id"]
 
     @property
     def all_nodes(self) -> Iterator[Node]:
