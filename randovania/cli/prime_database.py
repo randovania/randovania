@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
@@ -161,11 +162,13 @@ def refresh_all_logic(args):
     from randovania.game_description import pretty_print
     from randovania.game_description import data_reader, data_writer
 
-    for game in RandovaniaGame:
+    for game in iterate_enum(RandovaniaGame):
+        logging.info("Reading %s", game.long_name)
         path, data = default_data.read_json_then_binary(game)
         gd = data_reader.decode_data(data)
         new_data = data_writer.write_game_description(gd)
 
+        logging.info("Writing %s", game.long_name)
         data_writer.write_as_split_files(new_data, path)
         path.with_suffix("").mkdir(parents=True, exist_ok=True)
         pretty_print.write_human_readable_game(gd, path.with_suffix(""))

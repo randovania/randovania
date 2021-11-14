@@ -111,6 +111,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
                     "name": node.pop("name"),
                     "heal": node.pop("heal"),
                     "coordinates": node.pop("coordinates"),
+                    "extra": node.pop("extra"),
                     "node_type": node.pop("node_type"),
                     "data": node,
                 }
@@ -159,6 +160,8 @@ def _build_resource_info(**kwargs):
         **kwargs,
     )
 
+
+ConstructAssetId = construct.Select(VarInt, CString("utf-8"))
 
 ConstructResourceInfo = _build_resource_info()
 
@@ -250,7 +253,7 @@ ConstructNode = Struct(
         {
             "dock": Struct(
                 dock_index=Byte,
-                connected_area_asset_id=VarInt,
+                connected_area_asset_id=ConstructAssetId,
                 connected_dock_index=Byte,
                 dock_type=Byte,
                 dock_weakness_index=VarInt,
@@ -260,8 +263,8 @@ ConstructNode = Struct(
                 major_location=Flag,
             ),
             "teleporter": Struct(
-                destination_world_asset_id=VarInt,
-                destination_area_asset_id=VarInt,
+                destination_world_asset_id=ConstructAssetId,
+                destination_area_asset_id=ConstructAssetId,
                 teleporter_instance_id=OptionalValue(VarInt),
                 scan_asset_id=OptionalValue(VarInt),
                 keep_name_when_vanilla=Flag,
@@ -288,7 +291,7 @@ ConstructNode = Struct(
 ConstructArea = Struct(
     name=CString("utf8"),
     in_dark_aether=Flag,
-    asset_id=VarInt,
+    asset_id=ConstructAssetId,
     _node_count=Rebuild(VarInt, construct.len_(construct.this.nodes)),
     default_node_index=OptionalValue(VarInt),
     valid_starting_location=Flag,
@@ -303,7 +306,7 @@ ConstructArea = Struct(
 ConstructWorld = Struct(
     name=CString("utf8"),
     dark_name=OptionalValue(CString("utf8")),
-    asset_id=VarInt,
+    asset_id=ConstructAssetId,
     areas=PrefixedArray(VarInt, ConstructArea),
 )
 
@@ -337,8 +340,8 @@ ConstructGame = Struct(
     minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
     victory_condition=ConstructRequirement,
     starting_location=Struct(
-        world_asset_id=VarInt,
-        area_asset_id=VarInt,
+        world_asset_id=ConstructAssetId,
+        area_asset_id=ConstructAssetId,
     ),
     initial_states=PrefixedArray(VarInt, construct.Sequence(CString("utf8"),
                                                             PrefixedArray(VarInt, ConstructResourceGain))),
