@@ -27,7 +27,7 @@ def _shareable_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
         }
 
 
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 4
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 5
 
 
 def migrate_description(json_dict: dict) -> dict:
@@ -68,6 +68,12 @@ def migrate_description(json_dict: dict) -> dict:
                         if m is not None:
                             part_one, part_two = m.group(1, 2)
                             area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
+
+    if version == 4:
+        for game in json_dict["game_modifications"]:
+            for world_name, area in game["locations"].items():
+                if world_name == "Torvus Bog" and "Portal Chamber" in area:
+                    area["Portal Chamber (Light)"] = area.pop("Portal Chamber")
 
     json_dict["schema_version"] = version
     return json_dict
