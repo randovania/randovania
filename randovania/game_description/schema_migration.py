@@ -15,6 +15,14 @@ def _migrate_v1(data: dict) -> dict:
         for world in data["worlds"]
     }
 
+    start_loc = data["starting_location"]
+    data["starting_location"] = {
+        "world_name": world_asset_id_to_name[start_loc["world_asset_id"]],
+        "area_name": area_asset_id_to_name[world_asset_id_to_name[start_loc["world_asset_id"]]][
+            start_loc["area_asset_id"]
+        ],
+    }
+
     for world in data["worlds"]:
         world_name = world["name"]
         new_areas = {}

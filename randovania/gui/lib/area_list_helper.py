@@ -20,16 +20,17 @@ class AreaListHelper:
     during_batch_check_update: bool
 
     def areas_by_world_from_locations(self, all_area_locations: List[AreaLocation]):
+        world_list = self.game_description.world_list
         worlds = []
         areas_by_world = {}
 
         for location in all_area_locations:
-            world = self.game_description.world_list.world_by_asset_id(location.world_asset_id)
+            world = world_list.world_by_area_location(location)
             if world.world_asset_id not in areas_by_world:
                 worlds.append(world)
                 areas_by_world[world.world_asset_id] = []
 
-            areas_by_world[world.world_asset_id].append(world.area_by_asset_id(location.area_asset_id))
+            areas_by_world[world.world_asset_id].append(world.area_by_location(location))
 
         return worlds, areas_by_world
 
@@ -44,14 +45,14 @@ class AreaListHelper:
         worlds, areas_by_world = self.areas_by_world_from_locations(all_area_locations)
         worlds.sort(key=lambda it: it.name)
 
-        def _on_check_area(c, _):
+        def _on_check_area(c: QtWidgets.QCheckBox, _):
             if not self.during_batch_check_update:
                 on_check([c.area_location], c.isChecked())
 
-        def _on_check_world(c, _):
+        def _on_check_world(c: QtWidgets.QCheckBox, _):
             if not self.during_batch_check_update:
                 world_list = self.game_description.world_list
-                w = world_list.world_by_asset_id(c.world_asset_id)
+                w = world_list.world_with_name(c.world_name)
                 world_areas = [world_list.area_to_area_location(a)
                                for a in w.areas if c.is_dark_world == a.in_dark_aether
                                if a.area_asset_id in checks_for_area]
@@ -62,7 +63,7 @@ class AreaListHelper:
                 group_box = QtWidgets.QGroupBox(parent)
                 world_check = QtWidgets.QCheckBox(group_box)
                 world_check.setText(world.correct_name(is_dark_world))
-                world_check.world_asset_id = world.world_asset_id
+                world_check.world_name = world.name
                 world_check.is_dark_world = is_dark_world
                 world_check.stateChanged.connect(functools.partial(_on_check_world, world_check))
                 world_check.setTristate(True)

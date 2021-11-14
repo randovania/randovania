@@ -242,7 +242,7 @@ class WorldReader:
                     **generic_args,
                     dock_index=data["dock_index"],
                     default_connection=DockConnection(
-                        self._area_name_to_asset_id[self.current_world_name][data["connected_area_name"]],
+                        data["connected_area_name"],
                         data["connected_dock_index"],
                     ),
                     default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
@@ -259,15 +259,10 @@ class WorldReader:
 
             elif node_type == "teleporter":
                 instance_id = data["teleporter_instance_id"]
-                destination_world_asset_id = self._world_name_to_asset_id[data["destination"]["world_name"]]
-                destination_area_asset_id = self._area_name_to_asset_id[data["destination"]["world_name"]][
-                    data["destination"]["area_name"]
-                ]
-
                 return TeleporterNode(
                     **generic_args,
                     teleporter=Teleporter(self.current_world, self.current_area, instance_id),
-                    default_connection=AreaLocation(destination_world_asset_id, destination_area_asset_id),
+                    default_connection=AreaLocation.from_json(data["destination"]),
                     scan_asset_id=data["extra"]["scan_asset_id"],
                     keep_name_when_vanilla=data["keep_name_when_vanilla"],
                     editable=data["editable"],

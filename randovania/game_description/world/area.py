@@ -23,7 +23,7 @@ class Area:
         return "Area[{}]".format(self.name)
 
     def __hash__(self):
-        return self.name
+        return hash(self.name)
 
     @property
     def in_dark_aether(self) -> Optional[bool]:
