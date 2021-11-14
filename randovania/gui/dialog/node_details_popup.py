@@ -15,6 +15,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
+from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog
@@ -65,7 +66,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.dock_type_combo.setItemData(i, enum)
 
         for world in sorted(game.world_list.worlds, key=lambda x: x.name):
-            self.teleporter_destination_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
+            self.teleporter_destination_world_combo.addItem("{0.name}".format(world), userData=world)
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
@@ -171,12 +172,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         except KeyError:
             area = None
 
-        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
-                                                 if node.teleporter_instance_id is not None else "")
         self.teleporter_destination_world_combo.setCurrentIndex(self.teleporter_destination_world_combo.findData(world))
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
         self.teleporter_destination_area_combo.setCurrentIndex(self.teleporter_destination_area_combo.findData(area))
-        self.teleporter_scan_asset_id_edit.setText(hex(node.scan_asset_id) if node.scan_asset_id is not None else "")
         self.teleporter_editable_check.setChecked(node.editable)
         self.teleporter_vanilla_name_edit.setChecked(node.keep_name_when_vanilla)
 
@@ -310,28 +308,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == TeleporterNode:
-            instance_id = self.teleporter_instance_id_edit.text()
-            scan_asset_id = self.teleporter_scan_asset_id_edit.text()
-
-            if instance_id != "":
-                instance_id_value = int(instance_id, 0)
-                if isinstance(self.node, TeleporterNode):
-                    teleporter = dataclasses.replace(self.node.teleporter, instance_id=instance_id_value)
-                else:
-                    teleporter = NodeIdentifier(0, 0, instance_id_value)
-            else:
-                teleporter = None
-
             dest_world: World = self.teleporter_destination_world_combo.currentData()
             dest_area: Area = self.teleporter_destination_area_combo.currentData()
 
             return TeleporterNode(
-                name, heal, location, extra, index, teleporter,
+                name, heal, location, extra, index,
                 AreaIdentifier(
                     world_name=dest_world.name,
                     area_name=dest_area.name,
                 ),
-                int(scan_asset_id, 0) if scan_asset_id != "" else None,
                 self.teleporter_vanilla_name_edit.isChecked(),
                 self.teleporter_editable_check.isChecked(),
             )

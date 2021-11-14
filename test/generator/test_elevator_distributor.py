@@ -30,7 +30,7 @@ def test_try_randomize_elevators(seed_number: int,
         for world in echoes_game_description.world_list.worlds
         for area in world.areas
         for node in area.nodes
-        if isinstance(node, TeleporterNode) and node.editable and node.teleporter_instance_id in expected_ids
+        if isinstance(node, TeleporterNode) and node.editable and node.extra["teleporter_instance_id"] in expected_ids
     ]
     teleporters.sort()
 
@@ -39,11 +39,11 @@ def test_try_randomize_elevators(seed_number: int,
         rng,
         elevator_distributor.create_elevator_database(echoes_game_description.world_list, teleporters))
 
-    connected_ids = []
-    for elevator in result:
-        node = echoes_game_description.world_list.node_by_identifier(elevator.connected_elevator.teleporter)
-        if isinstance(node, TeleporterNode):
-            connected_ids.append(node.teleporter_instance_id)
+    connected_ids = [
+        echoes_game_description.world_list.node_by_identifier(elevator.connected_elevator.teleporter
+                                                              ).extra["teleporter_instance_id"]
+        for elevator in result
+    ]
 
     # Assert
     assert connected_ids == expected_ids

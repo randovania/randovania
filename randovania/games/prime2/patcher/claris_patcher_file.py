@@ -131,7 +131,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
         node = world_list.node_by_identifier(teleporter)
         assert isinstance(node, TeleporterNode)
         elevator_fields.append({
-            "instance_id": node.teleporter_instance_id,
+            "instance_id": node.extra["teleporter_instance_id"],
             "origin_location": teleporter.area_location.as_json,
             "target_location": connection.as_json,
             "room_name": _pretty_name_for_elevator(game.game, world_list, node, connection)
@@ -184,12 +184,12 @@ def _create_elevator_scan_port_patches(
     nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
 
     for teleporter, node in nodes_by_teleporter_id.items():
-        if node.scan_asset_id is None:
+        if node.extra.get("scan_asset_id") is None:
             continue
 
         target_area_name = elevators.get_elevator_or_area_name(game, world_list, elevator_connection[teleporter], True)
         yield {
-            "asset_id": node.scan_asset_id,
+            "asset_id": node.extra["scan_asset_id"],
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
         }
 

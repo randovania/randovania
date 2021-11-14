@@ -261,7 +261,6 @@ class WorldReader:
                 return TeleporterNode(
                     **generic_args,
                     default_connection=AreaIdentifier.from_json(data["destination"]),
-                    scan_asset_id=data["extra"]["scan_asset_id"],
                     keep_name_when_vanilla=data["keep_name_when_vanilla"],
                     editable=data["editable"],
                 )

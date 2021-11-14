@@ -246,7 +246,7 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "teleporter"
         data["destination_world_asset_id"] = _world_name_to_asset_id[conn.world_name]
         data["destination_area_asset_id"] = _area_name_to_asset_id[conn.world_name][conn.area_name]
-        data["teleporter_instance_id"] = node.teleporter_instance_id
+        data["teleporter_instance_id"] = extra.pop("teleporter_instance_id")
         data["scan_asset_id"] = extra.pop("scan_asset_id")
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
         data["editable"] = node.editable
