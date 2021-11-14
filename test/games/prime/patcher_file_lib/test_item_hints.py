@@ -10,7 +10,7 @@ from randovania.game_description.hint import Hint, HintType, HintLocationPrecisi
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -391,7 +391,7 @@ def test_create_message_for_hint_relative_area(echoes_game_description, blank_pi
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED, include_owner=False,
                       relative=RelativeDataArea(offset,
-                                                AreaLocation(1039999561, 3822429534),
+                                                AreaIdentifier(1039999561, 3822429534),
                                                 HintRelativeAreaName.NAME)),
         PickupIndex(5)
     )

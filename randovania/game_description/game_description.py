@@ -10,10 +10,10 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
@@ -56,7 +56,7 @@ class GameDescription:
 
     resource_database: ResourceDatabase
     victory_condition: Requirement
-    starting_location: AreaLocation
+    starting_location: AreaIdentifier
     initial_states: Dict[str, ResourceGainTuple]
     minimal_logic: Optional[MinimalLogicData]
     _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
@@ -83,7 +83,7 @@ class GameDescription:
 
                  resource_database: ResourceDatabase,
                  victory_condition: Requirement,
-                 starting_location: AreaLocation,
+                 starting_location: AreaIdentifier,
                  initial_states: Dict[str, ResourceGainTuple],
                  minimal_logic: Optional[MinimalLogicData],
                  world_list: WorldList,
@@ -106,8 +106,8 @@ class GameDescription:
         self._dangerous_resources = None
 
     def create_game_patches(self) -> GamePatches:
-        elevator_connection: Dict[Teleporter, AreaLocation] = {
-            node.teleporter: node.default_connection
+        elevator_connection: Dict[NodeIdentifier, AreaIdentifier] = {
+            self.world_list.identifier_for_node(node): node.default_connection
 
             for node in self.world_list.all_nodes
             if isinstance(node, TeleporterNode) and node.editable

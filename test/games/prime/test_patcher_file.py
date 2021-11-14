@@ -7,7 +7,7 @@ import pytest
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
@@ -15,7 +15,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import claris_patcher_file
 from randovania.patching.prime.patcher_file_lib import pickup_exporter
@@ -53,7 +53,7 @@ def test_add_header_data_to_result():
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     # Setup
-    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items({
+    patches = empty_patches.assign_starting_location(AreaIdentifier(100, 5000)).assign_extra_initial_items({
         echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15): 3,
     })
 
@@ -93,11 +93,11 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     patches = echoes_game_description.create_game_patches()
 
     elevator_connection = copy.copy(patches.elevator_connection)
-    elevator_connection[Teleporter(0x3BFA3EFF, 0xADED752E, 0x9001B)] = AreaLocation(464164546, 900285955)
-    elevator_connection[Teleporter(0x3BFA3EFF, 0x62FF94EE, 0x180086)] = AreaLocation(1039999561, 3479543630)
+    elevator_connection[NodeIdentifier(0x3BFA3EFF, 0xADED752E, 0x9001B)] = AreaIdentifier(464164546, 900285955)
+    elevator_connection[NodeIdentifier(0x3BFA3EFF, 0x62FF94EE, 0x180086)] = AreaIdentifier(1039999561, 3479543630)
 
     if not vanilla_gateway:
-        elevator_connection[Teleporter(0x3BFA3EFF, 0x87D35EE4, 0x82A008B)] = AreaLocation(2252328306, 3619928121)
+        elevator_connection[NodeIdentifier(0x3BFA3EFF, 0x87D35EE4, 0x82A008B)] = AreaIdentifier(2252328306, 3619928121)
 
     patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
 

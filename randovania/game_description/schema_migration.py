@@ -64,6 +64,7 @@ def _migrate_v1(data: dict) -> dict:
                     dest_area_name = area_asset_id_to_name[dest_world_name][node.pop("destination_area_asset_id")]
                     node["destination"] = {"world_name": dest_world_name, "area_name": dest_area_name}
                     node["extra"]["scan_asset_id"] = node.pop("scan_asset_id")
+                    node["extra"]["teleporter_instance_id"] = node.pop("teleporter_instance_id")
 
                 new_nodes[node_name] = node
 

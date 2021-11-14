@@ -1,6 +1,5 @@
 import dataclasses
 from random import Random
-from randovania.game_description.item import item_database
 from typing import Dict, Iterator
 
 import randovania
@@ -13,23 +12,24 @@ from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.patching.prime import elevators
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher.echoes_dol_patcher import EchoesDolPatchesData
-from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, hint_lib, \
-    credits_spoiler
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.patching.prime import elevators
+from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, \
+    hint_lib, \
+    credits_spoiler
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -98,7 +98,7 @@ def _create_spawn_point_field(patches: GamePatches,
 def _pretty_name_for_elevator(game: RandovaniaGame,
                               world_list: WorldList,
                               original_teleporter_node: TeleporterNode,
-                              connection: AreaLocation,
+                              connection: AreaIdentifier,
                               ) -> str:
     """
     Calculates the name the room that contains this elevator should have
@@ -123,30 +123,26 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     """
 
     world_list = game.world_list
-    nodes_by_teleporter = _get_nodes_by_teleporter_id(world_list)
     elevator_connection = patches.elevator_connection
 
-    if len(elevator_connection) != len(nodes_by_teleporter):
-        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            len(nodes_by_teleporter), len(elevator_connection)
-        ))
+    elevator_fields = []
 
-    elevator_fields = [
-        {
-            "instance_id": teleporter.instance_id,
-            "origin_location": world_list.node_to_area_location(nodes_by_teleporter[teleporter]).as_json,
+    for teleporter, connection in elevator_connection.items():
+        node = world_list.node_by_identifier(teleporter)
+        assert isinstance(node, TeleporterNode)
+        elevator_fields.append({
+            "instance_id": node.teleporter_instance_id,
+            "origin_location": teleporter.area_location.as_json,
             "target_location": connection.as_json,
-            "room_name": _pretty_name_for_elevator(game.game, world_list, nodes_by_teleporter[teleporter], connection)
-        }
-        for teleporter, connection in elevator_connection.items()
-    ]
+            "room_name": _pretty_name_for_elevator(game.game, world_list, node, connection)
+        })
 
     return elevator_fields
 
 
-def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[Teleporter, TeleporterNode]:
+def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[NodeIdentifier, TeleporterNode]:
     return {
-        node.teleporter: node
+        world_list.identifier_for_node(node): node
 
         for node in world_list.all_nodes
         if isinstance(node, TeleporterNode) and node.editable
@@ -180,8 +176,11 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
     specific_patches["always_up_great_temple"] = elevator_shuffle_mode != TeleporterShuffleMode.VANILLA
 
 
-def _create_elevator_scan_port_patches(game: RandovaniaGame, world_list: WorldList, elevator_connection: ElevatorConnection,
-                                       ) -> Iterator[dict]:
+def _create_elevator_scan_port_patches(
+        game: RandovaniaGame,
+        world_list: WorldList,
+        elevator_connection: ElevatorConnection,
+) -> Iterator[dict]:
     nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
 
     for teleporter, node in nodes_by_teleporter_id.items():

@@ -20,12 +20,12 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
     DockLockType
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -258,11 +258,9 @@ class WorldReader:
                 )
 
             elif node_type == "teleporter":
-                instance_id = data["teleporter_instance_id"]
                 return TeleporterNode(
                     **generic_args,
-                    teleporter=Teleporter(self.current_world, self.current_area, instance_id),
-                    default_connection=AreaLocation.from_json(data["destination"]),
+                    default_connection=AreaIdentifier.from_json(data["destination"]),
                     scan_asset_id=data["extra"]["scan_asset_id"],
                     keep_name_when_vanilla=data["keep_name_when_vanilla"],
                     editable=data["editable"],
@@ -439,7 +437,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
-    starting_location = AreaLocation.from_json(data["starting_location"])
+    starting_location = AreaIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 

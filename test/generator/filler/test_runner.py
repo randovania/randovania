@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
@@ -145,7 +145,7 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
         max_distance = 8
         data = RelativeDataArea(
             None if precise_distance else 2,
-            AreaLocation(0x3BFA3EFF, 0x62AC8AC4),
+            AreaIdentifier(0x3BFA3EFF, 0x62AC8AC4),
             precision,
         )
     else:

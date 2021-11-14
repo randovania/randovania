@@ -2,7 +2,7 @@ import hashlib
 from typing import List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import CurrentResources
 
@@ -205,7 +205,7 @@ def layout_string_for_items(item_names: List[str]) -> str:
     return result
 
 
-def starting_location_for(game: GameDescription, location: AreaLocation) -> str:
+def starting_location_for(game: GameDescription, location: AreaIdentifier) -> str:
     world = game.world_list.world_by_area_location(location)
     area = game.world_list.area_by_area_location(location)
 

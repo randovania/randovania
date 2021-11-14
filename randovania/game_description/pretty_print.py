@@ -82,7 +82,7 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
             other = world_list.resolve_dock_connection(world_list.nodes_to_world(node), node.default_connection)
             other_name = world_list.node_name(other)
         except IndexError as e:
-            other_name = (f"(ARea {node.default_connection.area_name}, "
+            other_name = (f"(Area {node.default_connection.area_name}, "
                           f"index {node.default_connection.dock_index}) [{e}]")
 
         return f"{node.default_dock_weakness.name} to {other_name}"

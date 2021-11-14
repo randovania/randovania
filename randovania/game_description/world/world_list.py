@@ -9,10 +9,10 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockConnection, DockLockType
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 
 
@@ -21,7 +21,7 @@ class WorldList:
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
-    _ids_to_area: Dict[AreaLocation, Area]
+    _ids_to_area: Dict[AreaIdentifier, Area]
     _nodes: Tuple[Node, ...]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
 
@@ -64,6 +64,11 @@ class WorldList:
             if area in world.areas:
                 return world
         raise KeyError("Unknown area: {}".format(area))
+
+    def identifier_for_node(self, node: Node) -> NodeIdentifier:
+        world = self.nodes_to_world(node)
+        area = self.nodes_to_area(node)
+        return NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
 
     @property
     def all_areas(self) -> Iterator[Area]:
@@ -146,11 +151,12 @@ class WorldList:
             return self.resolve_dock_connection(world, connection)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.elevator_connection.get(node.teleporter, node.default_connection)
+        connection = patches.elevator_connection.get(self.identifier_for_node(node),
+                                                     node.default_connection)
         if connection is not None:
             return self.resolve_teleporter_connection(connection)
 
-    def resolve_teleporter_connection(self, connection: AreaLocation) -> Node:
+    def resolve_teleporter_connection(self, connection: AreaIdentifier) -> Node:
         area = self.area_by_area_location(connection)
         if area.default_node_index is None:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
@@ -254,28 +260,28 @@ class WorldList:
                         connections[target] = value.patch_requirements(
                             static_resources, damage_multiplier, database).simplify()
 
-    def teleporter_to_node(self, teleporter: Teleporter) -> TeleporterNode:
-        area = self.area_by_area_location(teleporter.area_location)
+    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
+        area = self.area_by_area_location(identifier.area_location)
         for node in area.nodes:
-            if isinstance(node, TeleporterNode) and node.teleporter_instance_id == teleporter.instance_id:
+            if node.name == identifier.node_name:
                 return node
-        raise ValueError(f"No teleporter id with instance id {teleporter.instance_id} found in {area}")
+        raise ValueError(f"No node with name {identifier.node_name} found in {area}")
 
-    def area_by_area_location(self, location: AreaLocation) -> Area:
+    def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self._ids_to_area[location]
 
-    def world_by_area_location(self, location: AreaLocation) -> World:
+    def world_by_area_location(self, location: AreaIdentifier) -> World:
         return self.world_with_name(location.world_name)
 
-    def area_to_area_location(self, area: Area) -> AreaLocation:
+    def area_to_area_location(self, area: Area) -> AreaIdentifier:
         for world in self.worlds:
-            result = AreaLocation(world_name=world.name, area_name=area.name)
+            result = AreaIdentifier(world_name=world.name, area_name=area.name)
             if result in self._ids_to_area:
                 return result
         raise RuntimeError(f"Unknown area: {area}")
 
-    def node_to_area_location(self, node: Node) -> AreaLocation:
-        return AreaLocation(
+    def node_to_area_location(self, node: Node) -> AreaIdentifier:
+        return AreaIdentifier(
             world_name=self.nodes_to_world(node).name,
             area_name=self.nodes_to_area(node).name,
         )
@@ -295,7 +301,7 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
 
     for world in worlds:
         for area in world.areas:
-            ids_to_area[AreaLocation(world.name, area.name)] = area
+            ids_to_area[AreaIdentifier(world.name, area.name)] = area
             for node in area.nodes:
                 if node in nodes_to_area:
                     raise ValueError(

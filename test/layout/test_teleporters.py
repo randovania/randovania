@@ -2,8 +2,8 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
     TeleporterTargetList
@@ -30,8 +30,8 @@ def _m(encoded: bytes, bit_count: int, mode: str = "vanilla", skip_final_bosses=
 
 def _a(world, area, instance_id=None):
     if instance_id is not None:
-        return Teleporter(world, area, instance_id).as_json
-    return AreaLocation(world, area).as_json
+        return NodeIdentifier(world, area, instance_id).as_json
+    return AreaIdentifier(world, area).as_json
 
 
 @pytest.fixture(

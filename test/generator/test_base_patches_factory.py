@@ -4,14 +4,14 @@ from unittest.mock import MagicMock, patch, call, ANY
 
 import pytest
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -25,8 +25,8 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
     # Setup
     expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
-        expected.elevator_connection[Teleporter(0x3bfa3eff, 0x87d35ee4, 0x82a008b)] = AreaLocation(1006255871,
-                                                                                                   1393588666)
+        expected.elevator_connection[NodeIdentifier(0x3bfa3eff, 0x87d35ee4, 0x82a008b)] = AreaIdentifier(1006255871,
+                                                                                                         1393588666)
     config = default_layout_configuration
     config = dataclasses.replace(config,
                                  elevators=dataclasses.replace(config.elevators,
@@ -59,30 +59,30 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     expected = dataclasses.replace(
         game.create_game_patches(),
         elevator_connection={
-            Teleporter(0x3bfa3eff, 0xaded752e, 0x9001b): AreaLocation(1039999561, 1868895730),
-            Teleporter(0x3bfa3eff, 0x62ff94ee, 0x180086): AreaLocation(1039999561, 3479543630),
-            Teleporter(0x3bfa3eff, 0xac32f338, 0x1e000d): AreaLocation(2252328306, 408633584),
-            Teleporter(0x3bfa3eff, 0x4cc37f4a, 0x200063): AreaLocation(1119434212, 3331021649),
-            Teleporter(0x3bfa3eff, 0x87d35ee4, 0x82a008b): (AreaLocation(1006255871, 1393588666)
-                                                            if skip_final_bosses else AreaLocation(2252328306,
-                                                                                                   2068511343)),
-            Teleporter(0x863fcd72, 0x7b4afa6f, 0x9007d): AreaLocation(0x3BFA3EFF, 0x87D35EE4),
-            Teleporter(0x3bfa3eff, 0xcdf7686b, 0x33006e): AreaLocation(1039999561, 3205424168),
-            Teleporter(0x3bfa3eff, 0x503a0640, 0x36001f): AreaLocation(1119434212, 2806956034),
-            Teleporter(0x863fcd72, 0x185b40f0, 0x98): AreaLocation(1006255871, 2889020216),
-            Teleporter(0x863fcd72, 0x9860cbb0, 0x6002c): AreaLocation(464164546, 3145160350),
-            Teleporter(0x863fcd72, 0x8f01b104, 0x80021): AreaLocation(464164546, 900285955),
-            Teleporter(0x42b935e4, 0x57ce3a52, 0x7a): AreaLocation(464164546, 3528156989),
-            Teleporter(0x42b935e4, 0xa74ec002, 0x13007b): AreaLocation(1006255871, 1345979968),
-            Teleporter(0x42b935e4, 0xc68b5b51, 0x2d0073): AreaLocation(1006255871, 1287880522),
-            Teleporter(0x3dfd2249, 0x6f6515f2, 0x81): AreaLocation(1006255871, 2918020398),
-            Teleporter(0x3dfd2249, 0xcf659f4e, 0x21008a): AreaLocation(1006255871, 1660916974),
-            Teleporter(0x3dfd2249, 0xbf0ee428, 0x450030): AreaLocation(1006255871, 3455543403),
-            Teleporter(0x1baa96c2, 0xd24b673d, 0x26): AreaLocation(1119434212, 1473133138),
-            Teleporter(0x1baa96c2, 0x35a94603, 0x130094): AreaLocation(2252328306, 2399252740),
-            Teleporter(0x1baa96c2, 0xbb77569e, 0x190087): AreaLocation(2252328306, 2556480432),
-            Teleporter(0x1baa96c2, 0xbaf94a13, 0xc36007c): AreaLocation(464164546, 1564082177),
-            Teleporter(0x1baa96c2, 0x5d3a0001, 0x41010a): AreaLocation(464164546, 3136899603),
+            NodeIdentifier(0x3bfa3eff, 0xaded752e, 0x9001b): AreaIdentifier(1039999561, 1868895730),
+            NodeIdentifier(0x3bfa3eff, 0x62ff94ee, 0x180086): AreaIdentifier(1039999561, 3479543630),
+            NodeIdentifier(0x3bfa3eff, 0xac32f338, 0x1e000d): AreaIdentifier(2252328306, 408633584),
+            NodeIdentifier(0x3bfa3eff, 0x4cc37f4a, 0x200063): AreaIdentifier(1119434212, 3331021649),
+            NodeIdentifier(0x3bfa3eff, 0x87d35ee4, 0x82a008b): (AreaIdentifier(1006255871, 1393588666)
+                                                            if skip_final_bosses else AreaIdentifier(2252328306,
+                                                                                                     2068511343)),
+            NodeIdentifier(0x863fcd72, 0x7b4afa6f, 0x9007d): AreaIdentifier(0x3BFA3EFF, 0x87D35EE4),
+            NodeIdentifier(0x3bfa3eff, 0xcdf7686b, 0x33006e): AreaIdentifier(1039999561, 3205424168),
+            NodeIdentifier(0x3bfa3eff, 0x503a0640, 0x36001f): AreaIdentifier(1119434212, 2806956034),
+            NodeIdentifier(0x863fcd72, 0x185b40f0, 0x98): AreaIdentifier(1006255871, 2889020216),
+            NodeIdentifier(0x863fcd72, 0x9860cbb0, 0x6002c): AreaIdentifier(464164546, 3145160350),
+            NodeIdentifier(0x863fcd72, 0x8f01b104, 0x80021): AreaIdentifier(464164546, 900285955),
+            NodeIdentifier(0x42b935e4, 0x57ce3a52, 0x7a): AreaIdentifier(464164546, 3528156989),
+            NodeIdentifier(0x42b935e4, 0xa74ec002, 0x13007b): AreaIdentifier(1006255871, 1345979968),
+            NodeIdentifier(0x42b935e4, 0xc68b5b51, 0x2d0073): AreaIdentifier(1006255871, 1287880522),
+            NodeIdentifier(0x3dfd2249, 0x6f6515f2, 0x81): AreaIdentifier(1006255871, 2918020398),
+            NodeIdentifier(0x3dfd2249, 0xcf659f4e, 0x21008a): AreaIdentifier(1006255871, 1660916974),
+            NodeIdentifier(0x3dfd2249, 0xbf0ee428, 0x450030): AreaIdentifier(1006255871, 3455543403),
+            NodeIdentifier(0x1baa96c2, 0xd24b673d, 0x26): AreaIdentifier(1119434212, 1473133138),
+            NodeIdentifier(0x1baa96c2, 0x35a94603, 0x130094): AreaIdentifier(2252328306, 2399252740),
+            NodeIdentifier(0x1baa96c2, 0xbb77569e, 0x190087): AreaIdentifier(2252328306, 2556480432),
+            NodeIdentifier(0x1baa96c2, 0xbaf94a13, 0xc36007c): AreaIdentifier(464164546, 1564082177),
+            NodeIdentifier(0x1baa96c2, 0x5d3a0001, 0x41010a): AreaIdentifier(464164546, 3136899603),
         })
 
     # Run

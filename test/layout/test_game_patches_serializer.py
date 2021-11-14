@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, \
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -32,7 +32,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
     params=[
         {},
         {"starting_item": "Morph Ball"},
-        {"elevator": [Teleporter(1006255871, 1660916974, 1572998), "Temple Grounds/Transport to Agon Wastes"]},
+        {"elevator": [NodeIdentifier(1006255871, 1660916974, 1572998), "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",

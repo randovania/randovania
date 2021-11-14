@@ -24,10 +24,10 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.patching.prime import elevators
@@ -37,7 +37,7 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 from randovania.games.prime2.layout import translator_configuration
@@ -104,7 +104,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     game_configuration: BaseConfiguration
     persistence_path: Path
     _initial_state: State
-    _elevator_id_to_combo: Dict[Teleporter, QtWidgets.QComboBox]
+    _elevator_id_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
     _translator_gate_to_combo: Dict[TranslatorGate, QtWidgets.QComboBox]
     _starting_nodes: Set[ResourceNode]
     _undefined_item = ItemResourceInfo(-1, "Undefined", "Undefined", 0, None)
@@ -195,11 +195,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 for index in previous_state["actions"]
             ]
             if needs_starting_location:
-                starting_location = AreaLocation.from_json(previous_state["starting_location"])
+                starting_location = AreaIdentifier.from_json(previous_state["starting_location"])
 
-            elevators: Dict[Teleporter, Optional[AreaLocation]] = {
-                Teleporter.from_json(item["teleporter"]): (
-                    AreaLocation.from_json(item["data"])
+            elevators: Dict[NodeIdentifier, Optional[AreaIdentifier]] = {
+                NodeIdentifier.from_json(item["teleporter"]): (
+                    AreaIdentifier.from_json(item["data"])
                     if item["data"] is not None else None
                 )
                 for item in previous_state["elevators"]
@@ -522,6 +522,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     self._node_to_item[node] = node_item
 
     def setup_elevators(self):
+        if not hasattr(self.game_configuration, "elevators"):
+            return
+
+        elevators_config: TeleporterConfiguration = getattr(self.game_configuration, "elevators")
+
         world_list = self.game_description.world_list
         nodes_by_world: Dict[str, List[TeleporterNode]] = collections.defaultdict(list)
         self._elevator_id_to_combo = {}
@@ -538,22 +543,22 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 name = world.correct_name(area.in_dark_aether)
                 nodes_by_world[name].append(node)
 
-                location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                location = AreaIdentifier(world.world_asset_id, area.area_asset_id)
                 targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, True)] = location
 
-        if self.game_configuration.elevators.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+        if elevators_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
             for world in world_list.worlds:
                 for area in world.areas:
                     name = world.correct_name(area.in_dark_aether)
-                    targets[f"{name} - {area.name}"] = AreaLocation(world.world_asset_id, area.area_asset_id)
+                    targets[f"{name} - {area.name}"] = AreaIdentifier(world.world_asset_id, area.area_asset_id)
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
         for world_name in sorted(nodes_by_world.keys()):
             nodes = nodes_by_world[world_name]
-            nodes_locations = [AreaLocation(world_list.nodes_to_world(node).world_asset_id,
-                                            world_list.nodes_to_area(node).area_asset_id)
+            nodes_locations = [AreaIdentifier(world_list.nodes_to_world(node).world_asset_id,
+                                              world_list.nodes_to_area(node).area_asset_id)
                                for node in nodes]
             nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, False)
                            for location in nodes_locations]
@@ -572,7 +577,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 layout.addWidget(node_name, i, 0)
 
                 combo = QtWidgets.QComboBox(group)
-                if self.game_configuration.elevators.is_vanilla:
+                if elevators_config.is_vanilla:
                     combo.addItem("Vanilla", node.default_connection)
                     combo.setEnabled(False)
                 else:
@@ -582,7 +587,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
                 combo.setMinimumContentsLength(11)
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
-                self._elevator_id_to_combo[node.teleporter] = combo
+                self._elevator_id_to_combo[world_list.identifier_for_node(node)] = combo
                 layout.addWidget(combo, i, 1)
 
     def setup_translator_gates(self):
@@ -621,7 +626,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             self._translator_gate_to_combo[gate] = combo
             self.translator_gate_scroll_layout.addWidget(combo, i, 1)
 
-    def setup_starting_location(self, area_location: Optional[AreaLocation]):
+    def setup_starting_location(self, area_location: Optional[AreaIdentifier]):
         world_list = self.game_description.world_list
 
         if len(self.game_configuration.starting_location.locations) > 1:
