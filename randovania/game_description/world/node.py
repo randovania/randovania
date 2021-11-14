@@ -15,9 +15,9 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockConnection
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 class NodeLocation(NamedTuple):
@@ -90,20 +90,18 @@ class DockNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class TeleporterNode(Node):
-    teleporter: Optional[Teleporter]
-    default_connection: AreaLocation
+    default_connection: AreaIdentifier
     scan_asset_id: Optional[int]
     keep_name_when_vanilla: bool
     editable: bool
 
     @property
     def teleporter_instance_id(self) -> Optional[int]:
-        if self.teleporter is not None:
-            return self.teleporter.instance_id
+        return self.extra.get("teleporter_instance_id")
 
     def __post_init__(self):
-        if self.editable and self.teleporter is None:
-            raise ValueError(f"{self!r} is editable, but teleporter is None")
+        if self.editable and self.teleporter_instance_id is None:
+            raise ValueError(f"{self!r} is editable, but teleporter_instance_id is None")
 
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)

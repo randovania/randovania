@@ -4,7 +4,7 @@ from PySide2 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockType, DockConnection
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
@@ -13,7 +13,7 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
@@ -147,8 +147,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_index_spin.setValue(node.dock_index)
 
         # Connection
-        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.name,
-                                                                             node.default_connection.area_name))
+        other_area = self.game.world_list.area_by_area_location(AreaIdentifier(self.world.name,
+                                                                               node.default_connection.area_name))
         self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(other_area))
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         self.dock_connection_node_combo.setCurrentIndex(
@@ -297,7 +297,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return DockNode(
                 name, heal, location, extra, index,
                 self.dock_index_spin.value(),
-                DockConnection(self.dock_connection_area_combo.currentData().area_asset_id,
+                DockConnection(self.dock_connection_area_combo.currentData().area_name,
                                self.dock_connection_node_combo.currentData()),
                 self.dock_weakness_combo.currentData(),
             )
@@ -318,7 +318,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 if isinstance(self.node, TeleporterNode):
                     teleporter = dataclasses.replace(self.node.teleporter, instance_id=instance_id_value)
                 else:
-                    teleporter = Teleporter(0, 0, instance_id_value)
+                    teleporter = NodeIdentifier(0, 0, instance_id_value)
             else:
                 teleporter = None
 
@@ -327,7 +327,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
             return TeleporterNode(
                 name, heal, location, extra, index, teleporter,
-                AreaLocation(
+                AreaIdentifier(
                     world_name=dest_world.name,
                     area_name=dest_area.name,
                 ),

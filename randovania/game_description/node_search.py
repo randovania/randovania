@@ -3,7 +3,7 @@ from typing import Dict, Optional
 import networkx
 
 from randovania.game_description.world.area import Area
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.world.dock import DockConnection
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -29,7 +29,7 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
     g = networkx.DiGraph()
 
     dock_connections = patches.dock_connection if patches is not None else {}
-    elevator_connections = patches.elevator_connection if patches is not None else {}
+    elevator_connections: ElevatorConnection = patches.elevator_connection if patches is not None else {}
 
     for area in world_list.all_areas:
         g.add_node(area)
@@ -45,7 +45,8 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
                         new_areas.add(world.area_by_name(connection.area_name))
 
                 elif isinstance(node, TeleporterNode) and not ignore_elevators:
-                    connection = elevator_connections.get(node.teleporter, node.default_connection)
+                    connection = elevator_connections.get(world_list.identifier_for_node(node),
+                                                          node.default_connection)
                     if connection is not None:
                         new_areas.add(world_list.area_by_area_location(connection))
 

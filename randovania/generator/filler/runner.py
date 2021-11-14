@@ -118,8 +118,9 @@ def add_relative_hint(world_list: WorldList,
     }
     if not area_choices:
         return None
+
     area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
-                                                             key=lambda a: a[0].area_asset_id)), rng)
+                                                             key=lambda a: a[0].name)), rng)
 
     distance_offset = None
     if not precise_distance:

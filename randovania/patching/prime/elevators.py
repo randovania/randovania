@@ -1,4 +1,4 @@
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime1_elevators
@@ -26,7 +26,7 @@ def get_elevator_name_or_default(
 def get_elevator_or_area_name(
         game: RandovaniaGame,
         world_list: WorldList,
-        area_location: AreaLocation,
+        area_location: AreaIdentifier,
         include_world_name: bool
 ) -> str:
     return _get_elevator_or_area_name(CUSTOM_NAMES_FOR_ELEVATORS, game, world_list, area_location, include_world_name)
@@ -35,7 +35,7 @@ def get_elevator_or_area_name(
 def get_short_elevator_or_area_name(
         game: RandovaniaGame,
         world_list: WorldList,
-        area_location: AreaLocation,
+        area_location: AreaIdentifier,
         include_world_name: bool
 ) -> str:
     return _get_elevator_or_area_name(
@@ -47,7 +47,7 @@ def _get_elevator_or_area_name(
         custom_names_to_use: dict,
         game: RandovaniaGame,
         world_list: WorldList,
-        area_location: AreaLocation,
+        area_location: AreaIdentifier,
         include_world_name: bool
 ) -> str:
     custom_names_by_game = custom_names_to_use.get(game, {})

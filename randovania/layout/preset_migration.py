@@ -9,7 +9,7 @@ from typing import Optional, Dict
 import aiofiles
 import slugify
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
@@ -227,7 +227,7 @@ def _migrate_v8(preset: dict) -> dict:
         world_name, area_name = name.split("/", 1)
         world = game.world_list.world_with_name(world_name)
         area = world.area_by_name(area_name)
-        return AreaLocation(world.world_asset_id, area.area_asset_id)
+        return AreaIdentifier(world.world_asset_id, area.area_asset_id)
 
     preset["configuration"]["multi_pickup_placement"] = False
 
@@ -425,15 +425,37 @@ def _migrate_v14(preset: dict) -> dict:
         world = db.world_list.world_by_asset_id(old_loc["world_asset_id"])
         area = world.area_by_asset_id(old_loc["area_asset_id"])
 
+        node_name = {}
+        if "instance_id" in old_loc:
+            for node in area.nodes:
+                if node.extra.get("teleporter_instance_id") == old_loc["instance_id"]:
+                    node_name = {"node_name": node.name}
+                    break
+
         return {
             "world_name": world.name,
             "area_name": area.name,
+            **node_name,
         }
 
     preset["configuration"]["starting_location"] = [
         _migrate_area_location(old_loc)
         for old_loc in preset["configuration"]["starting_location"]
     ]
+
+    if "elevators" in preset["configuration"]:
+        elevators = preset["configuration"]["elevators"]
+
+        elevators["excluded_teleporters"] = [
+            _migrate_area_location(old_loc)
+            for old_loc in elevators["excluded_teleporters"]
+        ]
+        elevators["excluded_targets"] = [
+            _migrate_area_location(old_loc)
+            for old_loc in elevators["excluded_targets"]
+        ]
+
+        preset["configuration"]["elevators"] = elevators
 
     return preset
 

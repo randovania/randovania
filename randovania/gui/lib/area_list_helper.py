@@ -4,7 +4,7 @@ from typing import List, Callable, FrozenSet, Dict
 from PySide2 import QtWidgets, QtCore
 
 from randovania.patching.prime import elevators
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.world import World
 
@@ -19,7 +19,7 @@ class AreaListHelper:
     game_description: GameDescription
     during_batch_check_update: bool
 
-    def areas_by_world_from_locations(self, all_area_locations: List[AreaLocation]):
+    def areas_by_world_from_locations(self, all_area_locations: List[AreaIdentifier]):
         world_list = self.game_description.world_list
         worlds = []
         areas_by_world = {}
@@ -30,13 +30,13 @@ class AreaListHelper:
                 worlds.append(world)
                 areas_by_world[world.world_asset_id] = []
 
-            areas_by_world[world.world_asset_id].append(world.area_by_location(location))
+            areas_by_world[world.world_asset_id].append(world.area_by_identifier(location))
 
         return worlds, areas_by_world
 
     def create_area_list_selection(self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout,
-                                   all_area_locations: List[AreaLocation],
-                                   on_check: Callable[[List[AreaLocation], bool], None],
+                                   all_area_locations: List[AreaIdentifier],
+                                   on_check: Callable[[List[AreaIdentifier], bool], None],
                                    ):
         world_to_group = {}
         checks_for_world = {}
@@ -86,15 +86,15 @@ class AreaListHelper:
             for area in sorted(areas_by_world[world.world_asset_id], key=lambda a: a.name):
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
-                check.setText(elevators.get_elevator_name_or_default(self.game_description.game, area.area_asset_id, area.name))
-                check.area_location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                check.setText(elevators.get_elevator_name_or_default(self.game_description.game, area.area_name, area.name))
+                check.area_location = AreaIdentifier(world.world_asset_id, area.area_name)
                 check.stateChanged.connect(functools.partial(_on_check_area, check))
                 group_box.vertical_layout.addWidget(check)
-                checks_for_area[area.area_asset_id] = check
+                checks_for_area[area.area_name] = check
 
         return checks_for_world, checks_for_area
 
-    def update_area_list(self, areas_to_check: FrozenSet[AreaLocation],
+    def update_area_list(self, areas_to_check: FrozenSet[AreaIdentifier],
                          invert_check: bool,
                          location_for_world: Dict[str, QtWidgets.QCheckBox],
                          location_for_area: Dict[int, QtWidgets.QCheckBox],
@@ -112,7 +112,7 @@ class AreaListHelper:
 
                 for area in areas:
                     if area.area_asset_id in location_for_area:
-                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in areas_to_check
+                        is_checked = AreaIdentifier(world.world_asset_id, area.area_asset_id) in areas_to_check
                         if invert_check:
                             is_checked = not is_checked
 
