@@ -91,7 +91,6 @@ class DockNode(Node):
 @dataclasses.dataclass(frozen=True)
 class TeleporterNode(Node):
     default_connection: AreaIdentifier
-    scan_asset_id: Optional[int]
     keep_name_when_vanilla: bool
     editable: bool
 
@@ -100,7 +99,7 @@ class TeleporterNode(Node):
         return self.extra.get("teleporter_instance_id")
 
     def __post_init__(self):
-        if self.editable and self.teleporter_instance_id is None:
+        if self.editable and self.extra.get("teleporter_instance_id") is None:
             raise ValueError(f"{self!r} is editable, but teleporter_instance_id is None")
 
     def __repr__(self):
