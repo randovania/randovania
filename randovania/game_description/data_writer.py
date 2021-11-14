@@ -19,6 +19,9 @@ from randovania.game_description.world.node import Node, GenericNode, DockNode, 
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 
+_world_name_to_asset_id: dict[str, int] = {}
+_area_name_to_asset_id: dict[str, dict[str, int]] = {}
+
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     return {
@@ -213,11 +216,12 @@ def write_node(node: Node) -> dict:
     :return:
     """
 
+    extra = dict(node.extra)
     data = {
         "name": node.name,
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
-        "extra": node.extra,
+        "extra": extra,
     }
 
     if isinstance(node, GenericNode):
@@ -241,7 +245,7 @@ def write_node(node: Node) -> dict:
         data["destination_world_asset_id"] = node.default_connection.world_asset_id
         data["destination_area_asset_id"] = node.default_connection.area_asset_id
         data["teleporter_instance_id"] = node.teleporter_instance_id
-        data["scan_asset_id"] = node.scan_asset_id
+        data["scan_asset_id"] = extra.pop("scan_asset_id")
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
         data["editable"] = node.editable
 
@@ -342,8 +346,15 @@ def write_world(world: World) -> dict:
 
 def write_world_list(world_list: WorldList) -> list:
     errors = []
-
     known_indices = {}
+
+    _world_name_to_asset_id.clear()
+    _area_name_to_asset_id.clear()
+    for world in world_list.worlds:
+        _world_name_to_asset_id[world.name] = world.world_asset_id
+        _area_name_to_asset_id[world.name] = {}
+        for area in world.areas:
+            _area_name_to_asset_id[world.name][area.name] = area.area_asset_id
 
     worlds = []
     for world in world_list.worlds:

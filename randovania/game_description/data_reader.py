@@ -191,7 +191,11 @@ class WorldReader:
     dock_weakness_database: DockWeaknessDatabase
     generic_index: int = -1
     current_world: int
+    current_world_name: str
     current_area: int
+    current_area_name: str
+    _world_name_to_asset_id: dict[str, int]
+    _area_name_to_asset_id: dict[str, dict[str, int]]
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -237,7 +241,10 @@ class WorldReader:
                 return DockNode(
                     **generic_args,
                     dock_index=data["dock_index"],
-                    default_connection=DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
+                    default_connection=DockConnection(
+                        self._area_name_to_asset_id[self.current_world_name][data["connected_area_name"]],
+                        data["connected_dock_index"],
+                    ),
                     default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
                         DockType(data["dock_type"]),
                         data["dock_weakness_index"],
@@ -252,15 +259,16 @@ class WorldReader:
 
             elif node_type == "teleporter":
                 instance_id = data["teleporter_instance_id"]
-
-                destination_world_asset_id = data["destination_world_asset_id"]
-                destination_area_asset_id = data["destination_area_asset_id"]
+                destination_world_asset_id = self._world_name_to_asset_id[data["destination"]["world_name"]]
+                destination_area_asset_id = self._area_name_to_asset_id[data["destination"]["world_name"]][
+                    data["destination"]["area_name"]
+                ]
 
                 return TeleporterNode(
                     **generic_args,
                     teleporter=Teleporter(self.current_world, self.current_area, instance_id),
                     default_connection=AreaLocation(destination_world_asset_id, destination_area_asset_id),
-                    scan_asset_id=data["scan_asset_id"],
+                    scan_asset_id=data["extra"]["scan_asset_id"],
                     keep_name_when_vanilla=data["keep_name_when_vanilla"],
                     editable=data["editable"],
                 )
@@ -315,6 +323,7 @@ class WorldReader:
 
     def read_area(self, area_name: str, data: dict) -> Area:
         self.current_area = data["extra"]["asset_id"]
+        self.current_area_name = area_name
         nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
@@ -345,6 +354,7 @@ class WorldReader:
 
     def read_world(self, data: Dict) -> World:
         self.current_world = data["extra"]["asset_id"]
+        self.current_world_name = data["name"]
         return World(
             data["name"],
             self.read_area_list(data["areas"]),
@@ -352,6 +362,18 @@ class WorldReader:
         )
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
+        self._world_name_to_asset_id = {
+            world["name"]: world["extra"]["asset_id"]
+            for world in data
+        }
+        self._area_name_to_asset_id = {
+            world["name"]: {
+                name: item["extra"]["asset_id"]
+                for name, item in world["areas"].items()
+            }
+            for world in data
+        }
+
         return WorldList(read_array(data, self.read_world))
 
 

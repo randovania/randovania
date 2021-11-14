@@ -3,7 +3,20 @@ CURRENT_DATABASE_VERSION = 2
 
 def _migrate_v1(data: dict) -> dict:
 
+    world_asset_id_to_name = {
+        world["asset_id"]: world["name"]
+        for world in data["worlds"]
+    }
+    area_asset_id_to_name = {
+        world["name"]: {
+            area["asset_id"]: area["name"]
+            for area in world["areas"]
+        }
+        for world in data["worlds"]
+    }
+
     for world in data["worlds"]:
+        world_name = world["name"]
         new_areas = {}
 
         if world.get("extra") is None:
@@ -31,6 +44,18 @@ def _migrate_v1(data: dict) -> dict:
 
                 if node_name in new_nodes:
                     raise ValueError("Name conflict in {} - {}: {}".format(world["name"], area_name, node_name))
+
+                if node.get("extra") is None:
+                    node["extra"] = {}
+
+                if node["node_type"] == "dock":
+                    node["connected_area_name"] = area_asset_id_to_name[world_name][node.pop("connected_area_asset_id")]
+
+                elif node["node_type"] == "teleporter":
+                    dest_world_name = world_asset_id_to_name[node.pop("destination_world_asset_id")]
+                    dest_area_name = area_asset_id_to_name[dest_world_name][node.pop("destination_area_asset_id")]
+                    node["destination"] = {"world_name": dest_world_name, "area_name": dest_area_name}
+                    node["extra"]["scan_asset_id"] = node.pop("scan_asset_id")
 
                 new_nodes[node_name] = node
 
