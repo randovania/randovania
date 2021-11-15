@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
+from randovania.game_description import schema_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
@@ -18,10 +19,6 @@ from randovania.game_description.world.node import Node, GenericNode, DockNode, 
     TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
-
-_current_world_name: str
-_world_name_to_asset_id: dict[str, int] = {}
-_area_name_to_asset_id: dict[str, dict[str, int]] = {}
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -219,7 +216,6 @@ def write_node(node: Node) -> dict:
 
     extra = dict(node.extra)
     data = {
-        "name": node.name,
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
         "extra": extra,
@@ -231,7 +227,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
         data["dock_index"] = node.dock_index
-        data["connected_area_asset_id"] = _area_name_to_asset_id[_current_world_name][node.default_connection.area_name]
+        data["connected_area_name"] = node.default_connection.area_name
         data["connected_dock_index"] = node.default_connection.dock_index
         data["dock_type"] = node.default_dock_weakness.dock_type.value
         data["dock_weakness_index"] = node.default_dock_weakness.index
@@ -242,12 +238,8 @@ def write_node(node: Node) -> dict:
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
-        conn = node.default_connection
         data["node_type"] = "teleporter"
-        data["destination_world_asset_id"] = _world_name_to_asset_id[conn.world_name]
-        data["destination_area_asset_id"] = _area_name_to_asset_id[conn.world_name][conn.area_name]
-        data["teleporter_instance_id"] = extra.pop("teleporter_instance_id")
-        data["scan_asset_id"] = extra.pop("scan_asset_id")
+        data["destination"] = node.default_connection.as_json
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
         data["editable"] = node.editable
 
@@ -294,7 +286,7 @@ def write_area(area: Area) -> dict:
     """
     errors = []
 
-    nodes = []
+    nodes = {}
     for node in area.nodes:
         try:
             data = write_node(node)
@@ -303,7 +295,7 @@ def write_area(area: Area) -> dict:
                 for target_node in area.nodes
                 if target_node in area.connections[node]
             }
-            nodes.append(data)
+            nodes[node.name] = data
         except ValueError as e:
             errors.append(str(e))
 
@@ -313,10 +305,7 @@ def write_area(area: Area) -> dict:
 
     extra = copy.copy(area.extra)
     return {
-        "name": area.name,
-        "in_dark_aether": extra.pop("in_dark_aether", None),
-        "asset_id": extra.pop("asset_id"),
-        "default_node_index": area.default_node_index,
+        "default_node": area.default_node,
         "valid_starting_location": area.valid_starting_location,
         "extra": extra,
         "nodes": nodes,
@@ -324,14 +313,11 @@ def write_area(area: Area) -> dict:
 
 
 def write_world(world: World) -> dict:
-    global _current_world_name
-    _current_world_name = world.name
-
     errors = []
-    areas = []
+    areas = {}
     for area in world.areas:
         try:
-            areas.append(write_area(area))
+            areas[area.name] = write_area(area)
         except ValueError as e:
             errors.append(str(e))
 
@@ -342,8 +328,6 @@ def write_world(world: World) -> dict:
     extra = copy.copy(world.extra)
     return {
         "name": world.name,
-        "dark_name": extra.pop("dark_name", None),
-        "asset_id": extra.pop("asset_id"),
         "extra": extra,
         "areas": areas,
     }
@@ -352,14 +336,6 @@ def write_world(world: World) -> dict:
 def write_world_list(world_list: WorldList) -> list:
     errors = []
     known_indices = {}
-
-    _world_name_to_asset_id.clear()
-    _area_name_to_asset_id.clear()
-    for world in world_list.worlds:
-        _world_name_to_asset_id[world.name] = world.extra["asset_id"]
-        _area_name_to_asset_id[world.name] = {}
-        for area in world.areas:
-            _area_name_to_asset_id[world.name][area.name] = area.extra["asset_id"]
 
     worlds = []
     for world in world_list.worlds:
@@ -397,12 +373,6 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
     if db is None:
         return None
 
-    def expand(it: IndexWithReason, field_name: str) -> dict:
-        if it.reason is not None:
-            return {"index": it.index, field_name: it.reason}
-        else:
-            return {"index": it.index}
-
     return {
         "items_to_exclude": [
             {"index": it.index, "when_shuffled": it.reason}
@@ -423,17 +393,12 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 
 
 def write_game_description(game: GameDescription) -> dict:
-
-    starting_loc = {
-        "world_asset_id": game.world_list.world_by_area_location(game.starting_location).extra["asset_id"],
-        "area_asset_id": game.world_list.area_by_area_location(game.starting_location).extra["asset_id"],
-    }
-
     return {
+        "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
 
-        "starting_location": starting_loc,  #game.starting_location.as_json,
+        "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
