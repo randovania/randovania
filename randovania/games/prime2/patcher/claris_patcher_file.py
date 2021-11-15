@@ -1,4 +1,5 @@
 import dataclasses
+import typing
 from random import Random
 from typing import Dict, Iterator
 
@@ -77,19 +78,29 @@ _ELEVATOR_ROOMS_MAP_ASSET_IDS = [
 ]
 
 
+def _area_identifier_to_json(world_list: WorldList, identifier: AreaIdentifier) -> dict:
+    world = world_list.world_by_area_location(identifier)
+    area = world.area_by_identifier(identifier)
+
+    return {
+        "world_asset_id": world.world_asset_id,
+        "area_asset_id": area.area_asset_id,
+    }
+
+
 def _create_spawn_point_field(patches: GamePatches,
-                              resource_database: ResourceDatabase,
+                              game: GameDescription,
                               ) -> dict:
     capacities = [
         {
             "index": item.index,
             "amount": patches.starting_items.get(item, 0),
         }
-        for item in resource_database.item
+        for item in game.resource_database.item
     ]
 
     return {
-        "location": patches.starting_location.as_json,
+        "location": _area_identifier_to_json(game.world_list, patches.starting_location),
         "amount": capacities,
         "capacity": capacities,
     }
@@ -132,8 +143,8 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
         assert isinstance(node, TeleporterNode)
         elevator_fields.append({
             "instance_id": node.extra["teleporter_instance_id"],
-            "origin_location": teleporter.area_location.as_json,
-            "target_location": connection.as_json,
+            "origin_location": _area_identifier_to_json(game.world_list, teleporter.area_location),
+            "target_location": _area_identifier_to_json(game.world_list, connection),
             "room_name": _pretty_name_for_elevator(game.game, world_list, node, connection)
         })
 
@@ -423,7 +434,7 @@ def create_patcher_file(description: LayoutDescription,
     :return:
     """
     preset = description.permalink.get_preset(players_config.player_index)
-    configuration = preset.configuration
+    configuration = typing.cast(EchoesConfiguration, preset.configuration)
     patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.seed_number)
     area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
@@ -470,7 +481,7 @@ def create_patcher_file(description: LayoutDescription,
     ).as_json
 
     # Add Spawn Point
-    result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
+    result["spawn_point"] = _create_spawn_point_field(patches, game)
 
     result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
 

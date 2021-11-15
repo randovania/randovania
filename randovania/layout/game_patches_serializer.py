@@ -119,9 +119,11 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
 
 def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaIdentifier:
     world_name, area_name = re.match("([^/]+)/([^/]+)", area_name).group(1, 2)
-    starting_world = world_list.world_with_name(world_name)
-    starting_area = starting_world.area_by_name(area_name)
-    return AreaIdentifier(starting_world.world_asset_id, starting_area.area_asset_id)
+
+    # Filter out dark world names
+    world_name = world_list.world_with_name(world_name).name
+
+    return AreaIdentifier(world_name, area_name)
 
 
 def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> PickupEntry:

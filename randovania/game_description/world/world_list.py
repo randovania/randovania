@@ -262,13 +262,13 @@ class WorldList:
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         area = self.area_by_area_location(identifier.area_location)
-        for node in area.nodes:
-            if node.name == identifier.node_name:
-                return node
+        node = area.node_with_name(identifier.node_name)
+        if node is not None:
+            return node
         raise ValueError(f"No node with name {identifier.node_name} found in {area}")
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
-        return self._ids_to_area[location]
+        return self.world_with_name(location.world_name).area_by_name(location.area_name)
 
     def world_by_area_location(self, location: AreaIdentifier) -> World:
         return self.world_with_name(location.world_name)

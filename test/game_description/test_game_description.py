@@ -26,7 +26,7 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
     n2: Node = "n2"
 
     area_a = Area(
-        "area_a", False, 0, 0, True, [n1, n2],
+        "area_a", 0, True, [n1, n2],
         {
             n1: {
                 n2: set_a
@@ -36,7 +36,7 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
         {}
     )
     area_b = Area(
-        "area_b", True, 0, 0, True, [n1, n2],
+        "area_b", 0, True, [n1, n2],
         {
             n1: {},
             n2: {

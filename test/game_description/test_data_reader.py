@@ -36,21 +36,29 @@ def test_area_with_invalid_connections():
 
     with pytest.raises(MissingResource) as e:
         reader.read_area("Broken Area", {
-            "asset_id": 1234,
-            "nodes": [
-                {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
-                {"name": "Broken", "heal": True, "coordinates": None, "node_type": "generic", "connections": {
-                    "A": {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 1,
-                            "amount": 1,
-                            "negate": False
+            "extra": {
+                "asset_id": 1234,
+            },
+            "nodes": {
+                "A": {
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "connections": {}
+                },
+                "Broken": {
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "connections": {
+                        "A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 1,
+                                "amount": 1,
+                                "negate": False
+                            }
                         }
                     }
-                }},
-            ]
+                },
+            }
         })
 
     assert str(e.value) == ("In area Broken Area, connection from Broken to A got error: "

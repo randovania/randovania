@@ -17,7 +17,6 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockConnection
-from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 class NodeLocation(NamedTuple):
@@ -93,10 +92,6 @@ class TeleporterNode(Node):
     default_connection: AreaIdentifier
     keep_name_when_vanilla: bool
     editable: bool
-
-    @property
-    def teleporter_instance_id(self) -> Optional[int]:
-        return self.extra.get("teleporter_instance_id")
 
     def __post_init__(self):
         if self.editable and self.extra.get("teleporter_instance_id") is None:

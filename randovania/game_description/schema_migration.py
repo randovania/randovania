@@ -87,6 +87,5 @@ def migrate_to_current(data: dict) -> dict:
     while schema_version < CURRENT_DATABASE_VERSION:
         data = _MIGRATIONS[schema_version](data)
         schema_version += 1
-        data["schema_version"] = schema_version
 
     return data
