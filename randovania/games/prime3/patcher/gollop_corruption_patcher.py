@@ -209,7 +209,7 @@ def starting_location_for(game: GameDescription, location: AreaIdentifier) -> st
     world = game.world_list.world_by_area_location(location)
     area = game.world_list.area_by_area_location(location)
 
-    return f"custom {world.world_asset_id:x} {area.area_asset_id:x}"
+    return f"custom {world.extra['asset_id']:x} {area.extra['asset_id']:x}"
 
 
 def starting_items_for(resources: CurrentResources, hypermode_original: int) -> str:

@@ -53,12 +53,6 @@ class WorldList:
                 return world
         raise KeyError("Unknown name: {}".format(world_name))
 
-    def world_by_asset_id(self, asset_id: int) -> World:
-        for world in self.worlds:
-            if world.world_asset_id == asset_id:
-                return world
-        raise KeyError("Unknown asset_id: {}".format(asset_id))
-
     def world_with_area(self, area: Area) -> World:
         for world in self.worlds:
             if area in world.areas:

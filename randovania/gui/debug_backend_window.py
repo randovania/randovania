@@ -91,7 +91,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
             # current CWorld
             MemoryOperation(self._used_version.game_state_pointer, offset=4,
-                            write_bytes=world.world_asset_id.to_bytes(4, "big")),
+                            write_bytes=world.extra['asset_id'].to_bytes(4, "big")),
 
             # CPlayer VTable
             MemoryOperation(self._used_version.cstate_manager_global + 0x14fc, offset=0,

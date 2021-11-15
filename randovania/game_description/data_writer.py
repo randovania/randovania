@@ -356,10 +356,10 @@ def write_world_list(world_list: WorldList) -> list:
     _world_name_to_asset_id.clear()
     _area_name_to_asset_id.clear()
     for world in world_list.worlds:
-        _world_name_to_asset_id[world.name] = world.world_asset_id
+        _world_name_to_asset_id[world.name] = world.extra["asset_id"]
         _area_name_to_asset_id[world.name] = {}
         for area in world.areas:
-            _area_name_to_asset_id[world.name][area.name] = area.area_asset_id
+            _area_name_to_asset_id[world.name][area.name] = area.extra["asset_id"]
 
     worlds = []
     for world in world_list.worlds:
@@ -425,8 +425,8 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 def write_game_description(game: GameDescription) -> dict:
 
     starting_loc = {
-        "world_asset_id": game.world_list.world_by_area_location(game.starting_location).world_asset_id,
-        "area_asset_id": game.world_list.area_by_area_location(game.starting_location).area_asset_id,
+        "world_asset_id": game.world_list.world_by_area_location(game.starting_location).extra["asset_id"],
+        "area_asset_id": game.world_list.area_by_area_location(game.starting_location).extra["asset_id"],
     }
 
     return {

@@ -47,17 +47,6 @@ class World:
         for area in self.areas:
             yield from area.major_pickup_indices
 
-    def area_by_asset_id(self, asset_id: int) -> Area:
-        cache: Dict[int, int] = object.__getattribute__(self, "__cached_area_by_asset_id")
-        if asset_id in cache:
-            return self.areas[cache[asset_id]]
-
-        for i, area in enumerate(self.areas):
-            if area.area_asset_id == asset_id:
-                cache[asset_id] = i
-                return area
-        raise KeyError("Unknown asset_id: {}".format(asset_id))
-
     def area_by_name(self, area_name: str, is_dark_aether: Optional[bool] = None) -> Area:
         for area in self.areas:
             if is_dark_aether is not None and area.in_dark_aether != is_dark_aether:

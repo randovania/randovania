@@ -83,8 +83,8 @@ def _area_identifier_to_json(world_list: WorldList, identifier: AreaIdentifier) 
     area = world.area_by_identifier(identifier)
 
     return {
-        "world_asset_id": world.world_asset_id,
-        "area_asset_id": area.area_asset_id,
+        "world_asset_id": world.extra['asset_id'],
+        "area_asset_id": area.extra['asset_id'],
     }
 
 
