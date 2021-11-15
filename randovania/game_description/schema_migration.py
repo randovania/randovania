@@ -25,6 +25,11 @@ def _migrate_v1(data: dict) -> dict:
             if area_name in new_areas:
                 raise ValueError("Name conflict in {}: {}".format(world["name"], area_name))
 
+            # extra = JsonEncodedValue,
+            area["default_node"] = None
+            if (default_node_index := area.pop("default_node_index")) is not None:
+                area["default_node"] = area["nodes"][default_node_index]["name"]
+
             if area.get("extra") is None:
                 area["extra"] = {}
 
@@ -76,5 +81,7 @@ def migrate_to_current(data: dict) -> dict:
     while schema_version < CURRENT_DATABASE_VERSION:
         data = _MIGRATIONS[schema_version](data)
         schema_version += 1
+
+    data["schema_version"] = schema_version
 
     return data

@@ -2,15 +2,15 @@ import dataclasses
 import typing
 from typing import List, Dict, Optional, Iterator, Tuple
 
-from randovania.game_description.world.node import Node, DockNode, PickupNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import Node, DockNode, PickupNode
 
 
 @dataclasses.dataclass(frozen=True)
 class Area:
     name: str
-    default_node_index: Optional[int]
+    default_node: Optional[str]
     valid_starting_location: bool
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
@@ -32,6 +32,13 @@ class Area:
     @property
     def area_asset_id(self) -> int:
         return self.extra["asset_id"]
+
+    @property
+    def default_node_index(self) -> Optional[int]:
+        if self.default_node is not None:
+            for i, node in self.nodes:
+                if node.name == self.default_node:
+                    return i
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")

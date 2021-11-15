@@ -5,12 +5,13 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, schema_migration
 from randovania.games import binary_data
 
 
 def test_simple_round_trip():
     sample_data = {
+        "schema_version": 2,
         "game": "prime2",
         "resource_database": {
             "items": [],
@@ -26,8 +27,8 @@ def test_simple_round_trip():
             "damage_reductions": [],
         },
         "starting_location": {
-            "world_asset_id": 1006255871,
-            "area_asset_id": 1655756413
+            "world_name": "Temple Grounds",
+            "area_name": "Landing Site"
         },
         "initial_states": {
             "Default": [
@@ -59,6 +60,8 @@ def test_complex_encode(test_files_dir):
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         data = json.load(data_file)
 
+    data = schema_migration.migrate_to_current(data)
+
     b = io.BytesIO()
 
     # Run
@@ -77,6 +80,7 @@ def test_complex_decode(test_files_dir):
     # Assert
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         saved_data = json.load(data_file)
+    saved_data = schema_migration.migrate_to_current(saved_data)
 
     assert decoded_data == saved_data
 
@@ -97,7 +101,6 @@ def _comparable_dict(value):
 def test_full_data_encode_is_equal(game_enum):
     # The json data may be missing if we're running using a Pyinstaller binary
     # Setup
-    assert False
 
     data_dir = game_enum.data_path.joinpath("json_data")
     if not data_dir.is_dir() and get_data_path().joinpath("binary_data", f"{game_enum.value}.bin").is_file():
@@ -182,7 +185,6 @@ def test_encode_resource_database():
         },
         "damage_reductions": [],
     }
-    resource_database["requirement_template"] = list(resource_database["requirement_template"].items())
 
     # Run
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
