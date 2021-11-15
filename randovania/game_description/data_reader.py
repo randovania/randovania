@@ -341,7 +341,7 @@ class WorldReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
 
         try:
-            return Area(area_name, data["default_node_index"],
+            return Area(area_name, data["default_node"],
                         data["valid_starting_location"],
                         nodes, connections, data.get("extra"))
         except KeyError as e:
