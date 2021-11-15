@@ -1,3 +1,4 @@
+import copy
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
@@ -6,26 +7,31 @@ from frozendict import frozendict
 
 from randovania.game_description import schema_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
-from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd, RequirementTemplate
+from randovania.game_description.requirements import (
+    ResourceRequirement, Requirement, RequirementOr, RequirementAnd, RequirementTemplate
+)
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id, \
+from randovania.game_description.resources.search import (
+    MissingResource, find_resource_info_with_id,
     find_resource_info_with_long_name
+)
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
-    DockLockType
-from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+from randovania.game_description.world.dock import (
+    DockWeakness, DockType, DockWeaknessDatabase, DockConnection, DockLockType
+)
+from randovania.game_description.world.node import (
+    GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+)
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -329,7 +335,7 @@ class WorldReader:
                     the_set = read_requirement(target_requirement, self.resource_database)
                 except MissingResource as e:
                     raise MissingResource(
-                        f"In area {data['name']}, connection from {origin.name} to {target_name} got error: {e}")
+                        f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
 
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
@@ -425,7 +431,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
-    data = schema_migration.migrate_to_current(data)
+    data = schema_migration.migrate_to_current(copy.deepcopy(data))
 
     game = RandovaniaGame(data["game"])
 
