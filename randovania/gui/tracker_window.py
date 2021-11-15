@@ -8,15 +8,15 @@ from pathlib import Path
 from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import networkx
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
-from matplotlib.axes import Axes
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-from matplotlib.figure import Figure
+# from matplotlib.axes import Axes
+# from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+# from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+# from matplotlib.figure import Figure
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementAnd
@@ -30,6 +30,7 @@ from randovania.game_description.world.node import Node, ResourceNode, Translato
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.patching.prime import elevators
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
@@ -77,7 +78,7 @@ def _load_previous_state(persistence_path: Path,
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
-    ax: Axes
+    # ax: Axes
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -155,8 +156,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setup_elevators()
         self.setup_translator_gates()
 
-        self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
-        self.tab_graph_map_layout.addWidget(self.matplot_widget)
+        # self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
+        # self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self._world_to_node_positions = {}
         self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
@@ -543,7 +544,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 name = world.correct_name(area.in_dark_aether)
                 nodes_by_world[name].append(node)
 
-                location = AreaIdentifier(world.world_asset_id, area.area_asset_id)
+                location = AreaIdentifier(world.name, area.name)
                 targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, True)] = location
 
         if elevators_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
@@ -551,16 +552,16 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for world in world_list.worlds:
                 for area in world.areas:
                     name = world.correct_name(area.in_dark_aether)
-                    targets[f"{name} - {area.name}"] = AreaIdentifier(world.world_asset_id, area.area_asset_id)
+                    targets[f"{name} - {area.name}"] = AreaIdentifier(world.name, area.name)
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
         for world_name in sorted(nodes_by_world.keys()):
             nodes = nodes_by_world[world_name]
-            nodes_locations = [AreaIdentifier(world_list.nodes_to_world(node).world_asset_id,
-                                              world_list.nodes_to_area(node).area_asset_id)
+            nodes_locations = [world_list.identifier_for_node(node).area_location
                                for node in nodes]
-            nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, False)
+            nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list,
+                                                                     location, False)
                            for location in nodes_locations]
 
             group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
@@ -598,12 +599,15 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
             return
 
+        configuration = self.game_configuration
+        assert isinstance(configuration, EchoesConfiguration)
+
         gates = {
             f"{area.name} ({node.gate.index})": node.gate
             for world, area, node in world_list.all_worlds_areas_nodes
             if isinstance(node, TranslatorGateNode)
         }
-        translator_requirement = self.game_configuration.translator_configuration.translator_requirement
+        translator_requirement = configuration.translator_configuration.translator_requirement
 
         for i, (gate_name, gate) in enumerate(sorted(gates.items(), key=lambda it: it[0])):
             node_name = QtWidgets.QLabel(self.translator_gate_scroll_contents)

@@ -1,91 +1,95 @@
-from randovania.game_description.world.area_identifier import AreaIdentifier
-
 # These are hard-coded into the Randomprime API
 # Used by the prime1 patcher
 RANDOM_PRIME_CUSTOM_NAMES = {
-    (3241871825, 2472970646): 'Crater Entry Point',  # 2818083
-    (2831049361, 3222157185): 'Phendrana Drifts North\0(Phendrana Shorelines)',  # 45
-    (2831049361, 3708487481): 'Phendrana Drifts South\0(Quarantine Cave)',  # 1900634
-    (361692695, 3508802073): 'Exterior Docking Hangar',  # 134218592
-    (1056449404, 1005235657): 'Magmoor Caverns North\0(Lava Lake)',  # 31
-    (1056449404, 3702104715): 'Magmoor Caverns West\0(Monitor Station)',  # 852002
-    (1056449404, 1279075404): 'Magmoor Caverns East\0(Twin Fires)',  # 1048608
-    (1056449404, 4012840000): 'Magmoor Caverns South\0(Magmoor Workstation, Debris)',  # 1703972
-    (1056449404, 3249312307): 'Magmoor Caverns South\0(Magmoor Workstation, Save Station)',  # 1769512
-    (2980859237, 1125030300): 'Phazon Mines East\0(Main Quarry)',  # 28
-    (2980859237, 3804417848): 'Phazon Mines West\0(Phazon Processing Center)',  # 1638417
-    (972217896, 295707720): 'Tallon Overworld North\0(Tallon Canyon)',  # 917509
-    (972217896, 597223686): 'Artifact Temple',  # 1049306
-    (972217896, 2318493278): 'Tallon Overworld East\0(Frigate Crash Site)',  # 1441848
-    (972217896, 366411659): 'Tallon Overworld West\0(Root Cave)',  # 1507378
-    (972217896, 212145392): 'Tallon Overworld South\0(Great Tree Hall, Upper)',  # 2687012
-    (972217896, 2098226800): 'Tallon Overworld South\0(Great Tree Hall, Lower)',  # 2818083
-    (2214002543, 1047210935): 'Chozo Ruins West\0(Main Plaza)',  # 125
-    (2214002543, 2199318005): 'Chozo Ruins North\0(Sun Tower)',  # 1572903
-    (2214002543, 2784651681): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',  # 4063276
-    (2214002543, 594418447): 'Chozo Ruins South\0(Reflecting Pool, Far End)',  # 4128808
+    ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',  # 2818083
 
-    (0x13d79165, 0xb4b41c48): 'Credits',
+    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Exterior Docking Hangar',  # 134218592
+
+    ("Phendrana Drifts", "Transport to Magmoor Caverns West"): 'Phendrana Drifts North\0(Phendrana Shorelines)',  # 45
+    ("Phendrana Drifts", "Transport to Magmoor Caverns South"): 'Phendrana Drifts South\0(Quarantine Cave)',  # 1900634
+
+    ("Magmoor Caverns", "Transport to Chozo Ruins North"): 'Magmoor Caverns North\0(Lava Lake)',  # 31
+    ("Magmoor Caverns", "Transport to Phendrana Drifts North"): 'Magmoor Caverns West\0(Monitor Station)',  # 852002
+    ("Magmoor Caverns", "Transport to Tallon Overworld West"): 'Magmoor Caverns East\0(Twin Fires)',  # 1048608
+    ("Magmoor Caverns", "Transport to Phazon Mines West"): 'Magmoor Caverns South\0(Magmoor Workstation, Debris)',  # 1703972
+    ("Magmoor Caverns", "Transport to Phendrana Drifts South"): 'Magmoor Caverns South\0(Magmoor Workstation, Save Station)',  # 1769512
+
+    ("Phazon Mines", "Transport to Tallon Overworld South"): 'Phazon Mines East\0(Main Quarry)',  # 28
+    ("Phazon Mines", "Transport to Magmoor Caverns South"): 'Phazon Mines West\0(Phazon Processing Center)',  # 1638417
+
+    ("Tallon Overworld", "Transport to Chozo Ruins West"): 'Tallon Overworld North\0(Tallon Canyon)',  # 917509
+    ("Tallon Overworld", "Transport to Chozo Ruins East"): 'Tallon Overworld East\0(Frigate Crash Site)',  # 1441848
+    ("Tallon Overworld", "Transport to Magmoor Caverns East"): 'Tallon Overworld West\0(Root Cave)',  # 1507378
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): 'Tallon Overworld South\0(Great Tree Hall, Upper)',  # 2687012
+    ("Tallon Overworld", "Transport to Phazon Mines East"): 'Tallon Overworld South\0(Great Tree Hall, Lower)',  # 2818083
+    ("Tallon Overworld", "Artifact Temple"): 'Artifact Temple',  # 1049306
+
+    ("Chozo Ruins", "Transport to Tallon Overworld North"): 'Chozo Ruins West\0(Main Plaza)',  # 125
+    ("Chozo Ruins", "Transport to Magmoor Caverns North"): 'Chozo Ruins North\0(Sun Tower)',  # 1572903
+    ("Chozo Ruins", "Transport to Tallon Overworld East"): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',  # 4063276
+    ("Chozo Ruins", "Transport to Tallon Overworld South"): 'Chozo Ruins South\0(Reflecting Pool, Far End)',  # 4128808
+
+    ("End of Game", "Credits"): 'Credits',
 }
 
 # Names for use when "elevator" isn't implied
 UI_CUSTOM_NAMES = {
     # Ruins
-    1047210935: "Main Plaza Elevator",
-    2199318005: "Sun Tower Elevator",
-    2784651681: "Reflecting Pool West Elevator (Save)",
-    594418447: "Reflecting Pool South Elevator (Far)",
+    ("Chozo Ruins", "Transport to Tallon Overworld North"): "Main Plaza Elevator",
+    ("Chozo Ruins", "Transport to Magmoor Caverns North"): "Sun Tower Elevator",
+    ("Chozo Ruins", "Transport to Tallon Overworld East"): "Reflecting Pool West Elevator (Save)",
+    ("Chozo Ruins", "Transport to Tallon Overworld South"): "Reflecting Pool South Elevator (Far)",
 
     # Magmoor
-    1005235657: "Lava Lake Elevator",
-    3702104715: "Monitor Station Elevator",
-    1279075404: "Twin Fires Elevator",
-    4012840000: "Magmoor Workstation West Elevator (Debris)",
-    3249312307: "Magmoor Workstation South Elevator (Save)",
+    ("Magmoor Caverns", "Transport to Chozo Ruins North"): "Lava Lake Elevator",
+    ("Magmoor Caverns", "Transport to Phendrana Drifts North"): "Monitor Station Elevator",
+    ("Magmoor Caverns", "Transport to Tallon Overworld West"): "Twin Fires Elevator",
+    ("Magmoor Caverns", "Transport to Phazon Mines West"): "Magmoor Workstation West Elevator (Debris)",
+    ("Magmoor Caverns", "Transport to Phendrana Drifts South"): "Magmoor Workstation South Elevator (Save)",
 
     # Mines
-    1125030300: "Phazon Processing Elevator",
-    3804417848: "Main Quarry Elevator",
+    ("Phazon Mines", "Transport to Tallon Overworld South"): "Phazon Processing Elevator",
+    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Main Quarry Elevator",
 
     # Phendrana
-    3222157185: "Phendrana Shoreline Elevator",
-    3708487481: "Quarantine Cave Elevator",
+    ("Phendrana Drifts", "Transport to Magmoor Caverns West"): "Phendrana Shoreline Elevator",
+    ("Phendrana Drifts", "Transport to Magmoor Caverns South"): "Quarantine Cave Elevator",
 
     # Tallon
-    295707720: "Tallon Canyon Elevator",
-    2318493278: "Frigate Crash Site Elevator",
-    366411659: "Root Cave Elevator",
-    212145392: "Lower/North Great Tree Elevator",
-    2098226800: "Upper/South Great Tree Elevator"
+    ("Tallon Overworld", "Transport to Chozo Ruins West"): "Tallon Canyon Elevator",
+    ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site Elevator",
+    ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave Elevator",
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree Elevator",
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree Elevator"
 }
 
 # Names for use when "elevator" is implied
 SHORT_UI_CUSTOM_NAMES = {
     # Ruins
-    1047210935: "Main Plaza",
-    2199318005: "Sun Tower",
-    2784651681: "Reflecting Pool West (Save)",
-    594418447: "Reflecting Pool South (Far)",
+    ("Chozo Ruins", "Transport to Tallon Overworld North"): "Main Plaza",
+    ("Chozo Ruins", "Transport to Magmoor Caverns North"): "Sun Tower",
+    ("Chozo Ruins", "Transport to Tallon Overworld East"): "Reflecting Pool West (Save)",
+    ("Chozo Ruins", "Transport to Tallon Overworld South"): "Reflecting Pool South (Far)",
 
     # Magmoor
-    1005235657: "Lava Lake",
-    3702104715: "Monitor Station",
-    1279075404: "Twin Fires",
-    4012840000: "Workstation West (Debris)",
-    3249312307: "Workstation South (Save)",
+    ("Magmoor Caverns", "Transport to Chozo Ruins North"): "Lava Lake",
+    ("Magmoor Caverns", "Transport to Phendrana Drifts North"): "Monitor Station",
+    ("Magmoor Caverns", "Transport to Tallon Overworld West"): "Twin Fires",
+    ("Magmoor Caverns", "Transport to Phazon Mines West"): "Workstation West (Debris)",
+    ("Magmoor Caverns", "Transport to Phendrana Drifts South"): "Workstation South (Save)",
 
     # Mines
-    1125030300: "Phazon Processing",
-    3804417848: "Main Quarry",
+    ("Phazon Mines", "Transport to Tallon Overworld South"): "Phazon Processing",
+    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Main Quarry",
 
     # Phendrana
-    3222157185: "Phendrana Shoreline",
-    3708487481: "Quarantine Cave",
+    ("Phendrana Drifts", "Transport to Magmoor Caverns West"): "Phendrana Shoreline",
+    ("Phendrana Drifts", "Transport to Magmoor Caverns South"): "Quarantine Cave",
 
     # Tallon
-    295707720: "Tallon Canyon",
-    2318493278: "Frigate Crash Site",
-    366411659: "Root Cave",
-    212145392: "Lower/North Great Tree",
-    2098226800: "Upper/South Great Tree"
+    ("Tallon Overworld", "Transport to Chozo Ruins West"): "Tallon Canyon",
+    ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site",
+    ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave",
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree",
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree"
 }

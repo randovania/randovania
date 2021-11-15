@@ -136,6 +136,12 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     world_list = game.world_list
     elevator_connection = patches.elevator_connection
 
+    nodes_by_teleporter = _get_nodes_by_teleporter_id(world_list)
+    if len(elevator_connection) != len(nodes_by_teleporter):
+        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
+            len(nodes_by_teleporter), len(elevator_connection)
+        ))
+
     elevator_fields = []
 
     for teleporter, connection in elevator_connection.items():

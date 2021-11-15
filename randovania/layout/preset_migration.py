@@ -227,7 +227,10 @@ def _migrate_v8(preset: dict) -> dict:
         world_name, area_name = name.split("/", 1)
         world = game.world_list.world_with_name(world_name)
         area = world.area_by_name(area_name)
-        return AreaIdentifier(world.world_asset_id, area.area_asset_id)
+        return {
+            "world_asset_id": world.extra["asset_id"],
+            "area_asset_id": area.extra["asset_id"],
+        }
 
     preset["configuration"]["multi_pickup_placement"] = False
 
@@ -235,7 +238,7 @@ def _migrate_v8(preset: dict) -> dict:
         preset["configuration"]["energy_per_tank"] = int(preset["configuration"]["energy_per_tank"])
 
     preset["configuration"]["starting_location"] = [
-        _name_to_location(location).as_json
+        _name_to_location(location)
         for location in preset["configuration"]["starting_location"]
     ]
 

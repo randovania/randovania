@@ -11,6 +11,7 @@ from random import Random
 from typing import Tuple, Dict
 
 from randovania import get_data_path
+from randovania.game_description import migration_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.layout import game_patches_serializer
@@ -68,14 +69,25 @@ def migrate_description(json_dict: dict) -> dict:
                         if m is not None:
                             part_one, part_two = m.group(1, 2)
                             area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
+        version += 1
 
     if version == 4:
         for game in json_dict["game_modifications"]:
             for world_name, area in game["locations"].items():
-                if world_name == "Torvus Bog" and "Portal Chamber" in area:
-                    area["Portal Chamber (Light)"] = area.pop("Portal Chamber")
+                if world_name == "Torvus Bog" and "Portal Chamber/Pickup (Missile)" in area:
+                    area["Portal Chamber (Light)/Pickup (Missile)"] = area.pop("Portal Chamber/Pickup (Missile)")
+            for hint in game["hints"].values():
+                if hint["hint_type"] == "location" and hint["precision"]["location"] == "relative-to-area":
+                    hint["precision"]["relative"]["area_location"] = migration_data.convert_area_loc_id_to_name(
+                        RandovaniaGame.METROID_PRIME_ECHOES,  # only echoes has this at the moment
+                        hint["precision"]["relative"]["area_location"]
+                    )
+
+        version += 1
 
     json_dict["schema_version"] = version
+    if version != CURRENT_DESCRIPTION_SCHEMA_VERSION:
+        raise RuntimeError(f"Description migration did not end at current version")
     return json_dict
 
 

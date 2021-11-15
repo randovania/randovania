@@ -1,31 +1,31 @@
 CUSTOM_NAMES = {
     # Great Temple
-    408633584: "Temple Transport Emerald",
-    2399252740: "Temple Transport Violet",
-    2556480432: "Temple Transport Amber",
+    ("Great Temple", "Temple Transport A"): "Temple Transport Emerald",
+    ("Great Temple", "Temple Transport B"): "Temple Transport Violet",
+    ("Great Temple", "Temple Transport C"): "Temple Transport Amber",
 
     # Temple Grounds to Great Temple
-    1345979968: "Sanctuary Quadrant",
-    1287880522: "Agon Quadrant",
-    2918020398: "Torvus Quadrant",
+    ("Temple Grounds", "Temple Transport A"): "Sanctuary Quadrant",
+    ("Temple Grounds", "Temple Transport B"): "Agon Quadrant",
+    ("Temple Grounds", "Temple Transport C"): "Torvus Quadrant",
 
     # Temple Grounds to Areas
-    1660916974: "Agon Gate",
-    2889020216: "Torvus Gate",
-    3455543403: "Sanctuary Gate",
+    ("Temple Grounds", "Transport to Agon Wastes"): "Agon Gate",
+    ("Temple Grounds", "Transport to Torvus Bog"): "Torvus Gate",
+    ("Temple Grounds", "Transport to Sanctuary Fortress"): "Sanctuary Gate",
 
-    # Agon
-    1473133138: "Agon Entrance",
-    2806956034: "Agon Portal Access",
-    3331021649: "Agon Temple Access",
+    # Agon Wastes
+    ("Agon Wastes", "Transport to Temple Grounds"): "Agon Entrance",
+    ("Agon Wastes", "Transport to Torvus Bog"): "Agon Portal Access",
+    ("Agon Wastes", "Transport to Sanctuary Fortress"): "Agon Temple Access",
 
-    # Torvus
-    1868895730: "Torvus Entrance",
-    3479543630: "Torvus Temple Access",
-    3205424168: "Lower Torvus Access",
+    # Torvus Bog
+    ("Torvus Bog", "Transport to Temple Grounds"): "Torvus Entrance",
+    ("Torvus Bog", "Transport to Agon Wastes"): "Torvus Temple Access",
+    ("Torvus Bog", "Transport to Sanctuary Fortress"): "Lower Torvus Access",
 
-    # Sanctuary
-    3528156989: "Sanctuary Entrance",
-    900285955: "Sanctuary Spider side",
-    3145160350: "Sanctuary Vault side"
+    # Sanctuary Fortress
+    ("Sanctuary Fortress", "Transport to Temple Grounds"): "Sanctuary Entrance",
+    ("Sanctuary Fortress", "Transport to Agon Wastes"): "Sanctuary Spider side",
+    ("Sanctuary Fortress", "Transport to Torvus Bog"): "Sanctuary Vault side"
 }
