@@ -9,6 +9,7 @@ from typing import Optional, Dict
 import aiofiles
 import slugify
 
+from randovania.game_description import migration_data
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
@@ -425,21 +426,18 @@ def _migrate_v14(preset: dict) -> dict:
     db = default_database.game_description_for(game)
 
     def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
-        world = db.world_list.world_by_asset_id(old_loc["world_asset_id"])
-        area = world.area_by_asset_id(old_loc["area_asset_id"])
+        result = migration_data.convert_area_loc_id_to_name(game, old_loc)
 
-        node_name = {}
         if "instance_id" in old_loc:
+            # FIXME
+            world = db.world_list.world_with_name(result["world_name"])
+            area = world.area_by_name(result["area_name"])
             for node in area.nodes:
                 if node.extra.get("teleporter_instance_id") == old_loc["instance_id"]:
-                    node_name = {"node_name": node.name}
+                    result["node_name"] = node.name
                     break
 
-        return {
-            "world_name": world.name,
-            "area_name": area.name,
-            **node_name,
-        }
+        return result
 
     preset["configuration"]["starting_location"] = [
         _migrate_area_location(old_loc)
