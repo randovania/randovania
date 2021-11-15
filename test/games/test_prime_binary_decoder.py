@@ -115,14 +115,14 @@ def test_full_data_encode_is_equal(game_enum):
     decoded_database = binary_data.decode(b)
 
     # Run
-    assert json_database == decoded_database
+    assert decoded_database, json_database
 
     comparable_json = _comparable_dict(json_database)
     comparable_binary = _comparable_dict(decoded_database)
     for a, b in zip(comparable_json, comparable_binary):
         assert a == b
 
-    assert comparable_json == comparable_binary
+    assert comparable_binary == comparable_json
 
 
 @pytest.mark.parametrize("req", [

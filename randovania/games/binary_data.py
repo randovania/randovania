@@ -232,8 +232,9 @@ NodeBaseFields = {
 
 class NodeAdapter(construct.Adapter):
     def _decode(self, obj: construct.Container, context, path):
-        result = copy.copy(obj["data"])
-        result["node_type"] = obj["node_type"]
+        result = construct.Container(node_type=obj["node_type"])
+        result.update(obj["data"])
+        result.move_to_end("connections")
         return result
 
     def _encode(self, obj: construct.Container, context, path):
@@ -296,8 +297,8 @@ ConstructNode = NodeAdapter(Struct(
 ConstructArea = Struct(
     default_node=OptionalValue(String),
     valid_starting_location=Flag,
-    nodes=ConstructDict(ConstructNode),
     extra=JsonEncodedValue,
+    nodes=ConstructDict(ConstructNode),
 )
 
 ConstructWorld = Struct(

@@ -215,7 +215,8 @@ def write_node(node: Node) -> dict:
     """
 
     extra = dict(node.extra)
-    data = {
+    data = {}
+    common_fields = {
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
         "extra": extra,
@@ -223,9 +224,11 @@ def write_node(node: Node) -> dict:
 
     if isinstance(node, GenericNode):
         data["node_type"] = "generic"
+        data.update(common_fields)
 
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
+        data.update(common_fields)
         data["dock_index"] = node.dock_index
         data["connected_area_name"] = node.default_connection.area_name
         data["connected_dock_index"] = node.default_connection.dock_index
@@ -234,27 +237,32 @@ def write_node(node: Node) -> dict:
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"
+        data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
         data["node_type"] = "teleporter"
+        data.update(common_fields)
         data["destination"] = node.default_connection.as_json
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
         data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
+        data.update(common_fields)
         data["event_index"] = node.resource().index
         if not node.name.startswith("Event -"):
             raise ValueError(f"'{node.name}' is an Event Node, but naming doesn't start with 'Event -'")
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
+        data.update(common_fields)
         data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
         data["node_type"] = "logbook"
+        data.update(common_fields)
         data["string_asset_id"] = node.string_asset_id
         data["lore_type"] = node.lore_type.value
 
@@ -268,6 +276,7 @@ def write_node(node: Node) -> dict:
 
     elif isinstance(node, PlayerShipNode):
         data["node_type"] = "player_ship"
+        data.update(common_fields)
         data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
