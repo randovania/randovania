@@ -126,7 +126,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             if self.game == RandovaniaGame.METROID_PRIME:
                 crater = NodeIdentifier(AreaIdentifier("Tallon Overworld", "Artifact Temple"),
                                         "Teleport to Impact Crater - Crater Impact Point")
-                static[crater] = AreaIdentifier("End of Game", "End of Game")
+                static[crater] = AreaIdentifier("End of Game", "Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 gateway = NodeIdentifier(AreaIdentifier("Temple Grounds", "Sky Temple Gateway"),
                                          "Teleport to Great Temple - Sky Temple Energy Controller")

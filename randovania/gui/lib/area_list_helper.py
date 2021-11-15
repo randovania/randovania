@@ -3,6 +3,7 @@ from typing import List, Callable, FrozenSet, Dict
 
 from PySide2 import QtWidgets, QtCore
 
+from randovania.game_description.world.area import Area
 from randovania.patching.prime import elevators
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.game_description import GameDescription
@@ -84,13 +85,16 @@ class AreaListHelper:
 
         for world in worlds:
             for area in sorted(areas_by_world[world.world_asset_id], key=lambda a: a.name):
+                assert isinstance(area, Area)
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
-                check.setText(elevators.get_elevator_name_or_default(self.game_description.game, area.area_name, area.name))
-                check.area_location = AreaIdentifier(world.world_asset_id, area.area_name)
+                check.setText(elevators.get_elevator_name_or_default(
+                    self.game_description.game, world.name, area.name, area.name
+                ))
+                check.area_location = AreaIdentifier(world.name, area.name)
                 check.stateChanged.connect(functools.partial(_on_check_area, check))
                 group_box.vertical_layout.addWidget(check)
-                checks_for_area[area.area_name] = check
+                checks_for_area[area.name] = check
 
         return checks_for_world, checks_for_area
 

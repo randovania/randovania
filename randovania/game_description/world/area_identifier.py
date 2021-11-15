@@ -6,6 +6,10 @@ class AreaIdentifier:
     world_name: str
     area_name: str
 
+    def __post_init__(self):
+        assert isinstance(self.world_name, str)
+        assert isinstance(self.area_name, str)
+
     @property
     def world_asset_id(self) -> int:
         raise KeyError("Should be using world_name")

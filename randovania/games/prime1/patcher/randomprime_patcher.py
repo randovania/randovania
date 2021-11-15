@@ -189,8 +189,9 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
 
 
 def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
-    if location in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
-        return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[location]
+    loc = location.world_name, location.area_name
+    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
+        return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
@@ -294,8 +295,8 @@ class RandomprimePatcher(Patcher):
                     target = _name_for_location(db.world_list, patches.elevator_connection[identifier])
 
                     source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
-                        db.world_list.world_by_area_location(identifier.area_location).world_asset_id,
-                        db.world_list.area_by_area_location(identifier.area_location).area_asset_id,
+                        identifier.area_location.world_name,
+                        identifier.area_location.area_name,
                     )]
                     world_data[world.name]["transports"][source_name] = target
 

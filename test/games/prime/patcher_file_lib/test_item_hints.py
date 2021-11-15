@@ -36,13 +36,13 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     pickup_node = PickupNode("Pickup Node", True, None, {}, 1, pickup_index, True)
 
     world_list = WorldList([
-        World("World", "Dark World", 5000, [
-            Area("Area", False, 10000, 0, True, [logbook_node, pickup_node], {}, {}),
-            Area("Other Area", False, 20000, 0, True,
+        World("World", [
+            Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
+            Area("Other Area", 0, True,
                  [PickupNode(f"Pickup {i}", True, None, {}, 1, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
-        ]),
+        ], {}),
     ])
 
     return logbook_node, pickup_node, world_list
@@ -391,7 +391,7 @@ def test_create_message_for_hint_relative_area(echoes_game_description, blank_pi
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED, include_owner=False,
                       relative=RelativeDataArea(offset,
-                                                AreaIdentifier(1039999561, 3822429534),
+                                                AreaIdentifier("Torvus Bog", "Great Bridge"),
                                                 HintRelativeAreaName.NAME)),
         PickupIndex(5)
     )

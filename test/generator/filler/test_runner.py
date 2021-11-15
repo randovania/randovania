@@ -144,8 +144,9 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
         max_distance = 8
         data = RelativeDataArea(
-            None if precise_distance else 2,
-            AreaIdentifier("Temple Grounds", "Industrial Site"),
+            None if precise_distance else 3,
+            # Was Industrial Site
+            AreaIdentifier("Temple Grounds", "Hive Chamber A"),
             precision,
         )
     else:

@@ -100,11 +100,11 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         custom_weights = {}
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
             custom_weights = {
-                2252328306: 0,  # Great Temple
-                1119434212: 1,  # Agon Wastes
-                1039999561: 2,  # Torvus Bog
-                464164546: 3,  # Sanctuary Fortress
-                1006255871: 5,  # Temple Grounds
+                "Great Temple": 0,  # Great Temple
+                "Agon Wastes": 1,  # Agon Wastes
+                "Torvus Bog": 2,  # Torvus Bog
+                "Sanctuary Fortress": 3,  # Sanctuary Fortress
+                "Temple Grounds": 5,  # Temple Grounds
             }
         locations = TeleporterList.areas_list(self.game_enum)
         areas: Dict[NodeIdentifier, Area] = {
@@ -118,7 +118,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         self._elevator_source_destination = {}
 
         for location in sorted(locations,
-                               key=lambda loc: (custom_weights.get(loc.world_name, 0),
+                               key=lambda loc: (custom_weights.get(loc.area_location.world_name, 0),
                                                 checks[loc].text())):
             if location not in checks:
                 continue

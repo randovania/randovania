@@ -12,17 +12,17 @@ from randovania.layout.lib.location_list import LocationList
 @pytest.fixture(
     params=[
         {"encoded": b'\x00', "json": []},
-        {"encoded": b'\x0c\x00', "json": [{"world_asset_id": 1006255871, "area_asset_id": 1655756413}]},
-        {"encoded": b'\x14\x84', "json": [
-            {"world_asset_id": 1006255871, "area_asset_id": 3098756660},
-            {"world_asset_id": 1006255871, "area_asset_id": 3997643454}
+        {"encoded": b'\x0cP', "json": [{"world_name": "Temple Grounds", "area_name": "Landing Site"}]},
+        {"encoded": b'\x12\x8a', "json": [
+            {"world_name": "Temple Grounds", "area_name": "Hall of Honored Dead"},
+            {"world_name": "Temple Grounds", "area_name": "Path of Eyes"}
         ]},
     ],
     name="location_with_data")
 def _location_with_data(request, mocker, echoes_game_description):
     world_list = echoes_game_description.world_list
     areas = list(itertools.islice(
-        (AreaIdentifier(world.world_asset_id, area.area_asset_id)
+        (AreaIdentifier(world.name, area.name)
          for world in world_list.worlds
          for area in world.areas
          if area.valid_starting_location), 15))

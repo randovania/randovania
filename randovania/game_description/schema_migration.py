@@ -1,27 +1,13 @@
+from randovania.game_description import migration_data
+from randovania.games.game import RandovaniaGame
+
 CURRENT_DATABASE_VERSION = 2
 
 
 def _migrate_v1(data: dict) -> dict:
+    game = RandovaniaGame(data["game"])
 
-    world_asset_id_to_name = {
-        world["asset_id"]: world["name"]
-        for world in data["worlds"]
-    }
-    area_asset_id_to_name = {
-        world["name"]: {
-            area["asset_id"]: area["name"]
-            for area in world["areas"]
-        }
-        for world in data["worlds"]
-    }
-
-    start_loc = data["starting_location"]
-    data["starting_location"] = {
-        "world_name": world_asset_id_to_name[start_loc["world_asset_id"]],
-        "area_name": area_asset_id_to_name[world_asset_id_to_name[start_loc["world_asset_id"]]][
-            start_loc["area_asset_id"]
-        ],
-    }
+    data["starting_location"] = migration_data.convert_area_loc_id_to_name(game, data["starting_location"])
 
     for world in data["worlds"]:
         world_name = world["name"]
@@ -57,12 +43,15 @@ def _migrate_v1(data: dict) -> dict:
                     node["extra"] = {}
 
                 if node["node_type"] == "dock":
-                    node["connected_area_name"] = area_asset_id_to_name[world_name][node.pop("connected_area_asset_id")]
+                    node["connected_area_name"] = migration_data.get_area_name_from_id(
+                        game, world_name, node.pop("connected_area_asset_id"))
 
                 elif node["node_type"] == "teleporter":
-                    dest_world_name = world_asset_id_to_name[node.pop("destination_world_asset_id")]
-                    dest_area_name = area_asset_id_to_name[dest_world_name][node.pop("destination_area_asset_id")]
-                    node["destination"] = {"world_name": dest_world_name, "area_name": dest_area_name}
+                    dest = {
+                        "world_asset_id": node.pop("destination_world_asset_id"),
+                        "area_asset_id": node.pop("destination_area_asset_id"),
+                    }
+                    node["destination"] = migration_data.convert_area_loc_id_to_name(game, dest)
                     node["extra"]["scan_asset_id"] = node.pop("scan_asset_id")
                     node["extra"]["teleporter_instance_id"] = node.pop("teleporter_instance_id")
 

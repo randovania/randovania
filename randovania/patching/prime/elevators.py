@@ -17,10 +17,11 @@ CUSTOM_NAMES_FOR_ELEVATORS = {
 
 def get_elevator_name_or_default(
         game: RandovaniaGame,
-        asset_id: int,
+        world_name: str,
+        area_name: str,
         default: str
 ) -> str:
-    return CUSTOM_NAMES_FOR_ELEVATORS.get(game, {}).get(asset_id, default)
+    return CUSTOM_NAMES_FOR_ELEVATORS.get(game, {}).get((world_name, area_name), default)
 
 
 def get_elevator_or_area_name(
@@ -44,7 +45,7 @@ def get_short_elevator_or_area_name(
 
 
 def _get_elevator_or_area_name(
-        custom_names_to_use: dict,
+        custom_names_to_use: dict[RandovaniaGame, dict[tuple[str, str], str]],
         game: RandovaniaGame,
         world_list: WorldList,
         area_location: AreaIdentifier,
@@ -52,8 +53,9 @@ def _get_elevator_or_area_name(
 ) -> str:
     custom_names_by_game = custom_names_to_use.get(game, {})
 
-    if area_location.area_asset_id in custom_names_by_game:
-        return custom_names_by_game[area_location.area_asset_id]
+    area_loc = area_location.world_name, area_location.area_name
+    if area_loc in custom_names_by_game:
+        return custom_names_by_game[area_loc]
 
     else:
         area = world_list.area_by_area_location(area_location)
