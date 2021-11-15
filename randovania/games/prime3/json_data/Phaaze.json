@@ -1,19 +1,17 @@
 {
     "name": "Phaaze",
-    "dark_name": null,
-    "asset_id": 5406397194789083955,
-    "extra": {},
-    "areas": [
-        {
-            "name": "!!00_phaaze_warpin",
-            "in_dark_aether": null,
-            "asset_id": 10309111007900712142,
-            "default_node_index": null,
+    "extra": {
+        "asset_id": 5406397194789083955
+    },
+    "areas": {
+        "!!00_phaaze_warpin": {
+            "default_node": null,
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site",
+            "extra": {
+                "asset_id": 10309111007900712142
+            },
+            "nodes": {
+                "Door to Landing Site": {
                     "heal": false,
                     "coordinates": {
                         "x": 87.5,
@@ -23,24 +21,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 9591507280945991101,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Landing Site",
-            "in_dark_aether": null,
-            "asset_id": 9591507280945991101,
-            "default_node_index": 2,
+        "Landing Site": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Entry Canyon",
+            "extra": {
+                "asset_id": 9591507280945991101
+            },
+            "nodes": {
+                "Door to Entry Canyon": {
                     "heal": false,
                     "coordinates": {
                         "x": 34.0,
@@ -50,7 +46,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 16693130533792098749,
+                    "connected_area_name": "Entry Canyon",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -64,8 +60,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to !!00_phaaze_warpin",
+                "Dock to !!00_phaaze_warpin": {
                     "heal": false,
                     "coordinates": {
                         "x": -82.5,
@@ -75,14 +70,13 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 10309111007900712142,
+                    "connected_area_name": "!!00_phaaze_warpin",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -106,18 +100,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Cavern Alpha",
-            "in_dark_aether": null,
-            "asset_id": 2524100126595327996,
-            "default_node_index": 1,
+        "Cavern Alpha": {
+            "default_node": "Door to Entry Canyon",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Cavern Beta Access",
+            "extra": {
+                "asset_id": 2524100126595327996
+            },
+            "nodes": {
+                "Door to Cavern Beta Access": {
                     "heal": false,
                     "coordinates": {
                         "x": -30.0,
@@ -127,7 +119,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 11059908001917152736,
+                    "connected_area_name": "Cavern Beta Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -143,8 +135,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Entry Canyon",
+                "Door to Entry Canyon": {
                     "heal": false,
                     "coordinates": {
                         "x": 45.0,
@@ -154,7 +145,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 16693130533792098749,
+                    "connected_area_name": "Entry Canyon",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -257,18 +248,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Cavern",
-            "in_dark_aether": null,
-            "asset_id": 13173135756493471533,
-            "default_node_index": 1,
+        "Metroid Cavern": {
+            "default_node": "Door to Drop Shaft",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hatcher Shaft",
+            "extra": {
+                "asset_id": 13173135756493471533
+            },
+            "nodes": {
+                "Door to Hatcher Shaft": {
                     "heal": false,
                     "coordinates": {
                         "x": -99.99999237060547,
@@ -278,14 +267,13 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4527454355992305941,
+                    "connected_area_name": "Hatcher Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Drop Shaft",
+                "Door to Drop Shaft": {
                     "heal": false,
                     "coordinates": {
                         "x": -29.999993324279785,
@@ -295,7 +283,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 7243778186809121670,
+                    "connected_area_name": "Drop Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -309,18 +297,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hatcher Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 6465463941126605608,
-            "default_node_index": 0,
+        "Hatcher Tunnel": {
+            "default_node": "Door to Hatcher Shaft",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hatcher Shaft",
+            "extra": {
+                "asset_id": 6465463941126605608
+            },
+            "nodes": {
+                "Door to Hatcher Shaft": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -330,7 +316,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4527454355992305941,
+                    "connected_area_name": "Hatcher Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -344,8 +330,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Genesis Chamber",
+                "Door to Genesis Chamber": {
                     "heal": false,
                     "coordinates": {
                         "x": 9.000004768371582,
@@ -355,24 +340,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 5543768504991159971,
+                    "connected_area_name": "Genesis Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Genesis Chamber",
-            "in_dark_aether": null,
-            "asset_id": 5543768504991159971,
-            "default_node_index": 1,
+        "Genesis Chamber": {
+            "default_node": "Door to Hatcher Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Sanctum (Dark Samus)",
+            "extra": {
+                "asset_id": 5543768504991159971
+            },
+            "nodes": {
+                "Dock to Sanctum (Dark Samus)": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -382,14 +365,13 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 13423174227721576677,
+                    "connected_area_name": "Sanctum (Dark Samus)",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Hatcher Tunnel",
+                "Door to Hatcher Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -65.46446990966797,
@@ -399,7 +381,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 6465463941126605608,
+                    "connected_area_name": "Hatcher Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -461,18 +443,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Cavern Beta Access",
-            "in_dark_aether": null,
-            "asset_id": 11059908001917152736,
-            "default_node_index": 0,
+        "Cavern Beta Access": {
+            "default_node": "Door to Cavern Alpha",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Cavern Alpha",
+            "extra": {
+                "asset_id": 11059908001917152736
+            },
+            "nodes": {
+                "Door to Cavern Alpha": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -482,7 +462,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2524100126595327996,
+                    "connected_area_name": "Cavern Alpha",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -515,8 +495,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Cavern Beta",
+                "Door to Cavern Beta": {
                     "heal": false,
                     "coordinates": {
                         "x": -13.01439094543457,
@@ -526,24 +505,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 11291149967944563303,
+                    "connected_area_name": "Cavern Beta",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Drop Shaft",
-            "in_dark_aether": null,
-            "asset_id": 7243778186809121670,
-            "default_node_index": 0,
+        "Drop Shaft": {
+            "default_node": "Door to Cavern Beta",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Cavern Beta",
+            "extra": {
+                "asset_id": 7243778186809121670
+            },
+            "nodes": {
+                "Door to Cavern Beta": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -553,7 +530,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 11291149967944563303,
+                    "connected_area_name": "Cavern Beta",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -586,8 +563,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Metroid Cavern",
+                "Door to Metroid Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -597,24 +573,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 13173135756493471533,
+                    "connected_area_name": "Metroid Cavern",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Hatcher Shaft",
-            "in_dark_aether": null,
-            "asset_id": 4527454355992305941,
-            "default_node_index": 0,
+        "Hatcher Shaft": {
+            "default_node": "Door to Metroid Cavern",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Metroid Cavern",
+            "extra": {
+                "asset_id": 4527454355992305941
+            },
+            "nodes": {
+                "Door to Metroid Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -624,7 +598,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 13173135756493471533,
+                    "connected_area_name": "Metroid Cavern",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -638,8 +612,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hatcher Tunnel",
+                "Door to Hatcher Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -1.0013580322265625e-05,
@@ -649,24 +622,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 6465463941126605608,
+                    "connected_area_name": "Hatcher Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Sanctum (Dark Samus)",
-            "in_dark_aether": null,
-            "asset_id": 13423174227721576677,
-            "default_node_index": 0,
+        "Sanctum (Dark Samus)": {
+            "default_node": "Dock to Genesis Chamber",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Genesis Chamber",
+            "extra": {
+                "asset_id": 13423174227721576677
+            },
+            "nodes": {
+                "Dock to Genesis Chamber": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -676,7 +647,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 5543768504991159971,
+                    "connected_area_name": "Genesis Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -690,8 +661,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Sanctum (Aurora Unit 313)",
+                "Dock to Sanctum (Aurora Unit 313)": {
                     "heal": false,
                     "coordinates": {
                         "x": -355.0,
@@ -701,14 +671,13 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 17351725518036616530,
+                    "connected_area_name": "Sanctum (Aurora Unit 313)",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Event - Dark Samus",
+                "Event - Dark Samus": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -724,18 +693,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Entry Canyon",
-            "in_dark_aether": null,
-            "asset_id": 16693130533792098749,
-            "default_node_index": 0,
+        "Entry Canyon": {
+            "default_node": "Door to Landing Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site",
+            "extra": {
+                "asset_id": 16693130533792098749
+            },
+            "nodes": {
+                "Door to Landing Site": {
                     "heal": false,
                     "coordinates": {
                         "x": -34.678306579589844,
@@ -745,7 +712,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 9591507280945991101,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -773,8 +740,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Cavern Alpha",
+                "Door to Cavern Alpha": {
                     "heal": false,
                     "coordinates": {
                         "x": 4.336080014705658,
@@ -784,24 +750,22 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2524100126595327996,
+                    "connected_area_name": "Cavern Alpha",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Cavern Beta",
-            "in_dark_aether": null,
-            "asset_id": 11291149967944563303,
-            "default_node_index": 0,
+        "Cavern Beta": {
+            "default_node": "Door to Cavern Beta Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Cavern Beta Access",
+            "extra": {
+                "asset_id": 11291149967944563303
+            },
+            "nodes": {
+                "Door to Cavern Beta Access": {
                     "heal": false,
                     "coordinates": {
                         "x": -15.000000476837158,
@@ -811,7 +775,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 11059908001917152736,
+                    "connected_area_name": "Cavern Beta Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -911,8 +875,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Drop Shaft",
+                "Door to Drop Shaft": {
                     "heal": false,
                     "coordinates": {
                         "x": -9.5367431640625e-07,
@@ -922,7 +885,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 7243778186809121670,
+                    "connected_area_name": "Drop Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -959,18 +922,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sanctum (Aurora Unit 313)",
-            "in_dark_aether": null,
-            "asset_id": 17351725518036616530,
-            "default_node_index": 0,
+        "Sanctum (Aurora Unit 313)": {
+            "default_node": "Dock to Sanctum (Dark Samus)",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Sanctum (Dark Samus)",
+            "extra": {
+                "asset_id": 17351725518036616530
+            },
+            "nodes": {
+                "Dock to Sanctum (Dark Samus)": {
                     "heal": false,
                     "coordinates": {
                         "x": 355.0,
@@ -980,7 +941,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 13423174227721576677,
+                    "connected_area_name": "Sanctum (Dark Samus)",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -996,8 +957,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Aurora Unit 313",
+                "Event - Aurora Unit 313": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1013,21 +973,23 @@
                         }
                     }
                 },
-                {
-                    "name": "Leave Phaaze",
+                "Leave Phaaze": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 13921744762140409337,
-                    "destination_area_asset_id": 15622764306970326849,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "G.F.S. Valhalla",
+                        "area_name": "Docking Bay 5"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": false,
                     "connections": {}
                 }
-            ]
+            }
         }
-    ]
+    }
 }
