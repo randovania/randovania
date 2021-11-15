@@ -1,19 +1,17 @@
 {
     "name": "Bryyo - Ice",
-    "dark_name": null,
-    "asset_id": 12742502173584078952,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Warp Site Bravo",
-            "in_dark_aether": null,
-            "asset_id": 9245834436705857859,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 12742502173584078952
+    },
+    "areas": {
+        "Warp Site Bravo": {
+            "default_node": "Teleport to Bryyo Fire - Warp Site Alpha",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Imperial Caverns",
+            "extra": {
+                "asset_id": 9245834436705857859
+            },
+            "nodes": {
+                "Door to Imperial Caverns": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -23,7 +21,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 10980580650394598183,
+                    "connected_area_name": "Imperial Caverns",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -37,16 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Bryyo Fire - Warp Site Alpha",
+                "Teleport to Bryyo Fire - Warp Site Alpha": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 131452
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 11216541621678862008,
-                    "destination_area_asset_id": 4474147916478522354,
-                    "teleporter_instance_id": 131452,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "Bryyo - Fire",
+                        "area_name": "Warp Site Alpha"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -59,18 +59,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hall of Remembrance",
-            "in_dark_aether": null,
-            "asset_id": 6915612318130423578,
-            "default_node_index": 4,
+        "Hall of Remembrance": {
+            "default_node": "Pickup (Screw Attack)",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Imperial Crypt (Upper)",
+            "extra": {
+                "asset_id": 6915612318130423578
+            },
+            "nodes": {
+                "Door to Imperial Crypt (Upper)": {
                     "heal": false,
                     "coordinates": {
                         "x": -81.5,
@@ -80,7 +78,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 17976174099400013428,
+                    "connected_area_name": "Imperial Crypt",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -94,8 +92,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Imperial Crypt (Lower)",
+                "Door to Imperial Crypt (Lower)": {
                     "heal": false,
                     "coordinates": {
                         "x": -81.5,
@@ -105,7 +102,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 17976174099400013428,
+                    "connected_area_name": "Imperial Crypt",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -157,8 +154,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Tower (Lower)",
+                "Door to Tower (Lower)": {
                     "heal": false,
                     "coordinates": {
                         "x": 81.5,
@@ -168,7 +164,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 10429003070780375168,
+                    "connected_area_name": "Tower",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -220,8 +216,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Tower (Upper)",
+                "Door to Tower (Upper)": {
                     "heal": false,
                     "coordinates": {
                         "x": 81.5,
@@ -231,7 +226,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 10429003070780375168,
+                    "connected_area_name": "Tower",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -249,8 +244,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Screw Attack)",
+                "Pickup (Screw Attack)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -268,8 +262,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile Expansion)",
+                "Pickup (Ship Missile Expansion)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -287,8 +280,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Unlock Door",
+                "Event - Unlock Door": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -304,8 +296,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Locked Door Ledge",
+                "Locked Door Ledge": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -342,8 +333,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Hall of Remembrance Item",
+                "Event - Hall of Remembrance Item": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -359,18 +349,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Imperial Crypt",
-            "in_dark_aether": null,
-            "asset_id": 17976174099400013428,
-            "default_node_index": 1,
+        "Imperial Crypt": {
+            "default_node": "Door to Imperial Caverns",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hall of Remembrance (Upper)",
+            "extra": {
+                "asset_id": 17976174099400013428
+            },
+            "nodes": {
+                "Door to Hall of Remembrance (Upper)": {
                     "heal": false,
                     "coordinates": {
                         "x": 55.0,
@@ -380,7 +368,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 6915612318130423578,
+                    "connected_area_name": "Hall of Remembrance",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -408,8 +396,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Imperial Caverns",
+                "Door to Imperial Caverns": {
                     "heal": false,
                     "coordinates": {
                         "x": -15.0,
@@ -419,7 +406,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 10980580650394598183,
+                    "connected_area_name": "Imperial Caverns",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -520,8 +507,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of Remembrance (Lower)",
+                "Door to Hall of Remembrance (Lower)": {
                     "heal": false,
                     "coordinates": {
                         "x": 55.0,
@@ -531,7 +517,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 6915612318130423578,
+                    "connected_area_name": "Hall of Remembrance",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -564,8 +550,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ice Floor",
+                "Event - Ice Floor": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -588,18 +573,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tower",
-            "in_dark_aether": null,
-            "asset_id": 10429003070780375168,
-            "default_node_index": 1,
+        "Tower": {
+            "default_node": "Door to Hall of Remembrance (Lower)",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hall of Remembrance (Upper)",
+            "extra": {
+                "asset_id": 10429003070780375168
+            },
+            "nodes": {
+                "Door to Hall of Remembrance (Upper)": {
                     "heal": false,
                     "coordinates": {
                         "x": -30.0,
@@ -609,7 +592,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 6915612318130423578,
+                    "connected_area_name": "Hall of Remembrance",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -676,8 +659,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of Remembrance (Lower)",
+                "Door to Hall of Remembrance (Lower)": {
                     "heal": false,
                     "coordinates": {
                         "x": -30.0,
@@ -687,7 +669,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 6915612318130423578,
+                    "connected_area_name": "Hall of Remembrance",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -742,8 +724,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -760,18 +741,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Imperial Caverns",
-            "in_dark_aether": null,
-            "asset_id": 10980580650394598183,
-            "default_node_index": 1,
+        "Imperial Caverns": {
+            "default_node": "Door to Warp Site Bravo",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Imperial Crypt",
+            "extra": {
+                "asset_id": 10980580650394598183
+            },
+            "nodes": {
+                "Door to Imperial Crypt": {
                     "heal": false,
                     "coordinates": {
                         "x": 14.0,
@@ -781,7 +760,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 17976174099400013428,
+                    "connected_area_name": "Imperial Crypt",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -809,8 +788,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Warp Site Bravo",
+                "Door to Warp Site Bravo": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -820,7 +798,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 9245834436705857859,
+                    "connected_area_name": "Warp Site Bravo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -883,8 +861,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ice Floors",
+                "Event - Ice Floors": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -900,7 +877,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

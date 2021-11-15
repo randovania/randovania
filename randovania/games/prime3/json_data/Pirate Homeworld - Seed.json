@@ -1,19 +1,17 @@
 {
     "name": "Pirate Homeworld - Seed",
-    "dark_name": null,
-    "asset_id": 16039522250714156185,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Landing Site Delta",
-            "in_dark_aether": null,
-            "asset_id": 9593588872354674734,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 16039522250714156185
+    },
+    "areas": {
+        "Landing Site Delta": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Core Access",
+            "extra": {
+                "asset_id": 9593588872354674734
+            },
+            "nodes": {
+                "Door to Core Access": {
                     "heal": false,
                     "coordinates": {
                         "x": -1.4750239849090576,
@@ -23,7 +21,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 15118031102725025016,
+                    "connected_area_name": "Core Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -37,8 +35,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -142,18 +139,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Core Access",
-            "in_dark_aether": null,
-            "asset_id": 15118031102725025016,
-            "default_node_index": 0,
+        "Core Access": {
+            "default_node": "Door to Landing Site Delta",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site Delta",
+            "extra": {
+                "asset_id": 15118031102725025016
+            },
+            "nodes": {
+                "Door to Landing Site Delta": {
                     "heal": false,
                     "coordinates": {
                         "x": 8.0,
@@ -163,7 +158,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 9593588872354674734,
+                    "connected_area_name": "Landing Site Delta",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -174,8 +169,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Pirate Homeworld Leviathan Core",
+                "Door to Pirate Homeworld Leviathan Core": {
                     "heal": false,
                     "coordinates": {
                         "x": -19.086795806884766,
@@ -185,7 +179,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4585599704880367469,
+                    "connected_area_name": "Pirate Homeworld Leviathan Core",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -196,18 +190,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Pirate Homeworld Leviathan Core",
-            "in_dark_aether": null,
-            "asset_id": 4585599704880367469,
-            "default_node_index": 0,
+        "Pirate Homeworld Leviathan Core": {
+            "default_node": "Door to Core Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Core Access",
+            "extra": {
+                "asset_id": 4585599704880367469
+            },
+            "nodes": {
+                "Door to Core Access": {
                     "heal": false,
                     "coordinates": {
                         "x": -0.062248945236206055,
@@ -217,7 +209,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 15118031102725025016,
+                    "connected_area_name": "Core Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -240,26 +232,27 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleporter to Pirate Homeworld",
+                "Teleporter to Pirate Homeworld": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 124.49,
                         "z": 0.0
                     },
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 4037904934597342930,
-                    "destination_area_asset_id": 4408585131827753141,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "Pirate Homeworld - Command",
+                        "area_name": "Landing Site Bravo"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": false,
                     "connections": {}
                 },
-                {
-                    "name": "Pickup (Hyper Grapple)",
+                "Pickup (Hyper Grapple)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -290,8 +283,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Omega Ridley",
+                "Event - Omega Ridley": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -307,7 +299,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

@@ -1,19 +1,17 @@
 {
     "name": "Pirate Homeworld - Mines",
-    "dark_name": null,
-    "asset_id": 15932695450594384879,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Transit Station 4-B\nLeads to Command Center",
-            "in_dark_aether": null,
-            "asset_id": 4566937761378320542,
-            "default_node_index": 2,
+    "extra": {
+        "asset_id": 15932695450594384879
+    },
+    "areas": {
+        "Transit Station 4-B\nLeads to Command Center": {
+            "default_node": "Train to Command Center - Transit Station 4-A",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Save Station",
+            "extra": {
+                "asset_id": 4566937761378320542
+            },
+            "nodes": {
+                "Door to Save Station": {
                     "heal": false,
                     "coordinates": {
                         "x": 34.45944595336914,
@@ -23,7 +21,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 7677627888152439345,
+                    "connected_area_name": "Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -37,8 +35,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Quarry",
+                "Door to Phazon Quarry": {
                     "heal": false,
                     "coordinates": {
                         "x": 56.09955978393555,
@@ -48,7 +45,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_area_name": "Phazon Quarry",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -71,16 +68,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Train to Command Center - Transit Station 4-A",
+                "Train to Command Center - Transit Station 4-A": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 10585155416642007825,
+                        "teleporter_instance_id": 131408
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 4037904934597342930,
-                    "destination_area_asset_id": 12520185503864049660,
-                    "teleporter_instance_id": 131408,
-                    "scan_asset_id": 10585155416642007825,
+                    "destination": {
+                        "world_name": "Pirate Homeworld - Command",
+                        "area_name": "Transit Station 4-A\nLeads to Mining Site"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -93,18 +92,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Quarry",
-            "in_dark_aether": null,
-            "asset_id": 1516173575710242674,
-            "default_node_index": 2,
+        "Phazon Quarry": {
+            "default_node": "Door to Transit Station 4-B\nLeads to Command Center",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Mine Lift",
+            "extra": {
+                "asset_id": 1516173575710242674
+            },
+            "nodes": {
+                "Door to Mine Lift": {
                     "heal": false,
                     "coordinates": {
                         "x": -2.5001459560880903,
@@ -114,7 +111,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2328629671991442460,
+                    "connected_area_name": "Mine Lift",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -128,8 +125,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Drill Shaft 2",
+                "Door to Drill Shaft 2": {
                     "heal": false,
                     "coordinates": {
                         "x": 26.1,
@@ -139,7 +135,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 7923701740032492696,
+                    "connected_area_name": "Drill Shaft 2",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -188,8 +184,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transit Station 4-B\nLeads to Command Center",
+                "Door to Transit Station 4-B\nLeads to Command Center": {
                     "heal": false,
                     "coordinates": {
                         "x": -36.09955978393555,
@@ -199,7 +194,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 4566937761378320542,
+                    "connected_area_name": "Transit Station 4-B\nLeads to Command Center",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -465,8 +460,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Cell)",
+                "Pickup (Energy Cell)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -483,8 +477,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -501,8 +494,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Drill Halfpipe",
+                "Event - Drill Halfpipe": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -518,8 +510,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Balcony Barrier",
+                "Event - Balcony Barrier": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -535,8 +526,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Drill Wall (Lower)",
+                "Event - Drill Wall (Lower)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -552,8 +542,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Drill Wall (Upper)",
+                "Event - Drill Wall (Upper)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -569,8 +558,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Pirate Fight",
+                "Event - Pirate Fight": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -586,18 +574,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Drill Shaft 2",
-            "in_dark_aether": null,
-            "asset_id": 7923701740032492696,
-            "default_node_index": 1,
+        "Drill Shaft 2": {
+            "default_node": "Door to Main Cavern",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Quarry",
+            "extra": {
+                "asset_id": 7923701740032492696
+            },
+            "nodes": {
+                "Door to Phazon Quarry": {
                     "heal": false,
                     "coordinates": {
                         "x": -50.0,
@@ -607,7 +593,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_area_name": "Phazon Quarry",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -657,8 +643,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Cavern",
+                "Door to Main Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": -7.0,
@@ -668,7 +653,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_area_name": "Main Cavern",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -688,8 +673,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Destroy Drill",
+                "Event - Destroy Drill": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -705,18 +689,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Mine Lift",
-            "in_dark_aether": null,
-            "asset_id": 2328629671991442460,
-            "default_node_index": 0,
+        "Mine Lift": {
+            "default_node": "Door to Phazon Quarry",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Quarry",
+            "extra": {
+                "asset_id": 2328629671991442460
+            },
+            "nodes": {
+                "Door to Phazon Quarry": {
                     "heal": false,
                     "coordinates": {
                         "x": -5.099707245826721,
@@ -726,7 +708,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1516173575710242674,
+                    "connected_area_name": "Phazon Quarry",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -807,8 +789,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Harvesting",
+                "Door to Phazon Harvesting": {
                     "heal": false,
                     "coordinates": {
                         "x": 12.5,
@@ -818,7 +799,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 17076000080045116679,
+                    "connected_area_name": "Phazon Harvesting",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -884,8 +865,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Open Shaft",
+                "Event - Open Shaft": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -901,18 +881,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Harvesting",
-            "in_dark_aether": null,
-            "asset_id": 17076000080045116679,
-            "default_node_index": 0,
+        "Phazon Harvesting": {
+            "default_node": "Door to Mine Lift",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Mine Lift",
+            "extra": {
+                "asset_id": 17076000080045116679
+            },
+            "nodes": {
+                "Door to Mine Lift": {
                     "heal": false,
                     "coordinates": {
                         "x": -35.0,
@@ -922,7 +900,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2328629671991442460,
+                    "connected_area_name": "Mine Lift",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1110,8 +1088,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Drill Shaft 1",
+                "Door to Drill Shaft 1": {
                     "heal": false,
                     "coordinates": {
                         "x": 35.0,
@@ -1121,7 +1098,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 15941114407882664050,
+                    "connected_area_name": "Drill Shaft 1",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1203,8 +1180,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Walkway Destroyed",
+                "Event - Walkway Destroyed": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1220,18 +1196,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Drill Shaft 1",
-            "in_dark_aether": null,
-            "asset_id": 15941114407882664050,
-            "default_node_index": 0,
+        "Drill Shaft 1": {
+            "default_node": "Door to Phazon Harvesting",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Harvesting",
+            "extra": {
+                "asset_id": 15941114407882664050
+            },
+            "nodes": {
+                "Door to Phazon Harvesting": {
                     "heal": false,
                     "coordinates": {
                         "x": 57.0,
@@ -1241,7 +1215,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 17076000080045116679,
+                    "connected_area_name": "Phazon Harvesting",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1309,8 +1283,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Cavern",
+                "Door to Main Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": 57.09955978393555,
@@ -1320,7 +1293,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_area_name": "Main Cavern",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1334,18 +1307,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Landing Site Charlie",
-            "in_dark_aether": null,
-            "asset_id": 65874966404189819,
-            "default_node_index": 2,
+        "Landing Site Charlie": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Mine Entry",
+            "extra": {
+                "asset_id": 65874966404189819
+            },
+            "nodes": {
+                "Door to Phazon Mine Entry": {
                     "heal": false,
                     "coordinates": {
                         "x": -5.849468231201172,
@@ -1355,7 +1326,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 6948986767748104139,
+                    "connected_area_name": "Phazon Mine Entry",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1479,8 +1450,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Clean Landing Site",
+                "Event - Clean Landing Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1496,8 +1466,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -1521,18 +1490,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Cavern",
-            "in_dark_aether": null,
-            "asset_id": 3558406334082684652,
-            "default_node_index": 0,
+        "Main Cavern": {
+            "default_node": "Door to Drill Shaft 1",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Drill Shaft 1",
+            "extra": {
+                "asset_id": 3558406334082684652
+            },
+            "nodes": {
+                "Door to Drill Shaft 1": {
                     "heal": false,
                     "coordinates": {
                         "x": -20.0,
@@ -1542,7 +1509,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 15941114407882664050,
+                    "connected_area_name": "Drill Shaft 1",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1556,8 +1523,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Drill Shaft 2",
+                "Door to Drill Shaft 2": {
                     "heal": false,
                     "coordinates": {
                         "x": -36.09955978393555,
@@ -1567,7 +1533,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 7923701740032492696,
+                    "connected_area_name": "Drill Shaft 2",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1583,8 +1549,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Mine Entry",
+                "Door to Phazon Mine Entry": {
                     "heal": false,
                     "coordinates": {
                         "x": 25.0,
@@ -1594,7 +1559,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 6948986767748104139,
+                    "connected_area_name": "Phazon Mine Entry",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -1694,8 +1659,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Nova Beam)",
+                "Pickup (Nova Beam)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1709,8 +1673,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phazite Wall",
+                "Event - Phazite Wall": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1726,18 +1689,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station",
-            "in_dark_aether": null,
-            "asset_id": 7677627888152439345,
-            "default_node_index": 1,
+        "Save Station": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transit Station 4-B\nLeads to Command Center",
+            "extra": {
+                "asset_id": 7677627888152439345
+            },
+            "nodes": {
+                "Door to Transit Station 4-B\nLeads to Command Center": {
                     "heal": false,
                     "coordinates": {
                         "x": -10.540555953979492,
@@ -1747,7 +1708,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4566937761378320542,
+                    "connected_area_name": "Transit Station 4-B\nLeads to Command Center",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1761,8 +1722,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -1777,18 +1737,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Mine Entry",
-            "in_dark_aether": null,
-            "asset_id": 6948986767748104139,
-            "default_node_index": 1,
+        "Phazon Mine Entry": {
+            "default_node": "Door to Main Cavern",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site Charlie",
+            "extra": {
+                "asset_id": 6948986767748104139
+            },
+            "nodes": {
+                "Door to Landing Site Charlie": {
                     "heal": false,
                     "coordinates": {
                         "x": 59.13724899291992,
@@ -1798,7 +1756,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 65874966404189819,
+                    "connected_area_name": "Landing Site Charlie",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1812,8 +1770,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Cavern",
+                "Door to Main Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": -5.53,
@@ -1823,7 +1780,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3558406334082684652,
+                    "connected_area_name": "Main Cavern",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -1880,8 +1837,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1898,7 +1854,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

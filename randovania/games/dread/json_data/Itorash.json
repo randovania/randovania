@@ -1,14 +1,11 @@
 {
     "name": "Itorash",
-    "dark_name": null,
-    "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
-    "extra": {},
-    "areas": [
-        {
-            "name": "Save Station",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_000",
-            "default_node_index": null,
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld"
+    },
+    "areas": {
+        "Save Station": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -34,11 +31,11 @@
                         3500.0,
                         -4600.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_000"
             },
-            "nodes": [
-                {
-                    "name": "Door to Elevator to Raven Beak",
+            "nodes": {
+                "Door to Elevator to Raven Beak": {
                     "heal": false,
                     "coordinates": {
                         "x": 1450.0,
@@ -54,7 +51,7 @@
                     },
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_001",
+                    "connected_area_name": "Main Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -68,8 +65,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Room",
+                "Door to Main Room": {
                     "heal": false,
                     "coordinates": {
                         "x": 3450.0,
@@ -85,7 +81,7 @@
                     },
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": "collision_camera_002",
+                    "connected_area_name": "Elevator to Raven Beak",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -99,13 +95,10 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Room",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_001",
-            "default_node_index": null,
+        "Main Room": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -131,11 +124,11 @@
                         1500.0,
                         -4800.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_001"
             },
-            "nodes": [
-                {
-                    "name": "Elevator to Hanubia",
+            "nodes": {
+                "Elevator to Hanubia": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -199,8 +192,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station",
+                "Door to Save Station": {
                     "heal": false,
                     "coordinates": {
                         "x": 1450.0,
@@ -216,7 +208,7 @@
                     },
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_000",
+                    "connected_area_name": "Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -286,8 +278,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Total Refill Station",
+                "Total Refill Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -302,13 +293,10 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator to Raven Beak",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_002",
-            "default_node_index": null,
+        "Elevator to Raven Beak": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -334,11 +322,11 @@
                         6700.0,
                         -4600.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_002"
             },
-            "nodes": [
-                {
-                    "name": "Door to Save Station",
+            "nodes": {
+                "Door to Save Station": {
                     "heal": false,
                     "coordinates": {
                         "x": 3450.0,
@@ -354,7 +342,7 @@
                     },
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": "collision_camera_000",
+                    "connected_area_name": "Save Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -443,16 +431,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Raven Beak Arena",
+                "Elevator to Raven Beak Arena": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
-                    "destination_area_asset_id": "collision_camera_004",
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Raven Beak Arena"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -465,13 +455,10 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator Cutscene",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_003",
-            "default_node_index": null,
+        "Elevator Cutscene": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -497,24 +484,21 @@
                         6700.0,
                         -2500.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_003"
             },
-            "nodes": [
-                {
-                    "name": "Placeholder",
+            "nodes": {
+                "Placeholder": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "generic",
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Raven Beak Arena",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_004",
-            "default_node_index": null,
+        "Raven Beak Arena": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -540,11 +524,11 @@
                         7100.0,
                         1800.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_004"
             },
-            "nodes": [
-                {
-                    "name": "Before Fight",
+            "nodes": {
+                "Before Fight": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -573,8 +557,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Boss - Raven Beak",
+                "Boss - Raven Beak": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -589,21 +572,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Escape Sequence",
+                "Escape Sequence": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "generic",
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "collision_camera_005 (I)",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_005",
-            "default_node_index": null,
+        "collision_camera_005 (I)": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -629,24 +608,21 @@
                         2400.0,
                         1800.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_005"
             },
-            "nodes": [
-                {
-                    "name": "Placeholder",
+            "nodes": {
+                "Placeholder": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "generic",
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "collision_camera_900 (I)",
-            "in_dark_aether": null,
-            "asset_id": "collision_camera_900",
-            "default_node_index": null,
+        "collision_camera_900 (I)": {
+            "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -672,18 +648,18 @@
                         -13000.0,
                         6000.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_900"
             },
-            "nodes": [
-                {
-                    "name": "Placeholder",
+            "nodes": {
+                "Placeholder": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "generic",
                     "connections": {}
                 }
-            ]
+            }
         }
-    ]
+    }
 }

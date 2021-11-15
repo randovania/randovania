@@ -1,19 +1,19 @@
 {
     "name": "Temple Grounds",
-    "dark_name": "Sky Temple Grounds",
-    "asset_id": 1006255871,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Landing Site",
-            "in_dark_aether": false,
-            "asset_id": 1655756413,
-            "default_node_index": 0,
+    "extra": {
+        "asset_id": 1006255871,
+        "dark_name": "Sky Temple Grounds"
+    },
+    "areas": {
+        "Landing Site": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Save Station",
+            "extra": {
+                "asset_id": 1655756413,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Save Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -271,14 +271,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Service Access",
+                "Door to Service Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2679590972,
+                    "connected_area_name": "Service Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -292,14 +291,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Access Tunnel",
+                "Door to Hive Access Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2970881060,
+                    "connected_area_name": "Hive Access Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -378,8 +376,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Landing Site Webs",
+                "Event - Landing Site Webs": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -402,8 +399,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Keybearer Corpse (M-Dhe)",
+                "Keybearer Corpse (M-Dhe)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -421,24 +417,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Service Access",
-            "in_dark_aether": false,
-            "asset_id": 2679590972,
-            "default_node_index": 0,
+        "Service Access": {
+            "default_node": "Door to Landing Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site",
+            "extra": {
+                "asset_id": 2679590972,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Landing Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1655756413,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -512,14 +507,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Path of Honor",
+                "Door to Path of Honor": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2068656603,
+                    "connected_area_name": "Path of Honor",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -533,14 +527,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Meeting Grounds",
+                "Morph Ball Door to Meeting Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 4,
-                    "connected_area_asset_id": 2606692981,
+                    "connected_area_name": "Meeting Grounds",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -791,14 +784,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Path of Honor",
+                "Morph Ball Door to Path of Honor": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 2068656603,
+                    "connected_area_name": "Path of Honor",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -968,14 +960,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Meeting Grounds",
+                "Door to Meeting Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2606692981,
+                    "connected_area_name": "Meeting Grounds",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -1042,24 +1033,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Access Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 2970881060,
-            "default_node_index": 0,
+        "Hive Access Tunnel": {
+            "default_node": "Door to Landing Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Landing Site",
+            "extra": {
+                "asset_id": 2970881060,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Landing Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1655756413,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1080,14 +1070,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Transport Area",
+                "Door to Hive Transport Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2485094202,
+                    "connected_area_name": "Hive Transport Area",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1101,21 +1090,19 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Hive Chamber A",
+                "Dock to Hive Chamber A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 1353937573,
+                    "connected_area_name": "Hive Chamber A",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1138,24 +1125,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Path of Honor",
-            "in_dark_aether": false,
-            "asset_id": 2068656603,
-            "default_node_index": 1,
+        "Path of Honor": {
+            "default_node": "Door to Service Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Morph Ball Door to Hall of Honored Dead",
+            "extra": {
+                "asset_id": 2068656603,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Morph Ball Door to Hall of Honored Dead": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3098756660,
+                    "connected_area_name": "Hall of Honored Dead",
                     "connected_dock_index": 0,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -1171,14 +1157,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Service Access",
+                "Door to Service Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2679590972,
+                    "connected_area_name": "Service Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1237,14 +1222,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of Honored Dead",
+                "Door to Hall of Honored Dead": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 3098756660,
+                    "connected_area_name": "Hall of Honored Dead",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 12,
@@ -1258,14 +1242,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Service Access",
+                "Morph Ball Door to Service Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2679590972,
+                    "connected_area_name": "Service Access",
                     "connected_dock_index": 3,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -1281,24 +1264,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Meeting Grounds",
-            "in_dark_aether": false,
-            "asset_id": 2606692981,
-            "default_node_index": 2,
+        "Meeting Grounds": {
+            "default_node": "Door to Service Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Morph Ball Door to Service Access",
+            "extra": {
+                "asset_id": 2606692981,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Morph Ball Door to Service Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2679590972,
+                    "connected_area_name": "Service Access",
                     "connected_dock_index": 4,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -1314,14 +1296,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of Eyes",
+                "Door to Hall of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1198237772,
+                    "connected_area_name": "Hall of Eyes",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1335,14 +1316,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Service Access",
+                "Door to Service Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 2679590972,
+                    "connected_area_name": "Service Access",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -1356,14 +1336,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Transport C",
+                "Door to Temple Transport C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2918020398,
+                    "connected_area_name": "Temple Transport C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1377,8 +1356,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Bottom of Halfpipe",
+                "Bottom of Halfpipe": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1555,8 +1533,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1579,8 +1556,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Lore Scan",
+                "Lore Scan": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1598,24 +1574,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Transport Area",
-            "in_dark_aether": false,
-            "asset_id": 2485094202,
-            "default_node_index": 2,
+        "Hive Transport Area": {
+            "default_node": "Door to Hive Chamber C",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Industrial Site",
+            "extra": {
+                "asset_id": 2485094202,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Industrial Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1655474884,
+                    "connected_area_name": "Industrial Site",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1629,14 +1604,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Access Tunnel",
+                "Door to Hive Access Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2970881060,
+                    "connected_area_name": "Hive Access Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1650,14 +1624,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Chamber C",
+                "Door to Hive Chamber C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4219746340,
+                    "connected_area_name": "Hive Chamber C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1673,8 +1646,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Top of Elevator",
+                "Top of Elevator": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1705,8 +1677,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1729,24 +1700,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Chamber A",
-            "in_dark_aether": false,
-            "asset_id": 1353937573,
-            "default_node_index": 0,
+        "Hive Chamber A": {
+            "default_node": "Dock to Hive Access Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hive Access Tunnel",
+            "extra": {
+                "asset_id": 1353937573,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Dock to Hive Access Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2970881060,
+                    "connected_area_name": "Hive Access Tunnel",
                     "connected_dock_index": 2,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1780,14 +1750,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Tunnel",
+                "Door to Hive Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 360901706,
+                    "connected_area_name": "Hive Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1820,8 +1789,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1847,8 +1815,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Hive Chamber A Gates",
+                "Event - Hive Chamber A Gates": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1873,24 +1840,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hall of Honored Dead",
-            "in_dark_aether": false,
-            "asset_id": 3098756660,
-            "default_node_index": 0,
+        "Hall of Honored Dead": {
+            "default_node": "Door to Path of Honor",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Path of Honor",
+            "extra": {
+                "asset_id": 3098756660,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Path of Honor": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2068656603,
+                    "connected_area_name": "Path of Honor",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 12,
@@ -2124,14 +2090,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Path of Honor",
+                "Morph Ball Door to Path of Honor": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2068656603,
+                    "connected_area_name": "Path of Honor",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -2145,8 +2110,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Seeker Launcher)",
+                "Pickup (Seeker Launcher)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -2163,24 +2127,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hall of Eyes",
-            "in_dark_aether": false,
-            "asset_id": 1198237772,
-            "default_node_index": 1,
+        "Hall of Eyes": {
+            "default_node": "Door to Meeting Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Path of Eyes",
+            "extra": {
+                "asset_id": 1198237772,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Path of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3997643454,
+                    "connected_area_name": "Path of Eyes",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -2194,14 +2157,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Meeting Grounds",
+                "Door to Meeting Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2606692981,
+                    "connected_area_name": "Meeting Grounds",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2260,14 +2222,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Base Access",
+                "Portal to Base Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1752128027,
+                    "connected_area_name": "Base Access",
                     "connected_dock_index": 0,
                     "dock_type": 3,
                     "dock_weakness_index": 1,
@@ -2288,24 +2249,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Transport C",
-            "in_dark_aether": false,
-            "asset_id": 2918020398,
-            "default_node_index": 1,
+        "Temple Transport C": {
+            "default_node": "Elevator to Great Temple - Temple Transport C",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Meeting Grounds",
+            "extra": {
+                "asset_id": 2918020398,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Meeting Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2606692981,
+                    "connected_area_name": "Meeting Grounds",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2321,16 +2281,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Great Temple - Temple Transport C",
+                "Elevator to Great Temple - Temple Transport C": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 1116828519,
+                        "teleporter_instance_id": 589851
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2252328306,
-                    "destination_area_asset_id": 2556480432,
-                    "teleporter_instance_id": 589851,
-                    "scan_asset_id": 1116828519,
+                    "destination": {
+                        "world_name": "Great Temple",
+                        "area_name": "Temple Transport C"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -2343,24 +2305,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Industrial Site",
-            "in_dark_aether": false,
-            "asset_id": 1655474884,
-            "default_node_index": 2,
+        "Industrial Site": {
+            "default_node": "Door to Hive Transport Area",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Agon Transport Access",
+            "extra": {
+                "asset_id": 1655474884,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Agon Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2744240555,
+                    "connected_area_name": "Agon Transport Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2381,14 +2342,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Collapsed Tunnel",
+                "Door to Collapsed Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1536348486,
+                    "connected_area_name": "Collapsed Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2411,14 +2371,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Transport Area",
+                "Door to Hive Transport Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2485094202,
+                    "connected_area_name": "Hive Transport Area",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2760,8 +2719,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Gate",
+                "Event - Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -2777,8 +2735,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Crate Terminal",
+                "Front of Crate Terminal": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3273,8 +3230,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Translator Gate",
+                "Front of Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3469,8 +3425,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3493,8 +3448,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Keybearer Corpse (J-Fme)",
+                "Keybearer Corpse (J-Fme)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3512,8 +3466,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bridge",
+                "Event - Bridge": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3529,24 +3482,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Chamber C",
-            "in_dark_aether": false,
-            "asset_id": 4219746340,
-            "default_node_index": 2,
+        "Hive Chamber C": {
+            "default_node": "Morph Ball Door to Hive Chamber B",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hive Save Station",
+            "extra": {
+                "asset_id": 4219746340,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Hive Save Station": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 341957679,
+                    "connected_area_name": "Hive Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3569,14 +3521,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Transport Area",
+                "Door to Hive Transport Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2485094202,
+                    "connected_area_name": "Hive Transport Area",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3599,14 +3550,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Hive Chamber B",
+                "Morph Ball Door to Hive Chamber B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 494654382,
+                    "connected_area_name": "Hive Chamber B",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -3631,24 +3581,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 360901706,
-            "default_node_index": 1,
+        "Hive Tunnel": {
+            "default_node": "Door to Hive Chamber A",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Command Chamber",
+            "extra": {
+                "asset_id": 360901706,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Command Chamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3592880139,
+                    "connected_area_name": "Command Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3697,14 +3646,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Chamber A",
+                "Door to Hive Chamber A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1353937573,
+                    "connected_area_name": "Hive Chamber A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3727,8 +3675,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Hive Tunnel Web",
+                "Event - Hive Tunnel Web": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3751,24 +3698,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Base Access",
-            "in_dark_aether": true,
-            "asset_id": 1752128027,
-            "default_node_index": 0,
+        "Base Access": {
+            "default_node": "Door to War Ritual Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to War Ritual Grounds",
+            "extra": {
+                "asset_id": 1752128027,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to War Ritual Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2859985581,
+                    "connected_area_name": "War Ritual Grounds",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -3908,14 +3854,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Abandoned Base",
+                "Door to Abandoned Base": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3337937090,
+                    "connected_area_name": "Abandoned Base",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3931,14 +3876,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Hall of Eyes",
+                "Portal to Hall of Eyes": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1198237772,
+                    "connected_area_name": "Hall of Eyes",
                     "connected_dock_index": 0,
                     "dock_type": 3,
                     "dock_weakness_index": 2,
@@ -3992,24 +3936,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Path of Eyes",
-            "in_dark_aether": false,
-            "asset_id": 3997643454,
-            "default_node_index": 1,
+        "Path of Eyes": {
+            "default_node": "Portal from Abandoned Base",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Windchamber Gateway",
+            "extra": {
+                "asset_id": 3997643454,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Windchamber Gateway": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1966181726,
+                    "connected_area_name": "Windchamber Gateway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -4025,14 +3968,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal from Abandoned Base",
+                "Portal from Abandoned Base": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 3337937090,
+                    "connected_area_name": "Abandoned Base",
                     "connected_dock_index": 3,
                     "dock_type": 3,
                     "dock_weakness_index": 3,
@@ -4046,14 +3988,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of Eyes",
+                "Door to Hall of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1198237772,
+                    "connected_area_name": "Hall of Eyes",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -4228,14 +4169,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Torvus Transport Access",
+                "Door to Torvus Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2822315693,
+                    "connected_area_name": "Torvus Transport Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4249,8 +4189,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Light Block to Windchamber Gateway",
+                "Event - Light Block to Windchamber Gateway": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4266,8 +4205,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Light Block In Tunnel",
+                "Event - Light Block In Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4292,8 +4230,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Translator Gate",
+                "Front of Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4477,8 +4414,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4501,8 +4437,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Lore Scan",
+                "Lore Scan": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4522,8 +4457,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Center Door",
+                "Front of Center Door": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4694,24 +4628,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Agon Transport Access",
-            "in_dark_aether": false,
-            "asset_id": 2744240555,
-            "default_node_index": 1,
+        "Agon Transport Access": {
+            "default_node": "Door to Industrial Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Agon Wastes",
+            "extra": {
+                "asset_id": 2744240555,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport to Agon Wastes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1660916974,
+                    "connected_area_name": "Transport to Agon Wastes",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4725,14 +4658,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Industrial Site",
+                "Door to Industrial Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1655474884,
+                    "connected_area_name": "Industrial Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4746,24 +4678,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Collapsed Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 1536348486,
-            "default_node_index": 1,
+        "Collapsed Tunnel": {
+            "default_node": "Door to Industrial Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Temple Assembly Site",
+            "extra": {
+                "asset_id": 1536348486,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Assembly Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1263425809,
+                    "connected_area_name": "Temple Assembly Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4779,14 +4710,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Industrial Site",
+                "Door to Industrial Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1655474884,
+                    "connected_area_name": "Industrial Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4802,24 +4732,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Chamber B",
-            "in_dark_aether": false,
-            "asset_id": 494654382,
-            "default_node_index": 1,
+        "Hive Chamber B": {
+            "default_node": "Door to Hive Storage",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Morph Ball Door to Hive Chamber C",
+            "extra": {
+                "asset_id": 494654382,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Morph Ball Door to Hive Chamber C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4219746340,
+                    "connected_area_name": "Hive Chamber C",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -4878,14 +4807,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Storage",
+                "Door to Hive Storage": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1667749239,
+                    "connected_area_name": "Hive Storage",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4901,8 +4829,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4921,18 +4848,17 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Save Station",
-            "in_dark_aether": false,
-            "asset_id": 341957679,
-            "default_node_index": 0,
+        "Hive Save Station": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Save Station",
+            "extra": {
+                "asset_id": 341957679,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Save Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -4947,14 +4873,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Chamber C",
+                "Door to Hive Chamber C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4219746340,
+                    "connected_area_name": "Hive Chamber C",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4968,24 +4893,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Command Chamber",
-            "in_dark_aether": false,
-            "asset_id": 3592880139,
-            "default_node_index": 1,
+        "Command Chamber": {
+            "default_node": "Door to Hive Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hive Storage",
+            "extra": {
+                "asset_id": 3592880139,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Hive Storage": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1667749239,
+                    "connected_area_name": "Hive Storage",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5001,14 +4925,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Tunnel",
+                "Door to Hive Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 360901706,
+                    "connected_area_name": "Hive Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5059,8 +4982,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Command Chamber Gate",
+                "Event - Command Chamber Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -5083,24 +5005,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "War Ritual Grounds",
-            "in_dark_aether": true,
-            "asset_id": 2859985581,
-            "default_node_index": 0,
+        "War Ritual Grounds": {
+            "default_node": "Door to Shrine Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Shrine Access",
+            "extra": {
+                "asset_id": 2859985581,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Shrine Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 521996255,
+                    "connected_area_name": "Shrine Access",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5150,14 +5071,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Base Access",
+                "Door to Base Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1752128027,
+                    "connected_area_name": "Base Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -5207,8 +5127,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -5256,8 +5175,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Central Safe Zone",
+                "Central Safe Zone": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -5448,24 +5366,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Abandoned Base",
-            "in_dark_aether": true,
-            "asset_id": 3337937090,
-            "default_node_index": 1,
+        "Abandoned Base": {
+            "default_node": "Door to Base Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Portal to Path of Eyes",
+            "extra": {
+                "asset_id": 3337937090,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Portal to Path of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 3997643454,
+                    "connected_area_name": "Path of Eyes",
                     "connected_dock_index": 3,
                     "dock_type": 3,
                     "dock_weakness_index": 2,
@@ -5481,14 +5398,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Base Access",
+                "Door to Base Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1752128027,
+                    "connected_area_name": "Base Access",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5837,24 +5753,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Windchamber Gateway",
-            "in_dark_aether": false,
-            "asset_id": 1966181726,
-            "default_node_index": 0,
+        "Windchamber Gateway": {
+            "default_node": "Door to Path of Eyes",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Path of Eyes",
+            "extra": {
+                "asset_id": 1966181726,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Path of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3997643454,
+                    "connected_area_name": "Path of Eyes",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -5882,14 +5797,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Grand Windchamber",
+                "Door to Grand Windchamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2909835645,
+                    "connected_area_name": "Grand Windchamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 7,
@@ -6128,8 +6042,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6279,24 +6192,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Torvus Transport Access",
-            "in_dark_aether": false,
-            "asset_id": 2822315693,
-            "default_node_index": 0,
+        "Torvus Transport Access": {
+            "default_node": "Door to Path of Eyes",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Path of Eyes",
+            "extra": {
+                "asset_id": 2822315693,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Path of Eyes": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3997643454,
+                    "connected_area_name": "Path of Eyes",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6310,14 +6222,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Torvus Bog",
+                "Door to Transport to Torvus Bog": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2889020216,
+                    "connected_area_name": "Transport to Torvus Bog",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -6331,24 +6242,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Agon Wastes",
-            "in_dark_aether": false,
-            "asset_id": 1660916974,
-            "default_node_index": 2,
+        "Transport to Agon Wastes": {
+            "default_node": "Elevator to Agon Wastes - Transport to Temple Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Agon Transport Access",
+            "extra": {
+                "asset_id": 1660916974,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Agon Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2744240555,
+                    "connected_area_name": "Agon Transport Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6380,8 +6290,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6398,16 +6307,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Agon Wastes - Transport to Temple Grounds",
+                "Elevator to Agon Wastes - Transport to Temple Grounds": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 1177189496,
+                        "teleporter_instance_id": 1572998
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 1119434212,
-                    "destination_area_asset_id": 1473133138,
-                    "teleporter_instance_id": 1572998,
-                    "scan_asset_id": 1177189496,
+                    "destination": {
+                        "world_name": "Agon Wastes",
+                        "area_name": "Transport to Temple Grounds"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -6420,8 +6331,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Lore Scan",
+                "Lore Scan": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6439,24 +6349,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Assembly Site",
-            "in_dark_aether": false,
-            "asset_id": 1263425809,
-            "default_node_index": 4,
+        "Temple Assembly Site": {
+            "default_node": "Door to Collapsed Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Storage Cavern B",
+            "extra": {
+                "asset_id": 1263425809,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Storage Cavern B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 3197418796,
+                    "connected_area_name": "Storage Cavern B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -6470,14 +6379,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Plain of Dark Worship",
+                "Portal to Plain of Dark Worship": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 4,
-                    "connected_area_asset_id": 67496868,
+                    "connected_area_name": "Plain of Dark Worship",
                     "connected_dock_index": 3,
                     "dock_type": 3,
                     "dock_weakness_index": 1,
@@ -6522,14 +6430,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Transport B",
+                "Door to Temple Transport B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 1287880522,
+                    "connected_area_name": "Temple Transport B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6543,14 +6450,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Dynamo Chamber",
+                "Door to Dynamo Chamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3032508327,
+                    "connected_area_name": "Dynamo Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6564,14 +6470,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Collapsed Tunnel",
+                "Door to Collapsed Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1536348486,
+                    "connected_area_name": "Collapsed Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6585,8 +6490,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6605,8 +6509,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Temple Assembly Site Light Block",
+                "Event - Temple Assembly Site Light Block": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6629,8 +6532,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6972,8 +6874,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6996,24 +6897,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Storage",
-            "in_dark_aether": false,
-            "asset_id": 1667749239,
-            "default_node_index": 1,
+        "Hive Storage": {
+            "default_node": "Door to Command Chamber",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Hive Chamber B",
+            "extra": {
+                "asset_id": 1667749239,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Hive Chamber B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 494654382,
+                    "connected_area_name": "Hive Chamber B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7027,14 +6927,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Command Chamber",
+                "Door to Command Chamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3592880139,
+                    "connected_area_name": "Command Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7048,24 +6947,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Shrine Access",
-            "in_dark_aether": true,
-            "asset_id": 521996255,
-            "default_node_index": 1,
+        "Shrine Access": {
+            "default_node": "Door to Defiled Shrine",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to War Ritual Grounds",
+            "extra": {
+                "asset_id": 521996255,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to War Ritual Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2859985581,
+                    "connected_area_name": "War Ritual Grounds",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7158,14 +7056,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Defiled Shrine",
+                "Door to Defiled Shrine": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 383850164,
+                    "connected_area_name": "Defiled Shrine",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -7181,14 +7078,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gateway Access",
+                "Door to Gateway Access": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2217888920,
+                    "connected_area_name": "Gateway Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 6,
@@ -7204,8 +7100,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Safe Zone",
+                "Safe Zone": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -7439,24 +7334,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Grand Windchamber",
-            "in_dark_aether": false,
-            "asset_id": 2909835645,
-            "default_node_index": 2,
+        "Grand Windchamber": {
+            "default_node": "Door to Windchamber Gateway",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Windchamber Tunnel",
+            "extra": {
+                "asset_id": 2909835645,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Windchamber Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2590194623,
+                    "connected_area_name": "Windchamber Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7815,14 +7709,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Ing Windchamber",
+                "Portal to Ing Windchamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3455003633,
+                    "connected_area_name": "Ing Windchamber",
                     "connected_dock_index": 2,
                     "dock_type": 3,
                     "dock_weakness_index": 1,
@@ -7836,14 +7729,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Windchamber Gateway",
+                "Door to Windchamber Gateway": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1966181726,
+                    "connected_area_name": "Windchamber Gateway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 7,
@@ -8112,8 +8004,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Sunburst)",
+                "Pickup (Sunburst)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -8181,24 +8072,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Torvus Bog",
-            "in_dark_aether": false,
-            "asset_id": 2889020216,
-            "default_node_index": 1,
+        "Transport to Torvus Bog": {
+            "default_node": "Elevator to Torvus Bog - Transport to Temple Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Torvus Transport Access",
+            "extra": {
+                "asset_id": 2889020216,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Torvus Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2822315693,
+                    "connected_area_name": "Torvus Transport Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -8214,16 +8104,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Torvus Bog - Transport to Temple Grounds",
+                "Elevator to Torvus Bog - Transport to Temple Grounds": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 3917689266,
+                        "teleporter_instance_id": 1966093
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 1039999561,
-                    "destination_area_asset_id": 1868895730,
-                    "teleporter_instance_id": 1966093,
-                    "scan_asset_id": 3917689266,
+                    "destination": {
+                        "world_name": "Torvus Bog",
+                        "area_name": "Transport to Temple Grounds"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -8236,24 +8128,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Dynamo Chamber",
-            "in_dark_aether": false,
-            "asset_id": 3032508327,
-            "default_node_index": 1,
+        "Dynamo Chamber": {
+            "default_node": "Door to Temple Assembly Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Communication Area",
+            "extra": {
+                "asset_id": 3032508327,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Communication Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1667141025,
+                    "connected_area_name": "Communication Area",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8389,14 +8280,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Assembly Site",
+                "Door to Temple Assembly Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1263425809,
+                    "connected_area_name": "Temple Assembly Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8549,8 +8439,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Power Bomb)",
+                "Pickup (Power Bomb)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -8586,8 +8475,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Dynamo Chamber Gates",
+                "Event - Dynamo Chamber Gates": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -8706,24 +8594,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Transport B",
-            "in_dark_aether": false,
-            "asset_id": 1287880522,
-            "default_node_index": 1,
+        "Temple Transport B": {
+            "default_node": "Elevator to Great Temple - Temple Transport B",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Temple Assembly Site",
+            "extra": {
+                "asset_id": 1287880522,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Assembly Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1263425809,
+                    "connected_area_name": "Temple Assembly Site",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8739,16 +8626,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Great Temple - Temple Transport B",
+                "Elevator to Great Temple - Temple Transport B": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 2420389345,
+                        "teleporter_instance_id": 2097251
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2252328306,
-                    "destination_area_asset_id": 2399252740,
-                    "teleporter_instance_id": 2097251,
-                    "scan_asset_id": 2420389345,
+                    "destination": {
+                        "world_name": "Great Temple",
+                        "area_name": "Temple Transport B"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -8761,24 +8650,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Storage Cavern B",
-            "in_dark_aether": false,
-            "asset_id": 3197418796,
-            "default_node_index": 0,
+        "Storage Cavern B": {
+            "default_node": "Door to Temple Assembly Site",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Temple Assembly Site",
+            "extra": {
+                "asset_id": 3197418796,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Assembly Site": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1263425809,
+                    "connected_area_name": "Temple Assembly Site",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -8792,8 +8680,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -8810,24 +8697,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Plain of Dark Worship",
-            "in_dark_aether": true,
-            "asset_id": 67496868,
-            "default_node_index": 0,
+        "Plain of Dark Worship": {
+            "default_node": "Door to Lake Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Lake Access",
+            "extra": {
+                "asset_id": 67496868,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Lake Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1753921710,
+                    "connected_area_name": "Lake Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 6,
@@ -8843,14 +8729,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Temple Assembly Site",
+                "Portal to Temple Assembly Site": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 1263425809,
+                    "connected_area_name": "Temple Assembly Site",
                     "connected_dock_index": 4,
                     "dock_type": 3,
                     "dock_weakness_index": 2,
@@ -9105,8 +8990,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -9312,24 +9196,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Defiled Shrine",
-            "in_dark_aether": true,
-            "asset_id": 383850164,
-            "default_node_index": 0,
+        "Defiled Shrine": {
+            "default_node": "Door to Shrine Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Shrine Access",
+            "extra": {
+                "asset_id": 383850164,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Shrine Access": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 521996255,
+                    "connected_area_name": "Shrine Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -9374,8 +9257,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Sky Temple Key 8)",
+                "Pickup (Sky Temple Key 8)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -9394,8 +9276,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Safe Zone (Ship Location)",
+                "Safe Zone (Ship Location)": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -9625,24 +9506,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gateway Access",
-            "in_dark_aether": true,
-            "asset_id": 2217888920,
-            "default_node_index": 1,
+        "Gateway Access": {
+            "default_node": "Door to Shrine Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Sky Temple Gateway",
+            "extra": {
+                "asset_id": 2217888920,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Sky Temple Gateway": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 2278776548,
+                    "connected_area_name": "Sky Temple Gateway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9658,14 +9538,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Shrine Access",
+                "Door to Shrine Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 521996255,
+                    "connected_area_name": "Shrine Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9681,8 +9560,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Central Safe Zone",
+                "Central Safe Zone": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -9873,24 +9751,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Windchamber Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 2590194623,
-            "default_node_index": 0,
+        "Windchamber Tunnel": {
+            "default_node": "Door to GFMC Compound",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to GFMC Compound",
+            "extra": {
+                "asset_id": 2590194623,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to GFMC Compound": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1467316949,
+                    "connected_area_name": "GFMC Compound",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 7,
@@ -9906,14 +9783,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Grand Windchamber",
+                "Door to Grand Windchamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2909835645,
+                    "connected_area_name": "Grand Windchamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9929,24 +9805,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ing Windchamber",
-            "in_dark_aether": true,
-            "asset_id": 3455003633,
-            "default_node_index": 0,
+        "Ing Windchamber": {
+            "default_node": "Portal to Grand Windchamber",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Portal to Grand Windchamber",
+            "extra": {
+                "asset_id": 3455003633,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Portal to Grand Windchamber": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2909835645,
+                    "connected_area_name": "Grand Windchamber",
                     "connected_dock_index": 2,
                     "dock_type": 3,
                     "dock_weakness_index": 2,
@@ -10127,8 +10002,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ing Windchamber Blue Seeker Lock",
+                "Event - Ing Windchamber Blue Seeker Lock": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -10144,8 +10018,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ing Windchamber Yellow Seeker Lock",
+                "Event - Ing Windchamber Yellow Seeker Lock": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -10161,24 +10034,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Communication Area",
-            "in_dark_aether": false,
-            "asset_id": 1667141025,
-            "default_node_index": 0,
+        "Communication Area": {
+            "default_node": "Door to Dynamo Chamber",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Dynamo Chamber",
+            "extra": {
+                "asset_id": 1667141025,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Dynamo Chamber": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3032508327,
+                    "connected_area_name": "Dynamo Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10253,14 +10125,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Storage Cavern A",
+                "Door to Storage Cavern A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 939577218,
+                    "connected_area_name": "Storage Cavern A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10274,14 +10145,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Trooper Security Station",
+                "Door to Trooper Security Station": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1441689027,
+                    "connected_area_name": "Trooper Security Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10295,8 +10165,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -10313,8 +10182,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Next to Pickup",
+                "Next to Pickup": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -10461,24 +10329,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Lake Access",
-            "in_dark_aether": true,
-            "asset_id": 1753921710,
-            "default_node_index": 0,
+        "Lake Access": {
+            "default_node": "Door to Accursed Lake",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Accursed Lake",
+            "extra": {
+                "asset_id": 1753921710,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Accursed Lake": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2681312991,
+                    "connected_area_name": "Accursed Lake",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10494,14 +10361,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Plain of Dark Worship",
+                "Door to Plain of Dark Worship": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 67496868,
+                    "connected_area_name": "Plain of Dark Worship",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 5,
@@ -10517,24 +10383,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sky Temple Gateway",
-            "in_dark_aether": true,
-            "asset_id": 2278776548,
-            "default_node_index": 3,
+        "Sky Temple Gateway": {
+            "default_node": "Spawn Point/Front of Teleporter",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Gateway Access",
+            "extra": {
+                "asset_id": 2278776548,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Gateway Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2217888920,
+                    "connected_area_name": "Gateway Access",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10592,8 +10457,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Dark Samus 3 and 4",
+                "Event - Dark Samus 3 and 4": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -10609,16 +10473,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Great Temple - Sky Temple Energy Controller",
+                "Teleport to Great Temple - Sky Temple Energy Controller": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 136970379
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2252328306,
-                    "destination_area_asset_id": 2068511343,
-                    "teleporter_instance_id": 136970379,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "Great Temple",
+                        "area_name": "Sky Temple Energy Controller"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -10887,8 +10753,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Spawn Point/Front of Teleporter",
+                "Spawn Point/Front of Teleporter": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -10994,24 +10859,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "GFMC Compound",
-            "in_dark_aether": false,
-            "asset_id": 1467316949,
-            "default_node_index": 2,
+        "GFMC Compound": {
+            "default_node": "Door to Trooper Security Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Windchamber Tunnel",
+            "extra": {
+                "asset_id": 1467316949,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Windchamber Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 2590194623,
+                    "connected_area_name": "Windchamber Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 7,
@@ -11034,14 +10898,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sacred Bridge",
+                "Door to Sacred Bridge": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3132939042,
+                    "connected_area_name": "Sacred Bridge",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -11094,14 +10957,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Trooper Security Station",
+                "Door to Trooper Security Station": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1441689027,
+                    "connected_area_name": "Trooper Security Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11141,14 +11003,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fortress Transport Access",
+                "Door to Fortress Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1894115037,
+                    "connected_area_name": "Fortress Transport Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11188,8 +11049,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Launcher)",
+                "Pickup (Missile Launcher)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11206,8 +11066,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup 2 (Missile On Ship)",
+                "Pickup 2 (Missile On Ship)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11224,8 +11083,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - GFMC Compound Trooper Cutscene",
+                "Event - GFMC Compound Trooper Cutscene": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11241,8 +11099,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11604,8 +11461,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Translator Gate",
+                "Translator Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11628,24 +11484,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Storage Cavern A",
-            "in_dark_aether": false,
-            "asset_id": 939577218,
-            "default_node_index": 0,
+        "Storage Cavern A": {
+            "default_node": "Door to Communication Area",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Communication Area",
+            "extra": {
+                "asset_id": 939577218,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Communication Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1667141025,
+                    "connected_area_name": "Communication Area",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11659,8 +11514,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Keybearer Corpse (D-Isl)",
+                "Keybearer Corpse (D-Isl)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11678,24 +11532,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Trooper Security Station",
-            "in_dark_aether": false,
-            "asset_id": 1441689027,
-            "default_node_index": 1,
+        "Trooper Security Station": {
+            "default_node": "Door to Communication Area",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to GFMC Compound",
+            "extra": {
+                "asset_id": 1441689027,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to GFMC Compound": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1467316949,
+                    "connected_area_name": "GFMC Compound",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11781,14 +11634,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Communication Area",
+                "Door to Communication Area": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1667141025,
+                    "connected_area_name": "Communication Area",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11902,8 +11754,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Trooper Security Station Gate",
+                "Event - Trooper Security Station Gate": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -11976,24 +11827,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Accursed Lake",
-            "in_dark_aether": true,
-            "asset_id": 2681312991,
-            "default_node_index": 2,
+        "Accursed Lake": {
+            "default_node": "Spawn Point",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Lake Access",
+            "extra": {
+                "asset_id": 2681312991,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Lake Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1753921710,
+                    "connected_area_name": "Lake Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -12009,8 +11859,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Sky Temple Key 9)",
+                "Pickup (Sky Temple Key 9)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -12321,8 +12170,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Spawn Point",
+                "Spawn Point": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -12718,24 +12566,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fortress Transport Access",
-            "in_dark_aether": false,
-            "asset_id": 1894115037,
-            "default_node_index": 1,
+        "Fortress Transport Access": {
+            "default_node": "Door to GFMC Compound",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Sanctuary Fortress",
+            "extra": {
+                "asset_id": 1894115037,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport to Sanctuary Fortress": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3455543403,
+                    "connected_area_name": "Transport to Sanctuary Fortress",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -12756,14 +12603,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to GFMC Compound",
+                "Door to GFMC Compound": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1467316949,
+                    "connected_area_name": "GFMC Compound",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -12786,8 +12632,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -12804,8 +12649,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Lore Scan",
+                "Lore Scan": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -12823,24 +12667,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sacred Bridge",
-            "in_dark_aether": false,
-            "asset_id": 3132939042,
-            "default_node_index": 0,
+        "Sacred Bridge": {
+            "default_node": "Door to GFMC Compound",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to GFMC Compound",
+            "extra": {
+                "asset_id": 3132939042,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to GFMC Compound": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1467316949,
+                    "connected_area_name": "GFMC Compound",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -12950,14 +12793,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sacred Path",
+                "Door to Sacred Path": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3258777533,
+                    "connected_area_name": "Sacred Path",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13008,8 +12850,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Gate Unlocked",
+                "Event - Gate Unlocked": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13025,24 +12866,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Sanctuary Fortress",
-            "in_dark_aether": false,
-            "asset_id": 3455543403,
-            "default_node_index": 1,
+        "Transport to Sanctuary Fortress": {
+            "default_node": "Elevator to Sanctuary Fortress - Transport to Temple Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Fortress Transport Access",
+            "extra": {
+                "asset_id": 3455543403,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Fortress Transport Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1894115037,
+                    "connected_area_name": "Fortress Transport Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13058,16 +12898,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Sanctuary Fortress - Transport to Temple Grounds",
+                "Elevator to Sanctuary Fortress - Transport to Temple Grounds": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 2363755252,
+                        "teleporter_instance_id": 3342446
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 464164546,
-                    "destination_area_asset_id": 3528156989,
-                    "teleporter_instance_id": 3342446,
-                    "scan_asset_id": 2363755252,
+                    "destination": {
+                        "world_name": "Sanctuary Fortress",
+                        "area_name": "Transport to Temple Grounds"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -13080,24 +12922,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sacred Path",
-            "in_dark_aether": false,
-            "asset_id": 3258777533,
-            "default_node_index": 1,
+        "Sacred Path": {
+            "default_node": "Door to Sacred Bridge",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Portal to Profane Path",
+            "extra": {
+                "asset_id": 3258777533,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Portal to Profane Path": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 1692811478,
+                    "connected_area_name": "Profane Path",
                     "connected_dock_index": 1,
                     "dock_type": 3,
                     "dock_weakness_index": 1,
@@ -13118,14 +12959,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sacred Bridge",
+                "Door to Sacred Bridge": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3132939042,
+                    "connected_area_name": "Sacred Bridge",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13308,14 +13148,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Transport A",
+                "Door to Temple Transport A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1345979968,
+                    "connected_area_name": "Temple Transport A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13446,8 +13285,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Sacred Path Wall Broken",
+                "Event - Sacred Path Wall Broken": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13472,24 +13310,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Transport A",
-            "in_dark_aether": false,
-            "asset_id": 1345979968,
-            "default_node_index": 1,
+        "Temple Transport A": {
+            "default_node": "Elevator to Great Temple - Temple Transport A",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Sacred Path",
+            "extra": {
+                "asset_id": 1345979968,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Sacred Path": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3258777533,
+                    "connected_area_name": "Sacred Path",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13505,16 +13342,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Great Temple - Temple Transport A",
+                "Elevator to Great Temple - Temple Transport A": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 2155694422,
+                        "teleporter_instance_id": 3538975
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2252328306,
-                    "destination_area_asset_id": 408633584,
-                    "teleporter_instance_id": 3538975,
-                    "scan_asset_id": 2155694422,
+                    "destination": {
+                        "world_name": "Great Temple",
+                        "area_name": "Temple Transport A"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -13527,24 +13366,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Profane Path",
-            "in_dark_aether": true,
-            "asset_id": 1692811478,
-            "default_node_index": 0,
+        "Profane Path": {
+            "default_node": "Door to Phazon Pit",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Pit",
+            "extra": {
+                "asset_id": 1692811478,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Phazon Pit": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 506667008,
+                    "connected_area_name": "Phazon Pit",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13761,14 +13599,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Portal to Sacred Path",
+                "Portal to Sacred Path": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3258777533,
+                    "connected_area_name": "Sacred Path",
                     "connected_dock_index": 2,
                     "dock_type": 3,
                     "dock_weakness_index": 2,
@@ -13805,8 +13642,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Dark Ammo)",
+                "Pickup (Dark Ammo)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13825,8 +13661,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Safe Zone (Front of Echo Gate)",
+                "Safe Zone (Front of Echo Gate)": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -14150,24 +13985,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Pit",
-            "in_dark_aether": true,
-            "asset_id": 506667008,
-            "default_node_index": 1,
+        "Phazon Pit": {
+            "default_node": "Door to Phazon Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Profane Path",
+            "extra": {
+                "asset_id": 506667008,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Profane Path": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1692811478,
+                    "connected_area_name": "Profane Path",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14384,14 +14218,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Grounds",
+                "Door to Phazon Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1683944003,
+                    "connected_area_name": "Phazon Grounds",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14493,24 +14326,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Grounds",
-            "in_dark_aether": true,
-            "asset_id": 1683944003,
-            "default_node_index": 1,
+        "Phazon Grounds": {
+            "default_node": "Door to Reliquary Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Pit",
+            "extra": {
+                "asset_id": 1683944003,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Phazon Pit": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 506667008,
+                    "connected_area_name": "Phazon Pit",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14766,14 +14598,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reliquary Access",
+                "Door to Reliquary Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2235615956,
+                    "connected_area_name": "Reliquary Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 13,
@@ -14884,8 +14715,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -15092,24 +14922,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reliquary Access",
-            "in_dark_aether": true,
-            "asset_id": 2235615956,
-            "default_node_index": 0,
+        "Reliquary Access": {
+            "default_node": "Door to Phazon Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Phazon Grounds",
+            "extra": {
+                "asset_id": 2235615956,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Phazon Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1683944003,
+                    "connected_area_name": "Phazon Grounds",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 6,
@@ -15300,14 +15129,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reliquary Grounds",
+                "Door to Reliquary Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4237279396,
+                    "connected_area_name": "Reliquary Grounds",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -15550,24 +15378,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reliquary Grounds",
-            "in_dark_aether": true,
-            "asset_id": 4237279396,
-            "default_node_index": 0,
+        "Reliquary Grounds": {
+            "default_node": "Door to Reliquary Access",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Reliquary Access",
+            "extra": {
+                "asset_id": 4237279396,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Reliquary Access": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2235615956,
+                    "connected_area_name": "Reliquary Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -15845,14 +15672,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ing Reliquary",
+                "Door to Ing Reliquary": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1956545251,
+                    "connected_area_name": "Ing Reliquary",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -16013,24 +15839,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ing Reliquary",
-            "in_dark_aether": true,
-            "asset_id": 1956545251,
-            "default_node_index": 0,
+        "Ing Reliquary": {
+            "default_node": "Door to Reliquary Grounds",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Reliquary Grounds",
+            "extra": {
+                "asset_id": 1956545251,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Reliquary Grounds": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4237279396,
+                    "connected_area_name": "Reliquary Grounds",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -16279,8 +16104,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Sky Temple Key 7)",
+                "Pickup (Sky Temple Key 7)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -16402,18 +16226,17 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Credits",
-            "in_dark_aether": false,
-            "asset_id": 1393588666,
-            "default_node_index": 0,
+        "Credits": {
+            "default_node": "Event - Dark Samus 3 and 4",
             "valid_starting_location": false,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Event - Dark Samus 3 and 4",
+            "extra": {
+                "asset_id": 1393588666,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Event - Dark Samus 3 and 4": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -16421,7 +16244,7 @@
                     "event_index": 93,
                     "connections": {}
                 }
-            ]
+            }
         }
-    ]
+    }
 }

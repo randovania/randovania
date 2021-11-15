@@ -1,25 +1,23 @@
 {
     "name": "Ceres Station",
-    "dark_name": null,
-    "asset_id": 5553,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Elevator Shaft",
-            "in_dark_aether": null,
-            "asset_id": 253,
-            "default_node_index": 0,
+    "extra": {
+        "asset_id": 5553
+    },
+    "areas": {
+        "Elevator Shaft": {
+            "default_node": "Dock to Hallway A",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hallway A",
+            "extra": {
+                "asset_id": 253
+            },
+            "nodes": {
+                "Dock to Hallway A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 254,
+                    "connected_area_name": "Hallway A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -35,38 +33,38 @@
                         }
                     }
                 },
-                {
-                    "name": "Escape",
+                "Escape": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 5550,
-                    "destination_area_asset_id": 0,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "destination": {
+                        "world_name": "Upper Zebes",
+                        "area_name": "Landing Site"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Hallway A",
-            "in_dark_aether": null,
-            "asset_id": 254,
-            "default_node_index": 0,
+        "Hallway A": {
+            "default_node": "Dock to Elevator Shaft",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Elevator Shaft",
+            "extra": {
+                "asset_id": 254
+            },
+            "nodes": {
+                "Dock to Elevator Shaft": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 253,
+                    "connected_area_name": "Elevator Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -80,14 +78,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Hallway B",
+                "Dock to Hallway B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 255,
+                    "connected_area_name": "Hallway B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -101,24 +98,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hallway B",
-            "in_dark_aether": null,
-            "asset_id": 255,
-            "default_node_index": 0,
+        "Hallway B": {
+            "default_node": "Dock to Hallway A",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hallway A",
+            "extra": {
+                "asset_id": 255
+            },
+            "nodes": {
+                "Dock to Hallway A": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 254,
+                    "connected_area_name": "Hallway A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -132,14 +127,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Hallway C",
+                "Dock to Hallway C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 256,
+                    "connected_area_name": "Hallway C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -153,24 +147,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hallway C",
-            "in_dark_aether": null,
-            "asset_id": 256,
-            "default_node_index": 0,
+        "Hallway C": {
+            "default_node": "Dock to Hallway B",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hallway B",
+            "extra": {
+                "asset_id": 256
+            },
+            "nodes": {
+                "Dock to Hallway B": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 255,
+                    "connected_area_name": "Hallway B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -184,14 +176,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Hallway D",
+                "Dock to Hallway D": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 257,
+                    "connected_area_name": "Hallway D",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -205,24 +196,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hallway D",
-            "in_dark_aether": null,
-            "asset_id": 257,
-            "default_node_index": 0,
+        "Hallway D": {
+            "default_node": "Dock to Hallway C",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hallway C",
+            "extra": {
+                "asset_id": 257
+            },
+            "nodes": {
+                "Dock to Hallway C": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 256,
+                    "connected_area_name": "Hallway C",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -236,14 +225,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Sample Storage",
+                "Dock to Sample Storage": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 258,
+                    "connected_area_name": "Sample Storage",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -257,24 +245,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sample Storage",
-            "in_dark_aether": null,
-            "asset_id": 258,
-            "default_node_index": 0,
+        "Sample Storage": {
+            "default_node": "Dock to Hallway D",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Dock to Hallway D",
+            "extra": {
+                "asset_id": 258
+            },
+            "nodes": {
+                "Dock to Hallway D": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 257,
+                    "connected_area_name": "Hallway D",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -288,8 +274,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Fight Ridley at Ceres",
+                "Event - Fight Ridley at Ceres": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -305,7 +290,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

@@ -1,19 +1,17 @@
 {
     "name": "Magmoor Caverns",
-    "dark_name": null,
-    "asset_id": 1056449404,
-    "extra": {},
-    "areas": [
-        {
-            "name": "Transport to Chozo Ruins North",
-            "in_dark_aether": null,
-            "asset_id": 1005235657,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 1056449404
+    },
+    "areas": {
+        "Transport to Chozo Ruins North": {
+            "default_node": "Elevator to Chozo Ruins - Transport to Magmoor Caverns North",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Burning Trail",
+            "extra": {
+                "asset_id": 1005235657
+            },
+            "nodes": {
+                "Door to Burning Trail": {
                     "heal": false,
                     "coordinates": {
                         "x": -0.018539905548095703,
@@ -23,7 +21,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1833127758,
+                    "connected_area_name": "Burning Trail",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -37,16 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Chozo Ruins - Transport to Magmoor Caverns North",
+                "Elevator to Chozo Ruins - Transport to Magmoor Caverns North": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 222218204,
+                        "teleporter_instance_id": 31
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2214002543,
-                    "destination_area_asset_id": 2199318005,
-                    "teleporter_instance_id": 31,
-                    "scan_asset_id": 222218204,
+                    "destination": {
+                        "world_name": "Chozo Ruins",
+                        "area_name": "Transport to Magmoor Caverns North"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -59,18 +59,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Burning Trail",
-            "in_dark_aether": null,
-            "asset_id": 1833127758,
-            "default_node_index": 1,
+        "Burning Trail": {
+            "default_node": "Door to Transport to Chozo Ruins North",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Lake Tunnel",
+            "extra": {
+                "asset_id": 1833127758
+            },
+            "nodes": {
+                "Door to Lake Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 2.4338230527937412,
@@ -80,7 +78,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2037927229,
+                    "connected_area_name": "Lake Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -94,8 +92,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Chozo Ruins North",
+                "Door to Transport to Chozo Ruins North": {
                     "heal": false,
                     "coordinates": {
                         "x": -34.424896240234375,
@@ -105,7 +102,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1005235657,
+                    "connected_area_name": "Transport to Chozo Ruins North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -119,8 +116,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station Magmoor A",
+                "Door to Save Station Magmoor A": {
                     "heal": false,
                     "coordinates": {
                         "x": -4.19,
@@ -130,7 +126,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 162783260,
+                    "connected_area_name": "Save Station Magmoor A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -151,18 +147,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Lake Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 2037927229,
-            "default_node_index": 1,
+        "Lake Tunnel": {
+            "default_node": "Door to Burning Trail",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Lava Lake",
+            "extra": {
+                "asset_id": 2037927229
+            },
+            "nodes": {
+                "Door to Lava Lake": {
                     "heal": false,
                     "coordinates": {
                         "x": 25.235980987548828,
@@ -172,7 +166,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2758909034,
+                    "connected_area_name": "Lava Lake",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -252,8 +246,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Burning Trail",
+                "Door to Burning Trail": {
                     "heal": false,
                     "coordinates": {
                         "x": -0.5974400043487549,
@@ -263,7 +256,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1833127758,
+                    "connected_area_name": "Burning Trail",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -343,18 +336,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station Magmoor A",
-            "in_dark_aether": null,
-            "asset_id": 162783260,
-            "default_node_index": 1,
+        "Save Station Magmoor A": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Burning Trail",
+            "extra": {
+                "asset_id": 162783260
+            },
+            "nodes": {
+                "Door to Burning Trail": {
                     "heal": false,
                     "coordinates": {
                         "x": -7.82,
@@ -364,7 +355,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1833127758,
+                    "connected_area_name": "Burning Trail",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -378,8 +369,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -394,18 +384,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Lava Lake",
-            "in_dark_aether": null,
-            "asset_id": 2758909034,
-            "default_node_index": 0,
+        "Lava Lake": {
+            "default_node": "Door to Lake Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Lake Tunnel",
+            "extra": {
+                "asset_id": 2758909034
+            },
+            "nodes": {
+                "Door to Lake Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -67.87635040283203,
@@ -415,7 +403,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2037927229,
+                    "connected_area_name": "Lake Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -732,8 +720,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Pit Tunnel",
+                "Door to Pit Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 82.2545394897461,
@@ -743,7 +730,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3660499860,
+                    "connected_area_name": "Pit Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1044,8 +1031,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of Nature)",
+                "Pickup (Artifact of Nature)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -1259,8 +1245,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Next to Crates",
+                "Next to Crates": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -2010,18 +1995,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Pit Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 3660499860,
-            "default_node_index": 1,
+        "Pit Tunnel": {
+            "default_node": "Door to Lava Lake",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Triclops Pit",
+            "extra": {
+                "asset_id": 3660499860
+            },
+            "nodes": {
+                "Door to Triclops Pit": {
                     "heal": false,
                     "coordinates": {
                         "x": -7.822096824645996,
@@ -2031,7 +2014,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3134844351,
+                    "connected_area_name": "Triclops Pit",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2156,8 +2139,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Lava Lake",
+                "Door to Lava Lake": {
                     "heal": false,
                     "coordinates": {
                         "x": 25.663562774658203,
@@ -2167,7 +2149,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2758909034,
+                    "connected_area_name": "Lava Lake",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2292,18 +2274,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Triclops Pit",
-            "in_dark_aether": null,
-            "asset_id": 3134844351,
-            "default_node_index": 0,
+        "Triclops Pit": {
+            "default_node": "Door to Monitor Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Monitor Tunnel",
+            "extra": {
+                "asset_id": 3134844351
+            },
+            "nodes": {
+                "Door to Monitor Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 113.80526733398438,
@@ -2313,7 +2293,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 231492556,
+                    "connected_area_name": "Monitor Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2869,8 +2849,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Storage Cavern",
+                "Door to Storage Cavern": {
                     "heal": false,
                     "coordinates": {
                         "x": -59.25862121582031,
@@ -2880,7 +2859,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2918155326,
+                    "connected_area_name": "Storage Cavern",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2976,8 +2955,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Pit Tunnel",
+                "Door to Pit Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 1.3729589581489563,
@@ -2987,7 +2965,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3660499860,
+                    "connected_area_name": "Pit Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3525,8 +3503,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -3803,8 +3780,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Tunnel Entrance",
+                "Tunnel Entrance": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4036,18 +4012,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Monitor Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 231492556,
-            "default_node_index": 0,
+        "Monitor Tunnel": {
+            "default_node": "Door to Monitor Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Monitor Station",
+            "extra": {
+                "asset_id": 231492556
+            },
+            "nodes": {
+                "Door to Monitor Station": {
                     "heal": false,
                     "coordinates": {
                         "x": 22.53955078125,
@@ -4057,7 +4031,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 207070785,
+                    "connected_area_name": "Monitor Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4128,8 +4102,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Triclops Pit",
+                "Door to Triclops Pit": {
                     "heal": false,
                     "coordinates": {
                         "x": -37.23870849609375,
@@ -4139,7 +4112,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3134844351,
+                    "connected_area_name": "Triclops Pit",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4210,18 +4183,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Storage Cavern",
-            "in_dark_aether": null,
-            "asset_id": 2918155326,
-            "default_node_index": 0,
+        "Storage Cavern": {
+            "default_node": "Door to Triclops Pit",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Triclops Pit",
+            "extra": {
+                "asset_id": 2918155326
+            },
+            "nodes": {
+                "Door to Triclops Pit": {
                     "heal": false,
                     "coordinates": {
                         "x": -28.03388786315918,
@@ -4231,7 +4202,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3134844351,
+                    "connected_area_name": "Triclops Pit",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4245,8 +4216,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -4263,18 +4233,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Monitor Station",
-            "in_dark_aether": null,
-            "asset_id": 207070785,
-            "default_node_index": 0,
+        "Monitor Station": {
+            "default_node": "Door to Monitor Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Monitor Tunnel",
+            "extra": {
+                "asset_id": 207070785
+            },
+            "nodes": {
+                "Door to Monitor Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -8.172555923461914,
@@ -4284,7 +4252,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 231492556,
+                    "connected_area_name": "Monitor Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4779,8 +4747,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Tunnel A",
+                "Door to Transport Tunnel A": {
                     "heal": false,
                     "coordinates": {
                         "x": -70.8242416381836,
@@ -4790,7 +4757,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1207091335,
+                    "connected_area_name": "Transport Tunnel A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5196,8 +5163,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Warrior Shrine",
+                "Door to Warrior Shrine": {
                     "heal": false,
                     "coordinates": {
                         "x": 40.71084976196289,
@@ -5207,7 +5173,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2309409677,
+                    "connected_area_name": "Warrior Shrine",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5594,8 +5560,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Shore Tunnel",
+                "Door to Shore Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 38.15879821777344,
@@ -5605,7 +5570,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 3,
-                    "connected_area_asset_id": 2416984287,
+                    "connected_area_name": "Shore Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5989,8 +5954,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Middle Level",
+                "Middle Level": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -6628,18 +6592,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Tunnel A",
-            "in_dark_aether": null,
-            "asset_id": 1207091335,
-            "default_node_index": 0,
+        "Transport Tunnel A": {
+            "default_node": "Door to Transport to Phendrana Drifts North",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Phendrana Drifts North",
+            "extra": {
+                "asset_id": 1207091335
+            },
+            "nodes": {
+                "Door to Transport to Phendrana Drifts North": {
                     "heal": false,
                     "coordinates": {
                         "x": -36.83393096923828,
@@ -6649,7 +6611,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3702104715,
+                    "connected_area_name": "Transport to Phendrana Drifts North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6890,8 +6852,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Monitor Station",
+                "Door to Monitor Station": {
                     "heal": false,
                     "coordinates": {
                         "x": 36.56306457519531,
@@ -6901,7 +6862,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 207070785,
+                    "connected_area_name": "Monitor Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7142,8 +7103,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -7281,18 +7241,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Warrior Shrine",
-            "in_dark_aether": null,
-            "asset_id": 2309409677,
-            "default_node_index": 0,
+        "Warrior Shrine": {
+            "default_node": "Door to Monitor Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Monitor Station",
+            "extra": {
+                "asset_id": 2309409677
+            },
+            "nodes": {
+                "Door to Monitor Station": {
                     "heal": false,
                     "coordinates": {
                         "x": -67.77192687988281,
@@ -7302,7 +7260,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 207070785,
+                    "connected_area_name": "Monitor Station",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7347,8 +7305,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Fiery Shores",
+                "Morph Ball Door to Fiery Shores": {
                     "heal": false,
                     "coordinates": {
                         "x": -31.67,
@@ -7358,14 +7315,13 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4126087266,
+                    "connected_area_name": "Fiery Shores",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Pickup (Artifact of Strength)",
+                "Pickup (Artifact of Strength)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -7413,8 +7369,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Above Exit Tunnel",
+                "Above Exit Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -7562,18 +7517,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Shore Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 2416984287,
-            "default_node_index": 0,
+        "Shore Tunnel": {
+            "default_node": "Door to Monitor Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Monitor Station",
+            "extra": {
+                "asset_id": 2416984287
+            },
+            "nodes": {
+                "Door to Monitor Station": {
                     "heal": false,
                     "coordinates": {
                         "x": -23.190372467041016,
@@ -7583,7 +7536,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 207070785,
+                    "connected_area_name": "Monitor Station",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7696,8 +7649,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fiery Shores",
+                "Door to Fiery Shores": {
                     "heal": false,
                     "coordinates": {
                         "x": 21.62920570373535,
@@ -7707,7 +7659,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4126087266,
+                    "connected_area_name": "Fiery Shores",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7820,8 +7772,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ice Spreader)",
+                "Pickup (Ice Spreader)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -7964,8 +7915,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -8113,18 +8063,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Phendrana Drifts North",
-            "in_dark_aether": null,
-            "asset_id": 3702104715,
-            "default_node_index": 1,
+        "Transport to Phendrana Drifts North": {
+            "default_node": "Elevator - Transport to Magmoor Caverns West",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport Tunnel A",
+            "extra": {
+                "asset_id": 3702104715
+            },
+            "nodes": {
+                "Door to Transport Tunnel A": {
                     "heal": false,
                     "coordinates": {
                         "x": 24.572690963745117,
@@ -8134,7 +8082,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1207091335,
+                    "connected_area_name": "Transport Tunnel A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8148,16 +8096,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Transport to Magmoor Caverns West",
+                "Elevator - Transport to Magmoor Caverns West": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 3500678745,
+                        "teleporter_instance_id": 852002
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2831049361,
-                    "destination_area_asset_id": 3222157185,
-                    "teleporter_instance_id": 852002,
-                    "scan_asset_id": 3500678745,
+                    "destination": {
+                        "world_name": "Phendrana Drifts",
+                        "area_name": "Transport to Magmoor Caverns West"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -8170,18 +8120,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fiery Shores",
-            "in_dark_aether": null,
-            "asset_id": 4126087266,
-            "default_node_index": 0,
+        "Fiery Shores": {
+            "default_node": "Door to Shore Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Shore Tunnel",
+            "extra": {
+                "asset_id": 4126087266
+            },
+            "nodes": {
+                "Door to Shore Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -44.668060302734375,
@@ -8191,7 +8139,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2416984287,
+                    "connected_area_name": "Shore Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8236,8 +8184,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Tunnel B",
+                "Door to Transport Tunnel B": {
                     "heal": false,
                     "coordinates": {
                         "x": 2.567461982369423,
@@ -8247,7 +8194,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 860276342,
+                    "connected_area_name": "Transport Tunnel B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8805,8 +8752,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Warrior Shrine",
+                "Morph Ball Door to Warrior Shrine": {
                     "heal": false,
                     "coordinates": {
                         "x": -50.81,
@@ -8816,7 +8762,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 2309409677,
+                    "connected_area_name": "Warrior Shrine",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -8861,8 +8807,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Power Bomb)",
+                "Pickup (Power Bomb)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -9042,8 +8987,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -9347,8 +9291,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Below Upper Item Exit Tunnel",
+                "Below Upper Item Exit Tunnel": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -10389,18 +10332,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Tunnel B",
-            "in_dark_aether": null,
-            "asset_id": 860276342,
-            "default_node_index": 1,
+        "Transport Tunnel B": {
+            "default_node": "Door to Fiery Shores",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Tallon Overworld West",
+            "extra": {
+                "asset_id": 860276342
+            },
+            "nodes": {
+                "Door to Transport to Tallon Overworld West": {
                     "heal": false,
                     "coordinates": {
                         "x": 15.214618682861328,
@@ -10410,7 +10351,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1279075404,
+                    "connected_area_name": "Transport to Tallon Overworld West",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10694,8 +10635,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fiery Shores",
+                "Door to Fiery Shores": {
                     "heal": false,
                     "coordinates": {
                         "x": 15.110973834991455,
@@ -10705,7 +10645,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 4126087266,
+                    "connected_area_name": "Fiery Shores",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10989,18 +10929,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Tallon Overworld West",
-            "in_dark_aether": null,
-            "asset_id": 1279075404,
-            "default_node_index": 2,
+        "Transport to Tallon Overworld West": {
+            "default_node": "Elevator to Tallon Overworld - Transport to Magmoor Caverns East",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Twin Fires Tunnel",
+            "extra": {
+                "asset_id": 1279075404
+            },
+            "nodes": {
+                "Door to Twin Fires Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.023366928100585938,
@@ -11010,7 +10948,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3835971118,
+                    "connected_area_name": "Twin Fires Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11024,8 +10962,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Tunnel B",
+                "Door to Transport Tunnel B": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.01854109764099121,
@@ -11035,7 +10972,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 860276342,
+                    "connected_area_name": "Transport Tunnel B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11056,16 +10993,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Tallon Overworld - Transport to Magmoor Caverns East",
+                "Elevator to Tallon Overworld - Transport to Magmoor Caverns East": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 1273603276,
+                        "teleporter_instance_id": 1048608
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 366411659,
-                    "teleporter_instance_id": 1048608,
-                    "scan_asset_id": 1273603276,
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Transport to Magmoor Caverns East"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -11078,18 +11017,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Twin Fires Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 3835971118,
-            "default_node_index": 0,
+        "Twin Fires Tunnel": {
+            "default_node": "Door to Twin Fires",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Twin Fires",
+            "extra": {
+                "asset_id": 3835971118
+            },
+            "nodes": {
+                "Door to Twin Fires": {
                     "heal": false,
                     "coordinates": {
                         "x": -23.23024845123291,
@@ -11099,7 +11036,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1282952170,
+                    "connected_area_name": "Twin Fires",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -11432,8 +11369,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Tallon Overworld West",
+                "Door to Transport to Tallon Overworld West": {
                     "heal": false,
                     "coordinates": {
                         "x": 27.192304611206055,
@@ -11443,7 +11379,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1279075404,
+                    "connected_area_name": "Transport to Tallon Overworld West",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -12056,18 +11992,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Twin Fires",
-            "in_dark_aether": null,
-            "asset_id": 1282952170,
-            "default_node_index": 1,
+        "Twin Fires": {
+            "default_node": "Door to Twin Fires Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to North Core Tunnel",
+            "extra": {
+                "asset_id": 1282952170
+            },
+            "nodes": {
+                "Door to North Core Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -119.57,
@@ -12077,7 +12011,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2805715168,
+                    "connected_area_name": "North Core Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -12318,8 +12252,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Twin Fires Tunnel",
+                "Door to Twin Fires Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -77.46874237060547,
@@ -12329,7 +12262,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3835971118,
+                    "connected_area_name": "Twin Fires Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -12570,18 +12503,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "North Core Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 2805715168,
-            "default_node_index": 0,
+        "North Core Tunnel": {
+            "default_node": "Door to Twin Fires",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Twin Fires",
+            "extra": {
+                "asset_id": 2805715168
+            },
+            "nodes": {
+                "Door to Twin Fires": {
                     "heal": false,
                     "coordinates": {
                         "x": -31.15,
@@ -12591,7 +12522,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1282952170,
+                    "connected_area_name": "Twin Fires",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -12694,8 +12625,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Geothermal Core",
+                "Door to Geothermal Core": {
                     "heal": false,
                     "coordinates": {
                         "x": 28.63,
@@ -12705,7 +12635,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3226044022,
+                    "connected_area_name": "Geothermal Core",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -12808,18 +12738,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Geothermal Core",
-            "in_dark_aether": null,
-            "asset_id": 3226044022,
-            "default_node_index": 2,
+        "Geothermal Core": {
+            "default_node": "Door to South Core Tunnel",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to North Core Tunnel",
+            "extra": {
+                "asset_id": 3226044022
+            },
+            "nodes": {
+                "Door to North Core Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -42.78,
@@ -12829,7 +12757,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2805715168,
+                    "connected_area_name": "North Core Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13071,8 +12999,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Plasma Processing",
+                "Door to Plasma Processing": {
                     "heal": false,
                     "coordinates": {
                         "x": -1.88,
@@ -13082,7 +13009,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 1287753306,
+                    "connected_area_name": "Plasma Processing",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -13115,8 +13042,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to South Core Tunnel",
+                "Door to South Core Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 78.57451629638672,
@@ -13126,7 +13052,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 1893290168,
+                    "connected_area_name": "South Core Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -13383,8 +13309,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Geothermal Core Opened",
+                "Event - Geothermal Core Opened": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13471,8 +13396,7 @@
                         }
                     }
                 },
-                {
-                    "name": "First Spinner",
+                "First Spinner": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13730,18 +13654,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Plasma Processing",
-            "in_dark_aether": null,
-            "asset_id": 1287753306,
-            "default_node_index": 0,
+        "Plasma Processing": {
+            "default_node": "Door to Geothermal Core",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Geothermal Core",
+            "extra": {
+                "asset_id": 1287753306
+            },
+            "nodes": {
+                "Door to Geothermal Core": {
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -13751,7 +13673,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3226044022,
+                    "connected_area_name": "Geothermal Core",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -13765,8 +13687,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Plasma Beam)",
+                "Pickup (Plasma Beam)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -13783,18 +13704,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "South Core Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 1893290168,
-            "default_node_index": 0,
+        "South Core Tunnel": {
+            "default_node": "Door to Geothermal Core",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Geothermal Core",
+            "extra": {
+                "asset_id": 1893290168
+            },
+            "nodes": {
+                "Door to Geothermal Core": {
                     "heal": false,
                     "coordinates": {
                         "x": 25.24,
@@ -13804,7 +13723,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3226044022,
+                    "connected_area_name": "Geothermal Core",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -13818,8 +13737,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Magmoor Workstation",
+                "Door to Magmoor Workstation": {
                     "heal": false,
                     "coordinates": {
                         "x": -0.6,
@@ -13829,7 +13747,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2327753667,
+                    "connected_area_name": "Magmoor Workstation",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -13843,18 +13761,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Magmoor Workstation",
-            "in_dark_aether": null,
-            "asset_id": 2327753667,
-            "default_node_index": 2,
+        "Magmoor Workstation": {
+            "default_node": "Door to Transport Tunnel C",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to South Core Tunnel",
+            "extra": {
+                "asset_id": 2327753667
+            },
+            "nodes": {
+                "Door to South Core Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 37.2537841796875,
@@ -13864,7 +13780,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 1893290168,
+                    "connected_area_name": "South Core Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14193,8 +14109,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Workstation Tunnel",
+                "Door to Workstation Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": 1.3652310371398926,
@@ -14204,7 +14119,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 74274377,
+                    "connected_area_name": "Workstation Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14235,8 +14150,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Tunnel C",
+                "Door to Transport Tunnel C": {
                     "heal": false,
                     "coordinates": {
                         "x": -47.16,
@@ -14246,7 +14160,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 2,
-                    "connected_area_asset_id": 3549419025,
+                    "connected_area_name": "Transport Tunnel C",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -14277,8 +14191,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
                     "heal": false,
                     "coordinates": null,
                     "extra": {},
@@ -14295,18 +14208,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Workstation Tunnel",
-            "in_dark_aether": null,
-            "asset_id": 74274377,
-            "default_node_index": 1,
+        "Workstation Tunnel": {
+            "default_node": "Door to Magmoor Workstation",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Phazon Mines West",
+            "extra": {
+                "asset_id": 74274377
+            },
+            "nodes": {
+                "Door to Transport to Phazon Mines West": {
                     "heal": false,
                     "coordinates": {
                         "x": 25.71,
@@ -14316,7 +14227,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 4012840000,
+                    "connected_area_name": "Transport to Phazon Mines West",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -14349,8 +14260,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Magmoor Workstation",
+                "Door to Magmoor Workstation": {
                     "heal": false,
                     "coordinates": {
                         "x": -15.739174365997314,
@@ -14360,7 +14270,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2327753667,
+                    "connected_area_name": "Magmoor Workstation",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14393,18 +14303,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Tunnel C",
-            "in_dark_aether": null,
-            "asset_id": 3549419025,
-            "default_node_index": 1,
+        "Transport Tunnel C": {
+            "default_node": "Door to Magmoor Workstation",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Phendrana Drifts South",
+            "extra": {
+                "asset_id": 3549419025
+            },
+            "nodes": {
+                "Door to Transport to Phendrana Drifts South": {
                     "heal": false,
                     "coordinates": {
                         "x": -22.25,
@@ -14414,7 +14322,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3249312307,
+                    "connected_area_name": "Transport to Phendrana Drifts South",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -14428,8 +14336,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Magmoor Workstation",
+                "Door to Magmoor Workstation": {
                     "heal": false,
                     "coordinates": {
                         "x": 21.37,
@@ -14439,7 +14346,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 2327753667,
+                    "connected_area_name": "Magmoor Workstation",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -14453,18 +14360,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Phazon Mines West",
-            "in_dark_aether": null,
-            "asset_id": 4012840000,
-            "default_node_index": 1,
+        "Transport to Phazon Mines West": {
+            "default_node": "Elevator - Transport to Magmoor Caverns South",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Workstation Tunnel",
+            "extra": {
+                "asset_id": 4012840000
+            },
+            "nodes": {
+                "Door to Workstation Tunnel": {
                     "heal": false,
                     "coordinates": {
                         "x": -19.77,
@@ -14474,7 +14379,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 74274377,
+                    "connected_area_name": "Workstation Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -14488,16 +14393,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Transport to Magmoor Caverns South",
+                "Elevator - Transport to Magmoor Caverns South": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 800030426,
+                        "teleporter_instance_id": 1703972
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2980859237,
-                    "destination_area_asset_id": 3804417848,
-                    "teleporter_instance_id": 1703972,
-                    "scan_asset_id": 800030426,
+                    "destination": {
+                        "world_name": "Phazon Mines",
+                        "area_name": "Transport to Magmoor Caverns South"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -14510,18 +14417,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Phendrana Drifts South",
-            "in_dark_aether": null,
-            "asset_id": 3249312307,
-            "default_node_index": 2,
+        "Transport to Phendrana Drifts South": {
+            "default_node": "Elevator - Transport to Magmoor Caverns South",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Save Station Magmoor B",
+            "extra": {
+                "asset_id": 3249312307
+            },
+            "nodes": {
+                "Door to Save Station Magmoor B": {
                     "heal": false,
                     "coordinates": {
                         "x": -18.24,
@@ -14531,7 +14436,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 2136398113,
+                    "connected_area_name": "Save Station Magmoor B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -14552,8 +14457,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Tunnel C",
+                "Door to Transport Tunnel C": {
                     "heal": false,
                     "coordinates": {
                         "x": 24.57,
@@ -14563,7 +14467,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 1,
-                    "connected_area_asset_id": 3549419025,
+                    "connected_area_name": "Transport Tunnel C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -14577,16 +14481,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Transport to Magmoor Caverns South",
+                "Elevator - Transport to Magmoor Caverns South": {
                     "heal": false,
                     "coordinates": null,
-                    "extra": {},
+                    "extra": {
+                        "scan_asset_id": 1865475028,
+                        "teleporter_instance_id": 1769512
+                    },
                     "node_type": "teleporter",
-                    "destination_world_asset_id": 2831049361,
-                    "destination_area_asset_id": 3708487481,
-                    "teleporter_instance_id": 1769512,
-                    "scan_asset_id": 1865475028,
+                    "destination": {
+                        "world_name": "Phendrana Drifts",
+                        "area_name": "Transport to Magmoor Caverns South"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -14599,18 +14505,16 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station Magmoor B",
-            "in_dark_aether": null,
-            "asset_id": 2136398113,
-            "default_node_index": 1,
+        "Save Station Magmoor B": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "extra": {},
-            "nodes": [
-                {
-                    "name": "Door to Transport to Phendrana Drifts South",
+            "extra": {
+                "asset_id": 2136398113
+            },
+            "nodes": {
+                "Door to Transport to Phendrana Drifts South": {
                     "heal": false,
                     "coordinates": {
                         "x": 12.54,
@@ -14620,7 +14524,7 @@
                     "extra": {},
                     "node_type": "dock",
                     "dock_index": 0,
-                    "connected_area_asset_id": 3249312307,
+                    "connected_area_name": "Transport to Phendrana Drifts South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -14634,8 +14538,7 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
                     "heal": true,
                     "coordinates": null,
                     "extra": {},
@@ -14650,7 +14553,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }
