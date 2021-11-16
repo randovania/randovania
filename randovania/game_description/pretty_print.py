@@ -122,7 +122,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function("Asset id: {}".format(area.area_asset_id))
     for i, node in enumerate(area.nodes):
         message = f"> {node.name}; Heals? {node.heal}"
-        if area.default_node_index == i:
+        if area.default_node == node.name:
             message += "; Spawn Point"
         print_function(message)
 

@@ -33,13 +33,6 @@ class Area:
     def area_asset_id(self) -> int:
         return self.extra["asset_id"]
 
-    @property
-    def default_node_index(self) -> Optional[int]:
-        if self.default_node is not None:
-            for i, node in enumerate(self.nodes):
-                if node.name == self.default_node:
-                    return i
-
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
         if dock_index in cache:
