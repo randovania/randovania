@@ -160,8 +160,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if world_name is not None and area_name is not None:
             self.focus_on_world(world_name)
             self.focus_on_area(area_name)
-            if node_name is None and self.current_area.default_node_index is not None:
-                node_name = self.current_area.nodes[self.current_area.default_node_index].name
+            if node_name is None and self.current_area.default_node is not None:
+                node_name = self.current_area.default_node
             
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
@@ -251,7 +251,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert node is not None
 
         self.node_heals_check.setChecked(node.heal)
-        is_default_spawn = self.current_area.default_node_index == self.current_area.nodes.index(node)
+        is_default_spawn = self.current_area.default_node == node.name
         self.area_spawn_check.setChecked(is_default_spawn)
         self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
 

@@ -81,7 +81,7 @@ def _valid_teleporter_target(area: Area, game: RandovaniaGame):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return area.valid_starting_location and area.default_node_index is not None and not has_save_station
+    return area.valid_starting_location and area.default_node is not None and not has_save_station
 
 
 class TeleporterTargetList(location_list.LocationList):

@@ -152,13 +152,15 @@ class WorldList:
 
     def resolve_teleporter_connection(self, connection: AreaIdentifier) -> Node:
         area = self.area_by_area_location(connection)
-        if area.default_node_index is None:
-            raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
-        try:
-            return area.nodes[area.default_node_index]
-        except IndexError:
-            raise IndexError("Area '{}' default_node_index ({}), but there's only {} nodes".format(
-                area.name, area.default_node_index, len(area.nodes)))
+        if area.default_node is None:
+            raise IndexError("Area '{}' does not have a default_node".format(area.name))
+
+        node = area.node_with_name(area.default_node)
+        if node is None:
+            raise IndexError("Area '{}' default_node ({}) is missing".format(
+                area.name, area.default_node))
+
+        return node
 
     def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
         """
