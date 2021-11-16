@@ -53,7 +53,7 @@ def _get_elevator_or_area_name(
 ) -> str:
     custom_names_by_game = custom_names_to_use.get(game, {})
 
-    area_loc = area_location.world_name, area_location.area_name
+    area_loc = area_location.as_tuple
     if area_loc in custom_names_by_game:
         return custom_names_by_game[area_loc]
 

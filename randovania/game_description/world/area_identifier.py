@@ -11,19 +11,15 @@ class AreaIdentifier:
         assert isinstance(self.area_name, str)
 
     @property
-    def world_asset_id(self) -> int:
-        raise KeyError("Should be using world_name")
-
-    @property
-    def area_asset_id(self) -> int:
-        raise KeyError("Should be using area_name")
-
-    @property
     def as_json(self) -> dict:
         return {
             "world_name": self.world_name,
             "area_name": self.area_name,
         }
+
+    @property
+    def as_tuple(self) -> tuple[str, str]:
+        return self.world_name, self.area_name
 
     @classmethod
     def from_json(cls, value: dict) -> "AreaIdentifier":

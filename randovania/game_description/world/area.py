@@ -26,12 +26,8 @@ class Area:
         return hash(self.name)
 
     @property
-    def in_dark_aether(self) -> Optional[bool]:
-        return self.extra.get("in_dark_aether")
-
-    @property
-    def area_asset_id(self) -> int:
-        return self.extra["asset_id"]
+    def in_dark_aether(self) -> bool:
+        return self.extra.get("in_dark_aether", False)
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")

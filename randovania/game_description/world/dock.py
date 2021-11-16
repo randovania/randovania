@@ -78,9 +78,5 @@ class DockConnection:
     area_name: str
     dock_index: int
 
-    @property
-    def area_asset_id(self):
-        return
-
     def __repr__(self):
         return "{}/{}".format(self.area_name, self.dock_index)

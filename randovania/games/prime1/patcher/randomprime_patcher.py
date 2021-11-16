@@ -189,7 +189,7 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
 
 
 def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
-    loc = location.world_name, location.area_name
+    loc = location.as_tuple
     if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
         return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
