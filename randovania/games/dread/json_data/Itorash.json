@@ -1,0 +1,665 @@
+{
+    "name": "Itorash",
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld"
+    },
+    "areas": {
+        "Save Station": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 1400.0,
+                    "x2": 3500.0,
+                    "y1": -4600.0,
+                    "y2": -3500.0
+                },
+                "polygon": [
+                    [
+                        3500.0,
+                        -3500.0
+                    ],
+                    [
+                        1400.0,
+                        -3500.0
+                    ],
+                    [
+                        1400.0,
+                        -4600.0
+                    ],
+                    [
+                        3500.0,
+                        -4600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_000"
+            },
+            "nodes": {
+                "Door to Elevator to Raven Beak": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "dock_index": 0,
+                    "connected_area_name": "Main Room",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Main Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "dock_index": 1,
+                    "connected_area_name": "Elevator to Raven Beak",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Main Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5900.0,
+                    "x2": 1500.0,
+                    "y1": -4800.0,
+                    "y2": -1100.0
+                },
+                "polygon": [
+                    [
+                        1500.0,
+                        -1100.0
+                    ],
+                    [
+                        -5900.0,
+                        -1100.0
+                    ],
+                    [
+                        -5900.0,
+                        -4800.0
+                    ],
+                    [
+                        1500.0,
+                        -4800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_001"
+            },
+            "nodes": {
+                "Elevator to Hanubia": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 26,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 25,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 24,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Save Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "dock_index": 0,
+                    "connected_area_name": "Save Station",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Elevator to Hanubia": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 25,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 24,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 26,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Total Refill Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Total Refill Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elevator to Raven Beak": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3400.0,
+                    "x2": 6700.0,
+                    "y1": -4600.0,
+                    "y2": -2400.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        -2400.0
+                    ],
+                    [
+                        3400.0,
+                        -2400.0
+                    ],
+                    [
+                        3400.0,
+                        -4600.0
+                    ],
+                    [
+                        6700.0,
+                        -4600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_002"
+            },
+            "nodes": {
+                "Door to Save Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "dock_index": 0,
+                    "connected_area_name": "Save Station",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Elevator to Raven Beak Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 22,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 19,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 26,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 25,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": 2,
+                                                                    "index": 4,
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 24,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Elevator to Raven Beak Arena": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Raven Beak Arena"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elevator Cutscene": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3400.0,
+                    "x2": 6700.0,
+                    "y1": -2500.0,
+                    "y2": 1900.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        1900.0
+                    ],
+                    [
+                        3400.0,
+                        1900.0
+                    ],
+                    [
+                        3400.0,
+                        -2500.0
+                    ],
+                    [
+                        6700.0,
+                        -2500.0
+                    ]
+                ],
+                "asset_id": "collision_camera_003"
+            },
+            "nodes": {
+                "Placeholder": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "Raven Beak Arena": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3000.0,
+                    "x2": 7100.0,
+                    "y1": 1800.0,
+                    "y2": 4000.0
+                },
+                "polygon": [
+                    [
+                        7100.0,
+                        4000.0
+                    ],
+                    [
+                        3000.0,
+                        4000.0
+                    ],
+                    [
+                        3000.0,
+                        1800.0
+                    ],
+                    [
+                        7100.0,
+                        1800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_004"
+            },
+            "nodes": {
+                "Before Fight": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: accurate boss requirements incl. Combat tricks",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Boss - Raven Beak": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Escape Sequence": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "collision_camera_005 (I)": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 300.0,
+                    "x2": 2400.0,
+                    "y1": 1800.0,
+                    "y2": 2900.0
+                },
+                "polygon": [
+                    [
+                        2400.0,
+                        2900.0
+                    ],
+                    [
+                        300.0,
+                        2900.0
+                    ],
+                    [
+                        300.0,
+                        1800.0
+                    ],
+                    [
+                        2400.0,
+                        1800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_005"
+            },
+            "nodes": {
+                "Placeholder": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "collision_camera_900 (I)": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -27000.0,
+                    "x2": -13000.0,
+                    "y1": 6000.0,
+                    "y2": 19000.0
+                },
+                "polygon": [
+                    [
+                        -13000.0,
+                        19000.0
+                    ],
+                    [
+                        -27000.0,
+                        19000.0
+                    ],
+                    [
+                        -27000.0,
+                        6000.0
+                    ],
+                    [
+                        -13000.0,
+                        6000.0
+                    ]
+                ],
+                "asset_id": "collision_camera_900"
+            },
+            "nodes": {
+                "Placeholder": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

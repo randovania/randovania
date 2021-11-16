@@ -1,4 +1,3 @@
-import base64
 from pathlib import Path
 
 import pytest
@@ -215,7 +214,10 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
 
 
 def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_item_category):
-    data = "h^WxYK%Bzb%FGCg+{)z6@~Gs(+~&;6<eJ{d>e$N-ot3$j$)%29RCZS8S0<J+1eZou(gZdaMpkzBCzit8K`;ZWbDM)J8%r}wD<K0*qbq3*ot3$j$)%29RCZS8S0<J+1eZou(gZdaMpkzBCzit8K`;ZWbDM)J8%r}wD<K0*qbq0uzy"
+    data = (
+        "h^WxYK%Bzb%4P&bZe?<3c~o*?ZgXa3a!qe!b!=sZ&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwx"
+        "y`|qjis5Tm5_m@(Ur7@&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwxy`|qjis5Tm5_m@(Ur6S-~"
+    )
     expected_pickup = PickupEntry(
         name="The Name",
         model=PickupModel(
@@ -223,14 +225,14 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
             name="EnergyTransferModule",
         ),
         item_category=generic_item_category,
-        broad_category=generic_item_category, 
+        broad_category=generic_item_category,
         progression=tuple(),
     )
-    
-    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason 
-#    from randovania.server.game_session import _base64_encode_pickup
-#    new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
-#    assert new_data == data
+
+    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # from randovania.server.game_session import _base64_encode_pickup
+    # new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
+    # assert new_data == data
 
     # Run
     pickup = _decode_pickup(data, echoes_resource_database)

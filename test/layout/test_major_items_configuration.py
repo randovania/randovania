@@ -11,7 +11,7 @@ from randovania.layout.base.major_items_configuration import MajorItemsConfigura
 
 
 def _create_config_for(game: RandovaniaGame, replace: dict):
-    with get_data_path().joinpath("item_database", game.value, "default_state", "major-items.json").open() as open_file:
+    with game.data_path.joinpath("item_database", "default_state", "major-items.json").open() as open_file:
         default_data = json.load(open_file)
 
     default_data["minimum_random_starting_items"] = 0

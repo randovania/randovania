@@ -4,7 +4,7 @@ from typing import Dict, List, DefaultDict
 
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
@@ -14,11 +14,12 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 _ETM_NAME = "Energy Transfer Module"
 
@@ -54,12 +55,12 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
     }
 
 
-def _find_area_with_teleporter(world_list: WorldList, teleporter: Teleporter) -> Area:
+def _find_area_with_teleporter(world_list: WorldList, teleporter: NodeIdentifier) -> Area:
     return world_list.area_by_area_location(teleporter.area_location)
 
 
 def _name_for_gate(gate: TranslatorGate) -> str:
-    from randovania.games.patchers import claris_patcher
+    from randovania.games.prime2.patcher import claris_patcher
     for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Index"] == gate.index:
             return items["Name"]
@@ -67,7 +68,7 @@ def _name_for_gate(gate: TranslatorGate) -> str:
 
 
 def _find_gate_with_name(gate_name: str) -> TranslatorGate:
-    from randovania.games.patchers import claris_patcher
+    from randovania.games.prime2.patcher import claris_patcher
     for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
         if items["Name"] == gate_name:
             return TranslatorGate(items["Index"])
@@ -116,11 +117,13 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
     return result
 
 
-def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaLocation:
+def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaIdentifier:
     world_name, area_name = re.match("([^/]+)/([^/]+)", area_name).group(1, 2)
-    starting_world = world_list.world_with_name(world_name)
-    starting_area = starting_world.area_by_name(area_name)
-    return AreaLocation(starting_world.world_asset_id, starting_area.area_asset_id)
+
+    # Filter out dark world names
+    world_name = world_list.world_with_name(world_name).name
+
+    return AreaIdentifier(world_name, area_name)
 
 
 def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> PickupEntry:
@@ -133,7 +136,7 @@ def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> Pi
 
 
 def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: GameDescription,
-                  game_modifications: dict, configuration: EchoesConfiguration) -> GamePatches:
+                  game_modifications: dict, configuration: BaseConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
     :param player_index:
@@ -169,7 +172,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         ]
         assert len(potential_source_nodes) == 1
         source_node = potential_source_nodes[0]
-        elevator_connection[source_node.teleporter] = target_area
+        elevator_connection[world_list.identifier_for_node(source_node)] = target_area
 
     # Translator Gates
     translator_gates = {
@@ -224,13 +227,13 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
         translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
-        starting_location=starting_location,  # AreaLocation
+        starting_location=starting_location,  # AreaIdentifier
         hints=hints,
     )
 
 
 def decode(game_modifications: List[dict],
-           layout_configurations: Dict[int, EchoesConfiguration],
+           layout_configurations: Dict[int, BaseConfiguration],
            ) -> Dict[int, GamePatches]:
     all_games = {index: default_database.game_description_for(configuration.game)
                  for index, configuration in layout_configurations.items()}

@@ -1,13 +1,12 @@
 import copy
 import dataclasses
 import json
-from unittest.mock import MagicMock, patch, ANY
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
@@ -15,19 +14,19 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.games.patchers import claris_patcher_file
-from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.patcher import claris_patcher_file
 from randovania.generator.item_pool import pickup_creator, pool_creator
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.layout.prime2.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 
 
 def test_add_header_data_to_result():
@@ -51,25 +50,28 @@ def test_add_header_data_to_result():
     assert json.loads(json.dumps(result)) == expected
 
 
-def test_create_spawn_point_field(echoes_resource_database, empty_patches):
+def test_create_spawn_point_field(echoes_game_description, empty_patches):
     # Setup
-    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items({
-        echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15): 3,
+    resource_db = echoes_game_description.resource_database
+
+    loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
+    patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items({
+        resource_db.get_by_type_and_index(ResourceType.ITEM, 15): 3,
     })
 
     capacities = [
         {'amount': 3 if item.index == 15 else 0, 'index': item.index}
-        for item in echoes_resource_database.item
+        for item in resource_db.item
     ]
 
     # Run
-    result = claris_patcher_file._create_spawn_point_field(patches, echoes_resource_database)
+    result = claris_patcher_file._create_spawn_point_field(patches, echoes_game_description)
 
     # Assert
     assert result == {
         "location": {
-            "world_asset_id": 100,
-            "area_asset_id": 5000,
+            "world_asset_id": 1006255871,
+            "area_asset_id": 494654382,
         },
         "amount": capacities,
         "capacity": capacities,
@@ -93,11 +95,19 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     patches = echoes_game_description.create_game_patches()
 
     elevator_connection = copy.copy(patches.elevator_connection)
-    elevator_connection[Teleporter(0x3BFA3EFF, 0xADED752E, 0x9001B)] = AreaLocation(464164546, 900285955)
-    elevator_connection[Teleporter(0x3BFA3EFF, 0x62FF94EE, 0x180086)] = AreaLocation(1039999561, 3479543630)
+
+    def add(world: str, area: str, node: str, target_world: str, target_area: str):
+        elevator_connection[NodeIdentifier(AreaIdentifier(world, area), node)] = AreaIdentifier(target_world,
+                                                                                                target_area)
+
+    add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
+        "Sanctuary Fortress", "Transport to Agon Wastes")
+    add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Temple Grounds",
+        "Torvus Bog", "Transport to Agon Wastes")
 
     if not vanilla_gateway:
-        elevator_connection[Teleporter(0x3BFA3EFF, 0x87D35EE4, 0x82A008B)] = AreaLocation(2252328306, 3619928121)
+        add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
+            "Great Temple", "Sanctum")
 
     patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
 
@@ -431,20 +441,20 @@ def test_run_validated_hud_text():
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
-@patch("randovania.games.patchers.claris_patcher_file._logbook_title_string_patches", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.hints.create_hints", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
-@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
-@patch("randovania.games.patchers.claris_patcher_file._akul_testament_string_patch", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_patcher_file._logbook_title_string_patches", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.hints.create_hints", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
+@patch("randovania.patching.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
+@patch("randovania.games.prime2.patcher.claris_patcher_file._akul_testament_string_patch", autospec=True)
 def test_create_string_patches(
-                               mock_akul_testament: MagicMock,
-                               mock_stk_create_hints: MagicMock,
-                               mock_stk_hide_hints: MagicMock,
-                               mock_item_create_hints: MagicMock,
-                               mock_logbook_title_string_patches: MagicMock,
-                               stk_mode: SkyTempleKeyHintMode,
-                               mocker,
-                               ):
+        mock_akul_testament: MagicMock,
+        mock_stk_create_hints: MagicMock,
+        mock_stk_hide_hints: MagicMock,
+        mock_item_create_hints: MagicMock,
+        mock_logbook_title_string_patches: MagicMock,
+        stk_mode: SkyTempleKeyHintMode,
+        mocker,
+):
     # Setup
     game = MagicMock()
     all_patches = MagicMock()

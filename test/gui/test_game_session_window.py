@@ -44,7 +44,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     initial_session = GameSessionEntry(
         id=1234,
         name="The Session",
-        presets=[preset_manager.default_preset, preset_manager.default_preset],
+        presets=[preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES), preset_manager.default_preset],
         players={
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
         },
@@ -56,7 +56,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     second_session = GameSessionEntry(
         id=1234,
         name="The Session",
-        presets=[preset_manager.default_preset],
+        presets=[preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES)],
         players={
             12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
             24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
@@ -88,10 +88,10 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
 
 
 @pytest.mark.asyncio
-async def test_on_game_session_actions_update(window: GameSessionWindow, default_preset):
+async def test_on_game_session_actions_update(window: GameSessionWindow, default_echoes_preset):
     # Setup
     game_session = MagicMock()
-    game_session.presets = [default_preset]
+    game_session.presets = [default_echoes_preset]
     window._game_session = game_session
 
     # Run

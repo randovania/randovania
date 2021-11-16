@@ -1,9 +1,10 @@
 import dataclasses
+import typing
 from enum import Enum
-from typing import Optional, NamedTuple, Tuple
+from typing import Optional, NamedTuple, Tuple, Dict
 
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeakness, DockConnection
+from frozendict import frozendict
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement, RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -14,7 +15,8 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockWeakness, DockConnection
 
 
 class NodeLocation(NamedTuple):
@@ -28,6 +30,7 @@ class Node:
     name: str
     heal: bool
     location: Optional[NodeLocation]
+    extra: Dict[str, typing.Any]
     index: int
 
     def __lt__(self, other):
@@ -35,6 +38,10 @@ class Node:
 
     def __hash__(self):
         return hash((self.index, self.name))
+
+    def __post_init__(self):
+        if not isinstance(self.extra, frozendict):
+            object.__setattr__(self, "extra", frozendict(self.extra))
 
     @property
     def is_resource_node(self) -> bool:
@@ -82,20 +89,13 @@ class DockNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class TeleporterNode(Node):
-    teleporter: Optional[Teleporter]
-    default_connection: AreaLocation
-    scan_asset_id: Optional[int]
+    default_connection: AreaIdentifier
     keep_name_when_vanilla: bool
     editable: bool
 
-    @property
-    def teleporter_instance_id(self) -> Optional[int]:
-        if self.teleporter is not None:
-            return self.teleporter.instance_id
-
     def __post_init__(self):
-        if self.editable and self.teleporter is None:
-            raise ValueError(f"{self!r} is editable, but teleporter is None")
+        if self.editable and self.extra.get("teleporter_instance_id") is None:
+            raise ValueError(f"{self!r} is editable, but teleporter_instance_id is None")
 
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)

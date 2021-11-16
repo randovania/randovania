@@ -8,11 +8,11 @@ import randovania
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.patchers.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
-from randovania.games.prime.patcher_file_lib import pickup_exporter
+from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
 
 @pytest.mark.parametrize("other_player", [False, True])
@@ -747,7 +747,6 @@ def test_create_patch_data(test_files_dir):
             'artifactHintBehavior': None,
             'automaticCrashScreen': True,
             'mapDefaultState': 'default',
-            'obfuscateItems': False,
             'qolCosmetic': True,
             'qolGameBreaking': True,
             'qolCutscenes': 'original',
@@ -906,12 +905,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Caretaker Lumigek Skiff',
+            'gameBanner': {'description': 'Seed Hash: Strength Undertemple World',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - Z2OYS7HX'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - BQQHQKFF'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nCaretaker Lumigek Skiff',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nStrength Undertemple World',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {

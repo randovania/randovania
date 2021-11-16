@@ -82,7 +82,7 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
             other = world_list.resolve_dock_connection(world_list.nodes_to_world(node), node.default_connection)
             other_name = world_list.node_name(other)
         except IndexError as e:
-            other_name = (f"(Asset {node.default_connection.area_asset_id:x}, "
+            other_name = (f"(Area {node.default_connection.area_name}, "
                           f"index {node.default_connection.dock_index}) [{e}]")
 
         return f"{node.default_dock_weakness.name} to {other_name}"
@@ -119,10 +119,11 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
 
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
-    print_function("Asset id: {}".format(area.area_asset_id))
+    for extra_name, extra_field in area.extra.items():
+        print_function("Extra - {}: {}".format(extra_name, extra_field))
     for i, node in enumerate(area.nodes):
         message = f"> {node.name}; Heals? {node.heal}"
-        if area.default_node_index == i:
+        if area.default_node == node.name:
             message += "; Spawn Point"
         print_function(message)
 

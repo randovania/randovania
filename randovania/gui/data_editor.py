@@ -160,8 +160,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if world_name is not None and area_name is not None:
             self.focus_on_world(world_name)
             self.focus_on_area(area_name)
-            if node_name is None and self.current_area.default_node_index is not None:
-                node_name = self.current_area.nodes[self.current_area.default_node_index].name
+            if node_name is None and self.current_area.default_node is not None:
+                node_name = self.current_area.default_node
             
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
@@ -251,11 +251,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert node is not None
 
         self.node_heals_check.setChecked(node.heal)
-        is_default_spawn = self.current_area.default_node_index == self.current_area.nodes.index(node)
+        is_default_spawn = self.current_area.default_node == node.name
         self.area_spawn_check.setChecked(is_default_spawn)
         self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
 
-        msg = pretty_print.pretty_print_node_type(node, self.world_list)
+        try:
+            msg = pretty_print.pretty_print_node_type(node, self.world_list)
+        except Exception as e:
+            msg = f"Unable to describe node: {e}"
+
         if isinstance(node, DockNode):
             try:
                 other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
@@ -268,10 +272,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 pass
 
         elif isinstance(node, TeleporterNode):
-            other = self.world_list.area_by_area_location(node.default_connection)
-            name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
-            pretty_name = msg.replace("Teleporter to ", "")
-            msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
+            try:
+                other = self.world_list.area_by_area_location(node.default_connection)
+                name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
+                pretty_name = msg.replace("Teleporter to ", "")
+                msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
+            except Exception as e:
+                msg = f'Teleporter to {node.default_connection} (Unknown area due to {e}).'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
@@ -422,7 +429,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str):
         self.generic_index += 1
-        new_node = GenericNode(node_name, False, None, self.generic_index)
+        new_node = GenericNode(node_name, False, None, {}, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
         self.game_description.world_list.refresh_node_cache()

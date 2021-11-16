@@ -14,7 +14,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.patcher_file_lib import item_names
+from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
@@ -206,11 +206,17 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             self._default_items[category] = combo
 
     def _on_default_item_updated(self, category: ItemCategory, combo: QtWidgets.QComboBox, _):
+        item: MajorItem = combo.currentData()
         with self._editor as editor:
             new_config = editor.major_items_configuration
-            new_config = new_config.replace_default_item(category, combo.currentData())
-            new_config = new_config.replace_state_for_item(combo.currentData(),
-                                                           MajorItemState(num_included_in_starting_items=1))
+            new_config = new_config.replace_default_item(category, item)
+            new_config = new_config.replace_state_for_item(
+                item,
+                MajorItemState(
+                    num_included_in_starting_items=1,
+                    included_ammo=new_config.items_state[item].included_ammo
+                ),
+            )
             editor.major_items_configuration = new_config
 
     def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):

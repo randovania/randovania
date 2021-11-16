@@ -1,6 +1,6 @@
 from PySide2.QtWidgets import QDialog
 
-from randovania.layout.game_to_class import AnyCosmeticPatches
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BaseCosmeticPatchesDialog(QDialog):
@@ -13,5 +13,5 @@ class BaseCosmeticPatchesDialog(QDialog):
         raise NotImplementedError()
 
     @property
-    def cosmetic_patches(self) -> AnyCosmeticPatches:
+    def cosmetic_patches(self) -> BaseCosmeticPatches:
         raise NotImplementedError()

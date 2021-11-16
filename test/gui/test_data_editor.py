@@ -8,7 +8,7 @@ from mock import AsyncMock, patch, ANY
 
 import randovania.game_description.pretty_print
 from randovania.game_description import data_reader, pretty_print
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
 
@@ -21,7 +21,7 @@ def test_apply_edit_connections_change(echoes_game_data,
     skip_qtbot.addWidget(window)
     game = window.game_description
 
-    landing_site = game.world_list.area_by_area_location(AreaLocation(1006255871, 1655756413))
+    landing_site = game.world_list.area_by_area_location(AreaIdentifier("Temple Grounds", "Landing Site"))
     source = landing_site.node_with_name("Save Station")
     target = landing_site.node_with_name("Door to Service Access")
 

@@ -1,0 +1,1123 @@
+----------------
+Transport to Tallon Overworld South
+Extra - asset_id: 1125030300
+> Door to Quarry Access; Heals? False
+  * Wave Door to Quarry Access/Door to Transport to Tallon Overworld South
+  > Elevator to Tallon Overworld - Transport to Phazon Mines East
+      Trivial
+
+> Elevator to Tallon Overworld - Transport to Phazon Mines East; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Phazon Mines East
+  > Door to Quarry Access
+      Trivial
+
+----------------
+Quarry Access
+Extra - asset_id: 1758230360
+> Door to Main Quarry; Heals? False
+  * Wave Door to Main Quarry/Door to Quarry Access
+  > Door to Transport to Tallon Overworld South
+      Trivial
+
+> Door to Transport to Tallon Overworld South; Heals? False; Spawn Point
+  * Wave Door to Transport to Tallon Overworld South/Door to Quarry Access
+  > Door to Main Quarry
+      Trivial
+
+----------------
+Main Quarry
+Extra - asset_id: 1681720207
+> Door to Waste Disposal; Heals? False
+  * Ice Door to Waste Disposal/Door to Main Quarry
+  > Door to Quarry Access
+      Trivial
+  > Crane Platform
+      Grapple Beam
+
+> Door to Quarry Access; Heals? False; Spawn Point
+  * Wave Door to Quarry Access/Door to Main Quarry
+  > Door to Waste Disposal
+      Grapple Beam and Space Jump Boots
+  > Door to Save Station Mines A
+      Any of the following:
+          Space Jump Boots or Movement (Beginner)
+          Morph Ball and Spider Ball
+  > Door to Security Access A
+      After Main Quarry Barrier
+  > Event - Main Quarry Barrier Deactivated
+      Scan Visor
+  > Crane Platform
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+> Door to Save Station Mines A; Heals? False
+  * Wave Door to Save Station Mines A/Door to Main Quarry
+  > Door to Quarry Access
+      Trivial
+
+> Door to Security Access A; Heals? False
+  * Ice Door to Security Access A/Door to Main Quarry
+  > Door to Quarry Access
+      After Main Quarry Barrier or Enabled Backwards Upper Mines
+
+> Pickup (Missile); Heals? False
+  * Pickup 73; Major Location? False
+  > Crane Platform
+      Trivial
+
+> Event - Main Quarry Barrier Deactivated; Heals? False
+  * Event Main Quarry Barrier
+  > Door to Quarry Access
+      Trivial
+
+> Crane Platform; Heals? False
+  > Door to Waste Disposal
+      Any of the following:
+          Grapple Beam
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  R-Jump (Intermediate)
+                  L-Jump (Beginner) and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+                  Scan Visor and Combat/Scan Dash (Beginner)
+          Scan Visor and Combat/Scan Dash (Advanced)
+  > Door to Quarry Access
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Wave Beam and Scan Visor
+          Thermal Visor or Invisible Objects (Beginner)
+          Any of the following:
+              Morph Ball Bomb and Morph Ball and Spider Ball
+              Space Jump Boots and L-Jump (Beginner) and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+
+----------------
+Waste Disposal
+Extra - asset_id: 665031095
+> Door to Main Quarry; Heals? False
+  * Ice Door to Main Quarry/Door to Waste Disposal
+  > Door to Ore Processing
+      Morph Ball Bomb and Morph Ball
+
+> Door to Ore Processing; Heals? False; Spawn Point
+  * Ice Door to Ore Processing/Door to Waste Disposal
+  > Door to Main Quarry
+      Morph Ball Bomb and Morph Ball
+
+----------------
+Save Station Mines A
+Extra - asset_id: 907887024
+> Door to Main Quarry; Heals? True
+  * Wave Door to Main Quarry/Door to Save Station Mines A
+  > Save Station
+      After Phazon Mines Save Station A Barrier
+  > Event - Save Station A Barrier Opened
+      Scan Visor
+
+> Save Station; Heals? True; Spawn Point
+  > Door to Main Quarry
+      After Phazon Mines Save Station A Barrier
+
+> Event - Save Station A Barrier Opened; Heals? False
+  * Event Phazon Mines Save Station A Barrier
+  > Door to Main Quarry
+      Trivial
+
+----------------
+Security Access A
+Extra - asset_id: 3345300114
+> Door to Main Quarry; Heals? False; Spawn Point
+  * Ice Door to Main Quarry/Door to Security Access A
+  > Door to Mine Security Station
+      Trivial
+  > Pickup (Missile)
+      Power Bomb and Morph Ball
+
+> Door to Mine Security Station; Heals? False
+  * Ice Door to Mine Security Station/Door to Security Access A
+  > Door to Main Quarry
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Pickup 74; Major Location? False
+  > Door to Main Quarry
+      Trivial
+
+----------------
+Ore Processing
+Extra - asset_id: 2547167990
+> Door to Research Access; Heals? False
+  * Ice Door to Research Access/Door to Ore Processing
+  > Door to Elevator Access A
+      Any of the following:
+          Morph Ball Bomb and Morph Ball and Spider Ball
+          Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+
+> Door to Storage Depot B; Heals? False
+  * Ice Door to Storage Depot B/Door to Ore Processing
+  > Door to Waste Disposal
+      Any of the following:
+          Grapple Beam or Standable Terrain (Intermediate)
+          Space Jump Boots and R-Jump (Beginner)
+  > Door to Elevator Access A
+      Trivial
+
+> Door to Waste Disposal; Heals? False
+  * Ice Door to Waste Disposal/Door to Ore Processing
+  > Door to Storage Depot B
+      Any of the following:
+          Grapple Beam or Standable Terrain (Beginner)
+          All of the following:
+              Space Jump Boots
+              L-Jump (Beginner) or R-Jump (Beginner)
+          Scan Visor and Combat/Scan Dash (Intermediate)
+  > Door to Elevator Access A
+      Trivial
+
+> Door to Elevator Access A; Heals? False; Spawn Point
+  * Ice Door to Elevator Access A/Door to Ore Processing
+  > Door to Research Access
+      Trivial
+  > Door to Storage Depot B
+      Any of the following:
+          Grapple Beam
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Morph Ball Bomb and Power Bomb and Morph Ball and Spider Ball
+                  Standable Terrain (Intermediate) and R-Jump (Intermediate)
+
+----------------
+Mine Security Station
+Extra - asset_id: 2507085138
+> Door to Security Access A; Heals? False; Spawn Point
+  * Ice Door to Security Access A/Door to Mine Security Station
+  > Door to Security Access B
+      All of the following:
+          Wave Beam
+          Any of the following:
+              Charge Beam or Combat (Advanced)
+              Combat (Intermediate) and Normal Damage ≥ 200
+
+> Door to Security Access B; Heals? False
+  * Wave Door to Security Access B/Door to Mine Security Station
+  > Door to Security Access A
+      All of the following:
+          Wave Beam
+          Any of the following:
+              Charge Beam or Combat (Advanced)
+              Combat (Intermediate) and Normal Damage ≥ 200
+  > Door to Storage Depot A
+      After Mine Security Station Barrier
+  > Event - Mine Security Station Barrier Opened
+      Scan Visor and Power Bomb and Morph Ball
+
+> Door to Storage Depot A; Heals? False
+  * Plasma Door to Storage Depot A/Door to Mine Security Station
+  > Door to Security Access B
+      After Mine Security Station Barrier
+
+> Event - Mine Security Station Barrier Opened; Heals? False
+  * Event Mine Security Station Barrier
+  > Door to Security Access B
+      Trivial
+
+----------------
+Research Access
+Extra - asset_id: 1128703815
+> Door to Ore Processing; Heals? False; Spawn Point
+  * Ice Door to Ore Processing/Door to Research Access
+  > Door to Elite Research
+      Any of the following:
+          Morph Ball and Spider Ball
+          Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Advanced)
+
+> Door to Elite Research; Heals? False
+  * Ice Door to Elite Research/Door to Research Access
+  > Door to Ore Processing
+      Trivial
+
+----------------
+Storage Depot B
+Extra - asset_id: 3818665003
+> Door to Ore Processing; Heals? False; Spawn Point
+  * Ice Door to Ore Processing/Door to Storage Depot B
+  > Event - Storage Depot B Item
+      Trivial
+
+> Pickup (Grapple Beam); Heals? False
+  * Pickup 75; Major Location? True
+  > Door to Ore Processing
+      Trivial
+
+> Event - Storage Depot B Item; Heals? False
+  * Event Storage Depot B Item
+  > Pickup (Grapple Beam)
+      Trivial
+
+----------------
+Elevator Access A
+Extra - asset_id: 639736833
+> Door to Ore Processing; Heals? False; Spawn Point
+  * Ice Door to Ore Processing/Door to Elevator Access A
+  > Door to Elevator A
+      Trivial
+
+> Door to Elevator A; Heals? False
+  * Ice Door to Elevator A/Door to Elevator Access A
+  > Door to Ore Processing
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              Wave Beam and Morph Ball Bomb and Space Jump Boots and Standable Terrain (Expert) and Bomb Space Jump (Advanced)
+
+----------------
+Security Access B
+Extra - asset_id: 2718040532
+> Door to Elite Research; Heals? False
+  * Ice Door to Elite Research/Door to Security Access B
+  > Door to Mine Security Station
+      Trivial
+
+> Door to Mine Security Station; Heals? False; Spawn Point
+  * Wave Door to Mine Security Station/Door to Security Access B
+  > Door to Elite Research
+      Trivial
+
+----------------
+Storage Depot A
+Extra - asset_id: 902158134
+> Door to Mine Security Station; Heals? False; Spawn Point
+  * Plasma Door to Mine Security Station/Door to Storage Depot A
+  > Pickup (Flamethrower)
+      Trivial
+
+> Pickup (Flamethrower); Heals? False
+  * Pickup 76; Major Location? True
+  > Door to Mine Security Station
+      Trivial
+
+----------------
+Elite Research
+Extra - asset_id: 2325199700
+> Door to Research Access; Heals? False
+  * Ice Door to Research Access/Door to Elite Research
+  > Top Floor
+      Any of the following:
+          After Elite Research Rock Wall
+          Morph Ball and Boost Ball and Clip Through Objects (Beginner)
+
+> Door to Security Access B; Heals? False; Spawn Point
+  * Ice Door to Security Access B/Door to Elite Research
+  > Pickup (Artifact of Warrior)
+      All of the following:
+          Power Bomb and Morph Ball
+          After Invisible Drone or Enabled Phazon Elite without Dynamo
+          Charge Beam or Combat (Beginner)
+  > Top Floor
+      All of the following:
+          Scan Visor
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+
+> Event - Rock Wall in Elite Research Destroyed; Heals? False
+  * Event Elite Research Rock Wall
+  > Top Floor
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Pickup 78; Major Location? False
+  > Top Floor
+      Space Jump Boots or Standable Terrain (Beginner)
+
+> Pickup (Artifact of Warrior); Heals? False
+  * Pickup 77; Major Location? True
+  > Door to Security Access B
+      Trivial
+
+> Top Floor; Heals? False
+  > Door to Research Access
+      After Elite Research Rock Wall
+  > Door to Security Access B
+      Trivial
+  > Event - Rock Wall in Elite Research Destroyed
+      All of the following:
+          Scan Visor and Morph Ball
+          Any of the following:
+              Morph Ball Bomb and Spinners without Boost (Advanced)
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      Power Bomb and Knowledge (Beginner)
+  > Pickup (Missile)
+      All of the following:
+          After Elite Research Rock Wall
+          Space Jump Boots or Standable Terrain (Beginner)
+
+----------------
+Elevator A
+Extra - asset_id: 21425475
+> Door to Elevator Access A; Heals? False; Spawn Point
+  * Ice Door to Elevator Access A/Door to Elevator A
+  > Door to Elite Control Access
+      Scan Visor
+
+> Door to Elite Control Access; Heals? False
+  * Ice Door to Elite Control Access/Door to Elevator A
+  > Door to Elevator Access A
+      Trivial
+
+----------------
+Elite Control Access
+Extra - asset_id: 2307445195
+> Door to Elevator A; Heals? False; Spawn Point
+  * Ice Door to Elevator A/Door to Elite Control Access
+  > Door to Elite Control
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Complex Bomb Jump (Expert)
+
+> Door to Elite Control; Heals? False
+  * Wave Door to Elite Control/Door to Elite Control Access
+  > Door to Elevator A
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Pickup 79; Major Location? False
+  > Door to Elite Control
+      Trivial
+
+----------------
+Elite Control
+Extra - asset_id: 3305828730
+> Door to Maintenance Tunnel; Heals? False
+  * Ice Door to Maintenance Tunnel/Door to Elite Control
+  > Door to Elite Control Access
+      Trivial
+
+> Door to Elite Control Access; Heals? False; Spawn Point
+  * Wave Door to Elite Control Access/Door to Elite Control
+  > Door to Maintenance Tunnel
+      Trivial
+  > Door to Ventilation Shaft
+      After Elite Control Barriers
+  > Event - Elite Control Barriers Lowered
+      Scan Visor
+
+> Door to Ventilation Shaft; Heals? False
+  * Ice Door to Ventilation Shaft/Door to Elite Control
+  > Door to Elite Control Access
+      After Elite Control Barriers
+  > Event - Elite Control Barriers Lowered
+      Scan Visor and Enabled Backwards Lower Mines
+
+> Event - Elite Control Barriers Lowered; Heals? False
+  * Event Elite Control Barriers
+  > Door to Elite Control Access
+      Trivial
+
+----------------
+Maintenance Tunnel
+Extra - asset_id: 3975146125
+> Door to Elite Control; Heals? False; Spawn Point
+  * Ice Door to Elite Control/Door to Maintenance Tunnel
+  > Door to Phazon Processing Center
+      Power Bomb and Morph Ball
+
+> Door to Phazon Processing Center; Heals? False
+  * Ice Door to Phazon Processing Center/Door to Maintenance Tunnel
+  > Door to Elite Control
+      Power Bomb and Morph Ball
+
+----------------
+Ventilation Shaft
+Extra - asset_id: 2423298732
+> Door to Omega Research; Heals? False
+  * Ice Door to Omega Research/Door to Ventilation Shaft
+  > Door to Elite Control
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Boost Ball
+                  All of the following:
+                      Morph Ball Bomb
+                      Any of the following:
+                          Complex Bomb Jump (Hypermode)
+                          Space Jump Boots and Complex Bomb Jump (Expert)
+          Space Jump Boots and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate)
+  > Pickup (Energy Tank)
+      Scan Visor and Power Bomb and Morph Ball
+
+> Door to Elite Control; Heals? False; Spawn Point
+  * Ice Door to Elite Control/Door to Ventilation Shaft
+  > Door to Omega Research
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 80; Major Location? False
+  > Door to Omega Research
+      Trivial
+
+----------------
+Phazon Processing Center
+Extra - asset_id: 2905505465
+> Door to Transport Access; Heals? False
+  * Ice Door to Transport Access/Door to Phazon Processing Center
+  > Door to Maintenance Tunnel
+      Trivial
+
+> Door to Maintenance Tunnel; Heals? False; Spawn Point
+  * Ice Door to Maintenance Tunnel/Door to Phazon Processing Center
+  > Door to Transport Access
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Standable Terrain (Intermediate)
+                  Morph Ball and Spider Ball
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Spider Ball and Standable Terrain (Expert) and Bomb Jump (Expert)
+                  L-Jump (Expert) and Standable Terrain (Hypermode) and Complex Bomb Jump (Hypermode)
+  > Door to Processing Center Access
+      Any of the following:
+          Phazon Suit
+          Movement (Beginner) and Phazon Damage ≥ 45
+  > Pickup (Missile)
+      Power Bomb and Morph Ball
+
+> Door to Processing Center Access; Heals? False
+  * Plasma Door to Processing Center Access/Door to Phazon Processing Center
+  > Door to Maintenance Tunnel
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Phazon Suit
+                  Movement (Beginner) and Phazon Damage ≥ 45
+              Any of the following:
+                  Standable Terrain (Beginner)
+                  Morph Ball Bomb and Morph Ball and Spider Ball
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Phazon Damage ≥ 65
+              Any of the following:
+                  L-Jump (Advanced) or Standable Terrain (Advanced) or Bomb Space Jump (Expert) or Complex Bomb Jump (Expert)
+                  Spider Ball and L-Jump (Advanced) and Standable Terrain (Advanced) and Bomb Jump (Advanced)
+  > Pickup (Missile)
+      All of the following:
+          Power Bomb and Space Jump Boots and Morph Ball
+          Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Pickup 81; Major Location? False
+  > Door to Processing Center Access
+      Trivial
+
+----------------
+Omega Research
+Extra - asset_id: 1060593356
+> Door to Map Station Mines; Heals? False
+  * Ice Door to Map Station Mines/Door to Omega Research
+  > Door to Ventilation Shaft
+      Power Bomb and Morph Ball
+
+> Door to Ventilation Shaft; Heals? False; Spawn Point
+  * Ice Door to Ventilation Shaft/Door to Omega Research
+  > Door to Map Station Mines
+      Power Bomb and Morph Ball
+  > Door to Dynamo Access
+      Trivial
+
+> Door to Dynamo Access; Heals? False
+  * Ice Door to Dynamo Access/Door to Omega Research
+  > Door to Ventilation Shaft
+      All of the following:
+          Scan Visor or After Invisible Drone
+          Any of the following:
+              Space Jump Boots or Slope Jump (Intermediate)
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+----------------
+Transport Access
+Extra - asset_id: 1120185073
+> Door to Phazon Processing Center; Heals? False; Spawn Point
+  * Ice Door to Phazon Processing Center/Door to Transport Access
+  > Door to Transport to Magmoor Caverns South
+      Grapple Beam or Space Jump Boots or Slope Jump (Beginner)
+
+> Door to Transport to Magmoor Caverns South; Heals? False
+  * Ice Door to Transport to Magmoor Caverns South/Door to Transport Access
+  > Door to Phazon Processing Center
+      Grapple Beam or Space Jump Boots or Slope Jump (Beginner)
+
+----------------
+Processing Center Access
+Extra - asset_id: 3983402811
+> Door to Phazon Processing Center; Heals? False
+  * Plasma Door to Phazon Processing Center/Door to Processing Center Access
+  > Door to Elite Quarters
+      All of the following:
+          After Processing Center Access Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 99
+
+> Door to Elite Quarters; Heals? False; Spawn Point
+  * Plasma Door to Elite Quarters/Door to Processing Center Access
+  > Door to Phazon Processing Center
+      All of the following:
+          After Processing Center Access Barrier
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 199
+              Movement (Intermediate) and Phazon Damage ≥ 99
+  > Event - Processing Center Access Barrier Opened
+      Scan Visor
+  > Pickup (Energy Tank)
+      Trivial
+
+> Event - Processing Center Access Barrier Opened; Heals? False
+  * Event Processing Center Access Barrier
+  > Door to Elite Quarters
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 82; Major Location? False
+  > Door to Elite Quarters
+      Trivial
+
+----------------
+Map Station Mines
+Extra - asset_id: 428864988
+> Door to Omega Research; Heals? False; Spawn Point
+  * Ice Door to Omega Research/Door to Map Station Mines
+  > Map Station
+      Trivial
+
+> Map Station; Heals? False
+  > Door to Omega Research
+      Trivial
+
+----------------
+Dynamo Access
+Extra - asset_id: 4111966698
+> Door to Central Dynamo; Heals? False; Spawn Point
+  * Ice Door to Central Dynamo/Door to Dynamo Access
+  > Door to Omega Research
+      Trivial
+
+> Door to Omega Research; Heals? False
+  * Ice Door to Omega Research/Door to Dynamo Access
+  > Door to Central Dynamo
+      Trivial
+
+----------------
+Transport to Magmoor Caverns South
+Extra - asset_id: 3804417848
+> Door to Transport Access; Heals? False
+  * Ice Door to Transport Access/Door to Transport to Magmoor Caverns South
+  > Elevator - Transport to Phazon Mines West
+      Trivial
+
+> Elevator - Transport to Phazon Mines West; Heals? False; Spawn Point
+  * Teleporter to Magmoor Caverns - Transport to Phazon Mines West
+  > Door to Transport Access
+      Trivial
+
+----------------
+Elite Quarters
+Extra - asset_id: 961790803
+> Door to Elite Quarters Access; Heals? False; Spawn Point
+  * Plasma Door to Elite Quarters Access/Door to Elite Quarters
+  > Door to Processing Center Access
+      Scan Visor and After Omega Pirate
+  > Fight Trigger
+      Trivial
+
+> Door to Processing Center Access; Heals? False
+  * Plasma Door to Processing Center Access/Door to Elite Quarters
+  > Door to Elite Quarters Access
+      After Omega Pirate
+  > Fight Trigger
+      Trivial
+
+> Event - Omega Pirate; Heals? False
+  * Event Omega Pirate
+  > Pickup (Phazon Suit)
+      Trivial
+
+> Pickup (Phazon Suit); Heals? False
+  * Pickup 83; Major Location? True
+  > Door to Elite Quarters Access
+      Trivial
+
+> Fight Trigger; Heals? False
+  > Event - Omega Pirate
+      All of the following:
+          X-Ray Visor
+          Any of the following:
+              Combat (Hypermode)
+              Charge Beam and Normal Damage ≥ 300 and Have all Beams
+              All of the following:
+                  Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+                  Any of the following:
+                      # 1-Cycle Strats
+                      Plasma Beam
+                      Missile ≥ 30 and Super Missile
+              Power Bomb ≥ 3 and Morph Ball and Combat (Advanced)
+              Combat (Expert) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 800
+
+----------------
+Central Dynamo
+Extra - asset_id: 4272124642
+> Door to Dynamo Access; Heals? False; Spawn Point
+  * Ice Door to Dynamo Access/Door to Central Dynamo
+  > Door to Quarantine Access A
+      Power Bomb and Morph Ball and Knowledge (Beginner)
+  > Door to Save Station Mines B
+      After Invisible Drone
+  > Event - Security Drone
+      Combat (Beginner) or Normal Damage ≥ 100
+
+> Door to Quarantine Access A; Heals? False
+  * Ice Door to Quarantine Access A/Door to Central Dynamo
+  > Door to Save Station Mines B
+      Power Bomb and Morph Ball
+
+> Door to Save Station Mines B; Heals? False
+  * Ice Door to Save Station Mines B/Door to Central Dynamo
+  > Door to Dynamo Access
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Standable Terrain (Intermediate) and Complex Bomb Jump (Expert)
+  > Door to Quarantine Access A
+      Power Bomb and Morph Ball and After Invisible Drone
+
+> Event - Security Drone; Heals? False
+  * Event Invisible Drone
+  > Pickup (Main Power Bombs)
+      Morph Ball Bomb and Morph Ball
+
+> Pickup (Main Power Bombs); Heals? False
+  * Pickup 84; Major Location? True
+  > Door to Save Station Mines B
+      Trivial
+
+----------------
+Elite Quarters Access
+Extra - asset_id: 1899248703
+> Door to Metroid Quarantine B; Heals? False; Spawn Point
+  * Plasma Door to Metroid Quarantine B/Door to Elite Quarters Access
+  > Door to Elite Quarters
+      After Elite Quarters Access Barrier
+  > Event - Elite Quarters Access Barrier Opened
+      Plasma Beam
+
+> Door to Elite Quarters; Heals? False
+  * Plasma Door to Elite Quarters/Door to Elite Quarters Access
+  > Door to Metroid Quarantine B
+      After Elite Quarters Access Barrier
+  > Event - Elite Quarters Access Barrier Opened
+      Enabled Backwards Lower Mines
+
+> Event - Elite Quarters Access Barrier Opened; Heals? False
+  * Event Elite Quarters Access Barrier
+  > Door to Metroid Quarantine B
+      Trivial
+
+----------------
+Quarantine Access A
+Extra - asset_id: 1522461728
+> Door to Central Dynamo; Heals? False; Spawn Point
+  * Ice Door to Central Dynamo/Door to Quarantine Access A
+  > Door to Metroid Quarantine A
+      Trivial
+
+> Door to Metroid Quarantine A; Heals? False
+  * Wave Door to Metroid Quarantine A/Door to Quarantine Access A
+  > Door to Central Dynamo
+      Trivial
+
+----------------
+Save Station Mines B
+Extra - asset_id: 2077614267
+> Door to Central Dynamo; Heals? False
+  * Ice Door to Central Dynamo/Door to Save Station Mines B
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point
+  > Door to Central Dynamo
+      Trivial
+
+----------------
+Metroid Quarantine B
+Extra - asset_id: 3141205070
+> Door to Quarantine Access B; Heals? False; Spawn Point
+  * Plasma Door to Quarantine Access B/Door to Metroid Quarantine B
+  > Front of Barrier
+      Any of the following:
+          All of the following:
+              Space Jump Boots and Slope Jump (Beginner) and Standable Terrain (Intermediate)
+              Grapple Beam or L-Jump (Intermediate)
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  All of the following:
+                      Spider Ball
+                      Any of the following:
+                          Grapple Beam
+                          Scan Visor and Combat/Scan Dash (Expert)
+                  Scan Visor and Morph Ball Bomb and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate) and Complex Bomb Jump (Expert)
+
+> Door to Elite Quarters Access; Heals? False
+  * Plasma Door to Elite Quarters Access/Door to Metroid Quarantine B
+  > Door to Save Station Mines C
+      Trivial
+
+> Door to Save Station Mines C; Heals? False
+  * Plasma Door to Save Station Mines C/Door to Metroid Quarantine B
+  > Door to Quarantine Access B
+      All of the following:
+          Morph Ball and Boost Ball and Clip Through Objects (Advanced)
+          Any of the following:
+              Space Jump Boots and Standable Terrain (Advanced) and Single Room Out of Bounds (Advanced)
+              Morph Ball Bomb and Standable Terrain (Hypermode) and Bomb Jump (Advanced) and Single Room Out of Bounds (Expert) and Complex Bomb Jump (Expert)
+  > Door to Elite Quarters Access
+      Any of the following:
+          Space Jump Boots or Slope Jump (Beginner)
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          Scan Visor and Combat/Scan Dash (Beginner) and Standable Terrain (Beginner)
+  > Pickup (Missile)
+      Shoot Super Missile
+  > Event - Metroid Quarantine B Barrier Lowered
+      Scan Visor and Enabled Backwards Lower Mines
+  > Front of Barrier
+      After Metroid Quarantine B Barrier
+
+> Pickup (Missile); Heals? False
+  * Pickup 85; Major Location? False
+  > Door to Save Station Mines C
+      Trivial
+
+> Event - Metroid Quarantine B Barrier Lowered; Heals? False
+  * Event Metroid Quarantine B Barrier
+  > Front of Barrier
+      Trivial
+
+> Front of Barrier; Heals? False
+  > Door to Quarantine Access B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Beginner) and Phazon Damage ≥ 50
+  > Door to Save Station Mines C
+      After Metroid Quarantine B Barrier
+  > Event - Metroid Quarantine B Barrier Lowered
+      Scan Visor
+
+----------------
+Metroid Quarantine A
+Extra - asset_id: 4211416922
+> Door to Quarantine Access A; Heals? False; Spawn Point
+  * Wave Door to Quarantine Access A/Door to Metroid Quarantine A
+  > Event - Metroid Quarantine A Barrier Lowered
+      Scan Visor
+  > Front of Spider Track
+      All of the following:
+          After Metroid Quarantine A Barrier
+          Any of the following:
+              X-Ray Visor or Invisible Objects (Intermediate)
+              Thermal Visor and Invisible Objects (Beginner)
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and L-Jump (Advanced) and Bomb Jump (Expert)
+
+> Door to Elevator Access B; Heals? False
+  * Ice Door to Elevator Access B/Door to Metroid Quarantine A
+  > Door to Quarantine Access A
+      All of the following:
+          After Metroid Quarantine A Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 200
+              Slope Jump (Intermediate) and Phazon Damage ≥ 150
+  > Front of Spider Track
+      Any of the following:
+          Space Jump Boots or Combat/Scan Dash (Advanced)
+          Morph Ball Bomb and Morph Ball and Spider Ball
+
+> Pickup (Missile); Heals? False
+  * Pickup 86; Major Location? False
+  > Door to Elevator Access B
+      Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner)
+  > Front of Spider Track
+      Trivial
+
+> Event - Metroid Quarantine A Barrier Lowered; Heals? False
+  * Event Metroid Quarantine A Barrier
+  > Door to Quarantine Access A
+      Trivial
+
+> Front of Spider Track; Heals? False
+  > Door to Quarantine Access A
+      All of the following:
+          After Metroid Quarantine A Barrier
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      X-Ray Visor or Invisible Objects (Intermediate)
+                      Thermal Visor and Invisible Objects (Beginner)
+              Slope Jump (Advanced) and Phazon Damage ≥ 99
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Phazon Damage ≥ 75
+              Standable Terrain (Advanced) and Phazon Damage ≥ 55
+  > Door to Elevator Access B
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb and Spider Ball
+              All of the following:
+                  Scan Visor
+                  Any of the following:
+                      Power Bomb ≥ 2 and Combat/Scan Dash (Hypermode) and Standable Terrain (Expert)
+                      Power Bomb and Space Jump Boots and Combat/Scan Dash (Advanced) and Slope Jump (Advanced) and Standable Terrain (Advanced)
+  > Pickup (Missile)
+      All of the following:
+          Power Bomb ≥ 2 and Morph Ball
+          Any of the following:
+              Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+              All of the following:
+                  Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
+                  Spider Ball or Movement (Beginner)
+
+----------------
+Quarantine Access B
+Extra - asset_id: 340985721
+> Door to Metroid Quarantine B; Heals? False
+  * Plasma Door to Metroid Quarantine B/Door to Quarantine Access B
+  > Door to Fungal Hall B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          X-Ray Visor and Combat/Scan Dash (Beginner) and L-Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Advanced) and Phazon Damage ≥ 300
+
+> Door to Fungal Hall B; Heals? False; Spawn Point
+  * Plasma Door to Fungal Hall B/Door to Quarantine Access B
+  > Door to Metroid Quarantine B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Beginner) and Phazon Damage ≥ 100
+
+----------------
+Save Station Mines C
+Extra - asset_id: 1724960771
+> Door to Metroid Quarantine B; Heals? False
+  * Plasma Door to Metroid Quarantine B/Door to Save Station Mines C
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point
+  > Door to Metroid Quarantine B
+      Trivial
+
+----------------
+Elevator Access B
+Extra - asset_id: 1071241062
+> Door to Metroid Quarantine A; Heals? False; Spawn Point
+  * Ice Door to Metroid Quarantine A/Door to Elevator Access B
+  > Door to Elevator B
+      Trivial
+
+> Door to Elevator B; Heals? False
+  * Plasma Door to Elevator B/Door to Elevator Access B
+  > Door to Metroid Quarantine A
+      Trivial
+
+----------------
+Fungal Hall B
+Extra - asset_id: 3964125762
+> Door to Missile Station Mines; Heals? False
+  * Plasma Door to Missile Station Mines/Door to Fungal Hall B
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+> Door to Quarantine Access B; Heals? False
+  * Plasma Door to Quarantine Access B/Door to Fungal Hall B
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+> Door to Phazon Mining Tunnel; Heals? False; Spawn Point
+  * Plasma Door to Phazon Mining Tunnel/Door to Fungal Hall B
+  > Door to Missile Station Mines
+      All of the following:
+          Space Jump Boots
+          Grapple Beam or Slope Jump (Intermediate)
+  > Door to Quarantine Access B
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Grapple Beam or Combat/Scan Dash (Intermediate) or Slope Jump (Beginner) or Standable Terrain (Beginner)
+          Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert)
+          Ice Beam and Jump Off Enemies (Expert)
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb and Knowledge (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Pickup 87; Major Location? False
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+----------------
+Elevator B
+Extra - asset_id: 3900266464
+> Door to Elevator Access B; Heals? False; Spawn Point
+  * Plasma Door to Elevator Access B/Door to Elevator B
+  > Door to Fungal Hall Access
+      Scan Visor
+
+> Door to Fungal Hall Access; Heals? False
+  * Plasma Door to Fungal Hall Access/Door to Elevator B
+  > Door to Elevator Access B
+      Trivial
+
+----------------
+Missile Station Mines
+Extra - asset_id: 2961781534
+> Door to Fungal Hall B; Heals? False; Spawn Point
+  * Plasma Door to Fungal Hall B/Door to Missile Station Mines
+  > Missile Station
+      Trivial
+
+> Missile Station; Heals? False
+  > Door to Fungal Hall B
+      Trivial
+
+----------------
+Phazon Mining Tunnel
+Extra - asset_id: 3153742515
+> Door to Fungal Hall B; Heals? False
+  * Plasma Door to Fungal Hall B/Door to Phazon Mining Tunnel
+  > Door to Fungal Hall A
+      All of the following:
+          Power Bomb and Morph Ball
+          Any of the following:
+              Boost Ball
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 30
+  > Pickup (Artifact of Newborn)
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Phazon Suit
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Movement (Intermediate) and Phazon Damage ≥ 1299
+                      Movement (Advanced) and Phazon Damage ≥ 1199
+                      Movement (Expert) and Phazon Damage ≥ 1099
+                      Movement (Hypermode) and Phazon Damage ≥ 999
+
+> Door to Fungal Hall A; Heals? False; Spawn Point
+  * Plasma Door to Fungal Hall A/Door to Phazon Mining Tunnel
+  > Door to Fungal Hall B
+      All of the following:
+          Power Bomb and Morph Ball
+          Any of the following:
+              Boost Ball
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 30
+
+> Pickup (Artifact of Newborn); Heals? False
+  * Pickup 88; Major Location? True
+  > Door to Fungal Hall B
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Phazon Suit
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Movement (Expert) and Phazon Damage ≥ 200
+                      Movement (Advanced) and Phazon Damage ≥ 300
+                      Movement (Intermediate) and Phazon Damage ≥ 400
+
+----------------
+Fungal Hall Access
+Extra - asset_id: 3734860277
+> Door to Fungal Hall A; Heals? False
+  * Plasma Door to Fungal Hall A/Door to Fungal Hall Access
+  > Door to Elevator B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Standable Terrain (Advanced) and Bomb Jump (Advanced)
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 100
+
+> Door to Elevator B; Heals? False; Spawn Point
+  * Plasma Door to Elevator B/Door to Fungal Hall Access
+  > Door to Fungal Hall A
+      Any of the following:
+          Space Jump Boots or Movement (Beginner)
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Pickup 89; Major Location? False
+  > Door to Fungal Hall A
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+  > Door to Elevator B
+      Space Jump Boots
+
+----------------
+Fungal Hall A
+Extra - asset_id: 257062865
+> Door to Phazon Mining Tunnel; Heals? False
+  * Ice Door to Phazon Mining Tunnel/Door to Fungal Hall A
+  > Door to Fungal Hall Access
+      Space Jump Boots or Slope Jump (Beginner)
+
+> Door to Fungal Hall Access; Heals? False; Spawn Point
+  * Ice Door to Fungal Hall Access/Door to Fungal Hall A
+  > Door to Phazon Mining Tunnel
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Grapple Beam or R-Jump (Intermediate)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Combat/Scan Dash (Hypermode)
+                  Grapple Beam and Combat/Scan Dash (Expert)
+

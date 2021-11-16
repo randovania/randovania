@@ -19,7 +19,7 @@ from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import should_have_hint, UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import bootstrap, debug, random_lib
 
 T = TypeVar("T")
@@ -118,8 +118,9 @@ def add_relative_hint(world_list: WorldList,
     }
     if not area_choices:
         return None
+
     area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(),
-                                                             key=lambda a: a[0].area_asset_id)), rng)
+                                                             key=lambda a: a[0].name)), rng)
 
     distance_offset = None
     if not precise_distance:
@@ -298,7 +299,7 @@ def fill_unassigned_hints(patches: GamePatches,
 @dataclasses.dataclass(frozen=True)
 class PlayerPool:
     game: GameDescription
-    configuration: EchoesConfiguration
+    configuration: BaseConfiguration
     patches: GamePatches
     pickups: List[PickupEntry]
 

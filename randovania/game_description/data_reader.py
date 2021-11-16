@@ -1,28 +1,37 @@
+import copy
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
 
+from frozendict import frozendict
+
+from randovania.game_description import schema_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
-from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd, RequirementTemplate
+from randovania.game_description.requirements import (
+    ResourceRequirement, Requirement, RequirementOr, RequirementAnd, RequirementTemplate
+)
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id, \
+from randovania.game_description.resources.search import (
+    MissingResource, find_resource_info_with_id,
     find_resource_info_with_long_name
+)
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection, \
-    DockLockType
-from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import (
+    DockWeakness, DockType, DockWeaknessDatabase, DockConnection, DockLockType
+)
+from randovania.game_description.world.node import (
+    GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
-from randovania.game_description.world.teleporter import Teleporter
+)
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -171,8 +180,10 @@ def read_dock_weakness_database(data: Dict,
         door=door_types,
         morph_ball=morph_ball_types,
         other=[
-            DockWeakness(0, "Other Door", DockLockType.FRONT_ALWAYS_BACK_FREE, Requirement.trivial(),
-                         DockType.OTHER)
+            DockWeakness(0, "Open Passage", DockLockType.FRONT_ALWAYS_BACK_FREE,
+                         Requirement.trivial(), DockType.OTHER),
+            DockWeakness(1, "Not Determined", DockLockType.FRONT_ALWAYS_BACK_FREE,
+                         Requirement.impossible(), DockType.OTHER),
         ],
         portal=portal_types)
 
@@ -186,7 +197,11 @@ class WorldReader:
     dock_weakness_database: DockWeaknessDatabase
     generic_index: int = -1
     current_world: int
+    current_world_name: str
     current_area: int
+    current_area_name: str
+    _world_name_to_asset_id: dict[str, int]
+    _area_name_to_asset_id: dict[str, dict[str, int]]
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -208,75 +223,95 @@ class WorldReader:
             "Command Visor"
         )
 
-    def read_node(self, data: Dict) -> Node:
-        name: str = data["name"]
+    def read_node(self, name: str, data: Dict) -> Node:
         self.generic_index += 1
+
         try:
-            heal: bool = data["heal"]
-            node_type: int = data["node_type"]
             location = None
             if data["coordinates"] is not None:
                 location = location_from_json(data["coordinates"])
 
+            generic_args = {
+                "name": name,
+                "heal": data["heal"],
+                "location": location,
+                "extra": frozendict(data.get("extra", {})),
+                "index": self.generic_index,
+            }
+            node_type: int = data["node_type"]
+
             if node_type == "generic":
-                return GenericNode(name, heal, location, self.generic_index)
+                return GenericNode(**generic_args)
 
             elif node_type == "dock":
-                return DockNode(name, heal, location, self.generic_index, data["dock_index"],
-                                DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
-                                self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
-                                                                                  data["dock_weakness_index"]))
+                return DockNode(
+                    **generic_args,
+                    dock_index=data["dock_index"],
+                    default_connection=DockConnection(
+                        data["connected_area_name"],
+                        data["connected_dock_index"],
+                    ),
+                    default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
+                        DockType(data["dock_type"]),
+                        data["dock_weakness_index"],
+                    ))
 
             elif node_type == "pickup":
-                return PickupNode(name, heal, location, self.generic_index, PickupIndex(data["pickup_index"]),
-                                  data["major_location"])
+                return PickupNode(
+                    **generic_args,
+                    pickup_index=PickupIndex(data["pickup_index"]),
+                    major_location=data["major_location"],
+                )
 
             elif node_type == "teleporter":
-                instance_id = data["teleporter_instance_id"]
-
-                destination_world_asset_id = data["destination_world_asset_id"]
-                destination_area_asset_id = data["destination_area_asset_id"]
-
-                return TeleporterNode(name, heal, location, self.generic_index,
-                                      Teleporter(self.current_world, self.current_area, instance_id),
-                                      AreaLocation(destination_world_asset_id, destination_area_asset_id),
-                                      data["scan_asset_id"],
-                                      data["keep_name_when_vanilla"],
-                                      data["editable"],
-                                      )
+                return TeleporterNode(
+                    **generic_args,
+                    default_connection=AreaIdentifier.from_json(data["destination"]),
+                    keep_name_when_vanilla=data["keep_name_when_vanilla"],
+                    editable=data["editable"],
+                )
 
             elif node_type == "event":
-                return EventNode(name, heal, location, self.generic_index,
-                                 self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
+                return EventNode(
+                    **generic_args,
+                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"])
+                )
 
             elif node_type == "translator_gate":
-                return TranslatorGateNode(name, heal, location, self.generic_index,
-                                          TranslatorGate(data["gate_index"]),
-                                          self._get_scan_visor())
+                return TranslatorGateNode(
+                    **generic_args,
+                    gate=TranslatorGate(data["gate_index"]),
+                    scan_visor=self._get_scan_visor(),
+                )
 
             elif node_type == "logbook":
                 lore_type = LoreType(data["lore_type"])
 
                 if lore_type == LoreType.LUMINOTH_LORE:
-                    required_translator = self.resource_database.get_item(data["extra"])
+                    required_translator = self.resource_database.get_item(data["lore_extra"])
                 else:
                     required_translator = None
 
                 if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-                    hint_index = data["extra"]
+                    hint_index = data["lore_extra"]
                 else:
                     hint_index = None
 
-                return LogbookNode(name, heal, location, self.generic_index, data["string_asset_id"],
-                                   self._get_scan_visor(),
-                                   lore_type,
-                                   required_translator,
-                                   hint_index)
+                return LogbookNode(
+                    **generic_args,
+                    string_asset_id=data["string_asset_id"],
+                    scan_visor=self._get_scan_visor(),
+                    lore_type=lore_type,
+                    required_translator=required_translator,
+                    hint_index=hint_index,
+                )
 
             elif node_type == "player_ship":
-                return PlayerShipNode(name, heal, location, self.generic_index,
-                                      read_requirement(data["is_unlocked"], self.resource_database),
-                                      self._get_command_visor())
+                return PlayerShipNode(
+                    **generic_args,
+                    is_unlocked=read_requirement(data["is_unlocked"], self.resource_database),
+                    item_to_summon=self._get_command_visor(),
+                )
 
             else:
                 raise Exception(f"Unknown type: {node_type}")
@@ -284,14 +319,15 @@ class WorldReader:
         except Exception as e:
             raise Exception(f"In node {name}, got error: {e}")
 
-    def read_area(self, data: Dict) -> Area:
-        self.current_area = data["asset_id"]
-        nodes = read_array(data["nodes"], self.read_node)
+    def read_area(self, area_name: str, data: dict) -> Area:
+        self.current_area = data["extra"]["asset_id"]
+        self.current_area_name = area_name
+        nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
         connections = {}
-        for i, origin_data in enumerate(data["nodes"]):
-            origin = nodes[i]
+        for origin in nodes:
+            origin_data = data["nodes"][origin.name]
             connections[origin] = {}
 
             for target_name, target_requirement in origin_data["connections"].items():
@@ -299,28 +335,43 @@ class WorldReader:
                     the_set = read_requirement(target_requirement, self.resource_database)
                 except MissingResource as e:
                     raise MissingResource(
-                        f"In area {data['name']}, connection from {origin.name} to {target_name} got error: {e}")
+                        f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
 
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
 
-        area_name = data["name"]
         try:
-            return Area(area_name, data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+            return Area(area_name, data["default_node"],
                         data["valid_starting_location"],
-                        nodes, connections)
+                        nodes, connections, data.get("extra"))
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
-    def read_area_list(self, data: List[Dict]) -> List[Area]:
-        return read_array(data, self.read_area)
+    def read_area_list(self, data: dict[str, dict]) -> List[Area]:
+        return [self.read_area(name, item) for name, item in data.items()]
 
     def read_world(self, data: Dict) -> World:
-        self.current_world = data["asset_id"]
-        return World(data["name"], data["dark_name"], data["asset_id"],
-                     self.read_area_list(data["areas"]))
+        self.current_world = data["extra"]["asset_id"]
+        self.current_world_name = data["name"]
+        return World(
+            data["name"],
+            self.read_area_list(data["areas"]),
+            data["extra"]
+        )
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
+        self._world_name_to_asset_id = {
+            world["name"]: world["extra"]["asset_id"]
+            for world in data
+        }
+        self._area_name_to_asset_id = {
+            world["name"]: {
+                name: item["extra"]["asset_id"]
+                for name, item in world["areas"].items()
+            }
+            for world in data
+        }
+
         return WorldList(read_array(data, self.read_world))
 
 
@@ -380,6 +431,8 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
+    data = schema_migration.migrate_to_current(copy.deepcopy(data))
+
     game = RandovaniaGame(data["game"])
 
     resource_database = read_resource_database(game, data["resource_database"])
@@ -389,7 +442,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
-    starting_location = AreaLocation.from_json(data["starting_location"])
+    starting_location = AreaIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 

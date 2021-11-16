@@ -1,0 +1,98 @@
+====================
+Templates
+
+* Shoot Beam:
+      Power Beam or Wide Beam or Plasma Beam or Wave Beam or Hyper Beam
+
+* Shoot Wide Beam:
+      Any of the following:
+          Wide Beam
+          All of the following:
+              Disabled Separate Beam Behaviors
+              Plasma Beam or Wave Beam
+
+* Shoot Plasma Beam:
+      Any of the following:
+          Plasma Beam
+          Wave Beam and Disabled Separate Beam Behaviors
+
+* Shoot Charge Beam:
+      Charge Beam and Shoot Beam
+
+* Shoot Diffusion Beam:
+      Diffusion Beam and Shoot Charge Beam
+
+* Shoot Super Missile:
+      All of the following:
+          Missiles
+          Super Missiles or Ice Missiles
+
+* Shoot Ice Missile:
+      Missiles and Ice Missiles
+
+* Push Wide Beam Block:
+      Wide Beam and Shoot Charge Beam
+
+* Activate Storm Missile Locks:
+      Missiles ≥ 15 and Storm Missiles
+
+* Lay Bomb:
+      All of the following:
+          Morph Ball
+          Bomb or Cross Bomb
+
+* Use Spin Boost:
+      Spin Boost or Spin Boost
+
+====================
+Dock Weaknesses
+
+> DockType.DOOR
+  * (0) Access Open; Lock type: FRONT_ALWAYS_BACK_FREE
+      Trivial
+
+  * (1) Access Closed; Lock type: FRONT_ALWAYS_BACK_FREE
+      Impossible
+
+  * (2) Power Beam Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Shoot Beam
+
+  * (3) Charge Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Charge Beam
+
+  * (4) Wide Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Wide Beam
+
+  * (5) Plasma Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Plasma Beam
+
+  * (6) Wave Beam Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Wave Beam
+
+  * (7) Missile Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Missiles
+
+  * (8) Super Missile Door; Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+      Shoot Super Missile
+
+  * (9) Sensor Lock Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Phantom Cloak
+
+  * (10) Grapple Beam Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Grapple Beam
+
+  * (11) Phase Shift Door; Lock type: FRONT_ALWAYS_BACK_FREE
+      Flash Shift
+
+> DockType.MORPH_BALL_DOOR
+  * (0) Morph Ball Tunnel; Lock type: FRONT_ALWAYS_BACK_FREE
+      Morph Ball
+
+> DockType.OTHER
+  * (0) Open Passage; Lock type: FRONT_ALWAYS_BACK_FREE
+      Trivial
+
+  * (1) Not Determined; Lock type: FRONT_ALWAYS_BACK_FREE
+      Impossible
+
+> DockType.PORTAL

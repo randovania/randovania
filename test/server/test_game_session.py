@@ -11,9 +11,9 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
@@ -176,7 +176,8 @@ def two_player_session_fixture(clean_database):
 def test_game_session_request_pickups_one_action(mock_session_description: PropertyMock,
                                                  mock_get_resource_database: MagicMock,
                                                  mock_get_pickup_target: MagicMock,
-                                                 flask_app, two_player_session, generic_item_category, echoes_resource_database, mocker):
+                                                 flask_app, two_player_session, generic_item_category,
+                                                 echoes_resource_database, mocker):
     # Setup
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
@@ -193,10 +194,10 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
     # Run
     game_session._emit_game_session_pickups_update(sio, membership)
 
-    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason 
-#    from randovania.server.game_session import _base64_encode_pickup
-#    new_data = _base64_encode_pickup(pickup, echoes_resource_database)
-#    print(new_data)
+    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # from randovania.server.game_session import _base64_encode_pickup
+    # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
+    # assert new_data == b""
 
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
@@ -205,7 +206,11 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
         "game_session_pickups_update",
         {
             "game": "prime2",
-            "pickups": [{'provider_name': 'Other Name', 'pickup': 'C@fSK*4Fga_C{97Z0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<QZ0xPfu1zd+0;96GGPyLdkR-Y?wvZvPx-zr3xjeQO;t7BqTb$e(SlU^dSy>1gT^U<K1RMY'}]
+            "pickups": [{
+                'provider_name': 'Other Name',
+                'pickup': ('C?+ZkYioLIdm}4kHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhL'
+                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0uBH')
+            }]
         },
         room=f"game-session-1-1234"
     )
@@ -219,7 +224,8 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
                                               mock_get_resource_database: MagicMock,
                                               mock_get_pickup_target: MagicMock,
                                               mock_emit: MagicMock,
-                                              flask_app, two_player_session, generic_item_category, echoes_resource_database):
+                                              flask_app, two_player_session, generic_item_category,
+                                              echoes_resource_database):
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
@@ -597,7 +603,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     mock_from_json_dict: MagicMock = mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.from_json_dict")
 
-    preset_as_json = json.dumps(preset_manager.default_preset.as_json)
+    preset_as_json = json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user1)
@@ -605,7 +611,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     database.GameSessionPreset.create(session=session, row=1, preset=preset_as_json)
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
 
-    new_preset = preset_manager.default_preset.get_preset()
+    new_preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
     new_preset = dataclasses.replace(new_preset,
                                      configuration=dataclasses.replace(new_preset.configuration,
                                                                        menu_mod=False))

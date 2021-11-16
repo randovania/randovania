@@ -6,8 +6,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.prime1.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.layout.prime2.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 
 
 @pytest.mark.parametrize(["game", "cosmetic_class"], [
@@ -21,7 +21,7 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
 
-    mock_provider_for: MagicMock = mocker.patch("randovania.games.patcher_provider.PatcherProvider.patcher_for_game")
+    mock_provider_for: MagicMock = mocker.patch("randovania.patching.patcher_provider.PatcherProvider.patcher_for_game")
     patcher: MagicMock = mock_provider_for.return_value
 
     args = MagicMock()

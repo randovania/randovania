@@ -1,4 +1,4 @@
-from randovania.games.patchers import claris_patcher_file
+from randovania.games.prime2.patcher import claris_patcher_file
 
 
 def test_create_starting_popup_empty(default_echoes_preset, echoes_resource_database):

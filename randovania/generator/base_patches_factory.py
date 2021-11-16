@@ -3,7 +3,7 @@ import dataclasses
 from random import Random
 
 from randovania.game_description import default_database
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -17,9 +17,9 @@ from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.lib.enum_lib import iterate_enum
-from randovania.layout.prime2.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 class MissingRng(Exception):
@@ -102,7 +102,7 @@ def gate_assignment_for_configuration(configuration: EchoesConfiguration,
 def starting_location_for_configuration(configuration: EchoesConfiguration,
                                         game: GameDescription,
                                         rng: Random,
-                                        ) -> AreaLocation:
+                                        ) -> AreaIdentifier:
     locations = list(configuration.starting_location.locations)
     if len(locations) == 0:
         raise ValueError("No available starting locations")

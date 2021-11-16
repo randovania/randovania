@@ -1,14 +1,16 @@
 import copy
 import dataclasses
 import json
+import pprint
 from pathlib import Path
 
 import pytest
 
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.gui import tracker_window
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.preset_migration import VersionedPreset
-from randovania.layout.prime2.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.fixture(params=[{},
@@ -96,30 +98,34 @@ def test_load_previous_state_success(tmp_path: Path, default_preset):
 
 
 @pytest.mark.parametrize("shuffle_advanced", [False, True])
-def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_preset, shuffle_advanced):
+def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset, shuffle_advanced,
+                              echoes_game_description):
+    configuration = default_echoes_preset.configuration
+    assert isinstance(configuration, EchoesConfiguration)
+
     if shuffle_advanced:
         translator_requirement = copy.copy(
-            default_preset.configuration.translator_configuration.translator_requirement)
+            configuration.translator_configuration.translator_requirement)
         for gate in translator_requirement.keys():
             translator_requirement[gate] = LayoutTranslatorRequirement.RANDOM
             break
 
-        new_gate = dataclasses.replace(default_preset.configuration.translator_configuration,
+        new_gate = dataclasses.replace(configuration.translator_configuration,
                                        translator_requirement=translator_requirement)
         layout_config = dataclasses.replace(
-            default_preset.configuration,
+            configuration,
             elevators=dataclasses.replace(
-                default_preset.configuration.elevators,
+                configuration.elevators,
                 mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
             ),
             translator_configuration=new_gate)
 
-        preset = dataclasses.replace(default_preset.fork(), configuration=layout_config)
+        preset = dataclasses.replace(default_echoes_preset.fork(), configuration=layout_config)
 
     else:
-        preset = default_preset
+        preset = default_echoes_preset
 
-    state = {
+    state: dict = {
         "actions": [
             0,
             4
@@ -175,77 +181,77 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_preset, shuffl
         },
         "elevators": [
             {'data': None,
-             'teleporter': {'area_asset_id': 1473133138,
-                            'instance_id': 122,
-                            'world_asset_id': 1119434212}},
+             'teleporter': {'area_name': 'Transport to Temple Grounds',
+                            'node_name': 'Elevator to Temple Grounds - Transport to Agon Wastes',
+                            'world_name': 'Agon Wastes'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 2806956034,
-                            'instance_id': 1245307,
-                            'world_asset_id': 1119434212}},
+             'teleporter': {'area_name': 'Transport to Torvus Bog',
+                            'node_name': 'Elevator to Torvus Bog - Transport to Agon Wastes',
+                            'world_name': 'Agon Wastes'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3331021649,
-                            'instance_id': 2949235,
-                            'world_asset_id': 1119434212}},
+             'teleporter': {'area_name': 'Transport to Sanctuary Fortress',
+                            'node_name': 'Elevator to Sanctuary Fortress - Transport to Agon Wastes',
+                            'world_name': 'Agon Wastes'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 2556480432,
-                            'instance_id': 393260,
-                            'world_asset_id': 2252328306}},
+             'teleporter': {'area_name': 'Temple Transport C',
+                            'node_name': 'Elevator to Temple Grounds - Temple Transport C',
+                            'world_name': 'Great Temple'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 408633584,
-                            'instance_id': 152,
-                            'world_asset_id': 2252328306}},
+             'teleporter': {'area_name': 'Temple Transport A',
+                            'node_name': 'Elevator to Temple Grounds - Temple Transport A',
+                            'world_name': 'Great Temple'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 2399252740,
-                            'instance_id': 524321,
-                            'world_asset_id': 2252328306}},
+             'teleporter': {'area_name': 'Temple Transport B',
+                            'node_name': 'Elevator to Temple Grounds - Temple Transport B',
+                            'world_name': 'Great Temple'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3528156989,
-                            'instance_id': 38,
-                            'world_asset_id': 464164546}},
+             'teleporter': {'area_name': 'Transport to Temple Grounds',
+                            'node_name': 'Elevator to Temple Grounds - Transport to Sanctuary Fortress',
+                            'world_name': 'Sanctuary Fortress'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 900285955,
-                            'instance_id': 1245332,
-                            'world_asset_id': 464164546}},
+             'teleporter': {'area_name': 'Transport to Agon Wastes',
+                            'node_name': 'Elevator to Agon Wastes - Transport to Sanctuary Fortress',
+                            'world_name': 'Sanctuary Fortress'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3145160350,
-                            'instance_id': 1638535,
-                            'world_asset_id': 464164546}},
+             'teleporter': {'area_name': 'Transport to Torvus Bog',
+                            'node_name': 'Elevator to Torvus Bog - Transport to Sanctuary Fortress',
+                            'world_name': 'Sanctuary Fortress'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 1660916974,
-                            'instance_id': 1572998,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Transport to Agon Wastes',
+                            'node_name': 'Elevator to Agon Wastes - Transport to Temple Grounds',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 1287880522,
-                            'instance_id': 2097251,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Temple Transport B',
+                            'node_name': 'Elevator to Great Temple - Temple Transport B',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3455543403,
-                            'instance_id': 3342446,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Transport to Sanctuary Fortress',
+                            'node_name': 'Elevator to Sanctuary Fortress - Transport to Temple Grounds',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 1345979968,
-                            'instance_id': 3538975,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Temple Transport A',
+                            'node_name': 'Elevator to Great Temple - Temple Transport A',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 2889020216,
-                            'instance_id': 1966093,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Transport to Torvus Bog',
+                            'node_name': 'Elevator to Torvus Bog - Transport to Temple Grounds',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 2918020398,
-                            'instance_id': 589851,
-                            'world_asset_id': 1006255871}},
+             'teleporter': {'area_name': 'Temple Transport C',
+                            'node_name': 'Elevator to Great Temple - Temple Transport C',
+                            'world_name': 'Temple Grounds'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3205424168,
-                            'instance_id': 4522032,
-                            'world_asset_id': 1039999561}},
+             'teleporter': {'area_name': 'Transport to Sanctuary Fortress',
+                            'node_name': 'Elevator to Sanctuary Fortress - Transport to Torvus Bog',
+                            'world_name': 'Torvus Bog'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 1868895730,
-                            'instance_id': 129,
-                            'world_asset_id': 1039999561}},
+             'teleporter': {'area_name': 'Transport to Temple Grounds',
+                            'node_name': 'Elevator to Temple Grounds - Transport to Torvus Bog',
+                            'world_name': 'Torvus Bog'}},
             {'data': None,
-             'teleporter': {'area_asset_id': 3479543630,
-                            'instance_id': 2162826,
-                            'world_asset_id': 1039999561}}
+             'teleporter': {'area_name': 'Transport to Agon Wastes',
+                            'node_name': 'Elevator to Agon Wastes - Transport to Torvus Bog',
+                            'world_name': 'Torvus Bog'}}
         ],
         "translator_gates": {
             "0": None,
@@ -266,15 +272,13 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_preset, shuffl
             '8': None,
             '9': None,
         },
-        "starting_location": {
-            "world_asset_id": 1006255871,
-            "area_asset_id": 1655756413
-        }
+        "starting_location": {'world_name': 'Temple Grounds', 'area_name': 'Landing Site'}
     }
+
     if shuffle_advanced:
         for elevator in state["elevators"]:
-            if elevator["teleporter"]["instance_id"] == 2949235:
-                elevator["data"] = {'area_asset_id': 50083607, 'world_asset_id': 1119434212}
+            if elevator["teleporter"]["node_name"] == "Elevator to Sanctuary Fortress - Transport to Agon Wastes":
+                elevator["data"] = {'area_name': "Agon Energy Controller", 'world_name': "Agon Wastes"}
         state["translator_gates"]['0'] = 97
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")

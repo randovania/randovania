@@ -8,8 +8,9 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
-from randovania.games.prime import (all_prime_dol_patches, prime_items, prime1_dol_patches)
-from randovania.games.prime.prime1_dol_patches import Prime1DolVersion
+from randovania.patching.prime import (all_prime_dol_patches)
+from randovania.games.prime1.patcher import prime_items, prime1_dol_patches
+from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

@@ -1,0 +1,256 @@
+{
+    "name": "SkyTown, Elysia - Seed",
+    "extra": {
+        "asset_id": 10717625015048596485
+    },
+    "areas": {
+        "Landing Site C": {
+            "default_node": "Samus Ship",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 15514523555396225844
+            },
+            "nodes": {
+                "Door to Core Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.4750239849090576,
+                        "y": -47.19825744628906,
+                        "z": 25.594200134277344
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Core Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Samus Ship": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 15,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Samus Ship": {
+                    "node_type": "player_ship",
+                    "heal": true,
+                    "coordinates": null,
+                    "extra": {},
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 78,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Core Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 15,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Core Access": {
+            "default_node": "Door to Landing Site C",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 9032724980754539885
+            },
+            "nodes": {
+                "Door to Elysian Leviathan Core": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6.086796879768372,
+                        "y": -59.0,
+                        "z": 29.999999046325684
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Elysian Leviathan Core",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Landing Site C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Landing Site C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21.0,
+                        "y": 58.0,
+                        "z": 22.500001907348633
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Landing Site C",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Elysian Leviathan Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 6,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elysian Leviathan Core": {
+            "default_node": "Door to Core Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 17766988414710659705
+            },
+            "nodes": {
+                "Door to Core Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.062248945236206055,
+                        "y": 73.01398468017578,
+                        "z": 14.500015258789062
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Core Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Helios": {
+                            "type": "template",
+                            "data": "Enter Hypermode"
+                        }
+                    }
+                },
+                "Teleporter to Elysia": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -96.41,
+                        "z": -0.0
+                    },
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "SkyTown, Elysia - Main",
+                        "area_name": "Main Docking Bay"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": false,
+                    "connections": {}
+                },
+                "Pickup (Hyper Missile)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "pickup_index": 97,
+                    "major_location": true,
+                    "connections": {
+                        "Teleporter to Elysia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 37,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Helios": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "event_index": 10,
+                    "connections": {
+                        "Pickup (Hyper Missile)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

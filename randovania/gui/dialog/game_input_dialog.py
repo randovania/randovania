@@ -5,7 +5,7 @@ from typing import Optional
 from PySide2.QtWidgets import QMessageBox, QDialog, QLabel, QRadioButton
 
 from randovania.games.game import RandovaniaGame
-from randovania.games.patcher import Patcher
+from randovania.patching.patcher import Patcher
 from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options

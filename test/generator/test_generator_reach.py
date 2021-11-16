@@ -21,10 +21,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.generator.generator_reach import (
     GeneratorReach)
+from randovania.generator.item_pool import pool_creator
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.reach_lib import filter_pickup_nodes, collectable_resource_nodes, \
     get_collectable_resource_nodes_of_reach, reach_with_all_safe_resources, advance_reach_with_possible_unsafe_resources
-from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -133,14 +133,14 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     # Setup
     scan_visor = echoes_resource_database.get_item(10)
 
-    node_a = GenericNode("Node A", True, None, 0)
-    node_b = GenericNode("Node B", True, None, 1)
-    node_c = GenericNode("Node C", True, None, 2)
-    translator_node = TranslatorGateNode("Translator Gate", True, None, 3, TranslatorGate(1), scan_visor)
+    node_a = GenericNode("Node A", True, None, {}, 0)
+    node_b = GenericNode("Node B", True, None, {}, 1)
+    node_c = GenericNode("Node C", True, None, {}, 2)
+    translator_node = TranslatorGateNode("Translator Gate", True, None, {}, 3, TranslatorGate(1), scan_visor)
 
     world_list = WorldList([
-        World("Test World", "Test Dark World", 1, [
-            Area("Test Area A", False, 10, 0, True, [node_a, node_b, node_c, translator_node],
+        World("Test World", [
+            Area("Test Area A", 0, True, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),
@@ -156,9 +156,10 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_a: Requirement.trivial(),
                          node_c: Requirement.trivial(),
                      },
-                 }
+                 },
+                 {}
                  )
-        ])
+        ], {})
     ])
     game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, Requirement.impossible(),

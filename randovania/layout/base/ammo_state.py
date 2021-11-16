@@ -13,6 +13,21 @@ class AmmoState(BitPackValue):
     pickup_count: int = 0
     requires_major_item: bool = True
 
+    def check_consistency(self, ammo: Ammo):
+        db = default_database.resource_database_for(ammo.game)
+
+        if len(self.ammo_count) != len(ammo.items):
+            raise ValueError(f"Ammo state has {len(self.ammo_count)} ammo counts, expected {len(ammo.items)}")
+
+        for count, ammo_index in zip(self.ammo_count, ammo.items):
+            ammo_item = db.get_item(ammo_index)
+            if not (0 <= count <= ammo_item.max_capacity):
+                raise ValueError(f"Ammo count for item {ammo_index} of value {count} is not "
+                                 f"in range [0, {ammo_item.max_capacity}].")
+
+        if self.pickup_count < 0:
+            raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
+
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         ammo: Ammo = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
@@ -60,7 +75,7 @@ class AmmoState(BitPackValue):
 
     @property
     def as_json(self) -> dict:
-        result = {}
+        result: dict = {}
 
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)

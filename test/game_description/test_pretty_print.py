@@ -16,7 +16,7 @@ def test_commited_human_readable_description(game: RandovaniaGame, tmp_path):
                  for f in tmp_path.glob("*.txt")}
 
     existing_files = {f.name: f.read_text("utf-8")
-                      for f in randovania.get_data_path().joinpath("json_data", game.value).glob("*.txt")}
+                      for f in game.data_path.joinpath("json_data").glob("*.txt")}
 
     assert new_files == existing_files
 

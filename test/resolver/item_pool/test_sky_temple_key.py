@@ -1,9 +1,10 @@
 import pytest
 
-import randovania.games.prime.echoes_items
+from randovania.games.prime2.patcher import echoes_items
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.generator.item_pool import sky_temple_keys, pickup_creator
-from randovania.layout.prime2.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.prime2.generator.item_pool import sky_temple_keys
+from randovania.generator.item_pool import pickup_creator
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
 def test_sky_temple_key_distribution_logic_all_bosses_valid(echoes_resource_database):
@@ -27,7 +28,7 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(echoes_resource_d
     # Assert
     assert item_pool == []
     assert initial_items == {
-        ItemResourceInfo(randovania.games.prime.echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
+        ItemResourceInfo(echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
                          f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
         for i in range(4, 10)
     }
@@ -48,7 +49,7 @@ def test_sky_temple_key_distribution_logic_with_quantity(echoes_resource_databas
     ]
     assert pickup_assignment == {}
     assert initial_items == {
-        ItemResourceInfo(randovania.games.prime.echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
+        ItemResourceInfo(echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
                          f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
         for i in range(quantity + 1, 10)
     }

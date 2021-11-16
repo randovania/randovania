@@ -1,18 +1,21 @@
 import dataclasses
 from typing import List
+
 from PySide2 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
+from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.base.major_item_state import DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
+
 
 class MetroidPresetItemPool(PresetItemPool):
     _progressive_widgets: List[ProgressiveItemWidget]
@@ -20,11 +23,12 @@ class MetroidPresetItemPool(PresetItemPool):
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         item_database = default_database.item_database_for_game(self.game)
-        
+        game_description = default_database.game_description_for(self.game)
+
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
-        self._create_energy_tank_box()
+        self._create_energy_tank_box(game_description.resource_database.energy_tank)
         self._create_progressive_widgets(item_database)
         self._create_pickup_style_box(size_policy)
         signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
@@ -51,12 +55,12 @@ class MetroidPresetItemPool(PresetItemPool):
         with self._editor as editor:
             editor.set_configuration_field("multi_pickup_placement", value)
 
-    def _create_pickup_style_box(self, sizePolicy):
+    def _create_pickup_style_box(self, size_policy):
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
         self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
-        #widget.Changed.connect(partial(self._on_major_item_updated, widget))
+        # widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
-    def _create_energy_tank_box(self):
+    def _create_energy_tank_box(self, energy_tank_resource: ItemResourceInfo):
         category_box, category_layout, _ = self._boxes_for_category["energy_tank"]
 
         starting_label = QtWidgets.QLabel(category_box)
@@ -64,7 +68,7 @@ class MetroidPresetItemPool(PresetItemPool):
         category_layout.addWidget(starting_label, 0, 0)
 
         self.energy_tank_starting_spinbox = ScrollProtectedSpinBox(category_box)
-        self.energy_tank_starting_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
+        self.energy_tank_starting_spinbox.setMaximum(energy_tank_resource.max_capacity)
         self.energy_tank_starting_spinbox.valueChanged.connect(self._on_update_starting_energy_tank)
         category_layout.addWidget(self.energy_tank_starting_spinbox, 0, 1)
 
@@ -117,6 +121,31 @@ class MetroidPresetItemPool(PresetItemPool):
             all_progressive.append((
                 "Progressive Beam",
                 ("Plasma Beam", "Nova Beam"),
+            ))
+        elif self.game == RandovaniaGame.METROID_DREAD:
+            all_progressive.append((
+                "Progressive Beam",
+                ("Wide Beam", "Plasma Beam", "Wave Beam")
+            ))
+            all_progressive.append((
+                "Progressive Charge Beam",
+                ("Charge Beam", "Diffusion Beam")
+            ))
+            all_progressive.append((
+                "Progressive Missiles",
+                ("Super Missiles", "Ice Missiles")
+            ))
+            all_progressive.append((
+                "Progressive Suit",
+                ("Varia Suit", "Gravity Suit")
+            ))
+            all_progressive.append((
+                "Progressive Bomb",
+                ("Bomb", "Cross Bomb")
+            ))
+            all_progressive.append((
+                "Progressive Spin",
+                ("Spin Boost", "Space Jump")
             ))
 
         for (progressive_item_name, non_progressive_items) in all_progressive:

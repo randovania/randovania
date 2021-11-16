@@ -3,10 +3,11 @@ from typing import List, Callable, FrozenSet, Dict
 
 from PySide2 import QtWidgets, QtCore
 
-from randovania.games.prime import elevators
-from randovania.game_description.world.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.world import World
+from randovania.patching.prime import elevators
 
 
 def dark_world_flags(world: World):
@@ -19,42 +20,44 @@ class AreaListHelper:
     game_description: GameDescription
     during_batch_check_update: bool
 
-    def areas_by_world_from_locations(self, all_area_locations: List[AreaLocation]):
+    def areas_by_world_from_locations(self, all_area_locations: List[AreaIdentifier]
+                                      ) -> tuple[list[World], dict[str, list[Area]]]:
+        world_list = self.game_description.world_list
         worlds = []
         areas_by_world = {}
 
         for location in all_area_locations:
-            world = self.game_description.world_list.world_by_asset_id(location.world_asset_id)
-            if world.world_asset_id not in areas_by_world:
+            world = world_list.world_by_area_location(location)
+            if world.name not in areas_by_world:
                 worlds.append(world)
-                areas_by_world[world.world_asset_id] = []
+                areas_by_world[world.name] = []
 
-            areas_by_world[world.world_asset_id].append(world.area_by_asset_id(location.area_asset_id))
+            areas_by_world[world.name].append(world.area_by_identifier(location))
 
         return worlds, areas_by_world
 
     def create_area_list_selection(self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout,
-                                   all_area_locations: List[AreaLocation],
-                                   on_check: Callable[[List[AreaLocation], bool], None],
+                                   all_area_locations: List[AreaIdentifier],
+                                   on_check: Callable[[List[AreaIdentifier], bool], None],
                                    ):
         world_to_group = {}
         checks_for_world = {}
-        checks_for_area = {}
+        checks_for_area: dict[tuple[str, str], QtWidgets.QCheckBox] = {}
 
         worlds, areas_by_world = self.areas_by_world_from_locations(all_area_locations)
         worlds.sort(key=lambda it: it.name)
 
-        def _on_check_area(c, _):
+        def _on_check_area(c: QtWidgets.QCheckBox, _):
             if not self.during_batch_check_update:
                 on_check([c.area_location], c.isChecked())
 
-        def _on_check_world(c, _):
+        def _on_check_world(c: QtWidgets.QCheckBox, _):
             if not self.during_batch_check_update:
                 world_list = self.game_description.world_list
-                w = world_list.world_by_asset_id(c.world_asset_id)
+                w = world_list.world_with_name(c.world_name)
                 world_areas = [world_list.area_to_area_location(a)
                                for a in w.areas if c.is_dark_world == a.in_dark_aether
-                               if a.area_asset_id in checks_for_area]
+                               if (w.name, a.name) in checks_for_area]
                 on_check(world_areas, c.isChecked())
 
         for row, world in enumerate(worlds):
@@ -62,7 +65,7 @@ class AreaListHelper:
                 group_box = QtWidgets.QGroupBox(parent)
                 world_check = QtWidgets.QCheckBox(group_box)
                 world_check.setText(world.correct_name(is_dark_world))
-                world_check.world_asset_id = world.world_asset_id
+                world_check.world_name = world.name
                 world_check.is_dark_world = is_dark_world
                 world_check.stateChanged.connect(functools.partial(_on_check_world, world_check))
                 world_check.setTristate(True)
@@ -82,21 +85,24 @@ class AreaListHelper:
                 checks_for_world[world.correct_name(is_dark_world)] = world_check
 
         for world in worlds:
-            for area in sorted(areas_by_world[world.world_asset_id], key=lambda a: a.name):
+            for area in sorted(areas_by_world[world.name], key=lambda a: a.name):
+                assert isinstance(area, Area)
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
-                check.setText(elevators.get_elevator_name_or_default(self.game_description.game, area.area_asset_id, area.name))
-                check.area_location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                check.setText(elevators.get_elevator_name_or_default(
+                    self.game_description.game, world.name, area.name, area.name
+                ))
+                check.area_location = AreaIdentifier(world.name, area.name)
                 check.stateChanged.connect(functools.partial(_on_check_area, check))
                 group_box.vertical_layout.addWidget(check)
-                checks_for_area[area.area_asset_id] = check
+                checks_for_area[(world.name, area.name)] = check
 
         return checks_for_world, checks_for_area
 
-    def update_area_list(self, areas_to_check: FrozenSet[AreaLocation],
+    def update_area_list(self, areas_to_check: FrozenSet[AreaIdentifier],
                          invert_check: bool,
                          location_for_world: Dict[str, QtWidgets.QCheckBox],
-                         location_for_area: Dict[int, QtWidgets.QCheckBox],
+                         location_for_area: Dict[tuple[str, str], QtWidgets.QCheckBox],
                          ):
         self.during_batch_check_update = True
 
@@ -110,8 +116,8 @@ class AreaListHelper:
                     continue
 
                 for area in areas:
-                    if area.area_asset_id in location_for_area:
-                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in areas_to_check
+                    if (world.name, area.name) in location_for_area:
+                        is_checked = AreaIdentifier(world.name, area.name) in areas_to_check
                         if invert_check:
                             is_checked = not is_checked
 
@@ -119,7 +125,7 @@ class AreaListHelper:
                             no_areas = False
                         else:
                             all_areas = False
-                        location_for_area[area.area_asset_id].setChecked(is_checked)
+                        location_for_area[(world.name, area.name)].setChecked(is_checked)
                 if all_areas:
                     location_for_world[correct_name].setCheckState(QtCore.Qt.Checked)
                 elif no_areas:

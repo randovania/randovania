@@ -1,15 +1,15 @@
-from typing import Optional, List, Tuple
+from typing import Optional, Tuple
 
-from randovania.game_description import default_database
-from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import corruption_items, echoes_items
-from randovania.games.prime import prime_items
+from randovania.games.prime3.patcher import corruption_items
+from randovania.games.prime2.patcher import echoes_items
+from randovania.games.prime1.patcher import prime_items
 from randovania.layout.base.major_item_state import MajorItemState
 
 

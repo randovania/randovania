@@ -3,24 +3,24 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.games.prime.patcher_file_lib.hints
+import randovania.patching.prime.patcher_file_lib.hints
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair, \
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib import hint_lib
-from randovania.games.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter
-from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
-from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter
+from randovania.games.prime2.patcher import echoes_items
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.patching.prime.patcher_file_lib import hint_lib
+from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter
+from randovania.patching.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
+from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 
 
 @pytest.fixture(name="players_config")
@@ -32,15 +32,17 @@ def _players_configuration() -> PlayersConfiguration:
 
 
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
-    logbook_node = LogbookNode("Logbook A", True, None, 0, asset_id, None, None, None, None)
-    pickup_node = PickupNode("Pickup Node", True, None, 1, pickup_index, True)
+    logbook_node = LogbookNode("Logbook A", True, None, {}, 0, asset_id, None, None, None, None)
+    pickup_node = PickupNode("Pickup Node", True, None, {}, 1, pickup_index, True)
 
     world_list = WorldList([
-        World("World", "Dark World", 5000, [
-            Area("Area", False, 10000, 0, True, [logbook_node, pickup_node], {}),
-            Area("Other Area", False, 20000, 0, True, [PickupNode(f"Pickup {i}", True, None, 1, PickupIndex(i), True)
-                                                       for i in range(pickup_index.index)], {}),
-        ]),
+        World("World", [
+            Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
+            Area("Other Area", 0, True,
+                 [PickupNode(f"Pickup {i}", True, None, {}, 1, PickupIndex(i), True)
+                  for i in range(pickup_index.index)],
+                 {}, {}),
+        ], {}),
     ])
 
     return logbook_node, pickup_node, world_list
@@ -74,8 +76,8 @@ def test_create_hints_nothing(empty_patches, players_config):
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
-                                                                        {0: hint_lib.AreaNamer(world_list)}, rng)
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+                                                                           {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
     message = ("The &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
@@ -98,8 +100,8 @@ def test_create_hints_item_joke(empty_patches, players_config):
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
-                                                                        {0: hint_lib.AreaNamer(world_list)}, rng)
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+                                                                           {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
     joke = "While walking, holding L makes you move faster."
@@ -247,8 +249,8 @@ def test_create_hints_item_location(empty_patches, blank_pickup, item, location,
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
-                                                                        {0: hint_lib.AreaNamer(world_list)}, rng)
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+                                                                           {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
     message = "{} {} can be found in {}.".format(determiner, item_name, location[1])
@@ -289,8 +291,8 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
-                                                                        {0: hint_lib.AreaNamer(world_list)}, rng)
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+                                                                           {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
     message = f"{guardian} is guarding {item[1]}."
@@ -324,8 +326,8 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
     rng = MagicMock()
 
     # Run
-    result = randovania.games.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
-                                                                        {0: hint_lib.AreaNamer(world_list)}, rng)
+    result = randovania.patching.prime.patcher_file_lib.hints.create_hints({0: patches}, players_config, world_list,
+                                                                           {0: hint_lib.AreaNamer(world_list)}, rng)
 
     # Assert
     message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
@@ -389,7 +391,7 @@ def test_create_message_for_hint_relative_area(echoes_game_description, blank_pi
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED, include_owner=False,
                       relative=RelativeDataArea(offset,
-                                                AreaLocation(1039999561, 3822429534),
+                                                AreaIdentifier("Torvus Bog", "Great Bridge"),
                                                 HintRelativeAreaName.NAME)),
         PickupIndex(5)
     )

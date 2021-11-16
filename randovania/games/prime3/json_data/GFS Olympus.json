@@ -1,0 +1,2004 @@
+{
+    "name": "G.F.S. Olympus",
+    "extra": {
+        "asset_id": 4010992506757754735
+    },
+    "areas": {
+        "!!00_gfship_dsrebirth": {
+            "default_node": null,
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 3586057064387876334
+            },
+            "nodes": {
+                "Dock to Gunship": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -64.44425964355469,
+                        "y": 2.5,
+                        "z": 0.0
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Gunship",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            }
+        },
+        "Docking Bay 4": {
+            "default_node": "Door to Docking Bay Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 15740040421447045864
+            },
+            "nodes": {
+                "Door to Security Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20.0,
+                        "y": -9.5367431640625e-07,
+                        "z": 7.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Security Station",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Docking Bay Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.0,
+                        "y": -49.000003814697266,
+                        "z": 7.499998092651367
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Docking Bay Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Security Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 12,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Save Station B": {
+            "default_node": "Save Station",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 14403796150828511218
+            },
+            "nodes": {
+                "Door to Repair Bay Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.18054699897766113,
+                        "y": -18.255311965942383,
+                        "z": -9.5367431640625e-07
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Repair Bay Shaft",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Door to Repair Bay Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Flag Bridge": {
+            "default_node": "Door to Flag Bridge Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 14348692121215628991
+            },
+            "nodes": {
+                "Door to Aurora Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 46.000003814697266,
+                        "y": -9.5367431640625e-07,
+                        "z": 11.000005722045898
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Aurora Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 147,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Meeting Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 37.1568489074707,
+                        "y": 27.313709259033203,
+                        "z": 10.000001430511475
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Meeting Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lift Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 37.15684509277344,
+                        "y": -27.313701629638672,
+                        "z": 9.999998569488525
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Lift Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Aurora Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 147,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Meeting Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Flag Bridge Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Flag Bridge Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 38.0,
+                        "y": -9.5367431640625e-07,
+                        "z": 3.5
+                    },
+                    "extra": {},
+                    "dock_index": 3,
+                    "connected_area_name": "Flag Bridge Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Lab Access": {
+            "default_node": "Door to Xenoresearch Lab",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 9427699631074225391
+            },
+            "nodes": {
+                "Door to Xenoresearch Lab": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -65.10659790039062,
+                        "y": 23.10659408569336,
+                        "z": 2.5000012268371563
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Xenoresearch Lab",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Pirate Attack": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Pirate Attack": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "event_index": 148,
+                    "connections": {
+                        "Door to Xenoresearch Lab": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Port Observation Deck": {
+            "default_node": "Door to Flag Bridge Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 4548320739784543479
+            },
+            "nodes": {
+                "Door to Xenoresearch Lab": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 43.0,
+                        "y": -8.0,
+                        "z": 2.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Xenoresearch Lab",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Flag Bridge Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6.106597900390625,
+                        "y": 41.10659408569336,
+                        "z": 2.493699037004262
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Flag Bridge Access",
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Xenoresearch Lab": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Xenoresearch Lab": {
+            "default_node": "Door to Port Observation Deck",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 1240494628458491366
+            },
+            "nodes": {
+                "Door to Lab Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 34.143245697021484,
+                        "y": -28.53750228881836,
+                        "z": 2.5000060994416344
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Lab Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Port Observation Deck": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Morph Ball Door to Ventilation Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 148,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Port Observation Deck": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -34.0699577331543,
+                        "y": -13.537505626678467,
+                        "z": 2.5000073146973136
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Port Observation Deck",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lab Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Ventilation Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.0,
+                        "y": 27.0,
+                        "z": -12.0
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Ventilation Shaft",
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            }
+        },
+        "Security Station": {
+            "default_node": "Door to Docking Bay 4",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 13907983853126891218
+            },
+            "nodes": {
+                "Door to Docking Bay 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 2.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Docking Bay 4",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Security Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Security Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -50.43165588378906,
+                        "y": 0.19776010513305664,
+                        "z": 2.5
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Security Access",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Aurora Access": {
+            "default_node": "Door to Flag Bridge",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 17930423943250813827
+            },
+            "nodes": {
+                "Door to Flag Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -58.0,
+                        "y": 4.76837158203125e-07,
+                        "z": -15.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Flag Bridge",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Aurora Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Aurora Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 49.0,
+                        "y": -4.76837158203125e-07,
+                        "z": 18.674118757247925
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Aurora Chamber",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Repair Bay Shaft": {
+            "default_node": "Door to Repair Bay A",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 11421266353153196460
+            },
+            "nodes": {
+                "Door to Docking Bay 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.0,
+                        "y": 0.0,
+                        "z": 4.9999995115814215
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Docking Bay 5",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Save Station B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Save Station B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.0,
+                        "y": 16.0,
+                        "z": 5.0
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Save Station B",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Repair Bay A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -83.4228515625,
+                        "y": 0.0,
+                        "z": 4.999997807907107
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Repair Bay A",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Save Station B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Flag Bridge Access": {
+            "default_node": "Door to Flag Bridge",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 7060956319399124858
+            },
+            "nodes": {
+                "Door to Flag Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -31.0,
+                        "y": 0.0,
+                        "z": 2.4999997500000006
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Flag Bridge",
+                    "connected_dock_index": 3,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Command Lift A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 146,
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Door to Port Observation Deck": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 146,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Command Lift A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 53.5,
+                        "z": -2.4999829169310033
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Command Lift A",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Port Observation Deck": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.522589921951294,
+                        "y": -20.930017471313477,
+                        "z": 1.4634060263633728
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Port Observation Deck",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Command Lift A": {
+            "default_node": "Door to Security Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 14223261248779109721
+            },
+            "nodes": {
+                "Door to Flag Bridge Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -26.000003814697266,
+                        "z": 82.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Flag Bridge Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Security Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Security Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.0067901611328125e-06,
+                        "y": 26.0,
+                        "z": 2.5
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Security Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Security Access": {
+            "default_node": "Door to Security Station",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 9455349673417098581
+            },
+            "nodes": {
+                "Door to Security Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.500001907348633,
+                        "y": 2.4999960926513722,
+                        "z": 2.499999261581422
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Security Station",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Command Lift A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Command Lift A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -55.554588317871094,
+                        "y": -31.60660743713379,
+                        "z": 2.499998046325686
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Command Lift A",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Security Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Lift Access": {
+            "default_node": "Save Station",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 373237702897908369
+            },
+            "nodes": {
+                "Door to Flag Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 13.6818208694458,
+                        "z": 2.5000004999999987
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Flag Bridge",
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Command Lift B": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 147,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Command Lift B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.500008529952993,
+                        "y": -55.863651275634766,
+                        "z": 2.5000170830689967
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Command Lift B",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "extra": {},
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Command Lift B": {
+            "default_node": "Door to Gunnery Station",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 1845155541927532448
+            },
+            "nodes": {
+                "Door to Gunnery Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.0010900497436523438,
+                        "y": -22.059234619140625,
+                        "z": 24.191604614257812
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Gunnery Station",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Lift Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lift Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.15688109397888184,
+                        "y": 16.786357879638672,
+                        "z": 82.45758056640625
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Lift Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Gunnery Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Ready Room": {
+            "default_node": "Door to Meeting Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 14604797390173513666
+            },
+            "nodes": {
+                "Door to Meeting Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -23.951297760009766,
+                        "z": 1.4999990463256836
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Meeting Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Briefing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Briefing": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "event_index": 146,
+                    "connections": {
+                        "Door to Meeting Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gunnery Station": {
+            "default_node": "Door to MedLab Delta",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 4701238246970930238
+            },
+            "nodes": {
+                "Door to Command Lift B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -40.17128372192383,
+                        "y": 9.501140594482422,
+                        "z": 2.500000976837157
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Command Lift B",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to MedLab Delta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to MedLab Delta": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 28.501142501831055,
+                        "y": 15.004779815673828,
+                        "z": 2.500000976837157
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "MedLab Delta",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Command Lift B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "MedLab Delta": {
+            "default_node": "Pickup (Phazon Enhancement Device)",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 975168564662458837
+            },
+            "nodes": {
+                "Door to Gunnery Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -32.000003814697266,
+                        "y": -2.41408471763134,
+                        "z": 5.951695203781128
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Gunnery Station",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup (Phazon Enhancement Device)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Phazon Enhancement Device)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "pickup_index": 0,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Gunnery Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 20,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Disposal Chamber": {
+            "default_node": "Morph Ball Door to Ventilation Shaft",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 659263668515774583
+            },
+            "nodes": {
+                "Dock to Repair Bay A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.0,
+                        "y": 37.5,
+                        "z": 2.5000014768371557
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Repair Bay A",
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Morph Ball Door to Ventilation Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.0,
+                        "y": -11.5,
+                        "z": 71.0
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Ventilation Shaft",
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Repair Bay A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 12,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Ventilation Shaft": {
+            "default_node": "Morph Ball Door to Xenoresearch Lab",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 9908630587780032110
+            },
+            "nodes": {
+                "Morph Ball Door to Xenoresearch Lab": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.0,
+                        "y": -42.57,
+                        "z": 7.58
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Xenoresearch Lab",
+                    "connected_dock_index": 2,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 32,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 10,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Disposal Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -115.17,
+                        "y": -101.94,
+                        "z": -71.88
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Disposal Chamber",
+                    "connected_dock_index": 1,
+                    "dock_type": 1,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "pickup_index": 1,
+                    "major_location": true,
+                    "connections": {
+                        "Morph Ball Door to Disposal Chamber": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 32,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Docking Bay Access": {
+            "default_node": "Door to Docking Bay 5",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 10500207601768265995
+            },
+            "nodes": {
+                "Door to Docking Bay 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 48.4999885559082,
+                        "z": 32.500000953674316
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Docking Bay 4",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Docking Bay 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.49999499320983887,
+                        "y": -25.517187118530273,
+                        "z": 19.99998664855957
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Docking Bay 5",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 3,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Munitions Storage": {
+            "default_node": null,
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 7486162873388959747
+            },
+            "nodes": {
+                "Door to Repair Bay A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 12.48,
+                        "z": 0.0
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Repair Bay A",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup (Missile Launcher)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Launcher)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "pickup_index": 2,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Repair Bay A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gunship": {
+            "default_node": "Dock to !!00_gfship_dsrebirth",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 15628730931753443250
+            },
+            "nodes": {
+                "Dock to Docking Bay 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -45.0,
+                        "y": 77.0,
+                        "z": 28.5
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Docking Bay 5",
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Dock to !!00_gfship_dsrebirth": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 42.5,
+                        "y": 79.5,
+                        "z": 28.500003814697266
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "!!00_gfship_dsrebirth",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Docking Bay 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Repair Bay A": {
+            "default_node": "Dock to Disposal Chamber",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 16233775155696881050
+            },
+            "nodes": {
+                "Door to Repair Bay Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -83.12681579589844,
+                        "y": 4.76837158203125e-07,
+                        "z": -10.00000262260437
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Repair Bay Shaft",
+                    "connected_dock_index": 2,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Disposal Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Munitions Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -133.45082092285156,
+                        "y": -20.750200271606445,
+                        "z": 7.499999046325684
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Munitions Storage",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Disposal Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Disposal Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -142.66769409179688,
+                        "y": -4.9790520668029785,
+                        "z": -71.00006103515625
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Disposal Chamber",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Repair Bay Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 4,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Enter Hypermode"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Munitions Storage": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Meeting Access": {
+            "default_node": "Door to Flag Bridge",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 8779228940472058493
+            },
+            "nodes": {
+                "Door to Flag Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.2620624899864197,
+                        "y": -55.863651275634766,
+                        "z": 2.5000170830689967
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Flag Bridge",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Ready Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Ready Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.26,
+                        "y": 13.68,
+                        "z": 2.5
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Ready Room",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Flag Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Docking Bay 5": {
+            "default_node": "Dock to Gunship",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 5834535855679580949
+            },
+            "nodes": {
+                "Door to Repair Bay Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.0000009536743164,
+                        "y": 4.76837158203125e-07,
+                        "z": -9.999999284744263
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Repair Bay Shaft",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Berserker Lord": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 146,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Docking Bay Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12.500001907348633,
+                        "y": 51.28473663330078,
+                        "z": -4.999995112419128
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Docking Bay Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Gunship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Gunship": {
+                    "node_type": "dock",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 290.0,
+                        "y": -86.0,
+                        "z": 0.4999959468841553
+                    },
+                    "extra": {},
+                    "dock_index": 2,
+                    "connected_area_name": "Gunship",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Docking Bay Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Aurora Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22.5,
+                        "y": 2.5,
+                        "z": 50.0
+                    },
+                    "extra": {},
+                    "dock_index": 3,
+                    "connected_area_name": "Aurora Chamber",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Gunship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Berserker Lord": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "event_index": 1,
+                    "connections": {
+                        "Dock to Gunship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Aurora Chamber": {
+            "default_node": "Door to Aurora Access",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 14583031681898448395
+            },
+            "nodes": {
+                "Door to Aurora Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -44.0,
+                        "y": -4.76837158203125e-07,
+                        "z": 20.019623160362244
+                    },
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Aurora Access",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Docking Bay 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Docking Bay 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -28.01,
+                        "y": -32.39,
+                        "z": -64.15
+                    },
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Docking Bay 5",
+                    "connected_dock_index": 3,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

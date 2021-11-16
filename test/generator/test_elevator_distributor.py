@@ -5,9 +5,9 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import ElevatorHelper
 
@@ -26,11 +26,11 @@ def test_try_randomize_elevators(seed_number: int,
     # Setup
     rng = Random(seed_number)
     teleporters = [
-        node.teleporter
+        echoes_game_description.world_list.identifier_for_node(node)
         for world in echoes_game_description.world_list.worlds
         for area in world.areas
         for node in area.nodes
-        if isinstance(node, TeleporterNode) and node.editable and node.teleporter_instance_id in expected_ids
+        if isinstance(node, TeleporterNode) and node.editable and node.extra["teleporter_instance_id"] in expected_ids
     ]
     teleporters.sort()
 
@@ -38,7 +38,12 @@ def test_try_randomize_elevators(seed_number: int,
     result = elevator_distributor.try_randomize_elevators(
         rng,
         elevator_distributor.create_elevator_database(echoes_game_description.world_list, teleporters))
-    connected_ids = [elevator.connected_elevator.instance_id for elevator in result]
+
+    connected_ids = [
+        echoes_game_description.world_list.node_by_identifier(elevator.connected_elevator.teleporter
+                                                              ).extra["teleporter_instance_id"]
+        for elevator in result
+    ]
 
     # Assert
     assert connected_ids == expected_ids
@@ -49,8 +54,8 @@ def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators
                                                     ):
     # Setup
     rng = MagicMock()
-    elevator_a = MagicMock()
-    elevator_b = MagicMock()
+    elevator_a: ElevatorHelper = MagicMock()
+    elevator_b: ElevatorHelper = MagicMock()
     mock_try_randomize_elevators.return_value = [
         elevator_a, elevator_b
     ]
@@ -70,7 +75,7 @@ def test_two_way_elevator_connections_unchecked():
     # Setup
     rng = random.Random(5000)
     elevators = [
-        ElevatorHelper(Teleporter(i, i, i), AreaLocation(i, i))
+        ElevatorHelper(NodeIdentifier(AreaIdentifier(f"w{i}", f"a{i}"), f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)
@@ -80,42 +85,42 @@ def test_two_way_elevator_connections_unchecked():
 
     # Assert
     assert result == {
-        Teleporter(0, 0, 0): AreaLocation(4, 4),
-        Teleporter(1, 1, 1): AreaLocation(2, 2),
-        Teleporter(2, 2, 2): AreaLocation(1, 1),
-        Teleporter(3, 3, 3): AreaLocation(5, 5),
-        Teleporter(4, 4, 4): AreaLocation(0, 0),
-        Teleporter(5, 5, 5): AreaLocation(3, 3),
+        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w4", "a4"),
+        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w1", "a1"),
+        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w0", "a0"),
+        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w3", "a3"),
     }
 
 
 @pytest.mark.parametrize(["replacement", "expected"], [
     (False, {
-        Teleporter(0, 0, 0): AreaLocation(1, 1),
-        Teleporter(1, 1, 1): AreaLocation(2, 2),
-        Teleporter(2, 2, 2): AreaLocation(3, 3),
-        Teleporter(3, 3, 3): AreaLocation(5, 5),
-        Teleporter(4, 4, 4): AreaLocation(0, 0),
-        Teleporter(5, 5, 5): AreaLocation(4, 4),
+        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w1", "a1"),
+        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w0", "a0"),
+        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w4", "a4"),
     }),
     (True, {
-        Teleporter(0, 0, 0): AreaLocation(2, 2),
-        Teleporter(1, 1, 1): AreaLocation(3, 3),
-        Teleporter(2, 2, 2): AreaLocation(4, 4),
-        Teleporter(3, 3, 3): AreaLocation(2, 2),
-        Teleporter(4, 4, 4): AreaLocation(5, 5),
-        Teleporter(5, 5, 5): AreaLocation(3, 3),
+        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w4", "a4"),
+        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w3", "a3"),
     }),
 ])
 def test_one_way_elevator_connections(echoes_game_description, replacement, expected):
     # Setup
     rng = random.Random(5000)
     target_locations = [
-        AreaLocation(i, i)
+        AreaIdentifier(f"w{i}", f"a{i}")
         for i in range(6)
     ]
     elevators = [
-        ElevatorHelper(Teleporter(i, i, i), AreaLocation(i, i))
+        ElevatorHelper(NodeIdentifier(AreaIdentifier(f"w{i}", f"a{i}"), f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)

@@ -1,21 +1,21 @@
-import dataclasses
-import uuid
 import pytest
+
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import PickupNode
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
 
 @pytest.fixture()
 def pickup_node():
     return PickupNode(
-        pickup_index=PickupIndex(1), 
+        pickup_index=PickupIndex(1),
         major_location=True,
         name="Pickup (Ultra Beam)",
         heal=False,
         location=None,
+        extra={},
         index=0
     )
 
@@ -35,9 +35,11 @@ def test_location_pool_row_actions(skip_qtbot):
     skip_qtbot.addWidget(widget)
 
     signal_received = False
+
     def edit_closure():
         nonlocal signal_received
         signal_received = True
+
     widget.changed.connect(edit_closure)
 
     # Run & Assert
@@ -45,7 +47,6 @@ def test_location_pool_row_actions(skip_qtbot):
     widget.set_can_have_progression(True)
     assert signal_received
     assert widget.radio_shuffled.isChecked()
-
 
 
 def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echoes_game_description, skip_qtbot):

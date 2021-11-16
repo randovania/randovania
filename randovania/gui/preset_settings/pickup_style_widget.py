@@ -1,4 +1,3 @@
-from randovania.layout.game_to_class import AnyGameConfiguration
 from typing import Tuple
 from PySide2 import QtWidgets
 
@@ -6,6 +5,7 @@ from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.gui.generated.widget_pickup_style_ui import Ui_PickupStyleWidget
 from randovania.interface_common.preset_editor import PresetEditor
@@ -40,7 +40,7 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
                 options.set_configuration_field(attribute_name, combo.itemData(index))
         return persist
 
-    def update(self, layout: AnyGameConfiguration):
+    def update(self, layout: BaseConfiguration):
         self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(layout.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(
             self.pickup_data_source_combo.findData(layout.pickup_model_data_source))

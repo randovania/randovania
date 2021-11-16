@@ -1,0 +1,296 @@
+{
+    "name": "Ceres Station",
+    "extra": {
+        "asset_id": 5553
+    },
+    "areas": {
+        "Elevator Shaft": {
+            "default_node": "Dock to Hallway A",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 253
+            },
+            "nodes": {
+                "Dock to Hallway A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Hallway A",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Escape": {
+                            "type": "resource",
+                            "data": {
+                                "type": 1,
+                                "index": 6,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Escape": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Upper Zebes",
+                        "area_name": "Landing Site"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Hallway A": {
+            "default_node": "Dock to Elevator Shaft",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 254
+            },
+            "nodes": {
+                "Dock to Elevator Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Elevator Shaft",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Hallway B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Hallway B",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Elevator Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Hallway B": {
+            "default_node": "Dock to Hallway A",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 255
+            },
+            "nodes": {
+                "Dock to Hallway A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Hallway A",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Hallway C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Hallway C",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Hallway C": {
+            "default_node": "Dock to Hallway B",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 256
+            },
+            "nodes": {
+                "Dock to Hallway B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Hallway B",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway D": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Hallway D": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Hallway D",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Hallway D": {
+            "default_node": "Dock to Hallway C",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 257
+            },
+            "nodes": {
+                "Dock to Hallway C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Hallway C",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Sample Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Sample Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 1,
+                    "connected_area_name": "Sample Storage",
+                    "connected_dock_index": 0,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Dock to Hallway C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Sample Storage": {
+            "default_node": "Dock to Hallway D",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 258
+            },
+            "nodes": {
+                "Dock to Hallway D": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "dock_index": 0,
+                    "connected_area_name": "Hallway D",
+                    "connected_dock_index": 1,
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Fight Ridley at Ceres": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Fight Ridley at Ceres": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
+                    "event_index": 6,
+                    "connections": {
+                        "Dock to Hallway D": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

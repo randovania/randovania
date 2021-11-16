@@ -23,7 +23,7 @@ from randovania.layout.base.ammo_configuration import AmmoConfiguration
 def _config_with_data(request):
     game: RandovaniaGame = request.param["game"]
 
-    with get_data_path().joinpath("item_database", game.value, "default_state", "ammo.json").open() as open_file:
+    with game.data_path.joinpath("item_database", "default_state", "ammo.json").open() as open_file:
         default_data = json.load(open_file)
 
     default = AmmoConfiguration.from_json(default_data, game)

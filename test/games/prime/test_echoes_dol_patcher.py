@@ -1,12 +1,12 @@
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from randovania.games.prime import echoes_dol_patcher, echoes_dol_versions
+from randovania.games.prime2.patcher import echoes_dol_patcher, echoes_dol_versions
 
 
-@patch("randovania.games.prime.echoes_dol_patcher.DolFile")
-@patch("randovania.games.prime.echoes_dol_patcher._get_dol_path", autospec=True)
-@patch("randovania.games.prime.echoes_dol_patcher.find_version_for_dol", autospec=True)
+@patch("randovania.games.prime2.patcher.echoes_dol_patcher.DolFile")
+@patch("randovania.games.prime2.patcher.echoes_dol_patcher._get_dol_path", autospec=True)
+@patch("randovania.games.prime2.patcher.echoes_dol_patcher.find_version_for_dol", autospec=True)
 def test_apply_patches(mock_find_version_for_dol: MagicMock,
                        mock_get_dol_path: MagicMock,
                        mock_dol_file_constructor: MagicMock,
@@ -20,21 +20,21 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     dol_file = mock_dol_file_constructor.return_value
 
     mock_apply_string = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.apply_remote_execution_patch", autospec=True)
+        "randovania.patching.prime.all_prime_dol_patches.apply_remote_execution_patch", autospec=True)
     mock_apply_game_options: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_game_options_patch", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_game_options_patch", autospec=True)
     mock_apply_capacity: MagicMock = mocker.patch(
-        "randovania.games.prime.all_prime_dol_patches.apply_energy_tank_capacity_patch", autospec=True)
+        "randovania.patching.prime.all_prime_dol_patches.apply_energy_tank_capacity_patch", autospec=True)
     mock_apply_beam_cost_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_beam_cost_patch", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_beam_cost_patch", autospec=True)
     mock_apply_starting_visor_patch: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_starting_visor_patch", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_starting_visor_patch", autospec=True)
     mock_apply_fixes: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_fixes", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_fixes", autospec=True)
     mock_apply_unvisited_room_names: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_unvisited_room_names", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_unvisited_room_names", autospec=True)
     mock_apply_teleporter_sounds: MagicMock = mocker.patch(
-        "randovania.games.prime.echoes_dol_patches.apply_teleporter_sounds", autospec=True)
+        "randovania.games.prime2.patcher.echoes_dol_patches.apply_teleporter_sounds", autospec=True)
 
     # Run
     echoes_dol_patcher.apply_patches(game_root, patches_data)

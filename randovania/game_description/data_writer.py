@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
+from randovania.game_description import schema_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
@@ -213,62 +214,69 @@ def write_node(node: Node) -> dict:
     :return:
     """
 
-    data = {
-        "name": node.name,
+    extra = dict(node.extra)
+    data = {}
+    common_fields = {
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
+        "extra": extra,
     }
 
     if isinstance(node, GenericNode):
         data["node_type"] = "generic"
+        data.update(common_fields)
 
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
+        data.update(common_fields)
         data["dock_index"] = node.dock_index
-        data["connected_area_asset_id"] = node.default_connection.area_asset_id
+        data["connected_area_name"] = node.default_connection.area_name
         data["connected_dock_index"] = node.default_connection.dock_index
         data["dock_type"] = node.default_dock_weakness.dock_type.value
         data["dock_weakness_index"] = node.default_dock_weakness.index
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"
+        data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
         data["node_type"] = "teleporter"
-        data["destination_world_asset_id"] = node.default_connection.world_asset_id
-        data["destination_area_asset_id"] = node.default_connection.area_asset_id
-        data["teleporter_instance_id"] = node.teleporter_instance_id
-        data["scan_asset_id"] = node.scan_asset_id
+        data.update(common_fields)
+        data["destination"] = node.default_connection.as_json
         data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
         data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
+        data.update(common_fields)
         data["event_index"] = node.resource().index
         if not node.name.startswith("Event -"):
             raise ValueError(f"'{node.name}' is an Event Node, but naming doesn't start with 'Event -'")
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
+        data.update(common_fields)
         data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
         data["node_type"] = "logbook"
+        data.update(common_fields)
         data["string_asset_id"] = node.string_asset_id
         data["lore_type"] = node.lore_type.value
 
         if node.lore_type == LoreType.LUMINOTH_LORE:
-            data["extra"] = node.required_translator.index
+            data["lore_extra"] = node.required_translator.index
 
         elif node.lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-            data["extra"] = node.hint_index
+            data["lore_extra"] = node.hint_index
         else:
-            data["extra"] = 0
+            data["lore_extra"] = 0
 
     elif isinstance(node, PlayerShipNode):
         data["node_type"] = "player_ship"
+        data.update(common_fields)
         data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
@@ -287,7 +295,7 @@ def write_area(area: Area) -> dict:
     """
     errors = []
 
-    nodes = []
+    nodes = {}
     for node in area.nodes:
         try:
             data = write_node(node)
@@ -296,7 +304,7 @@ def write_area(area: Area) -> dict:
                 for target_node in area.nodes
                 if target_node in area.connections[node]
             }
-            nodes.append(data)
+            nodes[node.name] = data
         except ValueError as e:
             errors.append(str(e))
 
@@ -304,22 +312,21 @@ def write_area(area: Area) -> dict:
         raise ValueError("Area {} nodes has the following errors:\n* {}".format(
             area.name, "\n* ".join(errors)))
 
+    extra = copy.copy(area.extra)
     return {
-        "name": area.name,
-        "in_dark_aether": area.in_dark_aether,
-        "asset_id": area.area_asset_id,
-        "default_node_index": area.default_node_index,
+        "default_node": area.default_node,
         "valid_starting_location": area.valid_starting_location,
-        "nodes": nodes
+        "extra": extra,
+        "nodes": nodes,
     }
 
 
 def write_world(world: World) -> dict:
     errors = []
-    areas = []
+    areas = {}
     for area in world.areas:
         try:
-            areas.append(write_area(area))
+            areas[area.name] = write_area(area)
         except ValueError as e:
             errors.append(str(e))
 
@@ -327,17 +334,16 @@ def write_world(world: World) -> dict:
         raise ValueError("World {} has the following errors:\n> {}".format(
             world.name, "\n\n> ".join(errors)))
 
+    extra = copy.copy(world.extra)
     return {
         "name": world.name,
-        "dark_name": world.dark_name,
-        "asset_id": world.world_asset_id,
+        "extra": extra,
         "areas": areas,
     }
 
 
 def write_world_list(world_list: WorldList) -> list:
     errors = []
-
     known_indices = {}
 
     worlds = []
@@ -376,12 +382,6 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
     if db is None:
         return None
 
-    def expand(it: IndexWithReason, field_name: str) -> dict:
-        if it.reason is not None:
-            return {"index": it.index, field_name: it.reason}
-        else:
-            return {"index": it.index}
-
     return {
         "items_to_exclude": [
             {"index": it.index, "when_shuffled": it.reason}
@@ -403,6 +403,7 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 
 def write_game_description(game: GameDescription) -> dict:
     return {
+        "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
 

@@ -1,6 +1,7 @@
 import collections
 import copy
 import dataclasses
+import typing
 from functools import partial
 from typing import List, Dict, Optional, Set
 
@@ -15,12 +16,11 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime.patcher_file_lib import item_names
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib, game_exporter
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
@@ -28,8 +28,10 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
+from randovania.patching.prime.patcher_file_lib import item_names
 
 
 def _unique(iterable):
@@ -157,10 +159,18 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.open()
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.patchers import gollop_corruption_patcher
+        from randovania.games.prime3.patcher import gollop_corruption_patcher
+        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
+        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 
-        cosmetic = self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches
-        preset = self.layout_description.permalink.get_preset(self.current_player_index)
+        cosmetic = typing.cast(
+            CorruptionCosmeticPatches,
+            self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches,
+        )
+        configuration = typing.cast(
+            CorruptionConfiguration,
+            self.layout_description.permalink.get_preset(self.current_player_index).configuration,
+        )
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
@@ -179,7 +189,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         suit_type = game.resource_database.get_item_by_name("Suit Type")
         starting_items = copy.copy(patches.starting_items)
         starting_items[suit_type] = starting_items.get(suit_type, 0) + cosmetic.player_suit.value
-        if preset.configuration.start_with_corrupted_hypermode:
+        if configuration.start_with_corrupted_hypermode:
             hypermode_original = 0
         else:
             hypermode_original = 1
@@ -187,7 +197,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         commands = "\n".join([
             f'set seed="{layout_string}"',
             f'set "starting_items={gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)}"',
-            f'set "starting_location={gollop_corruption_patcher.starting_location_for(starting_location)}"',
+            f'set "starting_location={gollop_corruption_patcher.starting_location_for(game, starting_location)}"',
             f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
             f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
         ])

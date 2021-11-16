@@ -34,13 +34,13 @@ def _read_item_database_in_path(path: Path, game: RandovaniaGame) -> item_databa
 
 @functools.lru_cache()
 def item_database_for_game(game: RandovaniaGame):
-    return _read_item_database_in_path(get_data_path().joinpath("item_database", game.value),
+    return _read_item_database_in_path(game.data_path.joinpath("item_database"),
                                        game)
 
 
 @functools.lru_cache()
 def default_prime2_memo_data() -> dict:
-    with get_data_path().joinpath("item_database", "prime2", "memo_data.json").open("r") as memo_data_file:
+    with RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("item_database", "memo_data.json").open("r") as memo_data_file:
         memo_data = json.load(memo_data_file)
 
     TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]

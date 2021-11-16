@@ -8,9 +8,9 @@ from PySide2 import QtWidgets, QtCore
 from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime import elevators
+from randovania.patching.prime import elevators
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.area_list_helper import AreaListHelper
@@ -22,8 +22,8 @@ from randovania.lib import enum_lib
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
-    _elevator_source_for_location: Dict[Teleporter, QtWidgets.QCheckBox]
-    _elevator_source_destination: Dict[Teleporter, Optional[Teleporter]]
+    _elevator_source_for_location: Dict[NodeIdentifier, QtWidgets.QCheckBox]
+    _elevator_source_destination: Dict[NodeIdentifier, Optional[NodeIdentifier]]
     _elevator_target_for_world: Dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: Dict[int, QtWidgets.QCheckBox]
 
@@ -84,7 +84,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
     def game_enum(self):
         return self.game_description.game
 
-    def _create_check_for_source_elevator(self, location: Teleporter):
+    def _create_check_for_source_elevator(self, location: NodeIdentifier):
         name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.world_list, location.area_location, False)
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
@@ -95,29 +95,30 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
 
     def _create_source_elevators(self):
         row = 0
+        world_list = self.game_description.world_list
 
         custom_weights = {}
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
             custom_weights = {
-                2252328306: 0,  # Great Temple
-                1119434212: 1,  # Agon Wastes
-                1039999561: 2,  # Torvus Bog
-                464164546: 3,  # Sanctuary Fortress
-                1006255871: 5,  # Temple Grounds
+                "Great Temple": 0,  # Great Temple
+                "Agon Wastes": 1,  # Agon Wastes
+                "Torvus Bog": 2,  # Torvus Bog
+                "Sanctuary Fortress": 3,  # Sanctuary Fortress
+                "Temple Grounds": 5,  # Temple Grounds
             }
         locations = TeleporterList.areas_list(self.game_enum)
-        areas: Dict[Teleporter, Area] = {
-            loc: self.game_description.world_list.area_by_area_location(loc.area_location)
+        areas: Dict[NodeIdentifier, Area] = {
+            loc: world_list.area_by_area_location(loc.area_location)
             for loc in locations
         }
-        checks: Dict[Teleporter, QtWidgets.QCheckBox] = {
+        checks: Dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_elevator(loc) for loc in locations
         }
         self._elevator_source_for_location = copy.copy(checks)
         self._elevator_source_destination = {}
 
         for location in sorted(locations,
-                               key=lambda loc: (custom_weights.get(loc.world_asset_id, 0),
+                               key=lambda loc: (custom_weights.get(loc.area_location.world_name, 0),
                                                 checks[loc].text())):
             if location not in checks:
                 continue
@@ -127,12 +128,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             other_locations = [
                 node.default_connection
                 for node in areas[location].nodes
-                if isinstance(node, TeleporterNode) and node.teleporter == location
+                if isinstance(node, TeleporterNode) and world_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
-                node.teleporter
-                for node in self.game_description.world_list.area_by_area_location(other_locations[0]).nodes
+                world_list.identifier_for_node(node)
+                for node in world_list.area_by_area_location(other_locations[0]).nodes
                 if isinstance(node, TeleporterNode)
             ]
             assert teleporters_in_target
@@ -167,7 +168,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 allow_unvisited_room_names=checked,
             )
 
-    def _on_elevator_source_check_changed(self, location: Teleporter, checked: bool):
+    def _on_elevator_source_check_changed(self, location: NodeIdentifier, checked: bool):
         with self._editor as editor:
             config = editor.layout_configuration_elevators
             editor.layout_configuration_elevators = dataclasses.replace(
