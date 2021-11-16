@@ -905,12 +905,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Caretaker Lumigek Skiff',
+            'gameBanner': {'description': 'Seed Hash: Strength Undertemple World',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - Z2OYS7HX'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - BQQHQKFF'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nCaretaker Lumigek Skiff',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nStrength Undertemple World',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {

@@ -1,34 +1,35 @@
 {
     "name": "Upper Zebes",
-    "dark_name": null,
-    "asset_id": 5550,
-    "areas": [
-        {
-            "name": "Landing Site",
-            "in_dark_aether": false,
-            "asset_id": 0,
-            "default_node_index": 5,
+    "extra": {
+        "asset_id": 5550
+    },
+    "areas": {
+        "Landing Site": {
+            "default_node": "Langind Site Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Gauntlet Access",
+            "extra": {
+                "asset_id": 0
+            },
+            "nodes": {
+                "Dock to Gauntlet Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 12,
+                    "connected_area_name": "Gauntlet Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Parlor",
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 6,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -42,25 +43,25 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Crateria Power Bomb Room",
+                "Dock to Crateria Power Bomb Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 10,
+                    "connected_area_name": "Crateria Power Bomb Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Crateria Tube",
+                "Dock to Crateria Tube": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 1,
+                    "connected_area_name": "Crateria Tube",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -154,19 +155,19 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Win Game",
+                "Event - Win Game": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 7,
                     "connections": {}
                 },
-                {
-                    "name": "Langind Site Save Station",
+                "Langind Site Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Dock to Parlor": {
                             "type": "and",
@@ -273,22 +274,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Tube",
-            "in_dark_aether": false,
-            "asset_id": 1,
-            "default_node_index": 0,
+        "Crateria Tube": {
+            "default_node": "Dock to Landing Site",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Landing Site",
+            "extra": {
+                "asset_id": 1
+            },
+            "nodes": {
+                "Dock to Landing Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 0,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -302,13 +303,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Crateria Kihunter Room",
+                "Dock to Crateria Kihunter Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2,
+                    "connected_area_name": "Crateria Kihunter Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -322,22 +323,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Kihunter Room",
-            "in_dark_aether": false,
-            "asset_id": 2,
-            "default_node_index": 0,
+        "Crateria Kihunter Room": {
+            "default_node": "Dock to Crateria Tube",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Tube",
+            "extra": {
+                "asset_id": 2
+            },
+            "nodes": {
+                "Dock to Crateria Tube": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1,
+                    "connected_area_name": "Crateria Tube",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -358,25 +359,25 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Moat",
+                "Dock to Moat": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3,
+                    "connected_area_name": "Moat",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Elevator to Red Brinstar",
+                "Dock to Elevator to Red Brinstar": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 31,
+                    "connected_area_name": "Elevator to Red Brinstar",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -390,22 +391,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Moat",
-            "in_dark_aether": false,
-            "asset_id": 3,
-            "default_node_index": 0,
+        "Moat": {
+            "default_node": "Dock to Crateria Kihunter Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Kihunter Room",
+            "extra": {
+                "asset_id": 3
+            },
+            "nodes": {
+                "Dock to Crateria Kihunter Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2,
+                    "connected_area_name": "Crateria Kihunter Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -464,13 +465,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to West Ocean",
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -503,11 +504,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 4,
                     "major_location": false,
                     "connections": {
@@ -539,22 +540,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "West Ocean",
-            "in_dark_aether": false,
-            "asset_id": 4,
-            "default_node_index": 0,
+        "West Ocean": {
+            "default_node": "Dock to Moat",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Moat",
+            "extra": {
+                "asset_id": 4
+            },
+            "nodes": {
+                "Dock to Moat": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3,
+                    "connected_area_name": "Moat",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -587,13 +588,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Bowling Alley Path",
+                "Dock to Bowling Alley Path": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 5,
+                    "connected_area_name": "Bowling Alley Path",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -607,13 +608,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Bowling Alley",
+                "Dock to Bowling Alley": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 51,
+                    "connected_area_name": "Bowling Alley",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -679,13 +680,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship Entrance",
+                "Dock to Wrecked Ship Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 53,
+                    "connected_area_name": "Wrecked Ship Entrance",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -699,13 +700,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Gravity Suit Room",
+                "Dock to Gravity Suit Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 52,
+                    "connected_area_name": "Gravity Suit Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -719,13 +720,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Attic",
+                "Dock to Attic": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 5,
-                    "connected_area_asset_id": 65,
+                    "connected_area_name": "Attic",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -836,11 +837,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Topmost Missile Expansion)",
+                "Pickup (Topmost Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 2,
                     "major_location": false,
                     "connections": {
@@ -853,11 +854,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Morph Ball Maze Missile Expansion)",
+                "Pickup (Morph Ball Maze Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 3,
                     "major_location": false,
                     "connections": {
@@ -889,11 +890,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Seafloor Missile Expansion)",
+                "Pickup (Seafloor Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 1,
                     "major_location": false,
                     "connections": {
@@ -925,43 +926,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Bowling Alley Path",
-            "in_dark_aether": false,
-            "asset_id": 5,
-            "default_node_index": 0,
+        "Bowling Alley Path": {
+            "default_node": "Dock to West Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to West Ocean",
+            "extra": {
+                "asset_id": 5
+            },
+            "nodes": {
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "East Ocean",
-            "in_dark_aether": false,
-            "asset_id": 6,
-            "default_node_index": 0,
+        "East Ocean": {
+            "default_node": "Dock to Electric Death Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Electric Death Room",
+            "extra": {
+                "asset_id": 6
+            },
+            "nodes": {
+                "Dock to Electric Death Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 63,
+                    "connected_area_name": "Electric Death Room",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1011,13 +1012,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Forgotten Highway Kago Room",
+                "Dock to Forgotten Highway Kago Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 7,
+                    "connected_area_name": "Forgotten Highway Kago Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1067,22 +1068,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Forgotten Highway Kago Room",
-            "in_dark_aether": false,
-            "asset_id": 7,
-            "default_node_index": 0,
+        "Forgotten Highway Kago Room": {
+            "default_node": "Dock to East Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to East Ocean",
+            "extra": {
+                "asset_id": 7
+            },
+            "nodes": {
+                "Dock to East Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6,
+                    "connected_area_name": "East Ocean",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1096,13 +1097,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Crab Maze",
+                "Dock to Crab Maze": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8,
+                    "connected_area_name": "Crab Maze",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1116,22 +1117,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crab Maze",
-            "in_dark_aether": false,
-            "asset_id": 8,
-            "default_node_index": 0,
+        "Crab Maze": {
+            "default_node": "Dock to Forgotten Highway Kago Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Forgotten Highway Kago Room",
+            "extra": {
+                "asset_id": 8
+            },
+            "nodes": {
+                "Dock to Forgotten Highway Kago Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 7,
+                    "connected_area_name": "Forgotten Highway Kago Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1147,13 +1148,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Forgotten Highway Elbow",
+                "Dock to Forgotten Highway Elbow": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 9,
+                    "connected_area_name": "Forgotten Highway Elbow",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1203,22 +1204,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Forgotten Highway Elbow",
-            "in_dark_aether": false,
-            "asset_id": 9,
-            "default_node_index": 0,
+        "Forgotten Highway Elbow": {
+            "default_node": "Dock to Crab Maze",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crab Maze",
+            "extra": {
+                "asset_id": 9
+            },
+            "nodes": {
+                "Dock to Crab Maze": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8,
+                    "connected_area_name": "Crab Maze",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1232,13 +1233,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Forgotten Highway Elevator",
+                "Dock to Forgotten Highway Elevator": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 32,
+                    "connected_area_name": "Forgotten Highway Elevator",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -1252,139 +1253,139 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Power Bomb Room",
-            "in_dark_aether": false,
-            "asset_id": 10,
-            "default_node_index": 0,
+        "Crateria Power Bomb Room": {
+            "default_node": "Dock to Landing Site",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Landing Site",
+            "extra": {
+                "asset_id": 10
+            },
+            "nodes": {
+                "Dock to Landing Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 0,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Pickup (Power Bomb Expansion)",
+                "Pickup (Power Bomb Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 0,
                     "major_location": false,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Gauntlet",
-            "in_dark_aether": false,
-            "asset_id": 11,
-            "default_node_index": 0,
+        "Gauntlet": {
+            "default_node": "Dock to Gauntlet Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Gauntlet Access",
+            "extra": {
+                "asset_id": 11
+            },
+            "nodes": {
+                "Dock to Gauntlet Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 12,
+                    "connected_area_name": "Gauntlet Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Green Pirates Shaft",
+                "Dock to Green Pirates Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 13,
+                    "connected_area_name": "Green Pirates Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Gauntlet Access",
-            "in_dark_aether": false,
-            "asset_id": 12,
-            "default_node_index": 0,
+        "Gauntlet Access": {
+            "default_node": "Dock to Gauntlet",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Gauntlet",
+            "extra": {
+                "asset_id": 12
+            },
+            "nodes": {
+                "Dock to Gauntlet": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11,
+                    "connected_area_name": "Gauntlet",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Landing Site",
-                    "heal": false,
-                    "coordinates": null,
+                "Dock to Landing Site": {
                     "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 0,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 5,
                     "major_location": true,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Green Pirates Shaft",
-            "in_dark_aether": false,
-            "asset_id": 13,
-            "default_node_index": 0,
+        "Green Pirates Shaft": {
+            "default_node": "Dock to Gauntlet",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Gauntlet",
+            "extra": {
+                "asset_id": 13
+            },
+            "nodes": {
+                "Dock to Gauntlet": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11,
+                    "connected_area_name": "Gauntlet",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Terminator Room",
+                "Dock to Terminator Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 22,
+                    "connected_area_name": "Terminator Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1405,13 +1406,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Lower Mushrooms",
+                "Dock to Lower Mushrooms": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 23,
+                    "connected_area_name": "Lower Mushrooms",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1425,13 +1426,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Gold Four Hallway",
+                "Dock to Gold Four Hallway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 24,
+                    "connected_area_name": "Gold Four Hallway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1445,40 +1446,40 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Left Missile Expansion)",
+                "Pickup (Left Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 10,
                     "major_location": false,
                     "connections": {}
                 },
-                {
-                    "name": "Pickup (Right Missile Expansion)",
+                "Pickup (Right Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 9,
                     "major_location": false,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Parlor",
-            "in_dark_aether": false,
-            "asset_id": 14,
-            "default_node_index": 0,
+        "Parlor": {
+            "default_node": "Dock to Parlor Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Parlor Save Station",
+            "extra": {
+                "asset_id": 14
+            },
+            "nodes": {
+                "Dock to Parlor Save Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15,
+                    "connected_area_name": "Parlor Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1494,13 +1495,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Final Missile Bombway",
+                "Dock to Final Missile Bombway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 20,
+                    "connected_area_name": "Final Missile Bombway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1514,13 +1515,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Crateria Map Access",
+                "Dock to Crateria Map Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 18,
+                    "connected_area_name": "Crateria Map Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1534,13 +1535,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Flyway",
+                "Dock to Flyway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 16,
+                    "connected_area_name": "Flyway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1590,13 +1591,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Terminator Room",
+                "Dock to Terminator Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 22,
+                    "connected_area_name": "Terminator Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1672,13 +1673,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Climb",
+                "Dock to Climb": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 5,
-                    "connected_area_asset_id": 26,
+                    "connected_area_name": "Climb",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1692,13 +1693,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Landing Site",
+                "Dock to Landing Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 6,
-                    "connected_area_asset_id": 0,
+                    "connected_area_name": "Landing Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1813,43 +1814,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Parlor Save Station",
-            "in_dark_aether": false,
-            "asset_id": 15,
-            "default_node_index": 0,
+        "Parlor Save Station": {
+            "default_node": "Dock to Parlor",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Parlor",
+            "extra": {
+                "asset_id": 15
+            },
+            "nodes": {
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Flyway",
-            "in_dark_aether": false,
-            "asset_id": 16,
-            "default_node_index": 0,
+        "Flyway": {
+            "default_node": "Dock to Parlor",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Parlor",
+            "extra": {
+                "asset_id": 16
+            },
+            "nodes": {
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1863,13 +1864,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Bomb Torizo Room",
+                "Dock to Bomb Torizo Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17,
+                    "connected_area_name": "Bomb Torizo Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1883,22 +1884,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Bomb Torizo Room",
-            "in_dark_aether": false,
-            "asset_id": 17,
-            "default_node_index": 0,
+        "Bomb Torizo Room": {
+            "default_node": "Dock to Flyway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Flyway",
+            "extra": {
+                "asset_id": 17
+            },
+            "nodes": {
+                "Dock to Flyway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 16,
+                    "connected_area_name": "Flyway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1912,11 +1913,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Morph Ball Bombs)",
+                "Pickup (Morph Ball Bombs)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 7,
                     "major_location": true,
                     "connections": {
@@ -1929,22 +1930,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Map Access",
-            "in_dark_aether": false,
-            "asset_id": 18,
-            "default_node_index": 0,
+        "Crateria Map Access": {
+            "default_node": "Dock to Crateria Map Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Map Station",
+            "extra": {
+                "asset_id": 18
+            },
+            "nodes": {
+                "Dock to Crateria Map Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 19,
+                    "connected_area_name": "Crateria Map Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1958,13 +1959,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Parlor",
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1978,43 +1979,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Map Station",
-            "in_dark_aether": false,
-            "asset_id": 19,
-            "default_node_index": 0,
+        "Crateria Map Station": {
+            "default_node": "Dock to Crateria Map Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Map Access",
+            "extra": {
+                "asset_id": 19
+            },
+            "nodes": {
+                "Dock to Crateria Map Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 18,
+                    "connected_area_name": "Crateria Map Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Final Missile Bombway",
-            "in_dark_aether": false,
-            "asset_id": 20,
-            "default_node_index": 0,
+        "Final Missile Bombway": {
+            "default_node": "Dock to Final Missile Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Final Missile Room",
+            "extra": {
+                "asset_id": 20
+            },
+            "nodes": {
+                "Dock to Final Missile Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 21,
+                    "connected_area_name": "Final Missile Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2030,13 +2031,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Parlor",
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2086,22 +2087,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Final Missile Room",
-            "in_dark_aether": false,
-            "asset_id": 21,
-            "default_node_index": 0,
+        "Final Missile Room": {
+            "default_node": "Dock to Final Missile Bombway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Final Missile Bombway",
+            "extra": {
+                "asset_id": 21
+            },
+            "nodes": {
+                "Dock to Final Missile Bombway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 20,
+                    "connected_area_name": "Final Missile Bombway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2115,11 +2116,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 12,
                     "major_location": false,
                     "connections": {
@@ -2132,22 +2133,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Terminator Room",
-            "in_dark_aether": false,
-            "asset_id": 22,
-            "default_node_index": 0,
+        "Terminator Room": {
+            "default_node": "Dock to Green Pirates Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Green Pirates Shaft",
+            "extra": {
+                "asset_id": 22
+            },
+            "nodes": {
+                "Dock to Green Pirates Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13,
+                    "connected_area_name": "Green Pirates Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2161,13 +2162,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Parlor",
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 4,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2188,11 +2189,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 8,
                     "major_location": true,
                     "connections": {
@@ -2205,22 +2206,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Lower Mushrooms",
-            "in_dark_aether": false,
-            "asset_id": 23,
-            "default_node_index": 0,
+        "Lower Mushrooms": {
+            "default_node": "Dock to Green Pirates Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Green Pirates Shaft",
+            "extra": {
+                "asset_id": 23
+            },
+            "nodes": {
+                "Dock to Green Pirates Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13,
+                    "connected_area_name": "Green Pirates Shaft",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2234,13 +2235,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Elevator to Green Brinstar",
+                "Dock to Elevator to Green Brinstar": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 30,
+                    "connected_area_name": "Elevator to Green Brinstar",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2254,22 +2255,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gold Four Hallway",
-            "in_dark_aether": false,
-            "asset_id": 24,
-            "default_node_index": 0,
+        "Gold Four Hallway": {
+            "default_node": "Dock to Green Pirates Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Green Pirates Shaft",
+            "extra": {
+                "asset_id": 24
+            },
+            "nodes": {
+                "Dock to Green Pirates Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13,
+                    "connected_area_name": "Green Pirates Shaft",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2283,13 +2284,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Gold Four",
+                "Dock to Gold Four": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 25,
+                    "connected_area_name": "Gold Four",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2303,22 +2304,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gold Four",
-            "in_dark_aether": false,
-            "asset_id": 25,
-            "default_node_index": 1,
+        "Gold Four": {
+            "default_node": "Elevator - Tourian Entrance",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Gold Four Hallway",
+            "extra": {
+                "asset_id": 25
+            },
+            "nodes": {
+                "Dock to Gold Four Hallway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 24,
+                    "connected_area_name": "Gold Four Hallway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2369,15 +2370,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Tourian Entrance",
+                "Elevator - Tourian Entrance": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5550,
-                    "destination_area_asset_id": 33,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Upper Zebes",
+                        "area_name": "Tourian Entrance"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -2427,22 +2431,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Climb",
-            "in_dark_aether": false,
-            "asset_id": 26,
-            "default_node_index": 0,
+        "Climb": {
+            "default_node": "Dock to Crateria Super Missile Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Super Missile Room",
+            "extra": {
+                "asset_id": 26
+            },
+            "nodes": {
+                "Dock to Crateria Super Missile Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 27,
+                    "connected_area_name": "Crateria Super Missile Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -2492,13 +2496,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Parlor",
+                "Dock to Parlor": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14,
+                    "connected_area_name": "Parlor",
                     "connected_dock_index": 5,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2555,13 +2559,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Old Mother Brain",
+                "Dock to Old Mother Brain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 28,
+                    "connected_area_name": "Old Mother Brain",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2575,13 +2579,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Escape Room 4",
+                "Dock to Tourian Escape Room 4": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 50,
+                    "connected_area_name": "Tourian Escape Room 4",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -2602,22 +2606,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crateria Super Missile Room",
-            "in_dark_aether": false,
-            "asset_id": 27,
-            "default_node_index": 0,
+        "Crateria Super Missile Room": {
+            "default_node": "Dock to Climb",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Climb",
+            "extra": {
+                "asset_id": 27
+            },
+            "nodes": {
+                "Dock to Climb": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 26,
+                    "connected_area_name": "Climb",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2650,11 +2654,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Super Missile Expansion)",
+                "Pickup (Super Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 11,
                     "major_location": false,
                     "connections": {
@@ -2703,22 +2707,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Old Mother Brain",
-            "in_dark_aether": false,
-            "asset_id": 28,
-            "default_node_index": 0,
+        "Old Mother Brain": {
+            "default_node": "Dock to Climb",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Climb",
+            "extra": {
+                "asset_id": 28
+            },
+            "nodes": {
+                "Dock to Climb": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 26,
+                    "connected_area_name": "Climb",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2784,13 +2788,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Elevator to Blue Brinstar",
+                "Dock to Elevator to Blue Brinstar": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 29,
+                    "connected_area_name": "Elevator to Blue Brinstar",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2806,11 +2810,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup( Missile Expansion)",
+                "Pickup( Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 6,
                     "major_location": false,
                     "connections": {
@@ -2859,22 +2863,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator to Blue Brinstar",
-            "in_dark_aether": false,
-            "asset_id": 29,
-            "default_node_index": 0,
+        "Elevator to Blue Brinstar": {
+            "default_node": "Dock to Old Mother Brain",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Old Mother Brain",
+            "extra": {
+                "asset_id": 29
+            },
+            "nodes": {
+                "Dock to Old Mother Brain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 28,
+                    "connected_area_name": "Old Mother Brain",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2888,15 +2892,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Retro Brinstar",
+                "Elevator - Retro Brinstar": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5551,
-                    "destination_area_asset_id": 93,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Middle Zebes",
+                        "area_name": "Retro Brinstar"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -2909,22 +2916,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator to Green Brinstar",
-            "in_dark_aether": false,
-            "asset_id": 30,
-            "default_node_index": 0,
+        "Elevator to Green Brinstar": {
+            "default_node": "Dock to Lower Mushrooms",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Lower Mushrooms",
+            "extra": {
+                "asset_id": 30
+            },
+            "nodes": {
+                "Dock to Lower Mushrooms": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 23,
+                    "connected_area_name": "Lower Mushrooms",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2938,15 +2945,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Elevator to Green Brinstar",
+                "Elevator - Elevator to Green Brinstar": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5551,
-                    "destination_area_asset_id": 67,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Middle Zebes",
+                        "area_name": "Green Brinstar Main Shaft"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -2959,22 +2969,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator to Red Brinstar",
-            "in_dark_aether": false,
-            "asset_id": 31,
-            "default_node_index": 0,
+        "Elevator to Red Brinstar": {
+            "default_node": "Dock to Crateria Kihunter Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Crateria Kihunter Room",
+            "extra": {
+                "asset_id": 31
+            },
+            "nodes": {
+                "Dock to Crateria Kihunter Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2,
+                    "connected_area_name": "Crateria Kihunter Room",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -2988,15 +2998,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Red Brinstar Zoro Room",
+                "Elevator - Red Brinstar Zoro Room": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5551,
-                    "destination_area_asset_id": 105,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Middle Zebes",
+                        "area_name": "Red Brinstar Zoro Room"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -3009,22 +3022,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Forgotten Highway Elevator",
-            "in_dark_aether": false,
-            "asset_id": 32,
-            "default_node_index": 1,
+        "Forgotten Highway Elevator": {
+            "default_node": "Elevator - Maridia Elevator Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Forgotten Highway Elbow",
+            "extra": {
+                "asset_id": 32
+            },
+            "nodes": {
+                "Dock to Forgotten Highway Elbow": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9,
+                    "connected_area_name": "Forgotten Highway Elbow",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3038,15 +3051,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Maridia Elevator Room",
+                "Elevator - Maridia Elevator Room": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5551,
-                    "destination_area_asset_id": 175,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Middle Zebes",
+                        "area_name": "Maridia Elevator Room"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -3059,22 +3075,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Entrance",
-            "in_dark_aether": false,
-            "asset_id": 33,
-            "default_node_index": 2,
+        "Tourian Entrance": {
+            "default_node": "Elevator - Golden Four",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Upper Tourian Save Station",
+            "extra": {
+                "asset_id": 33
+            },
+            "nodes": {
+                "Dock to Upper Tourian Save Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 34,
+                    "connected_area_name": "Upper Tourian Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3088,13 +3104,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Room 1",
+                "Dock to Metroid Room 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 35,
+                    "connected_area_name": "Metroid Room 1",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3115,15 +3131,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Golden Four",
+                "Elevator - Golden Four": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 5550,
-                    "destination_area_asset_id": 25,
-                    "teleporter_instance_id": null,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Upper Zebes",
+                        "area_name": "Gold Four"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -3136,43 +3155,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Upper Tourian Save Station",
-            "in_dark_aether": false,
-            "asset_id": 34,
-            "default_node_index": 0,
+        "Upper Tourian Save Station": {
+            "default_node": "Dock to Tourian Entrance",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Tourian Entrance",
+            "extra": {
+                "asset_id": 34
+            },
+            "nodes": {
+                "Dock to Tourian Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 33,
+                    "connected_area_name": "Tourian Entrance",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Room 1",
-            "in_dark_aether": false,
-            "asset_id": 35,
-            "default_node_index": 0,
+        "Metroid Room 1": {
+            "default_node": "Dock to Tourian Entrance",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Tourian Entrance",
+            "extra": {
+                "asset_id": 35
+            },
+            "nodes": {
+                "Dock to Tourian Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 33,
+                    "connected_area_name": "Tourian Entrance",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3263,13 +3282,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Room 2",
+                "Dock to Metroid Room 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 36,
+                    "connected_area_name": "Metroid Room 2",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 15,
@@ -3283,11 +3302,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Room 1 Cleared",
+                "Event - Metroid Room 1 Cleared": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 14,
                     "connections": {
                         "Dock to Tourian Entrance": {
@@ -3299,22 +3318,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Room 2",
-            "in_dark_aether": false,
-            "asset_id": 36,
-            "default_node_index": 0,
+        "Metroid Room 2": {
+            "default_node": "Dock to Metroid Room 1",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Metroid Room 1",
+            "extra": {
+                "asset_id": 36
+            },
+            "nodes": {
+                "Dock to Metroid Room 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 35,
+                    "connected_area_name": "Metroid Room 1",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3405,13 +3424,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Room 3",
+                "Dock to Metroid Room 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 37,
+                    "connected_area_name": "Metroid Room 3",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 16,
@@ -3425,11 +3444,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Room 2 Cleared",
+                "Event - Metroid Room 2 Cleared": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 15,
                     "connections": {
                         "Dock to Metroid Room 3": {
@@ -3441,22 +3460,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Room 3",
-            "in_dark_aether": false,
-            "asset_id": 37,
-            "default_node_index": 0,
+        "Metroid Room 3": {
+            "default_node": "Dock to Metroid Room 2",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Metroid Room 2",
+            "extra": {
+                "asset_id": 37
+            },
+            "nodes": {
+                "Dock to Metroid Room 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 36,
+                    "connected_area_name": "Metroid Room 2",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3547,13 +3566,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Room 4",
+                "Dock to Metroid Room 4": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 38,
+                    "connected_area_name": "Metroid Room 4",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 17,
@@ -3567,11 +3586,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Room 3 Cleared",
+                "Event - Metroid Room 3 Cleared": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 16,
                     "connections": {
                         "Dock to Metroid Room 2": {
@@ -3583,22 +3602,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Room 4",
-            "in_dark_aether": false,
-            "asset_id": 38,
-            "default_node_index": 0,
+        "Metroid Room 4": {
+            "default_node": "Dock to Metroid Room 3",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Metroid Room 3",
+            "extra": {
+                "asset_id": 38
+            },
+            "nodes": {
+                "Dock to Metroid Room 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 37,
+                    "connected_area_name": "Metroid Room 3",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3689,13 +3708,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Blue Hopper Room",
+                "Dock to Blue Hopper Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 39,
+                    "connected_area_name": "Blue Hopper Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 18,
@@ -3709,11 +3728,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Room 4 Cleared",
+                "Event - Metroid Room 4 Cleared": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 17,
                     "connections": {
                         "Dock to Metroid Room 3": {
@@ -3725,22 +3744,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Blue Hopper Room",
-            "in_dark_aether": false,
-            "asset_id": 39,
-            "default_node_index": 0,
+        "Blue Hopper Room": {
+            "default_node": "Dock to Dust Torizo Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Dust Torizo Room",
+            "extra": {
+                "asset_id": 39
+            },
+            "nodes": {
+                "Dock to Dust Torizo Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 40,
+                    "connected_area_name": "Dust Torizo Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3754,13 +3773,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Room 4",
+                "Dock to Metroid Room 4": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 38,
+                    "connected_area_name": "Metroid Room 4",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3774,22 +3793,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Dust Torizo Room",
-            "in_dark_aether": false,
-            "asset_id": 40,
-            "default_node_index": 0,
+        "Dust Torizo Room": {
+            "default_node": "Dock to Blue Hopper Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Blue Hopper Room",
+            "extra": {
+                "asset_id": 40
+            },
+            "nodes": {
+                "Dock to Blue Hopper Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 39,
+                    "connected_area_name": "Blue Hopper Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -3803,13 +3822,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Big Boy Room",
+                "Dock to Big Boy Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 41,
+                    "connected_area_name": "Big Boy Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3823,22 +3842,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Big Boy Room",
-            "in_dark_aether": false,
-            "asset_id": 41,
-            "default_node_index": 1,
+        "Big Boy Room": {
+            "default_node": "Dock to Dust Torizo Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Seaweed Room",
+            "extra": {
+                "asset_id": 41
+            },
+            "nodes": {
+                "Dock to Seaweed Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 42,
+                    "connected_area_name": "Seaweed Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3852,13 +3871,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Dust Torizo Room",
+                "Dock to Dust Torizo Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 40,
+                    "connected_area_name": "Dust Torizo Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -3872,22 +3891,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Seaweed Room",
-            "in_dark_aether": false,
-            "asset_id": 42,
-            "default_node_index": 0,
+        "Seaweed Room": {
+            "default_node": "Dock to Big Boy Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Big Boy Room",
+            "extra": {
+                "asset_id": 42
+            },
+            "nodes": {
+                "Dock to Big Boy Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 41,
+                    "connected_area_name": "Big Boy Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3901,13 +3920,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Gadora Room",
+                "Dock to Tourian Gadora Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 44,
+                    "connected_area_name": "Tourian Gadora Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3928,13 +3947,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Resupply Station",
+                "Dock to Tourian Resupply Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 43,
+                    "connected_area_name": "Tourian Resupply Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3948,43 +3967,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Resupply Station",
-            "in_dark_aether": false,
-            "asset_id": 43,
-            "default_node_index": 0,
+        "Tourian Resupply Station": {
+            "default_node": "Dock to Seaweed Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Seaweed Room",
+            "extra": {
+                "asset_id": 43
+            },
+            "nodes": {
+                "Dock to Seaweed Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 42,
+                    "connected_area_name": "Seaweed Room",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Gadora Room",
-            "in_dark_aether": false,
-            "asset_id": 44,
-            "default_node_index": 0,
+        "Tourian Gadora Room": {
+            "default_node": "Dock to Seaweed Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Seaweed Room",
+            "extra": {
+                "asset_id": 44
+            },
+            "nodes": {
+                "Dock to Seaweed Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 42,
+                    "connected_area_name": "Seaweed Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3998,13 +4017,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Rinka Shaft",
+                "Dock to Rinka Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 45,
+                    "connected_area_name": "Rinka Shaft",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4018,22 +4037,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Rinka Shaft",
-            "in_dark_aether": false,
-            "asset_id": 45,
-            "default_node_index": 0,
+        "Rinka Shaft": {
+            "default_node": "Dock to Rinka Shaft Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Rinka Shaft Save Station",
+            "extra": {
+                "asset_id": 45
+            },
+            "nodes": {
+                "Dock to Rinka Shaft Save Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 46,
+                    "connected_area_name": "Rinka Shaft Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4054,13 +4073,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Mother Brain's Room",
+                "Dock to Mother Brain's Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 47,
+                    "connected_area_name": "Mother Brain's Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4074,13 +4093,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Gadora Room",
+                "Dock to Tourian Gadora Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 44,
+                    "connected_area_name": "Tourian Gadora Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4094,43 +4113,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Rinka Shaft Save Station",
-            "in_dark_aether": false,
-            "asset_id": 46,
-            "default_node_index": 0,
+        "Rinka Shaft Save Station": {
+            "default_node": "Dock to Rinka Shaft",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Rinka Shaft",
+            "extra": {
+                "asset_id": 46
+            },
+            "nodes": {
+                "Dock to Rinka Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 45,
+                    "connected_area_name": "Rinka Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Mother Brain's Room",
-            "in_dark_aether": false,
-            "asset_id": 47,
-            "default_node_index": 0,
+        "Mother Brain's Room": {
+            "default_node": "Dock to Rinka Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Rinka Shaft",
+            "extra": {
+                "asset_id": 47
+            },
+            "nodes": {
+                "Dock to Rinka Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 45,
+                    "connected_area_name": "Rinka Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4189,23 +4208,23 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Escape Room 1",
+                "Dock to Tourian Escape Room 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 42069,
+                    "connected_area_name": "Tourian Escape Room 1",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Event - Defeat Mother Brain",
+                "Event - Defeat Mother Brain": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 7,
                     "connections": {
                         "Dock to Tourian Escape Room 1": {
@@ -4217,22 +4236,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Escape Room 1",
-            "in_dark_aether": false,
-            "asset_id": 42069,
-            "default_node_index": 0,
+        "Tourian Escape Room 1": {
+            "default_node": "Dock to Mother Brain's Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Mother Brain's Room",
+            "extra": {
+                "asset_id": 42069
+            },
+            "nodes": {
+                "Dock to Mother Brain's Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 47,
+                    "connected_area_name": "Mother Brain's Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -4246,46 +4265,46 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Escape Room 2",
+                "Dock to Tourian Escape Room 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 48,
+                    "connected_area_name": "Tourian Escape Room 2",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Escape Room 2",
-            "in_dark_aether": false,
-            "asset_id": 48,
-            "default_node_index": 0,
+        "Tourian Escape Room 2": {
+            "default_node": "Dock to Tourian Escape Room 3",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Tourian Escape Room 3",
+            "extra": {
+                "asset_id": 48
+            },
+            "nodes": {
+                "Dock to Tourian Escape Room 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 49,
+                    "connected_area_name": "Tourian Escape Room 3",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Tourian Escape Room 1",
+                "Dock to Tourian Escape Room 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 42069,
+                    "connected_area_name": "Tourian Escape Room 1",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -4299,22 +4318,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Escape Room 3",
-            "in_dark_aether": false,
-            "asset_id": 49,
-            "default_node_index": 0,
+        "Tourian Escape Room 3": {
+            "default_node": "Dock to Tourian Escape Room 2",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Tourian Escape Room 2",
+            "extra": {
+                "asset_id": 49
+            },
+            "nodes": {
+                "Dock to Tourian Escape Room 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 48,
+                    "connected_area_name": "Tourian Escape Room 2",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -4347,34 +4366,34 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Tourian Escape Room 4",
+                "Dock to Tourian Escape Room 4": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 50,
+                    "connected_area_name": "Tourian Escape Room 4",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Tourian Escape Room 4",
-            "in_dark_aether": false,
-            "asset_id": 50,
-            "default_node_index": 0,
+        "Tourian Escape Room 4": {
+            "default_node": "Dock to Tourian Escape Room 3",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Tourian Escape Room 3",
+            "extra": {
+                "asset_id": 50
+            },
+            "nodes": {
+                "Dock to Tourian Escape Room 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 49,
+                    "connected_area_name": "Tourian Escape Room 3",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -4407,34 +4426,34 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Climb",
+                "Dock to Climb": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 26,
+                    "connected_area_name": "Climb",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Bowling Alley",
-            "in_dark_aether": false,
-            "asset_id": 51,
-            "default_node_index": 0,
+        "Bowling Alley": {
+            "default_node": "Dock to West Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to West Ocean",
+            "extra": {
+                "asset_id": 51
+            },
+            "nodes": {
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 8,
@@ -4484,13 +4503,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Gravity Suit Room",
+                "Dock to Gravity Suit Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 52,
+                    "connected_area_name": "Gravity Suit Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4540,11 +4559,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 130,
                     "major_location": false,
                     "connections": {
@@ -4628,11 +4647,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Reserve Tank)",
+                "Pickup (Reserve Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 129,
                     "major_location": true,
                     "connections": {
@@ -4645,22 +4664,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gravity Suit Room",
-            "in_dark_aether": false,
-            "asset_id": 52,
-            "default_node_index": 0,
+        "Gravity Suit Room": {
+            "default_node": "Dock to West Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to West Ocean",
+            "extra": {
+                "asset_id": 52
+            },
+            "nodes": {
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 4,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4681,13 +4700,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Bowling Alley",
+                "Dock to Bowling Alley": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 51,
+                    "connected_area_name": "Bowling Alley",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4701,11 +4720,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Gravity Suit)",
+                "Pickup (Gravity Suit)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 135,
                     "major_location": true,
                     "connections": {
@@ -4718,22 +4737,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship Entrance",
-            "in_dark_aether": false,
-            "asset_id": 53,
-            "default_node_index": 0,
+        "Wrecked Ship Entrance": {
+            "default_node": "Dock to West Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to West Ocean",
+            "extra": {
+                "asset_id": 53
+            },
+            "nodes": {
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4747,13 +4766,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4767,22 +4786,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship Main Shaft",
-            "in_dark_aether": false,
-            "asset_id": 54,
-            "default_node_index": 0,
+        "Wrecked Ship Main Shaft": {
+            "default_node": "Dock to Wrecked Ship Entrance",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Entrance",
+            "extra": {
+                "asset_id": 54
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 53,
+                    "connected_area_name": "Wrecked Ship Entrance",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4855,13 +4874,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Attic",
+                "Dock to Attic": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 65,
+                    "connected_area_name": "Attic",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4927,25 +4946,25 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Shaft Save Station",
+                "Dock to Shaft Save Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 55,
+                    "connected_area_name": "Shaft Save Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Sponge Bath",
+                "Dock to Sponge Bath": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 61,
+                    "connected_area_name": "Sponge Bath",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4959,13 +4978,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship East Super Room",
+                "Dock to Wrecked Ship East Super Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 59,
+                    "connected_area_name": "Wrecked Ship East Super Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5041,13 +5060,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship West Super Room",
+                "Dock to Wrecked Ship West Super Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 5,
-                    "connected_area_asset_id": 60,
+                    "connected_area_name": "Wrecked Ship West Super Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5080,13 +5099,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Basement",
+                "Dock to Basement": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 6,
-                    "connected_area_asset_id": 56,
+                    "connected_area_name": "Basement",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -5162,11 +5181,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 128,
                     "major_location": false,
                     "connections": {
@@ -5215,43 +5234,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Shaft Save Station",
-            "in_dark_aether": false,
-            "asset_id": 55,
-            "default_node_index": 0,
+        "Shaft Save Station": {
+            "default_node": "Dock to Wrecked Ship Main Shaft",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+            "extra": {
+                "asset_id": 55
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Basement",
-            "in_dark_aether": false,
-            "asset_id": 56,
-            "default_node_index": 0,
+        "Basement": {
+            "default_node": "Dock to Wrecked Ship Main Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+            "extra": {
+                "asset_id": 56
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 6,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5334,13 +5353,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship Map Station",
+                "Dock to Wrecked Ship Map Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 58,
+                    "connected_area_name": "Wrecked Ship Map Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5354,13 +5373,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Phantoon's Room",
+                "Dock to Phantoon's Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 57,
+                    "connected_area_name": "Phantoon's Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5410,22 +5429,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phantoon's Room",
-            "in_dark_aether": false,
-            "asset_id": 57,
-            "default_node_index": 0,
+        "Phantoon's Room": {
+            "default_node": "Dock to Basement",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Basement",
+            "extra": {
+                "asset_id": 57
+            },
+            "nodes": {
+                "Dock to Basement": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 56,
+                    "connected_area_name": "Basement",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5467,11 +5486,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phantoon Defeated",
+                "Event - Phantoon Defeated": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 2,
                     "connections": {
                         "Event - Wrecked Ship Powered": {
@@ -5483,11 +5502,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Wrecked Ship Powered",
+                "Event - Wrecked Ship Powered": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 5,
                     "connections": {
                         "Dock to Basement": {
@@ -5499,43 +5518,43 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship Map Station",
-            "in_dark_aether": false,
-            "asset_id": 58,
-            "default_node_index": 0,
+        "Wrecked Ship Map Station": {
+            "default_node": "Dock to Basement",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Basement",
+            "extra": {
+                "asset_id": 58
+            },
+            "nodes": {
+                "Dock to Basement": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 56,
+                    "connected_area_name": "Basement",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship East Super Room",
-            "in_dark_aether": false,
-            "asset_id": 59,
-            "default_node_index": 0,
+        "Wrecked Ship East Super Room": {
+            "default_node": "Dock to Wrecked Ship Main Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+            "extra": {
+                "asset_id": 59
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 4,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5594,11 +5613,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Super Missile Expansion)",
+                "Pickup (Super Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 134,
                     "major_location": false,
                     "connections": {
@@ -5647,22 +5666,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship West Super Room",
-            "in_dark_aether": false,
-            "asset_id": 60,
-            "default_node_index": 0,
+        "Wrecked Ship West Super Room": {
+            "default_node": "Dock to Wrecked Ship Main Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+            "extra": {
+                "asset_id": 60
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 5,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5676,11 +5695,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Super Missile Expansion)",
+                "Pickup (Super Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 133,
                     "major_location": false,
                     "connections": {
@@ -5693,22 +5712,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sponge Bath",
-            "in_dark_aether": false,
-            "asset_id": 61,
-            "default_node_index": 0,
+        "Sponge Bath": {
+            "default_node": "Dock to Wrecked Ship Main Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+            "extra": {
+                "asset_id": 61
+            },
+            "nodes": {
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5741,13 +5760,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Spiky Death Room",
+                "Dock to Spiky Death Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 62,
+                    "connected_area_name": "Spiky Death Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5761,22 +5780,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Spiky Death Room",
-            "in_dark_aether": false,
-            "asset_id": 62,
-            "default_node_index": 0,
+        "Spiky Death Room": {
+            "default_node": "Dock to Electric Death Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Electric Death Room",
+            "extra": {
+                "asset_id": 62
+            },
+            "nodes": {
+                "Dock to Electric Death Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 63,
+                    "connected_area_name": "Electric Death Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5790,13 +5809,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Sponge Bath",
+                "Dock to Sponge Bath": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 61,
+                    "connected_area_name": "Sponge Bath",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5810,22 +5829,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Electric Death Room",
-            "in_dark_aether": false,
-            "asset_id": 63,
-            "default_node_index": 0,
+        "Electric Death Room": {
+            "default_node": "Dock to Spiky Death Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Spiky Death Room",
+            "extra": {
+                "asset_id": 63
+            },
+            "nodes": {
+                "Dock to Spiky Death Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 62,
+                    "connected_area_name": "Spiky Death Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5839,13 +5858,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship Energy Tank Room",
+                "Dock to Wrecked Ship Energy Tank Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 64,
+                    "connected_area_name": "Wrecked Ship Energy Tank Room",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5859,13 +5878,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to East Ocean",
+                "Dock to East Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 6,
+                    "connected_area_name": "East Ocean",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5914,22 +5933,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Wrecked Ship Energy Tank Room",
-            "in_dark_aether": false,
-            "asset_id": 64,
-            "default_node_index": 0,
+        "Wrecked Ship Energy Tank Room": {
+            "default_node": "Dock to Electric Death Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Electric Death Room",
+            "extra": {
+                "asset_id": 64
+            },
+            "nodes": {
+                "Dock to Electric Death Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 63,
+                    "connected_area_name": "Electric Death Room",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5943,11 +5962,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 132,
                     "major_location": true,
                     "connections": {
@@ -5960,22 +5979,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Attic",
-            "in_dark_aether": false,
-            "asset_id": 65,
-            "default_node_index": 0,
+        "Attic": {
+            "default_node": "Dock to West Ocean",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to West Ocean",
+            "extra": {
+                "asset_id": 65
+            },
+            "nodes": {
+                "Dock to West Ocean": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4,
+                    "connected_area_name": "West Ocean",
                     "connected_dock_index": 5,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5989,13 +6008,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Wrecked Ship Main Shaft",
+                "Dock to Wrecked Ship Main Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 54,
+                    "connected_area_name": "Wrecked Ship Main Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6020,13 +6039,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Assembly Line",
+                "Dock to Assembly Line": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 66,
+                    "connected_area_name": "Assembly Line",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6040,22 +6059,22 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Assembly Line",
-            "in_dark_aether": false,
-            "asset_id": 66,
-            "default_node_index": 0,
+        "Assembly Line": {
+            "default_node": "Dock to Attic",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Dock to Attic",
+            "extra": {
+                "asset_id": 66
+            },
+            "nodes": {
+                "Dock to Attic": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 65,
+                    "connected_area_name": "Attic",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6069,11 +6088,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 131,
                     "major_location": false,
                     "connections": {
@@ -6086,7 +6105,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

@@ -303,7 +303,7 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
 
     executor = AsyncMock()
     executor.perform_memory_operations.side_effect = lambda ops: {
-        ops[0]: expected_world.world_asset_id.to_bytes(4, "big") if has_world else b"DEAD",
+        ops[0]: expected_world.extra["asset_id"].to_bytes(4, "big") if has_world else b"DEAD",
         ops[1]: b"\x01" if has_pending_op else b"\x00",
         ops[2]: version.cplayer_vtable.to_bytes(4, "big") if correct_vtable else b"CAFE",
     }

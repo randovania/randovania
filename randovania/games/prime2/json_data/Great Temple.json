@@ -1,22 +1,25 @@
 {
     "name": "Great Temple",
-    "dark_name": "Sky Temple",
-    "asset_id": 2252328306,
-    "areas": [
-        {
-            "name": "Temple Transport A",
-            "in_dark_aether": false,
-            "asset_id": 408633584,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 2252328306,
+        "dark_name": "Sky Temple"
+    },
+    "areas": {
+        "Temple Transport A": {
+            "default_node": "Elevator to Temple Grounds - Temple Transport A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport A Access",
+            "extra": {
+                "asset_id": 408633584,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport A Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3885674414,
+                    "connected_area_name": "Transport A Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -32,15 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Temple Grounds - Temple Transport A",
+                "Elevator to Temple Grounds - Temple Transport A": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1006255871,
-                    "destination_area_asset_id": 1345979968,
-                    "teleporter_instance_id": 152,
-                    "scan_asset_id": 827726881,
+                    "extra": {
+                        "scan_asset_id": 827726881,
+                        "teleporter_instance_id": 152
+                    },
+                    "destination": {
+                        "world_name": "Temple Grounds",
+                        "area_name": "Temple Transport A"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -53,20 +59,21 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport A Access",
-            "in_dark_aether": false,
-            "asset_id": 3885674414,
-            "default_node_index": 0,
+        "Transport A Access": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Save Station",
+            "extra": {
+                "asset_id": 3885674414,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Temple Sanctuary": {
                             "type": "resource",
@@ -246,13 +253,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Sanctuary",
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2731245106,
+                    "connected_area_name": "Temple Sanctuary",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -376,13 +383,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Transport A",
+                "Door to Temple Transport A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 408633584,
+                    "connected_area_name": "Temple Transport A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -396,11 +403,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 20,
                     "major_location": false,
                     "connections": {
@@ -413,22 +420,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Sanctuary",
-            "in_dark_aether": false,
-            "asset_id": 2731245106,
-            "default_node_index": 1,
+        "Temple Sanctuary": {
+            "default_node": "Door to Transport A Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport B Access",
+            "extra": {
+                "asset_id": 2731245106,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport B Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 4273454375,
+                    "connected_area_name": "Transport B Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -442,13 +450,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport A Access",
+                "Door to Transport A Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3885674414,
+                    "connected_area_name": "Transport A Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -531,13 +539,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Controller Transport",
+                "Door to Controller Transport": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 300223430,
+                    "connected_area_name": "Controller Transport",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -551,13 +559,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport C Access",
+                "Door to Transport C Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 441310400,
+                    "connected_area_name": "Transport C Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -571,11 +579,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Transfer Module)",
+                "Pickup (Energy Transfer Module)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 21,
                     "major_location": true,
                     "connections": {
@@ -588,11 +596,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Alpha Splinter",
+                "Event - Alpha Splinter": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 76,
                     "connections": {
                         "Pickup (Energy Transfer Module)": {
@@ -604,11 +612,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Transport A Access": {
                             "type": "resource",
@@ -944,11 +952,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Transport A Translator Gate",
+                "Transport A Translator Gate": {
+                    "node_type": "translator_gate",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "translator_gate",
+                    "extra": {},
                     "gate_index": 9,
                     "connections": {
                         "Door to Transport A Access": {
@@ -967,11 +975,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Transport B Translator Gate",
+                "Transport B Translator Gate": {
+                    "node_type": "translator_gate",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "translator_gate",
+                    "extra": {},
                     "gate_index": 7,
                     "connections": {
                         "Door to Transport B Access": {
@@ -990,11 +998,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Transport C Translator Gate",
+                "Transport C Translator Gate": {
+                    "node_type": "translator_gate",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "translator_gate",
+                    "extra": {},
                     "gate_index": 8,
                     "connections": {
                         "Door to Transport C Access": {
@@ -1013,11 +1021,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Transport A Gate Removal",
+                "Event - Transport A Gate Removal": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 91,
                     "connections": {
                         "Door to Transport A Access": {
@@ -1029,22 +1037,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport C Access",
-            "in_dark_aether": false,
-            "asset_id": 441310400,
-            "default_node_index": 1,
+        "Transport C Access": {
+            "default_node": "Door to Temple Sanctuary",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Transport C",
+            "extra": {
+                "asset_id": 441310400,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Transport C": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2556480432,
+                    "connected_area_name": "Temple Transport C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1060,13 +1069,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Sanctuary",
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2731245106,
+                    "connected_area_name": "Temple Sanctuary",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1086,11 +1095,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Transport C Access Light Block",
+                "Event - Transport C Access Light Block": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 7,
                     "connections": {
                         "Door to Temple Transport C": {
@@ -1109,22 +1118,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Controller Transport",
-            "in_dark_aether": false,
-            "asset_id": 300223430,
-            "default_node_index": 1,
+        "Controller Transport": {
+            "default_node": "Door to Main Energy Controller",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Sanctuary",
+            "extra": {
+                "asset_id": 300223430,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2731245106,
+                    "connected_area_name": "Temple Sanctuary",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1140,13 +1150,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Energy Controller",
+                "Door to Main Energy Controller": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 44045108,
+                    "connected_area_name": "Main Energy Controller",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1162,22 +1172,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport B Access",
-            "in_dark_aether": false,
-            "asset_id": 4273454375,
-            "default_node_index": 0,
+        "Transport B Access": {
+            "default_node": "Door to Temple Sanctuary",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Sanctuary",
+            "extra": {
+                "asset_id": 4273454375,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2731245106,
+                    "connected_area_name": "Temple Sanctuary",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1285,13 +1296,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Transport B",
+                "Door to Temple Transport B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2399252740,
+                    "connected_area_name": "Temple Transport B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1305,11 +1316,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 22,
                     "major_location": false,
                     "connections": {
@@ -1322,22 +1333,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Transport C",
-            "in_dark_aether": false,
-            "asset_id": 2556480432,
-            "default_node_index": 1,
+        "Temple Transport C": {
+            "default_node": "Elevator to Temple Grounds - Temple Transport C",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport C Access",
+            "extra": {
+                "asset_id": 2556480432,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport C Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 441310400,
+                    "connected_area_name": "Transport C Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1353,15 +1365,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Temple Grounds - Temple Transport C",
+                "Elevator to Temple Grounds - Temple Transport C": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1006255871,
-                    "destination_area_asset_id": 2918020398,
-                    "teleporter_instance_id": 393260,
-                    "scan_asset_id": 1430348762,
+                    "extra": {
+                        "scan_asset_id": 1430348762,
+                        "teleporter_instance_id": 393260
+                    },
+                    "destination": {
+                        "world_name": "Temple Grounds",
+                        "area_name": "Temple Transport C"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -1374,22 +1389,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Energy Controller",
-            "in_dark_aether": false,
-            "asset_id": 44045108,
-            "default_node_index": 0,
+        "Main Energy Controller": {
+            "default_node": "Door to Controller Transport",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Controller Transport",
+            "extra": {
+                "asset_id": 44045108,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Controller Transport": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 300223430,
+                    "connected_area_name": "Controller Transport",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1446,11 +1462,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Violet Translator)",
+                "Pickup (Violet Translator)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 23,
                     "major_location": true,
                     "connections": {
@@ -1463,11 +1479,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Light Suit)",
+                "Pickup (Light Suit)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 24,
                     "major_location": true,
                     "connections": {
@@ -1480,15 +1496,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Agon Wastes - Agon Energy Controller",
+                "Teleport to Agon Wastes - Agon Energy Controller": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1119434212,
-                    "destination_area_asset_id": 50083607,
-                    "teleporter_instance_id": 939982960,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 939982960
+                    },
+                    "destination": {
+                        "world_name": "Agon Wastes",
+                        "area_name": "Agon Energy Controller"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -1501,15 +1520,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Torvus Bog - Torvus Energy Controller",
+                "Teleport to Torvus Bog - Torvus Energy Controller": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1039999561,
-                    "destination_area_asset_id": 322696632,
-                    "teleporter_instance_id": 939982964,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 939982964
+                    },
+                    "destination": {
+                        "world_name": "Torvus Bog",
+                        "area_name": "Torvus Energy Controller"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -1522,15 +1544,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Sanctuary Fortress - Sanctuary Energy Controller",
+                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 464164546,
-                    "destination_area_asset_id": 218311274,
-                    "teleporter_instance_id": 939982965,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 939982965
+                    },
+                    "destination": {
+                        "world_name": "Sanctuary Fortress",
+                        "area_name": "Sanctuary Energy Controller"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -1543,11 +1568,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Main Energy Controller Pickup",
-                    "heal": false,
-                    "coordinates": null,
+                "Event - Main Energy Controller Pickup": {
                     "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "extra": {},
                     "event_index": 77,
                     "connections": {
                         "Pickup (Light Suit)": {
@@ -1559,14 +1584,14 @@
                         }
                     }
                 },
-                {
-                    "name": "Lore Scan",
+                "Lore Scan": {
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "logbook",
+                    "extra": {},
                     "string_asset_id": 3277287077,
                     "lore_type": "luminoth-lore",
-                    "extra": 97,
+                    "lore_extra": 97,
                     "connections": {
                         "Door to Controller Transport": {
                             "type": "and",
@@ -1577,22 +1602,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Transport B",
-            "in_dark_aether": false,
-            "asset_id": 2399252740,
-            "default_node_index": 1,
+        "Temple Transport B": {
+            "default_node": "Elevator to Temple Grounds - Temple Transport B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport B Access",
+            "extra": {
+                "asset_id": 2399252740,
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Transport B Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4273454375,
+                    "connected_area_name": "Transport B Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1608,15 +1634,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Temple Grounds - Temple Transport B",
+                "Elevator to Temple Grounds - Temple Transport B": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1006255871,
-                    "destination_area_asset_id": 1287880522,
-                    "teleporter_instance_id": 524321,
-                    "scan_asset_id": 2113337837,
+                    "extra": {
+                        "scan_asset_id": 2113337837,
+                        "teleporter_instance_id": 524321
+                    },
+                    "destination": {
+                        "world_name": "Temple Grounds",
+                        "area_name": "Temple Transport B"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -1629,20 +1658,21 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sky Temple Energy Controller",
-            "in_dark_aether": true,
-            "asset_id": 2068511343,
-            "default_node_index": 0,
+        "Sky Temple Energy Controller": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Save Station",
+            "extra": {
+                "asset_id": 2068511343,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Sanctum Access": {
                             "type": "or",
@@ -1736,13 +1766,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sanctum Access",
+                "Door to Sanctum Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3417147547,
+                    "connected_area_name": "Sanctum Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1813,15 +1843,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Temple Grounds - Sky Temple Gateway",
+                "Teleport to Temple Grounds - Sky Temple Gateway": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1006255871,
-                    "destination_area_asset_id": 2278776548,
-                    "teleporter_instance_id": 589949,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 589949
+                    },
+                    "destination": {
+                        "world_name": "Temple Grounds",
+                        "area_name": "Sky Temple Gateway"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -2046,22 +2079,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sanctum Access",
-            "in_dark_aether": true,
-            "asset_id": 3417147547,
-            "default_node_index": 0,
+        "Sanctum Access": {
+            "default_node": "Door to Sky Temple Energy Controller",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sky Temple Energy Controller",
+            "extra": {
+                "asset_id": 3417147547,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Sky Temple Energy Controller": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2068511343,
+                    "connected_area_name": "Sky Temple Energy Controller",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2144,13 +2178,13 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sanctum",
+                "Door to Sanctum": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3619928121,
+                    "connected_area_name": "Sanctum",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2166,22 +2200,23 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sanctum",
-            "in_dark_aether": true,
-            "asset_id": 3619928121,
-            "default_node_index": 0,
+        "Sanctum": {
+            "default_node": "Door to Sanctum Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sanctum Access",
+            "extra": {
+                "asset_id": 3619928121,
+                "in_dark_aether": true
+            },
+            "nodes": {
+                "Door to Sanctum Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3417147547,
+                    "connected_area_name": "Sanctum Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2542,11 +2577,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Emperor Ing",
+                "Event - Emperor Ing": {
+                    "node_type": "event",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 8,
                     "connections": {
                         "Door to Sanctum Access": {
@@ -2619,7 +2654,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

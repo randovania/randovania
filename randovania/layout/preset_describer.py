@@ -48,6 +48,12 @@ def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) ->
             return state.num_shuffled_pickups > 0
     return False
 
+def has_vanilla_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
+    for item, state in configuration.items_state.items():
+        if item.name == item_name:
+            return state.include_copy_in_original_location
+    return False
+
 
 def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem, MajorItemState]) -> List[str]:
     expected_items = game.data.layout.preset_describer.expected_items

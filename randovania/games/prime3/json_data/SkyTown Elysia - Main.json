@@ -1,26 +1,27 @@
 {
     "name": "SkyTown, Elysia - Main",
-    "dark_name": null,
-    "asset_id": 14087060452406742136,
-    "areas": [
-        {
-            "name": "Main Docking Bay",
-            "in_dark_aether": false,
-            "asset_id": 4133901881028310574,
-            "default_node_index": 3,
+    "extra": {
+        "asset_id": 14087060452406742136
+    },
+    "areas": {
+        "Main Docking Bay": {
+            "default_node": "Samus Ship (Catch.)",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Docking Access",
+            "extra": {
+                "asset_id": 4133901881028310574
+            },
+            "nodes": {
+                "Door to Main Docking Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -66.0,
                         "z": 6.499981999397278
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5767114369935179109,
+                    "connected_area_name": "Main Docking Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -114,11 +115,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 51,
                     "major_location": false,
                     "connections": {
@@ -131,11 +132,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Plasma Beam)",
+                "Pickup (Plasma Beam)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 52,
                     "major_location": true,
                     "connections": {
@@ -148,11 +149,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship (Catch.)",
+                "Samus Ship (Catch.)": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "and",
                         "data": {
@@ -215,11 +216,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ghor",
+                "Event - Ghor": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 8,
                     "connections": {
                         "Pickup (Plasma Beam)": {
@@ -231,11 +232,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Before Ghor",
+                "Before Ghor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Event - Ghor": {
                             "type": "or",
@@ -260,26 +261,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Zipline Station Alpha",
-            "in_dark_aether": false,
-            "asset_id": 201801993056581673,
-            "default_node_index": 0,
+        "Zipline Station Alpha": {
+            "default_node": "Door to Main Docking Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Docking Access",
+            "extra": {
+                "asset_id": 201801993056581673
+            },
+            "nodes": {
+                "Door to Main Docking Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.9141387939453125e-06,
                         "y": 325.15289306640625,
                         "z": 2.50001391413889
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5767114369935179109,
+                    "connected_area_name": "Main Docking Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -382,17 +383,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Arrival Station",
+                "Door to Arrival Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -6.9141387939453125e-06,
                         "y": -325.15289306640625,
                         "z": 2.49998608586111
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14742980547553882067,
+                    "connected_area_name": "Arrival Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -495,26 +496,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Arrival Station",
-            "in_dark_aether": false,
-            "asset_id": 14742980547553882067,
-            "default_node_index": 0,
+        "Arrival Station": {
+            "default_node": "Door to Zipline Station Alpha",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Zipline Station Alpha",
+            "extra": {
+                "asset_id": 14742980547553882067
+            },
+            "nodes": {
+                "Door to Zipline Station Alpha": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.5987625122070312e-05,
                         "y": 57.8472785949707,
                         "z": 2.5000029305115277
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 201801993056581673,
+                    "connected_area_name": "Zipline Station Alpha",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -542,17 +543,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hub Access",
+                "Door to Hub Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.3208169937133789,
                         "y": -35.07712173461914,
                         "z": 2.4999904932096797
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 11556115933702107376,
+                    "connected_area_name": "Hub Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -589,11 +590,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 53,
                     "major_location": true,
                     "connections": {
@@ -606,11 +607,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Ledge",
+                "Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Zipline Station Alpha": {
                             "type": "and",
@@ -663,26 +664,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Barracks Access",
-            "in_dark_aether": false,
-            "asset_id": 4910606911885883821,
-            "default_node_index": 0,
+        "Barracks Access": {
+            "default_node": "Door to Transit Hub",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transit Hub",
+            "extra": {
+                "asset_id": 4910606911885883821
+            },
+            "nodes": {
+                "Door to Transit Hub": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.794929504394531e-05,
                         "y": 57.84728240966797,
                         "z": 4.500002980232239
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13389753286679728417,
+                    "connected_area_name": "Transit Hub",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -705,17 +706,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Steambot Barracks",
+                "Door to Steambot Barracks": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.32747268676758,
                         "y": 5.507469177246094e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12622074872595627812,
+                    "connected_area_name": "Steambot Barracks",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -729,11 +730,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 54,
                     "major_location": false,
                     "connections": {
@@ -746,26 +747,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hub Access",
-            "in_dark_aether": false,
-            "asset_id": 11556115933702107376,
-            "default_node_index": 1,
+        "Hub Access": {
+            "default_node": "Door to Arrival Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transit Hub",
+            "extra": {
+                "asset_id": 11556115933702107376
+            },
+            "nodes": {
+                "Door to Transit Hub": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.8472900390625,
                         "y": 5.0067901611328125e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13389753286679728417,
+                    "connected_area_name": "Transit Hub",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -779,17 +780,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Arrival Station",
+                "Door to Arrival Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4.9114227294921875e-05,
                         "y": -35.327476501464844,
                         "z": 4.499998033046722
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14742980547553882067,
+                    "connected_area_name": "Arrival Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -803,26 +804,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Barracks Lift",
-            "in_dark_aether": false,
-            "asset_id": 11193898588728046860,
-            "default_node_index": 1,
+        "Barracks Lift": {
+            "default_node": "Door to Steambot Barracks",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Zipline Station Bravo",
+            "extra": {
+                "asset_id": 11193898588728046860
+            },
+            "nodes": {
+                "Door to Zipline Station Bravo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.8472785949707,
                         "y": 4.792213439941406e-05,
                         "z": 44.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10719110688968561272,
+                    "connected_area_name": "Zipline Station Bravo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -836,17 +837,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Steambot Barracks",
+                "Door to Steambot Barracks": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.32747268676758,
                         "y": -5.602836608886719e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12622074872595627812,
+                    "connected_area_name": "Steambot Barracks",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -867,17 +868,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hoverplat Docking Site",
+                "Door to Hoverplat Docking Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1.5974044799804688e-05,
                         "y": -57.8472785949707,
                         "z": 4.499997079372406
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 10164050604229640228,
+                    "connected_area_name": "Hoverplat Docking Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -891,26 +892,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Aurora Lift",
-            "in_dark_aether": false,
-            "asset_id": 9894117388493814037,
-            "default_node_index": 2,
+        "Aurora Lift": {
+            "default_node": "Door to Zipline Station Bravo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Aurora Chamber",
+            "extra": {
+                "asset_id": 9894117388493814037
+            },
+            "nodes": {
+                "Door to Aurora Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.32747268676758,
                         "y": 5.507469177246094e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3066396911819856814,
+                    "connected_area_name": "Aurora Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -952,17 +953,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station A",
+                "Door to Save Station A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 35.33,
                         "z": 44.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17325277017676572028,
+                    "connected_area_name": "Save Station A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 9,
@@ -976,17 +977,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Zipline Station Bravo",
+                "Door to Zipline Station Bravo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.8472785949707,
                         "y": -5.1975250244140625e-05,
                         "z": 44.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 10719110688968561272,
+                    "connected_area_name": "Zipline Station Bravo",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1016,11 +1017,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Lift Activated",
+                "Event - Lift Activated": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 64,
                     "connections": {
                         "Door to Zipline Station Bravo": {
@@ -1032,11 +1033,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Aurora Chamber Reloaded",
+                "Event - Aurora Chamber Reloaded": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 63,
                     "connections": {
                         "Door to Aurora Chamber": {
@@ -1048,26 +1049,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Aurora Chamber",
-            "in_dark_aether": false,
-            "asset_id": 3066396911819856814,
-            "default_node_index": 1,
+        "Aurora Chamber": {
+            "default_node": "Door to Aurora Lift",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Maintenance Shaft AU",
+            "extra": {
+                "asset_id": 3066396911819856814
+            },
+            "nodes": {
+                "Door to Maintenance Shaft AU": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.32744216918945,
                         "y": -9.5367431640625e-07,
                         "z": 2.5000002499999994
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 722564631842201436,
+                    "connected_area_name": "Maintenance Shaft AU",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1081,17 +1082,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Aurora Lift",
+                "Door to Aurora Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.32744216918945,
                         "y": 9.5367431640625e-07,
                         "z": 2.5000002499999994
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 9894117388493814037,
+                    "connected_area_name": "Aurora Lift",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1131,11 +1132,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Inside Aurora Chamber",
+                "Inside Aurora Chamber": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Aurora Lift": {
                             "type": "and",
@@ -1188,11 +1189,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Aurora Vaccine",
+                "Event - Aurora Vaccine": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 72,
                     "connections": {
                         "Inside Aurora Chamber": {
@@ -1204,11 +1205,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Aurora Circuits",
+                "Event - Aurora Circuits": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 73,
                     "connections": {
                         "Inside Aurora Chamber": {
@@ -1220,11 +1221,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Initiate Bomb Sequence",
+                "Event - Initiate Bomb Sequence": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 143,
                     "connections": {
                         "Inside Aurora Chamber": {
@@ -1236,26 +1237,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hoverplat Docking Site",
-            "in_dark_aether": false,
-            "asset_id": 10164050604229640228,
-            "default_node_index": 0,
+        "Hoverplat Docking Site": {
+            "default_node": "Door to Barracks Lift",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Barracks Lift",
+            "extra": {
+                "asset_id": 10164050604229640228
+            },
+            "nodes": {
+                "Door to Barracks Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.9141387939453125e-06,
                         "y": 134.15286254882812,
                         "z": 4.5000070333480835
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11193898588728046860,
+                    "connected_area_name": "Barracks Lift",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1370,17 +1371,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Junction",
+                "Door to Junction": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 299.3489685058594,
                         "y": -256.68182373046875,
                         "z": 4.499989986419678
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2692588651293388340,
+                    "connected_area_name": "Junction",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1495,11 +1496,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile Expansion)",
+                "Pickup (Ship Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 55,
                     "major_location": false,
                     "connections": {
@@ -1512,11 +1513,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Center Platform",
+                "Center Platform": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Barracks Lift": {
                             "type": "template",
@@ -1563,11 +1564,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Out of Bounds",
+                "Out of Bounds": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Barracks Lift": {
                             "type": "and",
@@ -1592,26 +1593,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Skybridge Hera",
-            "in_dark_aether": false,
-            "asset_id": 10733512082794532665,
-            "default_node_index": 0,
+        "Skybridge Hera": {
+            "default_node": "Door to Junction",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Junction",
+            "extra": {
+                "asset_id": 10733512082794532665
+            },
+            "nodes": {
+                "Door to Junction": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 200.0,
                         "y": 0.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2692588651293388340,
+                    "connected_area_name": "Junction",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1799,17 +1800,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Maintenance Shaft GP",
+                "Door to Maintenance Shaft GP": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -210.0,
                         "y": -24.947729110717773,
                         "z": 2.499999023162843
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15917923329011025717,
+                    "connected_area_name": "Maintenance Shaft GP",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1936,11 +1937,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 56,
                     "major_location": false,
                     "connections": {
@@ -1953,11 +1954,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pillar Platform",
+                "Pillar Platform": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Junction": {
                             "type": "or",
@@ -2146,11 +2147,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Destroy Bridge",
+                "Event - Destroy Bridge": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 74,
                     "connections": {
                         "Door to Maintenance Shaft GP": {
@@ -2162,26 +2163,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Zipline Station Charlie",
-            "in_dark_aether": false,
-            "asset_id": 17641492364836789457,
-            "default_node_index": 1,
+        "Zipline Station Charlie": {
+            "default_node": "Door to Junction",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Powerworks Access",
+            "extra": {
+                "asset_id": 17641492364836789457
+            },
+            "nodes": {
+                "Door to Powerworks Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.004770994186401367,
                         "y": -182.0,
                         "z": 2.4999939005583656
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17854052165197892560,
+                    "connected_area_name": "Powerworks Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2296,17 +2297,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Junction",
+                "Door to Junction": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.9141387939453125e-06,
                         "y": 182.3004608154297,
                         "z": 2.500009029953162
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2692588651293388340,
+                    "connected_area_name": "Junction",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2442,11 +2443,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 57,
                     "major_location": true,
                     "connections": {
@@ -2459,11 +2460,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Floating Platform (Junction)",
+                "Floating Platform (Junction)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Junction": {
                             "type": "template",
@@ -2550,11 +2551,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Floating Platform (Powerworks Access)",
+                "Floating Platform (Powerworks Access)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Powerworks Access": {
                             "type": "template",
@@ -2676,11 +2677,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Zipline",
+                "Event - Zipline": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 75,
                     "connections": {
                         "Floating Platform (Powerworks Access)": {
@@ -2692,11 +2693,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Out of Bounds",
+                "Out of Bounds": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Powerworks Access": {
                             "type": "and",
@@ -2728,26 +2729,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Powerworks Access",
-            "in_dark_aether": false,
-            "asset_id": 17854052165197892560,
-            "default_node_index": 0,
+        "Powerworks Access": {
+            "default_node": "Door to Zipline Station Charlie",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Zipline Station Charlie",
+            "extra": {
+                "asset_id": 17854052165197892560
+            },
+            "nodes": {
+                "Door to Zipline Station Charlie": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.5974044799804688e-05,
                         "y": 57.8472900390625,
                         "z": 4.500003933906555
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17641492364836789457,
+                    "connected_area_name": "Zipline Station Charlie",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2784,17 +2785,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Powerworks",
+                "Door to Powerworks": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.32747268676758,
                         "y": 2.6464462280273438e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 265878788849725085,
+                    "connected_area_name": "Powerworks",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2827,11 +2828,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Barrier",
+                "Event - Barrier": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 95,
                     "connections": {
                         "Door to Zipline Station Charlie": {
@@ -2843,26 +2844,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Maintenance Shaft GP",
-            "in_dark_aether": false,
-            "asset_id": 15917923329011025717,
-            "default_node_index": 0,
+        "Maintenance Shaft GP": {
+            "default_node": "Door to Skybridge Hera",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Skybridge Hera",
+            "extra": {
+                "asset_id": 15917923329011025717
+            },
+            "nodes": {
+                "Door to Skybridge Hera": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.8472900390625,
                         "y": 5.0067901611328125e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10733512082794532665,
+                    "connected_area_name": "Skybridge Hera",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2876,17 +2877,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Construction Bay",
+                "Door to Construction Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.059906005859375e-06,
                         "y": -57.847286224365234,
                         "z": 4.499997079372406
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2667502259855056433,
+                    "connected_area_name": "Construction Bay",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2943,11 +2944,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Skybridge Hera Reloaded After Bridge Destroyed",
+                "Event - Skybridge Hera Reloaded After Bridge Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 66,
                     "connections": {
                         "Door to Construction Bay": {
@@ -2959,26 +2960,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ballista Lift",
-            "in_dark_aether": false,
-            "asset_id": 17014153014158531645,
-            "default_node_index": 1,
+        "Ballista Lift": {
+            "default_node": "Door to Construction Bay",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ballista Storage",
+            "extra": {
+                "asset_id": 17014153014158531645
+            },
+            "nodes": {
+                "Door to Ballista Storage": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3.409385681152344e-05,
                         "y": 35.327476501464844,
                         "z": 4.500001907348633
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9955656508473190866,
+                    "connected_area_name": "Ballista Storage",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2992,17 +2993,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Construction Bay",
+                "Door to Construction Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.8472785949707,
                         "y": -5.1975250244140625e-05,
                         "z": 44.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2667502259855056433,
+                    "connected_area_name": "Construction Bay",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3016,26 +3017,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Security Tube",
-            "in_dark_aether": false,
-            "asset_id": 17487489647732344867,
-            "default_node_index": 1,
+        "Security Tube": {
+            "default_node": "Door to Security Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Skytram West",
+            "extra": {
+                "asset_id": 17487489647732344867
+            },
+            "nodes": {
+                "Door to Skytram West": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.8472900390625,
                         "y": -1.5974044799804688e-05,
                         "z": 4.500000953674316
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1051771406754533733,
+                    "connected_area_name": "Skytram West",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3085,17 +3086,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Station",
+                "Door to Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.006815910339355469,
                         "y": 35.33125686645508,
                         "z": 4.515638947486877
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8195940946934839837,
+                    "connected_area_name": "Security Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3158,11 +3159,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phazon Vines",
+                "Event - Phazon Vines": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 76,
                     "connections": {
                         "Door to Security Station": {
@@ -3174,26 +3175,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Junction",
-            "in_dark_aether": false,
-            "asset_id": 2692588651293388340,
-            "default_node_index": 5,
+        "Junction": {
+            "default_node": "Circle Room",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Skybridge Hera",
+            "extra": {
+                "asset_id": 2692588651293388340
+            },
+            "nodes": {
+                "Door to Skybridge Hera": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.85,
                         "y": 0.0,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10733512082794532665,
+                    "connected_area_name": "Skybridge Hera",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 9,
@@ -3207,17 +3208,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hoverplat Docking Site",
+                "Door to Hoverplat Docking Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.9141387939453125e-06,
                         "y": 57.84728240966797,
                         "z": 4.500001907348633
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 10164050604229640228,
+                    "connected_area_name": "Hoverplat Docking Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3231,17 +3232,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Post-Bomb)",
+                "Door to Spire Dock (Post-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.85,
                         "y": 0.0,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3166066018495772067,
+                    "connected_area_name": "Spire Dock (Post-Bomb)",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3255,17 +3256,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Pre-Bomb)",
+                "Door to Spire Dock (Pre-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.85,
                         "y": 0.0,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 2782037876215597956,
+                    "connected_area_name": "Spire Dock (Pre-Bomb)",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3279,17 +3280,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Zipline Station Charlie",
+                "Door to Zipline Station Charlie": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -6.9141387939453125e-06,
                         "y": -57.84728240966797,
                         "z": 4.499997079372406
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 17641492364836789457,
+                    "connected_area_name": "Zipline Station Charlie",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3303,11 +3304,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Circle Room",
+                "Circle Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Skybridge Hera": {
                             "type": "and",
@@ -3359,11 +3360,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Skybridge Hera Reloaded After Bridge Destroyed",
+                "Event - Skybridge Hera Reloaded After Bridge Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 66,
                     "connections": {
                         "Circle Room": {
@@ -3375,26 +3376,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Landing Site A",
-            "in_dark_aether": false,
-            "asset_id": 3381520513235092752,
-            "default_node_index": 1,
+        "Landing Site A": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Security Station",
+            "extra": {
+                "asset_id": 3381520513235092752
+            },
+            "nodes": {
+                "Door to Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.3920994512736797,
                         "y": -39.35691833496094,
                         "z": 8.485673904418945
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8195940946934839837,
+                    "connected_area_name": "Security Station",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3445,11 +3446,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -3469,11 +3470,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Landing Site Unlocked",
+                "Event - Landing Site Unlocked": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 68,
                     "connections": {
                         "Door to Security Station": {
@@ -3485,26 +3486,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Maintenance Shaft AU",
-            "in_dark_aether": false,
-            "asset_id": 722564631842201436,
-            "default_node_index": 0,
+        "Maintenance Shaft AU": {
+            "default_node": "Door to Aurora Chamber",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Aurora Chamber",
+            "extra": {
+                "asset_id": 722564631842201436
+            },
+            "nodes": {
+                "Door to Aurora Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.32748031616211,
                         "y": -4.9114227294921875e-05,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3066396911819856814,
+                    "connected_area_name": "Aurora Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3532,17 +3533,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Post-Bomb)",
+                "Door to Spire Dock (Post-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.0,
                         "y": -57.85,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3166066018495772067,
+                    "connected_area_name": "Spire Dock (Post-Bomb)",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3601,17 +3602,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Pre-Bomb)",
+                "Door to Spire Dock (Pre-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.0,
                         "y": -57.85,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2782037876215597956,
+                    "connected_area_name": "Spire Dock (Pre-Bomb)",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3670,11 +3671,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Aurora Chamber Reloaded",
+                "Event - Aurora Chamber Reloaded": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 63,
                     "connections": {
                         "Ledge": {
@@ -3686,11 +3687,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Ledge",
+                "Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Aurora Chamber": {
                             "type": "and",
@@ -3728,26 +3729,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Construction Bay",
-            "in_dark_aether": false,
-            "asset_id": 2667502259855056433,
-            "default_node_index": 1,
+        "Construction Bay": {
+            "default_node": "Door to Maintenance Shaft GP",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ballista Lift",
+            "extra": {
+                "asset_id": 2667502259855056433
+            },
+            "nodes": {
+                "Door to Ballista Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.84701156616211,
                         "y": 4.291534423828125e-05,
                         "z": 42.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17014153014158531645,
+                    "connected_area_name": "Ballista Lift",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3765,17 +3766,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Maintenance Shaft GP",
+                "Door to Maintenance Shaft GP": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.9141387939453125e-06,
                         "y": -57.84712600708008,
                         "z": 2.4999975463256305
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15917923329011025717,
+                    "connected_area_name": "Maintenance Shaft GP",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3884,11 +3885,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 58,
                     "major_location": false,
                     "connections": {
@@ -3898,26 +3899,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Docking Access",
-            "in_dark_aether": false,
-            "asset_id": 5767114369935179109,
-            "default_node_index": 1,
+        "Main Docking Access": {
+            "default_node": "Door to Main Docking Bay",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Zipline Station Alpha",
+            "extra": {
+                "asset_id": 5767114369935179109
+            },
+            "nodes": {
+                "Door to Zipline Station Alpha": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1.0013580322265625e-05,
                         "y": -57.8472900390625,
                         "z": 4.499997556209564
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 201801993056581673,
+                    "connected_area_name": "Zipline Station Alpha",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3996,17 +3997,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Docking Bay",
+                "Door to Main Docking Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.5987625122070312e-05,
                         "y": 57.8472785949707,
                         "z": 4.500002980232239
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4133901881028310574,
+                    "connected_area_name": "Main Docking Bay",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4081,11 +4082,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phazon Vines",
+                "Event - Phazon Vines": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 70,
                     "connections": {
                         "Door to Main Docking Bay": {
@@ -4097,26 +4098,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Security Station",
-            "in_dark_aether": false,
-            "asset_id": 8195940946934839837,
-            "default_node_index": 6,
+        "Security Station": {
+            "default_node": "Spire Side",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Security Tube",
+            "extra": {
+                "asset_id": 8195940946934839837
+            },
+            "nodes": {
+                "Door to Security Tube": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 35.32748031616211,
                         "z": 44.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17487489647732344867,
+                    "connected_area_name": "Security Tube",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4132,17 +4133,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Post-Bomb)",
+                "Door to Spire Dock (Post-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.85,
                         "y": -0.0,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3166066018495772067,
+                    "connected_area_name": "Spire Dock (Post-Bomb)",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4156,17 +4157,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Spire Dock (Pre-Bomb)",
+                "Door to Spire Dock (Pre-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.85,
                         "y": -0.0,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2782037876215597956,
+                    "connected_area_name": "Spire Dock (Pre-Bomb)",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4180,17 +4181,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Landing Site A",
+                "Door to Landing Site A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.6927719116210938e-05,
                         "y": -57.8472900390625,
                         "z": 4.499997556209564
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 3381520513235092752,
+                    "connected_area_name": "Landing Site A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4253,17 +4254,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Escape Pod Bay Access",
+                "Door to Escape Pod Bay Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.0,
                         "y": -25.46993637084961,
                         "z": 9.34857964515686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 10147956754909178375,
+                    "connected_area_name": "Escape Pod Bay Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4277,11 +4278,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile Expansion)",
+                "Pickup (Ship Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 59,
                     "major_location": false,
                     "connections": {
@@ -4294,11 +4295,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Spire Side",
+                "Spire Side": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Security Tube": {
                             "type": "and",
@@ -4350,26 +4351,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Steambot Barracks",
-            "in_dark_aether": false,
-            "asset_id": 12622074872595627812,
-            "default_node_index": 1,
+        "Steambot Barracks": {
+            "default_node": "Door to Barracks Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Barracks Lift",
+            "extra": {
+                "asset_id": 12622074872595627812
+            },
+            "nodes": {
+                "Door to Barracks Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 36.0,
                         "y": 0.0,
                         "z": 2.5056610053870827
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11193898588728046860,
+                    "connected_area_name": "Barracks Lift",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4385,17 +4386,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Barracks Access",
+                "Door to Barracks Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -36.0,
                         "y": -1.9073486328125e-06,
                         "z": 42.4807014465332
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4910606911885883821,
+                    "connected_area_name": "Barracks Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4488,11 +4489,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 60,
                     "major_location": false,
                     "connections": {
@@ -4505,11 +4506,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 61,
                     "major_location": true,
                     "connections": {
@@ -4522,11 +4523,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Steamlord",
+                "Event - Steamlord": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 6,
                     "connections": {
                         "Pickup (Energy Tank)": {
@@ -4538,11 +4539,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Bottom Floor",
+                "Bottom Floor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Barracks Lift": {
                             "type": "resource",
@@ -4653,11 +4654,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Gate",
+                "Event - Gate": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 94,
                     "connections": {
                         "Bottom Floor": {
@@ -4669,11 +4670,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Lift Activated",
+                "Event - Lift Activated": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 98,
                     "connections": {
                         "Door to Barracks Access": {
@@ -4685,26 +4686,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ballista Storage",
-            "in_dark_aether": false,
-            "asset_id": 9955656508473190866,
-            "default_node_index": 0,
+        "Ballista Storage": {
+            "default_node": "Door to Ballista Lift",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ballista Lift",
+            "extra": {
+                "asset_id": 9955656508473190866
+            },
+            "nodes": {
+                "Door to Ballista Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.002716064453125e-05,
                         "y": 35.32747268676758,
                         "z": 2.5000014768371557
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17014153014158531645,
+                    "connected_area_name": "Ballista Lift",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4718,11 +4719,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Cell)",
+                "Pickup (Energy Cell)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 62,
                     "major_location": true,
                     "connections": {
@@ -4735,11 +4736,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Boost Ball)",
+                "Pickup (Boost Ball)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 63,
                     "major_location": true,
                     "connections": {
@@ -4752,11 +4753,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Defense Drone",
+                "Event - Defense Drone": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 7,
                     "connections": {
                         "Event - Skybridge Hera Destroyed": {
@@ -4768,11 +4769,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Steamlord",
+                "Event - Steamlord": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 14,
                     "connections": {
                         "Bottom Floor": {
@@ -4784,11 +4785,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Bottom Floor",
+                "Bottom Floor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ballista Lift": {
                             "type": "and",
@@ -4929,11 +4930,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Skybridge Hera Destroyed",
+                "Event - Skybridge Hera Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 74,
                     "connections": {
                         "Pickup (Boost Ball)": {
@@ -4945,26 +4946,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Powerworks",
-            "in_dark_aether": false,
-            "asset_id": 265878788849725085,
-            "default_node_index": 0,
+        "Powerworks": {
+            "default_node": "Door to Powerworks Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Powerworks Access",
+            "extra": {
+                "asset_id": 265878788849725085
+            },
+            "nodes": {
+                "Door to Powerworks Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 51.32746887207031,
                         "y": 2.6941299438476562e-05,
                         "z": 2.4999997500000006
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17854052165197892560,
+                    "connected_area_name": "Powerworks Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5045,11 +5046,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Spider Ball)",
+                "Pickup (Spider Ball)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 64,
                     "major_location": true,
                     "connections": {
@@ -5081,11 +5082,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 65,
                     "major_location": false,
                     "connections": {
@@ -5098,11 +5099,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Back Area",
+                "Back Area": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Powerworks Access": {
                             "type": "and",
@@ -5176,42 +5177,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Spire Dock (Post-Bomb)",
-            "in_dark_aether": false,
-            "asset_id": 3166066018495772067,
-            "default_node_index": 0,
+        "Spire Dock (Post-Bomb)": {
+            "default_node": "Door to Maintenance Shaft AU",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Maintenance Shaft AU",
+            "extra": {
+                "asset_id": 3166066018495772067
+            },
+            "nodes": {
+                "Door to Maintenance Shaft AU": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.910064697265625e-05,
                         "y": 17.152891159057617,
                         "z": 5.0916619300842285
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 722564631842201436,
+                    "connected_area_name": "Maintenance Shaft AU",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Security Station",
+                "Door to Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 260.60205078125,
                         "y": -468.0001525878906,
                         "z": 5.091639995574951
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8195940946934839837,
+                    "connected_area_name": "Security Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5227,17 +5228,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Junction",
+                "Door to Junction": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -246.825927734375,
                         "y": -468.0,
                         "z": 5.0916407108306885
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2692588651293388340,
+                    "connected_area_name": "Junction",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5253,42 +5254,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Escape Pod Bay",
-            "in_dark_aether": false,
-            "asset_id": 7293006450314500398,
-            "default_node_index": 0,
+        "Escape Pod Bay": {
+            "default_node": "Door to Escape Pod Bay Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Escape Pod Bay Access",
+            "extra": {
+                "asset_id": 7293006450314500398
+            },
+            "nodes": {
+                "Door to Escape Pod Bay Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.019669055938720703,
                         "y": -37.88310241699219,
                         "z": 2.499999023162843
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10147956754909178375,
+                    "connected_area_name": "Escape Pod Bay Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Dock to Spire",
+                "Dock to Spire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 194.72,
                         "y": 503.74,
                         "z": 338.76
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 6637485379588009329,
+                    "connected_area_name": "Spire",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5302,26 +5303,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Spire",
-            "in_dark_aether": false,
-            "asset_id": 6637485379588009329,
-            "default_node_index": 1,
+        "Spire": {
+            "default_node": "Dock to Spire Dock (Pre-Bomb)",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Morph Ball Door to Podworks",
+            "extra": {
+                "asset_id": 6637485379588009329
+            },
+            "nodes": {
+                "Morph Ball Door to Podworks": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.01,
                         "y": -16.74,
                         "z": -2.75
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6342289143695945848,
+                    "connected_area_name": "Podworks",
                     "connected_dock_index": 0,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -5337,17 +5338,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Spire Dock (Pre-Bomb)",
+                "Dock to Spire Dock (Pre-Bomb)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -274.94,
                         "y": -588.26,
                         "z": 393.75
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2782037876215597956,
+                    "connected_area_name": "Spire Dock (Pre-Bomb)",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5361,27 +5362,27 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Escape Pod Bay",
+                "Dock to Escape Pod Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -280.19,
                         "y": -583.51,
                         "z": 393.75
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 7293006450314500398,
+                    "connected_area_name": "Escape Pod Bay",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Event - Destroy Leviathan Shield",
+                "Event - Destroy Leviathan Shield": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 78,
                     "connections": {
                         "Room Center": {
@@ -5393,11 +5394,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Morph Ball Door to Podworks": {
                             "type": "resource",
@@ -5435,26 +5436,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Spire Dock (Pre-Bomb)",
-            "in_dark_aether": false,
-            "asset_id": 2782037876215597956,
-            "default_node_index": 0,
+        "Spire Dock (Pre-Bomb)": {
+            "default_node": "Door to Maintenance Shaft AU",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Maintenance Shaft AU",
+            "extra": {
+                "asset_id": 2782037876215597956
+            },
+            "nodes": {
+                "Door to Maintenance Shaft AU": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.910064697265625e-05,
                         "y": 17.152891159057617,
                         "z": 5.0916619300842285
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 722564631842201436,
+                    "connected_area_name": "Maintenance Shaft AU",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5470,17 +5471,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Station",
+                "Door to Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 260.60205078125,
                         "y": -468.0001525878906,
                         "z": 5.091639995574951
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8195940946934839837,
+                    "connected_area_name": "Security Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5496,17 +5497,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Junction",
+                "Door to Junction": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -246.83,
                         "y": -468.0,
                         "z": 5.09
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2692588651293388340,
+                    "connected_area_name": "Junction",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5522,17 +5523,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Spire",
+                "Dock to Spire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 539.48,
                         "y": 68.87,
                         "z": 436.34
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 6637485379588009329,
+                    "connected_area_name": "Spire",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5546,11 +5547,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Center",
+                "Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Maintenance Shaft AU": {
                             "type": "resource",
@@ -5625,11 +5626,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bomb Prepared",
+                "Event - Bomb Prepared": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 77,
                     "connections": {
                         "Center": {
@@ -5641,26 +5642,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Podworks",
-            "in_dark_aether": false,
-            "asset_id": 6342289143695945848,
-            "default_node_index": 0,
+        "Podworks": {
+            "default_node": "Morph Ball Door to Spire",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Morph Ball Door to Spire",
+            "extra": {
+                "asset_id": 6342289143695945848
+            },
+            "nodes": {
+                "Morph Ball Door to Spire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 4.0,
                         "z": 1.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6637485379588009329,
+                    "connected_area_name": "Spire",
                     "connected_dock_index": 0,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -5702,11 +5703,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Podworks Repair",
+                "Event - Podworks Repair": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 96,
                     "connections": {
                         "Morph Ball Door to Spire": {
@@ -5718,26 +5719,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Skytram West",
-            "in_dark_aether": false,
-            "asset_id": 1051771406754533733,
-            "default_node_index": 0,
+        "Skytram West": {
+            "default_node": "Door to Security Tube",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Security Tube",
+            "extra": {
+                "asset_id": 1051771406754533733
+            },
+            "nodes": {
+                "Door to Security Tube": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -198.8471221923828,
                         "y": -34.995235443115234,
                         "z": 4.999998092651367
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17487489647732344867,
+                    "connected_area_name": "Security Tube",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5770,15 +5771,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Skytram to East Skytown - Skytram East",
+                "Skytram to East Skytown - Skytram East": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 16208562975376944299,
-                    "destination_area_asset_id": 10057915363412886881,
-                    "teleporter_instance_id": 2031842,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 2031842
+                    },
+                    "destination": {
+                        "world_name": "SkyTown, Elysia - Pod",
+                        "area_name": "Skytram East"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -5791,26 +5795,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transit Hub",
-            "in_dark_aether": false,
-            "asset_id": 13389753286679728417,
-            "default_node_index": 0,
+        "Transit Hub": {
+            "default_node": "Door to Hub Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hub Access",
+            "extra": {
+                "asset_id": 13389753286679728417
+            },
+            "nodes": {
+                "Door to Hub Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 57.8472900390625,
                         "y": 0.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11556115933702107376,
+                    "connected_area_name": "Hub Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5826,17 +5830,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Barracks Access",
+                "Door to Barracks Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 400.0000305175781,
                         "y": -242.15296936035156,
                         "z": 42.4999885559082
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4910606911885883821,
+                    "connected_area_name": "Barracks Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5878,17 +5882,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Zipline Station Bravo",
+                "Door to Zipline Station Bravo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 750.0,
                         "y": -4.5299530029296875e-06,
                         "z": 100.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 10719110688968561272,
+                    "connected_area_name": "Zipline Station Bravo",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5902,11 +5906,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 66,
                     "major_location": false,
                     "connections": {
@@ -5919,11 +5923,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Bomb Part Platform",
+                "Bomb Part Platform": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Hub Access": {
                             "type": "resource",
@@ -6053,11 +6057,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bomb Part 3",
+                "Event - Bomb Part 3": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 71,
                     "connections": {
                         "Bomb Part Platform": {
@@ -6069,26 +6073,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Zipline Station Bravo",
-            "in_dark_aether": false,
-            "asset_id": 10719110688968561272,
-            "default_node_index": 0,
+        "Zipline Station Bravo": {
+            "default_node": "Door to Barracks Lift",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Barracks Lift",
+            "extra": {
+                "asset_id": 10719110688968561272
+            },
+            "nodes": {
+                "Door to Barracks Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -296.15289306640625,
                         "y": -68.81822967529297,
                         "z": 12.49999713897705
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11193898588728046860,
+                    "connected_area_name": "Barracks Lift",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6251,17 +6255,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Aurora Lift",
+                "Door to Aurora Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 192.1748809814453,
                         "y": -32.34708786010742,
                         "z": 12.499999046325684
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 9894117388493814037,
+                    "connected_area_name": "Aurora Lift",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6389,17 +6393,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transit Hub",
+                "Door to Transit Hub": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.34521484375,
                         "y": 231.18186950683594,
                         "z": 69.97505950927734
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 13389753286679728417,
+                    "connected_area_name": "Transit Hub",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6413,26 +6417,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Escape Pod Bay Access",
-            "in_dark_aether": false,
-            "asset_id": 10147956754909178375,
-            "default_node_index": 0,
+        "Escape Pod Bay Access": {
+            "default_node": "Door to Escape Pod Bay",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Escape Pod Bay",
+            "extra": {
+                "asset_id": 10147956754909178375
+            },
+            "nodes": {
+                "Door to Escape Pod Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.05172610282897949,
                         "y": 12.847188949584961,
                         "z": 48.46122741699219
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 7293006450314500398,
+                    "connected_area_name": "Escape Pod Bay",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6446,17 +6450,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Station",
+                "Door to Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.019047975540161133,
                         "y": -12.620346069335938,
                         "z": -41.687007904052734
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8195940946934839837,
+                    "connected_area_name": "Security Station",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6470,26 +6474,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station A",
-            "in_dark_aether": false,
-            "asset_id": 17325277017676572028,
-            "default_node_index": 1,
+        "Save Station A": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Aurora Lift",
+            "extra": {
+                "asset_id": 17325277017676572028
+            },
+            "nodes": {
+                "Door to Aurora Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4.0531158447265625e-06,
                         "y": 21.0,
                         "z": 2.500000976837157
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9894117388493814037,
+                    "connected_area_name": "Aurora Lift",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6503,11 +6507,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Aurora Lift": {
                             "type": "and",
@@ -6518,7 +6522,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

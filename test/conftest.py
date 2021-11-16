@@ -16,6 +16,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, Pick
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
@@ -64,7 +65,8 @@ def default_echoes_preset() -> Preset:
 
 
 @pytest.fixture(scope="session")
-def default_layout_configuration(default_echoes_preset) -> BaseConfiguration:
+def default_layout_configuration(default_echoes_preset) -> EchoesConfiguration:
+    assert isinstance(default_echoes_preset.configuration, EchoesConfiguration)
     return default_echoes_preset.configuration
 
 

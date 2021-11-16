@@ -1,4 +1,5 @@
 {
+    "schema_version": 2,
     "game": "prime2",
     "resource_database": {
         "items": [
@@ -49,8 +50,8 @@
         "multiworld_magic_item_index": 74
     },
     "starting_location": {
-        "world_asset_id": 1234125,
-        "area_asset_id": 235234
+        "world_name": "Temple Grounds",
+        "area_name": "Landing Site"
     },
     "initial_states": {
         "Default": [
@@ -161,25 +162,28 @@
     "worlds": [
         {
             "name": "Temple Grounds",
-            "dark_name": "Sky Temple Grounds",
-            "asset_id": 1006255871,
-            "areas": [
-                {
-                    "name": "Landing Site",
-                    "in_dark_aether": false,
-                    "asset_id": 1655756413,
-                    "default_node_index": 0,
+            "extra": {
+                "asset_id": 1006255871,
+                "dark_name": "Sky Temple Grounds"
+            },
+            "areas": {
+                "Landing Site": {
+                    "default_node": "Save Station",
                     "valid_starting_location": true,
-                    "nodes": [
-                        {
-                            "name": "Save Station",
+                    "extra": {
+                        "asset_id": 1655756413,
+                        "in_dark_aether": false
+                    },
+                    "nodes": {
+                        "Save Station": {
+                            "node_type": "generic",
                             "heal": true,
                             "coordinates": {
                                 "x": -224.33,
                                 "y": 113.81,
                                 "z": -9.39
                             },
-                            "node_type": "generic",
+                            "extra": {},
                             "connections": {
                                 "Door to Service Access": {
                                     "type": "or",
@@ -217,17 +221,17 @@
                                 }
                             }
                         },
-                        {
-                            "name": "Door to Service Access",
+                        "Door to Service Access": {
+                            "node_type": "dock",
                             "heal": true,
                             "coordinates": {
                                 "x": 224.33,
                                 "y": 1113.81,
                                 "z": -9.3923
                             },
-                            "node_type": "dock",
+                            "extra": {},
                             "dock_index": 0,
-                            "connected_area_asset_id": 2679590972,
+                            "connected_area_name": "Service Access",
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
@@ -249,60 +253,61 @@
                                 }
                             }
                         }
-                    ]
+                    }
                 },
-                {
-                    "name": "Service Access",
-                    "in_dark_aether": false,
-                    "asset_id": 2679590972,
-                    "default_node_index": 0,
+                "Service Access": {
+                    "default_node": "Door to Landing Site",
                     "valid_starting_location": true,
-                    "nodes": [
-                        {
-                            "name": "Door to Landing Site",
+                    "extra": {
+                        "asset_id": 2679590972,
+                        "in_dark_aether": false
+                    },
+                    "nodes": {
+                        "Door to Landing Site": {
+                            "node_type": "dock",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "dock",
+                            "extra": {},
                             "dock_index": 0,
-                            "connected_area_asset_id": 1655756413,
+                            "connected_area_name": "Landing Site",
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
-                        {
-                            "name": "Luminoth Lore",
+                        "Luminoth Lore": {
+                            "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "logbook",
+                            "extra": {},
                             "string_asset_id": 1000,
                             "lore_type": "luminoth-lore",
-                            "extra": 2,
+                            "lore_extra": 2,
                             "connections": {}
                         },
-                        {
-                            "name": "Luminoth Warrior",
+                        "Luminoth Warrior": {
+                            "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "logbook",
+                            "extra": {},
                             "string_asset_id": 2000,
                             "lore_type": "luminoth-warrior",
-                            "extra": 2,
+                            "lore_extra": 2,
                             "connections": {}
                         },
-                        {
-                            "name": "Pirate Lore",
+                        "Pirate Lore": {
+                            "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "logbook",
+                            "extra": {},
                             "string_asset_id": 3000,
                             "lore_type": "pirate-lore",
-                            "extra": 0,
+                            "lore_extra": 0,
                             "connections": {}
                         }
-                    ]
+                    }
                 }
-            ]
+            }
         }
     ]
 }

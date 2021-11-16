@@ -1,26 +1,27 @@
 {
     "name": "Bryyo - Fire",
-    "dark_name": null,
-    "asset_id": 11216541621678862008,
-    "areas": [
-        {
-            "name": "Fiery Airdock",
-            "in_dark_aether": false,
-            "asset_id": 11708287702197177006,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 11216541621678862008
+    },
+    "areas": {
+        "Fiery Airdock": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Imperial Hall",
+            "extra": {
+                "asset_id": 11708287702197177006
+            },
+            "nodes": {
+                "Door to Imperial Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -67.0,
                         "z": 4.999997069488472
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4215957264467390882,
+                    "connected_area_name": "Imperial Hall",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -34,11 +35,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "and",
                         "data": {
@@ -56,26 +57,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Lift",
-            "in_dark_aether": false,
-            "asset_id": 9934831212540578712,
-            "default_node_index": 2,
+        "Main Lift": {
+            "default_node": "Door to Gel Refinery Site",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Warp Site Alpha",
+            "extra": {
+                "asset_id": 9934831212540578712
+            },
+            "nodes": {
+                "Door to Warp Site Alpha": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -16.5,
                         "y": 46.3,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4474147916478522354,
+                    "connected_area_name": "Warp Site Alpha",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -108,17 +109,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Corrupted Pool",
+                "Door to Corrupted Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.5,
                         "y": -68.0,
                         "z": -37.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4196997332781103286,
+                    "connected_area_name": "Corrupted Pool",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -134,17 +135,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Refinery Site",
+                "Door to Gel Refinery Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -31.500009536743164,
                         "y": -19.0,
                         "z": -6.999854028224945
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 691790544662692104,
+                    "connected_area_name": "Gel Refinery Site",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -297,11 +298,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 17,
                     "major_location": false,
                     "connections": {
@@ -333,11 +334,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Upper Area",
+                "Upper Area": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Warp Site Alpha": {
                             "type": "and",
@@ -394,11 +395,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ice Tunnel",
+                "Event - Ice Tunnel": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 53,
                     "connections": {
                         "Upper Area": {
@@ -410,26 +411,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Imperial Hall",
-            "in_dark_aether": false,
-            "asset_id": 4215957264467390882,
-            "default_node_index": 2,
+        "Imperial Hall": {
+            "default_node": "Door to Fiery Airdock",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gel Refinery Site",
+            "extra": {
+                "asset_id": 4215957264467390882
+            },
+            "nodes": {
+                "Door to Gel Refinery Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.81984519958496,
                         "y": -37.52722930908203,
                         "z": 4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 691790544662692104,
+                    "connected_area_name": "Gel Refinery Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -497,17 +498,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Refinery Access",
+                "Door to Refinery Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -59.18,
                         "y": -16.53,
                         "z": 15.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12195253720064854680,
+                    "connected_area_name": "Refinery Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -530,17 +531,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fiery Airdock",
+                "Door to Fiery Airdock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -37.180152893066406,
                         "y": 22.472768783569336,
                         "z": -1.9999990463256836
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 11708287702197177006,
+                    "connected_area_name": "Fiery Airdock",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -687,17 +688,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Cavern",
+                "Door to Gel Cavern": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -187.68,
                         "y": -200.53,
                         "z": 23.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 11307336868361004418,
+                    "connected_area_name": "Gel Cavern",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -711,11 +712,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 18,
                     "major_location": false,
                     "connections": {
@@ -749,11 +750,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Fuel Gel Walls",
+                "Event - Fuel Gel Walls": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 51,
                     "connections": {
                         "Door to Fiery Airdock": {
@@ -765,11 +766,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Lasso Walls",
+                "Front of Lasso Walls": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Refinery Access": {
                             "type": "resource",
@@ -907,11 +908,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Grapple Lasso Walls",
+                "Event - Grapple Lasso Walls": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 155,
                     "connections": {
                         "Front of Lasso Walls": {
@@ -923,26 +924,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Refinery Access",
-            "in_dark_aether": false,
-            "asset_id": 12195253720064854680,
-            "default_node_index": 1,
+        "Refinery Access": {
+            "default_node": "Door to Gel Refinery Site",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Imperial Hall",
+            "extra": {
+                "asset_id": 12195253720064854680
+            },
+            "nodes": {
+                "Door to Imperial Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.98,
                         "y": 32.27,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4215957264467390882,
+                    "connected_area_name": "Imperial Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -970,17 +971,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Refinery Site",
+                "Door to Gel Refinery Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 34.02,
                         "y": -7.73,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 691790544662692104,
+                    "connected_area_name": "Gel Refinery Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1008,26 +1009,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gel Refinery Site",
-            "in_dark_aether": false,
-            "asset_id": 691790544662692104,
-            "default_node_index": 0,
+        "Gel Refinery Site": {
+            "default_node": "Door to Imperial Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Imperial Hall",
+            "extra": {
+                "asset_id": 691790544662692104
+            },
+            "nodes": {
+                "Door to Imperial Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -7.5,
                         "y": 46.5,
                         "z": 5.000001953674314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4215957264467390882,
+                    "connected_area_name": "Imperial Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1041,17 +1042,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Refinery Access",
+                "Door to Refinery Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -36.5,
                         "y": 27.5,
                         "z": 15.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12195253720064854680,
+                    "connected_area_name": "Refinery Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1067,17 +1068,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Purification Site",
+                "Door to Gel Purification Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12.5,
                         "y": -41.5,
                         "z": 20.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 14145904616390261937,
+                    "connected_area_name": "Gel Purification Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1121,17 +1122,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Lift",
+                "Door to Main Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 56.5,
                         "y": -7.500000476837158,
                         "z": 15.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 9934831212540578712,
+                    "connected_area_name": "Main Lift",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1145,11 +1146,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 19,
                     "major_location": false,
                     "connections": {
@@ -1209,11 +1210,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Imperial Hall": {
                             "type": "and",
@@ -1521,11 +1522,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Pipe",
+                "Event - Pipe": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 52,
                     "connections": {
                         "Door to Gel Purification Site": {
@@ -1537,26 +1538,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gel Purification Site",
-            "in_dark_aether": false,
-            "asset_id": 14145904616390261937,
-            "default_node_index": 0,
+        "Gel Purification Site": {
+            "default_node": "Door to Gel Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gel Hall",
+            "extra": {
+                "asset_id": 14145904616390261937
+            },
+            "nodes": {
+                "Door to Gel Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -50.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15732414849243282895,
+                    "connected_area_name": "Gel Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1584,17 +1585,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Refinery Site",
+                "Door to Gel Refinery Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 50.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 691790544662692104,
+                    "connected_area_name": "Gel Refinery Site",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1622,26 +1623,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gel Hall",
-            "in_dark_aether": false,
-            "asset_id": 15732414849243282895,
-            "default_node_index": 1,
+        "Gel Hall": {
+            "default_node": "Door to Gel Processing Site",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gel Purification Site",
+            "extra": {
+                "asset_id": 15732414849243282895
+            },
+            "nodes": {
+                "Door to Gel Purification Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 40.0,
                         "z": 6.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 14145904616390261937,
+                    "connected_area_name": "Gel Purification Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1759,17 +1760,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Processing Site",
+                "Door to Gel Processing Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
                         "y": -20.0,
                         "z": 6.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15414731845526197010,
+                    "connected_area_name": "Gel Processing Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1852,17 +1853,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station A",
+                "Door to Save Station A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -40.0,
                         "y": -20.0,
                         "z": 5.999999016523361
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 6190253681364271262,
+                    "connected_area_name": "Save Station A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2010,11 +2011,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion - Ledge)",
+                "Pickup (Missile Expansion - Ledge)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 20,
                     "major_location": false,
                     "connections": {
@@ -2089,11 +2090,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion - Falling Platform)",
+                "Pickup (Missile Expansion - Falling Platform)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 21,
                     "major_location": false,
                     "connections": {
@@ -2106,11 +2107,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Falling Platform",
+                "Event - Falling Platform": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 137,
                     "connections": {
                         "Door to Gel Processing Site": {
@@ -2131,11 +2132,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Falling Platform",
+                "Falling Platform": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gel Processing Site": {
                             "type": "resource",
@@ -2319,26 +2320,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Corrupted Pool",
-            "in_dark_aether": false,
-            "asset_id": 4196997332781103286,
-            "default_node_index": 0,
+        "Corrupted Pool": {
+            "default_node": "Door to Main Lift",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Lift",
+            "extra": {
+                "asset_id": 4196997332781103286
+            },
+            "nodes": {
+                "Door to Main Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 85.0,
                         "z": 5.000003907348628
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9934831212540578712,
+                    "connected_area_name": "Main Lift",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2456,17 +2457,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Processing Site",
+                "Door to Gel Processing Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15414731845526197010,
+                    "connected_area_name": "Gel Processing Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2516,11 +2517,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phazon Vines",
+                "Event - Phazon Vines": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 54,
                     "connections": {
                         "Door to Main Lift": {
@@ -2532,26 +2533,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple of Bryyo",
-            "in_dark_aether": false,
-            "asset_id": 13296637487518400273,
-            "default_node_index": 0,
+        "Temple of Bryyo": {
+            "default_node": "Door to Temple Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Access",
+            "extra": {
+                "asset_id": 13296637487518400273
+            },
+            "nodes": {
+                "Door to Temple Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 58.5,
                         "y": 89.5,
                         "z": 3.500003933906555
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17784744952251613582,
+                    "connected_area_name": "Temple Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2565,17 +2566,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Reservoir",
+                "Door to Temple Reservoir": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.03677797317504883,
                         "y": -4.197683811187744,
                         "z": -24.9520320892334
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 6515839134538815411,
+                    "connected_area_name": "Temple Reservoir",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2589,11 +2590,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ice Missile)",
+                "Pickup (Ice Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 23,
                     "major_location": true,
                     "connections": {
@@ -2606,11 +2607,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 22,
                     "major_location": false,
                     "connections": {
@@ -2623,11 +2624,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Above Ground",
+                "Above Ground": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Temple Access": {
                             "type": "resource",
@@ -2895,11 +2896,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Rundas",
+                "Event - Rundas": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 3,
                     "connections": {
                         "Pickup (Ice Missile)": {
@@ -2911,11 +2912,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Turret",
+                "Event - Turret": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 56,
                     "connections": {
                         "Above Ground": {
@@ -2927,26 +2928,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Hall",
-            "in_dark_aether": false,
-            "asset_id": 8718899405848025583,
-            "default_node_index": 0,
+        "Temple Hall": {
+            "default_node": "Door to Temple Reservoir",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Reservoir",
+            "extra": {
+                "asset_id": 8718899405848025583
+            },
+            "nodes": {
+                "Door to Temple Reservoir": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 85.0,
                         "z": 5.000003907348628
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6515839134538815411,
+                    "connected_area_name": "Temple Reservoir",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3024,17 +3025,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Generator",
+                "Door to Temple Generator": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17919508762406024111,
+                    "connected_area_name": "Temple Generator",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3105,11 +3106,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Temple Hall Falls Activated",
+                "Event - Temple Hall Falls Activated": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 138,
                     "connections": {
                         "Door to Temple Reservoir": {
@@ -3121,26 +3122,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gel Processing Site",
-            "in_dark_aether": false,
-            "asset_id": 15414731845526197010,
-            "default_node_index": 0,
+        "Gel Processing Site": {
+            "default_node": "Door to Corrupted Pool",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Corrupted Pool",
+            "extra": {
+                "asset_id": 15414731845526197010
+            },
+            "nodes": {
+                "Door to Corrupted Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.000006675720215,
                         "y": 75.0,
                         "z": 9.999998569488525
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4196997332781103286,
+                    "connected_area_name": "Corrupted Pool",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3340,17 +3341,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Hall",
+                "Door to Gel Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -75.00001525878906,
                         "y": 14.999992847442627,
                         "z": 45.00001525878906
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15732414849243282895,
+                    "connected_area_name": "Gel Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3364,11 +3365,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Raise Pillar",
+                "Event - Raise Pillar": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 55,
                     "connections": {
                         "Door to Gel Hall": {
@@ -3380,11 +3381,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Single Use Out of Bounds",
+                "Event - Single Use Out of Bounds": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 154,
                     "connections": {
                         "Door to Gel Hall": {
@@ -3396,26 +3397,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station A",
-            "in_dark_aether": false,
-            "asset_id": 6190253681364271262,
-            "default_node_index": 2,
+        "Save Station A": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gel Hall",
+            "extra": {
+                "asset_id": 6190253681364271262
+            },
+            "nodes": {
+                "Door to Gel Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24.0,
                         "y": -3.8806028962135315,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15732414849243282895,
+                    "connected_area_name": "Gel Hall",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3429,17 +3430,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Cavern Entry",
+                "Door to Cavern Entry": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -24.000003814697266,
                         "y": -3.8806028962135315,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 7770467369003576485,
+                    "connected_area_name": "Cavern Entry",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3453,11 +3454,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gel Hall": {
                             "type": "and",
@@ -3475,26 +3476,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Generator",
-            "in_dark_aether": false,
-            "asset_id": 17919508762406024111,
-            "default_node_index": 0,
+        "Temple Generator": {
+            "default_node": "Door to Temple Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple Hall",
+            "extra": {
+                "asset_id": 17919508762406024111
+            },
+            "nodes": {
+                "Door to Temple Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 20.0,
                         "z": 5.0918428264558315
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8718899405848025583,
+                    "connected_area_name": "Temple Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3505,11 +3506,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Leviathan Shield",
+                "Event - Leviathan Shield": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 57,
                     "connections": {
                         "Door to Temple Hall": {
@@ -3521,26 +3522,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Cavern Entry",
-            "in_dark_aether": false,
-            "asset_id": 7770467369003576485,
-            "default_node_index": 1,
+        "Cavern Entry": {
+            "default_node": "Door to Gel Cavern",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Save Station A",
+            "extra": {
+                "asset_id": 7770467369003576485
+            },
+            "nodes": {
+                "Door to Save Station A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.5,
                         "y": -4.76837158203125e-07,
                         "z": 4.9999995115814215
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6190253681364271262,
+                    "connected_area_name": "Save Station A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3554,17 +3555,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gel Cavern",
+                "Door to Gel Cavern": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -51.5,
                         "y": 9.5367431640625e-07,
                         "z": 5.000001215255736
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 11307336868361004418,
+                    "connected_area_name": "Gel Cavern",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3578,26 +3579,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gel Cavern",
-            "in_dark_aether": false,
-            "asset_id": 11307336868361004418,
-            "default_node_index": 0,
+        "Gel Cavern": {
+            "default_node": "Door to Cavern Entry",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Cavern Entry",
+            "extra": {
+                "asset_id": 11307336868361004418
+            },
+            "nodes": {
+                "Door to Cavern Entry": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11.5,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 7770467369003576485,
+                    "connected_area_name": "Cavern Entry",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3723,17 +3724,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Access",
+                "Door to Temple Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -97.48075866699219,
                         "y": 0.0,
                         "z": 4.999996831069893
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17784744952251613582,
+                    "connected_area_name": "Temple Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3747,42 +3748,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Imperial Hall",
+                "Morph Ball Door to Imperial Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.0,
                         "y": 85.0,
                         "z": 8.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 4215957264467390882,
+                    "connected_area_name": "Imperial Hall",
                     "connected_dock_index": 3,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Reservoir",
-            "in_dark_aether": false,
-            "asset_id": 6515839134538815411,
-            "default_node_index": 0,
+        "Temple Reservoir": {
+            "default_node": "Door to Temple of Bryyo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Temple of Bryyo",
+            "extra": {
+                "asset_id": 6515839134538815411
+            },
+            "nodes": {
+                "Door to Temple of Bryyo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 5.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13296637487518400273,
+                    "connected_area_name": "Temple of Bryyo",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3832,17 +3833,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple Hall",
+                "Door to Temple Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 40.06295394897461,
                         "y": -46.0,
                         "z": 5.111594598740339
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8718899405848025583,
+                    "connected_area_name": "Temple Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3892,26 +3893,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Temple Access",
-            "in_dark_aether": false,
-            "asset_id": 17784744952251613582,
-            "default_node_index": 0,
+        "Temple Access": {
+            "default_node": "Door to Gel Cavern",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gel Cavern",
+            "extra": {
+                "asset_id": 17784744952251613582
+            },
+            "nodes": {
+                "Door to Gel Cavern": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11.5,
                         "y": -4.76837158203125e-07,
                         "z": 4.9999995115814215
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 11307336868361004418,
+                    "connected_area_name": "Gel Cavern",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3925,17 +3926,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Temple of Bryyo",
+                "Door to Temple of Bryyo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -71.5,
                         "y": -4.76837158203125e-07,
                         "z": 13.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 13296637487518400273,
+                    "connected_area_name": "Temple of Bryyo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3949,26 +3950,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Warp Site Alpha",
-            "in_dark_aether": false,
-            "asset_id": 4474147916478522354,
-            "default_node_index": 2,
+        "Warp Site Alpha": {
+            "default_node": "Teleport to Bryyo Ice - Warp Site Bravo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Lift",
+            "extra": {
+                "asset_id": 4474147916478522354
+            },
+            "nodes": {
+                "Door to Main Lift": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.01,
                         "y": -34.95,
                         "z": 10.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9934831212540578712,
+                    "connected_area_name": "Main Lift",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4028,11 +4029,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Warp Site Alpha Wall",
+                "Event - Warp Site Alpha Wall": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 21,
                     "connections": {
                         "Door to Main Lift": {
@@ -4044,15 +4045,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Bryyo Ice - Warp Site Bravo",
+                "Teleport to Bryyo Ice - Warp Site Bravo": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 12742502173584078952,
-                    "destination_area_asset_id": 9245834436705857859,
-                    "teleporter_instance_id": 1245247,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 1245247
+                    },
+                    "destination": {
+                        "world_name": "Bryyo - Ice",
+                        "area_name": "Warp Site Bravo"
+                    },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
@@ -4067,7 +4071,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

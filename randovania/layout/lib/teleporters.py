@@ -7,9 +7,9 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 
@@ -50,10 +50,10 @@ def _has_editable_teleporter(area: Area) -> bool:
 
 class TeleporterList(location_list.LocationList):
     @classmethod
-    def areas_list(cls, game: RandovaniaGame) -> List[Teleporter]:
+    def areas_list(cls, game: RandovaniaGame) -> List[NodeIdentifier]:
         world_list = default_database.game_description_for(game).world_list
         areas = [
-            node.teleporter
+            world_list.identifier_for_node(node)
             for world in world_list.worlds
             for area in world.areas
             for node in area.nodes
@@ -64,24 +64,21 @@ class TeleporterList(location_list.LocationList):
 
     @classmethod
     def element_type(cls):
-        return Teleporter
+        return NodeIdentifier
 
-    def ensure_has_location(self, area_location: Teleporter, enabled: bool) -> "TeleporterList":
+    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> "TeleporterList":
         return super().ensure_has_location(area_location, enabled)
 
-    def ensure_has_locations(self, area_locations: List[AreaLocation], enabled: bool) -> "TeleporterList":
+    def ensure_has_locations(self, area_locations: List[NodeIdentifier], enabled: bool) -> "TeleporterList":
         return super().ensure_has_locations(area_locations, enabled)
 
 
 def _valid_teleporter_target(area: Area, game: RandovaniaGame):
-    if game == RandovaniaGame.METROID_PRIME and area.area_asset_id == 3031702600:
-        return True
-
-    if game == RandovaniaGame.METROID_PRIME_ECHOES and area.area_asset_id == 1393588666:
+    if game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and area.name == "Credits":
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return area.valid_starting_location and area.default_node_index is not None and not has_save_station
+    return area.valid_starting_location and area.default_node is not None and not has_save_station
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -115,35 +112,41 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
     @property
-    def editable_teleporters(self) -> List[Teleporter]:
+    def editable_teleporters(self) -> List[NodeIdentifier]:
         return [teleporter for teleporter in self.excluded_teleporters.areas_list(self.game)
                 if teleporter not in self.excluded_teleporters.locations]
 
     @property
-    def static_teleporters(self) -> Dict[Teleporter, AreaLocation]:
+    def static_teleporters(self) -> Dict[NodeIdentifier, AreaIdentifier]:
         static = {}
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
-                static[Teleporter(972217896, 597223686, 1049306)] = AreaLocation(0x13d79165, 0xb4b41c48)
+                crater = NodeIdentifier(AreaIdentifier("Tallon Overworld", "Artifact Temple"),
+                                        "Teleport to Impact Crater - Crater Impact Point")
+                static[crater] = AreaIdentifier("End of Game", "Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                static[Teleporter(1006255871, 2278776548, 136970379)] = AreaLocation(1006255871, 1393588666)
+                gateway = NodeIdentifier(AreaIdentifier("Temple Grounds", "Sky Temple Gateway"),
+                                         "Teleport to Great Temple - Sky Temple Energy Controller")
+                static[gateway] = AreaIdentifier("Temple Grounds", "Credits")
             else:
                 raise ValueError(f"Unsupported skip_final_bosses and {self.game}")
 
         return static
 
     @property
-    def valid_targets(self) -> List[AreaLocation]:
+    def valid_targets(self) -> List[AreaIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             return [location for location in self.excluded_targets.areas_list(self.game)
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
             world_list = default_database.game_description_for(self.game).world_list
-            return [
-                world_list.teleporter_to_node(teleporter).default_connection
-                for teleporter in self.editable_teleporters
-            ]
+            result = []
+            for identifier in self.editable_teleporters:
+                node = world_list.node_by_identifier(identifier)
+                if isinstance(node, TeleporterNode):
+                    result.append(node.default_connection)
+            return result
         else:
             return []
 

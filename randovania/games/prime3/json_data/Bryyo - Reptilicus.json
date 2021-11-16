@@ -1,26 +1,27 @@
 {
     "name": "Bryyo - Reptilicus",
-    "dark_name": null,
-    "asset_id": 11458735609143269013,
-    "areas": [
-        {
-            "name": "Cliffside Airdock",
-            "in_dark_aether": false,
-            "asset_id": 2349002151496990705,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 11458735609143269013
+    },
+    "areas": {
+        "Cliffside Airdock": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gateway Hall",
+            "extra": {
+                "asset_id": 2349002151496990705
+            },
+            "nodes": {
+                "Door to Gateway Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24.549678802490234,
                         "y": -76.55158233642578,
                         "z": 12.064899206161499
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2768064962148517187,
+                    "connected_area_name": "Gateway Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -34,11 +35,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "and",
                         "data": {
@@ -56,26 +57,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "G.F.S. Theseus",
-            "in_dark_aether": false,
-            "asset_id": 10553270987934706862,
-            "default_node_index": 4,
+        "G.F.S. Theseus": {
+            "default_node": "Room Center",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Falls of Fire",
+            "extra": {
+                "asset_id": 10553270987934706862
+            },
+            "nodes": {
+                "Door to Falls of Fire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 37.319217681884766,
                         "y": -23.978485107421875,
                         "z": 2.605586502701044
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8374398449894515797,
+                    "connected_area_name": "Falls of Fire",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -89,17 +90,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crash Site",
+                "Door to Crash Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 47.74,
                         "y": 29.95,
                         "z": 3.95
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 15814834557214288722,
+                    "connected_area_name": "Crash Site",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -113,17 +114,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Crash Site",
+                "Morph Ball Door to Crash Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 72.67,
                         "y": 4.35,
                         "z": 5.25
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 15814834557214288722,
+                    "connected_area_name": "Crash Site",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -139,11 +140,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Satellite",
+                "Event - Satellite": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 30,
                     "connections": {
                         "Room Center": {
@@ -155,11 +156,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Falls of Fire": {
                             "type": "resource",
@@ -224,26 +225,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crash Site",
-            "in_dark_aether": false,
-            "asset_id": 15814834557214288722,
-            "default_node_index": 1,
+        "Crash Site": {
+            "default_node": "Door to Gateway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to G.F.S. Theseus",
+            "extra": {
+                "asset_id": 15814834557214288722
+            },
+            "nodes": {
+                "Door to G.F.S. Theseus": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3.08,
                         "y": -74.25,
                         "z": 3.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10553270987934706862,
+                    "connected_area_name": "G.F.S. Theseus",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -259,17 +260,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gateway",
+                "Door to Gateway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12.499994277954102,
                         "y": 47.67958450317383,
                         "z": 11.000001430511475
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3467893814575167461,
+                    "connected_area_name": "Gateway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -341,17 +342,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to G.F.S. Theseus",
+                "Morph Ball Door to G.F.S. Theseus": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.85,
                         "y": -99.84,
                         "z": 4.8
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 10553270987934706862,
+                    "connected_area_name": "G.F.S. Theseus",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -367,11 +368,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 24,
                     "major_location": false,
                     "connections": {
@@ -384,11 +385,11 @@
                         }
                     }
                 },
-                {
-                    "name": "G.F.S. Theseus Lower Ledge",
+                "G.F.S. Theseus Lower Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to G.F.S. Theseus": {
                             "type": "resource",
@@ -526,11 +527,11 @@
                         }
                     }
                 },
-                {
-                    "name": "G.F.S. Theseus Upper Ledge",
+                "G.F.S. Theseus Upper Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gateway": {
                             "type": "and",
@@ -555,26 +556,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gateway Hall",
-            "in_dark_aether": false,
-            "asset_id": 2768064962148517187,
-            "default_node_index": 0,
+        "Gateway Hall": {
+            "default_node": "Door to Cliffside Airdock",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Cliffside Airdock",
+            "extra": {
+                "asset_id": 2768064962148517187
+            },
+            "nodes": {
+                "Door to Cliffside Airdock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 28.91183376312256,
                         "y": 91.5,
                         "z": 15.31544303894043
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2349002151496990705,
+                    "connected_area_name": "Cliffside Airdock",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -602,17 +603,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gateway",
+                "Door to Gateway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.347816228866577,
                         "y": -89.65225982666016,
                         "z": -2.6226043701171875e-05
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3467893814575167461,
+                    "connected_area_name": "Gateway",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -768,26 +769,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Grand Court Path",
-            "in_dark_aether": false,
-            "asset_id": 8468936149308094087,
-            "default_node_index": 0,
+        "Grand Court Path": {
+            "default_node": "Door to Gateway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gateway",
+            "extra": {
+                "asset_id": 8468936149308094087
+            },
+            "nodes": {
+                "Door to Gateway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 30.0,
                         "y": -36.5,
                         "z": 4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3467893814575167461,
+                    "connected_area_name": "Gateway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -824,17 +825,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Grand Court",
+                "Door to Grand Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -59.999977111816406,
                         "y": 33.50006103515625,
                         "z": 15.00002384185791
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 18411620122976788705,
+                    "connected_area_name": "Grand Court",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -871,11 +872,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 25,
                     "major_location": false,
                     "connections": {
@@ -888,11 +889,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Phazon Vines",
+                "Event - Phazon Vines": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 25,
                     "connections": {
                         "Front of Phazon Vines": {
@@ -904,11 +905,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Phazon Vines",
+                "Front of Phazon Vines": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gateway": {
                             "type": "and",
@@ -1059,26 +1060,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reliquary I",
-            "in_dark_aether": false,
-            "asset_id": 928678633548581232,
-            "default_node_index": 0,
+        "Reliquary I": {
+            "default_node": "Door to Hillside Vista",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hillside Vista",
+            "extra": {
+                "asset_id": 928678633548581232
+            },
+            "nodes": {
+                "Door to Hillside Vista": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13902157786380317936,
+                    "connected_area_name": "Hillside Vista",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1092,11 +1093,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Grapple Swing)",
+                "Pickup (Grapple Swing)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 26,
                     "major_location": true,
                     "connections": {
@@ -1109,26 +1110,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Falls of Fire",
-            "in_dark_aether": false,
-            "asset_id": 8374398449894515797,
-            "default_node_index": 0,
+        "Falls of Fire": {
+            "default_node": "Door to G.F.S. Theseus",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to G.F.S. Theseus",
+            "extra": {
+                "asset_id": 8374398449894515797
+            },
+            "nodes": {
+                "Door to G.F.S. Theseus": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 1.101431965827942,
                         "z": -9.5367431640625e-07
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 10553270987934706862,
+                    "connected_area_name": "G.F.S. Theseus",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1199,17 +1200,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hidden Court",
+                "Door to Hidden Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.77,
                         "y": -114.14,
                         "z": -122.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14006603351279167667,
+                    "connected_area_name": "Hidden Court",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -1284,11 +1285,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 27,
                     "major_location": false,
                     "connections": {
@@ -1301,26 +1302,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hillside Vista",
-            "in_dark_aether": false,
-            "asset_id": 13902157786380317936,
-            "default_node_index": 0,
+        "Hillside Vista": {
+            "default_node": "Door to Grand Court",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Grand Court",
+            "extra": {
+                "asset_id": 13902157786380317936
+            },
+            "nodes": {
+                "Door to Grand Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.167206883430481,
                         "y": 6.554661512374878,
                         "z": 23.386123657226562
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 18411620122976788705,
+                    "connected_area_name": "Grand Court",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1408,17 +1409,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reliquary I",
+                "Door to Reliquary I": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13.713523387908936,
                         "y": -59.30723190307617,
                         "z": 4.473159909248352
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 928678633548581232,
+                    "connected_area_name": "Reliquary I",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1434,11 +1435,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 28,
                     "major_location": false,
                     "connections": {
@@ -1451,11 +1452,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Statue",
+                "Event - Statue": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 29,
                     "connections": {
                         "Front of Statue": {
@@ -1467,11 +1468,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Statue",
+                "Front of Statue": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Grand Court": {
                             "type": "or",
@@ -1577,26 +1578,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gateway",
-            "in_dark_aether": false,
-            "asset_id": 3467893814575167461,
-            "default_node_index": 2,
+        "Gateway": {
+            "default_node": "Door to Gateway Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crash Site",
+            "extra": {
+                "asset_id": 3467893814575167461
+            },
+            "nodes": {
+                "Door to Crash Site": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 54.32590103149414,
                         "y": -46.526912689208984,
                         "z": 12.999998092651367
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15814834557214288722,
+                    "connected_area_name": "Crash Site",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1688,17 +1689,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Grand Court Path",
+                "Door to Grand Court Path": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -88.0,
                         "y": -58.5,
                         "z": 23.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8468936149308094087,
+                    "connected_area_name": "Grand Court Path",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -1714,17 +1715,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gateway Hall",
+                "Door to Gateway Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 75.0,
                         "z": 5.000002930511528
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2768064962148517187,
+                    "connected_area_name": "Gateway Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1960,17 +1961,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reliquary II",
+                "Door to Reliquary II": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -88.0,
                         "y": -1.5000009536743164,
                         "z": 23.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 3252687480004049274,
+                    "connected_area_name": "Reliquary II",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2169,11 +2170,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 29,
                     "major_location": false,
                     "connections": {
@@ -2204,11 +2205,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Behind Gate",
+                "Behind Gate": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Grand Court Path": {
                             "type": "resource",
@@ -2248,11 +2249,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Orange Lock",
+                "Event - Orange Lock": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 22,
                     "connections": {
                         "Under Orange Bomb Slot": {
@@ -2264,11 +2265,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Green Lock",
+                "Event - Green Lock": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 23,
                     "connections": {
                         "Door to Gateway Hall": {
@@ -2280,11 +2281,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Tunnel Orb",
+                "Event - Tunnel Orb": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 24,
                     "connections": {
                         "Behind Gate": {
@@ -2296,11 +2297,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Gate",
+                "Front of Gate": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gateway Hall": {
                             "type": "or",
@@ -2692,11 +2693,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bridge Destroyed",
+                "Event - Bridge Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 139,
                     "connections": {
                         "Front of Gate": {
@@ -2708,11 +2709,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Under Orange Bomb Slot",
+                "Under Orange Bomb Slot": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Crash Site": {
                             "type": "or",
@@ -2802,26 +2803,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Grand Court",
-            "in_dark_aether": false,
-            "asset_id": 18411620122976788705,
-            "default_node_index": 1,
+        "Grand Court": {
+            "default_node": "Door to Grand Court Path",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hillside Vista",
+            "extra": {
+                "asset_id": 18411620122976788705
+            },
+            "nodes": {
+                "Door to Hillside Vista": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -133.0,
                         "y": 12.0,
                         "z": -1.908155918121338
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 13902157786380317936,
+                    "connected_area_name": "Hillside Vista",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2835,17 +2836,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Grand Court Path",
+                "Door to Grand Court Path": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.0,
                         "y": 2.5,
                         "z": 17.540159225463867
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8468936149308094087,
+                    "connected_area_name": "Grand Court Path",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2866,17 +2867,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reliquary III",
+                "Door to Reliquary III": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -52.42,
                         "y": -28.45,
                         "z": 19.23
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2046879235130061967,
+                    "connected_area_name": "Reliquary III",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -2897,11 +2898,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Tunnel Ledge",
+                "Morph Tunnel Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Grand Court Path": {
                             "type": "and",
@@ -2981,11 +2982,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Base Floor",
+                "Base Floor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Hillside Vista": {
                             "type": "and",
@@ -3115,11 +3116,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Tunnel Panels",
+                "Event - Tunnel Panels": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 27,
                     "connections": {
                         "Morph Tunnel Ledge": {
@@ -3131,11 +3132,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Golem",
+                "Event - Golem": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 28,
                     "connections": {
                         "Base Floor": {
@@ -3147,26 +3148,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fuel Gel Pool",
-            "in_dark_aether": false,
-            "asset_id": 7492844587871276588,
-            "default_node_index": 0,
+        "Fuel Gel Pool": {
+            "default_node": "Door to Hidden Court Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hidden Court Hall",
+            "extra": {
+                "asset_id": 7492844587871276588
+            },
+            "nodes": {
+                "Door to Hidden Court Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 46.450016021728516,
                         "y": 0.057177066802978516,
                         "z": -10.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 18145373112260209818,
+                    "connected_area_name": "Hidden Court Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3376,11 +3377,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion - Ledge)",
+                "Pickup (Missile Expansion - Ledge)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 30,
                     "major_location": false,
                     "connections": {
@@ -3395,11 +3396,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion - Bottom)",
+                "Pickup (Missile Expansion - Bottom)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
@@ -3521,11 +3522,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Pickup Golem Head",
+                "Event - Pickup Golem Head": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 33,
                     "connections": {
                         "Door to Hidden Court Hall": {
@@ -3537,26 +3538,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Jungle Generator",
-            "in_dark_aether": false,
-            "asset_id": 6613311822671481119,
-            "default_node_index": 4,
+        "Jungle Generator": {
+            "default_node": "Room Center",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Generator Hall North",
+            "extra": {
+                "asset_id": 6613311822671481119
+            },
+            "nodes": {
+                "Door to Generator Hall North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.7509372234344482,
                         "y": 40.0,
                         "z": 5.000001953674314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 655768186680006563,
+                    "connected_area_name": "Generator Hall North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3572,17 +3573,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Field Access",
+                "Door to Field Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8707858871451811842,
+                    "connected_area_name": "Field Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3596,17 +3597,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Generator Hall South",
+                "Door to Generator Hall South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.7509372234344482,
                         "y": -40.0,
                         "z": 4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1872319291341539278,
+                    "connected_area_name": "Generator Hall South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3622,11 +3623,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 32,
                     "major_location": false,
                     "connections": {
@@ -3639,11 +3640,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Generator Hall North": {
                             "type": "resource",
@@ -3713,11 +3714,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Leviathan Shield",
+                "Event - Leviathan Shield": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 45,
                     "connections": {
                         "Room Center": {
@@ -3729,11 +3730,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ship Missile Attempt",
+                "Event - Ship Missile Attempt": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 46,
                     "connections": {
                         "Room Center": {
@@ -3745,26 +3746,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hidden Court",
-            "in_dark_aether": false,
-            "asset_id": 14006603351279167667,
-            "default_node_index": 7,
+        "Hidden Court": {
+            "default_node": "Bottom Floor",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hidden Court Hall",
+            "extra": {
+                "asset_id": 14006603351279167667
+            },
+            "nodes": {
+                "Door to Hidden Court Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.0,
                         "y": 45.0,
                         "z": 30.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 18145373112260209818,
+                    "connected_area_name": "Hidden Court Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3919,17 +3920,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Shrine",
+                "Door to Ruined Shrine": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -50.0,
                         "y": 4.76837158203125e-07,
                         "z": -15.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 18426339925276965129,
+                    "connected_area_name": "Ruined Shrine",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3974,17 +3975,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Burrow",
+                "Door to Burrow": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 15.0,
                         "y": -40.000003814697266,
                         "z": 20.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 17937850293030639051,
+                    "connected_area_name": "Burrow",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4007,17 +4008,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Falls of Fire",
+                "Door to Falls of Fire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 45.0,
                         "y": -25.0,
                         "z": 4.999999023162843
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 8374398449894515797,
+                    "connected_area_name": "Falls of Fire",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4031,11 +4032,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 33,
                     "major_location": false,
                     "connections": {
@@ -4048,11 +4049,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Cell)",
+                "Pickup (Energy Cell)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 34,
                     "major_location": true,
                     "connections": {
@@ -4115,11 +4116,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Top of Halfpipe",
+                "Top of Halfpipe": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Hidden Court Hall": {
                             "type": "and",
@@ -4203,11 +4204,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Bottom Floor",
+                "Bottom Floor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Hidden Court Hall": {
                             "type": "or",
@@ -4605,11 +4606,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Bottom of Halfpipe",
+                "Bottom of Halfpipe": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Top of Halfpipe": {
                             "type": "and",
@@ -4646,11 +4647,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Golem",
+                "Event - Golem": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 31,
                     "connections": {
                         "Bottom Floor": {
@@ -4662,11 +4663,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Burrow Gate",
+                "Event - Burrow Gate": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 32,
                     "connections": {
                         "Door to Burrow": {
@@ -4678,26 +4679,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hidden Court Hall",
-            "in_dark_aether": false,
-            "asset_id": 18145373112260209818,
-            "default_node_index": 1,
+        "Hidden Court Hall": {
+            "default_node": "Door to Hidden Court",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Fuel Gel Pool",
+            "extra": {
+                "asset_id": 18145373112260209818
+            },
+            "nodes": {
+                "Door to Fuel Gel Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -44.26691436767578,
                         "y": 6.053531110286713,
                         "z": 5.0000004884185785
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 7492844587871276588,
+                    "connected_area_name": "Fuel Gel Pool",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4742,17 +4743,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hidden Court",
+                "Door to Hidden Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.73,
                         "y": -43.95,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 14006603351279167667,
+                    "connected_area_name": "Hidden Court",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4797,26 +4798,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reliquary II",
-            "in_dark_aether": false,
-            "asset_id": 3252687480004049274,
-            "default_node_index": 0,
+        "Reliquary II": {
+            "default_node": "Door to Gateway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gateway",
+            "extra": {
+                "asset_id": 3252687480004049274
+            },
+            "nodes": {
+                "Door to Gateway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3467893814575167461,
+                    "connected_area_name": "Gateway",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4830,11 +4831,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 35,
                     "major_location": true,
                     "connections": {
@@ -4847,26 +4848,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hangar Bay Hall",
-            "in_dark_aether": false,
-            "asset_id": 9489403314155737883,
-            "default_node_index": 1,
+        "Hangar Bay Hall": {
+            "default_node": "Door to Hangar Bay",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hall of the Golems",
+            "extra": {
+                "asset_id": 9489403314155737883
+            },
+            "nodes": {
+                "Door to Hall of the Golems": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.28054380416870117,
                         "y": -45.02240753173828,
                         "z": 4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2580753232084104741,
+                    "connected_area_name": "Hall of the Golems",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4894,17 +4895,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hangar Bay",
+                "Door to Hangar Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.28054380416870117,
                         "y": 39.97759246826172,
                         "z": 5.000001953674314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12448241480574438186,
+                    "connected_area_name": "Hangar Bay",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4932,26 +4933,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Field Access",
-            "in_dark_aether": false,
-            "asset_id": 8707858871451811842,
-            "default_node_index": 1,
+        "Field Access": {
+            "default_node": "Door to Jousting Field",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Jungle Generator",
+            "extra": {
+                "asset_id": 8707858871451811842
+            },
+            "nodes": {
+                "Door to Jungle Generator": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 75.01441192626953,
                         "y": -0.010534286499023438,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6613311822671481119,
+                    "connected_area_name": "Jungle Generator",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4979,17 +4980,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Jousting Field",
+                "Door to Jousting Field": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.014378070831298828,
                         "y": 49.989463806152344,
                         "z": 5.000008291534414
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17231991603182176876,
+                    "connected_area_name": "Jousting Field",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5017,17 +5018,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station B",
+                "Door to Save Station B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -39.99,
                         "y": -0.01,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 9372574566266947554,
+                    "connected_area_name": "Save Station B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -5055,11 +5056,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Ledge",
+                "Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Jungle Generator": {
                             "type": "and",
@@ -5084,26 +5085,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Enlightened Walkway",
-            "in_dark_aether": false,
-            "asset_id": 2559164233122714372,
-            "default_node_index": 0,
+        "Enlightened Walkway": {
+            "default_node": "Door to Ancient Courtyard",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ancient Courtyard",
+            "extra": {
+                "asset_id": 2559164233122714372
+            },
+            "nodes": {
+                "Door to Ancient Courtyard": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -50.0,
                         "y": 39.999961853027344,
                         "z": 5.000008053115835
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15861154386655212106,
+                    "connected_area_name": "Ancient Courtyard",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5131,17 +5132,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Jousting Field",
+                "Door to Jousting Field": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17231991603182176876,
+                    "connected_area_name": "Jousting Field",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5169,26 +5170,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ancient Courtyard",
-            "in_dark_aether": false,
-            "asset_id": 15861154386655212106,
-            "default_node_index": 0,
+        "Ancient Courtyard": {
+            "default_node": "Door to Overgrown Ruins",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Overgrown Ruins",
+            "extra": {
+                "asset_id": 15861154386655212106
+            },
+            "nodes": {
+                "Door to Overgrown Ruins": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -20.0,
                         "y": 23.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5590909670361746944,
+                    "connected_area_name": "Overgrown Ruins",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5225,17 +5226,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Overgrown Ruins",
+                "Morph Ball Door to Overgrown Ruins": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.6,
                         "y": 32.53,
                         "z": 21.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 5590909670361746944,
+                    "connected_area_name": "Overgrown Ruins",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -5251,17 +5252,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Enlightened Walkway",
+                "Door to Enlightened Walkway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 85.00000762939453,
                         "y": 24.725873947143555,
                         "z": 8.000015139579773
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2559164233122714372,
+                    "connected_area_name": "Enlightened Walkway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5341,11 +5342,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 36,
                     "major_location": false,
                     "connections": {
@@ -5365,11 +5366,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Overgrown Ruins Barrier",
+                "Event - Overgrown Ruins Barrier": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 43,
                     "connections": {
                         "Morph Ball Door to Overgrown Ruins": {
@@ -5383,11 +5384,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Halfpipe Wall",
+                "Event - Halfpipe Wall": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 44,
                     "connections": {
                         "Door to Overgrown Ruins": {
@@ -5399,26 +5400,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Overgrown Ruins",
-            "in_dark_aether": false,
-            "asset_id": 5590909670361746944,
-            "default_node_index": 1,
+        "Overgrown Ruins": {
+            "default_node": "Door to Thorn Jungle Airdock",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ancient Courtyard",
+            "extra": {
+                "asset_id": 5590909670361746944
+            },
+            "nodes": {
+                "Door to Ancient Courtyard": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 66.5,
                         "y": -45.0,
                         "z": -1.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 15861154386655212106,
+                    "connected_area_name": "Ancient Courtyard",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5434,17 +5435,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Thorn Jungle Airdock",
+                "Door to Thorn Jungle Airdock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -11.5,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 16131448128382991283,
+                    "connected_area_name": "Thorn Jungle Airdock",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5554,17 +5555,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Ancient Courtyard",
+                "Morph Ball Door to Ancient Courtyard": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 66.9,
                         "y": -35.47,
                         "z": 15.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 15861154386655212106,
+                    "connected_area_name": "Ancient Courtyard",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -5580,17 +5581,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Vault",
+                "Door to Vault": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -53.0,
                         "z": 3.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 12685212997342829632,
+                    "connected_area_name": "Vault",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -5627,26 +5628,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Shrine",
-            "in_dark_aether": false,
-            "asset_id": 18426339925276965129,
-            "default_node_index": 0,
+        "Ruined Shrine": {
+            "default_node": "Door to Hidden Court",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hidden Court",
+            "extra": {
+                "asset_id": 18426339925276965129
+            },
+            "nodes": {
+                "Door to Hidden Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 46.23118209838867,
                         "y": 14.922077655792236,
                         "z": -34.999996185302734
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 14006603351279167667,
+                    "connected_area_name": "Hidden Court",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5887,17 +5888,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hangar Bay",
+                "Door to Hangar Bay": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.0,
                         "y": 38.0,
                         "z": 2.500001715255735
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 12448241480574438186,
+                    "connected_area_name": "Hangar Bay",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5930,11 +5931,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 37,
                     "major_location": true,
                     "connections": {
@@ -6004,26 +6005,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Burrow",
-            "in_dark_aether": false,
-            "asset_id": 17937850293030639051,
-            "default_node_index": 1,
+        "Burrow": {
+            "default_node": "Door to Hall of the Golems",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hidden Court",
+            "extra": {
+                "asset_id": 17937850293030639051
+            },
+            "nodes": {
+                "Door to Hidden Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 60.5,
                         "y": 57.49998092651367,
                         "z": -30.999996185302734
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 14006603351279167667,
+                    "connected_area_name": "Hidden Court",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6120,17 +6121,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of the Golems",
+                "Door to Hall of the Golems": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -6.393417835235596,
                         "y": -2.665439784526825,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2580753232084104741,
+                    "connected_area_name": "Hall of the Golems",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6201,11 +6202,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 38,
                     "major_location": false,
                     "connections": {
@@ -6218,26 +6219,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Jousting Field",
-            "in_dark_aether": false,
-            "asset_id": 17231991603182176876,
-            "default_node_index": 1,
+        "Jousting Field": {
+            "default_node": "Door to Enlightened Walkway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Field Access",
+            "extra": {
+                "asset_id": 17231991603182176876
+            },
+            "nodes": {
+                "Door to Field Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17.5,
                         "y": -61.500003814697266,
                         "z": -4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8707858871451811842,
+                    "connected_area_name": "Field Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6251,17 +6252,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Enlightened Walkway",
+                "Door to Enlightened Walkway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.999998092651367,
                         "y": 51.5,
                         "z": -4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2559164233122714372,
+                    "connected_area_name": "Enlightened Walkway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6275,11 +6276,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Korakk",
+                "Event - Korakk": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 4,
                     "connections": {
                         "Room Center": {
@@ -6291,11 +6292,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Field Access": {
                             "type": "resource",
@@ -6534,26 +6535,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Machineworks Bridge",
-            "in_dark_aether": false,
-            "asset_id": 17945996104959776291,
-            "default_node_index": 1,
+        "Machineworks Bridge": {
+            "default_node": "Door to Colossus Vista",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to North Jungle Court",
+            "extra": {
+                "asset_id": 17945996104959776291
+            },
+            "nodes": {
+                "Door to North Jungle Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -50.0,
                         "z": 4.999998046325686
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5310258251750100868,
+                    "connected_area_name": "North Jungle Court",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6595,17 +6596,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Colossus Vista",
+                "Door to Colossus Vista": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 50.0,
                         "z": 5.000001953674314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8112010450000786492,
+                    "connected_area_name": "Colossus Vista",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6647,11 +6648,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 39,
                     "major_location": true,
                     "connections": {
@@ -6664,11 +6665,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to North Jungle Court": {
                             "type": "resource",
@@ -6694,11 +6695,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bridge (Cliffside)",
+                "Event - Bridge (Cliffside)": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 41,
                     "connections": {
                         "Door to Colossus Vista": {
@@ -6710,11 +6711,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Bridge (Jungleside)",
+                "Event - Bridge (Jungleside)": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 42,
                     "connections": {
                         "Door to North Jungle Court": {
@@ -6726,26 +6727,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "North Jungle Court",
-            "in_dark_aether": false,
-            "asset_id": 5310258251750100868,
-            "default_node_index": 1,
+        "North Jungle Court": {
+            "default_node": "Door to North Jungle Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Generator Hall North",
+            "extra": {
+                "asset_id": 5310258251750100868
+            },
+            "nodes": {
+                "Door to Generator Hall North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -65.0673828125,
                         "y": -35.42543411254883,
                         "z": 12.367807388305664
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 655768186680006563,
+                    "connected_area_name": "Generator Hall North",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6894,17 +6895,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to North Jungle Hall",
+                "Door to North Jungle Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 59.93259048461914,
                         "y": -15.425432205200195,
                         "z": 0.3678100109100342
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4895313609509491506,
+                    "connected_area_name": "North Jungle Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6980,17 +6981,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Machineworks Bridge",
+                "Door to Machineworks Bridge": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 39.9326171875,
                         "y": 69.5745620727539,
                         "z": 4.867811597883701
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 17945996104959776291,
+                    "connected_area_name": "Machineworks Bridge",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7023,11 +7024,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Destroy Turret",
+                "Event - Destroy Turret": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 48,
                     "connections": {
                         "Door to Generator Hall North": {
@@ -7039,11 +7040,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Lift Battery",
+                "Event - Lift Battery": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 49,
                     "connections": {
                         "Door to Generator Hall North": {
@@ -7055,26 +7056,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Generator Hall North",
-            "in_dark_aether": false,
-            "asset_id": 655768186680006563,
-            "default_node_index": 1,
+        "Generator Hall North": {
+            "default_node": "Door to North Jungle Court",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Jungle Generator",
+            "extra": {
+                "asset_id": 655768186680006563
+            },
+            "nodes": {
+                "Door to Jungle Generator": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6613311822671481119,
+                    "connected_area_name": "Jungle Generator",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7160,17 +7161,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to North Jungle Court",
+                "Door to North Jungle Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 60.0,
                         "y": 50.0,
                         "z": 12.500001907348633
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 5310258251750100868,
+                    "connected_area_name": "North Jungle Court",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7217,11 +7218,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 40,
                     "major_location": false,
                     "connections": {
@@ -7241,11 +7242,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Open Tunnel",
+                "Event - Open Tunnel": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 50,
                     "connections": {
                         "Door to North Jungle Court": {
@@ -7257,26 +7258,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "North Jungle Hall",
-            "in_dark_aether": false,
-            "asset_id": 4895313609509491506,
-            "default_node_index": 1,
+        "North Jungle Hall": {
+            "default_node": "Door to Auxiliary Dynamo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to North Jungle Court",
+            "extra": {
+                "asset_id": 4895313609509491506
+            },
+            "nodes": {
+                "Door to North Jungle Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21.0,
                         "y": 35.0,
                         "z": 2.5000012268371563
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5310258251750100868,
+                    "connected_area_name": "North Jungle Court",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7290,17 +7291,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Auxiliary Dynamo",
+                "Door to Auxiliary Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.5,
                         "y": -56.0,
                         "z": -2.4999970694884723
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 9706081627986864375,
+                    "connected_area_name": "Auxiliary Dynamo",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7314,26 +7315,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Generator Hall South",
-            "in_dark_aether": false,
-            "asset_id": 1872319291341539278,
-            "default_node_index": 0,
+        "Generator Hall South": {
+            "default_node": "Door to Jungle Generator",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Jungle Generator",
+            "extra": {
+                "asset_id": 1872319291341539278
+            },
+            "nodes": {
+                "Door to Jungle Generator": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 6613311822671481119,
+                    "connected_area_name": "Jungle Generator",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7383,17 +7384,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to South Jungle Court",
+                "Door to South Jungle Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 60.0,
                         "y": -50.0,
                         "z": 12.499998092651367
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8404374826148145183,
+                    "connected_area_name": "South Jungle Court",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7407,26 +7408,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "South Jungle Hall",
-            "in_dark_aether": false,
-            "asset_id": 4037774779061798319,
-            "default_node_index": 0,
+        "South Jungle Hall": {
+            "default_node": "Door to Auxiliary Dynamo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Auxiliary Dynamo",
+            "extra": {
+                "asset_id": 4037774779061798319
+            },
+            "nodes": {
+                "Door to Auxiliary Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.5,
                         "y": 56.0,
                         "z": -2.4999919468841654
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9706081627986864375,
+                    "connected_area_name": "Auxiliary Dynamo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7440,17 +7441,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to South Jungle Court",
+                "Door to South Jungle Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21.0,
                         "y": -35.0,
                         "z": 2.4999987731628437
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 8404374826148145183,
+                    "connected_area_name": "South Jungle Court",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7464,26 +7465,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Vault",
-            "in_dark_aether": false,
-            "asset_id": 12685212997342829632,
-            "default_node_index": 0,
+        "Vault": {
+            "default_node": "Door to Overgrown Ruins",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Overgrown Ruins",
+            "extra": {
+                "asset_id": 12685212997342829632
+            },
+            "nodes": {
+                "Door to Overgrown Ruins": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5590909670361746944,
+                    "connected_area_name": "Overgrown Ruins",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7497,11 +7498,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 41,
                     "major_location": true,
                     "connections": {
@@ -7514,26 +7515,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station B",
-            "in_dark_aether": false,
-            "asset_id": 9372574566266947554,
-            "default_node_index": 1,
+        "Save Station B": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Field Access",
+            "extra": {
+                "asset_id": 9372574566266947554
+            },
+            "nodes": {
+                "Door to Field Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 8707858871451811842,
+                    "connected_area_name": "Field Access",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7547,11 +7548,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Field Access": {
                             "type": "and",
@@ -7562,26 +7563,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hangar Bay",
-            "in_dark_aether": false,
-            "asset_id": 12448241480574438186,
-            "default_node_index": 7,
+        "Hangar Bay": {
+            "default_node": "Samus Ship",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Hangar Bay Hall",
+            "extra": {
+                "asset_id": 12448241480574438186
+            },
+            "nodes": {
+                "Door to Hangar Bay Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 45.0,
                         "y": -60.5,
                         "z": 10.99999713897705
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 9489403314155737883,
+                    "connected_area_name": "Hangar Bay Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7614,17 +7615,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Shrine",
+                "Door to Ruined Shrine": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 45.26884841918945,
                         "y": 6.077926576137543,
                         "z": 2.4999838937683307
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 18426339925276965129,
+                    "connected_area_name": "Ruined Shrine",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7910,11 +7911,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Cell)",
+                "Pickup (Energy Cell)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 42,
                     "major_location": true,
                     "connections": {
@@ -7927,11 +7928,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile)",
+                "Pickup (Ship Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 43,
                     "major_location": true,
                     "connections": {
@@ -7944,11 +7945,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Power",
+                "Event - Power": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 34,
                     "connections": {
                         "Pickup (Energy Cell)": {
@@ -7960,11 +7961,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Hangar Ceiling",
+                "Event - Hangar Ceiling": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 35,
                     "connections": {
                         "Door to Ruined Shrine": {
@@ -7976,11 +7977,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ship Upgrade",
+                "Event - Ship Upgrade": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 36,
                     "connections": {
                         "Pickup (Ship Missile)": {
@@ -7992,11 +7993,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -8025,26 +8026,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Colossus Vista",
-            "in_dark_aether": false,
-            "asset_id": 8112010450000786492,
-            "default_node_index": 0,
+        "Colossus Vista": {
+            "default_node": "Door to Hall of the Golems",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hall of the Golems",
+            "extra": {
+                "asset_id": 8112010450000786492
+            },
+            "nodes": {
+                "Door to Hall of the Golems": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.11,
                         "y": 16.81,
                         "z": -43.33
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2580753232084104741,
+                    "connected_area_name": "Hall of the Golems",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -8090,17 +8091,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Machineworks Bridge",
+                "Door to Machineworks Bridge": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.10858392715454102,
                         "y": -26.193115234375,
                         "z": -43.330135345458984
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 17945996104959776291,
+                    "connected_area_name": "Machineworks Bridge",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8133,11 +8134,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile Expansion)",
+                "Pickup (Ship Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 44,
                     "major_location": false,
                     "connections": {
@@ -8150,11 +8151,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Place Golem Head",
+                "Event - Place Golem Head": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 40,
                     "connections": {
                         "Door to Hall of the Golems": {
@@ -8166,26 +8167,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hall of the Golems",
-            "in_dark_aether": false,
-            "asset_id": 2580753232084104741,
-            "default_node_index": 1,
+        "Hall of the Golems": {
+            "default_node": "Door to Hangar Bay Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Burrow",
+            "extra": {
+                "asset_id": 2580753232084104741
+            },
+            "nodes": {
+                "Door to Burrow": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 23.780298233032227,
                         "y": 64.04847717285156,
                         "z": -18.330127716064453
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 17937850293030639051,
+                    "connected_area_name": "Burrow",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8199,17 +8200,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hangar Bay Hall",
+                "Door to Hangar Bay Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.826302528381348,
                         "y": 35.71390914916992,
                         "z": -43.33013153076172
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 9489403314155737883,
+                    "connected_area_name": "Hangar Bay Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8223,17 +8224,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Colossus Vista",
+                "Door to Colossus Vista": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 54.78,
                         "y": -21.5,
                         "z": -43.33
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 8112010450000786492,
+                    "connected_area_name": "Colossus Vista",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -8249,11 +8250,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 45,
                     "major_location": false,
                     "connections": {
@@ -8266,11 +8267,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Room Center",
+                "Room Center": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Burrow": {
                             "type": "or",
@@ -8662,11 +8663,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Grapple Voltage Golem",
+                "Event - Grapple Voltage Golem": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 37,
                     "connections": {
                         "Room Center": {
@@ -8678,11 +8679,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Plasma Beam Golem",
+                "Event - Plasma Beam Golem": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 38,
                     "connections": {
                         "Room Center": {
@@ -8694,11 +8695,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Ice Missile Golem",
+                "Event - Ice Missile Golem": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 39,
                     "connections": {
                         "Room Center": {
@@ -8710,26 +8711,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "South Jungle Court",
-            "in_dark_aether": false,
-            "asset_id": 8404374826148145183,
-            "default_node_index": 1,
+        "South Jungle Court": {
+            "default_node": "Door to South Jungle Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Generator Hall South",
+            "extra": {
+                "asset_id": 8404374826148145183
+            },
+            "nodes": {
+                "Door to Generator Hall South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -65.0,
                         "y": 35.0,
                         "z": 12.50000286102295
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1872319291341539278,
+                    "connected_area_name": "Generator Hall South",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8788,17 +8789,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to South Jungle Hall",
+                "Door to South Jungle Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 59.99997329711914,
                         "y": 15.0,
                         "z": 0.5000009536743164
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4037774779061798319,
+                    "connected_area_name": "South Jungle Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8857,11 +8858,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Destroy Turret",
+                "Event - Destroy Turret": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 47,
                     "connections": {
                         "Door to Generator Hall South": {
@@ -8873,26 +8874,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Thorn Jungle Airdock",
-            "in_dark_aether": false,
-            "asset_id": 16131448128382991283,
-            "default_node_index": 1,
+        "Thorn Jungle Airdock": {
+            "default_node": "Samus Ship",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Overgrown Ruins",
+            "extra": {
+                "asset_id": 16131448128382991283
+            },
+            "nodes": {
+                "Door to Overgrown Ruins": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 66.5,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 5590909670361746944,
+                    "connected_area_name": "Overgrown Ruins",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8906,11 +8907,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Samus Ship",
+                "Samus Ship": {
+                    "node_type": "player_ship",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "player_ship",
+                    "extra": {},
                     "is_unlocked": {
                         "type": "and",
                         "data": {
@@ -8928,26 +8929,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Auxiliary Dynamo",
-            "in_dark_aether": false,
-            "asset_id": 9706081627986864375,
-            "default_node_index": 0,
+        "Auxiliary Dynamo": {
+            "default_node": "Door to South Jungle Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to South Jungle Hall",
+            "extra": {
+                "asset_id": 9706081627986864375
+            },
+            "nodes": {
+                "Door to South Jungle Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 10.725374221801758,
                         "y": -19.0,
                         "z": 2.500004884185728
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4037774779061798319,
+                    "connected_area_name": "South Jungle Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8989,17 +8990,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to North Jungle Hall",
+                "Door to North Jungle Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 10.5,
                         "y": 19.0,
                         "z": 2.5000060994416344
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4895313609509491506,
+                    "connected_area_name": "North Jungle Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9015,11 +9016,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ship Missile Expansion)",
+                "Pickup (Ship Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 46,
                     "major_location": false,
                     "connections": {
@@ -9032,26 +9033,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reliquary III",
-            "in_dark_aether": false,
-            "asset_id": 2046879235130061967,
-            "default_node_index": 0,
+        "Reliquary III": {
+            "default_node": "Door to Grand Court",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Grand Court",
+            "extra": {
+                "asset_id": 2046879235130061967
+            },
+            "nodes": {
+                "Door to Grand Court": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.0,
                         "z": 5.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 18411620122976788705,
+                    "connected_area_name": "Grand Court",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9065,11 +9066,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 47,
                     "major_location": false,
                     "connections": {
@@ -9082,7 +9083,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

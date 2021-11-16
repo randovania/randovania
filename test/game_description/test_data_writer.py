@@ -1,8 +1,9 @@
+import copy
 import json
 
 import pytest
 
-from randovania.game_description import data_reader, data_writer
+from randovania.game_description import data_reader, data_writer, schema_migration
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 

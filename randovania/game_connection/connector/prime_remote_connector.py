@@ -53,6 +53,11 @@ class PrimeRemoteConnector(RemoteConnector):
         """struct.unpack format string for decoding an asset id"""
         raise NotImplementedError()
 
+    def world_by_asset_id(self, asset_id: int) -> Optional[World]:
+        for world in self.game.world_list.worlds:
+            if world.extra["asset_id"] == asset_id:
+                return world
+
     def _current_status_world(self, world_asset_id: Optional[bytes], vtable_bytes: Optional[bytes]) -> Optional[World]:
         """
         Helper for `current_game_status`. Calculates the current World based on raw world_asset_id and vtable pointer.
@@ -73,12 +78,7 @@ class PrimeRemoteConnector(RemoteConnector):
                 return None
 
         asset_id = struct.unpack(self._asset_id_format(), world_asset_id)[0]
-        try:
-            new_world = self.game.world_list.world_by_asset_id(asset_id)
-        except KeyError:
-            return None
-
-        return new_world
+        return self.world_by_asset_id(asset_id)
 
     async def current_game_status(self, executor: MemoryOperationExecutor):
         raise NotImplementedError()

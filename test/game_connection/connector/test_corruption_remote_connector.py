@@ -26,7 +26,7 @@ async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world
 
     executor = AsyncMock()
     executor.perform_memory_operations.side_effect = lambda ops: {
-        ops[0]: expected_world.world_asset_id.to_bytes(8, "big") if has_world else b"DEADBEEF",
+        ops[0]: expected_world.extra["asset_id"].to_bytes(8, "big") if has_world else b"DEADBEEF",
         ops[1]: b"\x01" if has_pending_op else b"\x00",
         ops[2]: cplayer_address.to_bytes(4, "big") if has_cplayer else None,
     }

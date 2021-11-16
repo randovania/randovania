@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
@@ -161,11 +162,13 @@ def refresh_all_logic(args):
     from randovania.game_description import pretty_print
     from randovania.game_description import data_reader, data_writer
 
-    for game in RandovaniaGame:
+    for game in iterate_enum(RandovaniaGame):
+        logging.info("Reading %s", game.long_name)
         path, data = default_data.read_json_then_binary(game)
         gd = data_reader.decode_data(data)
         new_data = data_writer.write_game_description(gd)
 
+        logging.info("Writing %s", game.long_name)
         data_writer.write_as_split_files(new_data, path)
         path.with_suffix("").mkdir(parents=True, exist_ok=True)
         pretty_print.write_human_readable_game(gd, path.with_suffix(""))
@@ -344,7 +347,7 @@ def render_worlds_graph_logic(args):
         if dock_node.default_dock_weakness.name in _IMPOSSIBLE_LOCKS:
             return
 
-        edge_id = f"{the_world.world_asset_id}-{source_area.area_asset_id}-{dock_node.dock_index}"
+        edge_id = f"{the_world.name}-{source_area.name}-{dock_node.dock_index}"
         if edge_id in added_edges:
             return
 
@@ -352,12 +355,12 @@ def render_worlds_graph_logic(args):
         direction = None
         if isinstance(target_node, DockNode) and _weakness_name(target_node.default_dock_weakness.name) == weak_name:
             direction = "both"
-            added_edges.add(f"{the_world.world_asset_id}-{target_area.area_asset_id}-{target_node.dock_index}")
+            added_edges.add(f"{the_world.name}-{target_area.name}-{target_node.dock_index}")
 
         color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
         dot.edge(
-            f"{the_world.world_asset_id}-{source_area.area_asset_id}",
-            f"{the_world.world_asset_id}-{target_area.area_asset_id}",
+            f"{the_world.name}-{source_area.name}",
+            f"{the_world.name}-{target_area.name}",
             weak_name, dir=direction, color=color, fontcolor=color,
         )
         added_edges.add(edge_id)
@@ -370,8 +373,8 @@ def render_worlds_graph_logic(args):
         target_area = gd.world_list.nodes_to_area(target_node)
 
         dot.edge(
-            f"{source_world.world_asset_id}-{source_area.area_asset_id}",
-            f"{target_world.world_asset_id}-{target_area.area_asset_id}",
+            f"{source_world.name}-{source_area.name}",
+            f"{target_world.name}-{target_area.name}",
             "Elevator",
         )
 
@@ -409,7 +412,7 @@ def render_worlds_graph_logic(args):
             fillcolor = "".join("{:02x}".format(max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64))
                                 for i in range(3))
             dot.node(
-                f"{world.world_asset_id}-{area.area_asset_id}", area.name,
+                f"{world.name}-{area.name}", area.name,
                 color=c,
                 fillcolor=f"#{fillcolor}",
                 style="filled",
@@ -422,7 +425,7 @@ def render_worlds_graph_logic(args):
                 if args.include_pickups and isinstance(node, PickupNode):
                     dot.node(str(node.pickup_index), re.search(r"Pickup \(([^)]+)\)", node.name).group(1),
                              shape="house")
-                    dot.edge(f"{world.world_asset_id}-{area.area_asset_id}", str(node.pickup_index))
+                    dot.edge(f"{world.name}-{area.name}", str(node.pickup_index))
 
     for world in worlds:
         print(f"Adding docks for {world.name}")

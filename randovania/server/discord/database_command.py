@@ -260,7 +260,7 @@ class DatabaseCommandCog(commands.Cog):
             name = node.name
             if node.heal:
                 name += " (Heals)"
-            if area.default_node_index == i:
+            if area.default_node == node.name:
                 name += "; Spawn Point"
 
             body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"

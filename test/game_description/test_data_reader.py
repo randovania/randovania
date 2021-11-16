@@ -20,8 +20,7 @@ def test_invalid_node_type():
     reader = WorldReader(None, None)
 
     with pytest.raises(Exception) as e:
-        reader.read_node({
-            "name": "Broken Node",
+        reader.read_node("Broken Node", {
             "heal": True,
             "coordinates": None,
             "node_type": "something that doesn't exist"
@@ -36,23 +35,30 @@ def test_area_with_invalid_connections():
     reader = WorldReader(db, None)
 
     with pytest.raises(MissingResource) as e:
-        reader.read_area({
-            "name": "Broken Area",
-            "asset_id": 1234,
-            "nodes": [
-                {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
-                {"name": "Broken", "heal": True, "coordinates": None, "node_type": "generic", "connections": {
-                    "A": {
-                        "type": "resource",
-                        "data": {
-                            "type": 0,
-                            "index": 1,
-                            "amount": 1,
-                            "negate": False
+        reader.read_area("Broken Area", {
+            "extra": {
+                "asset_id": 1234,
+            },
+            "nodes": {
+                "A": {
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "connections": {}
+                },
+                "Broken": {
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "connections": {
+                        "A": {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 1,
+                                "amount": 1,
+                                "negate": False
+                            }
                         }
                     }
-                }},
-            ]
+                },
+            }
         })
 
     assert str(e.value) == ("In area Broken Area, connection from Broken to A got error: "

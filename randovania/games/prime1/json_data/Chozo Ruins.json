@@ -1,26 +1,27 @@
 {
     "name": "Chozo Ruins",
-    "dark_name": null,
-    "asset_id": 2214002543,
-    "areas": [
-        {
-            "name": "Transport to Tallon Overworld North",
-            "in_dark_aether": false,
-            "asset_id": 1047210935,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 2214002543
+    },
+    "areas": {
+        "Transport to Tallon Overworld North": {
+            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins West",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruins Entrance",
+            "extra": {
+                "asset_id": 1047210935
+            },
+            "nodes": {
+                "Door to Ruins Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.018539905548095703,
                         "y": 23.858829498291016,
                         "z": 2.499994400558535
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3086062890,
+                    "connected_area_name": "Ruins Entrance",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -34,15 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Tallon Overworld - Transport to Chozo Ruins West",
+                "Elevator to Tallon Overworld - Transport to Chozo Ruins West": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 295707720,
-                    "teleporter_instance_id": 125,
-                    "scan_asset_id": 1013969958,
+                    "extra": {
+                        "scan_asset_id": 1013969958,
+                        "teleporter_instance_id": 125
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Transport to Chozo Ruins West"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -55,26 +59,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruins Entrance",
-            "in_dark_aether": false,
-            "asset_id": 3086062890,
-            "default_node_index": 1,
+        "Ruins Entrance": {
+            "default_node": "Door to Transport to Tallon Overworld North",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Plaza",
+            "extra": {
+                "asset_id": 3086062890
+            },
+            "nodes": {
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 18.315380096435547,
                         "y": 34.19708251953125,
                         "z": 5.000004887580872
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -88,17 +92,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Tallon Overworld North",
+                "Door to Transport to Tallon Overworld North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.983600378036499,
                         "y": -39.59127426147461,
                         "z": 2.5036054444499314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1047210935,
+                    "connected_area_name": "Transport to Tallon Overworld North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -112,26 +116,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Plaza",
-            "in_dark_aether": false,
-            "asset_id": 3587029001,
-            "default_node_index": 1,
+        "Main Plaza": {
+            "default_node": "Door to Ruins Entrance",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Fountain Access",
+            "extra": {
+                "asset_id": 3587029001
+            },
+            "nodes": {
+                "Door to Ruined Fountain Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 60.56023406982422,
                         "y": -40.634788513183594,
                         "z": 22.053800582885742
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1443741240,
+                    "connected_area_name": "Ruined Fountain Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -320,17 +324,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruins Entrance",
+                "Door to Ruins Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 28.292354583740234,
                         "y": -91.22492218017578,
                         "z": 7.036405801773071
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3086062890,
+                    "connected_area_name": "Ruins Entrance",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -487,17 +491,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Shrine Access",
+                "Door to Ruined Shrine Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.71,
                         "y": -32.5,
                         "z": 1.99
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3748948704,
+                    "connected_area_name": "Ruined Shrine Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -511,17 +515,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Nursery Access",
+                "Door to Nursery Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.46,
                         "y": 30.53,
                         "z": 7.36
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 153979389,
+                    "connected_area_name": "Nursery Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -535,17 +539,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Plaza Access",
+                "Door to Plaza Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 81.99,
                         "y": 51.46,
                         "z": 24.67
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 1396020311,
+                    "connected_area_name": "Plaza Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -559,17 +563,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Piston Tunnel",
+                "Morph Ball Door to Piston Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 56.45,
                         "y": -86.86,
                         "z": 20.84
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 5,
-                    "connected_area_asset_id": 725556462,
+                    "connected_area_name": "Piston Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -720,11 +724,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 3,
                     "major_location": false,
                     "connections": {
@@ -737,11 +741,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion Half Pipe)",
+                "Pickup (Missile Expansion Half Pipe)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 0,
                     "major_location": false,
                     "connections": {
@@ -754,11 +758,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion Tree)",
+                "Pickup (Missile Expansion Tree)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 2,
                     "major_location": false,
                     "connections": {
@@ -771,11 +775,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion Grapple Ledge)",
+                "Pickup (Missile Expansion Grapple Ledge)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 1,
                     "major_location": false,
                     "connections": {
@@ -788,11 +792,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Locked Door Ledge",
+                "Locked Door Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -819,11 +823,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Grapple Ledge",
+                "Grapple Ledge": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -1066,26 +1070,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Fountain Access",
-            "in_dark_aether": false,
-            "asset_id": 1443741240,
-            "default_node_index": 1,
+        "Ruined Fountain Access": {
+            "default_node": "Door to Ruined Fountain",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Plaza",
+            "extra": {
+                "asset_id": 1443741240
+            },
+            "nodes": {
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -32.01945209503174,
                         "y": 7.9502387046813965,
                         "z": 2.5000024536743695
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1109,17 +1113,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Fountain",
+                "Door to Ruined Fountain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 47.647701263427734,
                         "y": -13.46162462234497,
                         "z": 2.4999960926513722
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 375016937,
+                    "connected_area_name": "Ruined Fountain",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1143,26 +1147,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Shrine Access",
-            "in_dark_aether": false,
-            "asset_id": 3748948704,
-            "default_node_index": 0,
+        "Ruined Shrine Access": {
+            "default_node": "Door to Ruined Shrine",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Shrine",
+            "extra": {
+                "asset_id": 3748948704
+            },
+            "nodes": {
+                "Door to Ruined Shrine": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -22.250595092773438,
                         "y": 2.4999995115814215,
                         "z": 2.5000004884185785
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1014518864,
+                    "connected_area_name": "Ruined Shrine",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1176,17 +1180,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Plaza",
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 69.76,
                         "y": 2.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1200,26 +1204,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Nursery Access",
-            "in_dark_aether": false,
-            "asset_id": 153979389,
-            "default_node_index": 0,
+        "Nursery Access": {
+            "default_node": "Door to Eyon Tunnel",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Eyon Tunnel",
+            "extra": {
+                "asset_id": 153979389
+            },
+            "nodes": {
+                "Door to Eyon Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -22.250595092773438,
                         "y": 2.4999995115814215,
                         "z": 2.5000004884185785
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3407776267,
+                    "connected_area_name": "Eyon Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1233,17 +1237,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Plaza",
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.37059783935547,
                         "y": -19.944494247436523,
                         "z": 2.3464827612042427
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1257,26 +1261,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Plaza Access",
-            "in_dark_aether": false,
-            "asset_id": 1396020311,
-            "default_node_index": 1,
+        "Plaza Access": {
+            "default_node": "Door to Vault",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Plaza",
+            "extra": {
+                "asset_id": 1396020311
+            },
+            "nodes": {
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -29.957454681396484,
                         "y": -0.05403780937194824,
                         "z": 2.5196607364341617
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 4,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1290,17 +1294,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Vault",
+                "Door to Vault": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.7504539787769318,
                         "y": 50.050174713134766,
                         "z": 2.5196734350174665
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4010184729,
+                    "connected_area_name": "Vault",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1314,26 +1318,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Piston Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 725556462,
-            "default_node_index": 1,
+        "Piston Tunnel": {
+            "default_node": "Door to Training Chamber",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Plaza",
+            "extra": {
+                "asset_id": 725556462
+            },
+            "nodes": {
+                "Door to Main Plaza": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.59,
                         "y": 28.03,
                         "z": 0.76
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3587029001,
+                    "connected_area_name": "Main Plaza",
                     "connected_dock_index": 5,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -1357,17 +1361,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Training Chamber",
+                "Door to Training Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.59,
                         "y": -28.03,
                         "z": -0.76
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1057288964,
+                    "connected_area_name": "Training Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -1391,26 +1395,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Fountain",
-            "in_dark_aether": false,
-            "asset_id": 375016937,
-            "default_node_index": 1,
+        "Ruined Fountain": {
+            "default_node": "Door to Ruined Fountain Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Arboretum Access",
+            "extra": {
+                "asset_id": 375016937
+            },
+            "nodes": {
+                "Door to Arboretum Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 31.275650024414062,
                         "y": -25.83625888824463,
                         "z": -3.9432334899902344
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2265646373,
+                    "connected_area_name": "Arboretum Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1424,17 +1428,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Fountain Access",
+                "Door to Ruined Fountain Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.01314401626586914,
                         "y": 5.173672676086426,
                         "z": -2.939114049077034
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1443741240,
+                    "connected_area_name": "Ruined Fountain Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1448,17 +1452,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Meditation Fountain",
+                "Door to Meditation Fountain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17.497303009033203,
                         "y": -65.24139404296875,
                         "z": -5.021394371986389
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 673912500,
+                    "connected_area_name": "Meditation Fountain",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1574,11 +1578,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 4,
                     "major_location": false,
                     "connections": {
@@ -1591,26 +1595,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Shrine",
-            "in_dark_aether": false,
-            "asset_id": 1014518864,
-            "default_node_index": 1,
+        "Ruined Shrine": {
+            "default_node": "Door to Ruined Shrine Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Tower of Light Access",
+            "extra": {
+                "asset_id": 1014518864
+            },
+            "nodes": {
+                "Door to Tower of Light Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -38.5,
                         "y": 0.05,
                         "z": 21.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1507858510,
+                    "connected_area_name": "Tower of Light Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -1701,17 +1705,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Shrine Access",
+                "Door to Ruined Shrine Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 34.78738784790039,
                         "y": 0.23341047763824463,
                         "z": 2.5033784456318244
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3748948704,
+                    "connected_area_name": "Ruined Shrine Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1967,11 +1971,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Morph Ball)",
+                "Pickup (Morph Ball)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 5,
                     "major_location": true,
                     "connections": {
@@ -1984,11 +1988,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion Half Pipe)",
+                "Pickup (Missile Expansion Half Pipe)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 6,
                     "major_location": false,
                     "connections": {
@@ -2001,11 +2005,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion Bomb Wall)",
+                "Pickup (Missile Expansion Bomb Wall)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 7,
                     "major_location": false,
                     "connections": {
@@ -2018,11 +2022,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pit",
+                "Pit": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ruined Shrine Access": {
                             "type": "or",
@@ -2171,26 +2175,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Eyon Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 3407776267,
-            "default_node_index": 1,
+        "Eyon Tunnel": {
+            "default_node": "Door to Nursery Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Nursery",
+            "extra": {
+                "asset_id": 3407776267
+            },
+            "nodes": {
+                "Door to Ruined Nursery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13.2088623046875,
                         "y": 7.491743564605713,
                         "z": -1.3899477124214172
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3260509773,
+                    "connected_area_name": "Ruined Nursery",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2204,17 +2208,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Nursery Access",
+                "Door to Nursery Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 33.21451187133789,
                         "y": -22.500024795532227,
                         "z": -1.2149684727191925
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 153979389,
+                    "connected_area_name": "Nursery Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2228,26 +2232,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Vault",
-            "in_dark_aether": false,
-            "asset_id": 4010184729,
-            "default_node_index": 1,
+        "Vault": {
+            "default_node": "Door to Plaza Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Vault Access",
+            "extra": {
+                "asset_id": 4010184729
+            },
+            "nodes": {
+                "Door to Vault Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.000195026397705,
                         "y": 42.10716247558594,
                         "z": 2.5000070762787345
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2768802193,
+                    "connected_area_name": "Vault Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2347,17 +2351,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Plaza Access",
+                "Door to Plaza Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4.999978065490723,
                         "y": -37.10619354248047,
                         "z": -2.4997578833645093
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1396020311,
+                    "connected_area_name": "Plaza Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2371,11 +2375,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 8,
                     "major_location": false,
                     "connections": {
@@ -2388,26 +2392,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Training Chamber",
-            "in_dark_aether": false,
-            "asset_id": 1057288964,
-            "default_node_index": 0,
+        "Training Chamber": {
+            "default_node": "Door to Training Chamber Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Training Chamber Access",
+            "extra": {
+                "asset_id": 1057288964
+            },
+            "nodes": {
+                "Door to Training Chamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 8.29,
                         "z": 4.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 416384699,
+                    "connected_area_name": "Training Chamber Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2529,17 +2533,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Morph Ball Door to Piston Tunnel",
+                "Morph Ball Door to Piston Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 81.45,
                         "z": 3.84
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 725556462,
+                    "connected_area_name": "Piston Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -2555,11 +2559,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 9,
                     "major_location": false,
                     "connections": {
@@ -2599,11 +2603,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Chozo Ghosts",
+                "Event - Chozo Ghosts": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 11,
                     "connections": {
                         "Door to Training Chamber Access": {
@@ -2615,11 +2619,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Unlock morph track",
+                "Event - Unlock morph track": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 12,
                     "connections": {
                         "Door to Training Chamber Access": {
@@ -2631,26 +2635,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Arboretum Access",
-            "in_dark_aether": false,
-            "asset_id": 2265646373,
-            "default_node_index": 1,
+        "Arboretum Access": {
+            "default_node": "Door to Ruined Fountain",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Arboretum",
+            "extra": {
+                "asset_id": 2265646373
+            },
+            "nodes": {
+                "Door to Arboretum": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.71,
                         "y": -4.92,
                         "z": 0.99
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 413884678,
+                    "connected_area_name": "Arboretum",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -2664,17 +2668,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Fountain",
+                "Door to Ruined Fountain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -25.714508056640625,
                         "y": 40.07857131958008,
                         "z": 2.5000065878601845
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 375016937,
+                    "connected_area_name": "Ruined Fountain",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2688,26 +2692,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Meditation Fountain",
-            "in_dark_aether": false,
-            "asset_id": 673912500,
-            "default_node_index": 1,
+        "Meditation Fountain": {
+            "default_node": "Door to Ruined Fountain",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Magma Pool",
+            "extra": {
+                "asset_id": 673912500
+            },
+            "nodes": {
+                "Door to Magma Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.07857394218444824,
                         "y": -10.71450662612915,
                         "z": 2.499998546325685
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1226570426,
+                    "connected_area_name": "Magma Pool",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2721,17 +2725,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Fountain",
+                "Door to Ruined Fountain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 40.07856750488281,
                         "y": 30.714506149291992,
                         "z": 2.500004884185728
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 375016937,
+                    "connected_area_name": "Ruined Fountain",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2745,26 +2749,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tower of Light Access",
-            "in_dark_aether": false,
-            "asset_id": 1507858510,
-            "default_node_index": 1,
+        "Tower of Light Access": {
+            "default_node": "Door to Ruined Shrine",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Tower of Light",
+            "extra": {
+                "asset_id": 1507858510
+            },
+            "nodes": {
+                "Door to Tower of Light": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -27.52,
                         "y": -19.29,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 225636855,
+                    "connected_area_name": "Tower of Light",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2778,17 +2782,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Shrine",
+                "Door to Ruined Shrine": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.37,
                         "y": -19.69,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1014518864,
+                    "connected_area_name": "Ruined Shrine",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2802,26 +2806,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Nursery",
-            "in_dark_aether": false,
-            "asset_id": 3260509773,
-            "default_node_index": 2,
+        "Ruined Nursery": {
+            "default_node": "Door to Eyon Tunnel",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Save Station 1",
+            "extra": {
+                "asset_id": 3260509773
+            },
+            "nodes": {
+                "Door to Save Station 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -22.50003433227539,
                         "y": -7.714508533477783,
                         "z": 2.000391498208046
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 492718124,
+                    "connected_area_name": "Save Station 1",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2835,17 +2839,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to North Atrium",
+                "Door to North Atrium": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.500001953674314,
                         "y": 28.71450424194336,
                         "z": -0.49999499320983887
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1177115808,
+                    "connected_area_name": "North Atrium",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2866,17 +2870,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Eyon Tunnel",
+                "Door to Eyon Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 23.71450424194336,
                         "y": -12.498241901397705,
                         "z": -7.49989652633667
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3407776267,
+                    "connected_area_name": "Eyon Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -2984,11 +2988,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 10,
                     "major_location": false,
                     "connections": {
@@ -3001,26 +3005,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Vault Access",
-            "in_dark_aether": false,
-            "asset_id": 2768802193,
-            "default_node_index": 0,
+        "Vault Access": {
+            "default_node": "Door to Vault",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Vault",
+            "extra": {
+                "asset_id": 2768802193
+            },
+            "nodes": {
+                "Door to Vault": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11.609147071838379,
                         "y": -73.54900741577148,
                         "z": 24.134559631347656
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4010184729,
+                    "connected_area_name": "Vault",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3044,17 +3048,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Magmoor Caverns North",
+                "Door to Transport to Magmoor Caverns North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11.609146118164062,
                         "y": 32.16326904296875,
                         "z": 2.644509419798851
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2199318005,
+                    "connected_area_name": "Transport to Magmoor Caverns North",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3078,26 +3082,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Training Chamber Access",
-            "in_dark_aether": false,
-            "asset_id": 416384699,
-            "default_node_index": 0,
+        "Training Chamber Access": {
+            "default_node": "Door to Magma Pool",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Magma Pool",
+            "extra": {
+                "asset_id": 416384699
+            },
+            "nodes": {
+                "Door to Magma Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.71,
                         "y": 2.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1226570426,
+                    "connected_area_name": "Magma Pool",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -3111,17 +3115,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Training Chamber",
+                "Door to Training Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -32.5,
                         "y": 35.71,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1057288964,
+                    "connected_area_name": "Training Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -3144,11 +3148,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 11,
                     "major_location": false,
                     "connections": {
@@ -3161,26 +3165,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Arboretum",
-            "in_dark_aether": false,
-            "asset_id": 413884678,
-            "default_node_index": 1,
+        "Arboretum": {
+            "default_node": "Door to Arboretum Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sunchamber Lobby",
+            "extra": {
+                "asset_id": 413884678
+            },
+            "nodes": {
+                "Door to Sunchamber Lobby": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 9.28,
                         "y": 58.28,
                         "z": 41.82
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1025740749,
+                    "connected_area_name": "Sunchamber Lobby",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -3265,17 +3269,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Arboretum Access",
+                "Door to Arboretum Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.71,
                         "y": 0.5,
                         "z": 3.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2265646373,
+                    "connected_area_name": "Arboretum Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3289,17 +3293,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gathering Hall Access",
+                "Door to Gathering Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 68.71,
                         "y": 0.5,
                         "z": 1.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2515665310,
+                    "connected_area_name": "Gathering Hall Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -3356,11 +3360,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Gate",
+                "Front of Gate": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Sunchamber Lobby": {
                             "type": "and",
@@ -3501,11 +3505,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Open gate",
+                "Event - Open gate": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 9,
                     "connections": {
                         "Front of Gate": {
@@ -3517,26 +3521,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Magma Pool",
-            "in_dark_aether": false,
-            "asset_id": 1226570426,
-            "default_node_index": 1,
+        "Magma Pool": {
+            "default_node": "Door to Meditation Fountain",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Training Chamber Access",
+            "extra": {
+                "asset_id": 1226570426
+            },
+            "nodes": {
+                "Door to Training Chamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -25.71,
                         "y": -52.38,
                         "z": 12.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 416384699,
+                    "connected_area_name": "Training Chamber Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -3693,17 +3697,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Meditation Fountain",
+                "Door to Meditation Fountain": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.499999523162842,
                         "y": 23.030454635620117,
                         "z": 12.498388290405273
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 673912500,
+                    "connected_area_name": "Meditation Fountain",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -3852,11 +3856,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Power Bomb Expansion)",
+                "Pickup (Power Bomb Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 12,
                     "major_location": false,
                     "connections": {
@@ -3871,26 +3875,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tower of Light",
-            "in_dark_aether": false,
-            "asset_id": 225636855,
-            "default_node_index": 0,
+        "Tower of Light": {
+            "default_node": "Door to Tower of Light Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Tower of Light Access",
+            "extra": {
+                "asset_id": 225636855
+            },
+            "nodes": {
+                "Door to Tower of Light Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.37,
                         "y": 41.1,
                         "z": 18.28
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1507858510,
+                    "connected_area_name": "Tower of Light Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -4147,17 +4151,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Tower Chamber",
+                "Door to Tower Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.46,
                         "y": -50.94,
                         "z": 17.22
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 297624503,
+                    "connected_area_name": "Tower Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -4171,11 +4175,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Wavebuster)",
+                "Pickup (Wavebuster)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 13,
                     "major_location": true,
                     "connections": {
@@ -4188,26 +4192,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station 1",
-            "in_dark_aether": false,
-            "asset_id": 492718124,
-            "default_node_index": 1,
+        "Save Station 1": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Nursery",
+            "extra": {
+                "asset_id": 492718124
+            },
+            "nodes": {
+                "Door to Ruined Nursery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.5901206731796265,
                         "y": 8.972242832183838,
                         "z": 2.1727619618177414
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3260509773,
+                    "connected_area_name": "Ruined Nursery",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4221,11 +4225,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ruined Nursery": {
                             "type": "and",
@@ -4236,26 +4240,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "North Atrium",
-            "in_dark_aether": false,
-            "asset_id": 1177115808,
-            "default_node_index": 0,
+        "North Atrium": {
+            "default_node": "Door to Ruined Nursery",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Nursery",
+            "extra": {
+                "asset_id": 1177115808
+            },
+            "nodes": {
+                "Door to Ruined Nursery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.07857394218444824,
                         "y": -5.714507579803467,
                         "z": 2.499999023162843
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3260509773,
+                    "connected_area_name": "Ruined Nursery",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4269,17 +4273,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ruined Gallery",
+                "Door to Ruined Gallery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 40.07856750488281,
                         "y": 25.714506149291992,
                         "z": 2.5000039073486278
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3813660971,
+                    "connected_area_name": "Ruined Gallery",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4293,26 +4297,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Magmoor Caverns North",
-            "in_dark_aether": false,
-            "asset_id": 2199318005,
-            "default_node_index": 3,
+        "Transport to Magmoor Caverns North": {
+            "default_node": "Elevator to Magmoor Caverns - Transport to Chozo Ruins North",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sun Tower",
+            "extra": {
+                "asset_id": 2199318005
+            },
+            "nodes": {
+                "Door to Sun Tower": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 23.858829498291016,
                         "y": -0.018541574478149414,
                         "z": 2.4999904816284015
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3725988722,
+                    "connected_area_name": "Sun Tower",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4326,17 +4330,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Vault Access",
+                "Door to Vault Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.018539905548095703,
                         "y": -23.858829498291016,
                         "z": 2.4999870626984375
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2768802193,
+                    "connected_area_name": "Vault Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4350,17 +4354,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Access North",
+                "Door to Transport Access North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -17.39832305908203,
                         "y": -0.009038209915161133,
                         "z": 2.4999965810699223
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 986845711,
+                    "connected_area_name": "Transport Access North",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4388,15 +4392,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Magmoor Caverns - Transport to Chozo Ruins North",
+                "Elevator to Magmoor Caverns - Transport to Chozo Ruins North": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1056449404,
-                    "destination_area_asset_id": 1005235657,
-                    "teleporter_instance_id": 1572903,
-                    "scan_asset_id": 3322994662,
+                    "extra": {
+                        "scan_asset_id": 3322994662,
+                        "teleporter_instance_id": 1572903
+                    },
+                    "destination": {
+                        "world_name": "Magmoor Caverns",
+                        "area_name": "Transport to Chozo Ruins North"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -4409,26 +4416,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sunchamber Lobby",
-            "in_dark_aether": false,
-            "asset_id": 1025740749,
-            "default_node_index": 1,
+        "Sunchamber Lobby": {
+            "default_node": "Door to Sunchamber Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Arboretum",
+            "extra": {
+                "asset_id": 1025740749
+            },
+            "nodes": {
+                "Door to Arboretum": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.54,
                         "y": 2.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 413884678,
+                    "connected_area_name": "Arboretum",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4442,17 +4449,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sunchamber Access",
+                "Door to Sunchamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.8416748046875,
                         "y": -1.6822861433029175,
                         "z": 7.4999988079071045
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1422133653,
+                    "connected_area_name": "Sunchamber Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4466,26 +4473,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gathering Hall Access",
-            "in_dark_aether": false,
-            "asset_id": 2515665310,
-            "default_node_index": 1,
+        "Gathering Hall Access": {
+            "default_node": "Door to Arboretum",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gathering Hall",
+            "extra": {
+                "asset_id": 2515665310
+            },
+            "nodes": {
+                "Door to Gathering Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.714506149291992,
                         "y": -2.501756584038958,
                         "z": 2.4999995115814215
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1206336453,
+                    "connected_area_name": "Gathering Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4499,17 +4506,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Arboretum",
+                "Door to Arboretum": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -28.18,
                         "y": 2.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 413884678,
+                    "connected_area_name": "Arboretum",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4523,26 +4530,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Tower Chamber",
-            "in_dark_aether": false,
-            "asset_id": 297624503,
-            "default_node_index": 0,
+        "Tower Chamber": {
+            "default_node": "Door to Tower of Light",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Tower of Light",
+            "extra": {
+                "asset_id": 297624503
+            },
+            "nodes": {
+                "Door to Tower of Light": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.54,
                         "y": 24.45,
                         "z": -1.31
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 225636855,
+                    "connected_area_name": "Tower of Light",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -4556,11 +4563,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of Lifegiver)",
+                "Pickup (Artifact of Lifegiver)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 14,
                     "major_location": true,
                     "connections": {
@@ -4573,26 +4580,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ruined Gallery",
-            "in_dark_aether": false,
-            "asset_id": 3813660971,
-            "default_node_index": 1,
+        "Ruined Gallery": {
+            "default_node": "Door to Totem Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to North Atrium",
+            "extra": {
+                "asset_id": 3813660971
+            },
+            "nodes": {
+                "Door to North Atrium": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.4999919468841654,
                         "y": 31.285493850708008,
                         "z": -0.4994697570800781
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1177115808,
+                    "connected_area_name": "North Atrium",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4690,17 +4697,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Totem Access",
+                "Door to Totem Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.499948012375171,
                         "y": 78.7145004272461,
                         "z": -0.499530553817749
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3934929011,
+                    "connected_area_name": "Totem Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4714,17 +4721,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Map Station",
+                "Door to Map Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -17.71,
                         "y": 42.5,
                         "z": -7.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 442183190,
+                    "connected_area_name": "Map Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -4738,11 +4745,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 15,
                     "major_location": false,
                     "connections": {
@@ -4755,11 +4762,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion 2)",
+                "Pickup (Missile Expansion 2)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 16,
                     "major_location": false,
                     "connections": {
@@ -4772,26 +4779,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sun Tower",
-            "in_dark_aether": false,
-            "asset_id": 3725988722,
-            "default_node_index": 0,
+        "Sun Tower": {
+            "default_node": "Door to Sun Tower Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sun Tower Access",
+            "extra": {
+                "asset_id": 3725988722
+            },
+            "nodes": {
+                "Door to Sun Tower Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 31.624380111694336,
                         "y": -4.5299530029296875e-06,
                         "z": 28.49718475341797
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1103925484,
+                    "connected_area_name": "Sun Tower Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4815,17 +4822,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Magmoor Caverns North",
+                "Door to Transport to Magmoor Caverns North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -31.624380111694336,
                         "y": 6.4373016357421875e-06,
                         "z": -40.824832916259766
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2199318005,
+                    "connected_area_name": "Transport to Magmoor Caverns North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -4968,11 +4975,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Unlock spider track",
+                "Event - Unlock spider track": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 5,
                     "connections": {
                         "Door to Transport to Magmoor Caverns North": {
@@ -4984,11 +4991,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Activate Sunchamber Ghosts From Top",
+                "Event - Activate Sunchamber Ghosts From Top": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 6,
                     "connections": {
                         "Door to Sun Tower Access": {
@@ -5086,11 +5093,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Activate Sunchamber Ghosts From Bottom",
+                "Event - Activate Sunchamber Ghosts From Bottom": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 6,
                     "connections": {
                         "Door to Sun Tower Access": {
@@ -5137,26 +5144,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Access North",
-            "in_dark_aether": false,
-            "asset_id": 986845711,
-            "default_node_index": 0,
+        "Transport Access North": {
+            "default_node": "Door to Hive Totem",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hive Totem",
+            "extra": {
+                "asset_id": 986845711
+            },
+            "nodes": {
+                "Door to Hive Totem": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.32,
                         "y": 1.18,
                         "z": 11.15
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3358629366,
+                    "connected_area_name": "Hive Totem",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -5179,17 +5186,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Magmoor Caverns North",
+                "Door to Transport to Magmoor Caverns North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 67.9974365234375,
                         "y": 10.233339309692383,
                         "z": 23.51578140258789
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2199318005,
+                    "connected_area_name": "Transport to Magmoor Caverns North",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5222,11 +5229,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 17,
                     "major_location": false,
                     "connections": {
@@ -5239,26 +5246,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sunchamber Access",
-            "in_dark_aether": false,
-            "asset_id": 1422133653,
-            "default_node_index": 1,
+        "Sunchamber Access": {
+            "default_node": "Door to Sunchamber Lobby",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sunchamber",
+            "extra": {
+                "asset_id": 1422133653
+            },
+            "nodes": {
+                "Door to Sunchamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -14.777003288269043,
                         "y": -0.10928654670715332,
                         "z": 2.257336560636759
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2584347627,
+                    "connected_area_name": "Sunchamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5272,17 +5279,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sunchamber Lobby",
+                "Door to Sunchamber Lobby": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 45.71450424194336,
                         "y": -0.0208665132522583,
                         "z": -3.2271292358636856
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1025740749,
+                    "connected_area_name": "Sunchamber Lobby",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5332,26 +5339,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Gathering Hall",
-            "in_dark_aether": false,
-            "asset_id": 1206336453,
-            "default_node_index": 2,
+        "Gathering Hall": {
+            "default_node": "Door to Save Station 2",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Watery Hall Access",
+            "extra": {
+                "asset_id": 1206336453
+            },
+            "nodes": {
+                "Door to Watery Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 10.743853569030762,
                         "y": 23.30139923095703,
                         "z": 2.4946269993670285
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4008477565,
+                    "connected_area_name": "Watery Hall Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5365,17 +5372,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Gathering Hall Access",
+                "Door to Gathering Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.801740646362305,
                         "y": -10.112272143363953,
                         "z": 2.495987457688898
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2515665310,
+                    "connected_area_name": "Gathering Hall Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5457,17 +5464,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station 2",
+                "Door to Save Station 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.5,
                         "y": -57.65,
                         "z": 7.52
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 4158166350,
+                    "connected_area_name": "Save Station 2",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -5481,17 +5488,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to East Atrium",
+                "Door to East Atrium": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.816192626953125,
                         "y": -3.281392529606819,
                         "z": 26.96938133239746
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 1899364579,
+                    "connected_area_name": "East Atrium",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5616,11 +5623,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 18,
                     "major_location": false,
                     "connections": {
@@ -5633,26 +5640,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Totem Access",
-            "in_dark_aether": false,
-            "asset_id": 3934929011,
-            "default_node_index": 0,
+        "Totem Access": {
+            "default_node": "Door to Ruined Gallery",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Gallery",
+            "extra": {
+                "asset_id": 3934929011
+            },
+            "nodes": {
+                "Door to Ruined Gallery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.102190971374512,
                         "y": -30.284523963928223,
                         "z": 4.3029133677482605
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3813660971,
+                    "connected_area_name": "Ruined Gallery",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5666,17 +5673,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hive Totem",
+                "Door to Hive Totem": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 39.630096435546875,
                         "y": 21.400341033935547,
                         "z": -3.6702795028686523
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3358629366,
+                    "connected_area_name": "Hive Totem",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5690,26 +5697,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Map Station",
-            "in_dark_aether": false,
-            "asset_id": 442183190,
-            "default_node_index": 0,
+        "Map Station": {
+            "default_node": "Door to Ruined Gallery",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ruined Gallery",
+            "extra": {
+                "asset_id": 442183190
+            },
+            "nodes": {
+                "Door to Ruined Gallery": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 16.36,
                         "y": -2.51,
                         "z": 2.08
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3813660971,
+                    "connected_area_name": "Ruined Gallery",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5723,11 +5730,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Map Station",
+                "Map Station": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Ruined Gallery": {
                             "type": "and",
@@ -5738,26 +5745,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sun Tower Access",
-            "in_dark_aether": false,
-            "asset_id": 1103925484,
-            "default_node_index": 1,
+        "Sun Tower Access": {
+            "default_node": "Door to Sun Tower",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sunchamber",
+            "extra": {
+                "asset_id": 1103925484
+            },
+            "nodes": {
+                "Door to Sunchamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0008690357208251953,
                         "y": -69.17664337158203,
                         "z": 2.4999880395353102
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2584347627,
+                    "connected_area_name": "Sunchamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5771,17 +5778,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sun Tower",
+                "Door to Sun Tower": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -17.32915687561035,
                         "y": 66.67664337158203,
                         "z": 2.5000104952086986
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3725988722,
+                    "connected_area_name": "Sun Tower",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5795,26 +5802,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hive Totem",
-            "in_dark_aether": false,
-            "asset_id": 3358629366,
-            "default_node_index": 0,
+        "Hive Totem": {
+            "default_node": "Door to Totem Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Totem Access",
+            "extra": {
+                "asset_id": 3358629366
+            },
+            "nodes": {
+                "Door to Totem Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -45.71450424194336,
                         "y": 12.499997615814209,
                         "z": 7.5014156103134155
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3934929011,
+                    "connected_area_name": "Totem Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -5942,17 +5949,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Access North",
+                "Door to Transport Access North": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.5,
                         "y": 60.71,
                         "z": 12.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 986845711,
+                    "connected_area_name": "Transport Access North",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -6051,11 +6058,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Launcher)",
+                "Pickup (Missile Launcher)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 19,
                     "major_location": true,
                     "connections": {
@@ -6075,11 +6082,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Hive Mecha",
+                "Event - Hive Mecha": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 16,
                     "connections": {
                         "Pickup (Missile Launcher)": {
@@ -6091,26 +6098,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Sunchamber",
-            "in_dark_aether": false,
-            "asset_id": 2584347627,
-            "default_node_index": 6,
+        "Sunchamber": {
+            "default_node": "Before Fight",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Sun Tower Access",
+            "extra": {
+                "asset_id": 2584347627
+            },
+            "nodes": {
+                "Door to Sun Tower Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.00987696647644043,
                         "y": -72.18083190917969,
                         "z": 15.786983013153076
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1103925484,
+                    "connected_area_name": "Sun Tower Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6124,17 +6131,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Sunchamber Access",
+                "Door to Sunchamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 60.776058197021484,
                         "z": 6.624587535858154
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1422133653,
+                    "connected_area_name": "Sunchamber Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6148,11 +6155,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Varia Suit)",
+                "Pickup (Varia Suit)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 20,
                     "major_location": true,
                     "connections": {
@@ -6165,11 +6172,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of Wild)",
+                "Pickup (Artifact of Wild)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 21,
                     "major_location": true,
                     "connections": {
@@ -6182,11 +6189,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Flaahgra",
+                "Event - Flaahgra": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 7,
                     "connections": {
                         "Pickup (Varia Suit)": {
@@ -6198,11 +6205,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Chozo Ghosts",
+                "Event - Chozo Ghosts": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 8,
                     "connections": {
                         "Pickup (Artifact of Wild)": {
@@ -6214,11 +6221,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Before Fight",
+                "Before Fight": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Sun Tower Access": {
                             "type": "or",
@@ -6472,26 +6479,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Watery Hall Access",
-            "in_dark_aether": false,
-            "asset_id": 4008477565,
-            "default_node_index": 0,
+        "Watery Hall Access": {
+            "default_node": "Door to Gathering Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gathering Hall",
+            "extra": {
+                "asset_id": 4008477565
+            },
+            "nodes": {
+                "Door to Gathering Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 14.889594554901123,
                         "y": -30.721367835998535,
                         "z": 4.512247085571289
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1206336453,
+                    "connected_area_name": "Gathering Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6557,17 +6564,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Watery Hall",
+                "Door to Watery Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 14.89,
                         "y": 55.71,
                         "z": 4.51
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1227669322,
+                    "connected_area_name": "Watery Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -6581,11 +6588,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 22,
                     "major_location": false,
                     "connections": {
@@ -6598,26 +6605,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station 2",
-            "in_dark_aether": false,
-            "asset_id": 4158166350,
-            "default_node_index": 1,
+        "Save Station 2": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gathering Hall",
+            "extra": {
+                "asset_id": 4158166350
+            },
+            "nodes": {
+                "Door to Gathering Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.12,
                         "y": 17.92,
                         "z": 2.17
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1206336453,
+                    "connected_area_name": "Gathering Hall",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6631,11 +6638,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Gathering Hall": {
                             "type": "and",
@@ -6646,26 +6653,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "East Atrium",
-            "in_dark_aether": false,
-            "asset_id": 1899364579,
-            "default_node_index": 0,
+        "East Atrium": {
+            "default_node": "Door to Gathering Hall",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Gathering Hall",
+            "extra": {
+                "asset_id": 1899364579
+            },
+            "nodes": {
+                "Door to Gathering Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.714507102966309,
                         "y": 0.07857155799865723,
                         "z": 2.5000002499999994
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1206336453,
+                    "connected_area_name": "Gathering Hall",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6679,17 +6686,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Energy Core Access",
+                "Door to Energy Core Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -25.714506149291992,
                         "y": 40.078575134277344,
                         "z": 2.5000065878601845
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1178406190,
+                    "connected_area_name": "Energy Core Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6703,26 +6710,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Watery Hall",
-            "in_dark_aether": false,
-            "asset_id": 1227669322,
-            "default_node_index": 1,
+        "Watery Hall": {
+            "default_node": "Door to Watery Hall Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Dynamo Access",
+            "extra": {
+                "asset_id": 1227669322
+            },
+            "nodes": {
+                "Door to Dynamo Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.64,
                         "y": -50.15,
                         "z": 15.51
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 255867655,
+                    "connected_area_name": "Dynamo Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -6789,17 +6796,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Watery Hall Access",
+                "Door to Watery Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.35,
                         "y": -29.43,
                         "z": 5.27
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4008477565,
+                    "connected_area_name": "Watery Hall Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -6988,11 +6995,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Charge Beam)",
+                "Pickup (Charge Beam)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 23,
                     "major_location": true,
                     "connections": {
@@ -7005,11 +7012,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 24,
                     "major_location": false,
                     "connections": {
@@ -7041,11 +7048,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Open gate",
+                "Event - Open gate": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 10,
                     "connections": {
                         "Door to Watery Hall Access": {
@@ -7057,11 +7064,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Behind Gate",
+                "Behind Gate": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Dynamo Access": {
                             "type": "and",
@@ -7237,26 +7244,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Energy Core Access",
-            "in_dark_aether": false,
-            "asset_id": 1178406190,
-            "default_node_index": 0,
+        "Energy Core Access": {
+            "default_node": "Door to Energy Core",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Energy Core",
+            "extra": {
+                "asset_id": 1178406190
+            },
+            "nodes": {
+                "Door to Energy Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 39.23268127441406,
                         "y": -19.212360382080078,
                         "z": 2.4999975579070792
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3386190780,
+                    "connected_area_name": "Energy Core",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7270,17 +7277,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to East Atrium",
+                "Door to East Atrium": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -7.29633092880249,
                         "y": -0.0091325044631958,
                         "z": 2.4999995115814215
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1899364579,
+                    "connected_area_name": "East Atrium",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7294,26 +7301,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Dynamo Access",
-            "in_dark_aether": false,
-            "asset_id": 255867655,
-            "default_node_index": 1,
+        "Dynamo Access": {
+            "default_node": "Door to Dynamo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Watery Hall",
+            "extra": {
+                "asset_id": 255867655
+            },
+            "nodes": {
+                "Door to Watery Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.5,
                         "y": 22.25,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1227669322,
+                    "connected_area_name": "Watery Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7327,17 +7334,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Dynamo",
+                "Door to Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.94,
                         "y": -21.37,
                         "z": 2.35
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 81183365,
+                    "connected_area_name": "Dynamo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -7351,26 +7358,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Energy Core",
-            "in_dark_aether": false,
-            "asset_id": 3386190780,
-            "default_node_index": 2,
+        "Energy Core": {
+            "default_node": "Door to Energy Core Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Burn Dome Access",
+            "extra": {
+                "asset_id": 3386190780
+            },
+            "nodes": {
+                "Door to Burn Dome Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.52,
                         "y": 60.0,
                         "z": -3.77
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4018058640,
+                    "connected_area_name": "Burn Dome Access",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -7386,17 +7393,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to West Furnace Access",
+                "Door to West Furnace Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 25.714506149291992,
                         "y": -9.239748001098633,
                         "z": 5.478926301002502
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3262208600,
+                    "connected_area_name": "West Furnace Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7410,17 +7417,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Energy Core Access",
+                "Door to Energy Core Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -34.71451187133789,
                         "y": 6.4373016357421875e-06,
                         "z": 1.4806299805641174
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1178406190,
+                    "connected_area_name": "Energy Core Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7471,11 +7478,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Unlock West Furnace Access Door",
+                "Event - Unlock West Furnace Access Door": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 3,
                     "connections": {
                         "Door to Energy Core Access": {
@@ -7487,26 +7494,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Dynamo",
-            "in_dark_aether": false,
-            "asset_id": 81183365,
-            "default_node_index": 0,
+        "Dynamo": {
+            "default_node": "Door to Dynamo Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Dynamo Access",
+            "extra": {
+                "asset_id": 81183365
+            },
+            "nodes": {
+                "Door to Dynamo Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.25,
                         "y": -0.8,
                         "z": -1.84
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 255867655,
+                    "connected_area_name": "Dynamo Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7600,11 +7607,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 25,
                     "major_location": false,
                     "connections": {
@@ -7617,11 +7624,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion 2)",
+                "Pickup (Missile Expansion 2)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 26,
                     "major_location": false,
                     "connections": {
@@ -7634,26 +7641,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Burn Dome Access",
-            "in_dark_aether": false,
-            "asset_id": 4018058640,
-            "default_node_index": 2,
+        "Burn Dome Access": {
+            "default_node": "Spawn Point",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Burn Dome",
+            "extra": {
+                "asset_id": 4018058640
+            },
+            "nodes": {
+                "Door to Burn Dome": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.8966498970985413,
                         "y": 53.65196990966797,
                         "z": -2.6725898906588554
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1095301040,
+                    "connected_area_name": "Burn Dome",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7720,17 +7727,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Energy Core",
+                "Door to Energy Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1.51,
                         "y": -12.39,
                         "z": 1.29
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3386190780,
+                    "connected_area_name": "Energy Core",
                     "connected_dock_index": 0,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -7746,11 +7753,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Spawn Point",
+                "Spawn Point": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Burn Dome": {
                             "type": "resource",
@@ -7763,26 +7770,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "West Furnace Access",
-            "in_dark_aether": false,
-            "asset_id": 3262208600,
-            "default_node_index": 1,
+        "West Furnace Access": {
+            "default_node": "Door to Furnace",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Energy Core",
+            "extra": {
+                "asset_id": 3262208600
+            },
+            "nodes": {
+                "Door to Energy Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -22.250595092773438,
                         "y": 2.4999995115814215,
                         "z": 2.5000004884185785
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3386190780,
+                    "connected_area_name": "Energy Core",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7796,17 +7803,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Furnace",
+                "Door to Furnace": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.369956970214844,
                         "y": -19.693801879882812,
                         "z": 2.4999968310698932
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 774997107,
+                    "connected_area_name": "Furnace",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7820,26 +7827,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Burn Dome",
-            "in_dark_aether": false,
-            "asset_id": 1095301040,
-            "default_node_index": 0,
+        "Burn Dome": {
+            "default_node": "Door to Burn Dome Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Burn Dome Access",
+            "extra": {
+                "asset_id": 1095301040
+            },
+            "nodes": {
+                "Door to Burn Dome Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.7928390204906464,
                         "y": 21.173646926879883,
                         "z": 2.4991769895423204
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4018058640,
+                    "connected_area_name": "Burn Dome Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -7913,11 +7920,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Morph Ball Bombs)",
+                "Pickup (Morph Ball Bombs)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 28,
                     "major_location": true,
                     "connections": {
@@ -7930,11 +7937,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 27,
                     "major_location": false,
                     "connections": {
@@ -7949,11 +7956,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Incinerator Drone",
+                "Event - Incinerator Drone": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 39,
                     "connections": {
                         "Pickup (Morph Ball Bombs)": {
@@ -7965,26 +7972,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Furnace",
-            "in_dark_aether": false,
-            "asset_id": 774997107,
-            "default_node_index": 5,
+        "Furnace": {
+            "default_node": "Under Spider Track",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to East Furnace Access",
+            "extra": {
+                "asset_id": 774997107
+            },
+            "nodes": {
+                "Door to East Furnace Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 86.71,
                         "y": 0.0,
                         "z": -3.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1155868918,
+                    "connected_area_name": "East Furnace Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -7998,17 +8005,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to West Furnace Access",
+                "Door to West Furnace Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -16.497228622436523,
                         "y": 4.914760589599609,
                         "z": -8.811643362045288
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3262208600,
+                    "connected_area_name": "West Furnace Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8161,17 +8168,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crossway Access West",
+                "Door to Crossway Access West": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 58.12,
                         "y": 56.48,
                         "z": -7.46
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3655831216,
+                    "connected_area_name": "Crossway Access West",
                     "connected_dock_index": 1,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -8185,11 +8192,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 29,
                     "major_location": false,
                     "connections": {
@@ -8202,11 +8209,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 30,
                     "major_location": false,
                     "connections": {
@@ -8238,11 +8245,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Under Spider Track",
+                "Under Spider Track": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to East Furnace Access": {
                             "type": "or",
@@ -8607,26 +8614,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "East Furnace Access",
-            "in_dark_aether": false,
-            "asset_id": 1155868918,
-            "default_node_index": 0,
+        "East Furnace Access": {
+            "default_node": "Door to Hall of the Elders",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hall of the Elders",
+            "extra": {
+                "asset_id": 1155868918
+            },
+            "nodes": {
+                "Door to Hall of the Elders": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.81,
                         "y": 11.38,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4216627403,
+                    "connected_area_name": "Hall of the Elders",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -8640,17 +8647,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Furnace",
+                "Door to Furnace": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21.81,
                         "y": -10.82,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 774997107,
+                    "connected_area_name": "Furnace",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -8664,26 +8671,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crossway Access West",
-            "in_dark_aether": false,
-            "asset_id": 3655831216,
-            "default_node_index": 0,
+        "Crossway Access West": {
+            "default_node": "Door to Crossway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crossway",
+            "extra": {
+                "asset_id": 3655831216
+            },
+            "nodes": {
+                "Door to Crossway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24.47,
                         "y": 10.36,
                         "z": 6.23
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 335540505,
+                    "connected_area_name": "Crossway",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -8707,17 +8714,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Furnace",
+                "Door to Furnace": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.92,
                         "y": -49.72,
                         "z": 3.26
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 774997107,
+                    "connected_area_name": "Furnace",
                     "connected_dock_index": 2,
                     "dock_type": 1,
                     "dock_weakness_index": 0,
@@ -8741,26 +8748,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Hall of the Elders",
-            "in_dark_aether": false,
-            "asset_id": 4216627403,
-            "default_node_index": 1,
+        "Hall of the Elders": {
+            "default_node": "Door to Elder Hall Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Reflecting Pool Access",
+            "extra": {
+                "asset_id": 4216627403
+            },
+            "nodes": {
+                "Door to Reflecting Pool Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13.955537796020508,
                         "y": -65.71446800231934,
                         "z": 23.55466938018799
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2639359389,
+                    "connected_area_name": "Reflecting Pool Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8862,17 +8869,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elder Hall Access",
+                "Door to Elder Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.202220916748047,
                         "y": -1.2203165292739868,
                         "z": 11.529533386230469
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3788397521,
+                    "connected_area_name": "Elder Hall Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -8938,17 +8945,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to East Furnace Access",
+                "Door to East Furnace Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -18.37,
                         "y": -28.3,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1155868918,
+                    "connected_area_name": "East Furnace Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -8962,17 +8969,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crossway Access South",
+                "Door to Crossway Access South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.01,
                         "y": 1.24,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 1733962111,
+                    "connected_area_name": "Crossway Access South",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -9169,17 +9176,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elder Chamber",
+                "Door to Elder Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.03,
                         "y": -53.73,
                         "z": -1.85
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 4,
-                    "connected_area_asset_id": 3784843004,
+                    "connected_area_name": "Elder Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -9281,11 +9288,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
@@ -9298,11 +9305,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Activate bomb slots",
+                "Event - Activate bomb slots": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 14,
                     "connections": {
                         "Door to Crossway Access South": {
@@ -9314,11 +9321,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Deactivate barrier",
+                "Event - Deactivate barrier": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 15,
                     "connections": {
                         "Door to Reflecting Pool Access": {
@@ -9330,11 +9337,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Beam Bomb Slots",
+                "Front of Beam Bomb Slots": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Reflecting Pool Access": {
                             "type": "or",
@@ -9587,11 +9594,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Statue Moved",
+                "Event - Statue Moved": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 44,
                     "connections": {
                         "Front of Beam Bomb Slots": {
@@ -9603,26 +9610,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crossway",
-            "in_dark_aether": false,
-            "asset_id": 335540505,
-            "default_node_index": 1,
+        "Crossway": {
+            "default_node": "Door to Crossway Access West",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crossway Access South",
+            "extra": {
+                "asset_id": 335540505
+            },
+            "nodes": {
+                "Door to Crossway Access South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -27.5,
                         "y": -24.71,
                         "z": 10.82
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1733962111,
+                    "connected_area_name": "Crossway Access South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -9636,17 +9643,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crossway Access West",
+                "Door to Crossway Access West": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -57.71450424194336,
                         "y": -7.74808931350708,
                         "z": 9.823394298553467
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3655831216,
+                    "connected_area_name": "Crossway Access West",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9754,17 +9761,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elder Hall Access",
+                "Door to Elder Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.5,
                         "y": -17.22,
                         "z": 16.81
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3788397521,
+                    "connected_area_name": "Elder Hall Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -9903,11 +9910,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile Expansion)",
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 32,
                     "major_location": false,
                     "connections": {
@@ -9920,11 +9927,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Activate Bomb Slots",
+                "Event - Activate Bomb Slots": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 13,
                     "connections": {
                         "Door to Elder Hall Access": {
@@ -9936,26 +9943,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reflecting Pool Access",
-            "in_dark_aether": false,
-            "asset_id": 2639359389,
-            "default_node_index": 0,
+        "Reflecting Pool Access": {
+            "default_node": "Door to Reflecting Pool",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Reflecting Pool",
+            "extra": {
+                "asset_id": 2639359389
+            },
+            "nodes": {
+                "Door to Reflecting Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.5,
                         "y": -22.250595092773438,
                         "z": 2.499996592651314
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 907987628,
+                    "connected_area_name": "Reflecting Pool",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9969,17 +9976,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of the Elders",
+                "Door to Hall of the Elders": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.693801879882812,
                         "y": 21.369956970214844,
                         "z": 2.5000034305114696
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4216627403,
+                    "connected_area_name": "Hall of the Elders",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -9993,26 +10000,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elder Hall Access",
-            "in_dark_aether": false,
-            "asset_id": 3788397521,
-            "default_node_index": 0,
+        "Elder Hall Access": {
+            "default_node": "Door to Hall of the Elders",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Hall of the Elders",
+            "extra": {
+                "asset_id": 3788397521
+            },
+            "nodes": {
+                "Door to Hall of the Elders": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -7.305271625518799,
                         "y": -66.03111267089844,
                         "z": 17.535682678222656
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4216627403,
+                    "connected_area_name": "Hall of the Elders",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10026,17 +10033,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crossway",
+                "Door to Crossway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.5,
                         "y": -8.22,
                         "z": 14.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 335540505,
+                    "connected_area_name": "Crossway",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10050,26 +10057,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crossway Access South",
-            "in_dark_aether": false,
-            "asset_id": 1733962111,
-            "default_node_index": 0,
+        "Crossway Access South": {
+            "default_node": "Door to Crossway",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crossway",
+            "extra": {
+                "asset_id": 1733962111
+            },
+            "nodes": {
+                "Door to Crossway": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -27.5,
                         "y": -15.71,
                         "z": 8.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 335540505,
+                    "connected_area_name": "Crossway",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10093,17 +10100,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Hall of the Elders",
+                "Door to Hall of the Elders": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -27.5,
                         "y": -63.57,
                         "z": 8.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4216627403,
+                    "connected_area_name": "Hall of the Elders",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10127,26 +10134,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elder Chamber",
-            "in_dark_aether": false,
-            "asset_id": 3784843004,
-            "default_node_index": 0,
+        "Elder Chamber": {
+            "default_node": "Door to Hall of the Elders",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Hall of the Elders",
+            "extra": {
+                "asset_id": 3784843004
+            },
+            "nodes": {
+                "Door to Hall of the Elders": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.03,
                         "y": -53.73,
                         "z": -1.51
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4216627403,
+                    "connected_area_name": "Hall of the Elders",
                     "connected_dock_index": 4,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10160,11 +10167,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of World)",
+                "Pickup (Artifact of World)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 33,
                     "major_location": true,
                     "connections": {
@@ -10177,26 +10184,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reflecting Pool",
-            "in_dark_aether": false,
-            "asset_id": 907987628,
-            "default_node_index": 2,
+        "Reflecting Pool": {
+            "default_node": "Door to Reflecting Pool Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Save Station 3",
+            "extra": {
+                "asset_id": 907987628
+            },
+            "nodes": {
+                "Door to Save Station 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.23,
                         "y": -13.65,
                         "z": 6.8
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 411706287,
+                    "connected_area_name": "Save Station 3",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -10217,17 +10224,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport Access South",
+                "Door to Transport Access South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.11,
                         "y": -52.82,
                         "z": 6.79
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2734230611,
+                    "connected_area_name": "Transport Access South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10241,17 +10248,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reflecting Pool Access",
+                "Door to Reflecting Pool Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.11,
                         "y": 34.58,
                         "z": -6.15
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2639359389,
+                    "connected_area_name": "Reflecting Pool Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10464,17 +10471,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Antechamber",
+                "Door to Antechamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.11,
                         "y": -13.6,
                         "z": 6.8
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 2951734903,
+                    "connected_area_name": "Antechamber",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 4,
@@ -10495,11 +10502,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Drain water",
+                "Event - Drain water": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 4,
                     "connections": {
                         "Door to Reflecting Pool Access": {
@@ -10511,26 +10518,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station 3",
-            "in_dark_aether": false,
-            "asset_id": 411706287,
-            "default_node_index": 2,
+        "Save Station 3": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Reflecting Pool",
+            "extra": {
+                "asset_id": 411706287
+            },
+            "nodes": {
+                "Door to Reflecting Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8.97,
                         "y": 5.59,
                         "z": 2.17
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 907987628,
+                    "connected_area_name": "Reflecting Pool",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10544,17 +10551,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Tallon Overworld East",
+                "Door to Transport to Tallon Overworld East": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -71.24994659423828,
                         "y": 18.882888793945312,
                         "z": 2.445092588663101
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2784651681,
+                    "connected_area_name": "Transport to Tallon Overworld East",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10621,11 +10628,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Reflecting Pool": {
                             "type": "and",
@@ -10731,26 +10738,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Access South",
-            "in_dark_aether": false,
-            "asset_id": 2734230611,
-            "default_node_index": 0,
+        "Transport Access South": {
+            "default_node": "Door to Reflecting Pool",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Reflecting Pool",
+            "extra": {
+                "asset_id": 2734230611
+            },
+            "nodes": {
+                "Door to Reflecting Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 0.71,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 907987628,
+                    "connected_area_name": "Reflecting Pool",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10764,17 +10771,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Tallon Overworld South",
+                "Door to Transport to Tallon Overworld South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.978173390030861,
                         "y": -39.7575798034668,
                         "z": 2.4999934237212074
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 594418447,
+                    "connected_area_name": "Transport to Tallon Overworld South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10788,26 +10795,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Antechamber",
-            "in_dark_aether": false,
-            "asset_id": 2951734903,
-            "default_node_index": 0,
+        "Antechamber": {
+            "default_node": "Door to Reflecting Pool",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Reflecting Pool",
+            "extra": {
+                "asset_id": 2951734903
+            },
+            "nodes": {
+                "Door to Reflecting Pool": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -11.09,
                         "y": -0.2,
                         "z": 0.85
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 907987628,
+                    "connected_area_name": "Reflecting Pool",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -10821,11 +10828,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Ice Beam)",
+                "Pickup (Ice Beam)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 34,
                     "major_location": true,
                     "connections": {
@@ -10838,26 +10845,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Tallon Overworld East",
-            "in_dark_aether": false,
-            "asset_id": 2784651681,
-            "default_node_index": 1,
+        "Transport to Tallon Overworld East": {
+            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins East",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Save Station 3",
+            "extra": {
+                "asset_id": 2784651681
+            },
+            "nodes": {
+                "Door to Save Station 3": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 23.858829498291016,
                         "y": -0.018541574478149414,
                         "z": 2.4999904816284015
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 411706287,
+                    "connected_area_name": "Save Station 3",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10871,15 +10878,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Tallon Overworld - Transport to Chozo Ruins East",
+                "Elevator to Tallon Overworld - Transport to Chozo Ruins East": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 2318493278,
-                    "teleporter_instance_id": 4063276,
-                    "scan_asset_id": 4241923760,
+                    "extra": {
+                        "scan_asset_id": 4241923760,
+                        "teleporter_instance_id": 4063276
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Transport to Chozo Ruins East"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -10892,26 +10902,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Tallon Overworld South",
-            "in_dark_aether": false,
-            "asset_id": 594418447,
-            "default_node_index": 1,
+        "Transport to Tallon Overworld South": {
+            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins South",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport Access South",
+            "extra": {
+                "asset_id": 594418447
+            },
+            "nodes": {
+                "Door to Transport Access South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.018539905548095703,
                         "y": 23.858829498291016,
                         "z": 2.499994400558535
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2734230611,
+                    "connected_area_name": "Transport Access South",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -10925,15 +10935,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Tallon Overworld - Transport to Chozo Ruins South",
+                "Elevator to Tallon Overworld - Transport to Chozo Ruins South": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 212145392,
-                    "teleporter_instance_id": 4128808,
-                    "scan_asset_id": 1092416126,
+                    "extra": {
+                        "scan_asset_id": 1092416126,
+                        "teleporter_instance_id": 4128808
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Transport to Chozo Ruins South"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -10946,7 +10959,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

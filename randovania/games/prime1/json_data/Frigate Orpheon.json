@@ -1,26 +1,27 @@
 {
     "name": "Frigate Orpheon",
-    "dark_name": null,
-    "asset_id": 361692695,
-    "areas": [
-        {
-            "name": "Exterior Docking Hangar",
-            "in_dark_aether": false,
-            "asset_id": 3508802073,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 361692695
+    },
+    "areas": {
+        "Exterior Docking Hangar": {
+            "default_node": "Ship Save",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Air Lock",
+            "extra": {
+                "asset_id": 3508802073
+            },
+            "nodes": {
+                "Door to Air Lock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.240724563598633,
                         "y": -90.07203674316406,
                         "z": 7.513258457183838
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 123995650,
+                    "connected_area_name": "Air Lock",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -61,11 +62,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Ship Save",
+                "Ship Save": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Air Lock": {
                             "type": "and",
@@ -86,55 +87,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Landing Site",
+                "Teleport to Landing Site": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 2993688902,
-                    "teleporter_instance_id": 134218592,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 134218592
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Landing Site"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Air Lock",
-            "in_dark_aether": false,
-            "asset_id": 123995650,
-            "default_node_index": 1,
+        "Air Lock": {
+            "default_node": "Door to Exterior Docking Hangar",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Alpha Access Hall",
+            "extra": {
+                "asset_id": 123995650
+            },
+            "nodes": {
+                "Door to Deck Alpha Access Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.769554138183594,
                         "y": -122.3433837890625,
                         "z": 7.563265800476074
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1649363258,
+                    "connected_area_name": "Deck Alpha Access Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Exterior Docking Hangar",
+                "Door to Exterior Docking Hangar": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.28269386291504,
                         "y": -88.64302825927734,
                         "z": 7.5132598876953125
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3508802073,
+                    "connected_area_name": "Exterior Docking Hangar",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -158,17 +162,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Deck Alpha Mech Shaft",
+                "Dock to Deck Alpha Mech Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17.306926727294922,
                         "y": -112.51024627685547,
                         "z": 7.555581569671631
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3365346969,
+                    "connected_area_name": "Deck Alpha Mech Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -192,26 +196,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Alpha Access Hall",
-            "in_dark_aether": false,
-            "asset_id": 1649363258,
-            "default_node_index": 0,
+        "Deck Alpha Access Hall": {
+            "default_node": "Door to Air Lock",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Air Lock",
+            "extra": {
+                "asset_id": 1649363258
+            },
+            "nodes": {
+                "Door to Air Lock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.8948118686676025,
                         "y": -31.1055965423584,
                         "z": 2.499995115814272
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 123995650,
+                    "connected_area_name": "Air Lock",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -225,42 +229,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Emergency Evacuation Area",
+                "Door to Emergency Evacuation Area": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.897886037826538,
                         "y": 16.403669357299805,
                         "z": 2.5000029305115277
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 551846422,
+                    "connected_area_name": "Emergency Evacuation Area",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Alpha Mech Shaft",
-            "in_dark_aether": false,
-            "asset_id": 3365346969,
-            "default_node_index": 0,
+        "Deck Alpha Mech Shaft": {
+            "default_node": "Dock to Connection Elevator to Deck Alpha",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Connection Elevator to Deck Alpha",
+            "extra": {
+                "asset_id": 3365346969
+            },
+            "nodes": {
+                "Dock to Connection Elevator to Deck Alpha": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.335725784301758,
                         "y": -102.42301177978516,
                         "z": 7.555583477020264
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2921253053,
+                    "connected_area_name": "Connection Elevator to Deck Alpha",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -274,58 +278,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Air Lock",
+                "Dock to Air Lock": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17.306926727294922,
                         "y": -112.51024627685547,
                         "z": 7.555581569671631
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 123995650,
+                    "connected_area_name": "Air Lock",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Emergency Evacuation Area",
-            "in_dark_aether": false,
-            "asset_id": 551846422,
-            "default_node_index": 1,
+        "Emergency Evacuation Area": {
+            "default_node": "Door to Deck Alpha Access Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Alpha Umbilical Hall",
+            "extra": {
+                "asset_id": 551846422
+            },
+            "nodes": {
+                "Door to Deck Alpha Umbilical Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7.485584735870361,
                         "y": -62.66214370727539,
                         "z": 2.495425112079829
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3995189286,
+                    "connected_area_name": "Deck Alpha Umbilical Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Deck Alpha Access Hall",
+                "Door to Deck Alpha Access Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 22.4855899810791,
                         "y": -6.233133316040039,
                         "z": 7.495434999465942
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1649363258,
+                    "connected_area_name": "Deck Alpha Access Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -339,26 +343,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Connection Elevator to Deck Alpha",
-            "in_dark_aether": false,
-            "asset_id": 2921253053,
-            "default_node_index": 0,
+        "Connection Elevator to Deck Alpha": {
+            "default_node": "Door to Biotech Research Area 2",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Biotech Research Area 2",
+            "extra": {
+                "asset_id": 2921253053
+            },
+            "nodes": {
+                "Door to Biotech Research Area 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 36.41698455810547,
                         "y": -12.299900531768799,
                         "z": -2.5000024420929208
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3319675910,
+                    "connected_area_name": "Biotech Research Area 2",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -382,27 +386,27 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Deck Alpha Mech Shaft",
+                "Door to Deck Alpha Mech Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.804523468017578,
                         "y": 0.2793164998292923,
                         "z": 50.83114242553711
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3365346969,
+                    "connected_area_name": "Deck Alpha Mech Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Item Loss (UNIMPLEMENTED)",
+                "Item Loss (UNIMPLEMENTED)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Deck Alpha Mech Shaft": {
                             "type": "and",
@@ -413,26 +417,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Alpha Umbilical Hall",
-            "in_dark_aether": false,
-            "asset_id": 3995189286,
-            "default_node_index": 0,
+        "Deck Alpha Umbilical Hall": {
+            "default_node": "Door to Emergency Evacuation Area",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Emergency Evacuation Area",
+            "extra": {
+                "asset_id": 3995189286
+            },
+            "nodes": {
+                "Door to Emergency Evacuation Area": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.28269386291504,
                         "y": -88.64302825927734,
                         "z": 7.5132598876953125
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 551846422,
+                    "connected_area_name": "Emergency Evacuation Area",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -482,42 +486,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Map Facility",
+                "Door to Map Facility": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.282691955566406,
                         "y": -131.3774871826172,
                         "z": 7.513254165649414
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3454403824,
+                    "connected_area_name": "Map Facility",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Biotech Research Area 2",
-            "in_dark_aether": false,
-            "asset_id": 3319675910,
-            "default_node_index": 0,
+        "Biotech Research Area 2": {
+            "default_node": "Door to Main Ventilation Shaft Section F",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Ventilation Shaft Section F",
+            "extra": {
+                "asset_id": 3319675910
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section F": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 36.57742786407471,
                         "y": -29.834167003631592,
                         "z": 9.14476752281189
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 274035036,
+                    "connected_area_name": "Main Ventilation Shaft Section F",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -550,42 +554,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Connection Elevator to Deck Alpha",
+                "Door to Connection Elevator to Deck Alpha": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -71.68571472167969,
                         "y": -29.706077098846436,
                         "z": 7.98286509513855
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2921253053,
+                    "connected_area_name": "Connection Elevator to Deck Alpha",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Map Facility",
-            "in_dark_aether": false,
-            "asset_id": 3454403824,
-            "default_node_index": 0,
+        "Map Facility": {
+            "default_node": "Door to Deck Alpha Umbilical Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Alpha Umbilical Hall",
+            "extra": {
+                "asset_id": 3454403824
+            },
+            "nodes": {
+                "Door to Deck Alpha Umbilical Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 9.294754981994629,
                         "y": 29.402666091918945,
                         "z": 3.215004950761795
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3995189286,
+                    "connected_area_name": "Deck Alpha Umbilical Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -616,17 +620,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Connection Elevator to Deck Beta",
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 9.501745223999023,
                         "y": -0.7145045101642609,
                         "z": 2.625
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 834947875,
+                    "connected_area_name": "Connection Elevator to Deck Beta",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -640,11 +644,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Map Station",
+                "Map Station": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Deck Alpha Umbilical Hall": {
                             "type": "or",
@@ -665,42 +669,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section F",
-            "in_dark_aether": false,
-            "asset_id": 274035036,
-            "default_node_index": 1,
+        "Main Ventilation Shaft Section F": {
+            "default_node": "Door to Main Ventilation Shaft Section E",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Biotech Research Area 2",
+            "extra": {
+                "asset_id": 274035036
+            },
+            "nodes": {
+                "Door to Biotech Research Area 2": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -20.5678071975708,
                         "y": -23.54286766052246,
                         "z": 4.800855457782745
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3319675910,
+                    "connected_area_name": "Biotech Research Area 2",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section E",
+                "Door to Main Ventilation Shaft Section E": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4.579750746488571,
                         "y": -85.14690017700195,
                         "z": -8.015732169151306
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 690871324,
+                    "connected_area_name": "Main Ventilation Shaft Section E",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -714,26 +718,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Connection Elevator to Deck Beta",
-            "in_dark_aether": false,
-            "asset_id": 834947875,
-            "default_node_index": 0,
+        "Connection Elevator to Deck Beta": {
+            "default_node": "Door to Map Facility",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Map Facility",
+            "extra": {
+                "asset_id": 834947875
+            },
+            "nodes": {
+                "Door to Map Facility": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.5000080531158346,
                         "y": 10.714504718780518,
                         "z": 8.500001907348633
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3454403824,
+                    "connected_area_name": "Map Facility",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -757,58 +761,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Deck Beta Conduit Hall",
+                "Door to Deck Beta Conduit Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.5672540329396725,
                         "y": -10.713959217071533,
                         "z": -27.49953269958496
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2827042742,
+                    "connected_area_name": "Deck Beta Conduit Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section E",
-            "in_dark_aether": false,
-            "asset_id": 690871324,
-            "default_node_index": 1,
+        "Main Ventilation Shaft Section E": {
+            "default_node": "Door to Main Ventilation Shaft Section D",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Ventilation Shaft Section F",
+            "extra": {
+                "asset_id": 690871324
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section F": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -26.835307598114014,
                         "y": 15.727662563323975,
                         "z": -1.0926852524280548
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 274035036,
+                    "connected_area_name": "Main Ventilation Shaft Section F",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section D",
+                "Door to Main Ventilation Shaft Section D": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8.595238089561462,
                         "y": -8.799646854400635,
                         "z": -1.10742948949337
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1040562396,
+                    "connected_area_name": "Main Ventilation Shaft Section D",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -822,42 +826,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Beta Conduit Hall",
-            "in_dark_aether": false,
-            "asset_id": 2827042742,
-            "default_node_index": 1,
+        "Deck Beta Conduit Hall": {
+            "default_node": "Door to Connection Elevator to Deck Beta",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Biotech Research Area 1",
+            "extra": {
+                "asset_id": 2827042742
+            },
+            "nodes": {
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6.239264965057373,
                         "y": -16.888110876083374,
                         "z": 2.5499974144622684
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2237107796,
+                    "connected_area_name": "Biotech Research Area 1",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Connection Elevator to Deck Beta",
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13.792423248291016,
                         "y": 26.465730667114258,
                         "z": 2.625003904104233
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 834947875,
+                    "connected_area_name": "Connection Elevator to Deck Beta",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -881,26 +885,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section D",
-            "in_dark_aether": false,
-            "asset_id": 1040562396,
-            "default_node_index": 0,
+        "Main Ventilation Shaft Section D": {
+            "default_node": "Door to Main Ventilation Shaft Section C",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Ventilation Shaft Section C",
+            "extra": {
+                "asset_id": 1040562396
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section C": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.46687126159668,
                         "y": -37.504150390625,
                         "z": -11.416635036468506
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1541179036,
+                    "connected_area_name": "Main Ventilation Shaft Section C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -914,58 +918,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section E",
+                "Door to Main Ventilation Shaft Section E": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.73665726184845,
                         "y": 24.011698722839355,
                         "z": 8.144564390182495
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 690871324,
+                    "connected_area_name": "Main Ventilation Shaft Section E",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Biotech Research Area 1",
-            "in_dark_aether": false,
-            "asset_id": 2237107796,
-            "default_node_index": 1,
+        "Biotech Research Area 1": {
+            "default_node": "Door to Deck Beta Conduit Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Beta Security Hall",
+            "extra": {
+                "asset_id": 2237107796
+            },
+            "nodes": {
+                "Door to Deck Beta Security Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 49.18739700317383,
                         "y": 11.628427982330322,
                         "z": 12.500041007995605
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1237686565,
+                    "connected_area_name": "Deck Beta Security Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Deck Beta Conduit Hall",
+                "Door to Deck Beta Conduit Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12.241524696350098,
                         "y": -23.36069965362549,
                         "z": 12.499906539916992
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2827042742,
+                    "connected_area_name": "Deck Beta Conduit Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -989,17 +993,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Connection Elevator to Deck Beta",
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 35.9622688293457,
                         "y": -41.575416564941406,
                         "z": 2.499995115814272
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1859330843,
+                    "connected_area_name": "Connection Elevator to Deck Beta (2)",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1023,58 +1027,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subventilation Shaft Section A",
+                "Dock to Subventilation Shaft Section A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 48.59692192077637,
                         "y": -2.5408510342240334,
                         "z": 15.495466947555542
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 154468580,
+                    "connected_area_name": "Subventilation Shaft Section A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section C",
-            "in_dark_aether": false,
-            "asset_id": 1541179036,
-            "default_node_index": 1,
+        "Main Ventilation Shaft Section C": {
+            "default_node": "Door to Main Ventilation Shaft Section B",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Ventilation Shaft Section D",
+            "extra": {
+                "asset_id": 1541179036
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section D": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -31.701042652130127,
                         "y": 17.503027200698853,
                         "z": -8.899659395217896
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1040562396,
+                    "connected_area_name": "Main Ventilation Shaft Section D",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section B",
+                "Door to Main Ventilation Shaft Section B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.143601417541504,
                         "y": -24.32587432861328,
                         "z": 4.182678759098053
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1291117148,
+                    "connected_area_name": "Main Ventilation Shaft Section B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1088,42 +1092,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Beta Security Hall",
-            "in_dark_aether": false,
-            "asset_id": 1237686565,
-            "default_node_index": 1,
+        "Deck Beta Security Hall": {
+            "default_node": "Door to Biotech Research Area 1",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Biohazard Containment",
+            "extra": {
+                "asset_id": 1237686565
+            },
+            "nodes": {
+                "Door to Biohazard Containment": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.5316100120544434,
                         "y": 9.719512462615967,
                         "z": 2.500000976837157
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3513460432,
+                    "connected_area_name": "Biohazard Containment",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Biotech Research Area 1",
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21.451522827148438,
                         "y": -17.167717218399048,
                         "z": 2.480997531209141
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2237107796,
+                    "connected_area_name": "Biotech Research Area 1",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1137,42 +1141,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Connection Elevator to Deck Beta (2)",
-            "in_dark_aether": false,
-            "asset_id": 1859330843,
-            "default_node_index": 1,
+        "Connection Elevator to Deck Beta (2)": {
+            "default_node": "Door to Deck Gamma Monitor Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Biotech Research Area 1",
+            "extra": {
+                "asset_id": 1859330843
+            },
+            "nodes": {
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -175.57569885253906,
                         "y": 88.08171081542969,
                         "z": -17.505359649658203
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2237107796,
+                    "connected_area_name": "Biotech Research Area 1",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Deck Gamma Monitor Hall",
+                "Door to Deck Gamma Monitor Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -155.07770919799805,
                         "y": 42.37524223327637,
                         "z": -57.59830284118652
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3865556485,
+                    "connected_area_name": "Deck Gamma Monitor Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1196,26 +1200,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Subventilation Shaft Section A",
-            "in_dark_aether": false,
-            "asset_id": 154468580,
-            "default_node_index": 0,
+        "Subventilation Shaft Section A": {
+            "default_node": "Dock to Biotech Research Area 1",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Biotech Research Area 1",
+            "extra": {
+                "asset_id": 154468580
+            },
+            "nodes": {
+                "Dock to Biotech Research Area 1": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 48.59690189361572,
                         "y": -2.5487804487347603,
                         "z": 15.495471000671387
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2237107796,
+                    "connected_area_name": "Biotech Research Area 1",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1229,42 +1233,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subventilation Shaft Section B",
+                "Dock to Subventilation Shaft Section B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 75.44894790649414,
                         "y": -74.82316780090332,
                         "z": -2.6979673355817795
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3233526410,
+                    "connected_area_name": "Subventilation Shaft Section B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section B",
-            "in_dark_aether": false,
-            "asset_id": 1291117148,
-            "default_node_index": 0,
+        "Main Ventilation Shaft Section B": {
+            "default_node": "Door to Main Ventilation Shaft Section A",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Ventilation Shaft Section A",
+            "extra": {
+                "asset_id": 1291117148
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -27.5653657913208,
                         "y": 0.7368742525577545,
                         "z": -6.578010320663452
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1972129564,
+                    "connected_area_name": "Main Ventilation Shaft Section A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1278,58 +1282,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section C",
+                "Door to Main Ventilation Shaft Section C": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 26.960155487060547,
                         "y": 0.7240632474422455,
                         "z": -0.36160048842430115
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1541179036,
+                    "connected_area_name": "Main Ventilation Shaft Section C",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Biohazard Containment",
-            "in_dark_aether": false,
-            "asset_id": 3513460432,
-            "default_node_index": 0,
+        "Biohazard Containment": {
+            "default_node": "Door to Deck Beta Transit Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Beta Transit Hall",
+            "extra": {
+                "asset_id": 3513460432
+            },
+            "nodes": {
+                "Door to Deck Beta Transit Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.109954833984375,
                         "y": -6.971122860908508,
                         "z": 3.495651140809059
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 748855907,
+                    "connected_area_name": "Deck Beta Transit Hall",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Deck Beta Security Hall",
+                "Door to Deck Beta Security Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.923192024230957,
                         "y": -27.087387084960938,
                         "z": -11.447588920593262
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1237686565,
+                    "connected_area_name": "Deck Beta Security Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1353,26 +1357,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Gamma Monitor Hall",
-            "in_dark_aether": false,
-            "asset_id": 3865556485,
-            "default_node_index": 0,
+        "Deck Gamma Monitor Hall": {
+            "default_node": "Door to Reactor Core",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Reactor Core",
+            "extra": {
+                "asset_id": 3865556485
+            },
+            "nodes": {
+                "Door to Reactor Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -117.36316680908203,
                         "y": -5.124740540981293,
                         "z": -69.97333526611328
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2269457857,
+                    "connected_area_name": "Reactor Core",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1386,58 +1390,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Connection Elevator to Deck Beta",
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -155.0777359008789,
                         "y": 42.375253677368164,
                         "z": -57.59830284118652
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1859330843,
+                    "connected_area_name": "Connection Elevator to Deck Beta (2)",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Subventilation Shaft Section B",
-            "in_dark_aether": false,
-            "asset_id": 3233526410,
-            "default_node_index": 1,
+        "Subventilation Shaft Section B": {
+            "default_node": "Door to Subventilation Shaft Section A",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Cargo Freight Lift to Deck Gamma",
+            "extra": {
+                "asset_id": 3233526410
+            },
+            "nodes": {
+                "Door to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 133.3266830444336,
                         "y": -30.196805000305176,
                         "z": -30.47887134552002
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1878064482,
+                    "connected_area_name": "Cargo Freight Lift to Deck Gamma",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Subventilation Shaft Section A",
+                "Door to Subventilation Shaft Section A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 75.44895362854004,
                         "y": -74.82316780090332,
                         "z": -2.6979687958955765
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 154468580,
+                    "connected_area_name": "Subventilation Shaft Section A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1451,26 +1455,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Ventilation Shaft Section A",
-            "in_dark_aether": false,
-            "asset_id": 1972129564,
-            "default_node_index": 0,
+        "Main Ventilation Shaft Section A": {
+            "default_node": "Dock to Cargo Freight Lift to Deck Gamma",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Cargo Freight Lift to Deck Gamma",
+            "extra": {
+                "asset_id": 1972129564
+            },
+            "nodes": {
+                "Dock to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.279695272445679,
                         "y": -15.505695343017578,
                         "z": -5.4145089983940125
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1878064482,
+                    "connected_area_name": "Cargo Freight Lift to Deck Gamma",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1484,58 +1488,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section B",
+                "Door to Main Ventilation Shaft Section B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 30.042105674743652,
                         "y": 50.91055679321289,
                         "z": 1.4354674816131592
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1291117148,
+                    "connected_area_name": "Main Ventilation Shaft Section B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Deck Beta Transit Hall",
-            "in_dark_aether": false,
-            "asset_id": 748855907,
-            "default_node_index": 1,
+        "Deck Beta Transit Hall": {
+            "default_node": "Door to Biohazard Containment",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Cargo Freight Lift to Deck Gamma",
+            "extra": {
+                "asset_id": 748855907
+            },
+            "nodes": {
+                "Door to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.76881980895996,
                         "y": -2.5000004884185785,
                         "z": 2.5096628139726818
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1878064482,
+                    "connected_area_name": "Cargo Freight Lift to Deck Gamma",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Biohazard Containment",
+                "Door to Biohazard Containment": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -23.48688316345215,
                         "y": -2.394950445741415,
                         "z": 2.519327570218593
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3513460432,
+                    "connected_area_name": "Biohazard Containment",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1549,26 +1553,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Reactor Core",
-            "in_dark_aether": false,
-            "asset_id": 2269457857,
-            "default_node_index": 0,
+        "Reactor Core": {
+            "default_node": "Door to Reactor Core Entrance",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Reactor Core Entrance",
+            "extra": {
+                "asset_id": 2269457857
+            },
+            "nodes": {
+                "Door to Reactor Core Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.08483231067657471,
                         "y": 66.13909149169922,
                         "z": -5.067515894770622
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1050775790,
+                    "connected_area_name": "Reactor Core Entrance",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1582,27 +1586,27 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Deck Gamma Monitor Hall",
+                "Door to Deck Gamma Monitor Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -45.736595153808594,
                         "y": 26.08659076690674,
                         "z": -19.988420486450195
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3865556485,
+                    "connected_area_name": "Deck Gamma Monitor Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Event - Parasite Queen",
+                "Event - Parasite Queen": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 33,
                     "connections": {
                         "Door to Deck Gamma Monitor Hall": {
@@ -1614,26 +1618,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Cargo Freight Lift to Deck Gamma",
-            "in_dark_aether": false,
-            "asset_id": 1878064482,
-            "default_node_index": 0,
+        "Cargo Freight Lift to Deck Gamma": {
+            "default_node": "Door to Deck Beta Transit Hall",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Deck Beta Transit Hall",
+            "extra": {
+                "asset_id": 1878064482
+            },
+            "nodes": {
+                "Door to Deck Beta Transit Hall": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -8.789896965026855,
                         "y": 50.654659271240234,
                         "z": 25.20549488067627
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 748855907,
+                    "connected_area_name": "Deck Beta Transit Hall",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1666,17 +1670,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Subventilation Shaft Section B",
+                "Door to Subventilation Shaft Section B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -8.075820207595825,
                         "y": -38.061354637145996,
                         "z": -32.72634696960449
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3233526410,
+                    "connected_area_name": "Subventilation Shaft Section B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1690,58 +1694,58 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Main Ventilation Shaft Section A",
+                "Door to Main Ventilation Shaft Section A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8.924219608306885,
                         "y": -38.319539070129395,
                         "z": -32.63650608062744
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1972129564,
+                    "connected_area_name": "Main Ventilation Shaft Section A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Reactor Core Entrance",
+                "Door to Reactor Core Entrance": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1.575854778289795,
                         "y": -74.1997299194336,
                         "z": -37.29453659057617
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 1050775790,
+                    "connected_area_name": "Reactor Core Entrance",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Reactor Core Entrance",
-            "in_dark_aether": false,
-            "asset_id": 1050775790,
-            "default_node_index": 2,
+        "Reactor Core Entrance": {
+            "default_node": "Save Station",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Cargo Freight Lift to Deck Gamma",
+            "extra": {
+                "asset_id": 1050775790
+            },
+            "nodes": {
+                "Door to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.7021780014038086,
                         "y": 14.202085494995117,
                         "z": 4.999997064471245
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1878064482,
+                    "connected_area_name": "Cargo Freight Lift to Deck Gamma",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1781,27 +1785,27 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Reactor Core",
+                "Door to Reactor Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.7021633386611938,
                         "y": -14.20208740234375,
                         "z": 4.99998827278614
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2269457857,
+                    "connected_area_name": "Reactor Core",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Cargo Freight Lift to Deck Gamma": {
                             "type": "and",
@@ -1812,7 +1816,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }
