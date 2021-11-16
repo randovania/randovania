@@ -74,10 +74,7 @@ class TeleporterList(location_list.LocationList):
 
 
 def _valid_teleporter_target(area: Area, game: RandovaniaGame):
-    if game == RandovaniaGame.METROID_PRIME and area.area_asset_id == 3031702600:
-        return True
-
-    if game == RandovaniaGame.METROID_PRIME_ECHOES and area.area_asset_id == 1393588666:
+    if game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and area.name == "Credits":
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
