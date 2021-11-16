@@ -15,7 +15,7 @@ from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -188,9 +188,10 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
         return value > 0
 
 
-def _name_for_location(world_list: WorldList, location: AreaLocation) -> str:
-    if location in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
-        return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[location]
+def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
+    loc = location.as_tuple
+    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
+        return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
@@ -290,8 +291,13 @@ class RandomprimePatcher(Patcher):
                     if not isinstance(node, TeleporterNode) or not node.editable:
                         continue
 
-                    target = _name_for_location(db.world_list, patches.elevator_connection[node.teleporter])
-                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[node.teleporter.area_location]
+                    identifier = db.world_list.identifier_for_node(node)
+                    target = _name_for_location(db.world_list, patches.elevator_connection[identifier])
+
+                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
+                        identifier.area_location.world_name,
+                        identifier.area_location.area_name,
+                    )]
                     world_data[world.name]["transports"][source_name] = target
 
         starting_memo = None

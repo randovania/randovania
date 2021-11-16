@@ -1,26 +1,27 @@
 {
     "name": "Impact Crater",
-    "dark_name": null,
-    "asset_id": 3241871825,
-    "areas": [
-        {
-            "name": "Crater Entry Point",
-            "in_dark_aether": false,
-            "asset_id": 2472970646,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 3241871825
+    },
+    "areas": {
+        "Crater Entry Point": {
+            "default_node": "Teleport to Artifact Temple",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crater Tunnel A",
+            "extra": {
+                "asset_id": 2472970646
+            },
+            "nodes": {
+                "Door to Crater Tunnel A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.72,
                         "y": -29.9,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1238049635,
+                    "connected_area_name": "Crater Tunnel A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -34,15 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleport to Artifact Temple",
+                "Teleport to Artifact Temple": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 597223686,
-                    "teleporter_instance_id": 152,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 152
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Artifact Temple"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -62,11 +66,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Teleport to Artifact Temple": {
                             "type": "and",
@@ -77,26 +81,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crater Tunnel A",
-            "in_dark_aether": false,
-            "asset_id": 1238049635,
-            "default_node_index": 1,
+        "Crater Tunnel A": {
+            "default_node": "Door to Crater Entry Point",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Core",
+            "extra": {
+                "asset_id": 1238049635
+            },
+            "nodes": {
+                "Door to Phazon Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.0,
                         "y": -35.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3180620483,
+                    "connected_area_name": "Phazon Core",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -110,17 +114,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crater Entry Point",
+                "Door to Crater Entry Point": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15.0,
                         "y": 35.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2472970646,
+                    "connected_area_name": "Crater Entry Point",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -134,26 +138,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Core",
-            "in_dark_aether": false,
-            "asset_id": 3180620483,
-            "default_node_index": 1,
+        "Phazon Core": {
+            "default_node": "Door to Crater Tunnel A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Crater Missile Station",
+            "extra": {
+                "asset_id": 3180620483
+            },
+            "nodes": {
+                "Door to Crater Missile Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -61.29,
                         "y": -16.49,
                         "z": 38.94
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1296329791,
+                    "connected_area_name": "Crater Missile Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -262,17 +266,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crater Tunnel A",
+                "Door to Crater Tunnel A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -4.93,
                         "y": 76.92,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1238049635,
+                    "connected_area_name": "Crater Tunnel A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -358,17 +362,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Crater Tunnel B",
+                "Door to Crater Tunnel B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 41.78,
                         "y": -54.16,
                         "z": 55.42
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 852861312,
+                    "connected_area_name": "Crater Tunnel B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -382,26 +386,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crater Missile Station",
-            "in_dark_aether": false,
-            "asset_id": 1296329791,
-            "default_node_index": 0,
+        "Crater Missile Station": {
+            "default_node": "Door to Phazon Core",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Core",
+            "extra": {
+                "asset_id": 1296329791
+            },
+            "nodes": {
+                "Door to Phazon Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.03,
                         "y": 18.18,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3180620483,
+                    "connected_area_name": "Phazon Core",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -415,11 +419,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Missile Station",
+                "Missile Station": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Phazon Core": {
                             "type": "and",
@@ -430,26 +434,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Crater Tunnel B",
-            "in_dark_aether": false,
-            "asset_id": 852861312,
-            "default_node_index": 1,
+        "Crater Tunnel B": {
+            "default_node": "Door to Phazon Core",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Infusion Chamber",
+            "extra": {
+                "asset_id": 852861312
+            },
+            "nodes": {
+                "Door to Phazon Infusion Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2.5,
                         "y": -32.0,
                         "z": 5.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1729456653,
+                    "connected_area_name": "Phazon Infusion Chamber",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -577,17 +581,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Core",
+                "Door to Phazon Core": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.76,
                         "y": 39.0,
                         "z": 5.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3180620483,
+                    "connected_area_name": "Phazon Core",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -715,42 +719,42 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Infusion Chamber",
-            "in_dark_aether": false,
-            "asset_id": 1729456653,
-            "default_node_index": 1,
+        "Phazon Infusion Chamber": {
+            "default_node": "Door to Crater Tunnel B",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber One",
+            "extra": {
+                "asset_id": 1729456653
+            },
+            "nodes": {
+                "Dock to Subchamber One": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.0,
                         "y": -40.04,
                         "z": 22.58
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3672049347,
+                    "connected_area_name": "Subchamber One",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
                     "connections": {}
                 },
-                {
-                    "name": "Door to Crater Tunnel B",
+                "Door to Crater Tunnel B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 57.98,
                         "z": 7.58
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 852861312,
+                    "connected_area_name": "Crater Tunnel B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -764,26 +768,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Subchamber One",
-            "in_dark_aether": false,
-            "asset_id": 3672049347,
-            "default_node_index": 0,
+        "Subchamber One": {
+            "default_node": "Dock to Phazon Infusion Chamber",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Phazon Infusion Chamber",
+            "extra": {
+                "asset_id": 3672049347
+            },
+            "nodes": {
+                "Dock to Phazon Infusion Chamber": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 18.18,
                         "y": 35.98,
                         "z": 50.54
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1729456653,
+                    "connected_area_name": "Phazon Infusion Chamber",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -842,42 +846,42 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subchamber Two",
+                "Dock to Subchamber Two": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -49.32,
                         "y": 7.77,
                         "z": -15.18
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 122281798,
+                    "connected_area_name": "Subchamber Two",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
                     "connections": {}
                 }
-            ]
+            }
         },
-        {
-            "name": "Subchamber Two",
-            "in_dark_aether": false,
-            "asset_id": 122281798,
-            "default_node_index": 0,
+        "Subchamber Two": {
+            "default_node": "Dock to Subchamber One",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber One",
+            "extra": {
+                "asset_id": 122281798
+            },
+            "nodes": {
+                "Dock to Subchamber One": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.89,
                         "y": -33.78,
                         "z": 24.65
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3672049347,
+                    "connected_area_name": "Subchamber One",
                     "connected_dock_index": 1,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -945,17 +949,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subchamber Three",
+                "Dock to Subchamber Three": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.13,
                         "y": 36.33,
                         "z": -23.91
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2050677022,
+                    "connected_area_name": "Subchamber Three",
                     "connected_dock_index": 1,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -969,26 +973,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Subchamber Three",
-            "in_dark_aether": false,
-            "asset_id": 2050677022,
-            "default_node_index": 1,
+        "Subchamber Three": {
+            "default_node": "Dock to Subchamber Two",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber Four",
+            "extra": {
+                "asset_id": 2050677022
+            },
+            "nodes": {
+                "Dock to Subchamber Four": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.37,
                         "y": 52.95,
                         "z": -17.19
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2813067419,
+                    "connected_area_name": "Subchamber Four",
                     "connected_dock_index": 1,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1002,17 +1006,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subchamber Two",
+                "Dock to Subchamber Two": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3.63,
                         "y": -13.51,
                         "z": 32.82
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 122281798,
+                    "connected_area_name": "Subchamber Two",
                     "connected_dock_index": 1,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1057,26 +1061,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Subchamber Four",
-            "in_dark_aether": false,
-            "asset_id": 2813067419,
-            "default_node_index": 1,
+        "Subchamber Four": {
+            "default_node": "Dock to Subchamber Three",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber Five",
+            "extra": {
+                "asset_id": 2813067419
+            },
+            "nodes": {
+                "Dock to Subchamber Five": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 33.75,
                         "y": -23.98,
                         "z": 22.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2003911832,
+                    "connected_area_name": "Subchamber Five",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1090,17 +1094,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Subchamber Three",
+                "Dock to Subchamber Three": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -33.75,
                         "y": 0.77,
                         "z": 43.21
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2050677022,
+                    "connected_area_name": "Subchamber Three",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1145,26 +1149,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Subchamber Five",
-            "in_dark_aether": false,
-            "asset_id": 2003911832,
-            "default_node_index": 0,
+        "Subchamber Five": {
+            "default_node": "Dock to Subchamber Four",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber Four",
+            "extra": {
+                "asset_id": 2003911832
+            },
+            "nodes": {
+                "Dock to Subchamber Four": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.54,
                         "y": 31.22,
                         "z": 22.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2813067419,
+                    "connected_area_name": "Subchamber Four",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1178,17 +1182,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Dock to Metroid Prime Lair",
+                "Dock to Metroid Prime Lair": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.54,
                         "y": -3.96,
                         "z": -103.63
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 442920021,
+                    "connected_area_name": "Metroid Prime Lair",
                     "connected_dock_index": 0,
                     "dock_type": 2,
                     "dock_weakness_index": 0,
@@ -1202,26 +1206,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Prime Lair",
-            "in_dark_aether": false,
-            "asset_id": 442920021,
-            "default_node_index": 0,
+        "Metroid Prime Lair": {
+            "default_node": "Dock to Subchamber Five",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Dock to Subchamber Five",
+            "extra": {
+                "asset_id": 442920021
+            },
+            "nodes": {
+                "Dock to Subchamber Five": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -4.962790489196777,
                         "y": 2.570834159851074,
                         "z": 115.79628372192383
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2003911832,
+                    "connected_area_name": "Subchamber Five",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -1314,15 +1318,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Teleporter to Credits",
+                "Teleporter to Credits": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 332894565,
-                    "destination_area_asset_id": 3031702600,
-                    "teleporter_instance_id": 721282,
-                    "scan_asset_id": null,
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 721282
+                    },
+                    "destination": {
+                        "world_name": "End of Game",
+                        "area_name": "Credits"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
@@ -1335,7 +1342,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

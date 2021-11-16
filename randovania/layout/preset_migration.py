@@ -9,11 +9,12 @@ from typing import Optional, Dict
 import aiofiles
 import slugify
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description import migration_data
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 14
+CURRENT_PRESET_VERSION = 15
 
 
 class InvalidPreset(Exception):
@@ -221,11 +222,16 @@ def _migrate_v8(preset: dict) -> dict:
     from randovania.game_description import default_database
     game = default_database.game_description_for(RandovaniaGame(preset["game"]))
 
+    # FIXME: area location is now something different, this code broke
+
     def _name_to_location(name: str):
         world_name, area_name = name.split("/", 1)
         world = game.world_list.world_with_name(world_name)
         area = world.area_by_name(area_name)
-        return AreaLocation(world.world_asset_id, area.area_asset_id)
+        return {
+            "world_asset_id": world.extra["asset_id"],
+            "area_asset_id": area.extra["asset_id"],
+        }
 
     preset["configuration"]["multi_pickup_placement"] = False
 
@@ -233,7 +239,7 @@ def _migrate_v8(preset: dict) -> dict:
         preset["configuration"]["energy_per_tank"] = int(preset["configuration"]["energy_per_tank"])
 
     preset["configuration"]["starting_location"] = [
-        _name_to_location(location).as_json
+        _name_to_location(location)
         for location in preset["configuration"]["starting_location"]
     ]
 
@@ -413,6 +419,48 @@ def _migrate_v13(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v14(preset: dict) -> dict:
+    from randovania.game_description import default_database
+
+    game = RandovaniaGame(preset["game"])
+    db = default_database.game_description_for(game)
+
+    def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
+        result = migration_data.convert_area_loc_id_to_name(game, old_loc)
+
+        if "instance_id" in old_loc:
+            # FIXME
+            world = db.world_list.world_with_name(result["world_name"])
+            area = world.area_by_name(result["area_name"])
+            for node in area.nodes:
+                if node.extra.get("teleporter_instance_id") == old_loc["instance_id"]:
+                    result["node_name"] = node.name
+                    break
+
+        return result
+
+    preset["configuration"]["starting_location"] = [
+        _migrate_area_location(old_loc)
+        for old_loc in preset["configuration"]["starting_location"]
+    ]
+
+    if "elevators" in preset["configuration"]:
+        elevators = preset["configuration"]["elevators"]
+
+        elevators["excluded_teleporters"] = [
+            _migrate_area_location(old_loc)
+            for old_loc in elevators["excluded_teleporters"]
+        ]
+        elevators["excluded_targets"] = [
+            _migrate_area_location(old_loc)
+            for old_loc in elevators["excluded_targets"]
+        ]
+
+        preset["configuration"]["elevators"] = elevators
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -427,6 +475,7 @@ _MIGRATIONS = {
     11: _migrate_v11,
     12: _migrate_v12,
     13: _migrate_v13,
+    14: _migrate_v14,
 }
 
 

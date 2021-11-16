@@ -44,7 +44,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
 
         world_count = 0
         for i, world in enumerate(world_list.worlds):
-            if world.world_asset_id in ids_to_merge:
+            if world.extra['asset_id'] in ids_to_merge:
                 nodes_to_merge.extend(
                     node
                     for area in world.areas

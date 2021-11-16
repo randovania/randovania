@@ -18,6 +18,7 @@ class DockLockType(Enum):
     FRONT_ALWAYS_BACK_FREE = 0
     FRONT_BLAST_BACK_FREE_UNLOCK = 1
     FRONT_BLAST_BACK_BLAST = 2
+    # FRONT_BLAST_BACK_IMPOSSIBLE = 3  TODO
 
 
 @dataclass(frozen=True, order=True)
@@ -74,8 +75,8 @@ class DockWeaknessDatabase(NamedTuple):
 
 @dataclass(frozen=True, order=True)
 class DockConnection:
-    area_asset_id: int
+    area_name: str
     dock_index: int
 
     def __repr__(self):
-        return "{}/{}".format(self.area_asset_id, self.dock_index)
+        return "{}/{}".format(self.area_name, self.dock_index)

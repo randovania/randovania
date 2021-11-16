@@ -1,26 +1,27 @@
 {
     "name": "Phazon Mines",
-    "dark_name": null,
-    "asset_id": 2980859237,
-    "areas": [
-        {
-            "name": "Transport to Tallon Overworld South",
-            "in_dark_aether": false,
-            "asset_id": 1125030300,
-            "default_node_index": 1,
+    "extra": {
+        "asset_id": 2980859237
+    },
+    "areas": {
+        "Transport to Tallon Overworld South": {
+            "default_node": "Elevator to Tallon Overworld - Transport to Phazon Mines East",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Quarry Access",
+            "extra": {
+                "asset_id": 1125030300
+            },
+            "nodes": {
+                "Door to Quarry Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -24.57,
                         "y": -0.02,
                         "z": -41.91
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1758230360,
+                    "connected_area_name": "Quarry Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -34,15 +35,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator to Tallon Overworld - Transport to Phazon Mines East",
+                "Elevator to Tallon Overworld - Transport to Phazon Mines East": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 972217896,
-                    "destination_area_asset_id": 2098226800,
-                    "teleporter_instance_id": 28,
-                    "scan_asset_id": 2685334598,
+                    "extra": {
+                        "scan_asset_id": 2685334598,
+                        "teleporter_instance_id": 28
+                    },
+                    "destination": {
+                        "world_name": "Tallon Overworld",
+                        "area_name": "Transport to Phazon Mines East"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -55,26 +59,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Quarry Access",
-            "in_dark_aether": false,
-            "asset_id": 1758230360,
-            "default_node_index": 1,
+        "Quarry Access": {
+            "default_node": "Door to Transport to Tallon Overworld South",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Quarry",
+            "extra": {
+                "asset_id": 1758230360
+            },
+            "nodes": {
+                "Door to Main Quarry": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -29.5,
                         "y": -10.21,
                         "z": -2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1681720207,
+                    "connected_area_name": "Main Quarry",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -88,17 +92,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Tallon Overworld South",
+                "Door to Transport to Tallon Overworld South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 29.65,
                         "y": 10.29,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1125030300,
+                    "connected_area_name": "Transport to Tallon Overworld South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -112,26 +116,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Main Quarry",
-            "in_dark_aether": false,
-            "asset_id": 1681720207,
-            "default_node_index": 1,
+        "Main Quarry": {
+            "default_node": "Door to Quarry Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Waste Disposal",
+            "extra": {
+                "asset_id": 1681720207
+            },
+            "nodes": {
+                "Door to Waste Disposal": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19.87,
                         "y": 28.5,
                         "z": 37.48
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 665031095,
+                    "connected_area_name": "Waste Disposal",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -154,17 +158,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Quarry Access",
+                "Door to Quarry Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 69.96,
                         "y": 8.68,
                         "z": 22.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1758230360,
+                    "connected_area_name": "Quarry Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -319,17 +323,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station Mines A",
+                "Door to Save Station Mines A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4.77,
                         "y": -65.0,
                         "z": 21.11
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 907887024,
+                    "connected_area_name": "Save Station Mines A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -343,17 +347,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Access A",
+                "Door to Security Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -49.04,
                         "y": -65.94,
                         "z": 7.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 3345300114,
+                    "connected_area_name": "Security Access A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -386,11 +390,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 73,
                     "major_location": false,
                     "connections": {
@@ -403,11 +407,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Main Quarry Barrier Deactivated",
+                "Event - Main Quarry Barrier Deactivated": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 23,
                     "connections": {
                         "Door to Quarry Access": {
@@ -419,11 +423,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Crane Platform",
+                "Crane Platform": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Waste Disposal": {
                             "type": "or",
@@ -711,26 +715,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Waste Disposal",
-            "in_dark_aether": false,
-            "asset_id": 665031095,
-            "default_node_index": 1,
+        "Waste Disposal": {
+            "default_node": "Door to Ore Processing",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Quarry",
+            "extra": {
+                "asset_id": 665031095
+            },
+            "nodes": {
+                "Door to Main Quarry": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.13,
                         "y": -13.96,
                         "z": 6.12
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1681720207,
+                    "connected_area_name": "Main Quarry",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -763,17 +767,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ore Processing",
+                "Door to Ore Processing": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.15,
                         "y": 19.1,
                         "z": 33.55
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2547167990,
+                    "connected_area_name": "Ore Processing",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -806,26 +810,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station Mines A",
-            "in_dark_aether": false,
-            "asset_id": 907887024,
-            "default_node_index": 1,
+        "Save Station Mines A": {
+            "default_node": "Save Station",
             "valid_starting_location": false,
-            "nodes": [
-                {
-                    "name": "Door to Main Quarry",
+            "extra": {
+                "asset_id": 907887024
+            },
+            "nodes": {
+                "Door to Main Quarry": {
+                    "node_type": "dock",
                     "heal": true,
                     "coordinates": {
                         "x": -0.2,
                         "y": 17.66,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1681720207,
+                    "connected_area_name": "Main Quarry",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -866,11 +870,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Main Quarry": {
                             "type": "and",
@@ -891,11 +895,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Save Station A Barrier Opened",
+                "Event - Save Station A Barrier Opened": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 34,
                     "connections": {
                         "Door to Main Quarry": {
@@ -907,26 +911,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Security Access A",
-            "in_dark_aether": false,
-            "asset_id": 3345300114,
-            "default_node_index": 0,
+        "Security Access A": {
+            "default_node": "Door to Main Quarry",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Main Quarry",
+            "extra": {
+                "asset_id": 3345300114
+            },
+            "nodes": {
+                "Door to Main Quarry": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21.4,
                         "y": 13.99,
                         "z": 0.32
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1681720207,
+                    "connected_area_name": "Main Quarry",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -966,17 +970,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Mine Security Station",
+                "Door to Mine Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.17,
                         "y": -1.43,
                         "z": 1.86
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2507085138,
+                    "connected_area_name": "Mine Security Station",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -990,11 +994,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 74,
                     "major_location": false,
                     "connections": {
@@ -1007,26 +1011,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ore Processing",
-            "in_dark_aether": false,
-            "asset_id": 2547167990,
-            "default_node_index": 3,
+        "Ore Processing": {
+            "default_node": "Door to Elevator Access A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Research Access",
+            "extra": {
+                "asset_id": 2547167990
+            },
+            "nodes": {
+                "Door to Research Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -34.15,
                         "y": 0.13,
                         "z": 2.49
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1128703815,
+                    "connected_area_name": "Research Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1111,17 +1115,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Storage Depot B",
+                "Door to Storage Depot B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.13,
                         "y": 34.15,
                         "z": 47.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3818665003,
+                    "connected_area_name": "Storage Depot B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1187,17 +1191,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Waste Disposal",
+                "Door to Waste Disposal": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.08,
                         "y": -33.7,
                         "z": 47.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 665031095,
+                    "connected_area_name": "Waste Disposal",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1306,17 +1310,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elevator Access A",
+                "Door to Elevator Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -34.15,
                         "y": 0.26,
                         "z": 32.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 3,
-                    "connected_area_asset_id": 639736833,
+                    "connected_area_name": "Elevator Access A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1435,26 +1439,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Mine Security Station",
-            "in_dark_aether": false,
-            "asset_id": 2507085138,
-            "default_node_index": 0,
+        "Mine Security Station": {
+            "default_node": "Door to Security Access A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Security Access A",
+            "extra": {
+                "asset_id": 2507085138
+            },
+            "nodes": {
+                "Door to Security Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 25.63,
                         "y": -9.34,
                         "z": 3.38
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3345300114,
+                    "connected_area_name": "Security Access A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1538,17 +1542,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Access B",
+                "Door to Security Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.78,
                         "y": 57.92,
                         "z": 14.9
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2718040532,
+                    "connected_area_name": "Security Access B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -1676,17 +1680,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Storage Depot A",
+                "Door to Storage Depot A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5.59,
                         "y": 66.51,
                         "z": 0.91
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 902158134,
+                    "connected_area_name": "Storage Depot A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -1710,11 +1714,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Mine Security Station Barrier Opened",
+                "Event - Mine Security Station Barrier Opened": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 35,
                     "connections": {
                         "Door to Security Access B": {
@@ -1726,26 +1730,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Research Access",
-            "in_dark_aether": false,
-            "asset_id": 1128703815,
-            "default_node_index": 0,
+        "Research Access": {
+            "default_node": "Door to Ore Processing",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ore Processing",
+            "extra": {
+                "asset_id": 1128703815
+            },
+            "nodes": {
+                "Door to Ore Processing": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 22.96,
                         "y": 2.28,
                         "z": -27.17
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2547167990,
+                    "connected_area_name": "Ore Processing",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1821,17 +1825,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Research",
+                "Door to Elite Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -23.02,
                         "y": 1.14,
                         "z": 12.83
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2325199700,
+                    "connected_area_name": "Elite Research",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1845,26 +1849,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Storage Depot B",
-            "in_dark_aether": false,
-            "asset_id": 3818665003,
-            "default_node_index": 0,
+        "Storage Depot B": {
+            "default_node": "Door to Ore Processing",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ore Processing",
+            "extra": {
+                "asset_id": 3818665003
+            },
+            "nodes": {
+                "Door to Ore Processing": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -23.21,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2547167990,
+                    "connected_area_name": "Ore Processing",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1878,11 +1882,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Grapple Beam)",
+                "Pickup (Grapple Beam)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 75,
                     "major_location": true,
                     "connections": {
@@ -1895,11 +1899,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Storage Depot B Item",
+                "Event - Storage Depot B Item": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 46,
                     "connections": {
                         "Pickup (Grapple Beam)": {
@@ -1911,26 +1915,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator Access A",
-            "in_dark_aether": false,
-            "asset_id": 639736833,
-            "default_node_index": 0,
+        "Elevator Access A": {
+            "default_node": "Door to Ore Processing",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Ore Processing",
+            "extra": {
+                "asset_id": 639736833
+            },
+            "nodes": {
+                "Door to Ore Processing": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8.57,
                         "y": -18.88,
                         "z": 2.83
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2547167990,
+                    "connected_area_name": "Ore Processing",
                     "connected_dock_index": 3,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -1944,17 +1948,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elevator A",
+                "Door to Elevator A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -17.86,
                         "y": 14.28,
                         "z": -27.17
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 21425475,
+                    "connected_area_name": "Elevator A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2048,26 +2052,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Security Access B",
-            "in_dark_aether": false,
-            "asset_id": 2718040532,
-            "default_node_index": 1,
+        "Security Access B": {
+            "default_node": "Door to Mine Security Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elite Research",
+            "extra": {
+                "asset_id": 2718040532
+            },
+            "nodes": {
+                "Door to Elite Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.11,
                         "y": 33.46,
                         "z": 5.71
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2325199700,
+                    "connected_area_name": "Elite Research",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2081,17 +2085,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Mine Security Station",
+                "Door to Mine Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11.39,
                         "y": -39.26,
                         "z": -0.71
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2507085138,
+                    "connected_area_name": "Mine Security Station",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2105,26 +2109,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Storage Depot A",
-            "in_dark_aether": false,
-            "asset_id": 902158134,
-            "default_node_index": 0,
+        "Storage Depot A": {
+            "default_node": "Door to Mine Security Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Mine Security Station",
+            "extra": {
+                "asset_id": 902158134
+            },
+            "nodes": {
+                "Door to Mine Security Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": -23.21,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2507085138,
+                    "connected_area_name": "Mine Security Station",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -2138,11 +2142,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Flamethrower)",
+                "Pickup (Flamethrower)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 76,
                     "major_location": true,
                     "connections": {
@@ -2155,26 +2159,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elite Research",
-            "in_dark_aether": false,
-            "asset_id": 2325199700,
-            "default_node_index": 1,
+        "Elite Research": {
+            "default_node": "Door to Security Access B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Research Access",
+            "extra": {
+                "asset_id": 2325199700
+            },
+            "nodes": {
+                "Door to Research Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 37.03,
                         "y": -30.14,
                         "z": 20.22
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1128703815,
+                    "connected_area_name": "Research Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2233,17 +2237,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Security Access B",
+                "Door to Security Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.37,
                         "y": -65.86,
                         "z": -12.69
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2718040532,
+                    "connected_area_name": "Security Access B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2397,11 +2401,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Rock Wall in Elite Research Destroyed",
+                "Event - Rock Wall in Elite Research Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 24,
                     "connections": {
                         "Top Floor": {
@@ -2413,11 +2417,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 78,
                     "major_location": false,
                     "connections": {
@@ -2449,11 +2453,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of Warrior)",
+                "Pickup (Artifact of Warrior)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 77,
                     "major_location": true,
                     "connections": {
@@ -2466,11 +2470,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Top Floor",
+                "Top Floor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Research Access": {
                             "type": "resource",
@@ -2653,26 +2657,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator A",
-            "in_dark_aether": false,
-            "asset_id": 21425475,
-            "default_node_index": 0,
+        "Elevator A": {
+            "default_node": "Door to Elevator Access A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elevator Access A",
+            "extra": {
+                "asset_id": 21425475
+            },
+            "nodes": {
+                "Door to Elevator Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 22.71,
                         "y": -1.05,
                         "z": 37.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 639736833,
+                    "connected_area_name": "Elevator Access A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2696,17 +2700,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Control Access",
+                "Door to Elite Control Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 22.71,
                         "y": -1.13,
                         "z": -37.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2307445195,
+                    "connected_area_name": "Elite Control Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2720,26 +2724,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elite Control Access",
-            "in_dark_aether": false,
-            "asset_id": 2307445195,
-            "default_node_index": 0,
+        "Elite Control Access": {
+            "default_node": "Door to Elevator A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elevator A",
+            "extra": {
+                "asset_id": 2307445195
+            },
+            "nodes": {
+                "Door to Elevator A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -28.61,
                         "y": 6.15,
                         "z": 3.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 21425475,
+                    "connected_area_name": "Elevator A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2813,17 +2817,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Control",
+                "Door to Elite Control": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 14.13,
                         "y": -36.51,
                         "z": -6.52
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3305828730,
+                    "connected_area_name": "Elite Control",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2882,11 +2886,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 79,
                     "major_location": false,
                     "connections": {
@@ -2899,26 +2903,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elite Control",
-            "in_dark_aether": false,
-            "asset_id": 3305828730,
-            "default_node_index": 1,
+        "Elite Control": {
+            "default_node": "Door to Elite Control Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Maintenance Tunnel",
+            "extra": {
+                "asset_id": 3305828730
+            },
+            "nodes": {
+                "Door to Maintenance Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -44.29,
                         "y": 5.33,
                         "z": -15.29
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3975146125,
+                    "connected_area_name": "Maintenance Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -2932,17 +2936,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Control Access",
+                "Door to Elite Control Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 37.32,
                         "y": 41.0,
                         "z": -15.29
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2307445195,
+                    "connected_area_name": "Elite Control Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -2974,17 +2978,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ventilation Shaft",
+                "Door to Ventilation Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -20.86,
                         "y": -22.56,
                         "z": 12.22
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2423298732,
+                    "connected_area_name": "Ventilation Shaft",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3026,11 +3030,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Elite Control Barriers Lowered",
+                "Event - Elite Control Barriers Lowered": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 26,
                     "connections": {
                         "Door to Elite Control Access": {
@@ -3042,26 +3046,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Maintenance Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 3975146125,
-            "default_node_index": 0,
+        "Maintenance Tunnel": {
+            "default_node": "Door to Elite Control",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elite Control",
+            "extra": {
+                "asset_id": 3975146125
+            },
+            "nodes": {
+                "Door to Elite Control": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 36.23,
                         "y": 25.61,
                         "z": -0.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3305828730,
+                    "connected_area_name": "Elite Control",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3094,17 +3098,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Processing Center",
+                "Door to Phazon Processing Center": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -34.44,
                         "y": -7.99,
                         "z": 2.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2905505465,
+                    "connected_area_name": "Phazon Processing Center",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3137,26 +3141,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Ventilation Shaft",
-            "in_dark_aether": false,
-            "asset_id": 2423298732,
-            "default_node_index": 1,
+        "Ventilation Shaft": {
+            "default_node": "Door to Elite Control",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Omega Research",
+            "extra": {
+                "asset_id": 2423298732
+            },
+            "nodes": {
+                "Door to Omega Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 15.0,
                         "y": -34.17,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1060593356,
+                    "connected_area_name": "Omega Research",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3335,17 +3339,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Control",
+                "Door to Elite Control": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.0,
                         "y": 26.68,
                         "z": 13.12
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3305828730,
+                    "connected_area_name": "Elite Control",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3359,11 +3363,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 80,
                     "major_location": false,
                     "connections": {
@@ -3376,26 +3380,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Processing Center",
-            "in_dark_aether": false,
-            "asset_id": 2905505465,
-            "default_node_index": 1,
+        "Phazon Processing Center": {
+            "default_node": "Door to Maintenance Tunnel",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport Access",
+            "extra": {
+                "asset_id": 2905505465
+            },
+            "nodes": {
+                "Door to Transport Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21.71,
                         "y": -60.24,
                         "z": 93.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1120185073,
+                    "connected_area_name": "Transport Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3409,17 +3413,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Maintenance Tunnel",
+                "Door to Maintenance Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 20.71,
                         "y": -5.0,
                         "z": 42.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3975146125,
+                    "connected_area_name": "Maintenance Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -3667,17 +3671,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Processing Center Access",
+                "Door to Processing Center Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.76,
                         "y": -56.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3983402811,
+                    "connected_area_name": "Processing Center Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -3997,11 +4001,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 81,
                     "major_location": false,
                     "connections": {
@@ -4014,26 +4018,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Omega Research",
-            "in_dark_aether": false,
-            "asset_id": 1060593356,
-            "default_node_index": 1,
+        "Omega Research": {
+            "default_node": "Door to Ventilation Shaft",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Map Station Mines",
+            "extra": {
+                "asset_id": 1060593356
+            },
+            "nodes": {
+                "Door to Map Station Mines": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8.67,
                         "y": -53.82,
                         "z": 6.26
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 428864988,
+                    "connected_area_name": "Map Station Mines",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4066,17 +4070,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Ventilation Shaft",
+                "Door to Ventilation Shaft": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 29.71,
                         "y": 29.26,
                         "z": 6.37
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 2423298732,
+                    "connected_area_name": "Ventilation Shaft",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4116,17 +4120,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Dynamo Access",
+                "Door to Dynamo Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 47.49,
                         "y": -43.86,
                         "z": -17.28
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 4111966698,
+                    "connected_area_name": "Dynamo Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4228,26 +4232,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport Access",
-            "in_dark_aether": false,
-            "asset_id": 1120185073,
-            "default_node_index": 0,
+        "Transport Access": {
+            "default_node": "Door to Phazon Processing Center",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Processing Center",
+            "extra": {
+                "asset_id": 1120185073
+            },
+            "nodes": {
+                "Door to Phazon Processing Center": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.0,
                         "y": -26.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2905505465,
+                    "connected_area_name": "Phazon Processing Center",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4289,17 +4293,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Transport to Magmoor Caverns South",
+                "Door to Transport to Magmoor Caverns South": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.42,
                         "y": 36.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3804417848,
+                    "connected_area_name": "Transport to Magmoor Caverns South",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4341,26 +4345,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Processing Center Access",
-            "in_dark_aether": false,
-            "asset_id": 3983402811,
-            "default_node_index": 1,
+        "Processing Center Access": {
+            "default_node": "Door to Elite Quarters",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Processing Center",
+            "extra": {
+                "asset_id": 3983402811
+            },
+            "nodes": {
+                "Door to Phazon Processing Center": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 19.06,
                         "y": 22.13,
                         "z": -6.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2905505465,
+                    "connected_area_name": "Phazon Processing Center",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -4444,17 +4448,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Quarters",
+                "Door to Elite Quarters": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13.61,
                         "y": -25.57,
                         "z": -6.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 961790803,
+                    "connected_area_name": "Elite Quarters",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -4563,11 +4567,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Processing Center Access Barrier Opened",
+                "Event - Processing Center Access Barrier Opened": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 32,
                     "connections": {
                         "Door to Elite Quarters": {
@@ -4579,11 +4583,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Energy Tank)",
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 82,
                     "major_location": false,
                     "connections": {
@@ -4596,26 +4600,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Map Station Mines",
-            "in_dark_aether": false,
-            "asset_id": 428864988,
-            "default_node_index": 0,
+        "Map Station Mines": {
+            "default_node": "Door to Omega Research",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Omega Research",
+            "extra": {
+                "asset_id": 428864988
+            },
+            "nodes": {
+                "Door to Omega Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 15.71,
                         "y": -0.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1060593356,
+                    "connected_area_name": "Omega Research",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4629,11 +4633,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Map Station",
+                "Map Station": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Omega Research": {
                             "type": "and",
@@ -4644,26 +4648,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Dynamo Access",
-            "in_dark_aether": false,
-            "asset_id": 4111966698,
-            "default_node_index": 0,
+        "Dynamo Access": {
+            "default_node": "Door to Central Dynamo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Central Dynamo",
+            "extra": {
+                "asset_id": 4111966698
+            },
+            "nodes": {
+                "Door to Central Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 34.29,
                         "y": 14.92,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4272124642,
+                    "connected_area_name": "Central Dynamo",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4677,17 +4681,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Omega Research",
+                "Door to Omega Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -26.8,
                         "y": -10.58,
                         "z": 5.58
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1060593356,
+                    "connected_area_name": "Omega Research",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4701,26 +4705,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Transport to Magmoor Caverns South",
-            "in_dark_aether": false,
-            "asset_id": 3804417848,
-            "default_node_index": 1,
+        "Transport to Magmoor Caverns South": {
+            "default_node": "Elevator - Transport to Phazon Mines West",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Transport Access",
+            "extra": {
+                "asset_id": 3804417848
+            },
+            "nodes": {
+                "Door to Transport Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24.57,
                         "y": 0.02,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1120185073,
+                    "connected_area_name": "Transport Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -4734,15 +4738,18 @@
                         }
                     }
                 },
-                {
-                    "name": "Elevator - Transport to Phazon Mines West",
+                "Elevator - Transport to Phazon Mines West": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "teleporter",
-                    "destination_world_asset_id": 1056449404,
-                    "destination_area_asset_id": 4012840000,
-                    "teleporter_instance_id": 1638417,
-                    "scan_asset_id": 495694188,
+                    "extra": {
+                        "scan_asset_id": 495694188,
+                        "teleporter_instance_id": 1638417
+                    },
+                    "destination": {
+                        "world_name": "Magmoor Caverns",
+                        "area_name": "Transport to Phazon Mines West"
+                    },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
@@ -4755,26 +4762,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elite Quarters",
-            "in_dark_aether": false,
-            "asset_id": 961790803,
-            "default_node_index": 0,
+        "Elite Quarters": {
+            "default_node": "Door to Elite Quarters Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elite Quarters Access",
+            "extra": {
+                "asset_id": 961790803
+            },
+            "nodes": {
+                "Door to Elite Quarters Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.41,
                         "y": -37.5,
                         "z": 2.37
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1899248703,
+                    "connected_area_name": "Elite Quarters Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -4814,17 +4821,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Processing Center Access",
+                "Door to Processing Center Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.41,
                         "y": 90.44,
                         "z": 32.35
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3983402811,
+                    "connected_area_name": "Processing Center Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -4855,11 +4862,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Omega Pirate",
+                "Event - Omega Pirate": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 31,
                     "connections": {
                         "Pickup (Phazon Suit)": {
@@ -4871,11 +4878,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Phazon Suit)",
+                "Pickup (Phazon Suit)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 83,
                     "major_location": true,
                     "connections": {
@@ -4888,11 +4895,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Fight Trigger",
+                "Fight Trigger": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Event - Omega Pirate": {
                             "type": "and",
@@ -5151,26 +5158,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Central Dynamo",
-            "in_dark_aether": false,
-            "asset_id": 4272124642,
-            "default_node_index": 0,
+        "Central Dynamo": {
+            "default_node": "Door to Dynamo Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Dynamo Access",
+            "extra": {
+                "asset_id": 4272124642
+            },
+            "nodes": {
+                "Door to Dynamo Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -35.64,
                         "y": -34.9,
                         "z": 18.62
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4111966698,
+                    "connected_area_name": "Dynamo Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5247,17 +5254,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Quarantine Access A",
+                "Door to Quarantine Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.05,
                         "y": 64.46,
                         "z": 9.71
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1522461728,
+                    "connected_area_name": "Quarantine Access A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5290,17 +5297,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station Mines B",
+                "Door to Save Station Mines B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2.18,
                         "y": -39.75,
                         "z": 5.51
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 2077614267,
+                    "connected_area_name": "Save Station Mines B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5403,11 +5410,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Security Drone",
+                "Event - Security Drone": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 25,
                     "connections": {
                         "Pickup (Main Power Bombs)": {
@@ -5438,11 +5445,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Main Power Bombs)",
+                "Pickup (Main Power Bombs)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 84,
                     "major_location": true,
                     "connections": {
@@ -5455,26 +5462,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elite Quarters Access",
-            "in_dark_aether": false,
-            "asset_id": 1899248703,
-            "default_node_index": 0,
+        "Elite Quarters Access": {
+            "default_node": "Door to Metroid Quarantine B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Metroid Quarantine B",
+            "extra": {
+                "asset_id": 1899248703
+            },
+            "nodes": {
+                "Door to Metroid Quarantine B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 38.23,
                         "y": -5.31,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3141205070,
+                    "connected_area_name": "Metroid Quarantine B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -5515,17 +5522,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Quarters",
+                "Door to Elite Quarters": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -8.86,
                         "y": 26.76,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 961790803,
+                    "connected_area_name": "Elite Quarters",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -5566,11 +5573,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Elite Quarters Access Barrier Opened",
+                "Event - Elite Quarters Access Barrier Opened": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 30,
                     "connections": {
                         "Door to Metroid Quarantine B": {
@@ -5582,26 +5589,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Quarantine Access A",
-            "in_dark_aether": false,
-            "asset_id": 1522461728,
-            "default_node_index": 0,
+        "Quarantine Access A": {
+            "default_node": "Door to Central Dynamo",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Central Dynamo",
+            "extra": {
+                "asset_id": 1522461728
+            },
+            "nodes": {
+                "Door to Central Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 12.01,
                         "y": -30.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4272124642,
+                    "connected_area_name": "Central Dynamo",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5615,17 +5622,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Metroid Quarantine A",
+                "Door to Metroid Quarantine A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12.42,
                         "y": 30.5,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 4211416922,
+                    "connected_area_name": "Metroid Quarantine A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -5639,26 +5646,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station Mines B",
-            "in_dark_aether": false,
-            "asset_id": 2077614267,
-            "default_node_index": 1,
+        "Save Station Mines B": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Central Dynamo",
+            "extra": {
+                "asset_id": 2077614267
+            },
+            "nodes": {
+                "Door to Central Dynamo": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -0.2,
                         "y": 17.66,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4272124642,
+                    "connected_area_name": "Central Dynamo",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -5672,11 +5679,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Central Dynamo": {
                             "type": "and",
@@ -5687,26 +5694,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Quarantine B",
-            "in_dark_aether": false,
-            "asset_id": 3141205070,
-            "default_node_index": 0,
+        "Metroid Quarantine B": {
+            "default_node": "Door to Quarantine Access B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Quarantine Access B",
+            "extra": {
+                "asset_id": 3141205070
+            },
+            "nodes": {
+                "Door to Quarantine Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 90.17,
                         "y": 23.35,
                         "z": -9.01
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 340985721,
+                    "connected_area_name": "Quarantine Access B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -5936,17 +5943,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elite Quarters Access",
+                "Door to Elite Quarters Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -86.28,
                         "y": 8.42,
                         "z": 1.22
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1899248703,
+                    "connected_area_name": "Elite Quarters Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -5960,17 +5967,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Save Station Mines C",
+                "Door to Save Station Mines C": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -55.38,
                         "y": -57.73,
                         "z": -13.78
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 1724960771,
+                    "connected_area_name": "Save Station Mines C",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -6243,11 +6250,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 85,
                     "major_location": false,
                     "connections": {
@@ -6260,11 +6267,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Quarantine B Barrier Lowered",
+                "Event - Metroid Quarantine B Barrier Lowered": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 29,
                     "connections": {
                         "Front of Barrier": {
@@ -6276,11 +6283,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Barrier",
+                "Front of Barrier": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Quarantine Access B": {
                             "type": "or",
@@ -6389,26 +6396,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Metroid Quarantine A",
-            "in_dark_aether": false,
-            "asset_id": 4211416922,
-            "default_node_index": 0,
+        "Metroid Quarantine A": {
+            "default_node": "Door to Quarantine Access A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Quarantine Access A",
+            "extra": {
+                "asset_id": 4211416922
+            },
+            "nodes": {
+                "Door to Quarantine Access A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -42.34,
                         "y": -89.04,
                         "z": 0.17
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1522461728,
+                    "connected_area_name": "Quarantine Access A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
@@ -6554,17 +6561,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elevator Access B",
+                "Door to Elevator Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1.58,
                         "y": 87.41,
                         "z": 19.67
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 1071241062,
+                    "connected_area_name": "Elevator Access B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -6753,11 +6760,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 86,
                     "major_location": false,
                     "connections": {
@@ -6805,11 +6812,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Event - Metroid Quarantine A Barrier Lowered",
+                "Event - Metroid Quarantine A Barrier Lowered": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "event",
+                    "extra": {},
                     "event_index": 28,
                     "connections": {
                         "Door to Quarantine Access A": {
@@ -6821,11 +6828,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Front of Spider Track",
+                "Front of Spider Track": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Quarantine Access A": {
                             "type": "and",
@@ -7329,26 +7336,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Quarantine Access B",
-            "in_dark_aether": false,
-            "asset_id": 340985721,
-            "default_node_index": 1,
+        "Quarantine Access B": {
+            "default_node": "Door to Fungal Hall B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Metroid Quarantine B",
+            "extra": {
+                "asset_id": 340985721
+            },
+            "nodes": {
+                "Door to Metroid Quarantine B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -23.72,
                         "y": -12.72,
                         "z": 1.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3141205070,
+                    "connected_area_name": "Metroid Quarantine B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7486,17 +7493,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fungal Hall B",
+                "Door to Fungal Hall B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17.74,
                         "y": 18.87,
                         "z": 1.0
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3964125762,
+                    "connected_area_name": "Fungal Hall B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7590,26 +7597,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Save Station Mines C",
-            "in_dark_aether": false,
-            "asset_id": 1724960771,
-            "default_node_index": 1,
+        "Save Station Mines C": {
+            "default_node": "Save Station",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Metroid Quarantine B",
+            "extra": {
+                "asset_id": 1724960771
+            },
+            "nodes": {
+                "Door to Metroid Quarantine B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 23.21,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3141205070,
+                    "connected_area_name": "Metroid Quarantine B",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7623,11 +7630,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Save Station",
+                "Save Station": {
+                    "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Metroid Quarantine B": {
                             "type": "and",
@@ -7638,26 +7645,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator Access B",
-            "in_dark_aether": false,
-            "asset_id": 1071241062,
-            "default_node_index": 0,
+        "Elevator Access B": {
+            "default_node": "Door to Metroid Quarantine A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Metroid Quarantine A",
+            "extra": {
+                "asset_id": 1071241062
+            },
+            "nodes": {
+                "Door to Metroid Quarantine A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13.76,
                         "y": -29.57,
                         "z": -9.18
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 4211416922,
+                    "connected_area_name": "Metroid Quarantine A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -7671,17 +7678,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elevator B",
+                "Door to Elevator B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -6.73,
                         "y": 29.58,
                         "z": -11.18
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3900266464,
+                    "connected_area_name": "Elevator B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7695,26 +7702,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fungal Hall B",
-            "in_dark_aether": false,
-            "asset_id": 3964125762,
-            "default_node_index": 2,
+        "Fungal Hall B": {
+            "default_node": "Door to Phazon Mining Tunnel",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Missile Station Mines",
+            "extra": {
+                "asset_id": 3964125762
+            },
+            "nodes": {
+                "Door to Missile Station Mines": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 42.02,
                         "y": -36.68,
                         "z": 8.7
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 2961781534,
+                    "connected_area_name": "Missile Station Mines",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7728,17 +7735,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Quarantine Access B",
+                "Door to Quarantine Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -31.53,
                         "y": -84.67,
                         "z": -1.25
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 340985721,
+                    "connected_area_name": "Quarantine Access B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -7752,17 +7759,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Phazon Mining Tunnel",
+                "Door to Phazon Mining Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 9.12,
                         "y": 89.99,
                         "z": -7.37
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 2,
-                    "connected_area_asset_id": 3153742515,
+                    "connected_area_name": "Phazon Mining Tunnel",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8002,11 +8009,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 87,
                     "major_location": false,
                     "connections": {
@@ -8019,26 +8026,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Elevator B",
-            "in_dark_aether": false,
-            "asset_id": 3900266464,
-            "default_node_index": 0,
+        "Elevator B": {
+            "default_node": "Door to Elevator Access B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Elevator Access B",
+            "extra": {
+                "asset_id": 3900266464
+            },
+            "nodes": {
+                "Door to Elevator Access B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3.05,
                         "y": -26.71,
                         "z": 37.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 1071241062,
+                    "connected_area_name": "Elevator Access B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8062,17 +8069,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fungal Hall Access",
+                "Door to Fungal Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3.0,
                         "y": -26.71,
                         "z": -37.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3734860277,
+                    "connected_area_name": "Fungal Hall Access",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8086,26 +8093,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Missile Station Mines",
-            "in_dark_aether": false,
-            "asset_id": 2961781534,
-            "default_node_index": 0,
+        "Missile Station Mines": {
+            "default_node": "Door to Fungal Hall B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Fungal Hall B",
+            "extra": {
+                "asset_id": 2961781534
+            },
+            "nodes": {
+                "Door to Fungal Hall B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30.71,
                         "y": -0.0,
                         "z": 2.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3964125762,
+                    "connected_area_name": "Fungal Hall B",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8119,11 +8126,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Missile Station",
+                "Missile Station": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "generic",
+                    "extra": {},
                     "connections": {
                         "Door to Fungal Hall B": {
                             "type": "and",
@@ -8134,26 +8141,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Phazon Mining Tunnel",
-            "in_dark_aether": false,
-            "asset_id": 3153742515,
-            "default_node_index": 1,
+        "Phazon Mining Tunnel": {
+            "default_node": "Door to Fungal Hall A",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Fungal Hall B",
+            "extra": {
+                "asset_id": 3153742515
+            },
+            "nodes": {
+                "Door to Fungal Hall B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 23.38,
                         "y": -11.45,
                         "z": 16.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3964125762,
+                    "connected_area_name": "Fungal Hall B",
                     "connected_dock_index": 2,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8435,17 +8442,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fungal Hall A",
+                "Door to Fungal Hall A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -24.38,
                         "y": 17.41,
                         "z": 29.5
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 257062865,
+                    "connected_area_name": "Fungal Hall A",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8555,11 +8562,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Artifact of Newborn)",
+                "Pickup (Artifact of Newborn)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 88,
                     "major_location": true,
                     "connections": {
@@ -8711,26 +8718,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fungal Hall Access",
-            "in_dark_aether": false,
-            "asset_id": 3734860277,
-            "default_node_index": 1,
+        "Fungal Hall Access": {
+            "default_node": "Door to Elevator B",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Fungal Hall A",
+            "extra": {
+                "asset_id": 3734860277
+            },
+            "nodes": {
+                "Door to Fungal Hall A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10.96,
                         "y": -26.47,
                         "z": -7.12
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 257062865,
+                    "connected_area_name": "Fungal Hall A",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8858,17 +8865,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Elevator B",
+                "Door to Elevator B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5.77,
                         "y": 26.48,
                         "z": 7.88
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3900266464,
+                    "connected_area_name": "Elevator B",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 3,
@@ -8936,11 +8943,11 @@
                         }
                     }
                 },
-                {
-                    "name": "Pickup (Missile)",
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
-                    "node_type": "pickup",
+                    "extra": {},
                     "pickup_index": 89,
                     "major_location": false,
                     "connections": {
@@ -9007,26 +9014,26 @@
                         }
                     }
                 }
-            ]
+            }
         },
-        {
-            "name": "Fungal Hall A",
-            "in_dark_aether": false,
-            "asset_id": 257062865,
-            "default_node_index": 1,
+        "Fungal Hall A": {
+            "default_node": "Door to Fungal Hall Access",
             "valid_starting_location": true,
-            "nodes": [
-                {
-                    "name": "Door to Phazon Mining Tunnel",
+            "extra": {
+                "asset_id": 257062865
+            },
+            "nodes": {
+                "Door to Phazon Mining Tunnel": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -50.58,
                         "y": -61.78,
                         "z": 26.88
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 0,
-                    "connected_area_asset_id": 3153742515,
+                    "connected_area_name": "Phazon Mining Tunnel",
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -9067,17 +9074,17 @@
                         }
                     }
                 },
-                {
-                    "name": "Door to Fungal Hall Access",
+                "Door to Fungal Hall Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9.01,
                         "y": 105.69,
                         "z": 6.42
                     },
-                    "node_type": "dock",
+                    "extra": {},
                     "dock_index": 1,
-                    "connected_area_asset_id": 3734860277,
+                    "connected_area_name": "Fungal Hall Access",
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 1,
@@ -9203,7 +9210,7 @@
                         }
                     }
                 }
-            ]
+            }
         }
-    ]
+    }
 }

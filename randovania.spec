@@ -13,6 +13,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              binaries=[],
              datas=[
                  ("randovania/data/configuration.json", "data/"),
+                 ("randovania/data/migration_data.json", "data/"),
                  ("randovania/data/binary_data", "data/binary_data"),
                  ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
                  ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),

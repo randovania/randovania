@@ -1,19 +1,19 @@
-import dataclasses
+import logging
+import traceback
 
 from PySide2 import QtWidgets
 from qasync import asyncSlot
 
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_location import AreaLocation
-from randovania.game_description.world.dock import DockType, DockConnection
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockType, DockConnection
+from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
@@ -65,7 +65,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.dock_type_combo.setItemData(i, enum)
 
         for world in sorted(game.world_list.worlds, key=lambda x: x.name):
-            self.teleporter_destination_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
+            self.teleporter_destination_world_combo.addItem("{0.name}".format(world), userData=world)
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
@@ -147,8 +147,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_index_spin.setValue(node.dock_index)
 
         # Connection
-        other_area = self.game.world_list.area_by_area_location(AreaLocation(self.world.world_asset_id,
-                                                                             node.default_connection.area_asset_id))
+        other_area = self.game.world_list.area_by_area_location(AreaIdentifier(self.world.name,
+                                                                               node.default_connection.area_name))
         self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(other_area))
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         self.dock_connection_node_combo.setCurrentIndex(
@@ -165,15 +165,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.major_location_check.setChecked(node.major_location)
 
     def fill_for_teleporter(self, node: TeleporterNode):
-        world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
-        area = self.game.world_list.area_by_area_location(node.default_connection)
+        world = self.game.world_list.world_by_area_location(node.default_connection)
+        try:
+            area = self.game.world_list.area_by_area_location(node.default_connection)
+        except KeyError:
+            area = None
 
-        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
-                                                 if node.teleporter_instance_id is not None else "")
         self.teleporter_destination_world_combo.setCurrentIndex(self.teleporter_destination_world_combo.findData(world))
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
         self.teleporter_destination_area_combo.setCurrentIndex(self.teleporter_destination_area_combo.findData(area))
-        self.teleporter_scan_asset_id_edit.setText(hex(node.scan_asset_id) if node.scan_asset_id is not None else "")
         self.teleporter_editable_check.setChecked(node.editable)
         self.teleporter_vanilla_name_edit.setChecked(node.keep_name_when_vanilla)
 
@@ -284,45 +284,40 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             location = NodeLocation(self.location_x_spin.value(),
                                     self.location_y_spin.value(),
                                     self.location_z_spin.value())
+        extra = self.node.extra
         index = self.node.index
 
         if node_type == GenericNode:
-            return GenericNode(name, heal, location, index)
+            return GenericNode(name, heal, location, extra, index)
 
         elif node_type == DockNode:
+            connection_area: Area = self.dock_connection_area_combo.currentData()
+            connection_index: int = self.dock_connection_node_combo.currentData()
+
             return DockNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 self.dock_index_spin.value(),
-                DockConnection(self.dock_connection_area_combo.currentData().area_asset_id,
-                               self.dock_connection_node_combo.currentData()),
+                DockConnection(connection_area.name, connection_index),
                 self.dock_weakness_combo.currentData(),
             )
 
         elif node_type == PickupNode:
             return PickupNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 PickupIndex(self.pickup_index_spin.value()),
                 self.major_location_check.isChecked(),
             )
 
         elif node_type == TeleporterNode:
-            instance_id = self.teleporter_instance_id_edit.text()
-            scan_asset_id = self.teleporter_scan_asset_id_edit.text()
-
-            if instance_id != "":
-                instance_id_value = int(instance_id, 0)
-                if isinstance(self.node, TeleporterNode):
-                    teleporter = dataclasses.replace(self.node.teleporter, instance_id=instance_id_value)
-                else:
-                    teleporter = Teleporter(0, 0, instance_id_value)
-            else:
-                teleporter = None
+            dest_world: World = self.teleporter_destination_world_combo.currentData()
+            dest_area: Area = self.teleporter_destination_area_combo.currentData()
 
             return TeleporterNode(
-                name, heal, location, index, teleporter,
-                AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
-                             self.teleporter_destination_area_combo.currentData().area_asset_id),
-                int(scan_asset_id, 0) if scan_asset_id != "" else None,
+                name, heal, location, extra, index,
+                AreaIdentifier(
+                    world_name=dest_world.name,
+                    area_name=dest_area.name,
+                ),
                 self.teleporter_vanilla_name_edit.isChecked(),
                 self.teleporter_editable_check.isChecked(),
             )
@@ -332,13 +327,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             if event is None:
                 raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 event,
             )
 
         elif node_type == TranslatorGateNode:
             return TranslatorGateNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 TranslatorGate(self.translator_gate_spin.value()),
                 self._get_scan_visor()
             )
@@ -358,7 +353,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 hint_index = None
 
             return LogbookNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 int(self.logbook_string_asset_id_edit.text(), 0),
                 self._get_scan_visor(),
                 lore_type,
@@ -368,7 +363,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PlayerShipNode:
             return PlayerShipNode(
-                name, heal, location, index,
+                name, heal, location, extra, index,
                 self._unlocked_by_requirement,
                 self._get_command_visor()
             )
@@ -393,5 +388,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.create_new_node()
             self.accept()
         except Exception as e:
-            QtWidgets.QMessageBox.warning(self, "Invalid configuration",
-                                          f"Unable to save node: {e}")
+            logging.exception(f"Unable to save node: {e}")
+
+            box = QtWidgets.QMessageBox(
+                QtWidgets.QMessageBox.Warning,
+                "Invalid configuration",
+                f"Unable to save node: {e}",
+                QtWidgets.QMessageBox.Ok,
+                None,
+            )
+            box.setDefaultButton(QtWidgets.QMessageBox.Ok)
+            box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
+            common_qt_lib.set_default_window_icon(box)
+            box.exec_()

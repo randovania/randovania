@@ -1,20 +1,20 @@
 import dataclasses
+import typing
 from typing import List, Dict, Optional, Iterator, Tuple
 
-from randovania.game_description.world.node import Node, DockNode, PickupNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import Node, DockNode, PickupNode
 
 
 @dataclasses.dataclass(frozen=True)
 class Area:
     name: str
-    in_dark_aether: bool
-    area_asset_id: int
-    default_node_index: Optional[int]
+    default_node: Optional[str]
     valid_starting_location: bool
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
+    extra: Dict[str, typing.Any]
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_node_with_dock_index", {})
@@ -23,19 +23,25 @@ class Area:
         return "Area[{}]".format(self.name)
 
     def __hash__(self):
-        return self.area_asset_id
+        return hash(self.name)
+
+    @property
+    def in_dark_aether(self) -> bool:
+        return self.extra.get("in_dark_aether", False)
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
         if dock_index in cache:
-            return self.nodes[cache[dock_index]]
+            cached = self.nodes[cache[dock_index]]
+            assert isinstance(cached, DockNode)
+            return cached
 
         for i, node in enumerate(self.nodes):
             if isinstance(node, DockNode) and node.dock_index == dock_index:
                 cache[dock_index] = i
                 return node
-        raise IndexError("No DockNode found with dock_index {} in {}".format(
-            dock_index, self.name))
+
+        raise IndexError("No DockNode found with dock_index {} in {}".format(dock_index, self.name))
 
     def node_with_name(self, node_name: str) -> Optional[Node]:
         """

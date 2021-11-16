@@ -3,34 +3,30 @@ from collections import defaultdict
 from random import Random
 from typing import List, Dict, Optional, Tuple
 
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.game_patches import ElevatorConnection
 from randovania.game_description.world.node import TeleporterNode
-from randovania.game_description.world.teleporter import Teleporter
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 
 
 class ElevatorHelper:
-    teleporter: Teleporter
-    destination: AreaLocation
+    teleporter: NodeIdentifier
+    destination: AreaIdentifier
     connected_elevator: Optional["ElevatorHelper"]
 
-    def __init__(self, teleporter: Teleporter, destination: AreaLocation):
+    def __init__(self, teleporter: NodeIdentifier, destination: AreaIdentifier):
         self.teleporter = teleporter
         self.destination = destination
         self.connected_elevator = None
 
     @property
-    def world_asset_id(self):
-        return self.teleporter.world_asset_id
+    def world_name(self):
+        return self.teleporter.area_location.world_name
 
     @property
-    def area_asset_id(self):
-        return self.teleporter.area_asset_id
-
-    @property
-    def instance_id(self):
-        return self.teleporter.instance_id
+    def area_name(self):
+        return self.teleporter.area_location.area_name
 
     def connect_to(self, other: "ElevatorHelper"):
         self.destination = other.teleporter.area_location
@@ -40,7 +36,7 @@ class ElevatorHelper:
 
     @property
     def area_location(self):
-        return AreaLocation(self.world_asset_id, self.area_asset_id)
+        return self.teleporter.area_location
 
 
 def try_randomize_elevators(rng: Random,
@@ -50,9 +46,9 @@ def try_randomize_elevators(rng: Random,
     assert len(elevator_database) % 2 == 0
 
     elevator_list = copy.copy(elevator_database)
-    elevators_by_world: Dict[int, List[ElevatorHelper]] = defaultdict(list)
+    elevators_by_world: Dict[str, List[ElevatorHelper]] = defaultdict(list)
     for elevator in elevator_list:
-        elevators_by_world[elevator.world_asset_id].append(elevator)
+        elevators_by_world[elevator.world_name].append(elevator)
 
     while elevator_list:
         source_elevators: List[ElevatorHelper] = max(elevators_by_world.values(), key=len)
@@ -66,8 +62,8 @@ def try_randomize_elevators(rng: Random,
 
         source_elevator.connect_to(target_elevator)
 
-        elevators_by_world[source_elevator.world_asset_id].remove(source_elevator)
-        elevators_by_world[target_elevator.world_asset_id].remove(target_elevator)
+        elevators_by_world[source_elevator.world_name].remove(source_elevator)
+        elevators_by_world[target_elevator.world_name].remove(target_elevator)
         elevator_list.remove(source_elevator)
         elevator_list.remove(target_elevator)
 
@@ -80,8 +76,8 @@ def try_randomize_elevators(rng: Random,
             index = 0
             while index < len(list3):
                 celevator2 = list3[index]
-                if (celevator2.world_asset_id == celevator1.world_asset_id
-                        or celevator2.area_asset_id == celevator1.destination.area_asset_id):
+                if (celevator2.world_name == celevator1.world_name
+                        or celevator2.area_name == celevator1.destination.area_name):
                     celevator_list1.append(celevator2)
                     list3.remove(celevator2)
                 else:
@@ -117,7 +113,7 @@ def two_way_elevator_connections(rng: Random,
 
 def one_way_elevator_connections(rng: Random,
                                  elevator_database: Tuple[ElevatorHelper, ...],
-                                 target_locations: List[AreaLocation],
+                                 target_locations: List[AreaIdentifier],
                                  replacement: bool,
                                  ) -> ElevatorConnection:
     target_locations.sort()
@@ -136,7 +132,7 @@ def one_way_elevator_connections(rng: Random,
 
 
 def create_elevator_database(world_list: WorldList,
-                             all_teleporters: List[Teleporter],
+                             all_teleporters: List[NodeIdentifier],
                              ) -> Tuple[ElevatorHelper, ...]:
     """
     Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
@@ -145,7 +141,7 @@ def create_elevator_database(world_list: WorldList,
     :return:
     """
     all_helpers = [
-        ElevatorHelper(node.teleporter, node.default_connection)
+        ElevatorHelper(world_list.identifier_for_node(node), node.default_connection)
 
         for world, area, node in world_list.all_worlds_areas_nodes
         if isinstance(node, TeleporterNode)

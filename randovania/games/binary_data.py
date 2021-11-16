@@ -1,18 +1,20 @@
 import copy
+import json
 from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
-                       Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b)
+                       Short, PrefixedArray, Switch, If, VarInt, Float64b)
 
+from randovania.game_description import schema_migration
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')
-current_format_version = 8
+current_format_version = 9
 
-_IMPOSSIBLE_SET = {"type": "or", "data": {"comment": None, "items": []}}
+String = CString("utf-8")
 
 
 def convert_to_raw_python(value) -> Any:
@@ -37,35 +39,11 @@ def convert_to_raw_python(value) -> Any:
 
 def decode(binary_io: BinaryIO) -> Dict:
     decoded = convert_to_raw_python(ConstructGame.parse_stream(binary_io))
-
     decoded.pop("format_version")
     decoded.pop("magic_number")
-    decoded["initial_states"] = dict(decoded["initial_states"])
-    decoded["resource_database"]["requirement_template"] = dict(decoded["resource_database"]["requirement_template"])
-
-    for world in decoded["worlds"]:
-        for area in world["areas"]:
-
-            for node in area["nodes"]:
-                data = node.pop("data")
-                if data is not None:
-                    for key, value in data.items():
-                        node[key] = value
-                node["connections"] = {}
-
-            for i, connections in enumerate(area.pop("connections")):
-                node = area["nodes"][i]
-
-                j = 0
-                for connection in connections:
-                    if j == i:
-                        j += 1
-
-                    if connection != _IMPOSSIBLE_SET:
-                        node["connections"][area["nodes"][j]["name"]] = connection
-                    j += 1
 
     fields = [
+        "schema_version",
         "game",
         "resource_database",
         "starting_location",
@@ -92,34 +70,10 @@ def decode_file_path(binary_file_path: Path) -> Dict:
 
 def encode(original_data: Dict, x: BinaryIO) -> None:
     data = copy.deepcopy(original_data)
-
-    for world in data["worlds"]:
-        for area in world["areas"]:
-            area["connections"] = [
-                [
-                    origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
-                    for target in area["nodes"]
-                    if origin != target
-                ]
-                for origin in area["nodes"]
-            ]
-
-            for i, node in enumerate(area["nodes"]):
-                node.pop("connections")
-                area["nodes"][i] = {
-                    "name": node.pop("name"),
-                    "heal": node.pop("heal"),
-                    "coordinates": node.pop("coordinates"),
-                    "node_type": node.pop("node_type"),
-                    "data": node,
-                }
-
-    data["resource_database"]["requirement_template"] = list(data["resource_database"]["requirement_template"].items())
-    data["initial_states"] = list(data["initial_states"].items())
-
     ConstructGame.build_stream(data, x)
 
     # Resource Info database
+    data.pop("schema_version")
     data.pop("game")
     data.pop("resource_database")
     data.pop("dock_weakness_database")
@@ -141,14 +95,54 @@ def OptionalValue(subcon):
     )
 
 
+class DictAdapter(construct.Adapter):
+    def _decode(self, obj: construct.ListContainer, context, path):
+        result = construct.Container()
+        last = {}
+        for i, item in enumerate(obj):
+            key = item.key
+            if key in result:
+                raise construct.ConstructError(f"Key {key} found twice in object", path)
+            last[key] = i
+            result[key] = item.value
+        return result
+
+    def _encode(self, obj: construct.Container, context, path):
+        return construct.ListContainer(
+            construct.Container(key=type_, value=item)
+            for type_, item in obj.items()
+        )
+
+
+def ConstructDict(subcon):
+    return DictAdapter(PrefixedArray(VarInt, Struct(
+        key=String,
+        value=subcon,
+    )))
+
+
+JsonEncodedValue = construct.ExprAdapter(
+    String,
+    # Decode
+    lambda obj, ctx: json.loads(obj),
+    # Encode
+    lambda obj, ctx: json.dumps(obj),
+)
+
+
 def _build_resource_info(**kwargs):
     return Struct(
         index=VarInt,
-        long_name=CString("utf8"),
-        short_name=CString("utf8"),
+        long_name=String,
+        short_name=String,
         **kwargs,
     )
 
+
+ConstructAreaIdentifier = construct.Struct(
+    world_name=String,
+    area_name=String,
+)
 
 ConstructResourceInfo = _build_resource_info()
 
@@ -158,7 +152,7 @@ ConstructItemResourceInfo = _build_resource_info(
 )
 
 ConstructTrickResourceInfo = _build_resource_info(
-    description=CString("utf8"),
+    description=String,
 )
 
 ConstructDamageReductions = Struct(
@@ -178,7 +172,7 @@ ConstructResourceRequirement = Struct(
 
 requirement_type_map = {
     "resource": ConstructResourceRequirement,
-    "template": CString("utf8"),
+    "template": String,
 }
 
 ConstructRequirement = Struct(
@@ -186,7 +180,7 @@ ConstructRequirement = Struct(
     data=Switch(lambda this: this.type, requirement_type_map)
 )
 ConstructRequirementArray = Struct(
-    comment=OptionalValue(CString("utf8")),
+    comment=OptionalValue(String),
     items=PrefixedArray(VarInt, ConstructRequirement),
 )
 
@@ -195,7 +189,7 @@ requirement_type_map["or"] = ConstructRequirementArray
 
 ConstructDockWeakness = Struct(
     index=VarInt,
-    name=CString("utf8"),
+    name=String,
     lock_type=VarInt,
     requirement=ConstructRequirement,
 )
@@ -207,7 +201,7 @@ ConstructResourceDatabase = Struct(
     damage=PrefixedArray(VarInt, ConstructResourceInfo),
     versions=PrefixedArray(VarInt, ConstructResourceInfo),
     misc=PrefixedArray(VarInt, ConstructResourceInfo),
-    requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement)),
+    requirement_template=ConstructDict(ConstructRequirement),
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=VarInt,
     item_percentage_index=OptionalValue(VarInt),
@@ -228,71 +222,89 @@ ConstructNodeCoordinates = Struct(
     z=Float64b,
 )
 
-ConstructNode = Struct(
-    name=CString("utf8"),
-    heal=Flag,
-    coordinates=OptionalValue(ConstructNodeCoordinates),
+NodeBaseFields = {
+    "heal": Flag,
+    "coordinates": OptionalValue(ConstructNodeCoordinates),
+    "extra": JsonEncodedValue,
+    "connections": ConstructDict(ConstructRequirement),
+}
+
+
+class NodeAdapter(construct.Adapter):
+    def _decode(self, obj: construct.Container, context, path):
+        result = construct.Container(node_type=obj["node_type"])
+        result.update(obj["data"])
+        result.move_to_end("connections")
+        return result
+
+    def _encode(self, obj: construct.Container, context, path):
+        data = copy.copy(obj)
+        return construct.Container(
+            node_type=data.pop("node_type"),
+            data=data,
+        )
+
+
+ConstructNode = NodeAdapter(Struct(
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
                              logbook=6, player_ship=7),
     data=Switch(
         lambda this: this.node_type,
         {
+            "generic": Struct(
+                **NodeBaseFields,
+            ),
             "dock": Struct(
+                **NodeBaseFields,
                 dock_index=Byte,
-                connected_area_asset_id=VarInt,
+                connected_area_name=String,
                 connected_dock_index=Byte,
                 dock_type=Byte,
                 dock_weakness_index=VarInt,
             ),
             "pickup": Struct(
+                **NodeBaseFields,
                 pickup_index=VarInt,
                 major_location=Flag,
             ),
             "teleporter": Struct(
-                destination_world_asset_id=VarInt,
-                destination_area_asset_id=VarInt,
-                teleporter_instance_id=OptionalValue(VarInt),
-                scan_asset_id=OptionalValue(VarInt),
+                **NodeBaseFields,
+                destination=ConstructAreaIdentifier,
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
             ),
             "event": Struct(
+                **NodeBaseFields,
                 event_index=VarInt,
             ),
             "translator_gate": Struct(
+                **NodeBaseFields,
                 gate_index=VarInt,
             ),
             "logbook": Struct(
+                **NodeBaseFields,
                 string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
-                extra=VarInt,
+                lore_extra=VarInt,
             ),
             "player_ship": Struct(
+                **NodeBaseFields,
                 is_unlocked=ConstructRequirement,
             )
         }
-    )
-)
+)))
 
 ConstructArea = Struct(
-    name=CString("utf8"),
-    in_dark_aether=Flag,
-    asset_id=VarInt,
-    _node_count=Rebuild(VarInt, construct.len_(construct.this.nodes)),
-    default_node_index=OptionalValue(VarInt),
+    default_node=OptionalValue(String),
     valid_starting_location=Flag,
-    nodes=Array(lambda this: this._node_count, ConstructNode),
-    connections=Array(
-        lambda this: this._node_count,
-        Array(lambda this: this._node_count - 1, ConstructRequirement)
-    )
+    extra=JsonEncodedValue,
+    nodes=ConstructDict(ConstructNode),
 )
 
 ConstructWorld = Struct(
-    name=CString("utf8"),
-    dark_name=OptionalValue(CString("utf8")),
-    asset_id=VarInt,
-    areas=PrefixedArray(VarInt, ConstructArea),
+    name=String,
+    extra=JsonEncodedValue,
+    areas=ConstructDict(ConstructArea),
 )
 
 ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
@@ -300,7 +312,7 @@ ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item 
 ConstructMinimalLogicDatabase = Struct(
     items_to_exclude=PrefixedArray(VarInt, Struct(
         index=VarInt,
-        when_shuffled=OptionalValue(CString("utf8")),
+        when_shuffled=OptionalValue(String),
     )),
     custom_item_amount=PrefixedArray(VarInt, Struct(
         index=VarInt,
@@ -308,13 +320,14 @@ ConstructMinimalLogicDatabase = Struct(
     )),
     events_to_exclude=PrefixedArray(VarInt, Struct(
         index=VarInt,
-        reason=OptionalValue(CString("utf8")),
+        reason=OptionalValue(String),
     )),
 )
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
+    schema_version=Const(schema_migration.CURRENT_DATABASE_VERSION, VarInt),
     game=ConstructGameEnum,
     resource_database=ConstructResourceDatabase,
     dock_weakness_database=Struct(
@@ -324,11 +337,7 @@ ConstructGame = Struct(
     ),
     minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
     victory_condition=ConstructRequirement,
-    starting_location=Struct(
-        world_asset_id=VarInt,
-        area_asset_id=VarInt,
-    ),
-    initial_states=PrefixedArray(VarInt, construct.Sequence(CString("utf8"),
-                                                            PrefixedArray(VarInt, ConstructResourceGain))),
+    starting_location=ConstructAreaIdentifier,
+    initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
     worlds=PrefixedArray(VarInt, ConstructWorld),
 )

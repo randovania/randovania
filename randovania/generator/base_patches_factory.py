@@ -3,7 +3,7 @@ import dataclasses
 from random import Random
 
 from randovania.game_description import default_database
-from randovania.game_description.world.area_location import AreaLocation
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -102,7 +102,7 @@ def gate_assignment_for_configuration(configuration: EchoesConfiguration,
 def starting_location_for_configuration(configuration: EchoesConfiguration,
                                         game: GameDescription,
                                         rng: Random,
-                                        ) -> AreaLocation:
+                                        ) -> AreaIdentifier:
     locations = list(configuration.starting_location.locations)
     if len(locations) == 0:
         raise ValueError("No available starting locations")
