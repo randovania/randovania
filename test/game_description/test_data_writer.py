@@ -25,7 +25,7 @@ def test_round_trip_small(test_files_dir, small_name):
     with test_files_dir.joinpath(small_name).open("r") as data_file:
         original_data = json.load(data_file)
 
-    game = data_reader.decode_data(copy.deepcopy(original_data))
+    game = data_reader.decode_data(original_data)
     encoded_data = data_writer.write_game_description(game)
 
     # # Uncomment the following to update the file
