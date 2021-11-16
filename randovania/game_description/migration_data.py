@@ -1,13 +1,13 @@
 import functools
 import json
-from pathlib import Path
 
+from randovania import get_data_path
 from randovania.games.game import RandovaniaGame
 
 
 @functools.lru_cache()
 def get_raw_data():
-    p = Path(__file__).parent.joinpath("migration_data.json")
+    p = get_data_path().joinpath("migration_data.json")
     with p.open() as f:
         return json.load(f)
 
