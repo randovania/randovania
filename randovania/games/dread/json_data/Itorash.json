@@ -5,7 +5,7 @@
     },
     "areas": {
         "Save Station": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -44,6 +44,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -74,6 +75,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -94,11 +96,26 @@
                             }
                         }
                     }
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "savestation_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
+                        "usable_entity": "savestation_000"
+                    },
+                    "connections": {}
                 }
             }
         },
         "Main Room": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -128,69 +145,19 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Elevator to Hanubia": {
+                "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
-                    "connections": {
-                        "Door to Save Station": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 0,
-                                            "index": 26,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 0,
-                                            "index": 25,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": 0,
-                                            "index": 24,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
+                    "coordinates": {
+                        "x": -3650.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "StartPoint0",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
                 },
                 "Door to Save Station": {
                     "node_type": "dock",
@@ -201,6 +168,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -281,8 +249,16 @@
                 "Total Refill Station": {
                     "node_type": "generic",
                     "heal": true,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": -650.0,
+                        "y": -4700.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "weightactivatedplatform_total_000",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
+                        "usable_entity": "totalrechargestation_000"
+                    },
                     "connections": {
                         "Door to Save Station": {
                             "type": "and",
@@ -292,11 +268,105 @@
                             }
                         }
                     }
+                },
+                "Elevator to Hanubia": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3850.0,
+                        "y": -4700.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "capsuleelevatorskybase_000",
+                        "actor_def": "actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad",
+                        "elevator_component": "CCapsuleUsableComponent",
+                        "target_spawn_point": "elevator_skybase_000_platform"
+                    },
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_007 (H)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 26,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 25,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 0,
+                                            "index": 24,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Start Point 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3850.0,
+                        "y": -4700.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_shipyard_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "usable_entity": "capsuleelevatorskybase_000"
+                    },
+                    "connections": {}
                 }
             }
         },
         "Elevator to Raven Beak": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -335,6 +405,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -431,13 +502,32 @@
                         }
                     }
                 },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5300.0,
+                        "y": -3000.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_Commander",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
                 "Elevator to Raven Beak Arena": {
                     "node_type": "teleporter",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 5050.0,
+                        "y": -3100.0,
+                        "z": 0.0
+                    },
                     "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "actor_name": "weightactivatedplatform_commanderelevator_000",
+                        "actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad",
+                        "usable_entity": "commander_elevator"
                     },
                     "destination": {
                         "world_name": "Itorash",
