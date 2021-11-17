@@ -161,24 +161,50 @@ def update_human_readable(sub_parsers):
 def refresh_all_logic(args):
     from randovania.game_description import pretty_print
     from randovania.game_description import data_reader, data_writer
+    from randovania.game_description import integrity_check
+
+    gd_per_game = {}
+    path_per_game = {}
 
     for game in iterate_enum(RandovaniaGame):
         logging.info("Reading %s", game.long_name)
         path, data = default_data.read_json_then_binary(game)
+        path_per_game[game] = path
         gd = data_reader.decode_data(data)
-        new_data = data_writer.write_game_description(gd)
+        gd_per_game[game] = gd
 
+    should_stop = False
+    if args.integrity_check:
+        for game, gd in gd_per_game.items():
+            errors = integrity_check.find_database_errors(gd)
+            if errors:
+                logging.warning("Integrity errors for %s:\n%s", game.long_name,
+                                "\n".join(errors))
+                if not game.data.experimental:
+                    should_stop = True
+
+    if should_stop:
+        return
+
+    for game, gd in gd_per_game.items():
+        path = path_per_game[game]
         logging.info("Writing %s", game.long_name)
+        new_data = data_writer.write_game_description(gd)
         data_writer.write_as_split_files(new_data, path)
         path.with_suffix("").mkdir(parents=True, exist_ok=True)
         pretty_print.write_human_readable_game(gd, path.with_suffix(""))
 
 
-def refresh_all(sub_parsers):
+def refresh_all_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "refresh-all",
         help="Re-exports the json and txt files of all databases",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
+    )
+    parser.add_argument(
+        "--integrity-check",
+        help="Runs the integrity check on all games, refusing to continue if a non-experimental game has issues.",
+        action="store_true",
     )
     parser.set_defaults(func=refresh_all_logic)
 
@@ -494,7 +520,7 @@ def create_subparsers(sub_parsers):
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
     update_human_readable(sub_parsers)
-    refresh_all(sub_parsers)
+    refresh_all_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
     render_worlds_graph(sub_parsers)
