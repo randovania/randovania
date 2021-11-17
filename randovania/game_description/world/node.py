@@ -93,10 +93,6 @@ class TeleporterNode(Node):
     keep_name_when_vanilla: bool
     editable: bool
 
-    def __post_init__(self):
-        if self.editable and self.extra.get("teleporter_instance_id") is None:
-            raise ValueError(f"{self!r} is editable, but teleporter_instance_id is None")
-
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
 
