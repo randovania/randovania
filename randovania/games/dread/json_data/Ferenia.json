@@ -5,7 +5,7 @@
     },
     "areas": {
         "collision_camera_000 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -35,6 +35,20 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3200.0,
+                        "y": -7500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "StartPoint0",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_000)": {
                     "node_type": "dock",
                     "heal": false,
@@ -44,6 +58,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -55,6 +70,43 @@
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Elevator (elevator_baselab_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3500.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_baselab_000",
+                        "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
+                        "elevator_component": "CElevatorUsableComponent",
+                        "target_spawn_point": "elevator_sanctuary_000_platform"
+                    },
+                    "destination": {
+                        "world_name": "Dairon",
+                        "area_name": "collision_camera_003 (D)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3500.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_baselab_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "usable_entity": "elevator_baselab_000"
+                    },
                     "connections": {}
                 }
             }
@@ -99,6 +151,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorshutter_007",
                         "actor_def": "actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -115,7 +168,7 @@
             }
         },
         "collision_camera_002 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -154,6 +207,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -167,6 +221,21 @@
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -900.0,
+                        "y": -7800.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "weightactivatedplatform_total_000",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
+                        "usable_entity": "totalrechargestation_000"
+                    },
+                    "connections": {}
+                },
                 "Pickup (item_energyfragment_002)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -176,6 +245,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_energyfragment_002",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 123,
@@ -191,6 +261,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorshutter_007",
                         "actor_def": "actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -258,6 +329,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_016",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -280,6 +352,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_004",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -335,6 +408,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -351,7 +425,7 @@
             }
         },
         "collision_camera_005 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -390,6 +464,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -401,6 +476,34 @@
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10800.0,
+                        "y": -7150.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_ChozoRobotSanc",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12100.0,
+                        "y": -7150.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_Dead_ChozoRobotSoldier",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -445,6 +548,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_003",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -467,6 +571,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_004",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -489,6 +594,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletankplus_001",
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
                     },
                     "pickup_index": 128,
@@ -498,8 +604,8 @@
             }
         },
         "collision_camera_007 (F)": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point 1",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -13500.0,
@@ -537,6 +643,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
@@ -559,6 +666,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -571,11 +679,76 @@
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11050.916015625,
+                        "y": -3100.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_EmmySanc",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13050.0,
+                        "y": -900.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "teleporter_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "usable_entity": "teleporter_000"
+                    },
+                    "connections": {}
+                },
+                "Elevator (teleporter_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13050.0,
+                        "y": -900.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "teleporter_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "LE_Platform_Teleport_Secret"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_008 (B)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Start Point 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11100.0,
+                        "y": -200.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_TwoChozoRobots_BottomLeft",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_008 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -614,6 +787,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_004",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -625,6 +799,43 @@
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Elevator (elevator_baselab_001)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14950.0,
+                        "y": -5300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_baselab_001",
+                        "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
+                        "elevator_component": "CElevatorUsableComponent",
+                        "target_spawn_point": "elevator_sanctuary_001_platform"
+                    },
+                    "destination": {
+                        "world_name": "Dairon",
+                        "area_name": "collision_camera_019 (D)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14950.0,
+                        "y": -5300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_baselab_001_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "usable_entity": "elevator_baselab_001"
+                    },
                     "connections": {}
                 }
             }
@@ -669,6 +880,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_004",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -691,6 +903,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_energyfragment_000",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 131,
@@ -739,6 +952,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_003",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -761,6 +975,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
@@ -783,6 +998,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_004",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -838,6 +1054,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_001",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 120,
@@ -853,6 +1070,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_005",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 132,
@@ -862,7 +1080,7 @@
             }
         },
         "collision_camera_012 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -909,6 +1127,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_011",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -931,6 +1150,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_012",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -953,6 +1173,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedpower_000",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -975,6 +1196,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_013",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -997,10 +1219,25 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "itemsphere_spacejump",
                         "actor_def": "actordef:actors/items/itemsphere_spacejump/charclasses/itemsphere_spacejump.bmsad"
                     },
                     "pickup_index": 119,
                     "major_location": true,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13200.0,
+                        "y": 3400.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_SpaceJump",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 },
                 "Pickup (item_missiletank_002)": {
@@ -1012,6 +1249,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_002",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 129,
@@ -1027,10 +1265,25 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletankplus_000",
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
                     },
                     "pickup_index": 130,
                     "major_location": false,
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12900.0,
+                        "y": 800.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_AccessPoint_8",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -1075,6 +1328,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_000",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 121,
@@ -1084,7 +1338,7 @@
             }
         },
         "collision_camera_014 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1114,11 +1368,41 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Placeholder": {
+                "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": -24000.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "wagontrain_forest_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "usable_entity": "wagontrain_forest_000"
+                    },
+                    "connections": {}
+                },
+                "Elevator (wagontrain_forest_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -24000.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "wagontrain_forest_000",
+                        "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
+                        "elevator_component": "CTrainUsableComponent",
+                        "target_spawn_point": "wagontrain_sanctuary_000_platform"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_027 (G)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
                     "connections": {}
                 }
             }
@@ -1163,6 +1447,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_000",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1185,6 +1470,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_012",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1207,6 +1493,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedpower_000",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1229,6 +1516,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_013",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1245,7 +1533,7 @@
             }
         },
         "collision_camera_016 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1284,6 +1572,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_010",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1306,6 +1595,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_011",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1318,11 +1608,26 @@
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11450.0,
+                        "y": 700.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "accesspoint_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
+                        "usable_entity": "accesspoint_000"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_017 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1361,6 +1666,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1383,6 +1689,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1405,6 +1712,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_009",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1427,6 +1735,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_010",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1449,6 +1758,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_000",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1471,16 +1781,59 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_powerbombtank_001",
                         "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
                     },
                     "pickup_index": 126,
                     "major_location": false,
                     "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7600.0,
+                        "y": 1000.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_Dead_2ChozoRobots",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9800.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_TwoChozoRobots_TopLeft",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5050.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_TwoChozoRobots_TopRight",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_018 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1519,6 +1872,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_009",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1532,6 +1886,21 @@
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3000.0,
+                        "y": 6300.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "energyrecharge_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad",
+                        "usable_entity": "energyrecharge_000"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_021)": {
                     "node_type": "dock",
                     "heal": false,
@@ -1541,6 +1910,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_021",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1563,6 +1933,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000",
                         "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
@@ -1585,6 +1956,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorchargecharge_000",
                         "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1607,6 +1979,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorgrapplegrapple_000",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1623,7 +1996,7 @@
             }
         },
         "collision_camera_019 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1662,6 +2035,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1673,6 +2047,35 @@
                     "connected_dock_index": 1,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3700.0,
+                        "y": -200.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_TwoChozoRobots",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3200.0,
+                        "y": 1600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "weightactivatedplatform_energy_000",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad",
+                        "usable_entity": "energyrecharge_001"
+                    },
                     "connections": {}
                 }
             }
@@ -1717,6 +2120,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_energyfragment_001",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 124,
@@ -1773,6 +2177,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_015",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1795,6 +2200,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_016",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1817,6 +2223,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_004",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1872,6 +2279,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_019",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1894,6 +2302,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_020",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1910,7 +2319,7 @@
             }
         },
         "collision_camera_023 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1940,6 +2349,21 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2550.0,
+                        "y": -3700.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "maproom_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad",
+                        "usable_entity": "maproom"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_020)": {
                     "node_type": "dock",
                     "heal": false,
@@ -1949,6 +2373,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_020",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -1965,7 +2390,7 @@
             }
         },
         "collision_camera_024 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2020,6 +2445,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_018",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2042,6 +2468,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_019",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2064,6 +2491,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_024",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2075,6 +2503,21 @@
                     "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5100.0,
+                        "y": -1900.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "weightactivatedplatform_total_001",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
+                        "usable_entity": "totalrechargestation_001"
+                    },
                     "connections": {}
                 }
             }
@@ -2119,6 +2562,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_018",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2141,6 +2585,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_003",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2163,6 +2608,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_energyfragment",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 133,
@@ -2172,7 +2618,7 @@
             }
         },
         "collision_camera_026 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2202,6 +2648,20 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10800.0,
+                        "y": -3600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_SuperQuetzoa",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
                 "Pickup (item_missiletank_004)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -2211,6 +2671,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_004",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 122,
@@ -2220,7 +2681,7 @@
             }
         },
         "collision_camera_027 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2250,17 +2711,24 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Placeholder": {
+                "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": 8400.0,
+                        "y": -3600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_MultiLockOn",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_028 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2290,6 +2758,21 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -450.0,
+                        "y": 6500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_shipyard_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "usable_entity": "elevator_shipyard_000"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_021)": {
                     "node_type": "dock",
                     "heal": false,
@@ -2299,6 +2782,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_021",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2321,6 +2805,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_022",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -2333,11 +2818,33 @@
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
+                },
+                "Elevator (elevator_shipyard_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -450.0,
+                        "y": 6500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "elevator_shipyard_000",
+                        "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
+                        "elevator_component": "CElevatorUsableComponent",
+                        "target_spawn_point": "elevator_sanctuary_000_platform"
+                    },
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_000 (H)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
                 }
             }
         },
         "collision_camera_029 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2367,6 +2874,21 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 5500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "savestation_000_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
+                        "usable_entity": "savestation_000"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_022)": {
                     "node_type": "dock",
                     "heal": false,
@@ -2376,6 +2898,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_022",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -2431,6 +2954,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_missiletank_003",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 125,
@@ -2446,6 +2970,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000",
                         "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
@@ -2468,6 +2993,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorchargecharge_000",
                         "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2490,6 +3016,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorgrapplegrapple_000",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2545,6 +3072,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_023",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -2567,6 +3095,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_002",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2622,6 +3151,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_017",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2644,6 +3174,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_001",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2699,6 +3230,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_015",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2721,6 +3253,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_017",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2743,6 +3276,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_001",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2765,6 +3299,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_002",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -2781,7 +3316,7 @@
             }
         },
         "collision_camera_034 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2811,6 +3346,20 @@
                 "asset_id": "collision_camera_034"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5450.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_WaveBeam",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_023)": {
                     "node_type": "dock",
                     "heal": false,
@@ -2820,6 +3369,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_023",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002",
                         "left_shield_def": "actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad",
@@ -2836,7 +3386,7 @@
             }
         },
         "collision_camera_035 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2866,17 +3416,24 @@
                 "asset_id": "collision_camera_035"
             },
             "nodes": {
-                "Placeholder": {
+                "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": 12500.0,
+                        "y": 5050.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_EmmySancPhase2_CURoom",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_038_A (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2906,17 +3463,38 @@
                 "asset_id": "collision_camera_038_A"
             },
             "nodes": {
-                "Placeholder": {
+                "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": 10600.0,
+                        "y": 5100.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_CentralUnit",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10600.0,
+                        "y": 4500.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_EmmySancPhase2",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_040 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2954,6 +3532,20 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5500.0,
+                        "y": -5600.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "SP_Checkpoint_Professor",
+                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
                 "Pickup (item_powerbombtank_000)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -2963,6 +3555,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "item_powerbombtank_000",
                         "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
                     },
                     "pickup_index": 127,
@@ -2972,7 +3565,7 @@
             }
         },
         "collision_camera_041 (F)": {
-            "default_node": null,
+            "default_node": "Start Point 1",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3002,6 +3595,21 @@
                 "asset_id": "collision_camera_041"
             },
             "nodes": {
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5550.0,
+                        "y": -1200.0,
+                        "z": 0.0
+                    },
+                    "extra": {
+                        "actor_name": "savestation_001_platform",
+                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
+                        "usable_entity": "savestation_001"
+                    },
+                    "connections": {}
+                },
                 "Door (doorpowerpower_024)": {
                     "node_type": "dock",
                     "heal": false,
@@ -3011,6 +3619,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorpowerpower_024",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
@@ -3033,6 +3642,7 @@
                         "z": 0.0
                     },
                     "extra": {
+                        "actor_name": "doorclosedcharge_003",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
