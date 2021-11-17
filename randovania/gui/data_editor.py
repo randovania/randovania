@@ -9,13 +9,13 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, data_writer, pretty_print, default_database
+from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode
-from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.world import World
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
@@ -162,7 +162,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_area(area_name)
             if node_name is None and self.current_area.default_node is not None:
                 node_name = self.current_area.default_node
-            
+
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
                     radio_button.setChecked(True)
@@ -399,7 +399,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
         self._save_database(Path(open_result[0]))
 
-    def _save_database(self, path: Path):
+    def _save_database(self, path: Path) -> bool:
+        errors = integrity_check.find_database_errors(self.game_description)
+        if errors:
+            message = "Database has the following errors:\n\n" + "\n".join(errors)
+
+            options = QMessageBox.Ok
+            if self.game_description.game.data.experimental:
+                options = QMessageBox.Yes | QMessageBox.No
+                message += "\n\nIgnore?"
+
+            user_response = QMessageBox.critical(
+                self, "Integrity Check",
+                message,
+                options,
+                QMessageBox.No
+            )
+            if user_response != QMessageBox.Yes:
+                return False
+
         data = data_writer.write_game_description(self.game_description)
         if self._is_internal:
             path.with_suffix("").mkdir(exist_ok=True)
@@ -408,11 +426,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             with path.open("w") as open_file:
                 json.dump(data, open_file, indent=4)
         self._last_data = data
+        return True
 
     def _save_as_internal_database(self):
-        self._save_database(self._data_path)
-        pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
-        default_database.game_description_for.cache_clear()
+        if self._save_database(self._data_path):
+            pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
+            default_database.game_description_for.cache_clear()
 
     def _create_new_node(self):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
