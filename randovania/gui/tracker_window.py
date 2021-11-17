@@ -158,8 +158,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setup_elevators()
         self.setup_translator_gates()
 
-        # self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
-        # self.tab_graph_map_layout.addWidget(self.matplot_widget)
+        self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
+        self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self._world_to_node_positions = {}
         self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
