@@ -196,12 +196,8 @@ class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     generic_index: int = -1
-    current_world: int
     current_world_name: str
-    current_area: int
     current_area_name: str
-    _world_name_to_asset_id: dict[str, int]
-    _area_name_to_asset_id: dict[str, dict[str, int]]
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -235,7 +231,7 @@ class WorldReader:
                 "name": name,
                 "heal": data["heal"],
                 "location": location,
-                "extra": frozendict(data.get("extra", {})),
+                "extra": frozendict(data["extra"]),
                 "index": self.generic_index,
             }
             node_type: int = data["node_type"]
@@ -320,7 +316,6 @@ class WorldReader:
             raise Exception(f"In node {name}, got error: {e}")
 
     def read_area(self, area_name: str, data: dict) -> Area:
-        self.current_area = data["extra"]["asset_id"]
         self.current_area_name = area_name
         nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
@@ -343,7 +338,7 @@ class WorldReader:
         try:
             return Area(area_name, data["default_node"],
                         data["valid_starting_location"],
-                        nodes, connections, data.get("extra"))
+                        nodes, connections, data["extra"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
@@ -351,7 +346,6 @@ class WorldReader:
         return [self.read_area(name, item) for name, item in data.items()]
 
     def read_world(self, data: Dict) -> World:
-        self.current_world = data["extra"]["asset_id"]
         self.current_world_name = data["name"]
         return World(
             data["name"],
@@ -360,18 +354,6 @@ class WorldReader:
         )
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
-        self._world_name_to_asset_id = {
-            world["name"]: world["extra"]["asset_id"]
-            for world in data
-        }
-        self._area_name_to_asset_id = {
-            world["name"]: {
-                name: item["extra"]["asset_id"]
-                for name, item in world["areas"].items()
-            }
-            for world in data
-        }
-
         return WorldList(read_array(data, self.read_world))
 
 

@@ -252,8 +252,6 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "event"
         data.update(common_fields)
         data["event_index"] = node.resource().index
-        if not node.name.startswith("Event -"):
-            raise ValueError(f"'{node.name}' is an Event Node, but naming doesn't start with 'Event -'")
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
@@ -281,9 +279,6 @@ def write_node(node: Node) -> dict:
 
     else:
         raise ValueError("Unknown node class: {}".format(node))
-
-    if node.name.startswith("Event -") and data["node_type"] != "event":
-        raise ValueError(f"'{node.name}' is not an Event Node, but naming suggests it is.")
 
     return data
 
