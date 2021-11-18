@@ -10,22 +10,21 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
     ResourceLock, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
 from randovania.layout.base.major_item_state import MajorItemState
-from randovania.layout.permalink import Permalink
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.permalink import Permalink
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
@@ -33,8 +32,8 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
     params=[
         {},
         {"starting_item": "Morph Ball"},
-        {"elevator": [NodeIdentifier(AreaIdentifier("Temple Grounds", "Transport to Agon Wastes"),
-                                     "Elevator to Agon Wastes - Transport to Temple Grounds"),
+        {"elevator": [NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes",
+                                            "Elevator to Agon Wastes - Transport to Temple Grounds"),
                       "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
@@ -181,7 +180,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
             name="HyperMissile",
         ),
         item_category=generic_item_category,
-        broad_category=generic_item_category, 
+        broad_category=generic_item_category,
         progression=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),

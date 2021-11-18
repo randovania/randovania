@@ -30,7 +30,7 @@ def _m(encoded: bytes, bit_count: int, mode: str = "vanilla", skip_final_bosses=
 
 def _a(world, area, instance_id=None):
     if instance_id is not None:
-        return NodeIdentifier(AreaIdentifier(world, area), instance_id).as_json
+        return NodeIdentifier.create(world, area, instance_id).as_json
     return AreaIdentifier(world, area).as_json
 
 
