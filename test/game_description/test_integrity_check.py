@@ -82,4 +82,4 @@ def test_invalid_db():
     errors = integrity_check.find_database_errors(gd)
 
     # Assert
-    assert errors == ["World - Area - 'Event - Foo' is not an Event Node, but naming suggests it is."]
+    assert errors == ["World - Area - 'Event - Foo' is not an Event Node, but naming suggests it is"]
