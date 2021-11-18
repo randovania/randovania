@@ -160,7 +160,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if world_name is not None and area_name is not None:
             self.focus_on_world(world_name)
             self.focus_on_area(area_name)
-            if node_name is None and self.current_area.default_node is not None:
+            if node_name is None:
                 node_name = self.current_area.default_node
 
             for radio_button in self.radio_button_to_node.keys():
@@ -179,7 +179,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if not state:
             return
 
-        object.__setattr__(self.current_area, "default_node_index", self.current_area.nodes.index(self.current_node))
+        object.__setattr__(self.current_area, "default_node", self.current_node.name)
         self.area_spawn_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
@@ -203,6 +203,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         }
         area.connections.clear()
         area.connections.update(new_connections)
+        if area.default_node == old_node.name:
+            object.__setattr__(area, "default_node", new_node.name)
         self.game_description.world_list.refresh_node_cache()
 
         if area == self.current_area:
