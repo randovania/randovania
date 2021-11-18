@@ -12,6 +12,18 @@ class DockType(Enum):
     OTHER = 2
     PORTAL = 3
 
+    @property
+    def node_name_prefix(self) -> str:
+        if self == DockType.DOOR:
+            return "Door"
+        elif self == DockType.MORPH_BALL_DOOR:
+            return "Morph Ball Door"
+        elif self == DockType.OTHER:
+            return "Dock"
+        elif self == DockType.PORTAL:
+            return "Portal"
+        raise ValueError(f"Unknown DockType: {self}")
+
 
 @unique
 class DockLockType(Enum):
