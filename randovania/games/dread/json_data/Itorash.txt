@@ -5,15 +5,30 @@ Extra - polygon: [[3500.0, -3500.0], [1400.0, -3500.0], [1400.0, -4600.0], [3500
 Extra - asset_id: collision_camera_000
 > Door to Elevator to Raven Beak; Heals? False
   * Power Beam Door to Main Room/Door to Save Station
+  * Extra - actor_name: doorpowerpower_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
   > Door to Main Room
       Trivial
 
 > Door to Main Room; Heals? False
   * Power Beam Door to Elevator to Raven Beak/Door to Save Station
+  * Extra - actor_name: doorpowerpower_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
   > Door to Elevator to Raven Beak
       Trivial
 
 > Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: savestation_000_platform
+  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  * Extra - usable_entity: savestation_000
 
 ----------------
 Main Room
@@ -21,9 +36,17 @@ Extra - total_boundings: {'x1': -5900.0, 'x2': 1500.0, 'y1': -4800.0, 'y2': -110
 Extra - polygon: [[1500.0, -1100.0], [-5900.0, -1100.0], [-5900.0, -4800.0], [1500.0, -4800.0]]
 Extra - asset_id: collision_camera_001
 > Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: StartPoint0
+  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Door to Save Station; Heals? False
   * Power Beam Door to Save Station/Door to Elevator to Raven Beak
+  * Extra - actor_name: doorpowerpower_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
   > Total Refill Station
       Trivial
   > Elevator to Hanubia
@@ -32,17 +55,27 @@ Extra - asset_id: collision_camera_001
           Infinite Bomb Jump (Beginner) and Lay Bomb
 
 > Total Refill Station; Heals? True
+  * Extra - actor_name: weightactivatedplatform_total_000
+  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  * Extra - usable_entity: totalrechargestation_000
   > Door to Save Station
       Trivial
 
 > Elevator to Hanubia; Heals? False
   * Teleporter to Hanubia - collision_camera_007 (H)
+  * Extra - actor_name: capsuleelevatorskybase_000
+  * Extra - actor_def: actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
+  * Extra - elevator_component: CCapsuleUsableComponent
+  * Extra - target_spawn_point: elevator_skybase_000_platform
   > Door to Save Station
       Any of the following:
           Speed Booster or Spin Boost or Space Jump
           Infinite Bomb Jump (Beginner) and Lay Bomb
 
 > Start Point 3; Heals? False
+  * Extra - actor_name: elevator_shipyard_000_platform
+  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - usable_entity: capsuleelevatorskybase_000
 
 ----------------
 Elevator to Raven Beak
@@ -51,6 +84,12 @@ Extra - polygon: [[6700.0, -2400.0], [3400.0, -2400.0], [3400.0, -4600.0], [6700
 Extra - asset_id: collision_camera_002
 > Door to Save Station; Heals? False
   * Power Beam Door to Save Station/Door to Main Room
+  * Extra - actor_name: doorpowerpower_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
   > Elevator to Raven Beak Arena
       All of the following:
           Morph Ball and Power Bomb
@@ -59,9 +98,14 @@ Extra - asset_id: collision_camera_002
               Infinite Bomb Jump (Beginner) and Lay Bomb
 
 > Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: SP_Checkpoint_Commander
+  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Elevator to Raven Beak Arena; Heals? False
   * Teleporter to Itorash - Raven Beak Arena
+  * Extra - actor_name: weightactivatedplatform_commanderelevator_000
+  * Extra - actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
+  * Extra - usable_entity: commander_elevator
   > Door to Save Station
       Trivial
 

@@ -130,6 +130,8 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         description_line = pretty_print_node_type(node, game.world_list)
         if description_line:
             print_function(f"  * {description_line}")
+        for extra_name, extra_field in node.extra.items():
+            print_function("  * Extra - {}: {}".format(extra_name, extra_field))
 
         for target_node, requirement in game.world_list.area_connections_from(node):
             print_function("  > {}".format(target_node.name))
