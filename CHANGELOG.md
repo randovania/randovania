@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.3.0] - Unreleased
 
-- Nothing.
+- Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 
 ### Metroid Prime
 

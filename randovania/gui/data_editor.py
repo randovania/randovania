@@ -44,6 +44,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
 
+        self.setCentralWidget(None)
+        self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
+        self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
+
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
@@ -60,7 +64,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
-        self.verticalLayout.setAlignment(Qt.AlignTop)
+        self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
@@ -112,6 +116,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.radio_button_to_node.clear()
 
         current_area = self.current_area
+        self.area_view_canvas.select_area(current_area)
+
         if not current_area:
             self.new_node_button.setEnabled(False)
             self.delete_node_button.setEnabled(False)
@@ -119,7 +125,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
-            button = QRadioButton(self.points_of_interest_group)
+            button = QRadioButton(self.points_of_interest_content)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
             if is_first:
@@ -128,7 +134,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             button.setChecked(is_first)
             button.toggled.connect(self.on_select_node)
             is_first = False
-            self.verticalLayout.addWidget(button)
+            self.points_of_interest_layout.addWidget(button)
 
         self.new_node_button.setEnabled(True)
         self.delete_node_button.setEnabled(len(current_area.nodes) > 1)

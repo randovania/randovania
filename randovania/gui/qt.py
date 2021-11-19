@@ -11,6 +11,7 @@ from pathlib import Path
 from PySide2 import QtCore, QtWidgets
 
 import randovania
+from randovania.games.game import RandovaniaGame
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,12 @@ async def show_tracker(app: QtWidgets.QApplication):
     app.tracker.show()
 
 
+def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame):
+    from randovania.gui.data_editor import DataEditorWindow
+    app.data_editor = DataEditorWindow.open_internal_data(game, True)
+    app.data_editor.show()
+
+
 def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
     from randovania.gui.seed_details_window import SeedDetailsWindow
@@ -119,6 +126,8 @@ async def display_window_for(app, options, command: str, args):
         await show_tracker(app)
     elif command == "main":
         await show_main_window(app, options, args.preview)
+    elif command == "data_editor":
+        show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
         show_game_details(app, options, args.rdvgame)
     elif command == "session":
@@ -289,6 +298,10 @@ def create_subparsers(sub_parsers):
     gui_parsers = parser.add_subparsers(dest="command")
     gui_parsers.add_parser("main", help="Displays the Main Window").set_defaults(func=run)
     gui_parsers.add_parser("tracker", help="Opens only the auto tracker").set_defaults(func=run)
+
+    editor_parser = gui_parsers.add_parser("data_editor", help="Opens a data editor for the given game")
+    editor_parser.add_argument("--game", required=True, choices=[game.value for game in RandovaniaGame])
+    editor_parser.set_defaults(func=run)
 
     game_parser = gui_parsers.add_parser("game", help="Opens an rdvgame")
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
