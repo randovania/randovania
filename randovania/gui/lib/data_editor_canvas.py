@@ -18,9 +18,14 @@ _color_for_node: dict[Type[Node], int] = {
 
 class DataEditorCanvas(QtWidgets.QWidget):
     area: Optional[Area] = None
+    highlighted_node: Optional[Node] = None
 
     def select_area(self, area: Area):
         self.area = area
+        self.update()
+
+    def highlight_node(self, node: Node):
+        self.highlighted_node = node
         self.update()
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
@@ -77,6 +82,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 painter.setBrush(brush)
 
                 p = scale_point(node.location.x, node.location.y)
+                if self.highlighted_node == node:
+                    painter.drawEllipse(p, 7, 7)
                 painter.drawEllipse(p, 5, 5)
                 centeredText(p + QPointF(0, 15), node.name)
 
