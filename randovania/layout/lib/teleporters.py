@@ -121,12 +121,12 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         static = {}
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
-                crater = NodeIdentifier(AreaIdentifier("Tallon Overworld", "Artifact Temple"),
-                                        "Teleport to Impact Crater - Crater Impact Point")
+                crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
+                                               "Teleport to Impact Crater - Crater Impact Point")
                 static[crater] = AreaIdentifier("End of Game", "Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                gateway = NodeIdentifier(AreaIdentifier("Temple Grounds", "Sky Temple Gateway"),
-                                         "Teleport to Great Temple - Sky Temple Energy Controller")
+                gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
+                                                "Teleport to Great Temple - Sky Temple Energy Controller")
                 static[gateway] = AreaIdentifier("Temple Grounds", "Credits")
             else:
                 raise ValueError(f"Unsupported skip_final_bosses and {self.game}")

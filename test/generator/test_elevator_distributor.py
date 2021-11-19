@@ -75,7 +75,7 @@ def test_two_way_elevator_connections_unchecked():
     # Setup
     rng = random.Random(5000)
     elevators = [
-        ElevatorHelper(NodeIdentifier(AreaIdentifier(f"w{i}", f"a{i}"), f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
+        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)
@@ -85,31 +85,31 @@ def test_two_way_elevator_connections_unchecked():
 
     # Assert
     assert result == {
-        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w4", "a4"),
-        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w1", "a1"),
-        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w5", "a5"),
-        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w0", "a0"),
-        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w4", "a4"),
+        NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier.create("w2", "a2", "n2"): AreaIdentifier("w1", "a1"),
+        NodeIdentifier.create("w3", "a3", "n3"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier.create("w4", "a4", "n4"): AreaIdentifier("w0", "a0"),
+        NodeIdentifier.create("w5", "a5", "n5"): AreaIdentifier("w3", "a3"),
     }
 
 
 @pytest.mark.parametrize(["replacement", "expected"], [
     (False, {
-        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w1", "a1"),
-        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w3", "a3"),
-        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w5", "a5"),
-        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w0", "a0"),
-        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w4", "a4"),
+        NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w1", "a1"),
+        NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier.create("w2", "a2", "n2"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w3", "a3", "n3"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier.create("w4", "a4", "n4"): AreaIdentifier("w0", "a0"),
+        NodeIdentifier.create("w5", "a5", "n5"): AreaIdentifier("w4", "a4"),
     }),
     (True, {
-        NodeIdentifier(AreaIdentifier("w0", "a0"), "n0"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier(AreaIdentifier("w1", "a1"), "n1"): AreaIdentifier("w3", "a3"),
-        NodeIdentifier(AreaIdentifier("w2", "a2"), "n2"): AreaIdentifier("w4", "a4"),
-        NodeIdentifier(AreaIdentifier("w3", "a3"), "n3"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier(AreaIdentifier("w4", "a4"), "n4"): AreaIdentifier("w5", "a5"),
-        NodeIdentifier(AreaIdentifier("w5", "a5"), "n5"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w2", "a2", "n2"): AreaIdentifier("w4", "a4"),
+        NodeIdentifier.create("w3", "a3", "n3"): AreaIdentifier("w2", "a2"),
+        NodeIdentifier.create("w4", "a4", "n4"): AreaIdentifier("w5", "a5"),
+        NodeIdentifier.create("w5", "a5", "n5"): AreaIdentifier("w3", "a3"),
     }),
 ])
 def test_one_way_elevator_connections(echoes_game_description, replacement, expected):
@@ -120,7 +120,7 @@ def test_one_way_elevator_connections(echoes_game_description, replacement, expe
         for i in range(6)
     ]
     elevators = [
-        ElevatorHelper(NodeIdentifier(AreaIdentifier(f"w{i}", f"a{i}"), f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
+        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)

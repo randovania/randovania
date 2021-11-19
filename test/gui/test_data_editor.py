@@ -1,15 +1,12 @@
-import io
-import json
 from pathlib import Path
 
 import pytest
-from PySide2.QtWidgets import QDialog
+from PySide2.QtWidgets import QDialog, QMessageBox
 from mock import AsyncMock, patch, ANY
 
-import randovania.game_description.pretty_print
 from randovania.game_description import data_reader, pretty_print
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.gui.data_editor import DataEditorWindow
 
 
@@ -113,3 +110,33 @@ def test_create_node_and_save(tmp_path,
 
     assert list(new_files.keys()) == list(existing_files.keys())
     assert new_files == existing_files
+
+
+def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot, mocker):
+    # Setup
+    mock_find_database_errors = mocker.patch("randovania.game_description.integrity_check.find_database_errors",
+                                             return_value=["DB Errors"])
+    mock_write_human_readable_game = mocker.patch("randovania.game_description.pretty_print.write_human_readable_game")
+    mock_critical_message = mocker.patch("PySide2.QtWidgets.QMessageBox.critical",
+                                         return_value=QMessageBox.No)
+
+    tmp_path.joinpath("test-game", "game").mkdir(parents=True)
+    tmp_path.joinpath("human-readable").mkdir()
+
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+
+    window = DataEditorWindow(echoes_game_data, db_path, True, True)
+    skip_qtbot.addWidget(window)
+
+    # Run
+    window._save_as_internal_database()
+
+    # Assert
+    mock_find_database_errors.assert_called_once_with(window.game_description)
+    mock_write_human_readable_game.assert_not_called()
+    mock_critical_message.assert_called_once_with(
+        window, "Integrity Check",
+        "Database has the following errors:\n\nDB Errors",
+        QMessageBox.Ok,
+        QMessageBox.No
+    )

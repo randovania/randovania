@@ -9,13 +9,13 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, data_writer, pretty_print, default_database
+from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode
-from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.world import World
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
@@ -44,6 +44,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
 
+        self.setCentralWidget(None)
+        self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
+        self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
+
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
@@ -60,7 +64,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
-        self.verticalLayout.setAlignment(Qt.AlignTop)
+        self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
@@ -112,6 +116,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.radio_button_to_node.clear()
 
         current_area = self.current_area
+        self.area_view_canvas.select_area(current_area)
+
         if not current_area:
             self.new_node_button.setEnabled(False)
             self.delete_node_button.setEnabled(False)
@@ -119,7 +125,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
-            button = QRadioButton(self.points_of_interest_group)
+            button = QRadioButton(self.points_of_interest_content)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
             if is_first:
@@ -128,7 +134,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             button.setChecked(is_first)
             button.toggled.connect(self.on_select_node)
             is_first = False
-            self.verticalLayout.addWidget(button)
+            self.points_of_interest_layout.addWidget(button)
 
         self.new_node_button.setEnabled(True)
         self.delete_node_button.setEnabled(len(current_area.nodes) > 1)
@@ -160,9 +166,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if world_name is not None and area_name is not None:
             self.focus_on_world(world_name)
             self.focus_on_area(area_name)
-            if node_name is None and self.current_area.default_node is not None:
+            if node_name is None:
                 node_name = self.current_area.default_node
-            
+
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
                     radio_button.setChecked(True)
@@ -179,7 +185,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if not state:
             return
 
-        object.__setattr__(self.current_area, "default_node_index", self.current_area.nodes.index(self.current_node))
+        object.__setattr__(self.current_area, "default_node", self.current_node.name)
         self.area_spawn_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
@@ -203,6 +209,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         }
         area.connections.clear()
         area.connections.update(new_connections)
+        if area.default_node == old_node.name:
+            object.__setattr__(area, "default_node", new_node.name)
         self.game_description.world_list.refresh_node_cache()
 
         if area == self.current_area:
@@ -399,7 +407,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
         self._save_database(Path(open_result[0]))
 
-    def _save_database(self, path: Path):
+    def _save_database(self, path: Path) -> bool:
+        errors = integrity_check.find_database_errors(self.game_description)
+        if errors:
+            message = "Database has the following errors:\n\n" + "\n".join(errors)
+
+            options = QMessageBox.Ok
+            if self.game_description.game.data.experimental:
+                options = QMessageBox.Yes | QMessageBox.No
+                message += "\n\nIgnore?"
+
+            user_response = QMessageBox.critical(
+                self, "Integrity Check",
+                message,
+                options,
+                QMessageBox.No
+            )
+            if user_response != QMessageBox.Yes:
+                return False
+
         data = data_writer.write_game_description(self.game_description)
         if self._is_internal:
             path.with_suffix("").mkdir(exist_ok=True)
@@ -408,11 +434,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             with path.open("w") as open_file:
                 json.dump(data, open_file, indent=4)
         self._last_data = data
+        return True
 
     def _save_as_internal_database(self):
-        self._save_database(self._data_path)
-        pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
-        default_database.game_description_for.cache_clear()
+        if self._save_database(self._data_path):
+            pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
+            default_database.game_description_for.cache_clear()
 
     def _create_new_node(self):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")

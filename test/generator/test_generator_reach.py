@@ -15,6 +15,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -193,9 +194,9 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     def item(name: str):
         return find_resource_info_with_long_name(game.resource_database.item, name)
 
-    def nodes(*names):
+    def nodes(*names: str):
         result = [
-            game.world_list.node_from_name(name)
+            game.world_list.node_by_identifier(NodeIdentifier.create(*name.split("/")))
             for name in names
         ]
         result.sort(key=lambda it: it.index)
