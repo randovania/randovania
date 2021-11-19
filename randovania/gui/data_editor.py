@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -108,6 +108,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
+
+        self.area_view_canvas.select_world(self.current_world)
 
     def on_select_area(self):
         for node in self.radio_button_to_node.keys():

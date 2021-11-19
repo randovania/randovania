@@ -1,11 +1,14 @@
 import math
+import os
 from typing import Optional, Type
 
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import QPointF, QRectF
 
+from randovania import get_data_path
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node
+from randovania.game_description.world.world import World
 
 _color_for_node: dict[Type[Node], int] = {
     GenericNode: QtGui.Qt.red,
@@ -17,8 +20,51 @@ _color_for_node: dict[Type[Node], int] = {
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
+    world: Optional[World] = None
     area: Optional[Area] = None
     highlighted_node: Optional[Node] = None
+    _background_image: Optional[QtGui.QImage] = None
+    world_min_x: float
+    world_min_y: float
+    world_max_x: float
+    world_max_y: float
+    image_min_x: int
+    image_min_y: int
+    image_max_x: int
+    image_max_y: int
+
+    def select_world(self, world: World):
+        self.world = world
+        image_path = get_data_path().joinpath("gui_assets", "dread_maps", f"{world.name}.png")
+        if image_path.exists():
+            self._background_image = QtGui.QImage(os.fspath(image_path))
+            self.image_min_x = world.extra.get("map_min_x", 0)
+            self.image_max_x = self._background_image.width() - world.extra.get("map_max_x", 0)
+            self.image_min_y = world.extra.get("map_min_y", 0)
+            self.image_max_y = self._background_image.height() - world.extra.get("map_max_y", 0)
+        else:
+            self._background_image = None
+
+        min_x, min_y = math.inf, math.inf
+        max_x, max_y = -math.inf, -math.inf
+
+        for area in world.areas:
+            total_boundings = area.extra.get("total_boundings")
+            if total_boundings is None:
+                continue
+            min_x = min(min_x, total_boundings["x1"], total_boundings["x2"])
+            max_x = max(max_x, total_boundings["x1"], total_boundings["x2"])
+            min_y = min(min_y, total_boundings["y1"], total_boundings["y2"])
+            max_y = max(max_y, total_boundings["y1"], total_boundings["y2"])
+
+        self.world_min_x = min_x
+        self.world_max_x = max_x
+        self.world_min_y = min_y
+        self.world_max_y = max_y
+
+    def get_image_point(self, x: float, y: float):
+        return QPointF(self.image_min_x + (self.image_max_x - self.image_min_x) * x,
+                       self.image_min_y + (self.image_max_y - self.image_min_y) * y)
 
     def select_area(self, area: Area):
         self.area = area
@@ -61,6 +107,27 @@ class DataEditorCanvas(QtWidgets.QWidget):
             scale = min(canvas_width / max(max_x - min_x, 1),
                         canvas_height / max(max_y - min_y, 1))
 
+            percent_x_start = (min_x - self.world_min_x) / (self.world_max_x - self.world_min_x)
+            percent_x_end = (max_x - self.world_min_x) / (self.world_max_x - self.world_min_x)
+            percent_y_start = 1 - (max_y - self.world_min_y) / (self.world_max_y - self.world_min_y)
+            percent_y_end = 1 - (min_y - self.world_min_y) / (self.world_max_y - self.world_min_y)
+
+            # print("=============================================")
+            # print("AREA posX percent: ", percent_x_start, percent_x_end)
+            # print("AREA posY percent: ", percent_y_start, percent_y_end)
+            # print("TO IMAGE", self._background_image.width() * percent_x_start,
+            #       self._background_image.height() * percent_y_start)
+            #
+            # print("AREA min_x", min_x, " WORLD ", self.world_min_x)
+            # print("AREA min_y", min_y, max_y, " WORLD ", self.world_min_y, self.world_max_y)
+
+            if self._background_image is not None:
+                painter.drawImage(
+                    QRectF(0, 0, max(max_x - min_x, 1) * scale, max(max_y - min_y, 1) * scale),
+                    self._background_image,
+                    QRectF(self.get_image_point(percent_x_start, percent_y_start),
+                           self.get_image_point(percent_x_end, percent_y_end)))
+
             def scale_point(x, y):
                 return QPointF(scale * (x - min_x), scale * (max_y - y))
 
@@ -86,4 +153,3 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     painter.drawEllipse(p, 7, 7)
                 painter.drawEllipse(p, 5, 5)
                 centeredText(p + QPointF(0, 15), node.name)
-
