@@ -41,6 +41,8 @@ class Node:
 
     def __post_init__(self):
         if not isinstance(self.extra, frozendict):
+            if not isinstance(self.extra, dict):
+                raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
             object.__setattr__(self, "extra", frozendict(self.extra))
 
     @property
