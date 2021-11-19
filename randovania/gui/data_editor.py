@@ -262,6 +262,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         is_default_spawn = self.current_area.default_node == node.name
         self.area_spawn_check.setChecked(is_default_spawn)
         self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
+        self.area_view_canvas.highlight_node(node)
 
         try:
             msg = pretty_print.pretty_print_node_type(node, self.world_list)
