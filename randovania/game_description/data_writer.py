@@ -26,7 +26,7 @@ def write_resource_requirement(requirement: ResourceRequirement) -> dict:
         "type": "resource",
         "data": {
             "type": requirement.resource.resource_type.value,
-            "index": requirement.resource.index,
+            "name": requirement.resource.short_name,
             "amount": requirement.amount,
             "negate": requirement.negate,
         }
@@ -74,41 +74,35 @@ def write_requirement(requirement: Requirement) -> dict:
 
 def write_resource_gain(resource_gain: ResourceGain) -> list:
     def sorter(item: Tuple[ResourceInfo, int]):
-        return item[0].resource_type, item[0].index, item[1]
+        return item[0].resource_type, item[0].short_name, item[1]
 
     return [
         {
             "resource_type": resource.resource_type.value,
-            "resource_index": resource.index,
+            "resource_index": resource.short_name,
             "amount": gain,
         }
         for resource, gain in sorted(resource_gain, key=sorter)
     ]
 
 
-def write_simple_resource(resource: SimpleResourceInfo) -> dict:
-    return {
-        "index": resource.index,
+def write_simple_resource(resource: SimpleResourceInfo) -> Tuple[str, dict]:
+    return resource.short_name, {
         "long_name": resource.long_name,
-        "short_name": resource.short_name,
     }
 
 
-def write_item_resource(resource: ItemResourceInfo) -> dict:
-    return {
-        "index": resource.index,
+def write_item_resource(resource: ItemResourceInfo) -> Tuple[str, dict]:
+    return resource.short_name, {
         "long_name": resource.long_name,
-        "short_name": resource.short_name,
         "max_capacity": resource.max_capacity,
         "extra": resource.extra,
     }
 
 
-def write_trick_resource(resource: TrickResourceInfo) -> dict:
-    return {
-        "index": resource.index,
+def write_trick_resource(resource: TrickResourceInfo) -> Tuple[str, dict]:
+    return resource.short_name, {
         "long_name": resource.long_name,
-        "short_name": resource.short_name,
         "description": resource.description,
     }
 
@@ -116,11 +110,11 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
 X = TypeVar('X')
 
 
-def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
-    return [
+def write_array(array: List[X], writer: Callable[[X], Tuple[str, dict]]) -> dict:
+    return {
         writer(item)
         for item in array
-    ]
+    }
 
 
 def check_for_duplicated_index(array: List) -> Iterator[str]:

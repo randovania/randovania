@@ -272,11 +272,11 @@ class ResourceRequirement(Requirement):
     def with_data(cls,
                   database: ResourceDatabase,
                   resource_type: ResourceType,
-                  requirement_index: int,
+                  requirement_name: str,
                   amount: int,
                   negate: bool) -> "ResourceRequirement":
         return cls(
-            database.get_by_type_and_index(resource_type, requirement_index),
+            database.get_by_type_and_index(resource_type, requirement_name),
             amount,
             negate)
 
