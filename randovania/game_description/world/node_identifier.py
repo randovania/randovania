@@ -8,6 +8,10 @@ class NodeIdentifier:
     area_identifier: AreaIdentifier
     node_name: str
 
+    @classmethod
+    def create(cls, world_name: str, area_name: str, node_name: str) -> "NodeIdentifier":
+        return cls(AreaIdentifier(world_name, area_name), node_name)
+
     @property
     def as_json(self) -> dict:
         result = self.area_identifier.as_json

@@ -62,7 +62,7 @@ class WorldList:
     def identifier_for_node(self, node: Node) -> NodeIdentifier:
         world = self.nodes_to_world(node)
         area = self.nodes_to_area(node)
-        return NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
+        return NodeIdentifier.create(world.name, area.name, node.name)
 
     @property
     def all_areas(self) -> Iterator[Area]:
@@ -105,26 +105,6 @@ class WorldList:
         prefix = "{}/".format(self.world_name_from_node(node, distinguish_dark_aether)) if with_world else ""
         return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
 
-    def node_from_name(self, name: str) -> Node:
-        match = re.match("(?:([^/]+)/)?([^/]+)/([^/]+)", name)
-        if match is None:
-            raise ValueError("Invalid name: {}".format(name))
-
-        world_name, area_name, node_name = match.group(1, 2, 3)
-        for world in self.worlds:
-            if world_name is not None and world_name not in (world.name, world.dark_name):
-                continue
-
-            for area in world.areas:
-                if area.name != area_name:
-                    continue
-
-                for node in area.nodes:
-                    if node.name == node_name:
-                        return node
-
-        raise ValueError("Unknown name: {}".format(name))
-
     def nodes_to_world(self, node: Node) -> World:
         return self._nodes_to_world[node]
 
@@ -157,8 +137,7 @@ class WorldList:
 
         node = area.node_with_name(area.default_node)
         if node is None:
-            raise IndexError("Area '{}' default_node ({}) is missing".format(
-                area.name, area.default_node))
+            raise IndexError("Area '{}' default_node ({}) is missing".format(area.name, area.default_node))
 
         return node
 
