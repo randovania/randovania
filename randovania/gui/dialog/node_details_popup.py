@@ -1,3 +1,4 @@
+import json
 import logging
 import traceback
 
@@ -103,6 +104,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.location_x_spin.setValue(node.location.x)
             self.location_y_spin.setValue(node.location.y)
             self.location_z_spin.setValue(node.location.z)
+        self.extra_edit.setPlainText(json.dumps(node.extra, indent=4))
 
         visible_tab = self._fill_for_type(node)
         self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
@@ -284,7 +286,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             location = NodeLocation(self.location_x_spin.value(),
                                     self.location_y_spin.value(),
                                     self.location_z_spin.value())
-        extra = self.node.extra
+        extra = json.loads(self.extra_edit.toPlainText())
         index = self.node.index
 
         if node_type == GenericNode:
