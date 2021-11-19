@@ -4,18 +4,19 @@ from unittest.mock import MagicMock, patch, call, ANY
 
 import pytest
 
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
-    HintDarkTemple
+from randovania.game_description.hint import (
+    Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, HintDarkTemple,
+)
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])
@@ -25,9 +26,9 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
     # Setup
     expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
-        expected.elevator_connection[NodeIdentifier(AreaIdentifier("Temple Grounds", "Sky Temple Gateway"),
-                                                    "Teleport to Great Temple - Sky Temple Energy Controller")
-        ] = AreaIdentifier("Temple Grounds", "Credits")
+        node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
+                                           "Teleport to Great Temple - Sky Temple Energy Controller")
+        expected.elevator_connection[node_ident] = AreaIdentifier("Temple Grounds", "Credits")
 
     config = default_layout_configuration
     config = dataclasses.replace(config,
@@ -48,8 +49,6 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
 def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_layout_configuration):
-
-
     # Setup
     game = echoes_game_description
     layout_configuration = dataclasses.replace(
@@ -64,7 +63,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     elevator_connection = {}
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
-        elevator_connection[NodeIdentifier(AreaIdentifier(w, a), n)] = AreaIdentifier(tw, ta)
+        elevator_connection[NodeIdentifier.create(w, a, n)] = AreaIdentifier(tw, ta)
 
     ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
        "Torvus Bog", "Transport to Temple Grounds")

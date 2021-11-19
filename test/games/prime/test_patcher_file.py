@@ -97,8 +97,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     elevator_connection = copy.copy(patches.elevator_connection)
 
     def add(world: str, area: str, node: str, target_world: str, target_area: str):
-        elevator_connection[NodeIdentifier(AreaIdentifier(world, area), node)] = AreaIdentifier(target_world,
-                                                                                                target_area)
+        elevator_connection[NodeIdentifier.create(world, area, node)] = AreaIdentifier(target_world, target_area)
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
         "Sanctuary Fortress", "Transport to Agon Wastes")

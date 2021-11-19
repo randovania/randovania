@@ -1,5 +1,6 @@
 import collections
 import re
+import typing
 from typing import Dict, List, DefaultDict
 
 from randovania.game_description import default_database
@@ -185,7 +186,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
     pickup_assignment: PickupAssignment = {}
     for world_name, world_data in game_modifications["locations"].items():
-        for area_node_name, target_name in world_data.items():
+        for area_node_name, target_name in typing.cast(dict[str, str], world_data).items():
             if target_name == _ETM_NAME:
                 continue
 
@@ -197,7 +198,8 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
                 pickup_name = target_name
                 target_player = 0
 
-            node = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            node_identifier = NodeIdentifier.create(world_name, *area_node_name.split("/", 1))
+            node = world_list.node_by_identifier(node_identifier)
             assert isinstance(node, PickupNode)
             if node.pickup_index in initial_pickup_assignment:
                 pickup = initial_pickup_assignment[node.pickup_index]
