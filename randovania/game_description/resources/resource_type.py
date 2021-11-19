@@ -3,16 +3,16 @@ from enum import unique, Enum
 
 @unique
 class ResourceType(Enum):
-    ITEM = 0
-    EVENT = 1
-    TRICK = 2
-    DAMAGE = 3
-    VERSION = 4
-    MISC = 5
-    PICKUP_INDEX = 7
-    GATE_INDEX = 8
-    LOGBOOK_INDEX = 9
-    SHIP_NODE = 10
+    ITEM = "item"
+    EVENT = "event"
+    TRICK = "trick"
+    DAMAGE = "damage"
+    VERSION = "version"
+    MISC = "misc"
+    PICKUP_INDEX = "pickup_index"
+    GATE_INDEX = "gate_index"
+    LOGBOOK_INDEX = "logbook_index"
+    SHIP_NODE = "ship_node"
 
     @property
     def negated_prefix(self) -> str:
@@ -32,5 +32,21 @@ class ResourceType(Enum):
         else:
             return ""
 
+    @property
+    def index(self) -> int:
+        order = {
+            ResourceType.ITEM: 0,
+            ResourceType.EVENT: 1,
+            ResourceType.TRICK: 2,
+            ResourceType.DAMAGE: 3,
+            ResourceType.VERSION: 4,
+            ResourceType.MISC: 5,
+            ResourceType.PICKUP_INDEX: 7,
+            ResourceType.GATE_INDEX: 8,
+            ResourceType.LOGBOOK_INDEX: 9,
+            ResourceType.SHIP_NODE: 10
+        }
+        return order[self]
+
     def __lt__(self, other):
-        return self.value < other.value
+        return self.index < other.index

@@ -40,27 +40,27 @@ X = TypeVar('X')
 Y = TypeVar('Y')
 
 
-def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
-    return [item_reader(item) for item in data]
+def read_array(data: Dict[str, Y], item_reader: Callable[[str,Y], X]) -> List[X]:
+    return [item_reader(name, item) for name, item in data.items()]
 
 
-def read_resource_info(data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
-    return SimpleResourceInfo(data["index"], data["long_name"],
-                              data["short_name"], resource_type)
+def read_resource_info(name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
+    return SimpleResourceInfo(data["long_name"],
+                              name, resource_type)
 
 
-def read_item_resource_info(data: Dict) -> ItemResourceInfo:
-    return ItemResourceInfo(data["index"], data["long_name"],
-                            data["short_name"], data["max_capacity"], data.get("extra"))
+def read_item_resource_info(name: str, data: Dict) -> ItemResourceInfo:
+    return ItemResourceInfo(data["long_name"],
+                            name, data["max_capacity"], data.get("extra"))
 
 
-def read_trick_resource_info(data: Dict) -> TrickResourceInfo:
-    return TrickResourceInfo(data["index"], data["long_name"],
-                             data["short_name"], data["description"])
+def read_trick_resource_info(name: str, data: Dict) -> TrickResourceInfo:
+    return TrickResourceInfo(data["long_name"],
+                             name, data["description"])
 
 
-def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
-    return read_array(data, lambda info: read_resource_info(info, resource_type=resource_type))
+def read_resource_info_array(data: Dict[str, Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
+    return read_array(data, lambda name, info: read_resource_info(name, info, resource_type=resource_type))
 
 
 # Damage
@@ -92,7 +92,7 @@ def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
     data = data["data"]
     return ResourceRequirement.with_data(
         resource_database,
-        ResourceType(data["type"]), data["index"],
+        ResourceType(data["type"]), data["name"],
         data["amount"], data["negate"])
 
 
