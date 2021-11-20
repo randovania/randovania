@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -45,8 +45,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.radio_button_to_node = {}
 
         self.setCentralWidget(None)
+        # self.points_of_interest_dock.hide()
+        # self.node_info_dock.hide()
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
+
+        # self.spin_min_x = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_min_y = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_max_x = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_max_y = QtWidgets.QSpinBox(super().centralWidget())
+        # for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
+        #     it.setMaximum(99999)
+        #     la = QtWidgets.QLabel(super().centralWidget())
+        #     la.setText(["min_x", "min_y", "max_x", "max_y"][i])
+        #     self.gridLayout_2.addWidget(la)
+        #     self.gridLayout_2.addWidget(it)
+        #     it.valueChanged.connect(self._on_image_spin_update)
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
@@ -103,11 +117,33 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def on_select_world(self):
         self.area_selector_box.clear()
-        for area in sorted(self.current_world.areas, key=lambda x: x.name):
+        world = self.current_world
+        for area in sorted(world.areas, key=lambda x: x.name):
             if area.name.startswith("!!"):
                 continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
+
+        self.area_view_canvas.select_world(world)
+
+        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+        #     it.valueChanged.disconnect(self._on_image_spin_update)
+        #
+        # self.spin_min_x.setValue(world.extra["map_min_x"])
+        # self.spin_min_y.setValue(world.extra["map_min_y"])
+        # self.spin_max_x.setValue(world.extra["map_max_x"])
+        # self.spin_max_y.setValue(world.extra["map_max_y"])
+        #
+        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+        #     it.valueChanged.connect(self._on_image_spin_update)
+
+    # def _on_image_spin_update(self):
+    #     world = self.current_world
+    #     world.extra["map_min_x"] = self.spin_min_x.value()
+    #     world.extra["map_min_y"] = self.spin_min_y.value()
+    #     world.extra["map_max_x"] = self.spin_max_x.value()
+    #     world.extra["map_max_y"] = self.spin_max_y.value()
+    #     self.area_view_canvas.select_world(world)
 
     def on_select_area(self):
         for node in self.radio_button_to_node.keys():
