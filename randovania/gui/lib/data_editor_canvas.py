@@ -61,6 +61,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.world_max_x = max_x
         self.world_min_y = min_y
         self.world_max_y = max_y
+        self.update()
 
     def get_image_point(self, x: float, y: float):
         return QPointF(self.image_min_x + (self.image_max_x - self.image_min_x) * x,
