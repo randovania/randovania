@@ -107,11 +107,14 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
             scale = min(canvas_width / max(max_x - min_x, 1),
                         canvas_height / max(max_y - min_y, 1))
+            if scale == 0:
+                return
 
-            percent_x_start = (min_x - self.world_min_x) / (self.world_max_x - self.world_min_x)
-            percent_x_end = (max_x - self.world_min_x) / (self.world_max_x - self.world_min_x)
-            percent_y_start = 1 - (max_y - self.world_min_y) / (self.world_max_y - self.world_min_y)
-            percent_y_end = 1 - (min_y - self.world_min_y) / (self.world_max_y - self.world_min_y)
+            scaled_border = border / scale
+            percent_x_start = (min_x - self.world_min_x - scaled_border) / (self.world_max_x - self.world_min_x)
+            percent_x_end = (max_x - self.world_min_x + scaled_border) / (self.world_max_x - self.world_min_x)
+            percent_y_start = 1 - (max_y - self.world_min_y + scaled_border) / (self.world_max_y - self.world_min_y)
+            percent_y_end = 1 - (min_y - self.world_min_y - scaled_border) / (self.world_max_y - self.world_min_y)
 
             # print("=============================================")
             # print("AREA posX percent: ", percent_x_start, percent_x_end)
@@ -124,7 +127,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
             if self._background_image is not None:
                 painter.drawImage(
-                    QRectF(0, 0, max(max_x - min_x, 1) * scale, max(max_y - min_y, 1) * scale),
+                    QRectF(-border, -border,
+                           border * 2 + max(max_x - min_x, 1) * scale,
+                           border * 2 + max(max_y - min_y, 1) * scale),
                     self._background_image,
                     QRectF(self.get_image_point(percent_x_start, percent_y_start),
                            self.get_image_point(percent_x_end, percent_y_end)))
@@ -154,3 +159,11 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     painter.drawEllipse(p, 7, 7)
                 painter.drawEllipse(p, 5, 5)
                 centeredText(p + QPointF(0, 15), node.name)
+
+            if (self.highlighted_node is not None and self.highlighted_node in area.nodes
+                    and self.highlighted_node.location is not None):
+                for node in area.connections[self.highlighted_node].keys():
+                    if node.location is None:
+                        continue
+                    painter.drawLine(scale_point(self.highlighted_node.location.x, self.highlighted_node.location.y),
+                                     scale_point(node.location.x, node.location.y))
