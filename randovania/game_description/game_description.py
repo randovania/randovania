@@ -39,7 +39,7 @@ def _calculate_dangerous_resources_in_areas(
 
 @dataclasses.dataclass(frozen=True)
 class IndexWithReason:
-    index: int
+    name: str
     reason: Optional[str]
 
 

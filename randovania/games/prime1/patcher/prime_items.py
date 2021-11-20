@@ -2,7 +2,20 @@
 Some constants related to specific Prime 1 items that the logic needs to deal with.
 """
 
-ARTIFACT_ITEMS = [29 + i for i in range(12)]
+ARTIFACT_ITEMS = [
+    "Truth",
+    "Strength",
+    "Elder",
+    "Wild",
+    "Lifegiver",
+    "Warrior",
+    "Chozo",
+    "Nature",
+    "Sun",
+    "World",
+    "Spirit",
+    "Newborn"
+]
 ARTIFACT_NAMES = [
     "Artifact of Truth",
     "Artifact of Strength",

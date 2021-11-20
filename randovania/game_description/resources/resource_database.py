@@ -18,12 +18,12 @@ def default_base_damage_reduction(db: "ResourceDatabase", current_resources: Cur
 @dataclasses.dataclass(frozen=True)
 class ResourceDatabase:
     game_enum: RandovaniaGame
-    item: Dict[ItemResourceInfo]
-    event: Dict[SimpleResourceInfo]
-    trick: Dict[TrickResourceInfo]
-    damage: Dict[SimpleResourceInfo]
-    version: Dict[SimpleResourceInfo]
-    misc: Dict[SimpleResourceInfo]
+    item: Dict[str, ItemResourceInfo]
+    event: Dict[str, SimpleResourceInfo]
+    trick: Dict[str, TrickResourceInfo]
+    damage: Dict[str, SimpleResourceInfo]
+    version: Dict[str, SimpleResourceInfo]
+    misc: Dict[str, SimpleResourceInfo]
     requirement_template: Dict[str, "Requirement"]
     damage_reductions: Dict[SimpleResourceInfo, List[DamageReduction]]
     energy_tank_item_index: int
@@ -31,7 +31,7 @@ class ResourceDatabase:
     multiworld_magic_item_index: Optional[int]
     base_damage_reduction: Callable[["ResourceDatabase", CurrentResources], float] = default_base_damage_reduction
 
-    def get_by_type(self, resource_type: ResourceType) -> Dict[ResourceInfo]:
+    def get_by_type(self, resource_type: ResourceType) -> Dict[str, ResourceInfo]:
         if resource_type == ResourceType.ITEM:
             return self.item
         elif resource_type == ResourceType.EVENT:

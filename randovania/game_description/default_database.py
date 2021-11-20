@@ -14,7 +14,7 @@ from randovania.games.game import RandovaniaGame
 
 @functools.lru_cache()
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
-    return read_resource_database(game, default_data.read_json_then_binary(game)[1]["resource_database"])
+    return game_description_for(game).resource_database
 
 
 @functools.lru_cache()

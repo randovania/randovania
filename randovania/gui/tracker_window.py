@@ -108,7 +108,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _elevator_id_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
     _translator_gate_to_combo: Dict[TranslatorGate, QtWidgets.QComboBox]
     _starting_nodes: Set[ResourceNode]
-    _undefined_item = ItemResourceInfo(-1, "Undefined", "Undefined", 0, None)
+    _undefined_item = ItemResourceInfo("Undefined", "Undefined", 0, None)
 
     # UI tools
     _world_name_to_item: Dict[str, QTreeWidgetItem]
