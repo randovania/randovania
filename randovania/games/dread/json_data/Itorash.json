@@ -1,7 +1,11 @@
 {
     "name": "Itorash",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld"
+        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
+        "map_min_x": 66,
+        "map_max_x": 51,
+        "map_min_y": 24,
+        "map_max_y": 70
     },
     "areas": {
         "Save Station": {
@@ -35,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to Elevator to Raven Beak": {
+                "Door to Main Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -57,7 +61,7 @@
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
-                        "Door to Main Room": {
+                        "Door to Elevator to Raven Beak": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -66,7 +70,7 @@
                         }
                     }
                 },
-                "Door to Main Room": {
+                "Door to Elevator to Raven Beak": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -88,7 +92,7 @@
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
-                        "Door to Elevator to Raven Beak": {
+                        "Door to Main Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -665,86 +669,6 @@
                 "Escape Sequence": {
                     "node_type": "generic",
                     "heal": true,
-                    "coordinates": null,
-                    "extra": {},
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera_005 (I)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 300.0,
-                    "x2": 2400.0,
-                    "y1": 1800.0,
-                    "y2": 2900.0
-                },
-                "polygon": [
-                    [
-                        2400.0,
-                        2900.0
-                    ],
-                    [
-                        300.0,
-                        2900.0
-                    ],
-                    [
-                        300.0,
-                        1800.0
-                    ],
-                    [
-                        2400.0,
-                        1800.0
-                    ]
-                ],
-                "asset_id": "collision_camera_005"
-            },
-            "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "extra": {},
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera_900 (I)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -27000.0,
-                    "x2": -13000.0,
-                    "y1": 6000.0,
-                    "y2": 19000.0
-                },
-                "polygon": [
-                    [
-                        -13000.0,
-                        19000.0
-                    ],
-                    [
-                        -27000.0,
-                        19000.0
-                    ],
-                    [
-                        -27000.0,
-                        6000.0
-                    ],
-                    [
-                        -13000.0,
-                        6000.0
-                    ]
-                ],
-                "asset_id": "collision_camera_900"
-            },
-            "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
-                    "heal": false,
                     "coordinates": null,
                     "extra": {},
                     "connections": {}
