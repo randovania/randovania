@@ -70,6 +70,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
+        self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -190,6 +191,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def focus_on_area(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+
+    def focus_on_node(self, node: Node):
+        for radio, other_node in self.radio_button_to_node.items():
+            if other_node == node:
+                radio.setChecked(True)
+        self.update_selected_node()
 
     def _on_click_link_to_other_node(self, link: str):
         world_name, area_name, node_name = None, None, None
