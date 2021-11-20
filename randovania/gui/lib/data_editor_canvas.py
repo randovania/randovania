@@ -3,7 +3,7 @@ import os
 from typing import Optional, Type, NamedTuple, Union
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import QPointF, QRectF, QSizeF
+from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania import get_data_path
 from randovania.game_description.world.area import Area
@@ -53,6 +53,18 @@ class DataEditorCanvas(QtWidgets.QWidget):
     scale: float
     canvas_size: QSizeF
 
+    _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
+    CreateNodeRequest = Signal(NodeLocation)
+
+    def __init__(self):
+        super().__init__()
+
+        self._create_node_action = QtWidgets.QAction("Create node here", self)
+        self._create_node_action.triggered.connect(self._on_create_node)
+
+    def _on_create_node(self):
+        self.CreateNodeRequest.emit(self._next_node_location)
+
     def select_world(self, world: World):
         self.world = world
         image_path = get_data_path().joinpath("gui_assets", "dread_maps", f"{world.name}.png")
@@ -92,8 +104,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return QPointF(bounds.min_x + (bounds.max_x - bounds.min_x) * x,
                        bounds.min_y + (bounds.max_y - bounds.min_y) * y)
 
-    def select_area(self, area: Area):
+    def select_area(self, area: Optional[Area]):
         self.area = area
+        if area is None:
+            return
 
         if "total_boundings" in area.extra:
             min_x, max_x, min_y, max_y = [area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"]]
@@ -133,12 +147,23 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
-    # def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
-    #     print(self.mapFromGlobal(event.globalPos()))
-    #
-    #     menu = QtWidgets.QMenu(self)
-    #     menu.addAction(QtWidgets.QAction("Create node here", self))
-    #     menu.exec_(event.globalPos())
+    def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+
+        # Revert the border
+        local_pos -= QPointF(self.border, self.border)
+
+        # Revert the centering
+        local_pos -= QPointF(
+            (self.canvas_size.width() - self.area_size.width() * self.scale) / 2,
+            (self.canvas_size.height() - self.area_size.height() * self.scale) / 2,
+        )
+
+        self._next_node_location = self.qt_local_to_game_loc(local_pos)
+
+        menu = QtWidgets.QMenu(self)
+        menu.addAction(self._create_node_action)
+        menu.exec_(event.globalPos())
 
     def game_loc_to_qt_local(self, pos: Union[NodeLocation, list[float]]) -> QPointF:
         if isinstance(pos, NodeLocation):
@@ -146,7 +171,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             y = pos.y
         else:
             x, y = pos[0], pos[1]
+
         return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
+
+    def qt_local_to_game_loc(self, pos: QPointF) -> NodeLocation:
+        return NodeLocation((pos.x() / self.scale) + self.area_bounds.min_x,
+                            self.area_bounds.max_y - (pos.y() / self.scale),
+                            0)
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
         if self.world is None or self.area is None:
@@ -212,6 +243,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         if (self.highlighted_node is not None and self.highlighted_node in area.nodes
                 and self.highlighted_node.location is not None):
+
             for node in area.connections[self.highlighted_node].keys():
                 if node.location is None:
                     continue
