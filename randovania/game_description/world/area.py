@@ -23,7 +23,7 @@ class Area:
         return "Area[{}]".format(self.name)
 
     def __hash__(self):
-        return hash(self.name)
+        return hash(("area", self.name))
 
     @property
     def in_dark_aether(self) -> bool:
@@ -78,7 +78,6 @@ class Area:
             if isinstance(node, PickupNode) and node.major_location:
                 yield node.pickup_index
 
-    def remove_node(self, node: Node):
-        self.nodes.remove(node)
+    def clear_dock_cache(self):
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
         cache.clear()
