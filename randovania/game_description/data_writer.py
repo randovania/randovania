@@ -219,6 +219,7 @@ def write_node(node: Node) -> dict:
     common_fields = {
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
+        "description": node.description,
         "extra": extra,
     }
 

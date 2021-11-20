@@ -15,8 +15,8 @@ def test_connections_from_dock_blast_shield(empty_patches):
     weak_1 = DockWeakness(1, "Weak 1", DockLockType.FRONT_ALWAYS_BACK_FREE, req_1, DockType.DOOR)
     weak_2 = DockWeakness(2, "Weak 2", DockLockType.FRONT_BLAST_BACK_BLAST, req_2, DockType.DOOR)
 
-    node_1 = DockNode("Node 1", False, None, {}, 0, 0, DockConnection("Area 2", 0), weak_1)
-    node_2 = DockNode("Node 2", False, None, {}, 1, 0, DockConnection("Area 1", 0), weak_2)
+    node_1 = DockNode("Node 1", False, None, "", {}, 0, 0, DockConnection("Area 2", 0), weak_1)
+    node_2 = DockNode("Node 2", False, None, "", {}, 1, 0, DockConnection("Area 1", 0), weak_2)
 
     area_1 = Area("Area 1", 0, True, [node_1], {}, {})
     area_2 = Area("Area 2", 0, True, [node_2], {}, {})

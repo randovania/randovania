@@ -225,6 +225,7 @@ ConstructNodeCoordinates = Struct(
 NodeBaseFields = {
     "heal": Flag,
     "coordinates": OptionalValue(ConstructNodeCoordinates),
+    "description": String,
     "extra": JsonEncodedValue,
     "connections": ConstructDict(ConstructRequirement),
 }

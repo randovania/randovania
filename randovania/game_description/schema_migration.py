@@ -1,7 +1,7 @@
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 
-CURRENT_DATABASE_VERSION = 2
+CURRENT_DATABASE_VERSION = 3
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -70,8 +70,17 @@ def _migrate_v1(data: dict) -> dict:
     return data
 
 
+def _migrate_v2(data: dict) -> dict:
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                node["description"] = ""
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
+    2: _migrate_v2,
 }
 
 
