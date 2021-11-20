@@ -1,13 +1,14 @@
 import math
 import os
-from typing import Optional, Type
+from typing import Optional, Type, NamedTuple, Union
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import QPointF, QRectF
+from PySide2.QtCore import QPointF, QRectF, QSizeF
 
 from randovania import get_data_path
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node
+from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+    NodeLocation
 from randovania.game_description.world.world import World
 
 _color_for_node: dict[Type[Node], int] = {
@@ -19,29 +20,50 @@ _color_for_node: dict[Type[Node], int] = {
 }
 
 
+class BoundsInt(NamedTuple):
+    min_x: int
+    min_y: int
+    max_x: int
+    max_y: int
+
+
+class BoundsFloat(NamedTuple):
+    min_x: float
+    min_y: float
+    max_x: float
+    max_y: float
+
+
+def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
+    rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
+    painter.drawText(rect, QtGui.Qt.AlignCenter, text)
+
+
 class DataEditorCanvas(QtWidgets.QWidget):
+    border: int = 75
     world: Optional[World] = None
     area: Optional[Area] = None
     highlighted_node: Optional[Node] = None
     _background_image: Optional[QtGui.QImage] = None
-    world_min_x: float
-    world_min_y: float
-    world_max_x: float
-    world_max_y: float
-    image_min_x: int
-    image_min_y: int
-    image_max_x: int
-    image_max_y: int
+    world_bounds: BoundsFloat
+    area_bounds: BoundsFloat
+    area_size: QSizeF
+    image_bounds: BoundsInt
+
+    scale: float
+    canvas_size: QSizeF
 
     def select_world(self, world: World):
         self.world = world
         image_path = get_data_path().joinpath("gui_assets", "dread_maps", f"{world.name}.png")
         if image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
-            self.image_min_x = world.extra.get("map_min_x", 0)
-            self.image_max_x = self._background_image.width() - world.extra.get("map_max_x", 0)
-            self.image_min_y = world.extra.get("map_min_y", 0)
-            self.image_max_y = self._background_image.height() - world.extra.get("map_max_y", 0)
+            self.image_bounds = BoundsInt(
+                min_x=world.extra.get("map_min_x", 0),
+                min_y=world.extra.get("map_min_y", 0),
+                max_x=self._background_image.width() - world.extra.get("map_max_x", 0),
+                max_y=self._background_image.height() - world.extra.get("map_max_y", 0),
+            )
         else:
             self._background_image = None
 
@@ -57,113 +79,142 @@ class DataEditorCanvas(QtWidgets.QWidget):
             min_y = min(min_y, total_boundings["y1"], total_boundings["y2"])
             max_y = max(max_y, total_boundings["y1"], total_boundings["y2"])
 
-        self.world_min_x = min_x
-        self.world_max_x = max_x
-        self.world_min_y = min_y
-        self.world_max_y = max_y
+        self.world_bounds = BoundsFloat(
+            min_x=min_x,
+            min_y=min_y,
+            max_x=max_x,
+            max_y=max_y,
+        )
         self.update()
 
     def get_image_point(self, x: float, y: float):
-        return QPointF(self.image_min_x + (self.image_max_x - self.image_min_x) * x,
-                       self.image_min_y + (self.image_max_y - self.image_min_y) * y)
+        bounds = self.image_bounds
+        return QPointF(bounds.min_x + (bounds.max_x - bounds.min_x) * x,
+                       bounds.min_y + (bounds.max_y - bounds.min_y) * y)
 
     def select_area(self, area: Area):
         self.area = area
+
+        if "total_boundings" in area.extra:
+            min_x, max_x, min_y, max_y = [area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"]]
+        else:
+            min_x, min_y = math.inf, math.inf
+            max_x, max_y = -math.inf, -math.inf
+            for node in area.nodes:
+                if node.location is None:
+                    continue
+                min_x = min(min_x, node.location.x)
+                min_y = min(min_y, node.location.y)
+                max_x = max(max_x, node.location.x)
+                max_y = max(max_y, node.location.y)
+
+        self.area_bounds = BoundsFloat(
+            min_x=min_x,
+            min_y=min_y,
+            max_x=max_x,
+            max_y=max_y,
+        )
+        self.area_size = QSizeF(
+            max(max_x - min_x, 1),
+            max(max_y - min_y, 1),
+        )
         self.update()
 
     def highlight_node(self, node: Node):
         self.highlighted_node = node
         self.update()
 
+    def _update_scale_variables(self):
+        canvas_width = self.rect().width() - self.border * 2
+        canvas_height = self.rect().height() - self.border * 2
+
+        self.scale = min(canvas_width / self.area_size.width(),
+                         canvas_height / self.area_size.height())
+
+        self.canvas_size = QSizeF(canvas_width, canvas_width)
+
+    # def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
+    #     print(self.mapFromGlobal(event.globalPos()))
+    #
+    #     menu = QtWidgets.QMenu(self)
+    #     menu.addAction(QtWidgets.QAction("Create node here", self))
+    #     menu.exec_(event.globalPos())
+
+    def game_loc_to_qt_local(self, pos: Union[NodeLocation, list[float]]) -> QPointF:
+        if isinstance(pos, NodeLocation):
+            x = pos.x
+            y = pos.y
+        else:
+            x, y = pos[0], pos[1]
+        return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
+
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
-        area = self.area
+        if self.world is None or self.area is None:
+            return
+
+        self._update_scale_variables()
 
         painter = QtGui.QPainter(self)
         painter.setPen(QtGui.Qt.white)
         painter.setFont(QtGui.QFont("Arial", 10))
 
-        border = 75
-        canvas_width = self.rect().width() - border * 2
-        canvas_height = self.rect().height() - border * 2
-        painter.translate(border, border)
+        painter.translate(self.border, self.border)
 
-        def centeredText(pos: QPointF, text: str):
-            rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
-            painter.drawText(rect, QtGui.Qt.AlignCenter, text)
+        # Center what we're drawing
+        painter.translate(
+            (self.canvas_size.width() - self.area_size.width() * self.scale) / 2,
+            (self.canvas_size.height() - self.area_size.height() * self.scale) / 2,
+        )
 
-        if area is not None:
-            if "total_boundings" in area.extra:
-                min_x, max_x, min_y, max_y = [area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"]]
-            else:
-                min_x, min_y = math.inf, math.inf
-                max_x, max_y = -math.inf, -math.inf
-                for node in area.nodes:
-                    if node.location is None:
-                        continue
-                    min_x = min(min_x, node.location.x)
-                    min_y = min(min_y, node.location.y)
-                    max_x = max(max_x, node.location.x)
-                    max_y = max(max_y, node.location.y)
+        if self._background_image is not None:
+            scaled_border = self.border / self.scale
 
-            area_width = max(max_x - min_x, 1)
-            area_height = max(max_y - min_y, 1)
-            scale = min(canvas_width / area_width, canvas_height / area_height)
-            if scale == 0:
-                return
-
-            # Center what we're drawing
-            painter.translate(
-                (canvas_width - area_width * scale) / 2,
-                (canvas_height - area_height * scale) / 2,
-            )
-
-            scaled_border = border / scale
+            wbounds = self.world_bounds
+            abounds = self.area_bounds
 
             # Calculate the top-left corner and bottom-right of the background image
-            percent_x_start = (min_x - self.world_min_x - scaled_border) / (self.world_max_x - self.world_min_x)
-            percent_x_end = (max_x - self.world_min_x + scaled_border) / (self.world_max_x - self.world_min_x)
-            percent_y_start = 1 - (max_y - self.world_min_y + scaled_border) / (self.world_max_y - self.world_min_y)
-            percent_y_end = 1 - (min_y - self.world_min_y - scaled_border) / (self.world_max_y - self.world_min_y)
+            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border) / (wbounds.max_x - wbounds.min_x)
+            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border) / (wbounds.max_x - wbounds.min_x)
+            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border) / (wbounds.max_y - wbounds.min_y)
+            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border) / (wbounds.max_y - wbounds.min_y)
 
-            if self._background_image is not None:
-                painter.drawImage(
-                    QRectF(-border, -border,
-                           border * 2 + area_width * scale,
-                           border * 2 + area_height * scale),
-                    self._background_image,
-                    QRectF(self.get_image_point(percent_x_start, percent_y_start),
-                           self.get_image_point(percent_x_end, percent_y_end)))
+            painter.drawImage(
+                QRectF(-self.border, -self.border,
+                       self.border * 2 + self.area_size.width() * self.scale,
+                       self.border * 2 + self.area_size.height() * self.scale),
+                self._background_image,
+                QRectF(self.get_image_point(percent_x_start, percent_y_start),
+                       self.get_image_point(percent_x_end, percent_y_end)))
 
-            def scale_point(x, y):
-                return QPointF(scale * (x - min_x), scale * (max_y - y))
+        area = self.area
+        if "polygon" in area.extra:
+            points = [
+                self.game_loc_to_qt_local(p)
+                for p in area.extra["polygon"]
+            ]
+            painter.drawPolygon(points, QtGui.Qt.FillRule.OddEvenFill)
 
-            if "polygon" in area.extra:
-                points = [
-                    scale_point(*p)
-                    for p in area.extra["polygon"]
-                ]
-                painter.drawPolygon(points, QtGui.Qt.FillRule.OddEvenFill)
+        brush = painter.brush()
+        brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
 
-            brush = painter.brush()
-            brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
+        for node in area.nodes:
+            if node.location is None:
+                continue
 
-            for node in area.nodes:
+            brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+            painter.setBrush(brush)
+
+            p = self.game_loc_to_qt_local(node.location)
+            if self.highlighted_node == node:
+                painter.drawEllipse(p, 7, 7)
+            painter.drawEllipse(p, 5, 5)
+            centered_text(painter, p + QPointF(0, 15), node.name)
+
+        if (self.highlighted_node is not None and self.highlighted_node in area.nodes
+                and self.highlighted_node.location is not None):
+            for node in area.connections[self.highlighted_node].keys():
                 if node.location is None:
                     continue
-
-                brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
-                painter.setBrush(brush)
-
-                p = scale_point(node.location.x, node.location.y)
-                if self.highlighted_node == node:
-                    painter.drawEllipse(p, 7, 7)
-                painter.drawEllipse(p, 5, 5)
-                centeredText(p + QPointF(0, 15), node.name)
-
-            if (self.highlighted_node is not None and self.highlighted_node in area.nodes
-                    and self.highlighted_node.location is not None):
-                for node in area.connections[self.highlighted_node].keys():
-                    if node.location is None:
-                        continue
-                    painter.drawLine(scale_point(self.highlighted_node.location.x, self.highlighted_node.location.y),
-                                     scale_point(node.location.x, node.location.y))
+                painter.drawLine(
+                    self.game_loc_to_qt_local(self.highlighted_node.location),
+                    self.game_loc_to_qt_local(node.location))
