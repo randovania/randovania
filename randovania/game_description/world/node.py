@@ -30,6 +30,7 @@ class Node:
     name: str
     heal: bool
     location: Optional[NodeLocation]
+    description: str
     extra: Dict[str, typing.Any]
     index: int
 

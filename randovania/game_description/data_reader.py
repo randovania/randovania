@@ -231,6 +231,7 @@ class WorldReader:
                 "name": name,
                 "heal": data["heal"],
                 "location": location,
+                "description": data["description"],
                 "extra": frozendict(data["extra"]),
                 "index": self.generic_index,
             }

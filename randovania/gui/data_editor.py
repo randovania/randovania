@@ -320,6 +320,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
+        self.node_description_label.setText(node.description)
         self.update_other_node_connection()
 
         for button, source_node in self.radio_button_to_node.items():
@@ -482,7 +483,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
-        new_node = GenericNode(node_name, False, location, {}, self.generic_index)
+        new_node = GenericNode(node_name, False, location, "", {}, self.generic_index)
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
