@@ -1,3 +1,4 @@
+from build.lib.randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 
@@ -70,7 +71,66 @@ def _migrate_v1(data: dict) -> dict:
     return data
 
 def _migrate_v2(data: dict) -> dict:
-    pass
+    db = data["resource_database"]
+
+    find_resource = lambda res_type, index: filter(lambda item: item.index == index, db[res_type])[0]
+
+    special_indices = {"energy_tank_item_index", "item_percentage_index", "multiworld_magic_item_index"}
+    for name in special_indices:
+        index = db[name]
+        db[name] = find_resource("items", index)
+
+    def migrate_reduction(reduction: dict) -> dict:
+        reduction["name"] = find_resource(ResourceType.DAMAGE.value, reduction.pop("index"))
+        for red in reduction["reductions"]:
+            red["name"] = find_resource(ResourceType.ITEM.value, red.pop("index"))
+        return reduction
+    
+    db["damage_reductions"] = [migrate_reduction(red) for red in db["damage_reductions"]]
+
+    def migrate_requirement(requirement: dict) -> dict:
+        data = requirement["data"]
+
+        if requirement["type"] == "resource":
+            data["type"] = ResourceType.from_index(data["type"]).value
+            data["name"] = find_resource(data["type"], data.pop("index"))
+        else:
+            data["items"] = [migrate_requirement(req) for req in data["items"]]
+        
+        return {
+            "type": requirement["type"],
+            "data": data
+        }
+    
+    db["requirement_template"] = {k: migrate_requirement(v) for k,v in db["requirement_template"].items()}
+    data["victory_condition"] = migrate_requirement(data["victory_condition"])
+    
+    # TODO: move dock types to keys instead of indices as well?
+    for dock_type in data["dock_weakness_database"]:
+        for dock in dock_type:
+            dock["requirement"] = migrate_requirement(dock["requirement"])
+    
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                node["connections"] = {k: migrate_requirement(v) for k,v in node["connections"].items()}
+                
+                node_type = node["node_type"]
+                if node_type == "event":
+                    node["event_name"] = find_resource(ResourceType.EVENT.value, node.pop("event_index"))
+                if node_type == "translator_gate":
+                    pass # TODO
+                if node_type == "pickup":
+                    pass # TODO
+
+    lists_to_migrate = {restype for restype in ResourceType if restype < ResourceType._INDEXED}
+    for name in lists_to_migrate:
+        new_res_list = {resource.pop("short_name"): resource for resource in db[name]}
+        for resource in new_res_list.items():
+            resource.pop("index")
+        db[name] = new_res_list
+    
+    return data
 
 _MIGRATIONS = {
     1: _migrate_v1,
