@@ -40,7 +40,6 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
-    border: int = 75
     world: Optional[World] = None
     area: Optional[Area] = None
     highlighted_node: Optional[Node] = None
@@ -51,6 +50,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     image_bounds: BoundsInt
 
     scale: float
+    border_x: float = 75
+    border_y: float = 75
     canvas_size: QSizeF
 
     _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
@@ -139,8 +140,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.update()
 
     def _update_scale_variables(self):
-        canvas_width = self.rect().width() - self.border * 2
-        canvas_height = self.rect().height() - self.border * 2
+        self.border_x = self.rect().width() * 0.05
+        self.border_y = self.rect().height() * 0.05
+        canvas_width = max(self.rect().width() - self.border_x * 2, 1)
+        canvas_height = max(self.rect().height() - self.border_y * 2, 1)
 
         self.scale = min(canvas_width / self.area_size.width(),
                          canvas_height / self.area_size.height())
@@ -149,16 +152,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
-
-        # Revert the border
-        local_pos -= QPointF(self.border, self.border)
-
-        # Revert the centering
-        local_pos -= QPointF(
-            (self.canvas_size.width() - self.area_size.width() * self.scale) / 2,
-            (self.canvas_size.height() - self.area_size.height() * self.scale) / 2,
-        )
-
+        local_pos -= self.get_area_canvas_offset()
         self._next_node_location = self.qt_local_to_game_loc(local_pos)
 
         menu = QtWidgets.QMenu(self)
@@ -179,6 +173,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
                             self.area_bounds.max_y - (pos.y() / self.scale),
                             0)
 
+    def get_area_canvas_offset(self):
+        return QPointF(
+            (self.width() - self.area_size.width() * self.scale) / 2,
+            (self.height() - self.area_size.height() * self.scale) / 2,
+        )
+
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
         if self.world is None or self.area is None:
             return
@@ -189,30 +189,27 @@ class DataEditorCanvas(QtWidgets.QWidget):
         painter.setPen(QtGui.Qt.white)
         painter.setFont(QtGui.QFont("Arial", 10))
 
-        painter.translate(self.border, self.border)
-
         # Center what we're drawing
-        painter.translate(
-            (self.canvas_size.width() - self.area_size.width() * self.scale) / 2,
-            (self.canvas_size.height() - self.area_size.height() * self.scale) / 2,
-        )
+        painter.translate(self.get_area_canvas_offset())
 
         if self._background_image is not None:
-            scaled_border = self.border / self.scale
+            scaled_border_x = 8 * self.border_x / self.scale
+            scaled_border_y = 8 * self.border_y / self.scale
 
             wbounds = self.world_bounds
             abounds = self.area_bounds
 
             # Calculate the top-left corner and bottom-right of the background image
-            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border) / (wbounds.max_x - wbounds.min_x)
-            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border) / (wbounds.max_x - wbounds.min_x)
-            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border) / (wbounds.max_y - wbounds.min_y)
-            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border) / (wbounds.max_y - wbounds.min_y)
+            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border_x) / (wbounds.max_x - wbounds.min_x)
+            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border_x) / (wbounds.max_x - wbounds.min_x)
+            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
-                QRectF(-self.border, -self.border,
-                       self.border * 2 + self.area_size.width() * self.scale,
-                       self.border * 2 + self.area_size.height() * self.scale),
+                QRectF(-scaled_border_x * self.scale,
+                       -scaled_border_y * self.scale,
+                       (scaled_border_x * 2 + self.area_size.width()) * self.scale,
+                       (scaled_border_y * 2 + self.area_size.height()) * self.scale),
                 self._background_image,
                 QRectF(self.get_image_point(percent_x_start, percent_y_start),
                        self.get_image_point(percent_x_end, percent_y_end)))
