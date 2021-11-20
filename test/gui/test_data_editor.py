@@ -94,7 +94,7 @@ def test_create_node_and_save(tmp_path,
     skip_qtbot.addWidget(window)
 
     # Run
-    window._do_create_node("Some Node")
+    window._do_create_node("Some Node", None)
     window._save_as_internal_database()
 
     # Assert
