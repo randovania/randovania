@@ -300,9 +300,25 @@ def convert_prime2_pickups():
             ],
         }, meta_out, indent=4)
 
+    unique_anim = []
     for asset in converter.converted_assets.values():
+        if asset.type == "ANIM":
+            for assetb in converter.converted_assets.values():
+                if assetb.type == "ANCS" and any(asset.id in x for x in converted_dependencies[assetb.id]):
+                    for dep in converted_dependencies[assetb.id]:
+                        if asset.id in unique_anim:
+                            continue
+                        if dep.type == "EVNT":
+                            unique_anim.append(asset.id)
+                            asset.resource["anim"]["event_id"] = dep.id
+                            break
+
+    for asset in converter.converted_assets.values():
+        assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
+        if len(assetdata) % 32 != 0:
+            assetdata += b"\xFF" * (32-(len(assetdata) % 32))
         Path("converted").joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
-            format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
+            assetdata
         )
 
     logging.info(f"Time took: {time.time() - start}")
