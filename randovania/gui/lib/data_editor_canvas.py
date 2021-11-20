@@ -105,31 +105,31 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     max_x = max(max_x, node.location.x)
                     max_y = max(max_y, node.location.y)
 
-            scale = min(canvas_width / max(max_x - min_x, 1),
-                        canvas_height / max(max_y - min_y, 1))
+            area_width = max(max_x - min_x, 1)
+            area_height = max(max_y - min_y, 1)
+            scale = min(canvas_width / area_width, canvas_height / area_height)
             if scale == 0:
                 return
 
+            # Center what we're drawing
+            painter.translate(
+                (canvas_width - area_width * scale) / 2,
+                (canvas_height - area_height * scale) / 2,
+            )
+
             scaled_border = border / scale
+
+            # Calculate the top-left corner and bottom-right of the background image
             percent_x_start = (min_x - self.world_min_x - scaled_border) / (self.world_max_x - self.world_min_x)
             percent_x_end = (max_x - self.world_min_x + scaled_border) / (self.world_max_x - self.world_min_x)
             percent_y_start = 1 - (max_y - self.world_min_y + scaled_border) / (self.world_max_y - self.world_min_y)
             percent_y_end = 1 - (min_y - self.world_min_y - scaled_border) / (self.world_max_y - self.world_min_y)
 
-            # print("=============================================")
-            # print("AREA posX percent: ", percent_x_start, percent_x_end)
-            # print("AREA posY percent: ", percent_y_start, percent_y_end)
-            # print("TO IMAGE", self._background_image.width() * percent_x_start,
-            #       self._background_image.height() * percent_y_start)
-            #
-            # print("AREA min_x", min_x, " WORLD ", self.world_min_x)
-            # print("AREA min_y", min_y, max_y, " WORLD ", self.world_min_y, self.world_max_y)
-
             if self._background_image is not None:
                 painter.drawImage(
                     QRectF(-border, -border,
-                           border * 2 + max(max_x - min_x, 1) * scale,
-                           border * 2 + max(max_y - min_y, 1) * scale),
+                           border * 2 + area_width * scale,
+                           border * 2 + area_height * scale),
                     self._background_image,
                     QRectF(self.get_image_point(percent_x_start, percent_y_start),
                            self.get_image_point(percent_x_end, percent_y_end)))
