@@ -1,3 +1,4 @@
+import functools
 import math
 import os
 from typing import Optional, Type, NamedTuple, Union
@@ -56,6 +57,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
     CreateNodeRequest = Signal(NodeLocation)
+    SelectNodeRequest = Signal(Node)
 
     def __init__(self):
         super().__init__()
@@ -157,6 +159,24 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         menu = QtWidgets.QMenu(self)
         menu.addAction(self._create_node_action)
+
+        menu.addSeparator()
+
+        reference = self.game_loc_to_qt_local(self._next_node_location)
+        has_nearby_node = False
+        for node in self.area.nodes:
+            if node.location is not None and (
+                    self.game_loc_to_qt_local(node.location) - reference).manhattanLength() < 10:
+                a = QtWidgets.QAction(f"Select: {node.name}", self)
+                a.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
+                menu.addAction(a)
+                has_nearby_node = True
+
+        if not has_nearby_node:
+            a = QtWidgets.QAction("No nodes here", self)
+            a.setEnabled(False)
+            menu.addAction(a)
+
         menu.exec_(event.globalPos())
 
     def game_loc_to_qt_local(self, pos: Union[NodeLocation, list[float]]) -> QPointF:
