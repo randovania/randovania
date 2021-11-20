@@ -3,7 +3,7 @@ import math
 import os
 from typing import Optional, Type, NamedTuple, Union
 
-from PySide2 import QtWidgets, QtGui
+from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania import get_data_path
@@ -244,6 +244,35 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         brush = painter.brush()
         brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
+        painter.setBrush(brush)
+
+        if (self.highlighted_node is not None and self.highlighted_node in area.nodes
+                and self.highlighted_node.location is not None):
+
+            for node in area.connections[self.highlighted_node].keys():
+                if node.location is None:
+                    continue
+
+                source = self.game_loc_to_qt_local(self.highlighted_node.location)
+                target = self.game_loc_to_qt_local(node.location)
+                line = QtCore.QLineF(source, target)
+                line_len = line.length()
+                end_point = line.pointAt(1 - 7 / line_len)
+                line.setPoints(end_point, line.pointAt(5 / line_len))
+                painter.drawLine(line)
+
+                line_angle = line.angle()
+                line.setAngle(line_angle + 30)
+                tri_point_1 = line.pointAt(15 / line_len)
+                line.setAngle(line_angle - 30)
+                tri_point_2 = line.pointAt(15 / line_len)
+
+                arrow = QtGui.QPolygonF([
+                    end_point,
+                    tri_point_1,
+                    tri_point_2
+                ])
+                painter.drawPolygon(arrow)
 
         for node in area.nodes:
             if node.location is None:
@@ -257,13 +286,3 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 painter.drawEllipse(p, 7, 7)
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
-
-        if (self.highlighted_node is not None and self.highlighted_node in area.nodes
-                and self.highlighted_node.location is not None):
-
-            for node in area.connections[self.highlighted_node].keys():
-                if node.location is None:
-                    continue
-                painter.drawLine(
-                    self.game_loc_to_qt_local(self.highlighted_node.location),
-                    self.game_loc_to_qt_local(node.location))
