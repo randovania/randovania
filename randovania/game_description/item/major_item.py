@@ -13,8 +13,8 @@ class MajorItem:
     item_category: ItemCategory
     broad_category: ItemCategory
     model_name: str
-    progression: Tuple[int, ...]
-    ammo_index: Tuple[int, ...] = tuple()
+    progression: Tuple[str, ...]
+    ammo_index: Tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
     required: bool = False
     original_index: Optional[PickupIndex] = None

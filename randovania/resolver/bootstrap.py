@@ -211,7 +211,7 @@ def patch_resource_database(db: ResourceDatabase, configuration: BaseConfigurati
             base_damage_reduction = prime1_absolute_damage_reduction
 
     elif configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
-        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 2)] = [
+        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
             DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
             DamageReduction(db.get_item_by_name("Light Suit"), 0.0),

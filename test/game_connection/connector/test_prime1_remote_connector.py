@@ -33,7 +33,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
     db = connector.game.resource_database
     if artifact:
-        extra = (db.get_item(30), 1)
+        extra = (db.get_item("Strength"), 1)
     else:
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 

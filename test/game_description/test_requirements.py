@@ -40,7 +40,7 @@ def _database() -> ResourceDatabase:
 
 
 def _make_req(name: str):
-    req = SimpleResourceInfo(hash(name), name, name, "")
+    req = SimpleResourceInfo(name, name, "")
     id_req = ResourceRequirement(req, 1, False)
     return req, id_req
 

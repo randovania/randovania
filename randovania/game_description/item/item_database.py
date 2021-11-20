@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, Tuple
+from randovania.game_description import schema_migration
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
@@ -21,6 +22,8 @@ def read_database(database_data: Dict, game: RandovaniaGame) -> ItemDatabase:
     :param game:
     :return:
     """
+    schema_migration.migrate_items_to_current(database_data)
+
     item_categories = {
         name: ItemCategory.from_json(name, value)
         for name, value in database_data["item_categories"].items()
@@ -70,4 +73,4 @@ def write_database(database: ItemDatabase) -> Dict:
         for category, items in database.default_items.items()
     }
 
-    return {"item_categories": item_categories, "items": major_items_data, "ammo": ammo_data, "default_items": default_data}
+    return {"schema_version": schema_migration.CURRENT_ITEMDB_VERSION, "item_categories": item_categories, "items": major_items_data, "ammo": ammo_data, "default_items": default_data}

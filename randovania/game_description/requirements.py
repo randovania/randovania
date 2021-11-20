@@ -324,7 +324,7 @@ class ResourceRequirement(Requirement):
 
     @property
     def _as_comparison_tuple(self):
-        return self.resource.resource_type, self.resource.index, self.amount, self.negate
+        return self.resource.resource_type, self.resource.short_name, self.amount, self.negate
 
     def __lt__(self, other: "ResourceRequirement") -> bool:
         return self._as_comparison_tuple < other._as_comparison_tuple

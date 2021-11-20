@@ -28,8 +28,7 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(echoes_resource_d
     # Assert
     assert item_pool == []
     assert initial_items == {
-        ItemResourceInfo(echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
-                         f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
+        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
         for i in range(4, 10)
     }
     assert list(pickup_assignment.keys()) == sky_temple_keys._GUARDIAN_INDICES
@@ -49,7 +48,6 @@ def test_sky_temple_key_distribution_logic_with_quantity(echoes_resource_databas
     ]
     assert pickup_assignment == {}
     assert initial_items == {
-        ItemResourceInfo(echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
-                         f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
+        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
         for i in range(quantity + 1, 10)
     }

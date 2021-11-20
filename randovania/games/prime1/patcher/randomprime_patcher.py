@@ -179,7 +179,7 @@ def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.Exported
 
 
 def _starting_items_value_for(resource_database: ResourceDatabase,
-                              starting_items: CurrentResources, index: int) -> Union[bool, int]:
+                              starting_items: CurrentResources, index: str) -> Union[bool, int]:
     item = resource_database.get_item(index)
     value = starting_items.get(item, 0)
     if item.max_capacity > 1:

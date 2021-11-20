@@ -16,11 +16,11 @@ from randovania.layout.base.major_item_state import MajorItemState
 @pytest.mark.parametrize("percentage", [False, True])
 def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resource_database, generic_item_category):
     # Setup
-    item_a = echoes_resource_database.get_item(10)
-    item_b = echoes_resource_database.get_item(15)
-    item_c = echoes_resource_database.get_item(18)
-    ammo_a = echoes_resource_database.get_item(42)
-    ammo_b = echoes_resource_database.get_item(45)
+    item_a = echoes_resource_database.get_item("DarkVisor")
+    item_b = echoes_resource_database.get_item("MorphBall")
+    item_c = echoes_resource_database.get_item("Bombs")
+    ammo_a = echoes_resource_database.get_item("EnergyTank")
+    ammo_b = echoes_resource_database.get_item("DarkAmmo")
 
     less_generic_item_category = ItemCategory(
         name="the_category",
@@ -35,8 +35,8 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         item_category=less_generic_item_category,
         broad_category=generic_item_category,
         model_name="SuperModel",
-        progression=(10, 15, 18),
-        ammo_index=(42, 45),
+        progression=("DarkVisor", "MorphBall", "Bombs"),
+        ammo_index=("EnergyTank", "DarkAmmo"),
         required=False,
         original_index=None,
         probability_offset=5,
@@ -89,9 +89,9 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
 ])
 def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
     # Setup
-    missile = echoes_resource_database.get_item(44)
-    missile_launcher = echoes_resource_database.get_item(73)
-    temporary = echoes_resource_database.get_item(71)
+    missile = echoes_resource_database.get_item("Missile")
+    missile_launcher = echoes_resource_database.get_item("MissileLauncher")
+    temporary = echoes_resource_database.get_item("Temporary1")
 
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -140,10 +140,10 @@ def test_create_seeker_launcher(ammo_quantity: int,
                                 echoes_resource_database,
                                 ):
     # Setup
-    missile = echoes_resource_database.get_item(44)
-    missile_launcher = echoes_resource_database.get_item(73)
-    seeker_launcher = echoes_resource_database.get_item(26)
-    temporary = echoes_resource_database.get_item(71)
+    missile = echoes_resource_database.get_item("Missile")
+    missile_launcher = echoes_resource_database.get_item("MissileLauncher")
+    seeker_launcher = echoes_resource_database.get_item("Seekers")
+    temporary = echoes_resource_database.get_item("Temporary1")
 
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -188,17 +188,17 @@ def test_create_seeker_launcher(ammo_quantity: int,
 @pytest.mark.parametrize("requires_major_item", [False, True])
 def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, echoes_resource_database):
     # Setup
-    primary_a = echoes_resource_database.get_item(73)
-    ammo_a = echoes_resource_database.get_item(42)
-    temporary_a = echoes_resource_database.get_item(71)
+    primary_a = echoes_resource_database.get_item("MissileLauncher")
+    ammo_a = echoes_resource_database.get_item("Missile")
+    temporary_a = echoes_resource_database.get_item("Temporary1")
 
     ammo = Ammo(
         game=echoes_resource_database.game_enum,
         name="The Item",
-        items=(42,),
+        items=("Missile",),
         broad_category=USELESS_ITEM_CATEGORY,
-        unlocked_by=73,
-        temporary=71,
+        unlocked_by="MissileLauncher",
+        temporary="Temporary1",
         model_name="AmmoModel",
     )
     ammo_count = (11, 150)

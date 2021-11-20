@@ -132,7 +132,7 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
 @pytest.mark.parametrize("has_translator", [False, True])
 def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database):
     # Setup
-    scan_visor = echoes_resource_database.get_item(10)
+    scan_visor = echoes_resource_database.get_item("DarkVisor")
 
     node_a = GenericNode("Node A", True, None, {}, 0)
     node_b = GenericNode("Node B", True, None, {}, 1)

@@ -15,9 +15,9 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     configuration = MagicMock()
     configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     configuration.elevators.is_vanilla = vanilla_elevators
-    gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 16)
-    torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 17)
-    great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 18)
+    gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
+    torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
+    great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
     result = bootstrap.misc_resources_for_configuration(configuration, echoes_resource_database)

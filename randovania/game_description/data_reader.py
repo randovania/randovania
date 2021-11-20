@@ -40,9 +40,11 @@ X = TypeVar('X')
 Y = TypeVar('Y')
 
 
-def read_array(data: Dict[str, Y], item_reader: Callable[[str,Y], X]) -> List[X]:
+def read_dict(data: Dict[str, Y], item_reader: Callable[[str,Y], X]) -> List[X]:
     return [item_reader(name, item) for name, item in data.items()]
 
+def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
+    return [item_reader(item) for item in data]
 
 def read_resource_info(name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
     return SimpleResourceInfo(data["long_name"],
@@ -60,14 +62,14 @@ def read_trick_resource_info(name: str, data: Dict) -> TrickResourceInfo:
 
 
 def read_resource_info_array(data: Dict[str, Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
-    return read_array(data, lambda name, info: read_resource_info(name, info, resource_type=resource_type))
+    return read_dict(data, lambda name, info: read_resource_info(name, info, resource_type=resource_type))
 
 
 # Damage
 
 def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageReduction:
-    return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM)
-                           if data["index"] is not None else None,
+    return DamageReduction(find_resource_info_with_id(items, data["name"], ResourceType.ITEM)
+                           if data["name"] is not None else None,
                            data["multiplier"])
 
 
@@ -78,7 +80,7 @@ def read_damage_reductions(data: List[Dict], items: List[ItemResourceInfo]) -> T
 def read_resource_reductions_dict(data: List[Dict], db: ResourceDatabase,
                                   ) -> Dict[SimpleResourceInfo, List[DamageReduction]]:
     return {
-        db.get_by_type_and_index(ResourceType.DAMAGE, item["index"]): read_damage_reductions(item["reductions"],
+        db.get_by_type_and_index(ResourceType.DAMAGE, item["name"]): read_damage_reductions(item["reductions"],
                                                                                              db.item)
         for item in data
     }
@@ -145,7 +147,7 @@ def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Require
 
 def read_single_resource_gain(item: Dict, database: "ResourceDatabase") -> Tuple[ResourceInfo, int]:
     resource = database.get_by_type_and_index(ResourceType(item["resource_type"]),
-                                              item["resource_index"])
+                                              item["resource_name"])
     amount = item["amount"]
 
     return resource, amount
@@ -270,7 +272,7 @@ class WorldReader:
             elif node_type == "event":
                 return EventNode(
                     **generic_args,
-                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"])
+                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_name"])
                 )
 
             elif node_type == "translator_gate":
@@ -284,12 +286,12 @@ class WorldReader:
                 lore_type = LoreType(data["lore_type"])
 
                 if lore_type == LoreType.LUMINOTH_LORE:
-                    required_translator = self.resource_database.get_item(data["lore_extra"])
+                    required_translator = self.resource_database.get_item(data["extra"]["translator"])
                 else:
                     required_translator = None
 
                 if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-                    hint_index = data["lore_extra"]
+                    hint_index = data["extra"]["hint_index"]
                 else:
                     hint_index = None
 
@@ -365,12 +367,12 @@ def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[s
 
 
 def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase:
-    item = read_array(data["items"], read_item_resource_info)
+    item = read_dict(data["items"], read_item_resource_info)
     db = ResourceDatabase(
         game_enum=game,
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
-        trick=read_array(data["tricks"], read_trick_resource_info),
+        trick=read_dict(data["tricks"], read_trick_resource_info),
         damage=read_resource_info_array(data["damage"], ResourceType.DAMAGE),
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
@@ -398,15 +400,15 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
     return MinimalLogicData(
         items_to_exclude=[
-            IndexWithReason(it["index"], it.get("when_shuffled"))
+            IndexWithReason(it["name"], it.get("when_shuffled"))
             for it in data["items_to_exclude"]
         ],
         custom_item_amount={
-            it["index"]: it["value"]
+            it["name"]: it["value"]
             for it in data["custom_item_amount"]
         },
         events_to_exclude=[
-            IndexWithReason(it["index"], it.get("reason"))
+            IndexWithReason(it["name"], it.get("reason"))
             for it in data["events_to_exclude"]
         ],
     )
