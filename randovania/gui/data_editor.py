@@ -12,7 +12,7 @@ from qasync import asyncSlot
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -69,6 +69,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
+        self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
+        self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -145,7 +147,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     #     world.extra["map_max_y"] = self.spin_max_y.value()
     #     self.area_view_canvas.select_world(world)
 
-    def on_select_area(self):
+    def on_select_area(self, select_node: Optional[Node] = None):
         for node in self.radio_button_to_node.keys():
             node.deleteLater()
 
@@ -164,10 +166,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             button = QRadioButton(self.points_of_interest_content)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
-            if is_first:
+            if is_first or select_node is node:
                 self.selected_node_button = button
-
-            button.setChecked(is_first)
+                button.setChecked(True)
+            else:
+                button.setChecked(False)
             button.toggled.connect(self.on_select_node)
             is_first = False
             self.points_of_interest_layout.addWidget(button)
@@ -188,6 +191,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def focus_on_area(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+
+    def focus_on_node(self, node: Node):
+        for radio, other_node in self.radio_button_to_node.items():
+            if other_node == node:
+                radio.setChecked(True)
+        self.update_selected_node()
 
     def _on_click_link_to_other_node(self, link: str):
         world_name, area_name, node_name = None, None, None
@@ -478,7 +487,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
             default_database.game_description_for.cache_clear()
 
-    def _create_new_node(self):
+    def _create_new_node(self, location: Optional[NodeLocation] = None):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm or node_name == "":
             return
@@ -489,16 +498,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                                 "A node named '{}' already exists.".format(node_name))
             return
 
-        self._do_create_node(node_name)
+        self._do_create_node(node_name, location)
 
-    def _do_create_node(self, node_name: str):
+    def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
-        new_node = GenericNode(node_name, False, None, {}, self.generic_index)
+        new_node = GenericNode(node_name, False, location, {}, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
         self.game_description.world_list.refresh_node_cache()
 
-        self.on_select_area()
+        self.on_select_area(new_node)
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
