@@ -40,10 +40,19 @@ def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
         #         yield (f"'{node.name}' name suggests a connection to {other_area}, but it "
         #                f"connects to {node.default_connection.area_name}")
 
+        other_node = None
         try:
-            world_list.node_by_identifier(node.default_connection)
+            other_node = world_list.node_by_identifier(node.default_connection)
         except ValueError as e:
             yield f"'{node.name}' is a Dock Node, but connection {node.default_connection} is invalid: {e}"
+
+        if other_node is not None:
+            if isinstance(other_node, DockNode):
+                if other_node.default_connection != world_list.identifier_for_node(node):
+                    yield (f"'{node.name}' connects to {node.default_connection}, but that Dock connects "
+                           f"to {other_node.default_connection} instead.")
+            else:
+                yield f"'{node.name}' connects to {node.default_connection} which is not a DockNode"
 
     elif any(node.name.startswith(dock_type.node_name_prefix) for dock_type in iterate_enum(DockType)):
         yield f"'{node.name}' is not a Dock Node, naming suggests it should be."
