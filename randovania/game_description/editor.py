@@ -44,12 +44,11 @@ class Editor:
         def sub(n: Node):
             return new_node if n == old_node else n
 
-        if old_node.name != new_node.name:
-            old_identifier = self.game.world_list.identifier_for_node(old_node)
-            self.replace_references_to_node_identifier(
-                old_identifier,
-                dataclasses.replace(old_identifier, node_name=new_node.name)
-            )
+        old_identifier = self.game.world_list.identifier_for_node(old_node)
+        self.replace_references_to_node_identifier(
+            old_identifier,
+            dataclasses.replace(old_identifier, node_name=new_node.name)
+        )
 
         area_node_list = area.nodes
         for i, node in enumerate(area_node_list):
