@@ -21,24 +21,21 @@ Extra - asset_id: collision_camera_000
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False
-  * Extra - actor_name: PRP_CV_AmmoStation001_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  * Extra - usable_entity: PRP_CV_AmmoStation001
+> Ammo Recharge; Heals? False
+  * Extra - actor_name: PRP_CV_AmmoStation001
+  * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AmmoStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
 
-> Start Point 2; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_AccessPoint_1B
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_1B
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_000_Init (A)
 Extra - total_boundings: {'x1': -5200.0, 'x2': -900.0, 'y1': -9800.0, 'y2': -7700.0}
 Extra - polygon: [[-900.0, -7700.0], [-5200.0, -7700.0], [-5200.0, -9800.0], [-900.0, -9800.0]]
 Extra - asset_id: collision_camera_000_Init
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: StartPoint0
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (Door002 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_013 (A)/Door (Door002 (CG-CG))
   * Extra - actor_name: Door002 (CG-CG)
@@ -47,6 +44,10 @@ Extra - asset_id: collision_camera_000_Init
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: StartPoint0
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_001 (A)
@@ -150,14 +151,14 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_ProtoEmmy
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Pickup (item_missiletank_005); Heals? False
   * Pickup 31; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ProtoEmmy
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_004 (A)
@@ -234,10 +235,6 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: Item_MissileTank001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_EmmyCave
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (Door062 (PW-PW, Special)); Heals? False
   * Power Beam Door to collision_camera_006 (A)/Door (Door062 (PW-PW, Special))
   * Extra - actor_name: Door062 (PW-PW, Special)
@@ -251,6 +248,10 @@ Extra - asset_id: collision_camera_005
   * Not Determined to collision_camera_004 (A)/Door (DoorEmmy10_000)
   * Extra - actor_name: DoorEmmy10_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_EmmyCave
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_006 (A)
@@ -344,13 +345,6 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Elevator (teleport_baselab_000); Heals? False; Spawn Point
-  * Teleporter to Dairon - collision_camera_001 (D)
-  * Extra - actor_name: teleport_baselab_000
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: teleport_cave_000_platform
-
 > Door (DoorPowerPower_001); Heals? False
   * Power Beam Door to collision_camera_071 (A)/Door (DoorPowerPower_001)
   * Extra - actor_name: DoorPowerPower_001
@@ -387,10 +381,14 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
 
-> Start Point 1; Heals? False
-  * Extra - actor_name: teleport_baselab_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - usable_entity: teleport_baselab_000
+> Elevator (teleport_baselab_000); Heals? False; Spawn Point
+  * Teleporter to Dairon - collision_camera_001 (D)
+  * Extra - actor_name: teleport_baselab_000
+  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+  * Extra - elevator_component: CTeleporterUsableComponent
+  * Extra - target_spawn_point: teleport_cave_000_platform
+  * Extra - start_point_actor_name: teleport_baselab_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
 
 ----------------
 collision_camera_009 (A)
@@ -439,11 +437,6 @@ collision_camera_010 (A)
 Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -6200.0, 'y2': 2700.0}
 Extra - polygon: [[-1200.0, 2200.0], [-5200.0, 2200.0], [-5200.0, -5600.0], [-4800.0, -5600.0], [-3300.0, -6200.0], [-1200.0, -6200.0]]
 Extra - asset_id: collision_camera_010
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_PlatformCaveWaterWeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_valve/charclasses/weightactivatedplatform_valve.bmsad
-  * Extra - usable_entity: PRP_CV_PlatformCaveWater_B
-
 > Door (doorclosedpower_000); Heals? False
   * Not Determined to collision_camera_051 (A)/Door (doorclosedpower_000)
   * Extra - actor_name: doorclosedpower_000
@@ -503,6 +496,12 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Water Device; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_PlatformCaveWater_B
+  * Extra - actor_def: actordef:actors/props/platformcavewaterb/charclasses/platformcavewaterb.bmsad
+  * Extra - start_point_actor_name: PRP_CV_PlatformCaveWaterWeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_valve/charclasses/weightactivatedplatform_valve.bmsad
+
 ----------------
 collision_camera_011 (A)
 Extra - total_boundings: {'x1': -12200.0, 'x2': -8200.0, 'y1': 300.0, 'y2': 4800.0}
@@ -527,11 +526,6 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_EnergyStation002_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
-  * Extra - usable_entity: PRP_CV_EnergyStation002
-
 > Pickup (item_missiletank_003); Heals? False
   * Pickup 20; Major Location? False
   * Extra - actor_name: item_missiletank_003
@@ -546,17 +540,20 @@ Extra - asset_id: collision_camera_011
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 2; Heals? False
-  * Extra - actor_name: LE_Platform_Teleport_FromMagma
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - usable_entity: LE_Teleport_FromMagma
+> Life Recharge; Heals? True
+  * Extra - actor_name: PRP_CV_EnergyStation002
+  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_EnergyStation002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
 
-> Elevator (LE_Teleport_FromMagma); Heals? False
+> Elevator (LE_Teleport_FromMagma); Heals? False; Spawn Point
   * Teleporter to Cataris - collision_camera_025 (C)
   * Extra - actor_name: LE_Teleport_FromMagma
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: LE_Platform_Teleport_FromCave
+  * Extra - start_point_actor_name: LE_Platform_Teleport_FromMagma
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
 
 ----------------
 collision_camera_012 (A)
@@ -581,10 +578,11 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_SaveStation003_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
-  * Extra - usable_entity: PRP_CV_SaveStation003
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation003
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation003_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_013 (A)
@@ -651,9 +649,9 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: ItemSphere_ChargeBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_ChargeBeam
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChargeBeam
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_015 (A)
@@ -797,10 +795,6 @@ Extra - asset_id: collision_camera_017
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_MagnetGlove
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (DoorFrame_009); Heals? False
   * Access Open to collision_camera_015 (A)/Door (DoorFrame_009)
   * Extra - actor_name: DoorFrame_009
@@ -828,6 +822,10 @@ Extra - asset_id: collision_camera_017
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_MagnetGlove
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
 ----------------
 collision_camera_018 (A)
 Extra - total_boundings: {'x1': 7800.0, 'x2': 10900.0, 'y1': -3650.0, 'y2': -2850.0}
@@ -852,9 +850,9 @@ collision_camera_020 (A)
 Extra - total_boundings: {'x1': 17800.0, 'x2': 21900.0, 'y1': -550.0, 'y2': 800.0}
 Extra - polygon: [[21900.0, 800.0], [17800.0, 800.0], [17800.0, -550.0], [21900.0, -550.0]]
 Extra - asset_id: collision_camera_020
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_OpticalCamo
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_OpticalCamo
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_021 (A)
@@ -884,9 +882,9 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_name: Item_MissileTank005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_AccessPoint_2B
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_022 (A)
@@ -1010,10 +1008,11 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_SaveStation002_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
-  * Extra - usable_entity: PRP_CV_SaveStation002
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation002
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_026 (A)
@@ -1028,15 +1027,6 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-
-> Start Point 1; Heals? False
-  * Extra - actor_name: ev_chainreaction_deviceheat
-  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
-
-> Start Point 2; Heals? False
-  * Extra - actor_name: ev_chainreaction_weightactivatedplatform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
-  * Extra - usable_entity: ev_chainreaction_deviceheat
 
 > Door (Door053); Heals? False
   * Charge Beam Door to collision_camera_055 (A)/Door (Door053)
@@ -1056,9 +1046,15 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 3; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_ChainReaction
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Thermal Device; Heals? False
+  * Extra - actor_name: ev_chainreaction_deviceheat
+  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+  * Extra - start_point_actor_name: ev_chainreaction_weightactivatedplatform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_028 (A)
@@ -1107,10 +1103,6 @@ collision_camera_030 (A)
 Extra - total_boundings: {'x1': -17100.0, 'x2': -12100.0, 'y1': 8100.0, 'y2': 10142.0}
 Extra - polygon: [[-12100.0, 10142.0], [-17100.0, 10142.0], [-17100.0, 9000.0], [-16500.0, 9000.0], [-14600.0, 8100.0], [-12100.0, 8100.0]]
 Extra - asset_id: collision_camera_030
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Post_ChainReaction
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Pickup (item_energytank_000); Heals? False
   * Pickup 14; Major Location? False
   * Extra - actor_name: item_energytank_000
@@ -1124,6 +1116,10 @@ Extra - asset_id: collision_camera_030
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Post_ChainReaction
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_031 (A)
@@ -1153,9 +1149,9 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_VariaSuit
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_VariaSuit
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_032 (A)
@@ -1212,32 +1208,20 @@ Extra - asset_id: collision_camera_033
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Grapple
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Pickup (ItemSphere_GrappleBeam); Heals? False
   * Pickup 25; Major Location? True
   * Extra - actor_name: ItemSphere_GrappleBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Grapple
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_034 (A)
 Extra - total_boundings: {'x1': 700.0, 'x2': 2800.0, 'y1': 8700.0, 'y2': 9842.0}
 Extra - polygon: [[2800.0, 9842.0], [700.0, 9842.0], [700.0, 8700.0], [2800.0, 8700.0]]
 Extra - asset_id: collision_camera_034
-> Elevator (elevator_baselab_000); Heals? False
-  * Teleporter to Dairon - collision_camera_011 (D)
-  * Extra - actor_name: elevator_baselab_000
-  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
-  * Extra - elevator_component: CElevatorUsableComponent
-  * Extra - target_spawn_point: elevator_cave_000_platform
-
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: elevator_baselab_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - usable_entity: elevator_baselab_000
-
 > Door (Door066); Heals? False
   * Power Beam Door to collision_camera_032 (A)/Door (Door066)
   * Extra - actor_name: Door066
@@ -1246,6 +1230,15 @@ Extra - asset_id: collision_camera_034
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Elevator (elevator_baselab_000); Heals? False; Spawn Point
+  * Teleporter to Dairon - collision_camera_011 (D)
+  * Extra - actor_name: elevator_baselab_000
+  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: elevator_cave_000_platform
+  * Extra - start_point_actor_name: elevator_baselab_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
 
 ----------------
 collision_camera_045 (A)
@@ -1307,9 +1300,9 @@ Extra - asset_id: collision_camera_049
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_CentralUnit
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_050 (A)
@@ -1344,10 +1337,6 @@ Extra - asset_id: collision_camera_050
   * Extra - actor_name: DoorEmmy08
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_AccessPoint_002
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (doorpresenceframe_000); Heals? False
   * Sensor Lock Door to collision_camera_022 (A)/Door (doorpresenceframe_000)
   * Extra - actor_name: doorpresenceframe_000
@@ -1356,6 +1345,10 @@ Extra - asset_id: collision_camera_050
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_002
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_051 (A)
@@ -1432,15 +1425,16 @@ Extra - asset_id: collision_camera_054
   * Extra - actor_name: DoorEmmy01
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_EnergyStation001_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
-  * Extra - usable_entity: PRP_CV_EnergyStation001
-
 > Pickup (Item_MissileTank010); Heals? False
   * Pickup 22; Major Location? False
   * Extra - actor_name: Item_MissileTank010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Life Recharge; Heals? True; Spawn Point
+  * Extra - actor_name: PRP_CV_EnergyStation001
+  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_EnergyStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
 
 ----------------
 collision_camera_055 (A)
@@ -1507,9 +1501,9 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Pre_ChozoWarriorX
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Pre_ChozoWarriorX
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_057 (A)
@@ -1541,10 +1535,11 @@ Extra - asset_id: collision_camera_058
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_MapStation001_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
-  * Extra - usable_entity: PRP_CV_MapStation001
+> Map Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_MapStation001
+  * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
+  * Extra - start_point_actor_name: PRP_CV_MapStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
 
 ----------------
 collision_camera_059 (A)
@@ -1588,10 +1583,6 @@ Extra - asset_id: collision_camera_060
   * Extra - actor_name: DoorEmmy02
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_WaterValve
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (Door021 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_059 (A)/Door (Door021 (PW-PW)_000)
   * Extra - actor_name: Door021 (PW-PW)_000
@@ -1600,6 +1591,10 @@ Extra - asset_id: collision_camera_060
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_WaterValve
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_061 (A)
@@ -1666,10 +1661,11 @@ Extra - asset_id: collision_camera_063
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_SaveStation001_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
-  * Extra - usable_entity: PRP_CV_SaveStation001
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation001
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_064 (A)
@@ -1726,10 +1722,11 @@ Extra - asset_id: collision_camera_065
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_AccessPoint002_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
-  * Extra - usable_entity: PRP_CV_AccessPoint002
+> Navigation Room; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_AccessPoint002
+  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AccessPoint002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
 
 ----------------
 collision_camera_066 (A)
@@ -1795,23 +1792,20 @@ Extra - asset_id: collision_camera_067
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False
-  * Extra - actor_name: PRP_CV_ThermalDevice
-  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
-
 > Pickup (Item_MissileTank006); Heals? False
   * Pickup 10; Major Location? False
   * Extra - actor_name: Item_MissileTank006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 2; Heals? False
-  * Extra - actor_name: PRP_CV_ThermalDevice_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
-  * Extra - usable_entity: PRP_CV_ThermalDevice
+> Thermal Device; Heals? False
+  * Extra - actor_name: PRP_CV_ThermalDevice
+  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+  * Extra - start_point_actor_name: PRP_CV_ThermalDevice_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
 
-> Start Point 3; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_ThermalDevice
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ThermalDevice
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_068 (A)
@@ -1836,10 +1830,11 @@ Extra - asset_id: collision_camera_068
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_AccessPoint001_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
-  * Extra - usable_entity: PRP_CV_AccessPoint001
+> Navigation Room; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_AccessPoint001
+  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AccessPoint001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
 
 ----------------
 collision_camera_069 (A)
@@ -1911,10 +1906,11 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_TotalR_Platform_001
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  * Extra - usable_entity: PRP_TotalR_001
+> Total Recharge; Heals? True; Spawn Point
+  * Extra - actor_name: PRP_TotalR_001
+  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+  * Extra - start_point_actor_name: PRP_TotalR_Platform_001
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
 
 ----------------
 collision_camera_071 (A)
@@ -1967,10 +1963,6 @@ Extra - asset_id: collision_camera_072
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Scorpius
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (Door038 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_004 (A)/Door (Door038 (PW-PW)_000)
   * Extra - actor_name: Door038 (PW-PW)_000
@@ -1979,6 +1971,10 @@ Extra - asset_id: collision_camera_072
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Scorpius
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_073 (A)
@@ -2008,13 +2004,17 @@ collision_camera_074 (A)
 Extra - total_boundings: {'x1': 21650.0, 'x2': 23750.0, 'y1': -2800.0, 'y2': -1658.0}
 Extra - polygon: [[23750.0, -1658.0], [21650.0, -1658.0], [21650.0, -2800.0], [23750.0, -2800.0]]
 Extra - asset_id: collision_camera_074
+> Ammo Recharge; Heals? False
+  * Extra - actor_name: LE_CentraUnitDestroyedProto
+  * Extra - actor_def: actordef:actors/characters/centralunitproto/charclasses/centralunitproto.bmsad
+
 > Start Point 1; Heals? False
-  * Extra - actor_name: PRP_CV_CentralUnitProto
-  * Extra - actor_def: actordef:actors/props/centralunitprotocontroller/charclasses/centralunitprotocontroller.bmsad
+  * Extra - start_point_actor_name: PRP_CV_CentralUnitProto
+  * Extra - start_point_actor_def: actordef:actors/props/centralunitprotocontroller/charclasses/centralunitprotocontroller.bmsad
 
 > Start Point 2; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_CURoom
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  * Extra - start_point_actor_name: SP_Checkpoint_CURoom
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_075 (A)
@@ -2067,28 +2067,17 @@ Extra - asset_id: collision_camera_076
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: PRP_CV_SaveStation004_WeightPlate
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
-  * Extra - usable_entity: PRP_CV_SaveStation004
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation004
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation004_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_077 (A)
 Extra - total_boundings: {'x1': 31700.0, 'x2': 33800.0, 'y1': 2200.0, 'y2': 5200.0}
 Extra - polygon: [[33800.0, 5200.0], [31700.0, 5200.0], [31700.0, 2200.0], [33800.0, 2200.0]]
 Extra - asset_id: collision_camera_077
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: LE_Platform_Elevator_FromMagma
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - usable_entity: LE_Elevator_FromMagma
-
-> Elevator (LE_Elevator_FromMagma); Heals? False
-  * Teleporter to Cataris - collision_camera_000 (C)
-  * Extra - actor_name: LE_Elevator_FromMagma
-  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
-  * Extra - elevator_component: CElevatorUsableComponent
-  * Extra - target_spawn_point: LE_Platform_Elevator_FromCave
-
 > Door (Door062); Heals? False
   * Charge Beam Door to collision_camera_078 (A)/Door (Door062)
   * Extra - actor_name: Door062
@@ -2106,6 +2095,15 @@ Extra - asset_id: collision_camera_077
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Elevator (LE_Elevator_FromMagma); Heals? False; Spawn Point
+  * Teleporter to Cataris - collision_camera_000 (C)
+  * Extra - actor_name: LE_Elevator_FromMagma
+  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: LE_Platform_Elevator_FromCave
+  * Extra - start_point_actor_name: LE_Platform_Elevator_FromMagma
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
 
 ----------------
 collision_camera_078 (A)
@@ -2163,18 +2161,6 @@ collision_camera_080 (A)
 Extra - total_boundings: {'x1': -27800.0, 'x2': -24100.0, 'y1': -1900.0, 'y2': -758.0}
 Extra - polygon: [[-24100.0, -758.0], [-27800.0, -758.0], [-27800.0, -1900.0], [-24100.0, -1900.0]]
 Extra - asset_id: collision_camera_080
-> Elevator (elevator_with_cutscene_aqua_000); Heals? False
-  * Teleporter to Burenia - collision_camera_017 (B)
-  * Extra - actor_name: elevator_with_cutscene_aqua_000
-  * Extra - actor_def: actordef:actors/props/elevator_with_cutscene/charclasses/elevator_with_cutscene.bmsad
-  * Extra - elevator_component: CElevatorUsableComponent
-  * Extra - target_spawn_point: elevator_cave_000_platform
-
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: elevator_aqua_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - usable_entity: elevator_with_cutscene_aqua_000
-
 > Door (Door070); Heals? False
   * Not Determined to collision_camera_081 (A)/Door (Door070)
   * Extra - actor_name: Door070
@@ -2189,16 +2175,20 @@ Extra - asset_id: collision_camera_080
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
+> Elevator (elevator_with_cutscene_aqua_000); Heals? False; Spawn Point
+  * Teleporter to Burenia - collision_camera_017 (B)
+  * Extra - actor_name: elevator_with_cutscene_aqua_000
+  * Extra - actor_def: actordef:actors/props/elevator_with_cutscene/charclasses/elevator_with_cutscene.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: elevator_cave_000_platform
+  * Extra - start_point_actor_name: elevator_aqua_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+
 ----------------
 collision_camera_081 (A)
 Extra - total_boundings: {'x1': -24200.0, 'x2': -19100.0, 'y1': -5200.0, 'y2': -1200.0}
 Extra - polygon: [[-19100.0, -1200.0], [-24200.0, -1200.0], [-24200.0, -5200.0], [-19100.0, -5200.0]]
 Extra - asset_id: collision_camera_081
-> Start Point 1; Heals? False
-  * Extra - actor_name: PRP_TotalR_Platform_000
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  * Extra - usable_entity: PRP_TotalR_000
-
 > Door (doorgrapplegrapple); Heals? False
   * Grapple Beam Door to collision_camera_082 (A)/Door (doorgrapplegrapple)
   * Extra - actor_name: doorgrapplegrapple
@@ -2212,10 +2202,6 @@ Extra - asset_id: collision_camera_081
   * Pickup 24; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-
-> Start Point 2; Heals? False
-  * Extra - actor_name: SP_Checkpoint_ScrewAttack
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Door (Door070); Heals? False
   * Not Determined to collision_camera_080 (A)/Door (Door070)
@@ -2254,21 +2240,28 @@ Extra - asset_id: collision_camera_081
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
+> Total Recharge; Heals? True
+  * Extra - actor_name: PRP_TotalR_000
+  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+  * Extra - start_point_actor_name: PRP_TotalR_Platform_000
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+
+> Start Point 1; Heals? False
+  * Extra - start_point_actor_name: SP_Checkpoint_ScrewAttack
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
 > Elevator (teleporter_magma_000); Heals? False
   * Teleporter to Cataris - collision_camera_015 (C)
   * Extra - actor_name: teleporter_magma_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: teleporter_cave_000_platform
+  * Extra - start_point_actor_name: teleporter_magma_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
 
-> Start Point 3; Heals? False
-  * Extra - actor_name: teleporter_magma_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - usable_entity: teleporter_magma_000
-
-> Start Point 4; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Cooldown
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point 2; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_082 (A)
@@ -2283,10 +2276,6 @@ Extra - asset_id: collision_camera_082
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_ChozoWarriorCave
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Door (Door075); Heals? False
   * Power Beam Door to collision_camera_081 (A)/Door (Door075)
@@ -2310,6 +2299,10 @@ Extra - asset_id: collision_camera_082
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorCave
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_083 (A)
@@ -2422,22 +2415,18 @@ Extra - total_boundings: {'x1': 8300.0, 'x2': 10400.0, 'y1': -4800.0, 'y2': -365
 Extra - polygon: [[10400.0, -3658.0], [8300.0, -3658.0], [8300.0, -4800.0], [10400.0, -4800.0]]
 Extra - asset_id: collision_camera_090
 > Start Point 1; Heals? False
-  * Extra - actor_name: PRP_CV_CentralUnitCaves
-  * Extra - actor_def: actordef:actors/props/centralunit/charclasses/centralunit.bmsad
+  * Extra - start_point_actor_name: PRP_CV_CentralUnitCaves
+  * Extra - start_point_actor_def: actordef:actors/props/centralunit/charclasses/centralunit.bmsad
 
 > Start Point 2; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_EmmyCavePhase2
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  * Extra - start_point_actor_name: SP_Checkpoint_EmmyCavePhase2
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_091 (A)
 Extra - total_boundings: {'x1': -17200.0, 'x2': -14800.0, 'y1': -6331.0, 'y2': -5189.0}
 Extra - polygon: [[-14800.0, -5189.0], [-17200.0, -5189.0], [-17200.0, -6331.0], [-14800.0, -6331.0]]
 Extra - asset_id: collision_camera_091
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Dead_ChozoWarriorX
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door (Door077); Heals? False
   * Power Beam Door to collision_camera_082 (A)/Door (Door077)
   * Extra - actor_name: Door077
@@ -2455,4 +2444,8 @@ Extra - asset_id: collision_camera_091
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
