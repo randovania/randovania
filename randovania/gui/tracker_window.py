@@ -485,7 +485,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         str(gate.index): combo.currentData().index if combo.currentIndex() > 0 else None
                         for gate, combo in self._translator_gate_to_combo.items()
                     },
-                    "starting_location": world_list.node_to_area_location(self._initial_state.node).as_json,
+                    "starting_location": world_list.identifier_for_node(self._initial_state.node
+                                                                        ).area_identifier.as_json,
                 },
                 state_file
             )

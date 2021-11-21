@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.3.0] - Unreleased
 
 - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
+- Added: Data Editor can now edit area names.
 
 ### Metroid Prime
 

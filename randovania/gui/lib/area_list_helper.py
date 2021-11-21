@@ -55,7 +55,7 @@ class AreaListHelper:
             if not self.during_batch_check_update:
                 world_list = self.game_description.world_list
                 w = world_list.world_with_name(c.world_name)
-                world_areas = [world_list.area_to_area_location(a)
+                world_areas = [world_list.identifier_for_area(a)
                                for a in w.areas if c.is_dark_world == a.in_dark_aether
                                if (w.name, a.name) in checks_for_area]
                 on_check(world_areas, c.isChecked())

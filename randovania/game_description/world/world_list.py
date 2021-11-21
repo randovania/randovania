@@ -22,7 +22,7 @@ class WorldList:
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
     _ids_to_area: Dict[AreaIdentifier, Area]
-    _nodes: Tuple[Node, ...]
+    _nodes: Optional[Tuple[Node, ...]]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
 
     def __deepcopy__(self, memodict):
@@ -32,9 +32,9 @@ class WorldList:
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
-        self.refresh_node_cache()
+        self._nodes = None
 
-    def refresh_node_cache(self):
+    def _refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world, self._ids_to_area = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
         self._pickup_index_to_node = {
@@ -42,6 +42,13 @@ class WorldList:
             for node in self._nodes
             if isinstance(node, PickupNode)
         }
+
+    def ensure_has_node_cache(self):
+        if self._nodes is None:
+            self._refresh_node_cache()
+
+    def invalidate_node_cache(self):
+        self._nodes = None
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for world in self.worlds:
@@ -71,6 +78,7 @@ class WorldList:
 
     @property
     def all_nodes(self) -> Tuple[Node, ...]:
+        self.ensure_has_node_cache()
         return self._nodes
 
     @property
@@ -106,9 +114,11 @@ class WorldList:
         return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
 
     def nodes_to_world(self, node: Node) -> World:
+        self.ensure_has_node_cache()
         return self._nodes_to_world[node]
 
     def nodes_to_area(self, node: Node) -> Area:
+        self.ensure_has_node_cache()
         return self._nodes_to_area[node]
 
     def resolve_dock_connection(self, world: World, connection: DockConnection) -> Node:
@@ -248,7 +258,8 @@ class WorldList:
     def world_by_area_location(self, location: AreaIdentifier) -> World:
         return self.world_with_name(location.world_name)
 
-    def area_to_area_location(self, area: Area) -> AreaIdentifier:
+    def identifier_for_area(self, area: Area) -> AreaIdentifier:
+        self.ensure_has_node_cache()
         for world in self.worlds:
             result = AreaIdentifier(world_name=world.name, area_name=area.name)
             if result in self._ids_to_area:
@@ -262,9 +273,11 @@ class WorldList:
         )
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
+        self.ensure_has_node_cache()
         return self._pickup_index_to_node[index]
 
     def add_new_node(self, area: Area, node: Node):
+        self.ensure_has_node_cache()
         self._nodes_to_area[node] = area
         self._nodes_to_world[node] = self.world_with_area(area)
 
