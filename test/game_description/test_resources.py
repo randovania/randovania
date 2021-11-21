@@ -30,8 +30,8 @@ def test_pickup_index_has():
 
 def test_add_resource_gain_to_current_resources_convert(blank_pickup):
     # Setup
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     pickup = dataclasses.replace(
         blank_pickup,

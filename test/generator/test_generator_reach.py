@@ -79,9 +79,9 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 @pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
-    (RandovaniaGame.METROID_PRIME_ECHOES, "Starter Preset", {91, 92, 97}, set()),  # Echoes
-    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset", {1, 146, 147, 148, 154}, {0, 1, 2}),  # Corruption
-    (RandovaniaGame.METROID_PRIME, "Starter Preset", {33}, set())  # Prime
+    (RandovaniaGame.METROID_PRIME_ECHOES, "Starter Preset", {"Event91", "Event92", "Event97"}, set()),  # Echoes
+    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset", {"Event1", "Event146", "Event147", "Event148", "Event154"}, {0, 1, 2}),  # Corruption
+    (RandovaniaGame.METROID_PRIME, "Starter Preset", {"Event33"}, set())  # Prime
 ])
 def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(
@@ -97,7 +97,7 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
     for trick in game.resource_database.trick:
         initial_state.resources[trick] = LayoutTrickLevel.maximum().as_number
 
-    expected_events = [event for event in game.resource_database.event if event.index not in ignore_events]
+    expected_events = [event for event in game.resource_database.event if event.short_name not in ignore_events]
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())
@@ -126,7 +126,7 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
     }
     assert list(collectable_resource_nodes(reach.nodes, reach)) == []
     assert sorted(collected_indices) == expected_pickups
-    assert sorted(collected_events, key=lambda it: it.index) == expected_events
+    assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 
 
 @pytest.mark.parametrize("has_translator", [False, True])

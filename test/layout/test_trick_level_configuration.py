@@ -15,13 +15,13 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
             "minimal_logic": False, "specific_levels": {"Dash": "expert"}}},
         {"encoded": b'f3\x00\x00', "bit_count": 27, "json": {"minimal_logic": False, "specific_levels": {
             i: "hypermode"
-            for i in ["Dash", "BombJump", "Movement", "BSJ"]
+            for i in ["BombJump", "BSJ", "Dash", "Movement"]
         }}},
     ],
     name="trick_level_data")
 def _trick_level_data(request, mocker, echoes_game_description):
-    tricks = echoes_game_description.resource_database.trick[:14]
-    mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
+    # tricks = echoes_game_description.resource_database.trick[:14]
+    # mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
     return (request.param["encoded"], request.param["bit_count"],
             TrickLevelConfiguration.from_json(request.param["json"], game=RandovaniaGame.METROID_PRIME_ECHOES))
 

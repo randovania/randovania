@@ -5,15 +5,15 @@ from randovania.gui.dialog import connections_editor
 
 def test_build_no_changes(skip_qtbot, echoes_resource_database):
     # Setup
-    def mk_req(index: int):
-        return ResourceRequirement.with_data(echoes_resource_database, ResourceType.ITEM, index, 1, False)
+    def mk_req(name: str):
+        return ResourceRequirement.with_data(echoes_resource_database, ResourceType.ITEM, name, 1, False)
 
     requirement = RequirementOr([
         RequirementAnd([
-            mk_req(1),
-            mk_req(2),
+            mk_req("Dark"),
+            mk_req("Light"),
         ]),
-        mk_req(0),
+        mk_req("Power"),
     ])
 
     # Run

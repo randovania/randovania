@@ -10,8 +10,8 @@ from randovania.game_description.world.world_list import WorldList
 
 def test_connections_from_dock_blast_shield(empty_patches):
     # Setup
-    req_1 = ResourceRequirement(SimpleResourceInfo(1, "Ev1", "Ev1", ResourceType.EVENT), 1, False)
-    req_2 = ResourceRequirement(SimpleResourceInfo(2, "Ev2", "Ev2", ResourceType.EVENT), 1, False)
+    req_1 = ResourceRequirement(SimpleResourceInfo("Ev1", "Ev1", ResourceType.EVENT), 1, False)
+    req_2 = ResourceRequirement(SimpleResourceInfo("Ev2", "Ev2", ResourceType.EVENT), 1, False)
     weak_1 = DockWeakness(1, "Weak 1", DockLockType.FRONT_ALWAYS_BACK_FREE, req_1, DockType.DOOR)
     weak_2 = DockWeakness(2, "Weak 2", DockLockType.FRONT_BLAST_BACK_BLAST, req_2, DockType.DOOR)
 

@@ -39,7 +39,7 @@ class TrickLevelConfiguration(BitPackValue):
         encodable_levels = list(LayoutTrickLevel)
         encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
-        for trick in sorted(_all_tricks(resource_database)):
+        for trick in _all_tricks(resource_database):
             has_trick = self.has_specific_level_for_trick(trick)
             yield from bitpacking.encode_bool(has_trick)
             if has_trick:
@@ -57,7 +57,7 @@ class TrickLevelConfiguration(BitPackValue):
             encodable_levels = list(LayoutTrickLevel)
             encodable_levels.remove(LayoutTrickLevel.DISABLED)
 
-            for trick in sorted(_all_tricks(resource_database)):
+            for trick in _all_tricks(resource_database):
                 if bitpacking.decode_bool(decoder):
                     specific_levels[trick.short_name] = decoder.decode_element(encodable_levels)
 

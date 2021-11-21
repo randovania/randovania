@@ -53,13 +53,13 @@ async def test_update_inventory_label(executor: DebugExecutorWindow, echoes_reso
             DolRemotePatch([], all_prime_dol_patches.increment_item_capacity_patch(
                 executor._used_version.powerup_functions,
                 echoes_resource_database.game_enum,
-                echoes_resource_database.multiworld_magic_item.index,
+                echoes_resource_database.multiworld_magic_item.short_name,
                 delta=2,
             )),
             DolRemotePatch([], all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                 executor._used_version.powerup_functions,
                 echoes_resource_database.game_enum,
-                echoes_resource_database.energy_tank.index,
+                echoes_resource_database.energy_tank.short_name,
                 delta=4,
             )),
         ],

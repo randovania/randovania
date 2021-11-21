@@ -56,11 +56,11 @@ def test_create_spawn_point_field(echoes_game_description, empty_patches):
 
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
     patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items({
-        resource_db.get_by_type_and_index(ResourceType.ITEM, 15): 3,
+        resource_db.get_by_type_and_index(ResourceType.ITEM, "MorphBall"): 3,
     })
 
     capacities = [
-        {'amount': 3 if item.index == 15 else 0, 'index': item.index}
+        {'amount': 3 if item.short_name == "MorphBall" else 0, 'name': item.short_name}
         for item in resource_db.item
     ]
 
@@ -232,9 +232,9 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
 def test_create_translator_gates_field():
     # Setup
     gate_assignment = {
-        TranslatorGate(1): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
-        TranslatorGate(3): SimpleResourceInfo(50, "LongB", "B", ResourceType.ITEM),
-        TranslatorGate(4): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
+        TranslatorGate(1): SimpleResourceInfo("LongA", "A", ResourceType.ITEM),
+        TranslatorGate(3): SimpleResourceInfo("LongB", "B", ResourceType.ITEM),
+        TranslatorGate(4): SimpleResourceInfo("LongA", "A", ResourceType.ITEM),
     }
 
     # Run
@@ -242,9 +242,9 @@ def test_create_translator_gates_field():
 
     # Assert
     assert result == [
-        {"gate_index": 1, "translator_index": 10},
-        {"gate_index": 3, "translator_index": 50},
-        {"gate_index": 4, "translator_index": 10},
+        {"gate_index": 1, "translator_index": "A"},
+        {"gate_index": 3, "translator_index": "B"},
+        {"gate_index": 4, "translator_index": "A"},
     ]
 
 
@@ -304,14 +304,14 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
         "model_name": "SeekerLauncher",
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
-        'resources': [{'amount': 5, 'index': 71},
-                      {'amount': 1, 'index': 47},
-                      {'amount': 1, 'index': 26}],
+        'resources': [{'amount': 5, 'name': "Temporary1"},
+                      {'amount': 1, 'name': "Percent"},
+                      {'amount': 1, 'name': "Seekers"}],
         "conditional_resources": [
-            {'item': 73,
-             'resources': [{'amount': 5, 'index': 44},
-                           {'amount': 1, 'index': 47},
-                           {'amount': 1, 'index': 26}]}
+            {'item': "MissileLauncher",
+             'resources': [{'amount': 5, 'name': "Missile"},
+                           {'amount': 1, 'name': "Percent"},
+                           {'amount': 1, 'name': "Seekers"}]}
         ],
         "convert": [],
     }
@@ -353,12 +353,12 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
         "model_name": "PowerBombExpansion",
         "hud_text": hud_text,
-        'resources': [{'amount': 2, 'index': 72},
-                      {'amount': 1, 'index': 47}],
+        'resources': [{'amount': 2, 'name': "Temporary2"},
+                      {'amount': 1, 'name': "Percent"}],
         "conditional_resources": [
-            {'item': 43,
-             'resources': [{'amount': 2, 'index': 43},
-                           {'amount': 1, 'index': 47}]}
+            {'item': "PowerBomb",
+             'resources': [{'amount': 2, 'name': "PowerBomb"},
+                           {'amount': 1, 'name': "Percent"}]}
         ],
         "convert": [],
     }
@@ -385,8 +385,8 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
         "model_name": "PowerBombExpansion",
         "hud_text": ["Power Bomb Expansion acquired!"],
-        'resources': [{'amount': 2, 'index': 43},
-                      {'amount': 1, 'index': 47}],
+        'resources': [{'amount': 2, 'name': "PowerBomb"},
+                      {'amount': 1, 'name': "Percent"}],
         "conditional_resources": [],
         "convert": [],
     }

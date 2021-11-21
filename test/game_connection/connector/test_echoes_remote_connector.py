@@ -79,12 +79,12 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
 @pytest.mark.asyncio
 async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Setup
-    custom_inventory = {5: InventoryItem(0, 50)}
+    custom_inventory = {"Darkburst": InventoryItem(0, 50)}
 
     executor = AsyncMock()
     executor.perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II",
-                        *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
+                        *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, connector.game.resource_database.item)
     }
 
@@ -97,12 +97,12 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
 @pytest.mark.asyncio
 async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     # Setup
-    custom_inventory = {5: InventoryItem(1, 0)}
+    custom_inventory = {"Darkburst": InventoryItem(1, 0)}
 
     executor = AsyncMock()
     executor.perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II",
-                        *custom_inventory.get(item.index, InventoryItem(item.max_capacity, item.max_capacity)))
+                        *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, connector.game.resource_database.item)
     }
 
@@ -144,7 +144,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
-                                            connector.game.resource_database.multiworld_magic_item.index,
+                                            connector.game.resource_database.multiworld_magic_item.short_name,
                                             -10)
 
     assert locations == {PickupIndex(9)}
@@ -216,7 +216,7 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
 
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
-                                            connector.game.resource_database.multiworld_magic_item.index)
+                                            connector.game.resource_database.multiworld_magic_item.short_name)
     connector._patches_for_pickup.assert_awaited_once_with(permanent_pickups[0][0], permanent_pickups[0][1], inventory)
     assert has_message
     assert patches == [
@@ -255,7 +255,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
-                                            db.energy_tank.index,
+                                            db.energy_tank.short_name,
                                             db.energy_tank.max_capacity)
     assert patches == [mock_item_patch.return_value]
     assert message == "Received Pickup from Someone."

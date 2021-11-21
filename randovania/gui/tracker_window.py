@@ -482,7 +482,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         for teleporter, combo in self._elevator_id_to_combo.items()
                     ],
                     "translator_gates": {
-                        str(gate.index): combo.currentData().index if combo.currentIndex() > 0 else None
+                        str(gate.index): combo.currentData().short_name if combo.currentIndex() > 0 else None
                         for gate, combo in self._translator_gate_to_combo.items()
                     },
                     "starting_location": world_list.node_to_area_location(self._initial_state.node).as_json,
