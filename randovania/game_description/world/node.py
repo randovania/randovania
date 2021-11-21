@@ -79,6 +79,18 @@ class GenericNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class DockNode(Node):
+    """
+    Represents a connection to another area via something similar to a door and it's always to another DockNode.
+    The dock weakness describes the types of door the game might have, which could be randomized separately from where
+    the door leads to.
+    Alias is used when there are multiple pairs of dock nodes between the same two areas.
+
+    This is the default way a node connects to another area, expected to be used in every area and it implies the
+    areas are "phyisically" next to each other.
+
+    TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
+    UI for user selection (elevator rando, for example).
+    """
     dock_index: int
     default_connection: DockConnection
     default_dock_weakness: DockWeakness
