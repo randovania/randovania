@@ -4,14 +4,16 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets
+from PySide2 import QtGui
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
+from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.dock import DockConnection
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games import default_data
@@ -78,14 +80,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             self.save_database_button.clicked.connect(self._prompt_save_database)
 
+        self.rename_area_button.clicked.connect(self._rename_area)
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
+        self.editor = Editor(self.game_description)
         self.generic_index = world_reader.generic_index
-
         self.resource_database = self.game_description.resource_database
         self.world_list = self.game_description.world_list
 
@@ -237,26 +240,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if old_node == new_node:
             return
 
-        def sub(n: Node):
-            return new_node if n == old_node else n
-
-        area_node_list = area.nodes
-        for i, node in enumerate(area_node_list):
-            if node == old_node:
-                area_node_list[i] = new_node
-
-        new_connections = {
-            sub(source_node): {
-                sub(target_node): requirements
-                for target_node, requirements in connection.items()
-            }
-            for source_node, connection in area.connections.items()
-        }
-        area.connections.clear()
-        area.connections.update(new_connections)
-        if area.default_node == old_node.name:
-            object.__setattr__(area, "default_node", new_node.name)
-        self.game_description.world_list.refresh_node_cache()
+        self.editor.replace_node(area, old_node, new_node)
 
         if area == self.current_area:
             radio = next(key for key, value in self.radio_button_to_node.items() if value == old_node)
@@ -430,22 +414,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
         editor = ConnectionsEditor(self, self.resource_database, requirement)
         if await self._execute_edit_dialog(editor):
-            self._apply_edit_connections(from_node, target_node, editor.final_requirement)
-
-    def _apply_edit_connections(self, from_node: Node, target_node: Node,
-                                requirement: Optional[Requirement]):
-
-        current_connections = self.current_area.connections[from_node]
-        self.current_area.connections[from_node][target_node] = requirement
-        if self.current_area.connections[from_node][target_node] is None:
-            del self.current_area.connections[from_node][target_node]
-
-        self.current_area.connections[from_node] = {
-            node: current_connections[node]
-            for node in self.current_area.nodes
-            if node in current_connections
-        }
-        self.update_connections()
+            self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
+            self.update_connections()
 
     def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
@@ -487,6 +457,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
             default_database.game_description_for.cache_clear()
 
+    def _rename_area(self):
+        new_name, did_confirm = QInputDialog.getText(self, "New Name", "Insert area name:",
+                                                     text=self.current_area.name)
+        if not did_confirm or new_name == "" or new_name == self.current_area.name:
+            return
+
+        self.editor.rename_area(self.current_area, new_name)
+        self.on_select_world()
+        self.focus_on_area(new_name)
+
     def _create_new_node(self, location: Optional[NodeLocation] = None):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm or node_name == "":
@@ -503,10 +483,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
         new_node = GenericNode(node_name, False, location, {}, self.generic_index)
-        self.current_area.nodes.append(new_node)
-        self.current_area.connections[new_node] = {}
-        self.game_description.world_list.refresh_node_cache()
-
+        self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
     def _remove_node(self):
@@ -530,14 +507,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if user_response != QMessageBox.Yes:
             return
 
-        for other_nodes in self.current_area.connections.values():
-            other_nodes.pop(current_node, None)
-
-        self.current_area.remove_node(current_node)
-        self.game_description.world_list.refresh_node_cache()
+        self.editor.remove_node(self.current_area, current_node)
         self.on_select_area()
 
     def update_edit_mode(self):
+        self.rename_area_button.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)
