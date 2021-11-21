@@ -96,6 +96,11 @@ Extra - asset_id: collision_camera_002
               Speed Booster or Spin Boost or Space Jump
               Infinite Bomb Jump (Beginner) and Lay Bomb
 
+> Event - Breakable (block_pbcolumn_000); Heals? False
+  * Event Itorash - block_pbcolumn_000
+  * Extra - actor_name: block_pbcolumn_000
+  * Extra - actor_def: actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad
+
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Commander
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -108,6 +113,14 @@ Extra - asset_id: collision_camera_002
   * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
   > Door to Save Station
       Trivial
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_000
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_001
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 Elevator Cutscene
