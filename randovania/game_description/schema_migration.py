@@ -71,10 +71,32 @@ def _migrate_v1(data: dict) -> dict:
 
 
 def _migrate_v2(data: dict) -> dict:
+
     for world in data["worlds"]:
-        for area in world["areas"].values():
-            for node in area["nodes"].values():
+        world_name: str = world["name"]
+        areas: dict[str, dict] = world["areas"]
+        dock_index_to_name = {}
+
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            dock_index_to_name[area_name] = {}
+
+            for node_name, node in nodes.items():
                 node["description"] = ""
+                if node["node_type"] == "dock":
+                    dock_index_to_name[area_name][node.pop("dock_index")] = node_name
+
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            for node_name, node in nodes.items():
+                if node["node_type"] == "dock":
+                    area_name = node.pop("connected_area_name")
+                    node["destination"] = {
+                        "world_name": world_name,
+                        "area_name": area_name,
+                        "node_name": dock_index_to_name[area_name][node.pop("connected_dock_index")],
+                    }
+
     return data
 
 

@@ -4,8 +4,8 @@ from typing import Optional
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockConnection
-from randovania.game_description.world.node import Node, TeleporterNode, DockNode, GenericNode
+from randovania.game_description.world.node import Node, TeleporterNode, DockNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 class Editor:
@@ -86,9 +86,10 @@ class Editor:
                             new_node = dataclasses.replace(
                                 node,
                                 name=node.name.replace(old_name, new_name),
-                                default_connection=DockConnection(
+                                default_connection=NodeIdentifier.create(
+                                    world_name=node.default_connection.world_name,
                                     area_name=new_name,
-                                    dock_index=node.default_connection.dock_index,
+                                    node_name=node.default_connection.node_name,
                                 ),
                             )
 

@@ -367,13 +367,13 @@ def render_worlds_graph_logic(args):
     def _add_connection(dock_node: DockNode):
         the_world = gd.world_list.nodes_to_world(dock_node)
         source_area = gd.world_list.nodes_to_area(dock_node)
-        target_node = gd.world_list.resolve_dock_connection(world, dock_node.default_connection)
+        target_node = gd.world_list.node_by_identifier(dock_node.default_connection)
         target_area = gd.world_list.nodes_to_area(target_node)
 
         if dock_node.default_dock_weakness.name in _IMPOSSIBLE_LOCKS:
             return
 
-        edge_id = f"{the_world.name}-{source_area.name}-{dock_node.dock_index}"
+        edge_id = f"{the_world.name}-{source_area.name}-{target_node.name}"
         if edge_id in added_edges:
             return
 
@@ -381,7 +381,7 @@ def render_worlds_graph_logic(args):
         direction = None
         if isinstance(target_node, DockNode) and _weakness_name(target_node.default_dock_weakness.name) == weak_name:
             direction = "both"
-            added_edges.add(f"{the_world.name}-{target_area.name}-{target_node.dock_index}")
+            added_edges.add(f"{the_world.name}-{target_area.name}-{target_node.name}")
 
         color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
         dot.edge(

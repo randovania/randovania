@@ -28,5 +28,13 @@ class NodeIdentifier:
         )
 
     @property
+    def world_name(self) -> str:
+        return self.area_identifier.world_name
+
+    @property
+    def area_name(self) -> str:
+        return self.area_identifier.area_name
+
+    @property
     def area_location(self) -> AreaIdentifier:
         return self.area_identifier
