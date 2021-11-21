@@ -1,7 +1,7 @@
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 
-CURRENT_DATABASE_VERSION = 2
+CURRENT_DATABASE_VERSION = 3
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -70,8 +70,43 @@ def _migrate_v1(data: dict) -> dict:
     return data
 
 
+def _migrate_v2(data: dict) -> dict:
+    should_keep_index = data["game"] in {"prime1", "prime2", "prime3"}
+
+    for world in data["worlds"]:
+        world_name: str = world["name"]
+        areas: dict[str, dict] = world["areas"]
+        dock_index_to_name = {}
+
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            dock_index_to_name[area_name] = {}
+
+            for node_name, node in nodes.items():
+                node["description"] = ""
+                if node["node_type"] == "dock":
+                    dock_index = node.pop("dock_index")
+                    dock_index_to_name[area_name][dock_index] = node_name
+                    if should_keep_index:
+                        node["extra"]["dock_index"] = dock_index
+
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            for node_name, node in nodes.items():
+                if node["node_type"] == "dock":
+                    area_name = node.pop("connected_area_name")
+                    node["destination"] = {
+                        "world_name": world_name,
+                        "area_name": area_name,
+                        "node_name": dock_index_to_name[area_name][node.pop("connected_dock_index")],
+                    }
+
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
+    2: _migrate_v2,
 }
 
 

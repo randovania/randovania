@@ -2,12 +2,11 @@ from typing import Dict, Optional
 
 import networkx
 
-from randovania.game_description.world.area import Area
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
-from randovania.game_description.world.dock import DockConnection
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
 from randovania.game_description.world.world_list import WorldList
 
 
@@ -38,17 +37,17 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
         for area in world.areas:
             new_areas = set()
             for node in area.nodes:
+                connection = None
                 if isinstance(node, DockNode):
-                    connection = dock_connections.get(DockConnection(area.name, node.dock_index),
-                                                      node.default_connection)
-                    if connection is not None:
-                        new_areas.add(world.area_by_name(connection.area_name))
+                    connection = dock_connections.get(world_list.identifier_for_node(node),
+                                                      node.default_connection).area_identifier
 
                 elif isinstance(node, TeleporterNode) and not ignore_elevators:
                     connection = elevator_connections.get(world_list.identifier_for_node(node),
                                                           node.default_connection)
-                    if connection is not None:
-                        new_areas.add(world_list.area_by_area_location(connection))
+
+                if connection is not None:
+                    new_areas.add(world_list.area_by_area_location(connection))
 
             for next_area in new_areas:
                 g.add_edge(area, next_area)

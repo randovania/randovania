@@ -26,12 +26,13 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import (
-    DockWeakness, DockType, DockWeaknessDatabase, DockConnection, DockLockType
+    DockWeakness, DockType, DockWeaknessDatabase, DockLockType
 )
 from randovania.game_description.world.node import (
     GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
     TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 )
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -231,6 +232,7 @@ class WorldReader:
                 "name": name,
                 "heal": data["heal"],
                 "location": location,
+                "description": data["description"],
                 "extra": frozendict(data["extra"]),
                 "index": self.generic_index,
             }
@@ -242,11 +244,7 @@ class WorldReader:
             elif node_type == "dock":
                 return DockNode(
                     **generic_args,
-                    dock_index=data["dock_index"],
-                    default_connection=DockConnection(
-                        data["connected_area_name"],
-                        data["connected_dock_index"],
-                    ),
+                    default_connection=NodeIdentifier.from_json(data["destination"]),
                     default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
                         DockType(data["dock_type"]),
                         data["dock_weakness_index"],
