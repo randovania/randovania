@@ -1,5 +1,5 @@
 {
-    "schema_version": 2,
+    "schema_version": 3,
     "game": "prime2",
     "resource_database": {
         "items": [
@@ -183,6 +183,7 @@
                                 "y": 113.81,
                                 "z": -9.39
                             },
+                            "description": "",
                             "extra": {},
                             "connections": {
                                 "Door to Service Access": {
@@ -229,10 +230,15 @@
                                 "y": 1113.81,
                                 "z": -9.3923
                             },
-                            "extra": {},
-                            "dock_index": 0,
-                            "connected_area_name": "Service Access",
-                            "connected_dock_index": 0,
+                            "description": "",
+                            "extra": {
+                                "dock_index": 0
+                            },
+                            "destination": {
+                                "world_name": "Temple Grounds",
+                                "area_name": "Service Access",
+                                "node_name": "Door to Landing Site"
+                            },
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
@@ -267,10 +273,15 @@
                             "node_type": "dock",
                             "heal": true,
                             "coordinates": null,
-                            "extra": {},
-                            "dock_index": 0,
-                            "connected_area_name": "Landing Site",
-                            "connected_dock_index": 0,
+                            "description": "",
+                            "extra": {
+                                "dock_index": 0
+                            },
+                            "destination": {
+                                "world_name": "Temple Grounds",
+                                "area_name": "Landing Site",
+                                "node_name": "Door to Service Access"
+                            },
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
@@ -279,6 +290,7 @@
                             "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
+                            "description": "",
                             "extra": {},
                             "string_asset_id": 1000,
                             "lore_type": "luminoth-lore",
@@ -289,6 +301,7 @@
                             "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
+                            "description": "",
                             "extra": {},
                             "string_asset_id": 2000,
                             "lore_type": "luminoth-warrior",
@@ -299,6 +312,7 @@
                             "node_type": "logbook",
                             "heal": true,
                             "coordinates": null,
+                            "description": "",
                             "extra": {},
                             "string_asset_id": 3000,
                             "lore_type": "pirate-lore",
