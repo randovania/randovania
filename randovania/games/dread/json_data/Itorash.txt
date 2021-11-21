@@ -25,20 +25,17 @@ Extra - asset_id: collision_camera_000
   > Door to Main Room
       Trivial
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: savestation_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
-  * Extra - usable_entity: savestation_000
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: savestation_000
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: savestation_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 Main Room
 Extra - total_boundings: {'x1': -5900.0, 'x2': 1500.0, 'y1': -4800.0, 'y2': -1100.0}
 Extra - polygon: [[1500.0, -1100.0], [-5900.0, -1100.0], [-5900.0, -4800.0], [1500.0, -4800.0]]
 Extra - asset_id: collision_camera_001
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: StartPoint0
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-
 > Door to Save Station; Heals? False
   * Power Beam Door to Save Station/Door to Main Room
   * Extra - actor_name: doorpowerpower_000
@@ -47,17 +44,22 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Total Refill Station
+  > Total Recharge
       Trivial
   > Elevator to Hanubia
       Any of the following:
           Speed Booster or Spin Boost or Space Jump
           Infinite Bomb Jump (Beginner) and Lay Bomb
 
-> Total Refill Station; Heals? True
-  * Extra - actor_name: weightactivatedplatform_total_000
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  * Extra - usable_entity: totalrechargestation_000
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: StartPoint0
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Total Recharge; Heals? True
+  * Extra - actor_name: totalrechargestation_000
+  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+  * Extra - start_point_actor_name: weightactivatedplatform_total_000
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Door to Save Station
       Trivial
 
@@ -67,15 +69,12 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_def: actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
   * Extra - elevator_component: CCapsuleUsableComponent
   * Extra - target_spawn_point: elevator_skybase_000_platform
+  * Extra - start_point_actor_name: elevator_shipyard_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Save Station
       Any of the following:
           Speed Booster or Spin Boost or Space Jump
           Infinite Bomb Jump (Beginner) and Lay Bomb
-
-> Start Point 3; Heals? False
-  * Extra - actor_name: elevator_shipyard_000_platform
-  * Extra - actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - usable_entity: capsuleelevatorskybase_000
 
 ----------------
 Elevator to Raven Beak
@@ -97,15 +96,16 @@ Extra - asset_id: collision_camera_002
               Speed Booster or Spin Boost or Space Jump
               Infinite Bomb Jump (Beginner) and Lay Bomb
 
-> Start Point 1; Heals? False; Spawn Point
-  * Extra - actor_name: SP_Checkpoint_Commander
-  * Extra - actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Commander
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Elevator to Raven Beak Arena; Heals? False
   * Teleporter to Itorash - Raven Beak Arena
-  * Extra - actor_name: weightactivatedplatform_commanderelevator_000
-  * Extra - actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
-  * Extra - usable_entity: commander_elevator
+  * Extra - actor_name: commander_elevator
+  * Extra - actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
+  * Extra - start_point_actor_name: weightactivatedplatform_commanderelevator_000
+  * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
   > Door to Save Station
       Trivial
 
