@@ -4,6 +4,7 @@ from typing import Optional
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node, TeleporterNode, DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
@@ -43,6 +44,13 @@ class Editor:
         def sub(n: Node):
             return new_node if n == old_node else n
 
+        if old_node.name != new_node.name:
+            old_identifier = self.game.world_list.identifier_for_node(old_node)
+            self.replace_references_to_node_identifier(
+                old_identifier,
+                dataclasses.replace(old_identifier, node_name=new_node.name)
+            )
+
         area_node_list = area.nodes
         for i, node in enumerate(area_node_list):
             if node == old_node:
@@ -65,38 +73,68 @@ class Editor:
 
     def rename_area(self, current_area: Area, new_name: str):
         current_world = self.game.world_list.world_with_area(current_area)
-        old_name = current_area.name
         old_identifier = self.game.world_list.identifier_for_area(current_area)
         new_identifier = dataclasses.replace(old_identifier, area_name=new_name)
+
+        self.replace_references_to_area_identifier(
+            old_identifier,
+            new_identifier,
+        )
+
+        new_area = dataclasses.replace(current_area, name=new_name)
+        current_world.areas[current_world.areas.index(current_area)] = new_area
+
+        self.game.world_list.invalidate_node_cache()
+
+    def replace_references_to_area_identifier(self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier):
+        if old_identifier == new_identifier:
+            return
 
         for world in self.game.world_list.worlds:
             for area in world.areas:
                 for i in range(len(area.nodes)):
                     node = area.nodes[i]
-
                     new_node = None
+
                     if isinstance(node, TeleporterNode):
                         if node.default_connection == old_identifier:
-                            new_node = dataclasses.replace(node,
-                                                           name=node.name.replace(old_name, new_name),
-                                                           default_connection=new_identifier)
-
-                    elif isinstance(node, DockNode):
-                        if world == current_world and node.default_connection.area_name == old_name:
                             new_node = dataclasses.replace(
                                 node,
-                                name=node.name.replace(old_name, new_name),
-                                default_connection=NodeIdentifier.create(
-                                    world_name=node.default_connection.world_name,
-                                    area_name=new_name,
-                                    node_name=node.default_connection.node_name,
+                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                default_connection=new_identifier,
+                            )
+
+                    elif isinstance(node, DockNode):
+                        if node.default_connection.area_identifier == old_identifier:
+                            new_node = dataclasses.replace(
+                                node,
+                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                default_connection=dataclasses.replace(
+                                    node.default_connection,
+                                    area_identifier=new_identifier,
                                 ),
                             )
 
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
 
-        new_area = dataclasses.replace(current_area, name=new_name)
-        current_world.areas[current_world.areas.index(current_area)] = new_area
+    def replace_references_to_node_identifier(self, old_identifier: NodeIdentifier, new_identifier: NodeIdentifier):
+        if old_identifier == new_identifier:
+            return
 
-        self.game.world_list.invalidate_node_cache()
+        for world in self.game.world_list.worlds:
+            for area in world.areas:
+                for i in range(len(area.nodes)):
+                    node = area.nodes[i]
+                    new_node = None
+
+                    if isinstance(node, DockNode):
+                        if node.default_connection == old_identifier:
+                            new_node = dataclasses.replace(
+                                node,
+                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                default_connection=new_identifier,
+                            )
+
+                    if new_node is not None:
+                        self.replace_node(area, node, new_node)

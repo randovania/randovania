@@ -6,6 +6,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import DockNode
 
 
 @pytest.fixture(name="game_editor")
@@ -47,6 +48,7 @@ def test_replace_node(game_editor):
     # Setup
     world_list = game_editor.game.world_list
     loc = AreaIdentifier("Temple Grounds", "Landing Site")
+    loc2 = AreaIdentifier("Temple Grounds", "Service Access")
 
     landing_site = world_list.area_by_area_location(loc)
     source = landing_site.node_with_name("Save Station")
@@ -60,3 +62,23 @@ def test_replace_node(game_editor):
 
     # Assert
     assert world_list.area_by_area_location(loc).connections[source][new_node] is req
+    dock_to_landing = world_list.area_by_area_location(loc2).node_with_name("Door to Landing Site")
+    assert isinstance(dock_to_landing, DockNode)
+    assert dock_to_landing.default_connection.node_name == "FooBar"
+
+
+def test_rename_area(game_editor):
+    # Setup
+    world_list = game_editor.game.world_list
+    loc_1 = AreaIdentifier("Temple Grounds", "Transport to Agon Wastes")
+    loc_2 = AreaIdentifier("Agon Wastes", "Transport to Temple Grounds")
+    final = AreaIdentifier("Temple Grounds", "Foo Bar Transportation")
+
+    # Run
+    game_editor.rename_area(world_list.area_by_area_location(loc_1),
+                            "Foo Bar Transportation")
+
+    # Assert
+    assert world_list.area_by_area_location(final) is not None
+    area_2 = world_list.area_by_area_location(loc_2)
+    assert area_2.node_with_name("Elevator to Temple Grounds - Foo Bar Transportation") is not None
