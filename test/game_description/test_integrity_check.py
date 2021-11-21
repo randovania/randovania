@@ -145,10 +145,10 @@ def test_invalid_db():
     # Assert
     assert errors == [
         "World - Area 1 - 'Event - Foo' is not an Event Node, but naming suggests it is",
-        "World - Area 1 - 'Door to Area 2 (Generic)' connects to world World/area Area 2/node Generic Node"
+        "World - Area 1 - 'Door to Area 2 (Generic)' connects to 'world World/area Area 2/node Generic Node'"
         " which is not a DockNode",
-        "World - Area 1 - 'Door to Area 2 (Dock)' connects to world World/area Area 2/node Door to Area 1,"
-        " but that Dock connects to world World/area Area 1/node Door to Area 2 (Generic) instead.",
-        "World - Area 2 - 'Door to Area 1' connects to world World/area Area 1/node Door to Area 2 (Generic),"
-        " but that Dock connects to world World/area Area 2/node Generic Node instead."
+        "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'world World/area Area 2/node Door to Area 1',"
+        " but that dock connects to 'world World/area Area 1/node Door to Area 2 (Generic)' instead.",
+        "World - Area 2 - 'Door to Area 1' connects to 'world World/area Area 1/node Door to Area 2 (Generic)',"
+        " but that dock connects to 'world World/area Area 2/node Generic Node' instead."
     ]
