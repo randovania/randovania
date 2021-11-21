@@ -18,12 +18,12 @@ def default_base_damage_reduction(db: "ResourceDatabase", current_resources: Cur
 @dataclasses.dataclass(frozen=True)
 class ResourceDatabase:
     game_enum: RandovaniaGame
-    item: Dict[str, ItemResourceInfo]
-    event: Dict[str, SimpleResourceInfo]
-    trick: Dict[str, TrickResourceInfo]
-    damage: Dict[str, SimpleResourceInfo]
-    version: Dict[str, SimpleResourceInfo]
-    misc: Dict[str, SimpleResourceInfo]
+    item: List[ItemResourceInfo]
+    event: List[SimpleResourceInfo]
+    trick: List[TrickResourceInfo]
+    damage: List[SimpleResourceInfo]
+    version: List[SimpleResourceInfo]
+    misc: List[SimpleResourceInfo]
     requirement_template: Dict[str, "Requirement"]
     damage_reductions: Dict[SimpleResourceInfo, List[DamageReduction]]
     energy_tank_item_index: int
@@ -31,7 +31,7 @@ class ResourceDatabase:
     multiworld_magic_item_index: Optional[int]
     base_damage_reduction: Callable[["ResourceDatabase", CurrentResources], float] = default_base_damage_reduction
 
-    def get_by_type(self, resource_type: ResourceType) -> Dict[str, ResourceInfo]:
+    def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
             return self.item
         elif resource_type == ResourceType.EVENT:
@@ -51,12 +51,19 @@ class ResourceDatabase:
     def get_by_type_and_index(self, resource_type: ResourceType,
                               name: str) -> ResourceInfo:
         return search.find_resource_info_with_id(self.get_by_type(resource_type), name, resource_type)
+    
+    def get_resource_id(self, resource_type: ResourceType, name: str) -> int:
+        resource = self.get_by_type_and_index(resource_type, name)
+        return self.get_by_type(resource_type).index(resource)
 
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, short_name)
 
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
+    
+    def get_item_id(self, name: str) -> int:
+        return self.get_resource_id(ResourceType.ITEM, name)
 
     @property
     def item_percentage(self) -> Optional[ItemResourceInfo]:

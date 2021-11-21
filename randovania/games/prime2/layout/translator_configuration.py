@@ -18,7 +18,7 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     RANDOM_WITH_REMOVED = "random-removed"
 
     @property
-    def item_index(self) -> int:
+    def item_index(self) -> str:
         if self in (LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED):
             raise ValueError("The random Requirement shouldn't be used for item_index")
         return ITEM_INDICES[self]
@@ -29,11 +29,11 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
 
 
 ITEM_INDICES = {
-    LayoutTranslatorRequirement.VIOLET: 97,
-    LayoutTranslatorRequirement.AMBER: 98,
-    LayoutTranslatorRequirement.EMERALD: 99,
-    LayoutTranslatorRequirement.COBALT: 100,
-    LayoutTranslatorRequirement.REMOVED: 9,
+    LayoutTranslatorRequirement.VIOLET: "Violet",
+    LayoutTranslatorRequirement.AMBER: "Amber",
+    LayoutTranslatorRequirement.EMERALD: "Emerald",
+    LayoutTranslatorRequirement.COBALT: "Cobalt",
+    LayoutTranslatorRequirement.REMOVED: "Scan",
 }
 
 LONG_NAMES = {

@@ -55,18 +55,18 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
     items_to_skip = set()
     for it in game.minimal_logic.items_to_exclude:
         if it.reason is None or major_items.items_state[item_db.major_items[it.reason]].num_shuffled_pickups != 0:
-            items_to_skip.add(it.index)
+            items_to_skip.add(it.name)
 
     custom_item_count = game.minimal_logic.custom_item_amount
-    events_to_skip = {it.index for it in game.minimal_logic.events_to_exclude}
+    events_to_skip = {it.name for it in game.minimal_logic.events_to_exclude}
 
     for event in resource_database.event:
-        if event.index not in events_to_skip:
+        if event.short_name not in events_to_skip:
             resources[event] = 1
 
     for item in resource_database.item:
-        if item.index not in items_to_skip:
-            resources[item] = custom_item_count.get(item.index, 1)
+        if item.short_name not in items_to_skip:
+            resources[item] = custom_item_count.get(item.short_name, 1)
 
 
 def calculate_starting_state(game: GameDescription, patches: GamePatches, energy_per_tank: int) -> "State":
@@ -119,14 +119,14 @@ def misc_resources_for_configuration(configuration: BaseConfiguration,
     enabled_resources = set()
     if configuration.game == RandovaniaGame.METROID_PRIME:
         logical_patches = {
-            "allow_underwater_movement_without_gravity": 0,
-            "main_plaza_door": 1,
-            "backwards_frigate": 2,
-            "backwards_labs": 3,
-            "backwards_upper_mines": 4,
-            "backwards_lower_mines": 5,
-            "phazon_elite_without_dynamo": 6,
-            "small_samus": 7,
+            "allow_underwater_movement_without_gravity": "NoGravity",
+            "main_plaza_door": "main_plaza_door",
+            "backwards_frigate": "backwards_frigate",
+            "backwards_labs": "backwards_labs",
+            "backwards_upper_mines": "backwards_upper_mines",
+            "backwards_lower_mines": "backwards_lower_mines",
+            "phazon_elite_without_dynamo": "phazon_elite_without_dynamo",
+            "small_samus": "small",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
@@ -135,16 +135,16 @@ def misc_resources_for_configuration(configuration: BaseConfiguration,
     elif configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         enabled_resources = set()
         allow_vanilla = {
-            "allow_jumping_on_dark_water": 1,
-            "allow_vanilla_dark_beam": 19,
-            "allow_vanilla_light_beam": 20,
-            "allow_vanilla_seeker_launcher": 21,
-            "allow_vanilla_echo_visor": 22,
-            "allow_vanilla_dark_visor": 27,
-            "allow_vanilla_screw_attack": 23,
-            "allow_vanilla_gravity_boost": 24,
-            "allow_vanilla_boost_ball": 25,
-            "allow_vanilla_spider_ball": 26,
+            "allow_jumping_on_dark_water": "DarkWaterJump",
+            "allow_vanilla_dark_beam": "VanillaDarkBeam",
+            "allow_vanilla_light_beam": "VanillaLightBeam",
+            "allow_vanilla_seeker_launcher": "VanillaSeekers",
+            "allow_vanilla_echo_visor": "VanillaEcho",
+            "allow_vanilla_dark_visor": "VanillaDarkVisor",
+            "allow_vanilla_screw_attack": "VanillaSA",
+            "allow_vanilla_gravity_boost": "VanillaGravity",
+            "allow_vanilla_boost_ball": "VanillaBoost",
+            "allow_vanilla_spider_ball": "VanillaSpider",
         }
         for name, index in allow_vanilla.items():
             if getattr(configuration, name):
@@ -152,14 +152,14 @@ def misc_resources_for_configuration(configuration: BaseConfiguration,
 
         if configuration.elevators.is_vanilla:
             # Vanilla Great Temple Emerald Translator Gate
-            enabled_resources.add(18)
+            enabled_resources.add("VanillaGreatTempleEmeraldGate")
 
         if configuration.safe_zone.prevents_dark_aether:
             # Safe Zone
-            enabled_resources.add(2)
+            enabled_resources.add("SafeZone")
 
     return {
-        resource: 1 if resource.index in enabled_resources else 0
+        resource: 1 if resource.short_name in enabled_resources else 0
         for resource in resource_database.misc
     }
 
@@ -203,7 +203,7 @@ def patch_resource_database(db: ResourceDatabase, configuration: BaseConfigurati
 
         reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
         reductions.extend([DamageReduction(suit, 0) for suit in suits])
-        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, 5)] = reductions
+        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "HeatDamage1")] = reductions
 
         if configuration.progressive_damage_reduction:
             base_damage_reduction = prime1_progressive_damage_reduction
