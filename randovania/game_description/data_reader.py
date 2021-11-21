@@ -328,8 +328,7 @@ class WorldReader:
                     the_set = read_requirement(target_requirement, self.resource_database)
                     connections[origin][nodes_by_name[target_name]] = the_set
                 except (MissingResource, KeyError) as e:
-                    raise KeyError(
-                        f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
+                    raise type(e)(f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
         try:
             return Area(area_name, data["default_node"],
                         data["valid_starting_location"],
