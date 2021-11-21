@@ -79,11 +79,11 @@ def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterat
 def pretty_print_node_type(node: Node, world_list: WorldList):
     if isinstance(node, DockNode):
         try:
-            other = world_list.resolve_dock_connection(world_list.nodes_to_world(node), node.default_connection)
+            other = world_list.node_by_identifier(node.default_connection)
             other_name = world_list.node_name(other)
         except IndexError as e:
             other_name = (f"(Area {node.default_connection.area_name}, "
-                          f"index {node.default_connection.dock_index}) [{e}]")
+                          f"index {node.default_connection.node_name}) [{e}]")
 
         return f"{node.default_dock_weakness.name} to {other_name}"
 

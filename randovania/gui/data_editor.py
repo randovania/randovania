@@ -13,7 +13,6 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockConnection
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games import default_data
@@ -300,7 +299,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             try:
-                other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
+                other = self.world_list.node_by_identifier(node.default_connection)
                 msg = "{} to <a href=\"node://{}\">{}</a>".format(
                     node.default_dock_weakness.name,
                     self.world_list.node_name(other, with_world=True),

@@ -41,8 +41,8 @@ def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
         #                f"connects to {node.default_connection.area_name}")
 
         try:
-            world_list.resolve_dock_connection(world, node.default_connection)
-        except IndexError as e:
+            world_list.node_by_identifier(node.default_connection)
+        except ValueError as e:
             yield f"'{node.name}' is a Dock Node, but connection {node.default_connection} is invalid: {e}"
 
     elif any(node.name.startswith(dock_type.node_name_prefix) for dock_type in iterate_enum(DockType)):

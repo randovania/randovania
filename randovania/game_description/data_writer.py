@@ -230,9 +230,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
         data.update(common_fields)
-        data["dock_index"] = node.dock_index
-        data["connected_area_name"] = node.default_connection.area_name
-        data["connected_dock_index"] = node.default_connection.dock_index
+        data["destination"] = node.default_connection.as_json
         data["dock_type"] = node.default_dock_weakness.dock_type.value
         data["dock_weakness_index"] = node.default_dock_weakness.index
 

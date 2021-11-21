@@ -83,12 +83,3 @@ class DockWeaknessDatabase(NamedTuple):
                               weakness_index: int) -> DockWeakness:
         return _find_dock_weakness_with_id(
             self.get_by_type(dock_type), weakness_index)
-
-
-@dataclass(frozen=True, order=True)
-class DockConnection:
-    area_name: str
-    dock_index: int
-
-    def __repr__(self):
-        return "{}/{}".format(self.area_name, self.dock_index)
