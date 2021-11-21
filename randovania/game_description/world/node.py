@@ -16,7 +16,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness, DockConnection
+from randovania.game_description.world.dock import DockWeakness
+from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 class NodeLocation(NamedTuple):
@@ -30,6 +31,7 @@ class Node:
     name: str
     heal: bool
     location: Optional[NodeLocation]
+    description: str
     extra: Dict[str, typing.Any]
     index: int
 
@@ -78,15 +80,25 @@ class GenericNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class DockNode(Node):
-    dock_index: int
-    default_connection: DockConnection
+    """
+    Represents a connection to another area via something similar to a door and it's always to another DockNode.
+    The dock weakness describes the types of door the game might have, which could be randomized separately from where
+    the door leads to.
+
+    This is the default way a node connects to another area, expected to be used in every area and it implies the
+    areas are "phyisically" next to each other.
+
+    TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
+    UI for user selection (elevator rando, for example).
+    """
+    default_connection: NodeIdentifier
     default_dock_weakness: DockWeakness
 
     def __hash__(self):
-        return hash((self.index, self.name, self.dock_index))
+        return hash((self.index, self.name, self.default_connection))
 
     def __repr__(self):
-        return "DockNode({!r}/{} -> {})".format(self.name, self.dock_index, self.default_connection)
+        return "DockNode({!r} -> {})".format(self.name, self.default_connection)
 
 
 @dataclasses.dataclass(frozen=True)

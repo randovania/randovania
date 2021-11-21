@@ -11,7 +11,7 @@ from randovania.games import binary_data
 
 def test_simple_round_trip():
     sample_data = {
-        "schema_version": 2,
+        "schema_version": 3,
         "game": "prime2",
         "resource_database": {
             "items": [],
