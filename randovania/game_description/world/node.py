@@ -84,7 +84,6 @@ class DockNode(Node):
     Represents a connection to another area via something similar to a door and it's always to another DockNode.
     The dock weakness describes the types of door the game might have, which could be randomized separately from where
     the door leads to.
-    Alias is used when there are multiple pairs of dock nodes between the same two areas.
 
     This is the default way a node connects to another area, expected to be used in every area and it implies the
     areas are "phyisically" next to each other.
