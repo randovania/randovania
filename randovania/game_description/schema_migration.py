@@ -71,6 +71,7 @@ def _migrate_v1(data: dict) -> dict:
 
 
 def _migrate_v2(data: dict) -> dict:
+    should_keep_index = data["game"] in {"prime1", "prime2", "prime3"}
 
     for world in data["worlds"]:
         world_name: str = world["name"]
@@ -84,7 +85,10 @@ def _migrate_v2(data: dict) -> dict:
             for node_name, node in nodes.items():
                 node["description"] = ""
                 if node["node_type"] == "dock":
-                    dock_index_to_name[area_name][node.pop("dock_index")] = node_name
+                    dock_index = node.pop("dock_index")
+                    dock_index_to_name[area_name][dock_index] = node_name
+                    if should_keep_index:
+                        node["extra"]["dock_index"] = dock_index
 
         for area_name, area in areas.items():
             nodes: dict[str, dict] = area["nodes"]
