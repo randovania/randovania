@@ -133,8 +133,8 @@ JsonEncodedValue = construct.ExprAdapter(
 def _build_resource_info(**kwargs):
     return Struct(
         long_name=String,
-        extra=JsonEncodedValue,
         **kwargs,
+        extra=JsonEncodedValue,
     )
 
 
