@@ -41,7 +41,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "missiles": "Missile",
     "scanVisor": "Scan",
     "bombs": "Bombs",
-    "powerBombs": "PowerBombs",
+    "powerBombs": "PowerBomb",
     "flamethrower": "Flamethrower",
     "thermalVisor": "Thermal",
     "charge": "Charge",
