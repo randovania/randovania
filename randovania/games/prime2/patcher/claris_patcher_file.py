@@ -93,7 +93,7 @@ def _create_spawn_point_field(patches: GamePatches,
                               ) -> dict:
     capacities = [
         {
-            "index": item.index,
+            "name": item.short_name,
             "amount": patches.starting_items.get(item, 0),
         }
         for item in game.resource_database.item

@@ -1,6 +1,5 @@
 from typing import Callable, Optional, Union
-from build.lib.randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.resource_type import ResourceType as ResourceTypeLatest
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description import migration_data
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
@@ -77,22 +76,22 @@ def _migrate_v2(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
     db = data["resource_database"]
 
-    def find_resource(res_type: Union[ResourceTypeLatest, str], index: Optional[int]):
+    def find_resource(res_type: Union[ResourceType, str], index: Optional[int]):
         if index is None:
             return None
         if isinstance(res_type, str):
-            res_type = ResourceTypeLatest(res_type)
+            res_type = ResourceType(res_type)
         return migration_data.get_resource_name_from_index(game, index, res_type)
 
     special_indices = {"energy_tank_item_index", "item_percentage_index", "multiworld_magic_item_index"}
     for name in special_indices:
         index = db[name]
-        db[name] = find_resource(ResourceTypeLatest.ITEM, index)
+        db[name] = find_resource(ResourceType.ITEM, index)
 
     def migrate_reduction(reduction: dict) -> dict:
-        reduction["name"] = find_resource(ResourceTypeLatest.DAMAGE, reduction.pop("index"))
+        reduction["name"] = find_resource(ResourceType.DAMAGE, reduction.pop("index"))
         for red in reduction["reductions"]:
-            red["name"] = find_resource(ResourceTypeLatest.ITEM, red.pop("index"))
+            red["name"] = find_resource(ResourceType.ITEM, red.pop("index"))
         return reduction
     
     db["damage_reductions"] = [migrate_reduction(red) for red in db["damage_reductions"]]
@@ -101,7 +100,7 @@ def _migrate_v2(data: dict) -> dict:
         data = requirement["data"]
 
         if requirement["type"] == "resource":
-            data["type"] = ResourceTypeLatest.from_index(data["type"]).value
+            data["type"] = migration_data.get_resource_type_from_index(data["type"]).value
             data["name"] = find_resource(data["type"], data.pop("index"))
         elif requirement["type"] != "template":
             data["items"] = [migrate_requirement(req) for req in data["items"]]
@@ -116,23 +115,23 @@ def _migrate_v2(data: dict) -> dict:
     
     for key, state in data["initial_states"].items():
         data["initial_states"][key] = [{
-            "resource_type": ResourceTypeLatest.from_index(resource["resource_type"]).value,
-            "resource_name": find_resource(ResourceTypeLatest.from_index(resource["resource_type"]), resource["resource_index"]),
+            "resource_type": migration_data.get_resource_type_from_index(resource["resource_type"]).value,
+            "resource_name": find_resource(migration_data.get_resource_type_from_index(resource["resource_type"]), resource.pop("resource_index")),
             "amount": resource["amount"]
         } for resource in state]
     
     minimal = data["minimal_logic"]
     if minimal is not None:
         minimal["items_to_exclude"] = [{
-            "name": find_resource(ResourceTypeLatest.ITEM, item["index"]),
+            "name": find_resource(ResourceType.ITEM, item["index"]),
             "when_shuffled": item["when_shuffled"]
         } for item in minimal["items_to_exclude"]]
         minimal["custom_item_amount"] = [{
-            "name": find_resource(ResourceTypeLatest.ITEM, item["index"]),
+            "name": find_resource(ResourceType.ITEM, item["index"]),
             "value": item["value"]
         } for item in minimal["custom_item_amount"]]
         minimal["events_to_exclude"] = [{
-            "name": find_resource(ResourceTypeLatest.EVENT, item["index"]),
+            "name": find_resource(ResourceType.EVENT, item["index"]),
             "reason": item["reason"]
         } for item in minimal["events_to_exclude"]]
 
@@ -148,12 +147,12 @@ def _migrate_v2(data: dict) -> dict:
                 
                 node_type = node["node_type"]
                 if node_type == "event":
-                    node["event_name"] = find_resource(ResourceTypeLatest.EVENT, node.pop("event_index"))
+                    node["event_name"] = find_resource(ResourceType.EVENT, node.pop("event_index"))
 
                 if node_type == "logbook":
                     lore_type = LoreType(node["lore_type"])
                     if lore_type == LoreType.LUMINOTH_LORE:
-                        node["extra"]["translator"] = find_resource(ResourceTypeLatest.ITEM, node.pop("lore_extra"))
+                        node["extra"]["translator"] = find_resource(ResourceType.ITEM, node.pop("lore_extra"))
                     if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
                         node["extra"]["hint_index"] = node.pop("lore_extra")
                 
@@ -166,7 +165,7 @@ def _migrate_v2(data: dict) -> dict:
                 if node_type == "pickup":
                     pass # TODO
 
-    lists_to_migrate = {restype for restype in ResourceTypeLatest if restype < ResourceTypeLatest._INDEXED}
+    lists_to_migrate = {restype for restype in ResourceType if restype < ResourceType._INDEXED}
     for name in lists_to_migrate:
         new_res_list = {resource.pop("short_name"): resource for resource in db[name]}
         for resource in new_res_list.values():
@@ -183,18 +182,18 @@ _MIGRATIONS = {
 def _migrate_item_v1(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
     for item in data["items"].values():
-        item["progression"] = [migration_data.get_resource_name_from_index(game, progression, ResourceTypeLatest.ITEM) for progression in item["progression"]]
+        item["progression"] = [migration_data.get_resource_name_from_index(game, progression, ResourceType.ITEM) for progression in item["progression"]]
         ammo = item.get("ammo")
         if ammo is not None:
-            item["ammo"] = [migration_data.get_resource_name_from_index(game, ammo, ResourceTypeLatest.ITEM) for ammo in item["ammo"]]
+            item["ammo"] = [migration_data.get_resource_name_from_index(game, ammo, ResourceType.ITEM) for ammo in item["ammo"]]
     for ammo in data["ammo"].values():
-        ammo["items"] = [migration_data.get_resource_name_from_index(game, item, ResourceTypeLatest.ITEM) for item in ammo["items"]]
+        ammo["items"] = [migration_data.get_resource_name_from_index(game, item, ResourceType.ITEM) for item in ammo["items"]]
         unlock = ammo.get("unlocked_by")
         if unlock is not None:
-            ammo["unlocked_by"] = migration_data.get_resource_name_from_index(game, ammo["unlocked_by"], ResourceTypeLatest.ITEM)
+            ammo["unlocked_by"] = migration_data.get_resource_name_from_index(game, ammo["unlocked_by"], ResourceType.ITEM)
         temporary = ammo.get("temporary")
         if temporary is not None:
-            ammo["temporary"] = migration_data.get_resource_name_from_index(game, ammo["temporary"], ResourceTypeLatest.ITEM)
+            ammo["temporary"] = migration_data.get_resource_name_from_index(game, ammo["temporary"], ResourceType.ITEM)
     return data
 
 _ITEM_MIGRATIONS = {

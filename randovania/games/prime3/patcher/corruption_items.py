@@ -3,5 +3,5 @@ Some constants related to specific Corruption items that the logic needs to deal
 """
 
 ENERGY_CELL_MODEL = "Energy Cell"
-ENERGY_CELL_ITEMS = ["Fuse"+str(i+1) for i in range(9)]
+ENERGY_CELL_ITEMS = [f"Fuse{i}" for i in range(1, 10)]
 ENERGY_CELL_TOTAL_ITEM = "Fuses"

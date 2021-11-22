@@ -79,29 +79,29 @@ def write_resource_gain(resource_gain: ResourceGain) -> list:
     return [
         {
             "resource_type": resource.resource_type.value,
-            "resource_index": resource.short_name,
+            "resource_name": resource.short_name,
             "amount": gain,
         }
         for resource, gain in sorted(resource_gain, key=sorter)
     ]
 
 
-def write_simple_resource(resource: SimpleResourceInfo) -> Tuple[str, dict]:
-    return resource.short_name, {
+def write_simple_resource(resource: SimpleResourceInfo) -> dict:
+    return {
         "long_name": resource.long_name,
     }
 
 
-def write_item_resource(resource: ItemResourceInfo) -> Tuple[str, dict]:
-    return resource.short_name, {
+def write_item_resource(resource: ItemResourceInfo) -> dict:
+    return {
         "long_name": resource.long_name,
         "max_capacity": resource.max_capacity,
         "extra": resource.extra,
     }
 
 
-def write_trick_resource(resource: TrickResourceInfo) -> Tuple[str, dict]:
-    return resource.short_name, {
+def write_trick_resource(resource: TrickResourceInfo) -> dict:
+    return {
         "long_name": resource.long_name,
         "description": resource.description,
     }
@@ -110,27 +110,27 @@ def write_trick_resource(resource: TrickResourceInfo) -> Tuple[str, dict]:
 X = TypeVar('X')
 
 
-def write_array(array: List[X], writer: Callable[[X], Tuple[str, dict]]) -> dict:
+def write_array(array: List[X], writer: Callable[[X], dict]) -> dict:
     return {
-        writer(item)
+        item.short_name: writer(item)
         for item in array
     }
 
 
-def check_for_duplicated_index(array: List) -> Iterator[str]:
+def check_for_duplicated_index(array: List, field: str) -> Iterator[str]:
     indices_seen = set()
     for item in array:
-        if item.index in indices_seen:
-            yield f"Duplicated index {item.index} with {item.long_name}"
+        if getattr(item, field) in indices_seen:
+            yield f"Duplicated index {getattr(item, field)} with {item.long_name}"
         else:
-            indices_seen.add(item.index)
+            indices_seen.add(getattr(item, field))
 
 
 def write_resource_database(resource_database: ResourceDatabase):
     errors = []
     for array in (resource_database.item, resource_database.event, resource_database.trick, resource_database.damage,
                   resource_database.version, resource_database.misc):
-        errors.extend(check_for_duplicated_index(array))
+        errors.extend(check_for_duplicated_index(array, "short_name"))
 
     if errors:
         raise ValueError("Errors in resource database: {}".format("\n".join(errors)))
@@ -148,10 +148,10 @@ def write_resource_database(resource_database: ResourceDatabase):
         },
         "damage_reductions": [
             {
-                "index": resource.index,
+                "name": resource.short_name,
                 "reductions": [
                     {
-                        "index": reduction.inventory_item.index if reduction.inventory_item is not None else None,
+                        "name": reduction.inventory_item.short_name if reduction.inventory_item is not None else None,
                         "multiplier": reduction.damage_multiplier
                     }
                     for reduction in reductions
@@ -179,7 +179,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
 def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     errors = []
     for array in (database.door, database.portal, database.morph_ball):
-        errors.extend(check_for_duplicated_index(array))
+        errors.extend(check_for_duplicated_index(array, "index"))
 
     if errors:
         raise ValueError("Errors in dock weaknesses: {}".format("\n".join(errors)))
@@ -245,7 +245,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
-        data["event_index"] = node.resource().index
+        data["event_name"] = node.resource().short_name
 
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = "translator_gate"
@@ -259,12 +259,10 @@ def write_node(node: Node) -> dict:
         data["lore_type"] = node.lore_type.value
 
         if node.lore_type == LoreType.LUMINOTH_LORE:
-            data["lore_extra"] = node.required_translator.index
+            data["extra"]["translator"] = node.required_translator.short_name
 
         elif node.lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-            data["lore_extra"] = node.hint_index
-        else:
-            data["lore_extra"] = 0
+            data["extra"]["hint_index"] = node.hint_index
 
     elif isinstance(node, PlayerShipNode):
         data["node_type"] = "player_ship"
@@ -373,18 +371,18 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 
     return {
         "items_to_exclude": [
-            {"index": it.index, "when_shuffled": it.reason}
+            {"name": it.name, "when_shuffled": it.reason}
             for it in db.items_to_exclude
         ],
         "custom_item_amount": [
             {
-                "index": index,
+                "name": index,
                 "value": value
             }
             for index, value in db.custom_item_amount.items()
         ],
         "events_to_exclude": [
-            {"index": it.index, "reason": it.reason}
+            {"name": it.name, "reason": it.reason}
             for it in db.events_to_exclude
         ]
     }
