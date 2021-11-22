@@ -48,17 +48,17 @@ def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
 
 def read_resource_info(name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
     return SimpleResourceInfo(data["long_name"],
-                              name, resource_type)
+                              name, resource_type, frozendict(data["extra"]))
 
 
 def read_item_resource_info(name: str, data: Dict) -> ItemResourceInfo:
     return ItemResourceInfo(data["long_name"],
-                            name, data["max_capacity"], data.get("extra"))
+                            name, data["max_capacity"], frozendict(data["extra"]))
 
 
 def read_trick_resource_info(name: str, data: Dict) -> TrickResourceInfo:
     return TrickResourceInfo(data["long_name"],
-                             name, data["description"])
+                             name, data["description"], frozendict(data["extra"]))
 
 
 def read_resource_info_array(data: Dict[str, Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:

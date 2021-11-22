@@ -76,6 +76,8 @@ def _migrate_v2(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
     db = data["resource_database"]
 
+    keep_res_index = game.value in {"prime1", "prime2", "prime3", "super_metroid"}
+
     def find_resource(res_type: Union[ResourceType, str], index: Optional[int]):
         if index is None:
             return None
@@ -169,6 +171,15 @@ def _migrate_v2(data: dict) -> dict:
     for name in lists_to_migrate:
         new_res_list = {resource.pop("short_name"): resource for resource in db[name]}
         for resource in new_res_list.values():
+            if name == "items":
+                extra = resource["extra"]
+                resource["extra"] = {}
+                if extra is not None:
+                    resource["extra"]["specific"] = extra
+                if keep_res_index:
+                    resource["extra"]["item_id"] = resource["index"]
+            else:
+                resource["extra"] = {}
             resource.pop("index")
         db[name] = new_res_list
     
