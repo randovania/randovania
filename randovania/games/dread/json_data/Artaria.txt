@@ -5,23 +5,78 @@ Extra - polygon: [[6900.0, -6600.0], [1800.0, -6600.0], [1800.0, -8200.0], [1400
 Extra - asset_id: collision_camera_000
 > Door (Door006 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_001 (A)/Door (Door006 (CG-CG))
+  * Extra - actor_name: Door006 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door009 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_068 (A)/Door (Door009 (PW-PW))
+  * Extra - actor_name: Door009 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False
+> Event - Breakable (PRP_DB_CV_006); Heals? False
+  * Event Artaria - PRP_DB_CV_006
+  * Extra - actor_name: PRP_DB_CV_006
+  * Extra - actor_def: actordef:actors/props/breakablecave006/charclasses/breakablecave006.bmsad
 
-> Start Point 2; Heals? False; Spawn Point
+> Ammo Recharge; Heals? False
+  * Extra - actor_name: PRP_CV_AmmoStation001
+  * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AmmoStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_1B
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (MISSILE) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_052
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_053
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_054
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_055
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (MISSILE) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_056
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_051
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_000_Init (A)
 Extra - total_boundings: {'x1': -5200.0, 'x2': -900.0, 'y1': -9800.0, 'y2': -7700.0}
 Extra - polygon: [[-900.0, -7700.0], [-5200.0, -7700.0], [-5200.0, -9800.0], [-900.0, -9800.0]]
 Extra - asset_id: collision_camera_000_Init
-> Start Point 1; Heals? False; Spawn Point
-
 > Door (Door002 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_013 (A)/Door (Door002 (CG-CG))
+  * Extra - actor_name: Door002 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: StartPoint0
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_001 (A)
@@ -30,12 +85,26 @@ Extra - polygon: [[8900.0, -7800.0], [5800.0, -7800.0], [5800.0, -9600.0], [8900
 Extra - asset_id: collision_camera_001
 > Door (Door006 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_000 (A)/Door (Door006 (CG-CG))
+  * Extra - actor_name: Door006 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door007 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_002 (A)/Door (Door007 (CG-CG))
+  * Extra - actor_name: Door007 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_EnergyTank001); Heals? False
   * Pickup 3; Major Location? False
+  * Extra - actor_name: Item_EnergyTank001
+  * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
 
 ----------------
 collision_camera_002 (A)
@@ -44,9 +113,21 @@ Extra - polygon: [[10900.0, -6800.0], [8800.0, -6800.0], [8800.0, -8400.0], [109
 Extra - asset_id: collision_camera_002
 > Door (Door007 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_001 (A)/Door (Door007 (CG-CG))
+  * Extra - actor_name: Door007 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door008 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_068 (A)/Door (Door008 (PW-PW))
+  * Extra - actor_name: Door008 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_003 (A)
@@ -55,23 +136,67 @@ Extra - polygon: [[14900.0, -1200.0], [12800.0, -1200.0], [12800.0, -2000.0], [1
 Extra - asset_id: collision_camera_003
 > Door (Door010 (CL-PW,OP)); Heals? False
   * Access Closed to collision_camera_016 (A)/Door (Door010 (CL-PW,OP))
+  * Extra - actor_name: Door010 (CL-PW,OP)
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door011 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_004 (A)/Door (Door011 (CG-CG))
+  * Extra - actor_name: Door011 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door012 (PW-PW, MISSILE)); Heals? False
   * Power Beam Door to collision_camera_063 (A)/Door (Door012 (PW-PW, MISSILE))
+  * Extra - actor_name: Door012 (PW-PW, MISSILE)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy11); Heals? False
+  * Not Determined to collision_camera_018 (A)/Door (DoorEmmy11)
+  * Extra - actor_name: DoorEmmy11
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Pickup (Item_MissileTank003_1); Heals? False
   * Pickup 12; Major Location? False
+  * Extra - actor_name: Item_MissileTank003_1
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door055 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_016 (A)/Door (Door055 (PW-PW))
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: Door055 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletank_005); Heals? False
   * Pickup 31; Major Location? False
+  * Extra - actor_name: item_missiletank_005
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Event - Breakable (PRP_DB_CV_014); Heals? False
+  * Event Artaria - PRP_DB_CV_014
+  * Extra - actor_name: PRP_DB_CV_014
+  * Extra - actor_def: actordef:actors/props/breakablecave014/charclasses/breakablecave014.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ProtoEmmy
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_048
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_004 (A)
@@ -80,12 +205,50 @@ Extra - polygon: [[10900.0, 250.0], [7800.0, 250.0], [7800.0, -3000.0], [10900.0
 Extra - asset_id: collision_camera_004
 > Door (Door011 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_003 (A)/Door (Door011 (CG-CG))
+  * Extra - actor_name: Door011 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door038 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_063 (A)/Door (Door038 (PW-PW))
+  * Extra - actor_name: Door038 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy10); Heals? False
+  * Not Determined to collision_camera_005 (A)/Door (DoorEmmy10)
+  * Extra - actor_name: DoorEmmy10
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Door (Door038 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_072 (A)/Door (Door038 (PW-PW)_000)
+  * Extra - actor_name: Door038 (PW-PW)_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy10_000); Heals? False
+  * Not Determined to collision_camera_005 (A)/Door (DoorEmmy10_000)
+  * Extra - actor_name: DoorEmmy10_000
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Event - Breakable (PRP_DB_CV_003); Heals? False
+  * Event Artaria - PRP_DB_CV_003
+  * Extra - actor_name: PRP_DB_CV_003
+  * Extra - actor_def: actordef:actors/props/breakablecave003/charclasses/breakablecave003.bmsad
+
+> Event - Breakable (PRP_DB_CV_020); Heals? False
+  * Event Artaria - PRP_DB_CV_020
+  * Extra - actor_name: PRP_DB_CV_020
+  * Extra - actor_def: actordef:actors/props/breakablecave020/charclasses/breakablecave020.bmsad
 
 ----------------
 collision_camera_005 (A)
@@ -94,17 +257,53 @@ Extra - polygon: [[7900.0, 300.0], [5800.0, 300.0], [5800.0, -3600.0], [7900.0, 
 Extra - asset_id: collision_camera_005
 > Door (Door014 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_018 (A)/Door (Door014 (CG-CG))
+  * Extra - actor_name: Door014 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door018 (CG-CL,OP)); Heals? False
   * Access Closed to collision_camera_017 (A)/Door (Door018 (CG-CL,OP))
+  * Extra - actor_name: Door018 (CG-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy10); Heals? False
+  * Not Determined to collision_camera_004 (A)/Door (DoorEmmy10)
+  * Extra - actor_name: DoorEmmy10
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Pickup (Item_MissileTank001); Heals? False
   * Pickup 4; Major Location? False
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: Item_MissileTank001
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door062 (PW-PW, Special)); Heals? False
   * Power Beam Door to collision_camera_006 (A)/Door (Door062 (PW-PW, Special))
+  * Extra - actor_name: Door062 (PW-PW, Special)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy10_000); Heals? False
+  * Not Determined to collision_camera_004 (A)/Door (DoorEmmy10_000)
+  * Extra - actor_name: DoorEmmy10_000
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_EmmyCave
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_047
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_006 (A)
@@ -113,18 +312,53 @@ Extra - polygon: [[5900.0, 2050.0], [2700.0, 2050.0], [2700.0, -1800.0], [5900.0
 Extra - asset_id: collision_camera_006
 > Door (Door026 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_008 (A)/Door (Door026 (PW-PW))
+  * Extra - actor_name: Door026 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door041 (TH)); Heals? False
   * Not Determined to collision_camera_008 (A)/Door (Door041 (TH))
+  * Extra - actor_name: Door041 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_014); Heals? False
   * Access Open to collision_camera_053 (A)/Door (DoorFrame_014)
+  * Extra - actor_name: DoorFrame_014
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door062 (PW-PW, Special)); Heals? False
   * Power Beam Door to collision_camera_005 (A)/Door (Door062 (PW-PW, Special))
+  * Extra - actor_name: Door062 (PW-PW, Special)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door050 (TH)); Heals? False
   * Not Determined to collision_camera_015 (A)/Door (Door050 (TH))
+  * Extra - actor_name: Door050 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Breakable (PRP_DB_CV_002); Heals? False
+  * Event Artaria - PRP_DB_CV_002
+  * Extra - actor_name: PRP_DB_CV_002
+  * Extra - actor_def: actordef:actors/props/breakablecave002/charclasses/breakablecave002.bmsad
 
 ----------------
 collision_camera_008 (A)
@@ -133,29 +367,101 @@ Extra - polygon: [[8900.0, 4400.0], [5800.0, 4400.0], [5800.0, 300.0], [8900.0, 
 Extra - asset_id: collision_camera_008
 > Door (Door020 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_009 (A)/Door (Door020 (PW-PW))
+  * Extra - actor_name: Door020 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door026 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_006 (A)/Door (Door026 (PW-PW))
+  * Extra - actor_name: Door026 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door041 (TH)); Heals? False
   * Not Determined to collision_camera_006 (A)/Door (Door041 (TH))
+  * Extra - actor_name: Door041 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Elevator (teleport_baselab_000); Heals? False; Spawn Point
-  * Teleporter to Dairon - collision_camera_001 (D)
+> Door (DoorEmmy06); Heals? False
+  * Not Determined to collision_camera_070 (A)/Door (DoorEmmy06)
+  * Extra - actor_name: DoorEmmy06
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Door (DoorEmmy07); Heals? False
+  * Not Determined to collision_camera_070 (A)/Door (DoorEmmy07)
+  * Extra - actor_name: DoorEmmy07
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Door (DoorPowerPower_001); Heals? False
   * Power Beam Door to collision_camera_071 (A)/Door (DoorPowerPower_001)
+  * Extra - actor_name: DoorPowerPower_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_015); Heals? False
   * Access Open to collision_camera_071 (A)/Door (DoorFrame_015)
+  * Extra - actor_name: DoorFrame_015
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_016); Heals? False
   * Access Open to collision_camera_071 (A)/Door (DoorFrame_016)
+  * Extra - actor_name: DoorFrame_016
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door028); Heals? False
   * Not Determined to collision_camera_009 (A)/Door (Door028)
+  * Extra - actor_name: Door028
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
+  * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
 
-> Start Point 1; Heals? False
+> Elevator (teleport_baselab_000); Heals? False; Spawn Point
+  * Teleporter to Dairon - collision_camera_001 (D)
+  * Extra - actor_name: teleport_baselab_000
+  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+  * Extra - elevator_component: CTeleporterUsableComponent
+  * Extra - target_spawn_point: teleport_cave_000_platform
+  * Extra - start_point_actor_name: teleport_baselab_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+
+> Tile Group (BOMB MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_004
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_023
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_024
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_063
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_009 (A)
@@ -164,43 +470,123 @@ Extra - polygon: [[700.0, 4900.0], [699.9979858398438, 1800.0], [5900.0, 1800.0]
 Extra - asset_id: collision_camera_009
 > Door (Door020 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_008 (A)/Door (Door020 (PW-PW))
+  * Extra - actor_name: Door020 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door025 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_048 (A)/Door (Door025 (PW-PW))
+  * Extra - actor_name: Door025 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy05); Heals? False
+  * Not Determined to collision_camera_088 (A)/Door (DoorEmmy05)
+  * Extra - actor_name: DoorEmmy05
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Pickup (item_missiletank_001); Heals? False
   * Pickup 17; Major Location? False
+  * Extra - actor_name: item_missiletank_001
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door028); Heals? False
   * Not Determined to collision_camera_008 (A)/Door (Door028)
+  * Extra - actor_name: Door028
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
+  * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_038
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_039
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_040
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_010 (A)
 Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -6200.0, 'y2': 2700.0}
 Extra - polygon: [[-1200.0, 2200.0], [-5200.0, 2200.0], [-5200.0, -5600.0], [-4800.0, -5600.0], [-3300.0, -6200.0], [-1200.0, -6200.0]]
 Extra - asset_id: collision_camera_010
-> Start Point 1; Heals? False; Spawn Point
-
 > Door (doorclosedpower_000); Heals? False
   * Not Determined to collision_camera_051 (A)/Door (doorclosedpower_000)
+  * Extra - actor_name: doorclosedpower_000
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
 
 > Door (DoorFrame_004); Heals? False
   * Access Open to collision_camera_075 (A)/Door (DoorFrame_004)
+  * Extra - actor_name: DoorFrame_004
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_005); Heals? False
   * Access Open to collision_camera_075 (A)/Door (DoorFrame_005)
+  * Extra - actor_name: DoorFrame_005
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_006); Heals? False
   * Access Open to collision_camera_069 (A)/Door (DoorFrame_006)
+  * Extra - actor_name: DoorFrame_006
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_007); Heals? False
   * Access Open to collision_camera_069 (A)/Door (DoorFrame_007)
+  * Extra - actor_name: DoorFrame_007
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_powerbombtank_000); Heals? False
   * Pickup 19; Major Location? False
+  * Extra - actor_name: item_powerbombtank_000
+  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
 
 > Door (DoorFrame_017); Heals? False
   * Access Open to collision_camera_053 (A)/Door (DoorFrame_017)
+  * Extra - actor_name: DoorFrame_017
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Water Device; Heals? False; Spawn Point
+  * Event Artaria - PRP_CV_PlatformCaveWater_B
+  * Extra - actor_name: PRP_CV_PlatformCaveWater_B
+  * Extra - actor_def: actordef:actors/props/platformcavewaterb/charclasses/platformcavewaterb.bmsad
+  * Extra - start_point_actor_name: PRP_CV_PlatformCaveWaterWeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_valve/charclasses/weightactivatedplatform_valve.bmsad
 
 ----------------
 collision_camera_011 (A)
@@ -209,22 +595,94 @@ Extra - polygon: [[-8200.0, 4800.0], [-12200.0, 4800.0], [-12200.0, 300.0], [-82
 Extra - asset_id: collision_camera_011
 > Door (Door024 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_012 (A)/Door (Door024 (PW-PW))
+  * Extra - actor_name: Door024 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank004); Heals? False
   * Pickup 8; Major Location? False
+  * Extra - actor_name: Item_MissileTank004
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
+> Door (DoorEmmy03); Heals? False
+  * Not Determined to collision_camera_051 (A)/Door (DoorEmmy03)
+  * Extra - actor_name: DoorEmmy03
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Pickup (item_missiletank_003); Heals? False
   * Pickup 20; Major Location? False
+  * Extra - actor_name: item_missiletank_003
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door054); Heals? False
   * Not Determined to collision_camera_055 (A)/Door (Door054)
+  * Extra - actor_name: Door054
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
+  * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 2; Heals? False
+> Event - Breakable (db_reg_cv_022); Heals? False
+  * Event Artaria - db_reg_cv_022
+  * Extra - actor_name: db_reg_cv_022
+  * Extra - actor_def: actordef:actors/props/db_reg_cv_021/charclasses/db_reg_cv_021.bmsad
 
-> Elevator (LE_Teleport_FromMagma); Heals? False
+> Event - Breakable (db_reg_cv_023); Heals? False
+  * Event Artaria - db_reg_cv_023
+  * Extra - actor_name: db_reg_cv_023
+  * Extra - actor_def: actordef:actors/props/db_reg_cv_022/charclasses/db_reg_cv_022.bmsad
+
+> Door (Door056); Heals? False
+  * Charge Beam Door to collision_camera_028 (A)/Door (Door056)
+  * Extra - actor_name: Door056
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Life Recharge; Heals? True
+  * Extra - actor_name: PRP_CV_EnergyStation002
+  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_EnergyStation002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+
+> Elevator (LE_Teleport_FromMagma); Heals? False; Spawn Point
   * Teleporter to Cataris - collision_camera_025 (C)
+  * Extra - actor_name: LE_Teleport_FromMagma
+  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+  * Extra - elevator_component: CTeleporterUsableComponent
+  * Extra - target_spawn_point: LE_Platform_Teleport_FromCave
+  * Extra - start_point_actor_name: LE_Platform_Teleport_FromMagma
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+
+> Tile Group (MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_035
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_025
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_027
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_030
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_065
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_059
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_012 (A)
@@ -233,11 +691,27 @@ Extra - polygon: [[-12100.0, 2142.0], [-14200.0, 2142.0], [-14200.0, 1000.0], [-
 Extra - asset_id: collision_camera_012
 > Door (Door023 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_056 (A)/Door (Door023 (PW-PW))
+  * Extra - actor_name: Door023 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door024 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_011 (A)/Door (Door024 (PW-PW))
+  * Extra - actor_name: Door024 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation003
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation003_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_013 (A)
@@ -246,18 +720,53 @@ Extra - polygon: [[-5100.0, -6900.0], [-7200.0, -6900.0], [-7200.0, -9400.0], [-
 Extra - asset_id: collision_camera_013
 > Door (Door001 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_014 (A)/Door (Door001 (CG-CG))
+  * Extra - actor_name: Door001 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door002 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_000_Init (A)/Door (Door002 (CG-CG))
+  * Extra - actor_name: Door002 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door003 (PW-PW)); Heals? False
   * Not Determined to collision_camera_062 (A)/Door (Door003 (PW-PW))
+  * Extra - actor_name: Door003 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door004 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_062 (A)/Door (Door004 (PW-PW))
+  * Extra - actor_name: Door004 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank016); Heals? False
   * Pickup 29; Major Location? False
+  * Extra - actor_name: Item_MissileTank016
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Event - Breakable (PRP_DB_CV_010); Heals? False
+  * Event Artaria - PRP_DB_CV_010
+  * Extra - actor_name: PRP_DB_CV_010
+  * Extra - actor_def: actordef:actors/props/breakablecave010/charclasses/breakablecave010.bmsad
+
+> Tile Group (POWERBOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_042
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_014 (A)
@@ -266,11 +775,21 @@ Extra - polygon: [[-7100.0, -8600.0], [-9200.0, -8600.0], [-9200.0, -9742.0], [-
 Extra - asset_id: collision_camera_014
 > Door (Door001 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_013 (A)/Door (Door001 (CG-CG))
+  * Extra - actor_name: Door001 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (ItemSphere_ChargeBeam); Heals? False
   * Pickup 0; Major Location? True
+  * Extra - actor_name: ItemSphere_ChargeBeam
+  * Extra - actor_def: actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChargeBeam
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_015 (A)
@@ -279,24 +798,62 @@ Extra - polygon: [[2800.0, -800.0], [700.0, -800.0], [700.0, -6450.0], [2800.0, 
 Extra - asset_id: collision_camera_015
 > Door (Door016 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_017 (A)/Door (Door016 (PW-PW))
+  * Extra - actor_name: Door016 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank002); Heals? False
   * Pickup 5; Major Location? False
+  * Extra - actor_name: Item_MissileTank002
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (DoorFrame_009); Heals? False
   * Access Open to collision_camera_017 (A)/Door (DoorFrame_009)
+  * Extra - actor_name: DoorFrame_009
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_010); Heals? False
   * Access Open to collision_camera_017 (A)/Door (DoorFrame_010)
+  * Extra - actor_name: DoorFrame_010
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_011); Heals? False
   * Access Open to collision_camera_017 (A)/Door (DoorFrame_011)
+  * Extra - actor_name: DoorFrame_011
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_012); Heals? False
   * Access Open to collision_camera_069 (A)/Door (DoorFrame_012)
+  * Extra - actor_name: DoorFrame_012
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door050 (TH)); Heals? False
   * Not Determined to collision_camera_006 (A)/Door (Door050 (TH))
+  * Extra - actor_name: Door050 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_016 (A)
@@ -305,15 +862,39 @@ Extra - polygon: [[17800.0, -1200.0], [14800.0, -1200.0], [14800.0, -3700.0], [1
 Extra - asset_id: collision_camera_016
 > Door (Door010 (CL-PW,OP)); Heals? False
   * Power Beam Door to collision_camera_003 (A)/Door (Door010 (CL-PW,OP))
+  * Extra - actor_name: Door010 (CL-PW,OP)
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door055 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_003 (A)/Door (Door055 (PW-PW))
+  * Extra - actor_name: Door055 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank009); Heals? False
   * Pickup 13; Major Location? False
+  * Extra - actor_name: Item_MissileTank009
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door058 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_064 (A)/Door (Door058 (PW-PW))
+  * Extra - actor_name: Door058 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_064
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_017 (A)
@@ -322,26 +903,70 @@ Extra - polygon: [[5900.0, -1700.0], [2700.0, -1700.0], [2700.0, -6450.0], [5900
 Extra - asset_id: collision_camera_017
 > Door (Door015 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_049 (A)/Door (Door015 (CG-CG))
+  * Extra - actor_name: Door015 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door016 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_015 (A)/Door (Door016 (PW-PW))
+  * Extra - actor_name: Door016 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door018 (CG-CL,OP)); Heals? False
   * Power Beam Door to collision_camera_005 (A)/Door (Door018 (CG-CL,OP))
+  * Extra - actor_name: Door018 (CG-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door059 (CL-PW)); Heals? False
   * Access Closed to collision_camera_049 (A)/Door (Door059 (CL-PW))
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: Door059 (CL-PW)
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_009); Heals? False
   * Access Open to collision_camera_015 (A)/Door (DoorFrame_009)
+  * Extra - actor_name: DoorFrame_009
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_010); Heals? False
   * Access Open to collision_camera_015 (A)/Door (DoorFrame_010)
+  * Extra - actor_name: DoorFrame_010
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_011); Heals? False
   * Access Open to collision_camera_015 (A)/Door (DoorFrame_011)
+  * Extra - actor_name: DoorFrame_011
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_MagnetGlove
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_018 (A)
@@ -350,13 +975,35 @@ Extra - polygon: [[10900.0, -2850.0], [7800.0, -2850.0], [7800.0, -3650.0], [109
 Extra - asset_id: collision_camera_018
 > Door (Door014 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_005 (A)/Door (Door014 (CG-CG))
+  * Extra - actor_name: Door014 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (DoorEmmy11); Heals? False
+  * Not Determined to collision_camera_003 (A)/Door (DoorEmmy11)
+  * Extra - actor_name: DoorEmmy11
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 ----------------
 collision_camera_020 (A)
 Extra - total_boundings: {'x1': 17800.0, 'x2': 21900.0, 'y1': -550.0, 'y2': 800.0}
 Extra - polygon: [[21900.0, 800.0], [17800.0, 800.0], [17800.0, -550.0], [21900.0, -550.0]]
 Extra - asset_id: collision_camera_020
-> Start Point 1; Heals? False; Spawn Point
+> Door (Door054 (PW-PW)); Heals? False
+  * Power Beam Door to collision_camera_073 (A)/Door (Door054 (PW-PW))
+  * Extra - actor_name: Door054 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_OpticalCamo
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_021 (A)
@@ -365,14 +1012,34 @@ Extra - polygon: [[15900.0, 4600.0], [12800.0, 4600.0], [12800.0, 3000.0], [1590
 Extra - asset_id: collision_camera_021
 > Door (Door029 (CG-CL,OP)); Heals? False
   * Access Closed to collision_camera_065 (A)/Door (Door029 (CG-CL,OP))
+  * Extra - actor_name: Door029 (CG-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door044 (TH)); Heals? False
   * Not Determined to collision_camera_022 (A)/Door (Door044 (TH))
+  * Extra - actor_name: Door044 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank005); Heals? False
   * Pickup 9; Major Location? False
+  * Extra - actor_name: Item_MissileTank005
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_050
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_022 (A)
@@ -381,19 +1048,72 @@ Extra - polygon: [[17900.0, 4500.0], [15800.0, 4500.0], [15800.0, 900.0], [17900
 Extra - asset_id: collision_camera_022
 > Door (Door044 (TH)); Heals? False
   * Not Determined to collision_camera_021 (A)/Door (Door044 (TH))
+  * Extra - actor_name: Door044 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door045 (TH)); Heals? False
   * Not Determined to collision_camera_067 (A)/Door (Door045 (TH))
+  * Extra - actor_name: Door045 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (doorpresenceframe_000); Heals? False
   * Access Open to collision_camera_050 (A)/Door (doorpresenceframe_000)
+  * Extra - actor_name: doorpresenceframe_000
+  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Breakable (PRP_DB_CV_007); Heals? False
+  * Event Artaria - PRP_DB_CV_007
+  * Extra - actor_name: PRP_DB_CV_007
+  * Extra - actor_def: actordef:actors/props/breakablecave007/charclasses/breakablecave007.bmsad
+
+> Event - Breakable (db_reg_cv_021); Heals? False
+  * Event Artaria - db_reg_cv_021
+  * Extra - actor_name: db_reg_cv_021
+  * Extra - actor_def: actordef:actors/props/db_reg_cv_020/charclasses/db_reg_cv_020.bmsad
+
+> Door (Door032 (CG-CG)); Heals? False
+  * Charge Beam Door to collision_camera_023 (A)/Door (Door032 (CG-CG))
+  * Extra - actor_name: Door032 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_023 (A)
 Extra - total_boundings: {'x1': 17800.0, 'x2': 24900.0, 'y1': 2300.0, 'y2': 5100.0}
 Extra - polygon: [[24900.0, 5100.0], [17800.0, 5100.0], [17800.0, 3500.0], [24900.0, 3500.0]]
 Extra - asset_id: collision_camera_023
-> Placeholder; Heals? False
+> Door (Door032 (CG-CG)); Heals? False
+  * Charge Beam Door to collision_camera_022 (A)/Door (Door032 (CG-CG))
+  * Extra - actor_name: Door032 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door036 (PW-PW)); Heals? False
+  * Power Beam Door to collision_camera_024 (A)/Door (Door036 (PW-PW))
+  * Extra - actor_name: Door036 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_023_B (A)
@@ -402,9 +1122,17 @@ Extra - polygon: [[24900.0, 3442.0], [20000.0, 3442.0], [20000.0, 2300.0], [2490
 Extra - asset_id: collision_camera_023_B
 > Door (Door037 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_024 (A)/Door (Door037 (CG-CG))
+  * Extra - actor_name: Door037 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank007); Heals? False
   * Pickup 11; Major Location? False
+  * Extra - actor_name: Item_MissileTank007
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 ----------------
 collision_camera_024 (A)
@@ -413,15 +1141,48 @@ Extra - polygon: [[26900.0, 4200.0], [24800.0, 4200.0], [24800.0, 1200.0], [2690
 Extra - asset_id: collision_camera_024
 > Door (Door035 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_025 (A)/Door (Door035 (PW-PW))
+  * Extra - actor_name: Door035 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door037 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_023_B (A)/Door (Door037 (CG-CG))
+  * Extra - actor_name: Door037 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door060); Heals? False
   * Charge Beam Door to collision_camera_078 (A)/Door (Door060)
+  * Extra - actor_name: Door060
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (doorpresenceframe_001); Heals? False
   * Sensor Lock Door to collision_camera_079 (A)/Door (doorpresenceframe_001)
+  * Extra - actor_name: doorpresenceframe_001
+  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door036 (PW-PW)); Heals? False
+  * Power Beam Door to collision_camera_023 (A)/Door (Door036 (PW-PW))
+  * Extra - actor_name: Door036 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_025 (A)
@@ -430,11 +1191,27 @@ Extra - polygon: [[24900.0, 2342.0], [22800.0, 2342.0], [22800.0, 1200.0], [2490
 Extra - asset_id: collision_camera_025
 > Door (Door034 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_066 (A)/Door (Door034 (PW-PW))
+  * Extra - actor_name: Door034 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door035 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_024 (A)/Door (Door035 (PW-PW))
+  * Extra - actor_name: Door035 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation002
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_026 (A)
@@ -443,18 +1220,57 @@ Extra - polygon: [[-8100.0, 9200.0], [-12200.0, 9200.0], [-12200.0, 4700.0], [-8
 Extra - asset_id: collision_camera_026
 > Door (Door057); Heals? False
   * Access Closed to collision_camera_029 (A)/Door (Door057)
-
-> Start Point 1; Heals? False
-
-> Start Point 2; Heals? False
+  * Extra - actor_name: Door057
+  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door053); Heals? False
   * Charge Beam Door to collision_camera_055 (A)/Door (Door053)
+  * Extra - actor_name: Door053
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door055); Heals? False
   * Charge Beam Door to collision_camera_028 (A)/Door (Door055)
+  * Extra - actor_name: Door055
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 3; Heals? False; Spawn Point
+> Event - Thermal Device; Heals? False
+  * Event Artaria - ev_chainreaction_deviceheat
+  * Extra - actor_name: ev_chainreaction_deviceheat
+  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+  * Extra - start_point_actor_name: ev_chainreaction_weightactivatedplatform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_033
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_034
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_036
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_037
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_028 (A)
@@ -463,6 +1279,21 @@ Extra - polygon: [[-6100.0, 5500.0], [-8200.0, 5500.0], [-8200.0, 3800.0], [-610
 Extra - asset_id: collision_camera_028
 > Door (Door055); Heals? False
   * Charge Beam Door to collision_camera_026 (A)/Door (Door055)
+  * Extra - actor_name: Door055
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door056); Heals? False
+  * Charge Beam Door to collision_camera_011 (A)/Door (Door056)
+  * Extra - actor_name: Door056
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_029 (A)
@@ -471,25 +1302,65 @@ Extra - polygon: [[-6100.0, 9900.0], [-8200.0, 9900.0], [-8200.0, 8100.0], [-610
 Extra - asset_id: collision_camera_029
 > Door (Door057); Heals? False
   * Charge Beam Door to collision_camera_026 (A)/Door (Door057)
+  * Extra - actor_name: Door057
+  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door058); Heals? False
   * Charge Beam Door to collision_camera_031 (A)/Door (Door058)
+  * Extra - actor_name: Door058
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletankplus_001); Heals? False
   * Pickup 30; Major Location? False
+  * Extra - actor_name: item_missiletankplus_001
+  * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_032
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_030 (A)
 Extra - total_boundings: {'x1': -17100.0, 'x2': -12100.0, 'y1': 8100.0, 'y2': 10142.0}
 Extra - polygon: [[-12100.0, 10142.0], [-17100.0, 10142.0], [-17100.0, 9000.0], [-16500.0, 9000.0], [-14600.0, 8100.0], [-12100.0, 8100.0]]
 Extra - asset_id: collision_camera_030
-> Start Point 1; Heals? False; Spawn Point
-
 > Pickup (item_energytank_000); Heals? False
   * Pickup 14; Major Location? False
+  * Extra - actor_name: item_energytank_000
+  * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
 
 > Door (Door059); Heals? False
   * Not Determined to collision_camera_031 (A)/Door (Door059)
+  * Extra - actor_name: Door059
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door059_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Post_ChainReaction
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_003
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_031
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_000
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_031 (A)
@@ -498,14 +1369,30 @@ Extra - polygon: [[-8100.0, 11100.0], [-12200.0, 11100.0], [-12200.0, 9200.0], [
 Extra - asset_id: collision_camera_031
 > Pickup (IT_VARIA_GEN_001); Heals? False
   * Pickup 23; Major Location? True
+  * Extra - actor_name: IT_VARIA_GEN_001
+  * Extra - actor_def: actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad
 
 > Door (Door058); Heals? False
   * Charge Beam Door to collision_camera_029 (A)/Door (Door058)
+  * Extra - actor_name: Door058
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door059); Heals? False
   * Not Determined to collision_camera_030 (A)/Door (Door059)
+  * Extra - actor_name: Door059
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door059_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_VariaSuit
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_032 (A)
@@ -514,12 +1401,30 @@ Extra - polygon: [[4800.0, 9400.0], [2700.0, 9400.0], [2700.0, 5600.0], [4800.0,
 Extra - asset_id: collision_camera_032
 > Door (Door065); Heals? False
   * Power Beam Door to collision_camera_076 (A)/Door (Door065)
+  * Extra - actor_name: Door065
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door066); Heals? False
   * Power Beam Door to collision_camera_034 (A)/Door (Door066)
+  * Extra - actor_name: Door066
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door067); Heals? False
   * Power Beam Door to collision_camera_089 (A)/Door (Door067)
+  * Extra - actor_name: Door067
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_033 (A)
@@ -528,27 +1433,53 @@ Extra - polygon: [[10000.0, 6400.0], [6700.0, 6400.0], [6700.0, 4900.0], [8900.0
 Extra - asset_id: collision_camera_033
 > Door (doorclosedgrapple_000); Heals? False
   * Grapple Beam Door to collision_camera_089 (A)/Door (doorclosedgrapple_000)
+  * Extra - actor_name: doorclosedgrapple_000
+  * Extra - actor_def: actordef:actors/props/doorclosedgrapple/charclasses/doorclosedgrapple.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door069); Heals? False
   * Not Determined to collision_camera_089 (A)/Door (Door069)
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: Door069
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door069_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (ItemSphere_GrappleBeam); Heals? False
   * Pickup 25; Major Location? True
+  * Extra - actor_name: ItemSphere_GrappleBeam
+  * Extra - actor_def: actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Grapple
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_034 (A)
 Extra - total_boundings: {'x1': 700.0, 'x2': 2800.0, 'y1': 8700.0, 'y2': 9842.0}
 Extra - polygon: [[2800.0, 9842.0], [700.0, 9842.0], [700.0, 8700.0], [2800.0, 8700.0]]
 Extra - asset_id: collision_camera_034
-> Elevator (elevator_baselab_000); Heals? False
-  * Teleporter to Dairon - collision_camera_011 (D)
-
-> Start Point 1; Heals? False; Spawn Point
-
 > Door (Door066); Heals? False
   * Power Beam Door to collision_camera_032 (A)/Door (Door066)
+  * Extra - actor_name: Door066
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Elevator (elevator_baselab_000); Heals? False; Spawn Point
+  * Teleporter to Dairon - collision_camera_011 (D)
+  * Extra - actor_name: elevator_baselab_000
+  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: elevator_cave_000_platform
+  * Extra - start_point_actor_name: elevator_baselab_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
 
 ----------------
 collision_camera_045 (A)
@@ -557,6 +1488,12 @@ Extra - polygon: [[1900.0, -6858.0], [-1300.0, -6858.0], [-1300.0, -8000.0], [19
 Extra - asset_id: collision_camera_045
 > Door (Door005 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_054 (A)/Door (Door005 (PW-PW))
+  * Extra - actor_name: Door005 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_048 (A)
@@ -565,9 +1502,38 @@ Extra - polygon: [[800.0, 3900.0], [-1200.0, 3900.0], [-1200.0, 5200.0], [-5200.
 Extra - asset_id: collision_camera_048
 > Door (Door025 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_009 (A)/Door (Door025 (PW-PW))
+  * Extra - actor_name: Door025 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_001); Heals? False
   * Access Open to collision_camera_051 (A)/Door (DoorFrame_001)
+  * Extra - actor_name: DoorFrame_001
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Breakable (PRP_DB_CV_000); Heals? False
+  * Event Artaria - PRP_DB_CV_000
+  * Extra - actor_name: PRP_DB_CV_000
+  * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_044
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_045
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_046
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_049 (A)
@@ -576,11 +1542,25 @@ Extra - polygon: [[8350.0, -3600.0], [5800.0, -3600.0], [5800.0, -6450.0], [8350
 Extra - asset_id: collision_camera_049
 > Door (Door015 (CG-CG)); Heals? False
   * Charge Beam Door to collision_camera_017 (A)/Door (Door015 (CG-CG))
+  * Extra - actor_name: Door015 (CG-CG)
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door059 (CL-PW)); Heals? False
   * Power Beam Door to collision_camera_017 (A)/Door (Door059 (CL-PW))
+  * Extra - actor_name: Door059 (CL-PW)
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_050 (A)
@@ -589,31 +1569,85 @@ Extra - polygon: [[15900.0, 3100.0], [12800.0, 3100.0], [12800.0, 2200.0], [1080
 Extra - asset_id: collision_camera_050
 > Door (Door030 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_065 (A)/Door (Door030 (PW-PW))
+  * Extra - actor_name: Door030 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door049 (PR-PR)); Heals? False
   * Sensor Lock Door to collision_camera_073 (A)/Door (Door049 (PR-PR))
+  * Extra - actor_name: Door049 (PR-PR)
+  * Extra - actor_def: actordef:actors/props/doorpresencepresence/charclasses/doorpresencepresence.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletank_000); Heals? False
   * Pickup 6; Major Location? False
+  * Extra - actor_name: item_missiletank_000
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 1; Heals? False; Spawn Point
+> Door (DoorEmmy08); Heals? False
+  * Not Determined to collision_camera_071 (A)/Door (DoorEmmy08)
+  * Extra - actor_name: DoorEmmy08
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Door (doorpresenceframe_000); Heals? False
   * Sensor Lock Door to collision_camera_022 (A)/Door (doorpresenceframe_000)
+  * Extra - actor_name: doorpresenceframe_000
+  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_002
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_051 (A)
 Extra - total_boundings: {'x1': -8300.0, 'x2': -5100.0, 'y1': 900.0, 'y2': 3500.0}
 Extra - polygon: [[-5100.0, 3500.0], [-8300.0, 3500.0], [-8300.0, 900.0], [-5100.0, 900.0]]
 Extra - asset_id: collision_camera_051
+> Door (DoorEmmy03); Heals? False
+  * Not Determined to collision_camera_011 (A)/Door (DoorEmmy03)
+  * Extra - actor_name: DoorEmmy03
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
 > Door (doorclosedpower_000); Heals? False
   * Not Determined to collision_camera_010 (A)/Door (doorclosedpower_000)
+  * Extra - actor_name: doorclosedpower_000
+  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
 
 > Door (DoorFrame_001); Heals? False
   * Access Open to collision_camera_048 (A)/Door (DoorFrame_001)
+  * Extra - actor_name: DoorFrame_001
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletank_004); Heals? False
   * Pickup 21; Major Location? False
+  * Extra - actor_name: item_missiletank_004
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_060
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_061
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_053 (A)
@@ -622,9 +1656,25 @@ Extra - polygon: [[2800.0, 1750.0], [1300.0, 1750.0], [300.0, 1542.0], [-1300.0,
 Extra - asset_id: collision_camera_053
 > Door (DoorFrame_014); Heals? False
   * Access Open to collision_camera_006 (A)/Door (DoorFrame_014)
+  * Extra - actor_name: DoorFrame_014
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_017); Heals? False
   * Access Open to collision_camera_010 (A)/Door (DoorFrame_017)
+  * Extra - actor_name: DoorFrame_017
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_062
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_054 (A)
@@ -633,11 +1683,28 @@ Extra - polygon: [[-1200.0, -6000.0], [-5200.0, -6000.0], [-5200.0, -7600.0], [-
 Extra - asset_id: collision_camera_054
 > Door (Door005 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_045 (A)/Door (Door005 (PW-PW))
+  * Extra - actor_name: Door005 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Door (DoorEmmy01); Heals? False
+  * Not Determined to collision_camera_061 (A)/Door (DoorEmmy01)
+  * Extra - actor_name: DoorEmmy01
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Pickup (Item_MissileTank010); Heals? False
   * Pickup 22; Major Location? False
+  * Extra - actor_name: Item_MissileTank010
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Life Recharge; Heals? True; Spawn Point
+  * Extra - actor_name: PRP_CV_EnergyStation001
+  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+  * Extra - start_point_actor_name: PRP_CV_EnergyStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
 
 ----------------
 collision_camera_055 (A)
@@ -646,9 +1713,29 @@ Extra - polygon: [[-12100.0, 5400.0], [-14200.0, 5400.0], [-14200.0, 2000.0], [-
 Extra - asset_id: collision_camera_055
 > Door (Door053); Heals? False
   * Charge Beam Door to collision_camera_026 (A)/Door (Door053)
+  * Extra - actor_name: Door053
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door054); Heals? False
   * Not Determined to collision_camera_011 (A)/Door (Door054)
+  * Extra - actor_name: Door054
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
+  * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_028
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_029
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_056 (A)
@@ -657,20 +1744,67 @@ Extra - polygon: [[-14100.0, 2800.0], [-17100.0, 2800.0], [-17100.0, -5140.0], [
 Extra - asset_id: collision_camera_056
 > Door (Door022 (PW-PW) ); Heals? False
   * Power Beam Door to collision_camera_058 (A)/Door (Door022 (PW-PW) )
+  * Extra - actor_name: Door022 (PW-PW) 
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door023 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_012 (A)/Door (Door023 (PW-PW))
+  * Extra - actor_name: Door023 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank003); Heals? False
   * Pickup 7; Major Location? False
+  * Extra - actor_name: Item_MissileTank003
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Pickup (item_energyfragment_001); Heals? False
   * Pickup 16; Major Location? True
+  * Extra - actor_name: item_energyfragment_001
+  * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
 
 > Door (Door022 (PW-PW) _000); Heals? False
   * Power Beam Door to collision_camera_059 (A)/Door (Door022 (PW-PW) _000)
+  * Extra - actor_name: Door022 (PW-PW) _000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Event - Breakable (db_dif_cv_002); Heals? False
+  * Event Artaria - db_dif_cv_002
+  * Extra - actor_name: db_dif_cv_002
+  * Extra - actor_def: actordef:actors/props/db_dif_cv_001/charclasses/db_dif_cv_001.bmsad
+
+> Door (Door074); Heals? False
+  * Power Beam Door to collision_camera_085 (A)/Door (Door074)
+  * Extra - actor_name: Door074
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door076); Heals? False
+  * Not Determined to collision_camera_082 (A)/Door (Door076)
+  * Extra - actor_name: Door076
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Pre_ChozoWarriorX
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_057 (A)
@@ -686,11 +1820,27 @@ Extra - polygon: [[-12100.0, -1058.0], [-14200.0, -1058.0], [-14200.0, -2200.379
 Extra - asset_id: collision_camera_058
 > Door (Door021 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_060 (A)/Door (Door021 (PW-PW))
+  * Extra - actor_name: Door021 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door022 (PW-PW) ); Heals? False
   * Power Beam Door to collision_camera_056 (A)/Door (Door022 (PW-PW) )
+  * Extra - actor_name: Door022 (PW-PW) 
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Map Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_MapStation001
+  * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
+  * Extra - start_point_actor_name: PRP_CV_MapStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
 
 ----------------
 collision_camera_059 (A)
@@ -699,9 +1849,21 @@ Extra - polygon: [[-12100.0, 542.0], [-14200.0, 542.0], [-14200.0, -601.76098632
 Extra - asset_id: collision_camera_059
 > Door (Door021 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_060 (A)/Door (Door021 (PW-PW)_000)
+  * Extra - actor_name: Door021 (PW-PW)_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door022 (PW-PW) _000); Heals? False
   * Power Beam Door to collision_camera_056 (A)/Door (Door022 (PW-PW) _000)
+  * Extra - actor_name: Door022 (PW-PW) _000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_060 (A)
@@ -710,18 +1872,45 @@ Extra - polygon: [[-8200.0, 300.0], [-12200.0, 300.0], [-12200.0, -3400.0], [-82
 Extra - asset_id: collision_camera_060
 > Door (Door021 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_058 (A)/Door (Door021 (PW-PW))
+  * Extra - actor_name: Door021 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Door (DoorEmmy02); Heals? False
+  * Not Determined to collision_camera_075 (A)/Door (DoorEmmy02)
+  * Extra - actor_name: DoorEmmy02
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Door (Door021 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_059 (A)/Door (Door021 (PW-PW)_000)
+  * Extra - actor_name: Door021 (PW-PW)_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Breakable (PRP_DB_CV_008); Heals? False
+  * Event Artaria - PRP_DB_CV_008
+  * Extra - actor_name: PRP_DB_CV_008
+  * Extra - actor_def: actordef:actors/props/breakablecave008/charclasses/breakablecave008.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_WaterValve
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_061 (A)
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': -6800.0, 'y2': -3700.0}
 Extra - polygon: [[800.0, -3700.0], [-1300.0, -3700.0], [-1300.0, -6800.0], [800.0, -6800.0]]
 Extra - asset_id: collision_camera_061
-> Placeholder; Heals? False
+> Door (DoorEmmy01); Heals? False
+  * Not Determined to collision_camera_054 (A)/Door (DoorEmmy01)
+  * Extra - actor_name: DoorEmmy01
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 ----------------
 collision_camera_062 (A)
@@ -730,12 +1919,30 @@ Extra - polygon: [[-7100.0, -6900.0], [-9200.0, -6900.0], [-9200.0, -8800.0], [-
 Extra - asset_id: collision_camera_062
 > Door (Door003 (PW-PW)); Heals? False
   * Not Determined to collision_camera_013 (A)/Door (Door003 (PW-PW))
+  * Extra - actor_name: Door003 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door004 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_013 (A)/Door (Door004 (PW-PW))
+  * Extra - actor_name: Door004 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door004 (PW-PW)_001); Heals? False
   * Power Beam Door to collision_camera_086 (A)/Door (Door004 (PW-PW)_001)
+  * Extra - actor_name: Door004 (PW-PW)_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_063 (A)
@@ -744,11 +1951,27 @@ Extra - polygon: [[12900.0, -858.0], [10800.0, -858.0], [10800.0, -2000.0], [129
 Extra - asset_id: collision_camera_063
 > Door (Door012 (PW-PW, MISSILE)); Heals? False
   * Power Beam Door to collision_camera_003 (A)/Door (Door012 (PW-PW, MISSILE))
+  * Extra - actor_name: Door012 (PW-PW, MISSILE)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door038 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_004 (A)/Door (Door038 (PW-PW))
+  * Extra - actor_name: Door038 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation001
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_064 (A)
@@ -757,6 +1980,12 @@ Extra - polygon: [[21750.0, -1900.0], [17700.0, -1900.0], [17700.0, -3700.0], [1
 Extra - asset_id: collision_camera_064
 > Door (Door058 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_016 (A)/Door (Door058 (PW-PW))
+  * Extra - actor_name: Door058 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_065 (A)
@@ -765,17 +1994,45 @@ Extra - polygon: [[12900.0, 3642.0], [10800.0, 3642.0], [10800.0, 2500.0], [1290
 Extra - asset_id: collision_camera_065
 > Door (Door029 (CG-CL,OP)); Heals? False
   * Charge Beam Door to collision_camera_021 (A)/Door (Door029 (CG-CL,OP))
+  * Extra - actor_name: Door029 (CG-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door030 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_050 (A)/Door (Door030 (PW-PW))
+  * Extra - actor_name: Door030 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door042 (PW-PW) ); Heals? False
   * Power Beam Door to collision_camera_070 (A)/Door (Door042 (PW-PW) )
+  * Extra - actor_name: Door042 (PW-PW) 
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door057 (TH)); Heals? False
   * Not Determined to collision_camera_070 (A)/Door (Door057 (TH))
+  * Extra - actor_name: Door057 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Navigation Room; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_AccessPoint002
+  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AccessPoint002_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
 
 ----------------
 collision_camera_066 (A)
@@ -784,12 +2041,30 @@ Extra - polygon: [[22900.0, 2100.0], [19800.0, 2100.0], [19800.0, 958.0], [22900
 Extra - asset_id: collision_camera_066
 > Door (Door033 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_067 (A)/Door (Door033 (PW-PW))
+  * Extra - actor_name: Door033 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door034 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_025 (A)/Door (Door034 (PW-PW))
+  * Extra - actor_name: Door034 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door046 (PW-CL,OP)); Heals? False
   * Access Closed to collision_camera_067 (A)/Door (Door046 (PW-CL,OP))
+  * Extra - actor_name: Door046 (PW-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_067 (A)
@@ -798,21 +2073,50 @@ Extra - polygon: [[19900.0, 2600.0], [17800.0, 2600.0], [17800.0, 900.0], [19900
 Extra - asset_id: collision_camera_067
 > Door (Door033 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_066 (A)/Door (Door033 (PW-PW))
+  * Extra - actor_name: Door033 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door045 (TH)); Heals? False
   * Not Determined to collision_camera_022 (A)/Door (Door045 (TH))
+  * Extra - actor_name: Door045 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door046 (PW-CL,OP)); Heals? False
   * Power Beam Door to collision_camera_066 (A)/Door (Door046 (PW-CL,OP))
-
-> Start Point 1; Heals? False
+  * Extra - actor_name: Door046 (PW-CL,OP)
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank006); Heals? False
   * Pickup 10; Major Location? False
+  * Extra - actor_name: Item_MissileTank006
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Start Point 2; Heals? False
+> Event - Thermal Device; Heals? False
+  * Event Artaria - PRP_CV_ThermalDevice
+  * Extra - actor_name: PRP_CV_ThermalDevice
+  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+  * Extra - start_point_actor_name: PRP_CV_ThermalDevice_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
 
-> Start Point 3; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ThermalDevice
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_049
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_068 (A)
@@ -821,11 +2125,27 @@ Extra - polygon: [[8900.0, -6358.0], [6800.0, -6358.0], [6800.0, -7500.0], [8900
 Extra - asset_id: collision_camera_068
 > Door (Door008 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_002 (A)/Door (Door008 (PW-PW))
+  * Extra - actor_name: Door008 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door009 (PW-PW)); Heals? False
   * Power Beam Door to collision_camera_000 (A)/Door (Door009 (PW-PW))
+  * Extra - actor_name: Door009 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Navigation Room; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_AccessPoint001
+  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+  * Extra - start_point_actor_name: PRP_CV_AccessPoint001_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
 
 ----------------
 collision_camera_069 (A)
@@ -834,12 +2154,30 @@ Extra - polygon: [[800.0, -1100.0], [-1300.0, -1100.0], [-1300.0, -3300.0], [800
 Extra - asset_id: collision_camera_069
 > Door (DoorFrame_006); Heals? False
   * Access Open to collision_camera_010 (A)/Door (DoorFrame_006)
+  * Extra - actor_name: DoorFrame_006
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_007); Heals? False
   * Access Open to collision_camera_010 (A)/Door (DoorFrame_007)
+  * Extra - actor_name: DoorFrame_007
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_012); Heals? False
   * Access Open to collision_camera_015 (A)/Door (DoorFrame_012)
+  * Extra - actor_name: DoorFrame_012
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_070 (A)
@@ -848,28 +2186,93 @@ Extra - polygon: [[10900.0, 4400.0], [8800.0, 4400.0], [8800.0, 2500.0], [10900.
 Extra - asset_id: collision_camera_070
 > Door (Door042 (PW-PW) ); Heals? False
   * Power Beam Door to collision_camera_065 (A)/Door (Door042 (PW-PW) )
+  * Extra - actor_name: Door042 (PW-PW) 
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank011); Heals? False
   * Pickup 1; Major Location? False
+  * Extra - actor_name: Item_MissileTank011
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door057 (TH)); Heals? False
   * Not Determined to collision_camera_065 (A)/Door (Door057 (TH))
+  * Extra - actor_name: Door057 (TH)
+  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Door (DoorEmmy06); Heals? False
+  * Not Determined to collision_camera_008 (A)/Door (DoorEmmy06)
+  * Extra - actor_name: DoorEmmy06
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Door (DoorEmmy07); Heals? False
+  * Not Determined to collision_camera_008 (A)/Door (DoorEmmy07)
+  * Extra - actor_name: DoorEmmy07
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Event - Breakable (breakablecave017); Heals? False
+  * Event Artaria - breakablecave017
+  * Extra - actor_name: breakablecave017
+  * Extra - actor_def: actordef:actors/props/breakablecave017/charclasses/breakablecave017.bmsad
+
+> Event - Breakable (breakablecave016); Heals? False
+  * Event Artaria - breakablecave016
+  * Extra - actor_name: breakablecave016
+  * Extra - actor_def: actordef:actors/props/breakablecave016/charclasses/breakablecave016.bmsad
+
+> Total Recharge; Heals? True; Spawn Point
+  * Extra - actor_name: PRP_TotalR_001
+  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+  * Extra - start_point_actor_name: PRP_TotalR_Platform_001
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_022
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_071 (A)
 Extra - total_boundings: {'x1': 8800.0, 'x2': 10900.0, 'y1': 100.0, 'y2': 2600.0}
 Extra - polygon: [[10900.0, 2600.0], [8800.0, 2600.0], [8800.0, 100.0], [10900.0, 100.0]]
 Extra - asset_id: collision_camera_071
+> Door (DoorEmmy08); Heals? False
+  * Not Determined to collision_camera_050 (A)/Door (DoorEmmy08)
+  * Extra - actor_name: DoorEmmy08
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
 > Door (DoorPowerPower_001); Heals? False
   * Power Beam Door to collision_camera_008 (A)/Door (DoorPowerPower_001)
+  * Extra - actor_name: DoorPowerPower_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_015); Heals? False
   * Access Open to collision_camera_008 (A)/Door (DoorFrame_015)
+  * Extra - actor_name: DoorFrame_015
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_016); Heals? False
   * Access Open to collision_camera_008 (A)/Door (DoorFrame_016)
+  * Extra - actor_name: DoorFrame_016
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_072 (A)
@@ -878,11 +2281,25 @@ Extra - polygon: [[15900.0, 200.0], [10800.0, 200.0], [10800.0, -900.0], [15900.
 Extra - asset_id: collision_camera_072
 > Door (Door052); Heals? False
   * Access Open to collision_camera_073 (A)/Door (Door052)
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: Door052
+  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door038 (PW-PW)_000); Heals? False
   * Power Beam Door to collision_camera_004 (A)/Door (Door038 (PW-PW)_000)
+  * Extra - actor_name: Door038 (PW-PW)_000
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Scorpius
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_073 (A)
@@ -891,29 +2308,75 @@ Extra - polygon: [[17900.0, 1000.0], [15800.0, 1000.0], [15800.0, -600.0], [1790
 Extra - asset_id: collision_camera_073
 > Door (Door049 (PR-PR)); Heals? False
   * Sensor Lock Door to collision_camera_050 (A)/Door (Door049 (PR-PR))
+  * Extra - actor_name: Door049 (PR-PR)
+  * Extra - actor_def: actordef:actors/props/doorpresencepresence/charclasses/doorpresencepresence.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door052); Heals? False
   * Sensor Lock Door to collision_camera_072 (A)/Door (Door052)
+  * Extra - actor_name: Door052
+  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door054 (PW-PW)); Heals? False
+  * Power Beam Door to collision_camera_020 (A)/Door (Door054 (PW-PW))
+  * Extra - actor_name: Door054 (PW-PW)
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_074 (A)
 Extra - total_boundings: {'x1': 21650.0, 'x2': 23750.0, 'y1': -2800.0, 'y2': -1658.0}
 Extra - polygon: [[23750.0, -1658.0], [21650.0, -1658.0], [21650.0, -2800.0], [23750.0, -2800.0]]
 Extra - asset_id: collision_camera_074
+> Ammo Recharge; Heals? False
+  * Extra - actor_name: LE_CentraUnitDestroyedProto
+  * Extra - actor_def: actordef:actors/characters/centralunitproto/charclasses/centralunitproto.bmsad
+
 > Start Point 1; Heals? False
+  * Extra - start_point_actor_name: PRP_CV_CentralUnitProto
+  * Extra - start_point_actor_def: actordef:actors/props/centralunitprotocontroller/charclasses/centralunitprotocontroller.bmsad
 
 > Start Point 2; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_CURoom
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_075 (A)
 Extra - total_boundings: {'x1': -8300.0, 'x2': -5100.0, 'y1': -2900.0, 'y2': -1100.0}
 Extra - polygon: [[-5100.0, -1100.0], [-8300.0, -1100.0], [-8300.0, -2900.0], [-5100.0, -2900.0]]
 Extra - asset_id: collision_camera_075
+> Door (DoorEmmy02); Heals? False
+  * Not Determined to collision_camera_060 (A)/Door (DoorEmmy02)
+  * Extra - actor_name: DoorEmmy02
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
 > Door (DoorFrame_004); Heals? False
   * Access Open to collision_camera_010 (A)/Door (DoorFrame_004)
+  * Extra - actor_name: DoorFrame_004
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (DoorFrame_005); Heals? False
   * Access Open to collision_camera_010 (A)/Door (DoorFrame_005)
+  * Extra - actor_name: DoorFrame_005
+  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_076 (A)
@@ -922,27 +2385,59 @@ Extra - polygon: [[2800.0, 8342.0], [700.0, 8342.0], [700.0, 7200.0], [2800.0, 7
 Extra - asset_id: collision_camera_076
 > Door (Door064); Heals? False
   * Power Beam Door to collision_camera_088 (A)/Door (Door064)
+  * Extra - actor_name: Door064
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door065); Heals? False
   * Power Beam Door to collision_camera_032 (A)/Door (Door065)
+  * Extra - actor_name: Door065
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
-> Start Point 1; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point
+  * Extra - actor_name: PRP_CV_SaveStation004
+  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+  * Extra - start_point_actor_name: PRP_CV_SaveStation004_WeightPlate
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
 collision_camera_077 (A)
 Extra - total_boundings: {'x1': 31700.0, 'x2': 33800.0, 'y1': 2200.0, 'y2': 5200.0}
 Extra - polygon: [[33800.0, 5200.0], [31700.0, 5200.0], [31700.0, 2200.0], [33800.0, 2200.0]]
 Extra - asset_id: collision_camera_077
-> Start Point 1; Heals? False; Spawn Point
-
-> Elevator (LE_Elevator_FromMagma); Heals? False
-  * Teleporter to Cataris - collision_camera_000 (C)
-
 > Door (Door062); Heals? False
   * Charge Beam Door to collision_camera_078 (A)/Door (Door062)
+  * Extra - actor_name: Door062
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door063); Heals? False
   * Power Beam Door to collision_camera_079 (A)/Door (Door063)
+  * Extra - actor_name: Door063
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Elevator (LE_Elevator_FromMagma); Heals? False; Spawn Point
+  * Teleporter to Cataris - collision_camera_000 (C)
+  * Extra - actor_name: LE_Elevator_FromMagma
+  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: LE_Platform_Elevator_FromCave
+  * Extra - start_point_actor_name: LE_Platform_Elevator_FromMagma
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
 
 ----------------
 collision_camera_078 (A)
@@ -951,12 +2446,26 @@ Extra - polygon: [[31800.0, 4600.0], [26800.0, 4600.0], [26800.0, 3000.0], [3180
 Extra - asset_id: collision_camera_078
 > Pickup (Item_MissileTank012); Heals? False
   * Pickup 2; Major Location? False
+  * Extra - actor_name: Item_MissileTank012
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door060); Heals? False
   * Charge Beam Door to collision_camera_024 (A)/Door (Door060)
+  * Extra - actor_name: Door060
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door062); Heals? False
   * Charge Beam Door to collision_camera_077 (A)/Door (Door062)
+  * Extra - actor_name: Door062
+  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_079 (A)
@@ -965,62 +2474,173 @@ Extra - polygon: [[31800.0, 3000.0], [26800.0, 3000.0], [26800.0, 1400.0], [3180
 Extra - asset_id: collision_camera_079
 > Door (doorpresenceframe_001); Heals? False
   * Access Open to collision_camera_024 (A)/Door (doorpresenceframe_001)
+  * Extra - actor_name: doorpresenceframe_001
+  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door063); Heals? False
   * Power Beam Door to collision_camera_077 (A)/Door (Door063)
+  * Extra - actor_name: Door063
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_080 (A)
 Extra - total_boundings: {'x1': -27800.0, 'x2': -24100.0, 'y1': -1900.0, 'y2': -758.0}
 Extra - polygon: [[-24100.0, -758.0], [-27800.0, -758.0], [-27800.0, -1900.0], [-24100.0, -1900.0]]
 Extra - asset_id: collision_camera_080
-> Elevator (elevator_with_cutscene_aqua_000); Heals? False
-  * Teleporter to Burenia - collision_camera_017 (B)
-
-> Start Point 1; Heals? False; Spawn Point
-
 > Door (Door070); Heals? False
   * Not Determined to collision_camera_081 (A)/Door (Door070)
+  * Extra - actor_name: Door070
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletank_006); Heals? False
   * Pickup 32; Major Location? False
+  * Extra - actor_name: item_missiletank_006
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Elevator (elevator_with_cutscene_aqua_000); Heals? False; Spawn Point
+  * Teleporter to Burenia - collision_camera_017 (B)
+  * Extra - actor_name: elevator_with_cutscene_aqua_000
+  * Extra - actor_def: actordef:actors/props/elevator_with_cutscene/charclasses/elevator_with_cutscene.bmsad
+  * Extra - elevator_component: CElevatorUsableComponent
+  * Extra - target_spawn_point: elevator_cave_000_platform
+  * Extra - start_point_actor_name: elevator_aqua_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_006
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_002
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_001
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_081 (A)
 Extra - total_boundings: {'x1': -24200.0, 'x2': -19100.0, 'y1': -5200.0, 'y2': -1200.0}
 Extra - polygon: [[-19100.0, -1200.0], [-24200.0, -1200.0], [-24200.0, -5200.0], [-19100.0, -5200.0]]
 Extra - asset_id: collision_camera_081
-> Start Point 1; Heals? False
-
 > Door (doorgrapplegrapple); Heals? False
   * Grapple Beam Door to collision_camera_082 (A)/Door (doorgrapplegrapple)
+  * Extra - actor_name: doorgrapplegrapple
+  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (item_missiletank_002); Heals? False
   * Pickup 24; Major Location? False
-
-> Start Point 2; Heals? False
+  * Extra - actor_name: item_missiletank_002
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door070); Heals? False
   * Not Determined to collision_camera_080 (A)/Door (Door070)
+  * Extra - actor_name: Door070
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank014); Heals? False
   * Pickup 26; Major Location? False
+  * Extra - actor_name: Item_MissileTank014
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Pickup (ItemSphere_ScrewAttack); Heals? False
   * Pickup 27; Major Location? True
+  * Extra - actor_name: ItemSphere_ScrewAttack
+  * Extra - actor_def: actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad
 
 > Door (Door075); Heals? False
   * Power Beam Door to collision_camera_082 (A)/Door (Door075)
+  * Extra - actor_name: Door075
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door073); Heals? False
   * Not Determined to collision_camera_085 (A)/Door (Door073)
+  * Extra - actor_name: Door073
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Event - Breakable (breakablecave019); Heals? False
+  * Event Artaria - breakablecave019
+  * Extra - actor_name: breakablecave019
+  * Extra - actor_def: actordef:actors/props/breakablecave018/charclasses/breakablecave018.bmsad
+
+> Total Recharge; Heals? True
+  * Extra - actor_name: PRP_TotalR_000
+  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+  * Extra - start_point_actor_name: PRP_TotalR_Platform_000
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+
+> Start Point 1; Heals? False
+  * Extra - start_point_actor_name: SP_Checkpoint_ScrewAttack
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Elevator (teleporter_magma_000); Heals? False
   * Teleporter to Cataris - collision_camera_015 (C)
+  * Extra - actor_name: teleporter_magma_000
+  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+  * Extra - elevator_component: CTeleporterUsableComponent
+  * Extra - target_spawn_point: teleporter_cave_000_platform
+  * Extra - start_point_actor_name: teleporter_magma_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
 
-> Start Point 3; Heals? False
+> Start Point 2; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-> Start Point 4; Heals? False; Spawn Point
+> Tile Group (SCREWATTACK) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_014
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_015
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_016
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_057
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_058
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_026
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_043
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_082 (A)
@@ -1029,24 +2649,57 @@ Extra - polygon: [[-17100.0, -2200.0], [-19200.0, -2200.0], [-19200.0, -6400.0],
 Extra - asset_id: collision_camera_082
 > Door (doorgrapplegrapple); Heals? False
   * Grapple Beam Door to collision_camera_081 (A)/Door (doorgrapplegrapple)
-
-> Start Point 1; Heals? False; Spawn Point
+  * Extra - actor_name: doorgrapplegrapple
+  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door075); Heals? False
   * Power Beam Door to collision_camera_081 (A)/Door (Door075)
+  * Extra - actor_name: Door075
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Pickup (Item_MissileTank015); Heals? False
   * Pickup 28; Major Location? False
+  * Extra - actor_name: Item_MissileTank015
+  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Door (Door077); Heals? False
   * Power Beam Door to collision_camera_091 (A)/Door (Door077)
+  * Extra - actor_name: Door077
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Door (Door076); Heals? False
+  * Not Determined to collision_camera_056 (A)/Door (Door076)
+  * Extra - actor_name: Door076
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorCave
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_083 (A)
 Extra - total_boundings: {'x1': -16900.0, 'x2': -14800.0, 'y1': -7500.0, 'y2': -6358.0}
 Extra - polygon: [[-14800.0, -6358.0], [-16900.0, -6358.0], [-16900.0, -7500.0], [-14800.0, -7500.0]]
 Extra - asset_id: collision_camera_083
-> Placeholder; Heals? False
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_013
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_085 (A)
@@ -1055,6 +2708,21 @@ Extra - polygon: [[-17100.0, -1200.0], [-19200.0, -1200.0], [-19200.0, -2300.0],
 Extra - asset_id: collision_camera_085
 > Door (Door073); Heals? False
   * Not Determined to collision_camera_081 (A)/Door (Door073)
+  * Extra - actor_name: Door073
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Door (Door074); Heals? False
+  * Power Beam Door to collision_camera_056 (A)/Door (Door074)
+  * Extra - actor_name: Door074
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_086 (A)
@@ -1063,23 +2731,94 @@ Extra - polygon: [[-9100.0, -5700.0], [-14900.0, -5700.0], [-14900.0, -7800.0], 
 Extra - asset_id: collision_camera_086
 > Pickup (item_missiletankplus_000); Heals? False
   * Pickup 15; Major Location? False
+  * Extra - actor_name: item_missiletankplus_000
+  * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
 
 > Pickup (item_energyfragment_000); Heals? False
   * Pickup 18; Major Location? True
+  * Extra - actor_name: item_energyfragment_000
+  * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
 
 > Door (Door004 (PW-PW)_001); Heals? False
   * Power Beam Door to collision_camera_062 (A)/Door (Door004 (PW-PW)_001)
+  * Extra - actor_name: Door004 (PW-PW)_001
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door078); Heals? False
   * Power Beam Door to collision_camera_091 (A)/Door (Door078)
+  * Extra - actor_name: Door078
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Tile Group (MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_008
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_009
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_010
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_011
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_012
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 5; Heals? False
+  * Extra - actor_name: breakabletilegroup_041
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_088 (A)
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': 3900.0, 'y2': 8000.0}
 Extra - polygon: [[800.0, 8000.0], [-1300.0, 8000.0], [-1300.0, 3900.0], [800.0, 3900.0]]
 Extra - asset_id: collision_camera_088
+> Door (DoorEmmy05); Heals? False
+  * Not Determined to collision_camera_009 (A)/Door (DoorEmmy05)
+  * Extra - actor_name: DoorEmmy05
+  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
 > Door (Door064); Heals? False
   * Power Beam Door to collision_camera_076 (A)/Door (Door064)
+  * Extra - actor_name: Door064
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_017
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_018
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_019
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_020
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 5; Heals? False
+  * Extra - actor_name: breakabletilegroup_021
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_089 (A)
@@ -1088,12 +2827,30 @@ Extra - polygon: [[6800.0, 6500.0], [4700.0, 6500.0], [4700.0, 4900.0], [6800.0,
 Extra - asset_id: collision_camera_089
 > Door (doorclosedgrapple_000); Heals? False
   * Access Closed to collision_camera_033 (A)/Door (doorclosedgrapple_000)
+  * Extra - actor_name: doorclosedgrapple_000
+  * Extra - actor_def: actordef:actors/props/doorclosedgrapple/charclasses/doorclosedgrapple.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door069); Heals? False
   * Not Determined to collision_camera_033 (A)/Door (Door069)
+  * Extra - actor_name: Door069
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door069_missileShield
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door067); Heals? False
   * Power Beam Door to collision_camera_032 (A)/Door (Door067)
+  * Extra - actor_name: Door067
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 ----------------
 collision_camera_090 (A)
@@ -1101,19 +2858,41 @@ Extra - total_boundings: {'x1': 8300.0, 'x2': 10400.0, 'y1': -4800.0, 'y2': -365
 Extra - polygon: [[10400.0, -3658.0], [8300.0, -3658.0], [8300.0, -4800.0], [10400.0, -4800.0]]
 Extra - asset_id: collision_camera_090
 > Start Point 1; Heals? False
+  * Extra - start_point_actor_name: PRP_CV_CentralUnitCaves
+  * Extra - start_point_actor_def: actordef:actors/props/centralunit/charclasses/centralunit.bmsad
 
 > Start Point 2; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_EmmyCavePhase2
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 collision_camera_091 (A)
 Extra - total_boundings: {'x1': -17200.0, 'x2': -14800.0, 'y1': -6331.0, 'y2': -5189.0}
 Extra - polygon: [[-14800.0, -5189.0], [-17200.0, -5189.0], [-17200.0, -6331.0], [-14800.0, -6331.0]]
 Extra - asset_id: collision_camera_091
-> Start Point 1; Heals? False; Spawn Point
-
 > Door (Door077); Heals? False
   * Power Beam Door to collision_camera_082 (A)/Door (Door077)
+  * Extra - actor_name: Door077
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Door (Door078); Heals? False
   * Power Beam Door to collision_camera_086 (A)/Door (Door078)
+  * Extra - actor_name: Door078
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_007
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 

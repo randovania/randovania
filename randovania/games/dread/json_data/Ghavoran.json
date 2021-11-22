@@ -1,11 +1,15 @@
 {
     "name": "Ghavoran",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s050_forest/s050_forest.brfld"
+        "asset_id": "maps/levels/c10_samus/s050_forest/s050_forest.brfld",
+        "map_min_x": 28,
+        "map_max_x": 46,
+        "map_min_y": 21,
+        "map_max_y": 65
     },
     "areas": {
         "collision_camera_000 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -35,57 +39,6 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9000.0,
-                        "y": -5650.0,
-                        "z": -0.00024399999529123306
-                    },
-                    "extra": {
-                        "actor_name": "StartPoint0",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
-                "Elevator (elevator_aqua_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9500.0,
-                        "y": -5700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "elevator_aqua_000",
-                        "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
-                        "elevator_component": "CElevatorUsableComponent",
-                        "target_spawn_point": "elevator_forest_000_platform"
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_006 (B)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9500.0,
-                        "y": -5700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "elevator_aqua_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "usable_entity": "elevator_aqua_000"
-                    },
-                    "connections": {}
-                },
                 "Door (doorpowerpower_018)": {
                     "node_type": "dock",
                     "heal": false,
@@ -94,6 +47,7 @@
                         "y": -5700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_018",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -102,9 +56,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_003 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_003 (G)",
+                        "node_name": "Door (doorpowerpower_018)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -117,6 +73,7 @@
                         "y": -5700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_001",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -125,17 +82,59 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_001 (G)",
-                    "connected_dock_index": 3,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_001 (G)",
+                        "node_name": "Door (doorgrapplegrapple_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9000.0,
+                        "y": -5650.0,
+                        "z": -0.00024399999529123306
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "StartPoint0",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Elevator (elevator_aqua_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9500.0,
+                        "y": -5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "elevator_aqua_000",
+                        "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
+                        "elevator_component": "CElevatorUsableComponent",
+                        "target_spawn_point": "elevator_forest_000_platform",
+                        "start_point_actor_name": "elevator_aqua_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_006 (B)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
                     "connections": {}
                 }
             }
         },
         "collision_camera_001 (G)": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -181,6 +180,7 @@
                         "y": -3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -189,9 +189,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_002 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_002 (G)",
+                        "node_name": "Door (doorpowerpower_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -204,6 +206,7 @@
                         "y": -3900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_000",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -212,9 +215,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_035 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_035 (G)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -227,6 +232,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_012",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -235,9 +241,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_010 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_010 (G)",
+                        "node_name": "Door (doorpowerpower_012)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -250,6 +258,7 @@
                         "y": -5900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_000",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -266,6 +275,7 @@
                         "y": -5700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_001",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -274,29 +284,33 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 3,
-                    "connected_area_name": "collision_camera_000 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_000 (G)",
+                        "node_name": "Door (doorgrapplegrapple_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Total Recharge": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": -5500.0,
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "weightactivatedplatform_total_001",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
-                        "usable_entity": "totalrechargestation_001"
+                        "actor_name": "totalrechargestation_001",
+                        "actor_def": "actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_total_001",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
                     "connections": {}
                 },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -304,16 +318,32 @@
                         "y": -3500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_ChozoRobotForest",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_ChozoRobotForest",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (MISSILE)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7800.0,
+                        "y": -5900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_042",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_002 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -351,6 +381,7 @@
                         "y": -3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -359,9 +390,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_001 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_001 (G)",
+                        "node_name": "Door (doorpowerpower_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -374,6 +407,7 @@
                         "y": -3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_017",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -382,14 +416,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_003 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_003 (G)",
+                        "node_name": "Door (doorpowerpower_017)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -397,9 +433,10 @@
                         "y": -3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_Dead_ChozoRobotSoldier",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_Dead_ChozoRobotSoldier",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -444,6 +481,28 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
+                "Door (dooremmy_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10950.0,
+                        "y": -1400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_000",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_004 (G)",
+                        "node_name": "Door (dooremmy_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
                 "Door (doorpowerpower_018)": {
                     "node_type": "dock",
                     "heal": false,
@@ -452,6 +511,7 @@
                         "y": -5700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_018",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -460,9 +520,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_000 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_000 (G)",
+                        "node_name": "Door (doorpowerpower_018)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -475,6 +537,7 @@
                         "y": -3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_017",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -483,9 +546,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_002 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_002 (G)",
+                        "node_name": "Door (doorpowerpower_017)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -498,12 +563,88 @@
                         "y": -4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_003",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 108,
                     "major_location": false,
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14800.0,
+                        "y": -4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_020",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13200.0,
+                        "y": -5200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_044",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12400.0,
+                        "y": -3900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_016",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11800.0,
+                        "y": -4000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_037",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15100.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_039",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -539,6 +680,28 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
+                "Door (dooremmy_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10950.0,
+                        "y": -1400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_000",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_003 (G)",
+                        "node_name": "Door (dooremmy_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
                 "Door (doorpowerpower_002)": {
                     "node_type": "dock",
                     "heal": false,
@@ -547,6 +710,7 @@
                         "y": -500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -555,11 +719,50 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_011 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_011 (G)",
+                        "node_name": "Door (doorpowerpower_002)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_001)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7950.0,
+                        "y": -2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_001",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_005 (G)",
+                        "node_name": "Door (dooremmy_001)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9900.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_047",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -595,6 +798,28 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
+                "Door (dooremmy_001)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7950.0,
+                        "y": -2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_001",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_004 (G)",
+                        "node_name": "Door (dooremmy_001)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
                 "Door (doorpowerpower_003)": {
                     "node_type": "dock",
                     "heal": false,
@@ -603,6 +828,7 @@
                         "y": -2000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_003",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -611,9 +837,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_006 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_006 (G)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -626,9 +854,10 @@
                         "y": -2500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_EmmyForest",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_EmmyForest",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 },
@@ -640,16 +869,17 @@
                         "y": -1900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_AccessPoint_7",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_AccessPoint_7",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_006 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Navigation Room",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -679,21 +909,6 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3950.0,
-                        "y": -2000.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "accesspoint_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "usable_entity": "accesspoint_000"
-                    },
-                    "connections": {}
-                },
                 "Door (doorpowerpower_003)": {
                     "node_type": "dock",
                     "heal": false,
@@ -702,6 +917,7 @@
                         "y": -2000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_003",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -710,9 +926,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_005 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_005 (G)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -725,6 +943,7 @@
                         "y": -2000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_004",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -733,17 +952,36 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_007 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_007 (G)",
+                        "node_name": "Door (doorpowerpower_004)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Navigation Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3950.0,
+                        "y": -2000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "accesspoint_000",
+                        "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
+                        "start_point_actor_name": "accesspoint_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_007 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -781,6 +1019,7 @@
                         "y": -2000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_004",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -789,9 +1028,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_006 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_006 (G)",
+                        "node_name": "Door (doorpowerpower_004)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -804,6 +1045,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -812,14 +1054,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_029 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_029 (G)",
+                        "node_name": "Door (doorpowerpower_005)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -827,9 +1071,10 @@
                         "y": -1900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_AccessPoint_7B",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_AccessPoint_7B",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -882,6 +1127,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -890,9 +1136,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_038 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_038 (G)",
+                        "node_name": "Door (doorpowerpower_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -905,6 +1153,7 @@
                         "y": -4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -913,9 +1162,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_009 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_009 (G)",
+                        "node_name": "Door (doorpowerpower_006)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -928,6 +1179,7 @@
                         "y": -5200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_001",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -977,6 +1229,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_001",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -985,9 +1238,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_002",
                         "right_shield_def": "actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_010 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_010 (G)",
+                        "node_name": "Door (doorclosedpower_001)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -1000,6 +1255,7 @@
                         "y": -4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1008,9 +1264,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_008 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_008 (G)",
+                        "node_name": "Door (doorpowerpower_006)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1023,6 +1281,7 @@
                         "y": -5900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1031,9 +1290,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_010 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_010 (G)",
+                        "node_name": "Door (doorpowerpower_007)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -1046,6 +1307,7 @@
                         "y": -3800.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletankplus_000",
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
@@ -1053,11 +1315,26 @@
                     "pickup_index": 102,
                     "major_location": false,
                     "connections": {}
+                },
+                "Tile Group (BOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1500.0,
+                        "y": -4900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_019",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_010 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1095,6 +1372,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_012",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1103,9 +1381,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_001 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_001 (G)",
+                        "node_name": "Door (doorpowerpower_012)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1118,6 +1398,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_001",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -1126,9 +1407,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_002",
                         "right_shield_def": "actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad"
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_009 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_009 (G)",
+                        "node_name": "Door (doorclosedpower_001)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -1141,6 +1424,7 @@
                         "y": -5900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1149,9 +1433,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_009 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_009 (G)",
+                        "node_name": "Door (doorpowerpower_007)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -1164,6 +1450,7 @@
                         "y": -5590.0,
                         "z": 0.0012209999840706587
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "itemsphere_supermissile",
                         "actor_def": "actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad"
@@ -1172,7 +1459,7 @@
                     "major_location": true,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1180,9 +1467,10 @@
                         "y": -5800.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_SuperMissiles",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_SuperMissiles",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -1227,6 +1515,7 @@
                         "y": -500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1235,9 +1524,55 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_004 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_004 (G)",
+                        "node_name": "Door (doorpowerpower_002)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_002)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_002",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_012 (G)",
+                        "node_name": "Door (dooremmy_002)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_003",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_012 (G)",
+                        "node_name": "Door (dooremmy_003)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -1250,6 +1585,7 @@
                         "y": 400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorframe_000",
                         "actor_def": "actordef:actors/props/doorframe/charclasses/doorframe.bmsad",
@@ -1258,9 +1594,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_014 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_014 (G)",
+                        "node_name": "Door (doorframe_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
@@ -1298,6 +1636,50 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
+                "Door (dooremmy_002)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_002",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_011 (G)",
+                        "node_name": "Door (dooremmy_002)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_003",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_011 (G)",
+                        "node_name": "Door (dooremmy_003)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
                 "Door (doorpowerpower_008)": {
                     "node_type": "dock",
                     "heal": false,
@@ -1306,6 +1688,7 @@
                         "y": 700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1314,17 +1697,79 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_013 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_013 (G)",
+                        "node_name": "Door (doorpowerpower_008)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3000.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_023",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4200.0,
+                        "y": -100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_040",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3800.0,
+                        "y": 100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_041",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4400.0,
+                        "y": 400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_052",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_013 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Map Station",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1362,6 +1807,7 @@
                         "y": 700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1370,14 +1816,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_012 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_012 (G)",
+                        "node_name": "Door (doorpowerpower_008)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Map Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1385,10 +1833,12 @@
                         "y": 700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "maproom_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad",
-                        "usable_entity": "maproom"
+                        "actor_name": "maproom",
+                        "actor_def": "actordef:actors/props/maproom/charclasses/maproom.bmsad",
+                        "start_point_actor_name": "maproom_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
                     "connections": {}
                 }
@@ -1433,6 +1883,7 @@
                         "y": 3100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_006",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -1441,11 +1892,57 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_018 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_018 (G)",
+                        "node_name": "Door (doorgrapplegrapple_006)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
+                    "connections": {}
+                },
+                "Door (dooremmy_004)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_004",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_015 (G)",
+                        "node_name": "Door (dooremmy_004)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_005)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_005",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_015 (G)",
+                        "node_name": "Door (dooremmy_005)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 "Door (doorpowerpower_009)": {
@@ -1456,6 +1953,7 @@
                         "y": 3700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_009",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1464,9 +1962,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_018 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_018 (G)",
+                        "node_name": "Door (doorpowerpower_009)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1479,6 +1979,7 @@
                         "y": 400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorframe_000",
                         "actor_def": "actordef:actors/props/doorframe/charclasses/doorframe.bmsad",
@@ -1487,9 +1988,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_011 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_011 (G)",
+                        "node_name": "Door (doorframe_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
@@ -1527,11 +2030,70 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
+                "Door (dooremmy_004)": {
+                    "node_type": "dock",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_004",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_014 (G)",
+                        "node_name": "Door (dooremmy_004)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_005)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_005",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_014 (G)",
+                        "node_name": "Door (dooremmy_005)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_006)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_006",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_016 (G)",
+                        "node_name": "Door (dooremmy_006)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 }
             }
@@ -1567,17 +2129,99 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Placeholder": {
+                "Door (dooremmy_006)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9950.0,
+                        "y": 5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_006",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_015 (G)",
+                        "node_name": "Door (dooremmy_006)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (doorchargecharge_001)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6950.0,
+                        "y": 5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorchargecharge_001",
+                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_019 (G)",
+                        "node_name": "Door (doorchargecharge_001)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Door (tunnelframe)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6950.0,
+                        "y": 5300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "tunnelframe",
+                        "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_019 (G)",
+                        "node_name": "Door (tunnelframe)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
-                    "extra": {},
+                    "coordinates": {
+                        "x": -9000.0,
+                        "y": 5600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_000",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_017 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1607,7 +2251,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1615,9 +2259,10 @@
                         "y": 4300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_EmmyForestPhase2",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_EmmyForestPhase2",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -1662,6 +2307,7 @@
                         "y": 3100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_006",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -1670,9 +2316,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_014 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_014 (G)",
+                        "node_name": "Door (doorgrapplegrapple_006)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
                     "connections": {}
@@ -1685,6 +2333,7 @@
                         "y": 3700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_009",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1693,9 +2342,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_014 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_014 (G)",
+                        "node_name": "Door (doorpowerpower_009)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1708,6 +2359,7 @@
                         "y": 3200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorchargecharge_000",
                         "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
@@ -1716,9 +2368,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_020 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_020 (G)",
+                        "node_name": "Door (doorchargecharge_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 3,
                     "connections": {}
@@ -1756,34 +2410,6 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6500.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_CentralUnit",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5300.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_IceMissiles",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Door (doorpowerpower_010)": {
                     "node_type": "dock",
                     "heal": false,
@@ -1792,6 +2418,7 @@
                         "y": 5400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_010",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1800,9 +2427,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_020 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_020 (G)",
+                        "node_name": "Door (doorpowerpower_010)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1815,6 +2444,7 @@
                         "y": 4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_011",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1823,11 +2453,95 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_020 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_020 (G)",
+                        "node_name": "Door (doorpowerpower_011)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Door (doorchargecharge_001)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6950.0,
+                        "y": 5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorchargecharge_001",
+                        "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_016 (G)",
+                        "node_name": "Door (doorchargecharge_001)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Door (tunnelframe)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6950.0,
+                        "y": 5300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "tunnelframe",
+                        "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_016 (G)",
+                        "node_name": "Door (tunnelframe)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Start Point 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6500.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_CentralUnit",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5300.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_IceMissiles",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -1871,6 +2585,7 @@
                         "y": 3200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorchargecharge_000",
                         "actor_def": "actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad",
@@ -1879,11 +2594,57 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_018 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_018 (G)",
+                        "node_name": "Door (doorchargecharge_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Door (dooremmy)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": 3500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_021 (G)",
+                        "node_name": "Door (dooremmy)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_007)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": 4200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_007",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_021 (G)",
+                        "node_name": "Door (dooremmy_007)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 "Door (doorpowerpower_010)": {
@@ -1894,6 +2655,7 @@
                         "y": 5400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_010",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1902,9 +2664,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_019 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_019 (G)",
+                        "node_name": "Door (doorpowerpower_010)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1917,6 +2681,7 @@
                         "y": 4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_011",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1925,17 +2690,34 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_019 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_019 (G)",
+                        "node_name": "Door (doorpowerpower_011)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2300.0,
+                        "y": 4400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_004",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_021 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Ammo Recharge",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1973,6 +2755,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrappleclosed_000",
                         "actor_def": "actordef:actors/props/doorgrappleclosed/charclasses/doorgrappleclosed.bmsad",
@@ -1981,9 +2764,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_039 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_039 (G)",
+                        "node_name": "Door (doorgrappleclosed_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
                     "connections": {}
@@ -1996,6 +2781,7 @@
                         "y": -300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_019",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2004,9 +2790,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_022 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_022 (G)",
+                        "node_name": "Door (doorpowerpower_019)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2019,6 +2807,7 @@
                         "y": 7720.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_powerbombtank_000",
                         "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
@@ -2027,19 +2816,48 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
+                "Door (dooremmy)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 800.0,
-                        "y": 4300.0,
+                        "x": -950.0,
+                        "y": 3500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "ammorecharge_001_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad",
-                        "usable_entity": "ammorecharge_001"
+                        "actor_name": "dooremmy",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_020 (G)",
+                        "node_name": "Door (dooremmy)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (dooremmy_007)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": 4200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "dooremmy_007",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_020 (G)",
+                        "node_name": "Door (dooremmy_007)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 "Pickup (item_energyfragment_000)": {
@@ -2050,6 +2868,7 @@
                         "y": 1200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_energyfragment_000",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
@@ -2066,6 +2885,7 @@
                         "y": 5000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_energytank_000",
                         "actor_def": "actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad"
@@ -2073,11 +2893,43 @@
                     "pickup_index": 109,
                     "major_location": false,
                     "connections": {}
+                },
+                "Ammo Recharge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 800.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "ammorecharge_001",
+                        "actor_def": "actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad",
+                        "start_point_actor_name": "ammorecharge_001_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (MISSILE)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -600.0,
+                        "y": 1200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_043",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_022 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2115,6 +2967,7 @@
                         "y": -300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_019",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2123,26 +2976,13 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_021 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_021 (G)",
+                        "node_name": "Door (doorpowerpower_019)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3050.0,
-                        "y": -300.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "savestation_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
-                        "usable_entity": "savestation_000"
-                    },
                     "connections": {}
                 },
                 "Door (doorpowerpower_013)": {
@@ -2153,6 +2993,7 @@
                         "y": -300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_013",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2161,17 +3002,36 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_023 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_023 (G)",
+                        "node_name": "Door (doorpowerpower_013)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3050.0,
+                        "y": -300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "savestation_000",
+                        "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
+                        "start_point_actor_name": "savestation_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_023 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -2209,6 +3069,7 @@
                         "y": -300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_013",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2217,9 +3078,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_022 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_022 (G)",
+                        "node_name": "Door (doorpowerpower_013)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -2232,6 +3095,7 @@
                         "y": 300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_002",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -2240,14 +3104,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_025_B (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_025_B (G)",
+                        "node_name": "Door (doorpowerclosed_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2255,16 +3121,32 @@
                         "y": -200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5800.0,
+                        "y": 800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_024",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_024 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -2310,6 +3192,7 @@
                         "y": 3700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2318,25 +3201,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_040 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_040 (G)",
+                        "node_name": "Door (doorpowerpower)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6200.0,
-                        "y": 6200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_SuperGoliath",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
                     "connections": {}
                 },
                 "Door (doorpowerpower_014)": {
@@ -2347,6 +3218,7 @@
                         "y": 2900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_014",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2355,9 +3227,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_025_B (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_025_B (G)",
+                        "node_name": "Door (doorpowerpower_014)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2370,6 +3244,7 @@
                         "y": 2900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_004",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -2386,6 +3261,7 @@
                         "y": 1700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_002",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -2394,9 +3270,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_025_B (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_025_B (G)",
+                        "node_name": "Door (doorclosedpower_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2409,6 +3287,7 @@
                         "y": 6100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_015",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2417,9 +3296,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 3,
-                    "connected_area_name": "collision_camera_036 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_036 (G)",
+                        "node_name": "Door (doorpowerpower_015)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -2432,49 +3313,13 @@
                         "y": 2400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_007",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 107,
                     "major_location": false,
-                    "connections": {}
-                },
-                "Elevator (teleporter_aqua_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5750.0,
-                        "y": 2100.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "teleporter_aqua_000",
-                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
-                        "elevator_component": "CTeleporterUsableComponent",
-                        "target_spawn_point": "teleporter_forest_000_platform"
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_015 (B)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5750.0,
-                        "y": 2100.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "teleporter_aqua_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "usable_entity": "teleporter_aqua_000"
-                    },
                     "connections": {}
                 },
                 "Door (doorgrapplegrapple_000)": {
@@ -2485,6 +3330,7 @@
                         "y": 3300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_000",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -2493,9 +3339,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 4,
-                    "connected_area_name": "collision_camera_031 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_031 (G)",
+                        "node_name": "Door (doorgrapplegrapple_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
                     "connections": {}
@@ -2508,6 +3356,7 @@
                         "y": 7900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_energyfragment",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
@@ -2524,6 +3373,7 @@
                         "y": 7500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedcharge",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
@@ -2532,48 +3382,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 5,
-                    "connected_area_name": "collision_camera_039 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_039 (G)",
+                        "node_name": "Door (doorclosedcharge)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 3,
-                    "connections": {}
-                },
-                "Elevator (teleporter_magma_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4450.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "teleporter_magma_000",
-                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
-                        "elevator_component": "CTeleporterUsableComponent",
-                        "target_spawn_point": "teleporter_forest_000_platform"
-                    },
-                    "destination": {
-                        "world_name": "Cataris",
-                        "area_name": "collision_camera_026 (C)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Start Point 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4450.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "teleporter_magma_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "usable_entity": "teleporter_magma_000"
-                    },
                     "connections": {}
                 },
                 "Pickup (item_missiletank)": {
@@ -2584,6 +3399,7 @@
                         "y": 4550.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -2591,11 +3407,271 @@
                     "pickup_index": 113,
                     "major_location": false,
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6200.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_SuperGoliath",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Elevator (teleporter_aqua_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5750.0,
+                        "y": 2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "teleporter_aqua_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "teleporter_forest_000_platform",
+                        "start_point_actor_name": "teleporter_aqua_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_015 (B)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Elevator (teleporter_magma_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4450.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "teleporter_magma_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "teleporter_forest_000_platform",
+                        "start_point_actor_name": "teleporter_magma_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Cataris",
+                        "area_name": "collision_camera_026 (C)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Tile Group (POWERBOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 2000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_001",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 2800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_002",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4500.0,
+                        "y": 4400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_005",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 2800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_013",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4600.0,
+                        "y": 6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_028",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SPEEDBOOST) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 6700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_038",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SPEEDBOOST) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5600.0,
+                        "y": 6500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_036",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4300.0,
+                        "y": 5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4600.0,
+                        "y": 5800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_008",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4700.0,
+                        "y": 5500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_010",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4400.0,
+                        "y": 5100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_018",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4200.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_048",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4600.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_049",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_025_B (G)": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -2641,6 +3717,7 @@
                         "y": 300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_002",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -2649,9 +3726,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_023 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_023 (G)",
+                        "node_name": "Door (doorpowerclosed_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2664,6 +3743,7 @@
                         "y": 2900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_014",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2672,9 +3752,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorpowerpower_014)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2687,6 +3769,7 @@
                         "y": 1700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_002",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -2695,29 +3778,33 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorclosedpower_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Total Recharge": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 7550.0,
                         "y": 2300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "weightactivatedplatform_total_000",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
-                        "usable_entity": "totalrechargestation_000"
+                        "actor_name": "totalrechargestation_000",
+                        "actor_def": "actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_total_000",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
                     "connections": {}
                 },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2725,16 +3812,62 @@
                         "y": 1800.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_ChozoWarriorForest",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_ChozoWarriorForest",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8100.0,
+                        "y": 1100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_025",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7200.0,
+                        "y": 600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_026",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7900.0,
+                        "y": 2200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_045",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_026 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -2764,20 +3897,6 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8800.0,
-                        "y": 5231.7578125,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_LineBomb",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Door (doorpowerclosed_003)": {
                     "node_type": "dock",
                     "heal": false,
@@ -2786,6 +3905,7 @@
                         "y": 5300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_003",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -2794,17 +3914,49 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_033 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_033 (G)",
+                        "node_name": "Door (doorpowerclosed_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8800.0,
+                        "y": 5231.7578125,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_LineBomb",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9600.0,
+                        "y": 6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_011",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_027 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Elevator (wagontrain_sanctuary_000)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2842,11 +3994,14 @@
                         "y": 2500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "wagontrain_sanctuary_000",
                         "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
                         "elevator_component": "CTrainUsableComponent",
-                        "target_spawn_point": "wagontrain_forest_000_platform"
+                        "target_spawn_point": "wagontrain_forest_000_platform",
+                        "start_point_actor_name": "wagontrain_sanctuary_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "destination": {
                         "world_name": "Ferenia",
@@ -2854,21 +4009,6 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 15200.0,
-                        "y": 2500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "wagontrain_sanctuary_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "usable_entity": "wagontrain_sanctuary_000"
-                    },
                     "connections": {}
                 }
             }
@@ -2912,12 +4052,58 @@
                         "y": -400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_002",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 101,
                     "major_location": false,
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1900.0,
+                        "y": -500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_022",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2000.0,
+                        "y": -400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_030",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2100.0,
+                        "y": -500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_050",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -2969,6 +4155,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -2977,9 +4164,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_007 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_007 (G)",
+                        "node_name": "Door (doorpowerpower_005)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -2992,6 +4181,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_003",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -3000,9 +4190,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_037 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_037 (G)",
+                        "node_name": "Door (doorgrapplegrapple_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
                     "connections": {}
@@ -3015,6 +4207,7 @@
                         "y": -2300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_009",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -3022,11 +4215,26 @@
                     "pickup_index": 111,
                     "major_location": false,
                     "connections": {}
+                },
+                "Tile Group (SPEEDBOOST)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -900.0,
+                        "y": -2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_021",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_030 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3056,20 +4264,6 @@
                 "asset_id": "collision_camera_030"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3200.0,
-                        "y": 900.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_DoubleJump",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Pickup (itemsphere_doublejump)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -3078,6 +4272,7 @@
                         "y": 1110.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "itemsphere_doublejump",
                         "actor_def": "actordef:actors/items/itemsphere_doublejump/charclasses/itemsphere_doublejump.bmsad"
@@ -3085,11 +4280,26 @@
                     "pickup_index": 104,
                     "major_location": true,
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3200.0,
+                        "y": 900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_DoubleJump",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_031 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3119,21 +4329,6 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2900.0,
-                        "y": 3900.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "energyrecharge_002_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad",
-                        "usable_entity": "energyrecharge_002"
-                    },
-                    "connections": {}
-                },
                 "Door (doorgrapplegrapple_000)": {
                     "node_type": "dock",
                     "heal": false,
@@ -3142,6 +4337,7 @@
                         "y": 3300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_000",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -3150,17 +4346,126 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 4,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorgrapplegrapple_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
+                    "connections": {}
+                },
+                "Life Recharge": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 2900.0,
+                        "y": 3900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "energyrecharge_002",
+                        "actor_def": "actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad",
+                        "start_point_actor_name": "energyrecharge_002_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2500.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_014",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2600.0,
+                        "y": 3000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_015",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3500.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_035",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2300.0,
+                        "y": 3300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_033",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3000.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_053",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2600.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_054",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_032 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3190,20 +4495,6 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2900.0,
-                        "y": 5450.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_SonarObtained",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Pickup (powerup_sonar)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -3212,12 +4503,103 @@
                         "y": 5550.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "powerup_sonar",
                         "actor_def": "actordef:actors/items/powerup_sonar/charclasses/powerup_sonar.bmsad"
                     },
                     "pickup_index": 110,
                     "major_location": true,
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2900.0,
+                        "y": 5450.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_SonarObtained",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3600.0,
+                        "y": 5800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_012",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 5800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_027",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_029",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2200.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_031",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3900.0,
+                        "y": 5900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_034",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -3261,6 +4643,7 @@
                         "y": 5400.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_005",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -3277,6 +4660,7 @@
                         "y": 5300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_003",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -3285,9 +4669,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_026 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_026 (G)",
+                        "node_name": "Door (doorpowerclosed_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3300,6 +4686,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_003",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -3308,9 +4695,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_036 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_036 (G)",
+                        "node_name": "Door (doorclosedpower_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -3323,6 +4712,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_000",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -3331,17 +4721,94 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_034 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_034 (G)",
+                        "node_name": "Door (doorclosedpower_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11200.0,
+                        "y": 5300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_006",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11700.0,
+                        "y": 6300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_007",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10600.0,
+                        "y": 5591.17578125,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_009",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11600.0,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_051",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11200.0,
+                        "y": 6100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_032",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_034 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Elevator (wagontrain_shipyard_000)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3371,43 +4838,6 @@
                 "asset_id": "collision_camera_034"
             },
             "nodes": {
-                "Elevator (wagontrain_shipyard_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17400.0,
-                        "y": 6600.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "wagontrain_shipyard_000",
-                        "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
-                        "elevator_component": "CTrainUsableComponent",
-                        "target_spawn_point": "wagontrain_forest_000_platform"
-                    },
-                    "destination": {
-                        "world_name": "Hanubia",
-                        "area_name": "collision_camera_001 (H)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17400.0,
-                        "y": 6600.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "wagontrain_shipyard_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "usable_entity": "wagontrain_shipyard_000"
-                    },
-                    "connections": {}
-                },
                 "Door (doorclosedpower_000)": {
                     "node_type": "dock",
                     "heal": false,
@@ -3416,6 +4846,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_000",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -3424,11 +4855,38 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_033 (G)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_033 (G)",
+                        "node_name": "Door (doorclosedpower_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Elevator (wagontrain_shipyard_000)": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17400.0,
+                        "y": 6600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "wagontrain_shipyard_000",
+                        "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
+                        "elevator_component": "CTrainUsableComponent",
+                        "target_spawn_point": "wagontrain_forest_000_platform",
+                        "start_point_actor_name": "wagontrain_shipyard_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_001 (H)"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
                     "connections": {}
                 }
             }
@@ -3472,6 +4930,7 @@
                         "y": -3900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerclosed_000",
                         "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
@@ -3480,9 +4939,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_001 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_001 (G)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3528,6 +4989,7 @@
                         "y": 6100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_015",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -3536,9 +4998,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 3,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorpowerpower_015)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -3551,6 +5015,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedpower_003",
                         "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
@@ -3559,9 +5024,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_033 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_033 (G)",
+                        "node_name": "Door (doorclosedpower_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -3569,7 +5036,7 @@
             }
         },
         "collision_camera_037 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Elevator (wagontrain_quarantine_with_cutscene_000)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3607,6 +5074,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrapplegrapple_003",
                         "actor_def": "actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad",
@@ -3615,26 +5083,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_029 (G)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_029 (G)",
+                        "node_name": "Door (doorgrapplegrapple_003)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 10,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7400.0,
-                        "y": -3000.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "wagontrain_quarantine_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "usable_entity": "wagontrain_quarantine_with_cutscene_000"
-                    },
                     "connections": {}
                 },
                 "Elevator (wagontrain_quarantine_000)": {
@@ -3645,6 +5100,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "wagontrain_quarantine_000",
                         "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
@@ -3667,11 +5123,14 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "wagontrain_quarantine_with_cutscene_000",
                         "actor_def": "actordef:actors/props/wagontrain_with_cutscene/charclasses/wagontrain_with_cutscene.bmsad",
                         "elevator_component": "CTrainUsableComponentCutScene",
-                        "target_spawn_point": "wagontrain_forest_000_platform"
+                        "target_spawn_point": "wagontrain_forest_000_platform",
+                        "start_point_actor_name": "wagontrain_quarantine_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "destination": {
                         "world_name": "Elun",
@@ -3684,7 +5143,7 @@
             }
         },
         "collision_camera_038 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Elevator (elevator_baselab_000)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3722,6 +5181,7 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -3730,26 +5190,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_008 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_008 (G)",
+                        "node_name": "Door (doorpowerpower_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5100.0,
-                        "y": -4900.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "elevator_baselab_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "usable_entity": "elevator_baselab_000"
-                    },
                     "connections": {}
                 },
                 "Elevator (elevator_baselab_000)": {
@@ -3760,11 +5207,14 @@
                         "y": -4900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "elevator_baselab_000",
                         "actor_def": "actordef:actors/props/elevator/charclasses/elevator.bmsad",
                         "elevator_component": "CElevatorUsableComponent",
-                        "target_spawn_point": "elevator_forest_000_platform"
+                        "target_spawn_point": "elevator_forest_000_platform",
+                        "start_point_actor_name": "elevator_baselab_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "destination": {
                         "world_name": "Dairon",
@@ -3777,7 +5227,7 @@
             }
         },
         "collision_camera_039 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3815,6 +5265,7 @@
                         "y": 6600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorgrappleclosed_000",
                         "actor_def": "actordef:actors/props/doorgrappleclosed/charclasses/doorgrappleclosed.bmsad",
@@ -3823,25 +5274,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_021 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_021 (G)",
+                        "node_name": "Door (doorgrappleclosed_000)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2900.0,
-                        "y": 6550.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "SP_Checkpoint_Sonar",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
                     "connections": {}
                 },
                 "Pickup (item_missiletank_006)": {
@@ -3852,6 +5291,7 @@
                         "y": 6900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_006",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -3868,6 +5308,7 @@
                         "y": 7500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorclosedcharge",
                         "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
@@ -3876,17 +5317,79 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 5,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorclosedcharge)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2900.0,
+                        "y": 6550.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_Sonar",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3300.0,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_003",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3600.0,
+                        "y": 6400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_017",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3900.0,
+                        "y": 7000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_046",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_040 (G)": {
-            "default_node": "Start Point 1",
+            "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3916,21 +5419,6 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8050.0,
-                        "y": 3700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "weightactivatedplatform_save",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
-                        "usable_entity": "savestation"
-                    },
-                    "connections": {}
-                },
                 "Door (doorpowerpower)": {
                     "node_type": "dock",
                     "heal": false,
@@ -3939,6 +5427,7 @@
                         "y": 3700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -3947,11 +5436,30 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_024 (G)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_024 (G)",
+                        "node_name": "Door (doorpowerpower)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8050.0,
+                        "y": 3700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "savestation",
+                        "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_save",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -3991,6 +5499,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }
@@ -4031,6 +5540,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }

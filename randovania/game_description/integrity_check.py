@@ -40,10 +40,19 @@ def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
         #         yield (f"'{node.name}' name suggests a connection to {other_area}, but it "
         #                f"connects to {node.default_connection.area_name}")
 
+        other_node = None
         try:
-            world_list.resolve_dock_connection(world, node.default_connection)
-        except IndexError as e:
-            yield f"'{node.name}' is a Dock Node, but connection {node.default_connection} is invalid: {e}"
+            other_node = world_list.node_by_identifier(node.default_connection)
+        except ValueError as e:
+            yield f"'{node.name}' is a Dock Node, but connection '{node.default_connection}' is invalid: {e}"
+
+        if other_node is not None:
+            if isinstance(other_node, DockNode):
+                if other_node.default_connection != world_list.identifier_for_node(node):
+                    yield (f"'{node.name}' connects to '{node.default_connection}', but that dock connects "
+                           f"to '{other_node.default_connection}' instead.")
+            else:
+                yield f"'{node.name}' connects to '{node.default_connection}' which is not a DockNode"
 
     elif any(node.name.startswith(dock_type.node_name_prefix) for dock_type in iterate_enum(DockType)):
         yield f"'{node.name}' is not a Dock Node, naming suggests it should be."
@@ -64,7 +73,7 @@ def find_area_errors(world_list: WorldList, area: Area) -> Iterator[str]:
             yield f"{area.name} - {error}"
 
     if area.default_node is not None and area.node_with_name(area.default_node) is None:
-        yield f"'{area.name} has default node {area.default_node}, but no node with that name exists"
+        yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
 
     # elif area.default_node is not None:
     #     nodes_with_paths_in.add(area.node_with_name(area.default_node))
@@ -74,7 +83,7 @@ def find_area_errors(world_list: WorldList, area: Area) -> Iterator[str]:
             continue
 
         if node in nodes_with_paths_in:
-            yield f"'{area.name} - {node.name}: Node has paths in, but no connections out."
+            yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
 
 def find_world_errors(world_list: WorldList, world: World) -> Iterator[str]:

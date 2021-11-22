@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.3.0] - Unreleased
 
 - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
+- Added: Data Editor can now edit area names.
 
 ### Metroid Prime
 
@@ -18,7 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Fixed: Magma Pool - Added missing suit or heated runs trick requirement for non-grapple methods of crossing the room
+- Added: Magma Pool - Added standable terrain method to cross the room with a video example
+- Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 
 ### Metroid Prime 2: Echoes
 

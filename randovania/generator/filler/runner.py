@@ -127,7 +127,7 @@ def add_relative_hint(world_list: WorldList,
         distance_offset = max_distance - distances[area]
 
     if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
-        relative = RelativeDataArea(distance_offset, world_list.area_to_area_location(area),
+        relative = RelativeDataArea(distance_offset, world_list.identifier_for_area(area),
                                     precision)
     elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
         relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)

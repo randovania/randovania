@@ -10,9 +10,10 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, Q
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
+from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -45,8 +46,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.radio_button_to_node = {}
 
         self.setCentralWidget(None)
+        # self.points_of_interest_dock.hide()
+        # self.node_info_dock.hide()
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
+
+        # self.spin_min_x = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_min_y = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_max_x = QtWidgets.QSpinBox(super().centralWidget())
+        # self.spin_max_y = QtWidgets.QSpinBox(super().centralWidget())
+        # for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
+        #     it.setMaximum(99999)
+        #     la = QtWidgets.QLabel(super().centralWidget())
+        #     la.setText(["min_x", "min_y", "max_x", "max_y"][i])
+        #     self.gridLayout_2.addWidget(la)
+        #     self.gridLayout_2.addWidget(it)
+        #     it.valueChanged.connect(self._on_image_spin_update)
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
@@ -55,6 +70,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
+        self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
+        self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -62,14 +79,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             self.save_database_button.clicked.connect(self._prompt_save_database)
 
+        self.rename_area_button.clicked.connect(self._rename_area)
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
+        self.editor = Editor(self.game_description)
         self.generic_index = world_reader.generic_index
-
         self.resource_database = self.game_description.resource_database
         self.world_list = self.game_description.world_list
 
@@ -103,13 +121,35 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def on_select_world(self):
         self.area_selector_box.clear()
-        for area in sorted(self.current_world.areas, key=lambda x: x.name):
+        world = self.current_world
+        for area in sorted(world.areas, key=lambda x: x.name):
             if area.name.startswith("!!"):
                 continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
 
-    def on_select_area(self):
+        self.area_view_canvas.select_world(world)
+
+        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+        #     it.valueChanged.disconnect(self._on_image_spin_update)
+        #
+        # self.spin_min_x.setValue(world.extra["map_min_x"])
+        # self.spin_min_y.setValue(world.extra["map_min_y"])
+        # self.spin_max_x.setValue(world.extra["map_max_x"])
+        # self.spin_max_y.setValue(world.extra["map_max_y"])
+        #
+        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+        #     it.valueChanged.connect(self._on_image_spin_update)
+
+    # def _on_image_spin_update(self):
+    #     world = self.current_world
+    #     world.extra["map_min_x"] = self.spin_min_x.value()
+    #     world.extra["map_min_y"] = self.spin_min_y.value()
+    #     world.extra["map_max_x"] = self.spin_max_x.value()
+    #     world.extra["map_max_y"] = self.spin_max_y.value()
+    #     self.area_view_canvas.select_world(world)
+
+    def on_select_area(self, select_node: Optional[Node] = None):
         for node in self.radio_button_to_node.keys():
             node.deleteLater()
 
@@ -128,10 +168,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             button = QRadioButton(self.points_of_interest_content)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
-            if is_first:
+            if is_first or select_node is node:
                 self.selected_node_button = button
-
-            button.setChecked(is_first)
+                button.setChecked(True)
+            else:
+                button.setChecked(False)
             button.toggled.connect(self.on_select_node)
             is_first = False
             self.points_of_interest_layout.addWidget(button)
@@ -152,6 +193,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def focus_on_area(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+
+    def focus_on_node(self, node: Node):
+        for radio, other_node in self.radio_button_to_node.items():
+            if other_node == node:
+                radio.setChecked(True)
+        self.update_selected_node()
 
     def _on_click_link_to_other_node(self, link: str):
         world_name, area_name, node_name = None, None, None
@@ -192,26 +239,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if old_node == new_node:
             return
 
-        def sub(n: Node):
-            return new_node if n == old_node else n
-
-        area_node_list = area.nodes
-        for i, node in enumerate(area_node_list):
-            if node == old_node:
-                area_node_list[i] = new_node
-
-        new_connections = {
-            sub(source_node): {
-                sub(target_node): requirements
-                for target_node, requirements in connection.items()
-            }
-            for source_node, connection in area.connections.items()
-        }
-        area.connections.clear()
-        area.connections.update(new_connections)
-        if area.default_node == old_node.name:
-            object.__setattr__(area, "default_node", new_node.name)
-        self.game_description.world_list.refresh_node_cache()
+        self.editor.replace_node(area, old_node, new_node)
 
         if area == self.current_area:
             radio = next(key for key, value in self.radio_button_to_node.items() if value == old_node)
@@ -262,6 +290,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         is_default_spawn = self.current_area.default_node == node.name
         self.area_spawn_check.setChecked(is_default_spawn)
         self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
+        self.area_view_canvas.highlight_node(node)
 
         try:
             msg = pretty_print.pretty_print_node_type(node, self.world_list)
@@ -270,7 +299,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             try:
-                other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
+                other = self.world_list.node_by_identifier(node.default_connection)
                 msg = "{} to <a href=\"node://{}\">{}</a>".format(
                     node.default_dock_weakness.name,
                     self.world_list.node_name(other, with_world=True),
@@ -290,6 +319,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
+        self.node_description_label.setText(node.description)
         self.update_other_node_connection()
 
         for button, source_node in self.radio_button_to_node.items():
@@ -384,22 +414,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
         editor = ConnectionsEditor(self, self.resource_database, requirement)
         if await self._execute_edit_dialog(editor):
-            self._apply_edit_connections(from_node, target_node, editor.final_requirement)
-
-    def _apply_edit_connections(self, from_node: Node, target_node: Node,
-                                requirement: Optional[Requirement]):
-
-        current_connections = self.current_area.connections[from_node]
-        self.current_area.connections[from_node][target_node] = requirement
-        if self.current_area.connections[from_node][target_node] is None:
-            del self.current_area.connections[from_node][target_node]
-
-        self.current_area.connections[from_node] = {
-            node: current_connections[node]
-            for node in self.current_area.nodes
-            if node in current_connections
-        }
-        self.update_connections()
+            self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
+            self.update_connections()
 
     def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
@@ -441,7 +457,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
             default_database.game_description_for.cache_clear()
 
-    def _create_new_node(self):
+    def _rename_area(self):
+        new_name, did_confirm = QInputDialog.getText(self, "New Name", "Insert area name:",
+                                                     text=self.current_area.name)
+        if not did_confirm or new_name == "" or new_name == self.current_area.name:
+            return
+
+        self.editor.rename_area(self.current_area, new_name)
+        self.on_select_world()
+        self.focus_on_area(new_name)
+
+    def _create_new_node(self, location: Optional[NodeLocation] = None):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm or node_name == "":
             return
@@ -452,16 +478,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                                 "A node named '{}' already exists.".format(node_name))
             return
 
-        self._do_create_node(node_name)
+        self._do_create_node(node_name, location)
 
-    def _do_create_node(self, node_name: str):
+    def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
-        new_node = GenericNode(node_name, False, None, {}, self.generic_index)
-        self.current_area.nodes.append(new_node)
-        self.current_area.connections[new_node] = {}
-        self.game_description.world_list.refresh_node_cache()
-
-        self.on_select_area()
+        new_node = GenericNode(node_name, False, location, "", {}, self.generic_index)
+        self.editor.add_node(self.current_area, new_node)
+        self.on_select_area(new_node)
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
@@ -484,14 +507,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if user_response != QMessageBox.Yes:
             return
 
-        for other_nodes in self.current_area.connections.values():
-            other_nodes.pop(current_node, None)
-
-        self.current_area.remove_node(current_node)
-        self.game_description.world_list.refresh_node_cache()
+        self.editor.remove_node(self.current_area, current_node)
         self.on_select_area()
 
     def update_edit_mode(self):
+        self.rename_area_button.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)

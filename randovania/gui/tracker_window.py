@@ -1,9 +1,9 @@
 import collections
 import functools
 import json
+import logging
 import math
 import typing
-import logging
 from pathlib import Path
 from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
@@ -25,13 +25,14 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockLockType, DockConnection
+from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.patching.prime import elevators
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
@@ -41,8 +42,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
-from randovania.games.prime2.layout import translator_configuration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.patching.prime import elevators
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -369,7 +369,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         target_node = world_list.resolve_dock_node(node, state.patches)
                         if target_node is None:
                             continue
-                        forward_weakness = state.patches.dock_weakness.get(DockConnection(area.name, node.dock_index),
+                        forward_weakness = state.patches.dock_weakness.get(world_list.identifier_for_node(node),
                                                                            node.default_dock_weakness)
                         requirement = forward_weakness.requirement
                         # TODO: only add requirement if the blast shield has not been destroyed yet
@@ -377,7 +377,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         if isinstance(target_node, DockNode):
                             # TODO: Target node is expected to be a dock. Should this error?
                             back_weakness = state.patches.dock_weakness.get(
-                                DockConnection(world_list.nodes_to_area(target_node).name, target_node.dock_index),
+                                world_list.identifier_for_node(target_node),
                                 target_node.default_dock_weakness)
                             if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
                                 requirement = RequirementAnd([requirement, back_weakness.requirement])
@@ -485,7 +485,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         str(gate.index): combo.currentData().short_name if combo.currentIndex() > 0 else None
                         for gate, combo in self._translator_gate_to_combo.items()
                     },
-                    "starting_location": world_list.node_to_area_location(self._initial_state.node).as_json,
+                    "starting_location": world_list.identifier_for_node(self._initial_state.node
+                                                                        ).area_identifier.as_json,
                 },
                 state_file
             )
