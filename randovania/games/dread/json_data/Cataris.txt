@@ -26,6 +26,11 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
+> Event - Breakable (breakablemag002); Heals? False
+  * Event Cataris - breakablemag002
+  * Extra - actor_name: breakablemag002
+  * Extra - actor_def: actordef:actors/props/breakablemag002/charclasses/breakablemag002.bmsad
+
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -42,6 +47,14 @@ Extra - asset_id: collision_camera_000
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_3
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_065
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_066
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_001 (C)
@@ -120,7 +133,8 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Thermal Device; Heals? False
+> Event - Thermal Device; Heals? False
+  * Event Cataris - deviceheat
   * Extra - actor_name: deviceheat
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_005
@@ -194,11 +208,20 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (breakablemag001); Heals? False
+  * Event Cataris - breakablemag001
+  * Extra - actor_name: breakablemag001
+  * Extra - actor_def: actordef:actors/props/breakablemag001/charclasses/breakablemag001.bmsad
+
 > Total Recharge; Heals? True; Spawn Point
   * Extra - actor_name: totalrechargestation
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_064
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_009 (C)
@@ -227,6 +250,19 @@ Extra - asset_id: collision_camera_009
   * Pickup 37; Major Location? False
   * Extra - actor_name: item_missiletank_008
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Event - Breakable (breakablemag003); Heals? False
+  * Event Cataris - breakablemag003
+  * Extra - actor_name: breakablemag003
+  * Extra - actor_def: actordef:actors/props/breakablemag003/charclasses/breakablemag003.bmsad
+
+> Tile Group (SCREWATTACK) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_057
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_067
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_010 (C)
@@ -383,6 +419,10 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_045
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
 ----------------
 collision_camera_015 (C)
 Extra - total_boundings: {'x1': 13400.0, 'x2': 19600.0, 'y1': -1200.0, 'y2': 8400.0}
@@ -416,6 +456,16 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (breakablemag012); Heals? False
+  * Event Cataris - breakablemag012
+  * Extra - actor_name: breakablemag012
+  * Extra - actor_def: actordef:actors/props/breakablemag012/charclasses/breakablemag012.bmsad
+
+> Event - Breakable (db_dside_mg_004); Heals? False
+  * Event Cataris - db_dside_mg_004
+  * Extra - actor_name: db_dside_mg_004
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_003/charclasses/db_dside_mg_003.bmsad
+
 > Elevator (teleporter_cave_000); Heals? False; Spawn Point
   * Teleporter to Artaria - collision_camera_081 (A)
   * Extra - actor_name: teleporter_cave_000
@@ -424,6 +474,58 @@ Extra - asset_id: collision_camera_015
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_028
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_029
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_030
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_037
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_038
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_039
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_040
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_041
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_042
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_043
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_044
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SCREWATTACK); Heals? False
+  * Extra - actor_name: breakabletilegroup_074
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_075
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_016 (C)
@@ -447,6 +549,11 @@ Extra - asset_id: collision_camera_016
   * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Event - Breakable (db_hdoor_mg_001); Heals? False
+  * Event Cataris - db_hdoor_mg_001
+  * Extra - actor_name: db_hdoor_mg_001
+  * Extra - actor_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
 
 > Total Recharge; Heals? True; Spawn Point
   * Extra - actor_name: totalrechargestation_000
@@ -501,6 +608,10 @@ Extra - asset_id: collision_camera_018
   * Extra - start_point_actor_name: weightactivatedplatform_002
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
 
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_012
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
 ----------------
 collision_camera_019 (C)
 Extra - total_boundings: {'x1': -4700.0, 'x2': -1600.0, 'y1': -3700.0, 'y2': -1700.0}
@@ -514,6 +625,21 @@ Extra - asset_id: collision_camera_019
   * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
   * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
+
+> Event - Breakable (breakablemag004); Heals? False
+  * Event Cataris - breakablemag004
+  * Extra - actor_name: breakablemag004
+  * Extra - actor_def: actordef:actors/props/breakablemag004/charclasses/breakablemag004.bmsad
+
+> Event - Breakable (breakablemag014); Heals? False
+  * Event Cataris - breakablemag014
+  * Extra - actor_name: breakablemag014
+  * Extra - actor_def: actordef:actors/props/breakablemag014/charclasses/breakablemag014.bmsad
+
+> Event - Breakable (breakablemag013); Heals? False
+  * Event Cataris - breakablemag013
+  * Extra - actor_name: breakablemag013
+  * Extra - actor_def: actordef:actors/props/breakablemag013/charclasses/breakablemag013.bmsad
 
 ----------------
 collision_camera_020 (C)
@@ -551,6 +677,23 @@ Extra - asset_id: collision_camera_020
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Event - Breakable (breakablemag005); Heals? False
+  * Event Cataris - breakablemag005
+  * Extra - actor_name: breakablemag005
+  * Extra - actor_def: actordef:actors/props/breakablemag005/charclasses/breakablemag005.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_053
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_054
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_055
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_021 (C)
@@ -623,11 +766,36 @@ Extra - asset_id: collision_camera_023
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (db_reg_mg_017); Heals? False
+  * Event Cataris - db_reg_mg_017
+  * Extra - actor_name: db_reg_mg_017
+  * Extra - actor_def: actordef:actors/props/db_reg_mg_016/charclasses/db_reg_mg_016.bmsad
+
 > Ammo Recharge; Heals? False; Spawn Point
   * Extra - actor_name: ammorecharge_000
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_015
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_018
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_073
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_031
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_032
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_024 (C)
@@ -642,6 +810,28 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Event - Breakable (breakablemag010); Heals? False
+  * Event Cataris - breakablemag010
+  * Extra - actor_name: breakablemag010
+  * Extra - actor_def: actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad
+
+> Event - Breakable (db_reg_mg_019); Heals? False
+  * Event Cataris - db_reg_mg_019
+  * Extra - actor_name: db_reg_mg_019
+  * Extra - actor_def: actordef:actors/props/db_reg_mg_018/charclasses/db_reg_mg_018.bmsad
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_033
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_058
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_059
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_025 (C)
@@ -689,6 +879,11 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
 
+> Event - Breakable (db_dside_mg_002b_000); Heals? False
+  * Event Cataris - db_dside_mg_002b_000
+  * Extra - actor_name: db_dside_mg_002b_000
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_002b/charclasses/db_dside_mg_002b.bmsad
+
 > Elevator (LE_Teleport_FromCave); Heals? False
   * Teleporter to Artaria - collision_camera_011 (A)
   * Extra - actor_name: LE_Teleport_FromCave
@@ -701,6 +896,18 @@ Extra - asset_id: collision_camera_025
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_3_B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_020
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_021
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_022
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_026 (C)
@@ -717,6 +924,16 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
+> Event - Breakable (db_dside_mg_003); Heals? False
+  * Event Cataris - db_dside_mg_003
+  * Extra - actor_name: db_dside_mg_003
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_002/charclasses/db_dside_mg_002.bmsad
+
+> Event - Breakable (db_dside_mg_001b_000); Heals? False
+  * Event Cataris - db_dside_mg_001b_000
+  * Extra - actor_name: db_dside_mg_001b_000
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_001b/charclasses/db_dside_mg_001b.bmsad
+
 > Elevator (teleporter_forest_000); Heals? False; Spawn Point
   * Teleporter to Ghavoran - collision_camera_024 (G)
   * Extra - actor_name: teleporter_forest_000
@@ -725,6 +942,22 @@ Extra - asset_id: collision_camera_026
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_056
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_069
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_068
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_023
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_027 (C)
@@ -744,6 +977,11 @@ Extra - asset_id: collision_camera_027
   * Not Determined to collision_camera_028 (C)/Door (dooremmy_007)
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+
+> Event - Breakable (db_dside_mg_002); Heals? False
+  * Event Cataris - db_dside_mg_002
+  * Extra - actor_name: db_dside_mg_002
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_001/charclasses/db_dside_mg_001.bmsad
 
 ----------------
 collision_camera_028 (C)
@@ -815,6 +1053,18 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_016
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_017
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_076
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_030 (C)
@@ -973,7 +1223,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Thermal Device; Heals? False; Spawn Point
+> Event - Thermal Device; Heals? False; Spawn Point
+  * Event Cataris - deviceheat_001
   * Extra - actor_name: deviceheat_001
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_004
@@ -1016,6 +1267,16 @@ Extra - asset_id: collision_camera_036
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
+
+> Event - Breakable (breakablemag007); Heals? False
+  * Event Cataris - breakablemag007
+  * Extra - actor_name: breakablemag007
+  * Extra - actor_def: actordef:actors/props/breakablemag007/charclasses/breakablemag007.bmsad
+
+> Event - Breakable (breakablemag008); Heals? False
+  * Event Cataris - breakablemag008
+  * Extra - actor_name: breakablemag008
+  * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
@@ -1083,6 +1344,14 @@ Extra - asset_id: collision_camera_040
   * Pickup 54; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_002
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_070
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_041 (C)
@@ -1153,13 +1422,15 @@ Extra - asset_id: collision_camera_042
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
 
-> Thermal Device 1; Heals? False; Spawn Point
+> Event - Thermal Device 1; Heals? False; Spawn Point
+  * Event Cataris - deviceheat_002
   * Extra - actor_name: deviceheat_002
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_003
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
 
-> Thermal Device 2; Heals? False
+> Event - Thermal Device 2; Heals? False
+  * Event Cataris - deviceheat_camerafar_000
   * Extra - actor_name: deviceheat_camerafar_000
   * Extra - actor_def: actordef:actors/props/deviceheat_camerafar/charclasses/deviceheat_camerafar.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_006
@@ -1188,6 +1459,14 @@ Extra - asset_id: collision_camera_043
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_019
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_026
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
 ----------------
 collision_camera_044 (C)
 Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': -7700.0, 'y2': -4700.0}
@@ -1212,9 +1491,50 @@ Extra - asset_id: collision_camera_044
   * Extra - actor_name: item_powerbombtank_001
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
 
+> Event - Breakable (db_dif_mg_002); Heals? False
+  * Event Cataris - db_dif_mg_002
+  * Extra - actor_name: db_dif_mg_002
+  * Extra - actor_def: actordef:actors/props/db_dif_mg_002/charclasses/db_dif_mg_002.bmsad
+
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_DiffusionBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (BOMB) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_003
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_004
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_005
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_006
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_007
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_008
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_009
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (WEIGHT) 4; Heals? False
+  * Extra - actor_name: breakabletilegroup_010
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 5; Heals? False
+  * Extra - actor_name: breakabletilegroup_011
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_045 (C)
@@ -1252,6 +1572,15 @@ Extra - asset_id: collision_camera_045
   * Pickup 46; Major Location? False
   * Extra - actor_name: item_missiletank_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Event - Breakable (db_dside_mg_003b_000); Heals? False
+  * Event Cataris - db_dside_mg_003b_000
+  * Extra - actor_name: db_dside_mg_003b_000
+  * Extra - actor_def: actordef:actors/props/db_dside_mg_003b/charclasses/db_dside_mg_003b.bmsad
+
+> Tile Group (POWERBEAM); Heals? False
+  * Extra - actor_name: breakabletilegroup_036
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_046 (C)
@@ -1322,6 +1651,34 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
+> Tile Group (BOMB) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_046
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_047
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_048
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_049
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (MISSILE) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_050
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (MISSILE) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_051
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (MISSILE) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_052
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
 ----------------
 collision_camera_049 (C)
 Extra - total_boundings: {'x1': 4400.0, 'x2': 8100.0, 'y1': -4400.0, 'y2': -2200.0}
@@ -1369,6 +1726,16 @@ Extra - asset_id: collision_camera_051
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (breakablemag009); Heals? False
+  * Event Cataris - breakablemag009
+  * Extra - actor_name: breakablemag009
+  * Extra - actor_def: actordef:actors/props/breakablemag009/charclasses/breakablemag009.bmsad
+
+> Event - Breakable (db_dif_mg_001); Heals? False
+  * Event Cataris - db_dif_mg_001
+  * Extra - actor_name: db_dif_mg_001
+  * Extra - actor_def: actordef:actors/props/db_dif_mg_001/charclasses/db_dif_mg_001.bmsad
+
 > Elevator (teleport_baselab_000); Heals? False; Spawn Point
   * Teleporter to Dairon - collision_camera_008 (D)
   * Extra - actor_name: teleport_baselab_000
@@ -1377,6 +1744,18 @@ Extra - asset_id: collision_camera_051
   * Extra - target_spawn_point: teleport_magma_000_platform
   * Extra - start_point_actor_name: teleport_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+
+> Tile Group (POWERBOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_027
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_060
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_061
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_052 (C)
@@ -1415,6 +1794,16 @@ Extra - asset_id: collision_camera_052
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (db_hdoor_mg_002); Heals? False
+  * Event Cataris - db_hdoor_mg_002
+  * Extra - actor_name: db_hdoor_mg_002
+  * Extra - actor_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
+
+> Event - Breakable (db_hdoor_mg_002b_000); Heals? False
+  * Event Cataris - db_hdoor_mg_002b_000
+  * Extra - actor_name: db_hdoor_mg_002b_000
+  * Extra - actor_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
+
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyMagma
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1438,12 +1827,36 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
 
+> Tile Group (SPEEDBOOST) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_000
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (SPEEDBOOST) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_001
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_025
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_062
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Extra - actor_name: breakabletilegroup_063
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
 ----------------
 collision_camera_054 (C)
 Extra - total_boundings: {'x1': -6700.0, 'x2': -4600.0, 'y1': -6600.0, 'y2': -5458.0}
 Extra - polygon: [[-4600.0, -5458.0], [-6700.0, -5458.0], [-6700.0, -6600.0], [-4600.0, -6600.0]]
 Extra - asset_id: collision_camera_054
 > Placeholder; Heals? False
+
+> Tile Group (SPEEDBOOST); Heals? False
+  * Extra - actor_name: breakabletilegroup_024
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_055 (C)
@@ -1454,6 +1867,14 @@ Extra - asset_id: collision_camera_055
   * Pickup 47; Major Location? False
   * Extra - actor_name: item_missiletank_011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+
+> Tile Group (WEIGHT); Heals? False
+  * Extra - actor_name: breakabletilegroup_013
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (MISSILE); Heals? False
+  * Extra - actor_name: breakabletilegroup_014
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_058 (C)
@@ -1533,9 +1954,23 @@ Extra - asset_id: collision_camera_061
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
+> Event - Breakable (db_reg_mg_021); Heals? False
+  * Event Cataris - db_reg_mg_021
+  * Extra - actor_name: db_reg_mg_021
+  * Extra - actor_def: actordef:actors/props/db_reg_mg_020/charclasses/db_reg_mg_020.bmsad
+
+> Event - Breakable (db_reg_mg_020); Heals? False
+  * Event Cataris - db_reg_mg_020
+  * Extra - actor_name: db_reg_mg_020
+  * Extra - actor_def: actordef:actors/props/db_reg_mg_019/charclasses/db_reg_mg_019.bmsad
+
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Kraid
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_071
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_062 (C)
@@ -1566,19 +2001,17 @@ Extra - asset_id: collision_camera_063
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_Kraid
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-----------------
-collision_camera_063_Stage_001 (C)
-Extra - total_boundings: {'x1': -16900.0, 'x2': -14500.0, 'y1': -6500.0, 'y2': -4900.0}
-Extra - polygon: [[-14500.0, -4900.0], [-16900.0, -4900.0], [-16900.0, -6500.0], [-14500.0, -6500.0]]
-Extra - asset_id: collision_camera_063_Stage_001
-> Placeholder; Heals? False
+> Tile Group (WEIGHT) 1; Heals? False
+  * Extra - actor_name: breakabletilegroup_034
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
-----------------
-collision_camera_063_Stage_002 (C)
-Extra - total_boundings: {'x1': -17500.0, 'x2': -15400.0, 'y1': -7300.0, 'y2': -4900.0}
-Extra - polygon: [[-15400.0, -4900.0], [-17500.0, -4900.0], [-17500.0, -7300.0], [-15400.0, -7300.0]]
-Extra - asset_id: collision_camera_063_Stage_002
-> Placeholder; Heals? False
+> Tile Group (WEIGHT) 2; Heals? False
+  * Extra - actor_name: breakabletilegroup_035
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+
+> Tile Group (BOMB); Heals? False
+  * Extra - actor_name: breakabletilegroup_072
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
 
 ----------------
 collision_camera_064 (C)
