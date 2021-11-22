@@ -9,44 +9,49 @@ from randovania.game_description import data_reader, schema_migration
 from randovania.games import binary_data
 
 
-def test_simple_round_trip():
-    sample_data = {
-        "schema_version": 2,
-        "game": "prime2",
-        "resource_database": {
-            "items": [],
-            "energy_tank_item_index": 0,
-            "item_percentage_index": 0,
-            "multiworld_magic_item_index": 0,
-            "events": [],
-            "tricks": [],
-            "damage": [],
-            "versions": [],
-            "misc": [],
-            "requirement_template": {},
-            "damage_reductions": [],
+sample_data = {
+    "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
+    "game": "prime2",
+    "resource_database": {
+        "items": {},
+        "energy_tank_item_index": "",
+        "item_percentage_index": "",
+        "multiworld_magic_item_index": "",
+        "events": {},
+        "tricks": {},
+        "damage": {},
+        "versions": {},
+        "misc": {},
+        "requirement_template": {
+            "Foo": {
+                "type": "or",
+                "data": {"comment": None, "items": []}
+            }
         },
-        "starting_location": {
-            "world_name": "Temple Grounds",
-            "area_name": "Landing Site"
-        },
-        "initial_states": {
-            "Default": [
-            ]
-        },
-        "minimal_logic": None,
-        "victory_condition": {
-            "type": "and",
-            "data": {"comment": None, "items": []},
-        },
-        "dock_weakness_database": {
-            "door": [],
-            "portal": [],
-            "morph_ball": [],
-        },
-        "worlds": [],
-    }
+        "damage_reductions": [],
+    },
+    "starting_location": {
+        "world_name": "Temple Grounds",
+        "area_name": "Landing Site"
+    },
+    "initial_states": {
+        "Default": [
+        ]
+    },
+    "minimal_logic": None,
+    "victory_condition": {
+        "type": "and",
+        "data": {"comment": None, "items": []},
+    },
+    "dock_weakness_database": {
+        "door": [],
+        "portal": [],
+        "morph_ball": [],
+    },
+    "worlds": [],
+}
 
+def test_simple_round_trip():
     b = io.BytesIO()
     binary_data.encode(sample_data, b)
 
@@ -124,13 +129,17 @@ def test_full_data_encode_is_equal(game_enum):
 
     assert comparable_binary == comparable_json
 
-
-@pytest.mark.parametrize("req", [
+reqs_to_test = [
     {"type": "or", "data": {"comment": None, "items": []}},
     {"type": "and", "data": {"comment": None, "items": []}},
-    {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
+    {"type": "or", "data": {"comment": None, "items": []}},
+    {"type": "resource", "data": {"type": "items", "name": "Foo", "amount": 7, "negate": True}},
+    {"type": "or", "data": {"comment": None, "items": []}},
     {"type": "template", "data": "Example Template"},
-])
+]
+reqs_to_test.append({"type": "and", "data": {"comment": None, "items": list(reqs_to_test)}})
+
+@pytest.mark.parametrize("req", reqs_to_test)
 def test_encode_requirement_simple(req):
     # Run
     encoded = binary_data.ConstructRequirement.build(req)
@@ -139,52 +148,9 @@ def test_encode_requirement_simple(req):
     # Assert
     assert req == decoded
 
-
-def test_encode_requirement_complex():
-    # Setup
-    req = {
-        "type": "and",
-        "data": {
-            "comment": None,
-            "items": [
-                {"type": "or", "data": {"comment": None, "items": []}},
-                {"type": "and", "data": {"comment": None, "items": []}},
-                {"type": "or", "data": {"comment": None, "items": []}},
-                {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
-                {"type": "or", "data": {"comment": None, "items": []}},
-                {"type": "template", "data": "Example Template"},
-            ]
-        }
-    }
-
-    # Run
-    encoded = binary_data.ConstructRequirement.build(req)
-    decoded = binary_data.convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
-
-    # Assert
-    assert req == decoded
-
-
 def test_encode_resource_database():
     # Setup
-    resource_database = {
-        "items": [],
-        "energy_tank_item_index": 0,
-        "item_percentage_index": 0,
-        "multiworld_magic_item_index": 0,
-        "events": [],
-        "tricks": [],
-        "damage": [],
-        "versions": [],
-        "misc": [],
-        "requirement_template": {
-            "Foo": {
-                "type": "or",
-                "data": {"comment": None, "items": []}
-            }
-        },
-        "damage_reductions": [],
-    }
+    resource_database = sample_data["resource_database"]
 
     # Run
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
