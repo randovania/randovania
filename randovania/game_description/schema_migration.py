@@ -111,9 +111,7 @@ def _migrate_v3(data: dict) -> dict:
 
     keep_res_index = game.value in {"prime1", "prime2", "prime3", "super_metroid"}
 
-    def find_resource(res_type: Union[ResourceType, str], index: Optional[int]):
-        if index is None:
-            return None
+    def find_resource(res_type: Union[ResourceType, str], index: int):
         if isinstance(res_type, str):
             res_type = ResourceType(res_type)
         return migration_data.get_resource_name_from_index(game, index, res_type)
