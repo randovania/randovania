@@ -5,14 +5,14 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
-                       Short, PrefixedArray, Switch, If, VarInt, Float64b)
+                       Short, PrefixedArray, Switch, If, VarInt, Float64b, Compressed)
 
 from randovania.game_description import schema_migration
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
 X = TypeVar('X')
-current_format_version = 9
+current_format_version = 10
 
 String = CString("utf-8")
 
@@ -37,28 +37,25 @@ def convert_to_raw_python(value) -> Any:
     return value
 
 
-def decode(binary_io: BinaryIO) -> Dict:
-    decoded = convert_to_raw_python(ConstructGame.parse_stream(binary_io))
-    decoded.pop("format_version")
-    decoded.pop("magic_number")
+_EXPECTED_FIELDS = [
+    "schema_version",
+    "game",
+    "resource_database",
+    "starting_location",
+    "initial_states",
+    "minimal_logic",
+    "victory_condition",
+    "dock_weakness_database",
+    "worlds",
+]
 
-    fields = [
-        "schema_version",
-        "game",
-        "resource_database",
-        "starting_location",
-        "initial_states",
-        "minimal_logic",
-        "victory_condition",
-        "dock_weakness_database",
-        "worlds",
-    ]
-    result = {
-        field_name: decoded.pop(field_name)
-        for field_name in fields
-    }
-    if decoded:
-        raise ValueError(f"Unexpected fields remaining in data: {list(decoded.keys())}")
+
+def decode(binary_io: BinaryIO) -> dict:
+    decoded = ConstructGame.parse_stream(binary_io)
+    result: dict = convert_to_raw_python(decoded["db"])
+
+    if unknown_keys := [key for key in result if key not in _EXPECTED_FIELDS]:
+        raise ValueError(f"Unexpected fields in decoded data: {unknown_keys}")
 
     return result
 
@@ -69,22 +66,11 @@ def decode_file_path(binary_file_path: Path) -> Dict:
 
 
 def encode(original_data: Dict, x: BinaryIO) -> None:
+    if unknown_keys := [key for key in original_data if key not in _EXPECTED_FIELDS]:
+        raise ValueError(f"Unexpected fields in data to be encoded: {unknown_keys}")
+
     data = copy.deepcopy(original_data)
-    ConstructGame.build_stream(data, x)
-
-    # Resource Info database
-    data.pop("schema_version")
-    data.pop("game")
-    data.pop("resource_database")
-    data.pop("dock_weakness_database")
-    data.pop("worlds")
-    data.pop("victory_condition")
-    data.pop("starting_location")
-    data.pop("initial_states")
-    data.pop("minimal_logic")
-
-    if data:
-        raise ValueError(f"Unexpected fields remaining in data: {list(data.keys())}")
+    ConstructGame.build_stream({"db": data}, x)
 
 
 def OptionalValue(subcon):
@@ -167,7 +153,8 @@ ConstructDamageReductions = Struct(
     ))
 )
 
-ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5, pickup_index=7, gate_index=8, logbook_index=9, ship_node=10)
+ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5, pickup_index=7,
+                                       gate_index=8, logbook_index=9, ship_node=10)
 
 ConstructResourceRequirement = Struct(
     type=ConstructResourceType,
@@ -296,7 +283,7 @@ ConstructNode = NodeAdapter(Struct(
                 is_unlocked=ConstructRequirement,
             )
         }
-)))
+    )))
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
@@ -331,17 +318,21 @@ ConstructMinimalLogicDatabase = Struct(
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
-    schema_version=Const(schema_migration.CURRENT_DATABASE_VERSION, VarInt),
-    game=ConstructGameEnum,
-    resource_database=ConstructResourceDatabase,
-    dock_weakness_database=Struct(
-        door=PrefixedArray(VarInt, ConstructDockWeakness),
-        portal=PrefixedArray(VarInt, ConstructDockWeakness),
-        morph_ball=PrefixedArray(VarInt, ConstructDockWeakness),
-    ),
-    minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
-    victory_condition=ConstructRequirement,
-    starting_location=ConstructAreaIdentifier,
-    initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
-    worlds=PrefixedArray(VarInt, ConstructWorld),
+    db=Compressed(Struct(
+        schema_version=Const(schema_migration.CURRENT_DATABASE_VERSION, VarInt),
+        game=ConstructGameEnum,
+        resource_database=ConstructResourceDatabase,
+
+        starting_location=ConstructAreaIdentifier,
+        initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
+        minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
+        victory_condition=ConstructRequirement,
+
+        dock_weakness_database=Struct(
+            door=PrefixedArray(VarInt, ConstructDockWeakness),
+            portal=PrefixedArray(VarInt, ConstructDockWeakness),
+            morph_ball=PrefixedArray(VarInt, ConstructDockWeakness),
+        ),
+        worlds=PrefixedArray(VarInt, ConstructWorld),
+    ), "lzma")
 )
