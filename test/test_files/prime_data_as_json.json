@@ -1,32 +1,41 @@
 {
-    "schema_version": 3,
+    "schema_version": 4,
     "game": "prime2",
     "resource_database": {
         "items": {
             "Light": {
                 "long_name": "Light Beam",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 2
+                }
             },
             "SpaceJump": {
                 "long_name": "Space Jump Boots",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 24
+                }
             },
             "ScanVisor": {
                 "long_name": "Scan Visor",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 30
+                }
             },
             "LightAmmo": {
                 "long_name": "Light Ammo",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 46
+                }
             }
         },
         "events": {
             "Event1": {
-                "long_name": "First Event"
+                "long_name": "First Event",
+                "extra": {}
             }
         },
         "tricks": {},
@@ -281,7 +290,9 @@
                             "heal": true,
                             "coordinates": null,
                             "description": "",
-                            "extra": {},
+                            "extra": {
+                                "translator": "ScanVisor"
+                            },
                             "string_asset_id": 1000,
                             "lore_type": "luminoth-lore",
                             "connections": {}
@@ -291,7 +302,9 @@
                             "heal": true,
                             "coordinates": null,
                             "description": "",
-                            "extra": {},
+                            "extra": {
+                                "hint_index": 2
+                            },
                             "string_asset_id": 2000,
                             "lore_type": "luminoth-warrior",
                             "connections": {}
