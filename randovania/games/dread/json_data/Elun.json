@@ -253,8 +253,8 @@
             }
         },
         "collision_camera_003 (E)": {
-            "default_node": "Ammo Recharge",
-            "valid_starting_location": false,
+            "default_node": "Start Point",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 1300.0,
@@ -378,6 +378,74 @@
                     "major_location": false,
                     "connections": {}
                 },
+                "Door (doorpowerpower_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_003",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001",
+                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_006 (E)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (doorpowerclosed_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerclosed_000",
+                        "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
+                        "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_006 (E)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Event - Breakable (db_reg_qt_001)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1900.0,
+                        "y": -1600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "db_reg_qt_001",
+                        "actor_def": "actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad"
+                    },
+                    "event_index": 87,
+                    "connections": {}
+                },
                 "Ammo Recharge": {
                     "node_type": "generic",
                     "heal": false,
@@ -392,6 +460,21 @@
                         "actor_def": "actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad",
                         "start_point_actor_name": "ammorecharge_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3000.0,
+                        "y": -2000.0,
+                        "z": 0.040038999170064926
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_PlasmaBeam",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 },
@@ -729,6 +812,58 @@
                     },
                     "pickup_index": 115,
                     "major_location": true,
+                    "connections": {}
+                },
+                "Door (doorpowerpower_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_003",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001",
+                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (doorpowerclosed_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerclosed_000",
+                        "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
+                        "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
                     "connections": {}
                 },
                 "Start Point": {
