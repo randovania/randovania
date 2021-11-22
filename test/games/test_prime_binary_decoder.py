@@ -90,17 +90,17 @@ def test_complex_decode(test_files_dir):
     assert decoded_data == saved_data
 
 
-def _comparable_dict(value):
-    if isinstance(value, dict):
-        return [
-            (key, _comparable_dict(item))
-            for key, item in value.items()
-        ]
+# def _comparable_dict(value):
+#     if isinstance(value, dict):
+#         return {
+#             (key, _comparable_dict(item))
+#             for key, item in value.items()
+#         }
 
-    if isinstance(value, list):
-        return [_comparable_dict(item) for item in value]
+#     if isinstance(value, list):
+#         return [_comparable_dict(item) for item in value]
 
-    return value
+#     return value
 
 
 def test_full_data_encode_is_equal(game_enum):
@@ -122,12 +122,15 @@ def test_full_data_encode_is_equal(game_enum):
     # Run
     assert decoded_database, json_database
 
-    comparable_json = _comparable_dict(json_database)
-    comparable_binary = _comparable_dict(decoded_database)
-    for a, b in zip(comparable_json, comparable_binary):
-        assert a == b
+    assert decoded_database == json_database
 
-    assert comparable_binary == comparable_json
+    # TODO: readable diff
+    # comparable_json = _comparable_dict(json_database)
+    # comparable_binary = _comparable_dict(decoded_database)
+    # for a, b in zip(comparable_json, comparable_binary):
+    #     assert a == b
+
+    # assert comparable_binary == comparable_json
 
 reqs_to_test = [
     {"type": "or", "data": {"comment": None, "items": []}},

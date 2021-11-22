@@ -20,8 +20,8 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
     ],
     name="trick_level_data")
 def _trick_level_data(request, mocker, echoes_game_description):
-    # tricks = echoes_game_description.resource_database.trick[:14]
-    # mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
+    tricks = echoes_game_description.resource_database.trick[:14]
+    mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
     return (request.param["encoded"], request.param["bit_count"],
             TrickLevelConfiguration.from_json(request.param["json"], game=RandovaniaGame.METROID_PRIME_ECHOES))
 
