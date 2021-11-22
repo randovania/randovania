@@ -130,7 +130,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     count = 0
 
     for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.short_name == "Nothing":
+        if resource.extra["item_id"] >= 1000:
             continue
         pickup_type = resource.long_name
         count = quantity

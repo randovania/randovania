@@ -89,6 +89,7 @@ def write_resource_gain(resource_gain: ResourceGain) -> list:
 def write_simple_resource(resource: SimpleResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
+        "extra": resource.extra
     }
 
 
@@ -104,6 +105,7 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "description": resource.description,
+        "extra": resource.extra
     }
 
 

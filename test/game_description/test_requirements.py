@@ -146,7 +146,7 @@ def test_list_dangerous_resources(input_data, output_data):
         (ResourceRequirement(SimpleResourceInfo(str(item[0]), str(item[0]), ""), 1, item[1])
          for item in input_data))
     expected_result = {
-        SimpleResourceInfo(item, str(item), str(item), "")
+        SimpleResourceInfo(str(item), str(item), "")
         for item in output_data
     }
 

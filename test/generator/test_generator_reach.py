@@ -97,7 +97,7 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
     for trick in game.resource_database.trick:
         initial_state.resources[trick] = LayoutTrickLevel.maximum().as_number
 
-    expected_events = [event for event in game.resource_database.event if event.short_name not in ignore_events]
+    expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events], key=lambda it:it.short_name)
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())

@@ -133,6 +133,7 @@ JsonEncodedValue = construct.ExprAdapter(
 def _build_resource_info(**kwargs):
     return Struct(
         long_name=String,
+        extra=JsonEncodedValue,
         **kwargs,
     )
 
@@ -146,7 +147,6 @@ ConstructResourceInfo = _build_resource_info()
 
 ConstructItemResourceInfo = _build_resource_info(
     max_capacity=Int32ub,
-    extra=OptionalValue(Int32ub),
 )
 
 ConstructTrickResourceInfo = _build_resource_info(
@@ -210,7 +210,7 @@ ConstructResourceDatabase = Struct(
 
 ConstructResourceGain = Struct(
     resource_type=ConstructResourceType,
-    resource_index=String,
+    resource_name=String,
     amount=VarInt,
 )
 

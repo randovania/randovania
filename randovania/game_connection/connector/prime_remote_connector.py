@@ -93,7 +93,7 @@ class PrimeRemoteConnector(RemoteConnector):
         memory_ops = await self._memory_op_for_items(executor, [
             item
             for item in self.game.resource_database.item
-            if item.index < 1000
+            if item.extra["item_id"] < 1000
         ])
         ops_result = await executor.perform_memory_operations(memory_ops)
 
@@ -127,7 +127,7 @@ class PrimeRemoteConnector(RemoteConnector):
             patches = [DolRemotePatch([], all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                 self.version.powerup_functions,
                 self.game.game,
-                multiworld_magic_item.index,
+                multiworld_magic_item.extra["item_id"],
                 -magic_inv.amount,
             ))]
             return locations, patches
@@ -160,7 +160,7 @@ class PrimeRemoteConnector(RemoteConnector):
         patches.append(DolRemotePatch([], all_prime_dol_patches.increment_item_capacity_patch(
             self.version.powerup_functions,
             self.game.game,
-            multiworld_magic_item.index,
+            multiworld_magic_item.extra["item_id"],
         )))
         patches.append(self._dol_patch_for_hud_message(message))
 

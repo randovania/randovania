@@ -93,7 +93,7 @@ def _create_spawn_point_field(patches: GamePatches,
                               ) -> dict:
     capacities = [
         {
-            "name": item.short_name,
+            "index": item.extra["item_id"],
             "amount": patches.starting_items.get(item, 0),
         }
         for item in game.resource_database.item
@@ -175,7 +175,7 @@ def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
     return [
         {
             "gate_index": gate.index,
-            "translator_index": translator.short_name,
+            "translator_index": translator.extra["item_id"],
         }
         for gate, translator in gate_assignment.items()
     ]
@@ -601,7 +601,7 @@ class EchoesModelNameMapping:
 def _create_pickup_resources_for(resources: ResourceGain):
     return [
         {
-            "name": resource.short_name,
+            "index": resource.extra["item_id"],
             "amount": quantity
         }
         for resource, quantity in resources
@@ -629,15 +629,15 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         "resources": _create_pickup_resources_for(details.conditional_resources[0].resources),
         "conditional_resources": [
             {
-                "item": conditional.item.short_name,
+                "item": conditional.item.extra["item_id"],
                 "resources": _create_pickup_resources_for(conditional.resources),
             }
             for conditional in details.conditional_resources[1:]
         ],
         "convert": [
             {
-                "from_item": conversion.source.short_name,
-                "to_item": conversion.target.short_name,
+                "from_item": conversion.source.extra["item_id"],
+                "to_item": conversion.target.extra["item_id"],
                 "clear_source": conversion.clear_source,
                 "overwrite_target": conversion.overwrite_target,
             }
