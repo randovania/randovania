@@ -83,7 +83,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         return [
             MemoryOperation(
                 address=player_state_pointer,
-                offset=_corruption_powerup_offset(item.index),
+                offset=_corruption_powerup_offset(item.extra["item_id"]),
                 read_byte_count=8,
             )
             for item in items
@@ -96,7 +96,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         patches = [
             all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                 self.version.powerup_functions, self.game.game,
-                item.index, delta,
+                item.extra["item_id"], delta,
             )
             for item, delta in resources_to_give.items()
         ]

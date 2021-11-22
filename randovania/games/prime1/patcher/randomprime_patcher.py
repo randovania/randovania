@@ -34,38 +34,38 @@ from randovania.lib.status_update_lib import ProgressUpdateCallable
 _EASTER_EGG_SHINY_MISSILE = 1024
 
 _STARTING_ITEM_NAME_TO_INDEX = {
-    "powerBeam": 0,
-    "ice": 1,
-    "wave": 2,
-    "plasma": 3,
-    "missiles": 4,
-    "scanVisor": 5,
-    "bombs": 6,
-    "powerBombs": 7,
-    "flamethrower": 8,
-    "thermalVisor": 9,
-    "charge": 10,
-    "superMissile": 11,
-    "grapple": 12,
-    "xray": 13,
-    "iceSpreader": 14,
-    "spaceJump": 15,
-    "morphBall": 16,
-    "combatVisor": 17,
-    "boostBall": 18,
-    "spiderBall": 19,
-    "gravitySuit": 21,
-    "variaSuit": 22,
-    "phazonSuit": 23,
-    "energyTanks": 24,
-    "wavebuster": 28
+    "powerBeam": "Power",
+    "ice": "Ice",
+    "wave": "Wave",
+    "plasma": "Plasma",
+    "missiles": "Missile",
+    "scanVisor": "Scan",
+    "bombs": "Bombs",
+    "powerBombs": "PowerBomb",
+    "flamethrower": "Flamethrower",
+    "thermalVisor": "Thermal",
+    "charge": "Charge",
+    "superMissile": "Supers",
+    "grapple": "Grapple",
+    "xray": "X-Ray",
+    "iceSpreader": "IceSpreader",
+    "spaceJump": "SpaceJump",
+    "morphBall": "MorphBall",
+    "combatVisor": "Combat",
+    "boostBall": "Boost",
+    "spiderBall": "Spider",
+    "gravitySuit": "GravitySuit",
+    "variaSuit": "VariaSuit",
+    "phazonSuit": "PhazonSuit",
+    "energyTanks": "EnergyTank",
+    "wavebuster": "Wavebuster"
 }
 
-# "Power Suit": 20,
-# "Combat Visor": 17,
-# "Unknown Item 1": 25,
-# "Health Refill": 26,
-# "Unknown Item 2": 27,
+# "Power Suit": "PowerSuit",
+# "Combat Visor": "Combat",
+# "Unknown Item 1": "Unknown1",
+# "Health Refill": "HealthRefill",
+# "Unknown Item 2": "Unknown2",
 
 _MODEL_MAPPING = {
     (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
@@ -130,7 +130,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     count = 0
 
     for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.index >= 1000:
+        if resource.extra["item_id"] >= 1000:
             continue
         pickup_type = resource.long_name
         count = quantity
@@ -179,7 +179,7 @@ def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.Exported
 
 
 def _starting_items_value_for(resource_database: ResourceDatabase,
-                              starting_items: CurrentResources, index: int) -> Union[bool, int]:
+                              starting_items: CurrentResources, index: str) -> Union[bool, int]:
     item = resource_database.get_item(index)
     value = starting_items.get(item, 0)
     if item.max_capacity > 1:

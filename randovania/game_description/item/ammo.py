@@ -12,10 +12,10 @@ class Ammo:
     game: RandovaniaGame
     name: str
     model_name: str
-    items: Tuple[int, ...]
+    items: Tuple[str, ...]
     broad_category: ItemCategory
-    unlocked_by: Optional[int] = None
-    temporary: Optional[int] = None
+    unlocked_by: Optional[str] = None
+    temporary: Optional[str] = None
 
     def __post_init__(self):
         if self.temporary is not None:

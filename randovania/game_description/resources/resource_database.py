@@ -49,14 +49,21 @@ class ResourceDatabase:
                 "Invalid resource_type: {}".format(resource_type))
 
     def get_by_type_and_index(self, resource_type: ResourceType,
-                              index: int) -> ResourceInfo:
-        return search.find_resource_info_with_id(self.get_by_type(resource_type), index, resource_type)
+                              name: str) -> ResourceInfo:
+        return search.find_resource_info_with_id(self.get_by_type(resource_type), name, resource_type)
+    
+    def get_resource_id(self, resource_type: ResourceType, name: str) -> int:
+        resource = self.get_by_type_and_index(resource_type, name)
+        return self.get_by_type(resource_type).index(resource)
 
-    def get_item(self, index: int) -> ItemResourceInfo:
-        return self.get_by_type_and_index(ResourceType.ITEM, index)
+    def get_item(self, short_name: str) -> ItemResourceInfo:
+        return self.get_by_type_and_index(ResourceType.ITEM, short_name)
 
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
+    
+    def get_item_id(self, name: str) -> int:
+        return self.get_resource_id(ResourceType.ITEM, name)
 
     @property
     def item_percentage(self) -> Optional[ItemResourceInfo]:
