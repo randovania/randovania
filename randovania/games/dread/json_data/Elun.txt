@@ -95,11 +95,38 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
 
-> Ammo Recharge; Heals? False; Spawn Point
+> Door (doorpowerpower_003); Heals? False
+  * Not Determined to collision_camera_006 (E)/Door (doorpowerpower_003)
+  * Extra - actor_name: doorpowerpower_003
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Door (doorpowerclosed_000); Heals? False
+  * Not Determined to collision_camera_006 (E)/Door (doorpowerclosed_000)
+  * Extra - actor_name: doorpowerclosed_000
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+
+> Event - Breakable (db_reg_qt_001); Heals? False
+  * Event Elun - db_reg_qt_001
+  * Extra - actor_name: db_reg_qt_001
+  * Extra - actor_def: actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad
+
+> Ammo Recharge; Heals? False
   * Extra - actor_name: ammorecharge_000
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_PlasmaBeam
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Tile Group (POWERBEAM); Heals? False
   * Extra - actor_name: breakabletilegroup_006
@@ -189,6 +216,24 @@ Extra - asset_id: collision_camera_006
   * Pickup 115; Major Location? True
   * Extra - actor_name: itemsphere_plasmabeam_000
   * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
+
+> Door (doorpowerpower_003); Heals? False
+  * Not Determined to collision_camera_003 (E)/Door (doorpowerpower_003)
+  * Extra - actor_name: doorpowerpower_003
+  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
+  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+
+> Door (doorpowerclosed_000); Heals? False
+  * Not Determined to collision_camera_003 (E)/Door (doorpowerclosed_000)
+  * Extra - actor_name: doorpowerclosed_000
+  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
+  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_PlasmaBeam
