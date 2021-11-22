@@ -204,7 +204,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     def _add_power_up(self, registers: Dict[int, int]):
         item_id = registers[4]
         delta = registers[5]
-        item = self.game.resource_database.get_item(item_id)
+        item = next(item for item in self.game.resource_database.item if item.extra.get("item_id") == item_id)
         address = _echoes_powerup_address(item_id)
 
         amount, capacity = self._read_memory_format(">II", address)
