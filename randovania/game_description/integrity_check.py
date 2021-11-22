@@ -72,6 +72,9 @@ def find_area_errors(world_list: WorldList, area: Area) -> Iterator[str]:
         for error in find_node_errors(world_list, node):
             yield f"{area.name} - {error}"
 
+        if node in area.connections.get(node, {}):
+            yield f"{area.name} - Node '{node.name}' has a connection to itself"
+
     if area.default_node is not None and area.node_with_name(area.default_node) is None:
         yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
 
