@@ -2,6 +2,7 @@ import copy
 import dataclasses
 import json
 from unittest.mock import MagicMock, patch
+from frozendict import frozendict
 
 import pytest
 
@@ -60,7 +61,7 @@ def test_create_spawn_point_field(echoes_game_description, empty_patches):
     })
 
     capacities = [
-        {'amount': 3 if item.short_name == "MorphBall" else 0, 'name': item.short_name}
+        {'amount': 3 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
     ]
 
@@ -232,9 +233,9 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
 def test_create_translator_gates_field():
     # Setup
     gate_assignment = {
-        TranslatorGate(1): SimpleResourceInfo("LongA", "A", ResourceType.ITEM),
-        TranslatorGate(3): SimpleResourceInfo("LongB", "B", ResourceType.ITEM),
-        TranslatorGate(4): SimpleResourceInfo("LongA", "A", ResourceType.ITEM),
+        TranslatorGate(1): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
+        TranslatorGate(3): SimpleResourceInfo("LongB", "B", ResourceType.ITEM, frozendict({"item_id": 1})),
+        TranslatorGate(4): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
     }
 
     # Run
@@ -242,9 +243,9 @@ def test_create_translator_gates_field():
 
     # Assert
     assert result == [
-        {"gate_index": 1, "translator_index": "A"},
-        {"gate_index": 3, "translator_index": "B"},
-        {"gate_index": 4, "translator_index": "A"},
+        {"gate_index": 1, "translator_index": 0},
+        {"gate_index": 3, "translator_index": 1},
+        {"gate_index": 4, "translator_index": 0},
     ]
 
 
@@ -304,14 +305,14 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
         "model_name": "SeekerLauncher",
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
-        'resources': [{'amount': 5, 'name': "Temporary1"},
-                      {'amount': 1, 'name': "Percent"},
-                      {'amount': 1, 'name': "Seekers"}],
+        'resources': [{'amount': 5, 'index': 71},
+                      {'amount': 1, 'index': 47},
+                      {'amount': 1, 'index': 26}],
         "conditional_resources": [
-            {'item': "MissileLauncher",
-             'resources': [{'amount': 5, 'name': "Missile"},
-                           {'amount': 1, 'name': "Percent"},
-                           {'amount': 1, 'name': "Seekers"}]}
+            {'item': 73,
+             'resources': [{'amount': 5, 'index': 44},
+                           {'amount': 1, 'index': 47},
+                           {'amount': 1, 'index': 26}]}
         ],
         "convert": [],
     }
@@ -353,12 +354,12 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
         "model_name": "PowerBombExpansion",
         "hud_text": hud_text,
-        'resources': [{'amount': 2, 'name': "Temporary2"},
-                      {'amount': 1, 'name': "Percent"}],
+        'resources': [{'amount': 2, 'index': 72},
+                      {'amount': 1, 'index': 47}],
         "conditional_resources": [
-            {'item': "PowerBomb",
-             'resources': [{'amount': 2, 'name': "PowerBomb"},
-                           {'amount': 1, 'name': "Percent"}]}
+            {'item': 43,
+             'resources': [{'amount': 2, 'index': 43},
+                           {'amount': 1, 'index': 47}]}
         ],
         "convert": [],
     }
@@ -385,8 +386,8 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
         "model_name": "PowerBombExpansion",
         "hud_text": ["Power Bomb Expansion acquired!"],
-        'resources': [{'amount': 2, 'name': "PowerBomb"},
-                      {'amount': 1, 'name': "Percent"}],
+        'resources': [{'amount': 2, 'index': 43},
+                      {'amount': 1, 'index': 47}],
         "conditional_resources": [],
         "convert": [],
     }

@@ -63,7 +63,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
     expected_patches.insert(0, used_patch.return_value)
     used_patch.assert_called_once_with(connector.version.powerup_functions,
                                        RandovaniaGame.METROID_PRIME,
-                                       extra[0].short_name,
+                                       extra[0].extra["item_id"],
                                        extra[1])
     unused_patch.assert_not_called()
 

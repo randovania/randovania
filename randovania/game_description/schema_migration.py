@@ -171,7 +171,7 @@ def _migrate_v2(data: dict) -> dict:
     for name in lists_to_migrate:
         new_res_list = {resource.pop("short_name"): resource for resource in db[name]}
         for resource in new_res_list.values():
-            if name == "items":
+            if name == ResourceType.ITEM:
                 extra = resource["extra"]
                 resource["extra"] = {}
                 if extra is not None:

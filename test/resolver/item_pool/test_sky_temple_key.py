@@ -1,3 +1,4 @@
+from frozendict import frozendict
 import pytest
 
 from randovania.games.prime2.patcher import echoes_items
@@ -6,6 +7,8 @@ from randovania.games.prime2.generator.item_pool import sky_temple_keys
 from randovania.generator.item_pool import pickup_creator
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
+
+item_ids = [29, 30, 31, 101, 102, 103, 104, 105, 106]
 
 def test_sky_temple_key_distribution_logic_all_bosses_valid(echoes_resource_database):
     # Run
@@ -28,7 +31,7 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(echoes_resource_d
     # Assert
     assert item_pool == []
     assert initial_items == {
-        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
+        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, frozendict({"item_id": item_ids[i-1]})): 1
         for i in range(4, 10)
     }
     assert list(pickup_assignment.keys()) == sky_temple_keys._GUARDIAN_INDICES
@@ -48,6 +51,6 @@ def test_sky_temple_key_distribution_logic_with_quantity(echoes_resource_databas
     ]
     assert pickup_assignment == {}
     assert initial_items == {
-        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, None): 1
+        ItemResourceInfo(f'Sky Temple Key {i}', f'TempleKey{i}', 1, frozendict({"item_id": item_ids[i-1]})): 1
         for i in range(quantity + 1, 10)
     }
