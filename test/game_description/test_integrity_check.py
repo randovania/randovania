@@ -70,7 +70,15 @@ def test_invalid_db():
                             "coordinates": None,
                             "description": "",
                             "extra": {},
-                            "connections": {},
+                            "connections": {
+                                "Event - Foo": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            },
                         },
                         "Door to Area 2 (Generic)": {
                             "node_type": "dock",
@@ -145,6 +153,7 @@ def test_invalid_db():
     # Assert
     assert errors == [
         "World - Area 1 - 'Event - Foo' is not an Event Node, but naming suggests it is",
+        "World - Area 1 - Node 'Event - Foo' has a connection to itself",
         "World - Area 1 - 'Door to Area 2 (Generic)' connects to 'world World/area Area 2/node Generic Node'"
         " which is not a DockNode",
         "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'world World/area Area 2/node Door to Area 1',"
