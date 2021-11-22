@@ -170,7 +170,6 @@ def _migrate_v3(data: dict) -> dict:
             "reason": item["reason"]
         } for item in minimal["events_to_exclude"]]
 
-    # TODO: move dock types to keys instead of indices as well?
     for dock_type in data["dock_weakness_database"].values():
         for dock in dock_type:
             dock["requirement"] = migrate_requirement(dock["requirement"])
@@ -193,12 +192,6 @@ def _migrate_v3(data: dict) -> dict:
                 
                 if node_type == "player_ship":
                     node["is_unlocked"] = migrate_requirement(node["is_unlocked"])
-
-                if node_type == "translator_gate":
-                    pass # TODO
-
-                if node_type == "pickup":
-                    pass # TODO
 
     lists_to_migrate = {restype for restype in ResourceType if restype < ResourceType._INDEXED}
     for name in lists_to_migrate:
