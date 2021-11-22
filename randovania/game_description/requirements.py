@@ -272,11 +272,11 @@ class ResourceRequirement(Requirement):
     def with_data(cls,
                   database: ResourceDatabase,
                   resource_type: ResourceType,
-                  requirement_index: int,
+                  requirement_name: str,
                   amount: int,
                   negate: bool) -> "ResourceRequirement":
         return cls(
-            database.get_by_type_and_index(resource_type, requirement_index),
+            database.get_by_type_and_index(resource_type, requirement_name),
             amount,
             negate)
 
@@ -324,7 +324,7 @@ class ResourceRequirement(Requirement):
 
     @property
     def _as_comparison_tuple(self):
-        return self.resource.resource_type, self.resource.index, self.amount, self.negate
+        return self.resource.resource_type, self.resource.short_name, self.amount, self.negate
 
     def __lt__(self, other: "ResourceRequirement") -> bool:
         return self._as_comparison_tuple < other._as_comparison_tuple

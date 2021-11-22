@@ -50,8 +50,8 @@ def test_area_with_invalid_connections():
                         "A": {
                             "type": "resource",
                             "data": {
-                                "type": 0,
-                                "index": 1,
+                                "type": "items",
+                                "name": "Dark",
                                 "amount": 1,
                                 "negate": False
                             }
@@ -62,4 +62,4 @@ def test_area_with_invalid_connections():
         })
 
     assert str(e.value) == ("In area Broken Area, connection from Broken to A got error: "
-                            "ResourceType.ITEM Resource with index 1 not found in []")
+                            "items Resource with short_name 'Dark' not found in 0 resources")

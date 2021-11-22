@@ -15,7 +15,7 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
             "minimal_logic": False, "specific_levels": {"Dash": "expert"}}},
         {"encoded": b'f3\x00\x00', "bit_count": 27, "json": {"minimal_logic": False, "specific_levels": {
             i: "hypermode"
-            for i in ["Dash", "BombJump", "Movement", "BSJ"]
+            for i in ["BombJump", "BSJ", "Dash", "Movement"]
         }}},
     ],
     name="trick_level_data")

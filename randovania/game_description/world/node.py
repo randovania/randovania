@@ -297,7 +297,7 @@ class PlayerShipNode(ResourceNode):
         return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(), 1, False)])
 
     def resource(self) -> SimpleResourceInfo:
-        return SimpleResourceInfo(self.index, f"Ship Node {self.index}", f"Ship{self.index}", ResourceType.SHIP_NODE)
+        return SimpleResourceInfo(f"Ship Node {self.index}", f"Ship{self.index}", ResourceType.SHIP_NODE)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
                     all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:

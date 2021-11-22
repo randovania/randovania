@@ -279,7 +279,7 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset,
         for elevator in state["elevators"]:
             if elevator["teleporter"]["node_name"] == "Elevator to Sanctuary Fortress - Transport to Agon Wastes":
                 elevator["data"] = {'area_name': "Agon Energy Controller", 'world_name': "Agon Wastes"}
-        state["translator_gates"]['0'] = 97
+        state["translator_gates"]['0'] = "Violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")
 

@@ -2,6 +2,7 @@ import copy
 import dataclasses
 import json
 from unittest.mock import MagicMock, patch
+from frozendict import frozendict
 
 import pytest
 
@@ -56,11 +57,11 @@ def test_create_spawn_point_field(echoes_game_description, empty_patches):
 
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
     patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items({
-        resource_db.get_by_type_and_index(ResourceType.ITEM, 15): 3,
+        resource_db.get_by_type_and_index(ResourceType.ITEM, "MorphBall"): 3,
     })
 
     capacities = [
-        {'amount': 3 if item.index == 15 else 0, 'index': item.index}
+        {'amount': 3 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
     ]
 
@@ -232,9 +233,9 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
 def test_create_translator_gates_field():
     # Setup
     gate_assignment = {
-        TranslatorGate(1): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
-        TranslatorGate(3): SimpleResourceInfo(50, "LongB", "B", ResourceType.ITEM),
-        TranslatorGate(4): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
+        TranslatorGate(1): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
+        TranslatorGate(3): SimpleResourceInfo("LongB", "B", ResourceType.ITEM, frozendict({"item_id": 1})),
+        TranslatorGate(4): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
     }
 
     # Run
@@ -242,9 +243,9 @@ def test_create_translator_gates_field():
 
     # Assert
     assert result == [
-        {"gate_index": 1, "translator_index": 10},
-        {"gate_index": 3, "translator_index": 50},
-        {"gate_index": 4, "translator_index": 10},
+        {"gate_index": 1, "translator_index": 0},
+        {"gate_index": 3, "translator_index": 1},
+        {"gate_index": 4, "translator_index": 0},
     ]
 
 

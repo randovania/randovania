@@ -132,10 +132,9 @@ JsonEncodedValue = construct.ExprAdapter(
 
 def _build_resource_info(**kwargs):
     return Struct(
-        index=VarInt,
         long_name=String,
-        short_name=String,
         **kwargs,
+        extra=JsonEncodedValue,
     )
 
 
@@ -154,7 +153,6 @@ ConstructResourceInfo = _build_resource_info()
 
 ConstructItemResourceInfo = _build_resource_info(
     max_capacity=Int32ub,
-    extra=OptionalValue(Int32ub),
 )
 
 ConstructTrickResourceInfo = _build_resource_info(
@@ -162,16 +160,18 @@ ConstructTrickResourceInfo = _build_resource_info(
 )
 
 ConstructDamageReductions = Struct(
-    index=VarInt,
+    name=String,
     reductions=PrefixedArray(VarInt, Struct(
-        index=VarInt,
+        name=String,
         multiplier=Float32b,
     ))
 )
 
+ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5, pickup_index=7, gate_index=8, logbook_index=9, ship_node=10)
+
 ConstructResourceRequirement = Struct(
-    type=Byte,
-    index=VarInt,
+    type=ConstructResourceType,
+    name=String,
     amount=Short,
     negate=Flag,
 )
@@ -201,22 +201,22 @@ ConstructDockWeakness = Struct(
 )
 
 ConstructResourceDatabase = Struct(
-    items=PrefixedArray(VarInt, ConstructItemResourceInfo),
-    events=PrefixedArray(VarInt, ConstructResourceInfo),
-    tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
-    damage=PrefixedArray(VarInt, ConstructResourceInfo),
-    versions=PrefixedArray(VarInt, ConstructResourceInfo),
-    misc=PrefixedArray(VarInt, ConstructResourceInfo),
+    items=ConstructDict(ConstructItemResourceInfo),
+    events=ConstructDict(ConstructResourceInfo),
+    tricks=ConstructDict(ConstructTrickResourceInfo),
+    damage=ConstructDict(ConstructResourceInfo),
+    versions=ConstructDict(ConstructResourceInfo),
+    misc=ConstructDict(ConstructResourceInfo),
     requirement_template=ConstructDict(ConstructRequirement),
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
-    energy_tank_item_index=VarInt,
-    item_percentage_index=OptionalValue(VarInt),
-    multiworld_magic_item_index=OptionalValue(VarInt),
+    energy_tank_item_index=String,
+    item_percentage_index=OptionalValue(String),
+    multiworld_magic_item_index=OptionalValue(String),
 )
 
 ConstructResourceGain = Struct(
-    resource_type=Byte,
-    resource_index=VarInt,
+    resource_type=ConstructResourceType,
+    resource_name=String,
     amount=VarInt,
 )
 
@@ -280,7 +280,7 @@ ConstructNode = NodeAdapter(Struct(
             ),
             "event": Struct(
                 **NodeBaseFields,
-                event_index=VarInt,
+                event_name=String,
             ),
             "translator_gate": Struct(
                 **NodeBaseFields,
@@ -290,7 +290,6 @@ ConstructNode = NodeAdapter(Struct(
                 **NodeBaseFields,
                 string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
-                lore_extra=VarInt,
             ),
             "player_ship": Struct(
                 **NodeBaseFields,
@@ -316,15 +315,15 @@ ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item 
 
 ConstructMinimalLogicDatabase = Struct(
     items_to_exclude=PrefixedArray(VarInt, Struct(
-        index=VarInt,
+        name=String,
         when_shuffled=OptionalValue(String),
     )),
     custom_item_amount=PrefixedArray(VarInt, Struct(
-        index=VarInt,
+        name=String,
         value=VarInt,
     )),
     events_to_exclude=PrefixedArray(VarInt, Struct(
-        index=VarInt,
+        name=String,
         reason=OptionalValue(String),
     )),
 )

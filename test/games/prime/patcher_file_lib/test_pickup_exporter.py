@@ -45,8 +45,8 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
 ])
 def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
     # Setup
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     pickup_x = PickupEntry("A", 1, generic_item_category, generic_item_category,
                            progression=(
@@ -100,9 +100,9 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         name="EnergyTransferModule",
     )
 
-    useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10, None)
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    useless_resource = ItemResourceInfo("Useless", "Useless", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
     pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,
                            progression=((resource_a, 1),),
                            )
@@ -201,7 +201,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_item_category):
     # Setup
     rng = Random(5000)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
@@ -338,8 +338,8 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
 def _create_pickup_data(generic_item_category):
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
     return PickupEntry("Cake", 1, generic_item_category, generic_item_category,
                        progression=(
                            (resource_a, 1),
@@ -351,8 +351,8 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     # Setup
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     model = MagicMock()
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
@@ -379,8 +379,8 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     creator = pickup_exporter.PickupExporterMulti(solo, MagicMock(), PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
@@ -404,12 +404,12 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
-    multi = ItemResourceInfo(10, "Multiworld", "Multiworld", 30, None)
+    multi = ItemResourceInfo("Multiworld", "Multiworld", 30, None)
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     creator = pickup_exporter.PickupExporterMulti(solo, multi, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),

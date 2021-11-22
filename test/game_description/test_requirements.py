@@ -19,17 +19,17 @@ def _database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
-            ItemResourceInfo(0, "A", "A", 1, None),
-            ItemResourceInfo(1, "B", "B", 1, None),
-            ItemResourceInfo(2, "C", "C", 1, None),
+            ItemResourceInfo("A", "A", 1, None),
+            ItemResourceInfo("B", "B", 1, None),
+            ItemResourceInfo("C", "C", 1, None),
         ],
         event=[],
         trick=[],
         damage=[],
         version=[],
         misc=[
-            SimpleResourceInfo(0, "Trivial", "Trivial", ResourceType.MISC),
-            SimpleResourceInfo(1, "Impossible", "Impossible", ResourceType.MISC),
+            SimpleResourceInfo("Trivial", "Trivial", ResourceType.MISC),
+            SimpleResourceInfo("Impossible", "Impossible", ResourceType.MISC),
         ],
         requirement_template={},
         damage_reductions={},
@@ -40,7 +40,7 @@ def _database() -> ResourceDatabase:
 
 
 def _make_req(name: str):
-    req = SimpleResourceInfo(hash(name), name, name, "")
+    req = SimpleResourceInfo(name, name, "")
     id_req = ResourceRequirement(req, 1, False)
     return req, id_req
 
@@ -143,10 +143,10 @@ def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: Req
 def test_list_dangerous_resources(input_data, output_data):
     # setup
     req_list = RequirementList(
-        (ResourceRequirement(SimpleResourceInfo(item[0], str(item[0]), str(item[0]), ""), 1, item[1])
+        (ResourceRequirement(SimpleResourceInfo(str(item[0]), str(item[0]), ""), 1, item[1])
          for item in input_data))
     expected_result = {
-        SimpleResourceInfo(item, str(item), str(item), "")
+        SimpleResourceInfo(str(item), str(item), "")
         for item in output_data
     }
 
@@ -431,8 +431,8 @@ def test_requirement_template_nested(database):
     assert hash(use_a) != hash(use_b)
 
 
-def _json_req(amount: int, index: int = 1, resource_type: int = 3):
-    return {"type": "resource", "data": {"type": resource_type, "index": index, "amount": amount, "negate": False}}
+def _json_req(amount: int, name: str = "Damage", resource_type: ResourceType = ResourceType.DAMAGE):
+    return {"type": "resource", "data": {"type": resource_type.value, "name": name, "amount": amount, "negate": False}}
 
 
 def _arr_req(req_type: str, items: list):
@@ -441,30 +441,30 @@ def _arr_req(req_type: str, items: list):
 
 @pytest.mark.parametrize(["damage", "items", "requirement"], [
     (50, [], _arr_req("and", [_json_req(50)])),
-    (MAX_DAMAGE, [], _arr_req("and", [_json_req(1, resource_type=0)])),
+    (MAX_DAMAGE, [], _arr_req("and", [_json_req(1, "Dark", ResourceType.ITEM)])),
     (80, [], _arr_req("and", [_json_req(50), _json_req(30)])),
     (30, [], _arr_req("or", [_json_req(50), _json_req(30)])),
-    (50, [], _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)])),
-    (0, [1], _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)])),
+    (50, [], _arr_req("or", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)])),
+    (0, ["Dark"], _arr_req("or", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)])),
     (100, [], _arr_req("or", [
         _json_req(100),
-        _arr_req("and", [_json_req(50), _json_req(1, resource_type=0)]),
+        _arr_req("and", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)]),
     ])),
-    (50, [1], _arr_req("or", [
+    (50, ["Dark"], _arr_req("or", [
         _json_req(100),
-        _arr_req("and", [_json_req(50), _json_req(1, resource_type=0)]),
+        _arr_req("and", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)]),
     ])),
     (150, [], _arr_req("and", [
         _json_req(100),
-        _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)]),
+        _arr_req("or", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)]),
     ])),
-    (100, [1], _arr_req("and", [
+    (100, ["Dark"], _arr_req("and", [
         _json_req(100),
-        _arr_req("or", [_json_req(50), _json_req(1, resource_type=0)]),
+        _arr_req("or", [_json_req(50), _json_req(1, "Dark", ResourceType.ITEM)]),
     ])),
-    (200, [], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
-    (121, [13], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
-    (100, [14], _arr_req("and", [_json_req(100), _json_req(100, 2)])),
+    (200, [], _arr_req("and", [_json_req(100), _json_req(100, "DarkWorld1")])),
+    (121, ["DarkSuit"], _arr_req("and", [_json_req(100), _json_req(100, "DarkWorld1")])),
+    (100, ["LightSuit"], _arr_req("and", [_json_req(100), _json_req(100, "DarkWorld1")])),
 ])
 def test_requirement_damage(damage, items, requirement, echoes_resource_database):
     req = data_reader.read_requirement(requirement, echoes_resource_database)
@@ -480,7 +480,7 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
 def test_simple_echoes_damage(echoes_resource_database):
     db = echoes_resource_database
     req = ResourceRequirement(
-        db.get_by_type_and_index(ResourceType.DAMAGE, 2),
+        db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1"),
         50, False,
     )
     d_suit = db.get_item_by_name("Dark Suit")

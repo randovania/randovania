@@ -39,7 +39,7 @@ def create_major_item(item: MajorItem,
     if include_percentage and resource_database.item_percentage is not None:
         extra_resources.append((resource_database.item_percentage, 1))
 
-    def _create_resources(base_resource: Optional[int]) -> ResourceQuantity:
+    def _create_resources(base_resource: Optional[str]) -> ResourceQuantity:
         # FIXME: hacky quantity for Hazard Shield
         quantity = 5 if item.name == "Hazard Shield" else 1
         return resource_database.get_item(base_resource), quantity

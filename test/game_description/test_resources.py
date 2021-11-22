@@ -8,6 +8,7 @@ from randovania.game_description.resources.pickup_entry import ConditionalResour
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources, \
     add_resources_into_another, convert_resource_gain_to_current_resources
+from randovania.game_description.resources.resource_type import ResourceType
 
 
 @pytest.mark.parametrize(["a", "b", "result"], [
@@ -30,8 +31,8 @@ def test_pickup_index_has():
 
 def test_add_resource_gain_to_current_resources_convert(blank_pickup):
     # Setup
-    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
-    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     pickup = dataclasses.replace(
         blank_pickup,
@@ -64,3 +65,10 @@ def test_convert_resource_gain_to_current_resources(resource_gain, expected):
 
     # Assert
     assert result == expected
+
+def test_resource_type_from_index():
+    # Run
+    result = ResourceType.from_index(0)
+
+    # Assert
+    assert result == ResourceType.ITEM

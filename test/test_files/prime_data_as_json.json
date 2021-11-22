@@ -1,53 +1,52 @@
 {
-    "schema_version": 3,
+    "schema_version": 4,
     "game": "prime2",
     "resource_database": {
-        "items": [
-            {
-                "index": 2,
+        "items": {
+            "Light": {
                 "long_name": "Light Beam",
-                "short_name": "Light",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 2
+                }
             },
-            {
-                "index": 24,
+            "SpaceJump": {
                 "long_name": "Space Jump Boots",
-                "short_name": "SpaceJump",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 24
+                }
             },
-            {
-                "index": 30,
+            "ScanVisor": {
                 "long_name": "Scan Visor",
-                "short_name": "ScanVisor",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 30
+                }
             },
-            {
-                "index": 46,
+            "LightAmmo": {
                 "long_name": "Light Ammo",
-                "short_name": "LightAmmo",
                 "max_capacity": 1,
-                "extra": null
+                "extra": {
+                    "item_id": 46
+                }
             }
-        ],
-        "events": [
-            {
-                "index": 1,
+        },
+        "events": {
+            "Event1": {
                 "long_name": "First Event",
-                "short_name": "Event1"
+                "extra": {}
             }
-        ],
-        "tricks": [],
-        "damage": [],
-        "versions": [],
-        "misc": [],
+        },
+        "tricks": {},
+        "damage": {},
+        "versions": {},
+        "misc": {},
         "requirement_template": {},
         "damage_reductions": [],
-        "energy_tank_item_index": 42,
-        "item_percentage_index": 47,
-        "multiworld_magic_item_index": 74
+        "energy_tank_item_index": "EnergyTank",
+        "item_percentage_index": "Percent",
+        "multiworld_magic_item_index": "Multiworld"
     },
     "starting_location": {
         "world_name": "Temple Grounds",
@@ -56,20 +55,20 @@
     "initial_states": {
         "Default": [
             {
-                "resource_type": 0,
-                "resource_index": 24,
+                "resource_type": "items",
+                "resource_name": "SpaceJump",
                 "amount": 1
             }
         ],
         "Item Loss Disabled": [
             {
-                "resource_type": 0,
-                "resource_index": 2,
+                "resource_type": "items",
+                "resource_name": "Light",
                 "amount": 1
             },
             {
-                "resource_type": 0,
-                "resource_index": 24,
+                "resource_type": "items",
+                "resource_name": "SpaceJump",
                 "amount": 1
             }
         ]
@@ -88,8 +87,8 @@
                             {
                                 "type": "resource",
                                 "data": {
-                                    "type": 1,
-                                    "index": 1,
+                                    "type": "events",
+                                    "name": "Event1",
                                     "amount": 3,
                                     "negate": false
                                 }
@@ -199,8 +198,8 @@
                                                         {
                                                             "type": "resource",
                                                             "data": {
-                                                                "type": 0,
-                                                                "index": 2,
+                                                                "type": "items",
+                                                                "name": "Light",
                                                                 "amount": 1,
                                                                 "negate": false
                                                             }
@@ -208,8 +207,8 @@
                                                         {
                                                             "type": "resource",
                                                             "data": {
-                                                                "type": 0,
-                                                                "index": 24,
+                                                                "type": "items",
+                                                                "name": "SpaceJump",
                                                                 "amount": 1,
                                                                 "negate": false
                                                             }
@@ -291,10 +290,11 @@
                             "heal": true,
                             "coordinates": null,
                             "description": "",
-                            "extra": {},
+                            "extra": {
+                                "translator": "ScanVisor"
+                            },
                             "string_asset_id": 1000,
                             "lore_type": "luminoth-lore",
-                            "lore_extra": 2,
                             "connections": {}
                         },
                         "Luminoth Warrior": {
@@ -302,10 +302,11 @@
                             "heal": true,
                             "coordinates": null,
                             "description": "",
-                            "extra": {},
+                            "extra": {
+                                "hint_index": 2
+                            },
                             "string_asset_id": 2000,
                             "lore_type": "luminoth-warrior",
-                            "lore_extra": 2,
                             "connections": {}
                         },
                         "Pirate Lore": {
@@ -316,7 +317,6 @@
                             "extra": {},
                             "string_asset_id": 3000,
                             "lore_type": "pirate-lore",
-                            "lore_extra": 0,
                             "connections": {}
                         }
                     }

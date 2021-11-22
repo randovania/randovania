@@ -10,8 +10,8 @@ from randovania.game_description.resources.resource_info import convert_resource
     name="logbook_node")
 def _logbook_node(request):
     has_translator = request.param
-    scan_visor = ItemResourceInfo(1, "Scan", "S", 1, None)
-    translator = ItemResourceInfo(2, "Translator", "T", 1, None)
+    scan_visor = ItemResourceInfo("Scan", "S", 1, None)
+    translator = ItemResourceInfo("Translator", "T", 1, None)
 
     node = LogbookNode("Logbook", False, None, "", {}, 0,
                        1000, scan_visor, LoreType.LUMINOTH_LORE,

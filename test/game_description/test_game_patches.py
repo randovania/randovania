@@ -7,7 +7,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 
 
 def make(name: str) -> SimpleResourceInfo:
-    return SimpleResourceInfo(ord(name[0]), name, name, ResourceType.ITEM)
+    return SimpleResourceInfo(name, name, ResourceType.ITEM)
 
 
 @pytest.mark.parametrize("items", [

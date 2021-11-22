@@ -77,7 +77,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         return [
             MemoryOperation(
                 address=player_state_pointer,
-                offset=_prime1_powerup_offset(item.index),
+                offset=_prime1_powerup_offset(item.extra["item_id"]),
                 read_byte_count=8,
             )
             for item in items
@@ -95,18 +95,18 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             if delta == 0:
                 continue
 
-            if item.index not in prime_items.ARTIFACT_ITEMS:
+            if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                    self.version.powerup_functions, self.game.game, item.index, delta,
+                    self.version.powerup_functions, self.game.game, item.extra["item_id"], delta,
                 ))
             else:
-                if item.index > 29:
-                    layer_id = item.index - 28
+                if item.extra["item_id"] > 29:
+                    layer_id = item.extra["item_id"] - 28
                 else:
                     layer_id = 24  # Truth layer
 
                 patches.append(all_prime_dol_patches.increment_item_capacity_patch(
-                    self.version.powerup_functions, self.game.game, item.index, delta
+                    self.version.powerup_functions, self.game.game, item.extra["item_id"], delta
                 ))
                 patches.append(prime1_dol_patches.set_artifact_layer_active_patch(
                     self.version, layer_id, delta > 0

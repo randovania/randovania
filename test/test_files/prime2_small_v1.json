@@ -428,6 +428,13 @@
                 "short_name": "ChargeCombo",
                 "max_capacity": 1,
                 "extra": null
+            },
+            {
+                "index": 130,
+                "long_name": "Command Visor",
+                "short_name": "CommandVisor",
+                "max_capacity": 1,
+                "extra": 1943434474
             }
         ],
         "events": [
@@ -1815,7 +1822,26 @@
         ],
         "Item Loss Disabled": []
     },
-    "minimal_logic": null,
+    "minimal_logic": {
+        "items_to_exclude": [
+            {
+                "index": 13,
+                "when_shuffled": "Progressive Suit"
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "index": 42,
+                "value": 14
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "index": 93,
+                "reason": "victory condition"
+            }
+        ]
+    },
     "victory_condition": {
         "type": "resource",
         "data": {
@@ -2850,6 +2876,29 @@
                             "connected_dock_index": 0,
                             "dock_type": 3,
                             "dock_weakness_index": 1,
+                            "connections": {
+                                "Door to Path of Eyes": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Samus Ship",
+                            "heal": true,
+                            "coordinates": null,
+                            "extra": {},
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            },
                             "connections": {
                                 "Door to Path of Eyes": {
                                     "type": "and",
@@ -6211,7 +6260,6 @@
             "name": "Torvus Bog",
             "dark_name": "Dark Torvus Bog",
             "asset_id": 1039999561,
-            "extra": {},
             "areas": [
                 {
                     "name": "Transport to Temple Grounds",
@@ -6219,13 +6267,11 @@
                     "asset_id": 1868895730,
                     "default_node_index": 1,
                     "valid_starting_location": true,
-                    "extra": {},
                     "nodes": [
                         {
                             "name": "Door to Temple Transport Access",
                             "heal": false,
                             "coordinates": null,
-                            "extra": {},
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 668125336,

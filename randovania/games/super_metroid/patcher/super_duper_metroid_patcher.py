@@ -11,6 +11,7 @@ import SuperDuperMetroid.SM_Constants
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.patching.patcher import Patcher
 from randovania.patching.prime.patcher_file_lib import pickup_exporter
@@ -40,7 +41,7 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
     count = 0
 
     for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.index >= 1000:
+        if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
             continue
         pickup_type = resource.long_name
         count = quantity

@@ -15,9 +15,10 @@ def auto_tracker_window(skip_qtbot):
 
 def test_update_tracker_from_hook(window, echoes_resource_database):
     # Setup
+    items = echoes_resource_database.item
     inventory = {
-        item: InventoryItem(item.index % 3, item.index % 3)
-        for item in echoes_resource_database.item
+        items[i]: InventoryItem(i % 3, i % 3)
+        for i in range(len(items))
     }
 
     # Run
