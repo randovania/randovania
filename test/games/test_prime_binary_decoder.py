@@ -8,7 +8,6 @@ from randovania import get_data_path
 from randovania.game_description import data_reader, schema_migration
 from randovania.games import binary_data
 
-
 sample_data = {
     "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
     "game": "prime2",
@@ -50,6 +49,7 @@ sample_data = {
     },
     "worlds": [],
 }
+
 
 def test_simple_round_trip():
     b = io.BytesIO()
@@ -120,7 +120,7 @@ def test_full_data_encode_is_equal(game_enum):
     decoded_database = binary_data.decode(b)
 
     # Run
-    assert decoded_database, json_database
+    assert decoded_database == json_database
 
     comparable_json = _comparable_dict(json_database)
     comparable_binary = _comparable_dict(decoded_database)
@@ -128,6 +128,7 @@ def test_full_data_encode_is_equal(game_enum):
         assert a == b
 
     assert comparable_binary == comparable_json
+
 
 reqs_to_test = [
     {"type": "or", "data": {"comment": None, "items": []}},
@@ -139,6 +140,7 @@ reqs_to_test = [
 ]
 reqs_to_test.append({"type": "and", "data": {"comment": None, "items": list(reqs_to_test)}})
 
+
 @pytest.mark.parametrize("req", reqs_to_test)
 def test_encode_requirement_simple(req):
     # Run
@@ -147,6 +149,7 @@ def test_encode_requirement_simple(req):
 
     # Assert
     assert req == decoded
+
 
 def test_encode_resource_database():
     # Setup
