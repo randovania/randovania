@@ -22,7 +22,7 @@ def test_find_database_errors(game_enum):
 
 def test_invalid_db():
     sample_data = {
-        "schema_version": 2,
+        "schema_version": 3,
         "game": "prime2",
         "resource_database": {
             "items": [],
@@ -59,7 +59,7 @@ def test_invalid_db():
             "name": "World",
             "extra": {},
             "areas": {
-                "Area": {
+                "Area 1": {
                     "default_node": None,
                     "valid_starting_location": False,
                     "extra": {},
@@ -68,11 +68,72 @@ def test_invalid_db():
                             "node_type": "generic",
                             "heal": False,
                             "coordinates": None,
+                            "description": "",
+                            "extra": {},
+                            "connections": {},
+                        },
+                        "Door to Area 2 (Generic)": {
+                            "node_type": "dock",
+                            "heal": False,
+                            "coordinates": None,
+                            "description": "",
+                            "destination": {
+                                "world_name": "World",
+                                "area_name": "Area 2",
+                                "node_name": "Generic Node"
+                            },
+                            "dock_type": 2,
+                            "dock_weakness_index": 0,
+                            "extra": {},
+                            "connections": {},
+                        },
+                        "Door to Area 2 (Dock)": {
+                            "node_type": "dock",
+                            "heal": False,
+                            "coordinates": None,
+                            "description": "",
+                            "destination": {
+                                "world_name": "World",
+                                "area_name": "Area 2",
+                                "node_name": "Door to Area 1"
+                            },
+                            "dock_type": 2,
+                            "dock_weakness_index": 0,
                             "extra": {},
                             "connections": {},
                         }
                     }
-                }
+                },
+                "Area 2": {
+                    "default_node": None,
+                    "valid_starting_location": False,
+                    "extra": {},
+                    "nodes": {
+                        "Generic Node": {
+                            "node_type": "generic",
+                            "heal": False,
+                            "coordinates": None,
+                            "description": "",
+                            "extra": {},
+                            "connections": {},
+                        },
+                        "Door to Area 1": {
+                            "node_type": "dock",
+                            "heal": False,
+                            "coordinates": None,
+                            "description": "",
+                            "destination": {
+                                "world_name": "World",
+                                "area_name": "Area 1",
+                                "node_name": "Door to Area 2 (Generic)"
+                            },
+                            "dock_type": 2,
+                            "dock_weakness_index": 0,
+                            "extra": {},
+                            "connections": {},
+                        }
+                    }
+                },
             }
         }],
     }
@@ -82,4 +143,12 @@ def test_invalid_db():
     errors = integrity_check.find_database_errors(gd)
 
     # Assert
-    assert errors == ["World - Area - 'Event - Foo' is not an Event Node, but naming suggests it is"]
+    assert errors == [
+        "World - Area 1 - 'Event - Foo' is not an Event Node, but naming suggests it is",
+        "World - Area 1 - 'Door to Area 2 (Generic)' connects to 'world World/area Area 2/node Generic Node'"
+        " which is not a DockNode",
+        "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'world World/area Area 2/node Door to Area 1',"
+        " but that dock connects to 'world World/area Area 1/node Door to Area 2 (Generic)' instead.",
+        "World - Area 2 - 'Door to Area 1' connects to 'world World/area Area 1/node Door to Area 2 (Generic)',"
+        " but that dock connects to 'world World/area Area 2/node Generic Node' instead."
+    ]

@@ -52,18 +52,29 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="delete_node_button">
+      <widget class="QPushButton" name="rename_area_button">
        <property name="text">
-        <string>Delete Node</string>
+        <string>Rename Area</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="new_node_button">
-       <property name="text">
-        <string>New Node</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="delete_node_button">
+         <property name="text">
+          <string>Delete Node</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="new_node_button">
+         <property name="text">
+          <string>New Node</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -92,26 +103,6 @@
         <string>Node Info</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QLabel" name="node_name_label">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QCheckBox" name="node_heals_check">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Heals?</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QPushButton" name="node_edit_button">
           <property name="maximumSize">
@@ -139,6 +130,39 @@
          <widget class="QCheckBox" name="area_spawn_check">
           <property name="text">
            <string>Area spawn</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="node_name_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QCheckBox" name="node_heals_check">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Heals?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="node_description_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -181,8 +205,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>190</width>
-             <height>219</height>
+             <width>149</width>
+             <height>190</height>
             </rect>
            </property>
           </widget>

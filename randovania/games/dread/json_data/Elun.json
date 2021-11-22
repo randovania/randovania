@@ -1,7 +1,11 @@
 {
     "name": "Elun",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s060_quarantine/s060_quarantine.brfld"
+        "asset_id": "maps/levels/c10_samus/s060_quarantine/s060_quarantine.brfld",
+        "map_min_x": 98,
+        "map_max_x": 147,
+        "map_min_y": 278,
+        "map_max_y": 239
     },
     "areas": {
         "collision_camera_000 (E)": {
@@ -39,13 +43,14 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }
             }
         },
         "collision_camera_001 (E)": {
-            "default_node": "Start Point 3",
+            "default_node": "Start Point 2",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -75,6 +80,32 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
+                "Door (doorpowerpower_004)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11650.0,
+                        "y": 600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_004",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_012 (E)",
+                        "node_name": "Door (doorpowerpower_004)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
                 "Start Point 1": {
                     "node_type": "generic",
                     "heal": false,
@@ -83,9 +114,10 @@
                         "y": 700.0,
                         "z": 0.040038999170064926
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "StartPoint0",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "StartPoint0",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 },
@@ -97,11 +129,14 @@
                         "y": 600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "wagontrain_forest_000",
                         "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
                         "elevator_component": "CTrainUsableComponent",
-                        "target_spawn_point": "wagontrain_quarantine_000_platform"
+                        "target_spawn_point": "wagontrain_quarantine_000_platform",
+                        "start_point_actor_name": "wagontrain_forest_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "destination": {
                         "world_name": "Ghavoran",
@@ -115,51 +150,14 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -14400.0,
-                        "y": 600.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "wagontrain_forest_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "usable_entity": "wagontrain_forest_000"
-                    },
-                    "connections": {}
-                },
-                "Door (doorpowerpower_004)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11650.0,
-                        "y": 600.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "doorpowerpower_004",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_012 (E)",
-                    "connected_dock_index": 1,
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
-                    "connections": {}
-                },
-                "Start Point 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
                         "x": -14000.0,
                         "y": 700.0,
                         "z": 0.040038999170064926
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_ProfessorX",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_ProfessorX",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -204,6 +202,7 @@
                         "y": 700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -212,18 +211,50 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_003 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerpower_000)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300.0,
+                        "y": 100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_000",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 800.0,
+                        "y": 600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_007",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_003 (E)": {
-            "default_node": "Start Point 1",
-            "valid_starting_location": false,
+            "default_node": "Start Point",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 1300.0,
@@ -260,6 +291,7 @@
                         "y": 700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -268,9 +300,11 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_002 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_002 (E)",
+                        "node_name": "Door (doorpowerpower_000)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -283,6 +317,7 @@
                         "y": 1600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -291,9 +326,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_004 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_004 (E)",
+                        "node_name": "Door (doorpowerpower_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -306,6 +343,7 @@
                         "y": 900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -314,9 +352,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_005 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_005 (E)",
+                        "node_name": "Door (doorpowerpower_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -329,6 +369,7 @@
                         "y": 2200.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_energytank_000",
                         "actor_def": "actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad"
@@ -337,7 +378,75 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Door (doorpowerpower_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_003",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001",
+                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_006 (E)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (doorpowerclosed_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerclosed_000",
+                        "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
+                        "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_006 (E)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Event - Breakable (db_reg_qt_001)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1900.0,
+                        "y": -1600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "db_reg_qt_001",
+                        "actor_def": "actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad"
+                    },
+                    "event_index": 87,
+                    "connections": {}
+                },
+                "Ammo Recharge": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -345,17 +454,94 @@
                         "y": -300.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "ammorecharge_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad",
-                        "usable_entity": "ammorecharge_000"
+                        "actor_name": "ammorecharge_000",
+                        "actor_def": "actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad",
+                        "start_point_actor_name": "ammorecharge_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3000.0,
+                        "y": -2000.0,
+                        "z": 0.040038999170064926
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_PlasmaBeam",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1600.0,
+                        "y": 2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_006",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2600.0,
+                        "y": 2700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_008",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_009",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2000.0,
+                        "y": 2200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_027",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_004 (E)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -393,6 +579,7 @@
                         "y": 1600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -401,9 +588,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_003 (E)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerpower_001)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -416,6 +605,7 @@
                         "y": 1600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -424,14 +614,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_007 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_007 (E)",
+                        "node_name": "Door (doorpowerpower_005)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -439,9 +631,10 @@
                         "y": 1750.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 }
@@ -486,6 +679,7 @@
                         "y": 900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_002",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -494,9 +688,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_003 (E)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerpower_002)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -509,6 +705,7 @@
                         "y": 500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -517,9 +714,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_007 (E)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_007 (E)",
+                        "node_name": "Door (doorpowerpower_006)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
@@ -532,6 +731,7 @@
                         "y": -100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -540,17 +740,34 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 2,
-                    "connected_area_name": "collision_camera_008 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_008 (E)",
+                        "node_name": "Door (doorpowerpower_007)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Tile Group (BOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3600.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_005",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
         },
         "collision_camera_006 (E)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -588,6 +805,7 @@
                         "y": -1190.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "itemsphere_plasmabeam_000",
                         "actor_def": "actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad"
@@ -596,7 +814,59 @@
                     "major_location": true,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Door (doorpowerpower_003)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_003",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001",
+                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerpower_003)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Door (doorpowerclosed_000)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerclosed_000",
+                        "actor_def": "actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
+                        "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_003 (E)",
+                        "node_name": "Door (doorpowerclosed_000)"
+                    },
+                    "dock_type": 2,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -604,16 +874,32 @@
                         "y": -1350.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_PlasmaBeam",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_PlasmaBeam",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4100.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_001",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "collision_camera_007 (E)": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -651,6 +937,7 @@
                         "y": 1600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -659,9 +946,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_004 (E)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_004 (E)",
+                        "node_name": "Door (doorpowerpower_005)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -674,6 +963,7 @@
                         "y": 500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_006",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -682,14 +972,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_005 (E)",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_005 (E)",
+                        "node_name": "Door (doorpowerpower_006)"
+                    },
                     "dock_type": 2,
                     "dock_weakness_index": 1,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -697,9 +989,25 @@
                         "y": 1700.0,
                         "z": 0.040038999170064926
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_ChozoWarriorX",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_ChozoWarriorX",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7400.0,
+                        "y": 600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_003",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
                     },
                     "connections": {}
                 }
@@ -744,6 +1052,7 @@
                         "y": -100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -752,9 +1061,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_005 (E)",
-                    "connected_dock_index": 2,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_005 (E)",
+                        "node_name": "Door (doorpowerpower_007)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -767,6 +1078,7 @@
                         "y": -1380.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_002",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
@@ -774,11 +1086,41 @@
                     "pickup_index": 117,
                     "major_location": false,
                     "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7200.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_002",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SPEEDBOOST)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5700.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_004",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
         "collision_camera_009 (E)": {
-            "default_node": "Start Point 1",
+            "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -808,21 +1150,6 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8600.0,
-                        "y": -200.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "energyrecharge_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad",
-                        "usable_entity": "energyrecharge_000"
-                    },
-                    "connections": {}
-                },
                 "Pickup (item_powerbombtank_000)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -831,12 +1158,180 @@
                         "y": 900.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_powerbombtank_000",
                         "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
                     },
                     "pickup_index": 116,
                     "major_location": false,
+                    "connections": {}
+                },
+                "Life Recharge": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 8600.0,
+                        "y": -200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "energyrecharge_000",
+                        "actor_def": "actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad",
+                        "start_point_actor_name": "energyrecharge_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7900.0,
+                        "y": 2700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_017",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9100.0,
+                        "y": 3000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_018",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8400.0,
+                        "y": 3600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_019",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9400.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_020",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8900.0,
+                        "y": 2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_021",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9000.0,
+                        "y": 2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_022",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8200.0,
+                        "y": 1900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_023",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8800.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_024",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 4": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9000.0,
+                        "y": 1100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_025",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group ()": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9200.0,
+                        "y": 700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_026",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -880,12 +1375,118 @@
                         "y": 3600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "item_missiletank_000",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
                     "pickup_index": 118,
                     "major_location": false,
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3700.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_010",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 3500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_011",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4500.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_012",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5700.0,
+                        "y": 3400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_013",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_014",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6300.0,
+                        "y": 3400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_015",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (BOMB) 4": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6400.0,
+                        "y": 3300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_016",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
                     "connections": {}
                 }
             }
@@ -929,6 +1530,7 @@
                         "y": 600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -937,9 +1539,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_012 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_012 (E)",
+                        "node_name": "Door (doorpowerpower_008)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -947,7 +1551,7 @@
             }
         },
         "collision_camera_012 (E)": {
-            "default_node": "Start Point 1",
+            "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -985,6 +1589,7 @@
                         "y": 600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_008",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -993,9 +1598,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "collision_camera_011 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_011 (E)",
+                        "node_name": "Door (doorpowerpower_008)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
@@ -1008,6 +1615,7 @@
                         "y": 600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_004",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -1016,14 +1624,16 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 1,
-                    "connected_area_name": "collision_camera_001 (E)",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "collision_camera_001 (E)",
+                        "node_name": "Door (doorpowerpower_004)"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {}
                 },
-                "Start Point 1": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1031,10 +1641,12 @@
                         "y": 600.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "weightactivatedplatform_save",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
-                        "usable_entity": "savestation"
+                        "actor_name": "savestation",
+                        "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_save",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
                     "connections": {}
                 }
@@ -1091,6 +1703,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }

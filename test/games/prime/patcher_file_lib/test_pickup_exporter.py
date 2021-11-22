@@ -126,7 +126,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 
     world_list = MagicMock()
     world_list.all_nodes = [
-        PickupNode(f"Name {i}", False, None, {}, i, PickupIndex(i), False)
+        PickupNode(f"Name {i}", False, None, "", {}, i, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -239,7 +239,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     world_list = MagicMock()
     world_list.all_nodes = [
-        PickupNode(f"Name {i}", False, None, {}, i, PickupIndex(i), False)
+        PickupNode(f"Name {i}", False, None, "", {}, i, PickupIndex(i), False)
         for i in range(5)
     ]
 

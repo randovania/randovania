@@ -7,14 +7,15 @@ from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.fixture()
-def pickup_node():
+@pytest.fixture(name="pickup_node")
+def _pickup_node():
     return PickupNode(
         pickup_index=PickupIndex(1),
         major_location=True,
         name="Pickup (Ultra Beam)",
         heal=False,
         location=None,
+        description="",
         extra={},
         index=0
     )
@@ -29,7 +30,7 @@ def test_location_pool_row_initial_state(pickup_node, skip_qtbot):
     assert widget.label_location_name.text() == "Fancy name for a pickup"
 
 
-def test_location_pool_row_actions(skip_qtbot):
+def test_location_pool_row_actions(pickup_node, skip_qtbot):
     # Setup
     widget = LocationPoolRowWidget(pickup_node, "Fancy name for a pickup")
     skip_qtbot.addWidget(widget)

@@ -1,5 +1,4 @@
 import copy
-import re
 import logging
 from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
@@ -10,7 +9,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockConnection, DockLockType
+from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
@@ -22,7 +21,7 @@ class WorldList:
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
     _ids_to_area: Dict[AreaIdentifier, Area]
-    _nodes: Tuple[Node, ...]
+    _nodes: Optional[Tuple[Node, ...]]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
 
     def __deepcopy__(self, memodict):
@@ -32,9 +31,9 @@ class WorldList:
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
-        self.refresh_node_cache()
+        self._nodes = None
 
-    def refresh_node_cache(self):
+    def _refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world, self._ids_to_area = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
         self._pickup_index_to_node = {
@@ -42,6 +41,13 @@ class WorldList:
             for node in self._nodes
             if isinstance(node, PickupNode)
         }
+
+    def ensure_has_node_cache(self):
+        if self._nodes is None:
+            self._refresh_node_cache()
+
+    def invalidate_node_cache(self):
+        self._nodes = None
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for world in self.worlds:
@@ -71,6 +77,7 @@ class WorldList:
 
     @property
     def all_nodes(self) -> Tuple[Node, ...]:
+        self.ensure_has_node_cache()
         return self._nodes
 
     @property
@@ -106,23 +113,18 @@ class WorldList:
         return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
 
     def nodes_to_world(self, node: Node) -> World:
+        self.ensure_has_node_cache()
         return self._nodes_to_world[node]
 
     def nodes_to_area(self, node: Node) -> Area:
+        self.ensure_has_node_cache()
         return self._nodes_to_area[node]
 
-    def resolve_dock_connection(self, world: World, connection: DockConnection) -> Node:
-        target_area = world.area_by_name(connection.area_name)
-        return target_area.node_with_dock_index(connection.dock_index)
-
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
-        world = self.nodes_to_world(node)
-        original_area = self.nodes_to_area(node)
-
-        connection = patches.dock_connection.get(DockConnection(original_area.name, node.dock_index),
+        connection = patches.dock_connection.get(self.identifier_for_node(node),
                                                  node.default_connection)
         if connection is not None:
-            return self.resolve_dock_connection(world, connection)
+            return self.node_by_identifier(connection)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
         connection = patches.elevator_connection.get(self.identifier_for_node(node),
@@ -154,10 +156,7 @@ class WorldList:
                 if target_node is None:
                     return
 
-                original_area = self.nodes_to_area(node)
-                target_area = self.nodes_to_area(target_node)
-
-                forward_weakness = patches.dock_weakness.get(DockConnection(original_area.name, node.dock_index),
+                forward_weakness = patches.dock_weakness.get(self.identifier_for_node(node),
                                                              node.default_dock_weakness)
                 requirement = forward_weakness.requirement
 
@@ -165,13 +164,14 @@ class WorldList:
 
                 if isinstance(target_node, DockNode):
                     # TODO: Target node is expected to be a dock. Should this error?
-                    back_weakness = patches.dock_weakness.get(DockConnection(target_area.name, target_node.dock_index),
+                    back_weakness = patches.dock_weakness.get(self.identifier_for_node(target_node),
                                                               target_node.default_dock_weakness)
                     if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
                         requirement = RequirementAnd([requirement, back_weakness.requirement])
 
                 yield target_node, requirement
-            except IndexError:
+
+            except ValueError:
                 # TODO: fix data to not having docks pointing to nothing
                 yield None, Requirement.impossible()
 
@@ -248,7 +248,8 @@ class WorldList:
     def world_by_area_location(self, location: AreaIdentifier) -> World:
         return self.world_with_name(location.world_name)
 
-    def area_to_area_location(self, area: Area) -> AreaIdentifier:
+    def identifier_for_area(self, area: Area) -> AreaIdentifier:
+        self.ensure_has_node_cache()
         for world in self.worlds:
             result = AreaIdentifier(world_name=world.name, area_name=area.name)
             if result in self._ids_to_area:
@@ -262,9 +263,11 @@ class WorldList:
         )
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
+        self.ensure_has_node_cache()
         return self._pickup_index_to_node[index]
 
     def add_new_node(self, area: Area, node: Node):
+        self.ensure_has_node_cache()
         self._nodes_to_area[node] = area
         self._nodes_to_world[node] = self.world_with_area(area)
 

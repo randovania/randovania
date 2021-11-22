@@ -143,6 +143,12 @@ ConstructAreaIdentifier = construct.Struct(
     area_name=String,
 )
 
+ConstructNodeIdentifier = construct.Struct(
+    world_name=String,
+    area_name=String,
+    node_name=String,
+)
+
 ConstructResourceInfo = _build_resource_info()
 
 ConstructItemResourceInfo = _build_resource_info(
@@ -225,6 +231,7 @@ ConstructNodeCoordinates = Struct(
 NodeBaseFields = {
     "heal": Flag,
     "coordinates": OptionalValue(ConstructNodeCoordinates),
+    "description": String,
     "extra": JsonEncodedValue,
     "connections": ConstructDict(ConstructRequirement),
 }
@@ -256,9 +263,7 @@ ConstructNode = NodeAdapter(Struct(
             ),
             "dock": Struct(
                 **NodeBaseFields,
-                dock_index=Byte,
-                connected_area_name=String,
-                connected_dock_index=Byte,
+                destination=ConstructNodeIdentifier,
                 dock_type=Byte,
                 dock_weakness_index=VarInt,
             ),

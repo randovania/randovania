@@ -1,11 +1,15 @@
 {
     "name": "Itorash",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld"
+        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
+        "map_min_x": 66,
+        "map_max_x": 51,
+        "map_min_y": 24,
+        "map_max_y": 70
     },
     "areas": {
         "Save Station": {
-            "default_node": "Start Point 1",
+            "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -35,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to Elevator to Raven Beak": {
+                "Door to Main Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -43,6 +47,7 @@
                         "y": -4500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -51,40 +56,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "Main Room",
-                    "connected_dock_index": 0,
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
-                    "connections": {
-                        "Door to Main Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Main Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3450.0,
-                        "y": -4500.0,
-                        "z": 0.0
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Main Room",
+                        "node_name": "Door to Save Station"
                     },
-                    "extra": {
-                        "actor_name": "doorpowerpower_001",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "dock_index": 1,
-                    "connected_area_name": "Elevator to Raven Beak",
-                    "connected_dock_index": 0,
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
@@ -97,7 +73,41 @@
                         }
                     }
                 },
-                "Start Point 1": {
+                "Door to Elevator to Raven Beak": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_001",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Elevator to Raven Beak",
+                        "node_name": "Door to Save Station"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {
+                        "Door to Main Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -105,17 +115,19 @@
                         "y": -4500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "savestation_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad",
-                        "usable_entity": "savestation_000"
+                        "actor_name": "savestation_000",
+                        "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
+                        "start_point_actor_name": "savestation_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
                     "connections": {}
                 }
             }
         },
         "Main Room": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -145,20 +157,6 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3650.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "StartPoint0",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Door to Save Station": {
                     "node_type": "dock",
                     "heal": false,
@@ -167,6 +165,7 @@
                         "y": -4500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_000",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -175,13 +174,15 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "Save Station",
-                    "connected_dock_index": 0,
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Save Station",
+                        "node_name": "Door to Main Room"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
-                        "Total Refill Station": {
+                        "Total Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -246,7 +247,22 @@
                         }
                     }
                 },
-                "Total Refill Station": {
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3650.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "start_point_actor_name": "StartPoint0",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Total Recharge": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
@@ -254,10 +270,12 @@
                         "y": -4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "weightactivatedplatform_total_000",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad",
-                        "usable_entity": "totalrechargestation_000"
+                        "actor_name": "totalrechargestation_000",
+                        "actor_def": "actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_total_000",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
                     "connections": {
                         "Door to Save Station": {
@@ -277,11 +295,14 @@
                         "y": -4700.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "capsuleelevatorskybase_000",
                         "actor_def": "actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad",
                         "elevator_component": "CCapsuleUsableComponent",
-                        "target_spawn_point": "elevator_skybase_000_platform"
+                        "target_spawn_point": "elevator_skybase_000_platform",
+                        "start_point_actor_name": "elevator_shipyard_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "destination": {
                         "world_name": "Hanubia",
@@ -347,26 +368,11 @@
                             }
                         }
                     }
-                },
-                "Start Point 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3850.0,
-                        "y": -4700.0,
-                        "z": 0.0
-                    },
-                    "extra": {
-                        "actor_name": "elevator_shipyard_000_platform",
-                        "actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "usable_entity": "capsuleelevatorskybase_000"
-                    },
-                    "connections": {}
                 }
             }
         },
         "Elevator to Raven Beak": {
-            "default_node": "Start Point 1",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -404,6 +410,7 @@
                         "y": -4500.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
                         "actor_name": "doorpowerpower_001",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -412,9 +419,11 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_index": 0,
-                    "connected_area_name": "Save Station",
-                    "connected_dock_index": 1,
+                    "destination": {
+                        "world_name": "Itorash",
+                        "area_name": "Save Station",
+                        "node_name": "Door to Elevator to Raven Beak"
+                    },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
                     "connections": {
@@ -502,7 +511,23 @@
                         }
                     }
                 },
-                "Start Point 1": {
+                "Event - Breakable (block_pbcolumn_000)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5050.0,
+                        "y": -4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "block_pbcolumn_000",
+                        "actor_def": "actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad"
+                    },
+                    "event_index": 86,
+                    "connections": {}
+                },
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -510,9 +535,10 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "SP_Checkpoint_Commander",
-                        "actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                        "start_point_actor_name": "SP_Checkpoint_Commander",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
                 },
@@ -524,10 +550,12 @@
                         "y": -3100.0,
                         "z": 0.0
                     },
+                    "description": "",
                     "extra": {
-                        "actor_name": "weightactivatedplatform_commanderelevator_000",
-                        "actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad",
-                        "usable_entity": "commander_elevator"
+                        "actor_name": "commander_elevator",
+                        "actor_def": "actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad",
+                        "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
+                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
                     },
                     "destination": {
                         "world_name": "Itorash",
@@ -544,6 +572,36 @@
                             }
                         }
                     }
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3700.0,
+                        "y": -3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_000",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
+                },
+                "Tile Group (POWERBOMB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5900.0,
+                        "y": -3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_001",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                    },
+                    "connections": {}
                 }
             }
         },
@@ -582,6 +640,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }
@@ -622,6 +681,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {
                         "Escape Sequence": {
@@ -651,6 +711,7 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {
                         "Escape Sequence": {
@@ -666,86 +727,7 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
-                    "extra": {},
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera_005 (I)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 300.0,
-                    "x2": 2400.0,
-                    "y1": 1800.0,
-                    "y2": 2900.0
-                },
-                "polygon": [
-                    [
-                        2400.0,
-                        2900.0
-                    ],
-                    [
-                        300.0,
-                        2900.0
-                    ],
-                    [
-                        300.0,
-                        1800.0
-                    ],
-                    [
-                        2400.0,
-                        1800.0
-                    ]
-                ],
-                "asset_id": "collision_camera_005"
-            },
-            "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "extra": {},
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera_900 (I)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -27000.0,
-                    "x2": -13000.0,
-                    "y1": 6000.0,
-                    "y2": 19000.0
-                },
-                "polygon": [
-                    [
-                        -13000.0,
-                        19000.0
-                    ],
-                    [
-                        -27000.0,
-                        19000.0
-                    ],
-                    [
-                        -27000.0,
-                        6000.0
-                    ],
-                    [
-                        -13000.0,
-                        6000.0
-                    ]
-                ],
-                "asset_id": "collision_camera_900"
-            },
-            "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
+                    "description": "",
                     "extra": {},
                     "connections": {}
                 }
