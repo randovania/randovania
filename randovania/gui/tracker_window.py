@@ -19,14 +19,12 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementAnd
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node, ResourceNode, ConfigurableNode, TeleporterNode, DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -106,9 +104,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     persistence_path: Path
     _initial_state: State
     _elevator_id_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
-    _translator_gate_to_combo: Dict[TranslatorGate, QtWidgets.QComboBox]
+    _translator_gate_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
     _starting_nodes: Set[ResourceNode]
-    _undefined_item = ItemResourceInfo("Undefined", "Undefined", 0, None)
 
     # UI tools
     _world_name_to_item: Dict[str, QTreeWidgetItem]
@@ -185,7 +182,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         starting_location = None
         needs_starting_location = len(self.game_configuration.starting_location.locations) > 1
         resource_db = self.game_description.resource_database
-        translator_gates = {}
+        configurable_nodes = {}
 
         try:
             pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
@@ -208,11 +205,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 for item in previous_state["elevators"]
             }
             if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                translator_gates = {
-                    TranslatorGate(int(gate)): (resource_db.get_item(item)
-                                                if item is not None
-                                                else self._undefined_item)
-                    for gate, item in previous_state["translator_gates"].items()
+                configurable_nodes = {
+                    NodeIdentifier.from_string(identifier): (LayoutTranslatorRequirement(item)
+                                                             if item is not None
+                                                             else None)
+                    for identifier, item in previous_state["configurable_nodes"].items()
                 }
         except KeyError:
             return False
@@ -229,10 +226,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     combo.setCurrentIndex(i)
                     break
 
-        for gate, item in translator_gates.items():
-            combo = self._translator_gate_to_combo[gate]
+        for identifier, requirement in configurable_nodes.items():
+            combo = self._translator_gate_to_combo[identifier]
             for i in range(combo.count()):
-                if item == combo.itemData(i):
+                if requirement == combo.itemData(i):
                     combo.setCurrentIndex(i)
                     break
 
@@ -481,8 +478,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                         }
                         for teleporter, combo in self._elevator_id_to_combo.items()
                     ],
-                    "translator_gates": {
-                        str(gate.index): combo.currentData().short_name if combo.currentIndex() > 0 else None
+                    "configurable_nodes": {
+                        gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
                         for gate, combo in self._translator_gate_to_combo.items()
                     },
                     "starting_location": world_list.identifier_for_node(self._initial_state.node
@@ -516,10 +513,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
                 for node in area.nodes:
                     node_item = QTreeWidgetItem(area_item)
-                    if isinstance(node, TranslatorGateNode):
-                        node_item.setText(0, "{} ({})".format(node.name, node.gate))
-                    else:
-                        node_item.setText(0, node.name)
+                    node_item.setText(0, node.name)
                     node_item.node = node
                     if node.is_resource_node:
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
@@ -548,7 +542,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 nodes_by_world[name].append(node)
 
                 location = AreaIdentifier(world.name, area.name)
-                targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location, True)] = location
+                targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location,
+                                                                  True)] = location
 
         if elevators_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -606,9 +601,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         assert isinstance(configuration, EchoesConfiguration)
 
         gates = {
-            f"{area.name} ({node.gate.index})": node.gate
+            f"{area.name} ({node.name})": world_list.identifier_for_node(node)
             for world, area, node in world_list.all_worlds_areas_nodes
-            if isinstance(node, TranslatorGateNode)
+            if isinstance(node, ConfigurableNode)
         }
         translator_requirement = configuration.translator_configuration.translator_requirement
 
@@ -622,11 +617,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
             if gate_requirement in (LayoutTranslatorRequirement.RANDOM,
                                     LayoutTranslatorRequirement.RANDOM_WITH_REMOVED):
-                combo.addItem("Undefined", self._undefined_item)
-                for translator, index in translator_configuration.ITEM_INDICES.items():
-                    combo.addItem(translator.long_name, resource_db.get_item(index))
+                combo.addItem("Undefined", None)
+                for translator in translator_configuration.ITEM_NAMES.keys():
+                    combo.addItem(translator.long_name, translator)
             else:
-                combo.addItem(gate_requirement.long_name, resource_db.get_item(gate_requirement.item_index))
+                combo.addItem(gate_requirement.long_name, gate_requirement)
                 combo.setEnabled(False)
 
             combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
@@ -787,7 +782,19 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             state.patches.elevator_connection[teleporter] = combo.currentData()
 
         for gate, item in self._translator_gate_to_combo.items():
-            state.patches.translator_gates[gate] = item.currentData()
+            scan_visor = self.game_description.resource_database.get_item("Scan")
+
+            requirement: Optional[LayoutTranslatorRequirement] = item.currentData()
+            if requirement is None:
+                translator_req = Requirement.impossible()
+            else:
+                translator = self.game_description.resource_database.get_item(requirement.item_name)
+                translator_req = ResourceRequirement(translator, 1, False)
+
+            state.patches.configurable_nodes[gate] = RequirementAnd([
+                ResourceRequirement(scan_visor, 1, False),
+                translator_req,
+            ])
 
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):

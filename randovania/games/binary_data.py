@@ -240,7 +240,7 @@ class NodeAdapter(construct.Adapter):
 
 
 ConstructNode = NodeAdapter(Struct(
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, configurable_node=5,
                              logbook=6, player_ship=7),
     data=Switch(
         lambda this: this.node_type,
@@ -269,9 +269,8 @@ ConstructNode = NodeAdapter(Struct(
                 **NodeBaseFields,
                 event_name=String,
             ),
-            "translator_gate": Struct(
+            "configurable_node": Struct(
                 **NodeBaseFields,
-                gate_index=VarInt,
             ),
             "logbook": Struct(
                 **NodeBaseFields,
