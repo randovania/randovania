@@ -1,0 +1,755 @@
+{
+    "name": "Egg Corridor",
+    "extra": {
+        "asset_id": null
+    },
+    "areas": {
+        "Egg Corridor": {
+            "default_node": "Teleporter to Arthur's House",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "Eggs"
+            },
+            "nodes": {
+                "Door to Cthulhu's Abode (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Cthulhu's Abode",
+                        "node_name": "Door to Egg Corridor (Lower)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Outside Cthulhu's Abode": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Cthulhu's Abode (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Cthulhu's Abode",
+                        "node_name": "Door to Egg Corridor (Upper)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Outside Cthulhu's Abode": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup - Above Cthulhu's Abode": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Arthur's House": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Hint (Blue Robot)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup - Basil Spot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Outside Cthulhu's Abode": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint (Blue Robot)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup - Basil Spot": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 14,
+                    "major_location": false,
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Outside Cthulhu's Abode": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Cthulhu's Abode (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Cthulhu's Abode (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dboost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Outside Egg Observation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup - Above Cthulhu's Abode": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 13,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Cthulhu's Abode (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Outside Egg Observation Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Outside Cthulhu's Abode": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Entrance to Egg No. 06": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Egg Observation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Entrance to Egg No. 01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Outside Egg No. 00": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBoss",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Entrance to Egg No. 06": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg No. 06",
+                        "node_name": "Door to Egg Corridor"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {
+                        "Outside Egg Observation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Observation Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Observation Room",
+                        "node_name": "Door to Egg Corridor"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Outside Egg Observation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Entrance to Egg No. 01": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg No. 01",
+                        "node_name": "Door to Egg Corridor"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {
+                        "Outside Egg Observation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Igor": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {
+                        "Outside Egg No. 00": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Outside Egg No. 00": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Outside Egg Observation Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBoss",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Igor": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        },
+                        "Door to Egg No. 00": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBoss",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Egg No. 00": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Door to Cthulhu's Abode (Lower)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Igor": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        },
+                        "Outside Egg No. 00": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBoss",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Side Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Side Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Side Room",
+                        "node_name": "Door to Egg Corridor"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Egg No. 00": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cthulhu's Abode": {
+            "default_node": "Door to Egg Corridor (Lower)",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "Cthu"
+            },
+            "nodes": {
+                "Door to Egg Corridor (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Door to Cthulhu's Abode (Lower)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Egg Corridor (Upper)": {
+                            "type": "template",
+                            "data": "Can Break Blocks"
+                        },
+                        "Hint (Cthulhu)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Corridor (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Door to Cthulhu's Abode (Upper)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Egg Corridor (Lower)": {
+                            "type": "template",
+                            "data": "Can Break Blocks"
+                        }
+                    }
+                },
+                "Hint (Cthulhu)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg No. 06": {
+            "default_node": "Door to Egg Corridor",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "Egg6"
+            },
+            "nodes": {
+                "Door to Egg Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Entrance to Egg No. 06"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup - Egg Chest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup - Egg Chest": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 15,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg Observation Room": {
+            "default_node": "Pickup - Egg Observation Room Chest",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "EggR"
+            },
+            "nodes": {
+                "Pickup - Egg Observation Room Chest": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 16,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Door to Egg Observation Room"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Pickup - Egg Observation Room Chest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg No. 01": {
+            "default_node": "Door to Egg Corridor",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "Egg1"
+            },
+            "nodes": {
+                "Door to Egg Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Entrance to Egg No. 01"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Event - Lowered Barrier": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "idCard",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Lowered Barrier": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {
+                        "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg No. 00": {
+            "default_node": "Door to Egg Corridor",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "EggX"
+            },
+            "nodes": {
+                "Door to Egg Corridor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Event - Saved Sue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Saved Sue": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventSue",
+                    "connections": {
+                        "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Side Room": {
+            "default_node": "Door to Egg Corridor",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": "EgEnd1"
+            },
+            "nodes": {
+                "Door to Egg Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Egg Corridor",
+                        "area_name": "Egg Corridor",
+                        "node_name": "Door to Side Room"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Save Point/Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point/Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

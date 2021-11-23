@@ -1,0 +1,280 @@
+----------------
+Start Point
+Extra - asset_id: Start
+> Door to First Cave; Heals? False; Spawn Point
+  * Normal Door to First Cave/Door to Mimiga Village
+  > Save Point/Refill
+      Trivial
+
+> Save Point/Refill; Heals? True
+  > Door to First Cave
+      Trivial
+
+----------------
+First Cave
+Extra - asset_id: Cave
+> Door to Start Point; Heals? False; Spawn Point
+  * Normal Door to Start Point/Door to First Cave
+  > Door to Hermit Gunsmith
+      Trivial
+  > Door to Mimiga Village
+      Can Break Blocks and Has Weapon
+  > Pickup - Life Capsule
+      Trivial
+
+> Door to Hermit Gunsmith; Heals? False
+  * Normal Door to Hermit Gunsmith/Door to First Cave
+  > Door to Start Point
+      Trivial
+
+> Door to Mimiga Village; Heals? False
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Door to Start Point
+      Can Break Blocks
+
+> Pickup - Life Capsule; Heals? False
+  * Pickup 2; Major Location? False
+  > Door to Start Point
+      Trivial
+
+----------------
+Hermit Gunsmith
+Extra - asset_id: Pole
+> Door to First Cave; Heals? False; Spawn Point
+  * Normal Door to First Cave/Door to Mimiga Village
+  > Pickup - Chest
+      Trivial
+  > Pickup - Gunsmith
+      Polar Star and After Defeated the Core
+
+> Pickup - Chest; Heals? False
+  * Pickup 5; Major Location? False
+  > Door to First Cave
+      Trivial
+
+> Pickup - Gunsmith; Heals? False
+  * Pickup 6; Major Location? False
+  > Door to First Cave
+      Trivial
+
+----------------
+Mimiga Village
+Extra - asset_id: Mimi
+> Door to First Cave; Heals? False; Spawn Point
+  * Normal Door to First Cave/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Room Centre; Heals? False
+  > Door to First Cave
+      Has Flight
+  > Door to Save Point
+      Trivial
+  > Door to Reservoir
+      Trivial
+  > Door to Yamashita Farm
+      Trivial
+  > Door to Assembly Hall
+      Trivial
+  > Door to Graveyard
+      After Defeated a Boss
+  > Door to Shack
+      Trivial
+  > Door to Arthur's House
+      Arthur's Key
+  > Pickup - Chest
+      Trivial
+
+> Door to Save Point; Heals? False
+  * Normal Door to Save Point/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Reservoir; Heals? False
+  * Normal Door to Reservoir/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Yamashita Farm; Heals? False
+  * Normal Door to Yamashita Farm/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Assembly Hall; Heals? False
+  * Normal Door to Assembly Hall/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Graveyard; Heals? False
+  * Normal Door to Graveyard/Door to Storage
+  > Room Centre
+      Trivial
+
+> Door to Shack; Heals? False
+  * Normal Door to Shack/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Arthur's House; Heals? False
+  * Normal Door to Arthur's House/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Pickup - Chest; Heals? False
+  * Pickup 7; Major Location? False
+  > Room Centre
+      Trivial
+
+----------------
+Save Point
+Extra - asset_id: MiBox
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Save Point/Refill
+      Trivial
+
+> Save Point/Refill; Heals? True
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Yamashita Farm
+Extra - asset_id: Plant
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Pickup - Underwater
+      Trivial
+
+> Pickup - Underwater; Heals? False
+  * Pickup 12; Major Location? False
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Reservoir
+Extra - asset_id: Pool
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Pickup - Underwater
+      Trivial
+
+> Debug Cat to Labyrinth; Heals? False
+
+> Pickup - Underwater; Heals? False
+  * Pickup 9; Major Location? False
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup - Ironhead; Heals? False
+  * Pickup 8; Major Location? False
+
+----------------
+Assembly Hall
+Extra - asset_id: Comu
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Pickup - Fireplace
+      Jellyfish Juice
+
+> Pickup - Fireplace; Heals? False
+  * Pickup 1; Major Location? False
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Graveyard
+Extra - asset_id: Cemet
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Door to Storage
+      Has Flight
+  > Pickup - Grave
+      Trivial
+  > Pickup - Mr. Little
+      Trivial
+
+> Door to Storage; Heals? False
+  * Normal Door to Storage/Door to Graveyard
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup - Grave; Heals? False
+  * Pickup 3; Major Location? False
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup - Mr. Little; Heals? False
+  * Pickup 4; Major Location? False
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Storage
+Extra - asset_id: Mapi
+> Door to Graveyard; Heals? False; Spawn Point
+  * Normal Door to Graveyard/Door to Storage
+  > Pickup - Chest
+      After Saved Curly
+  > Event - Ma Pignon
+      All of the following:
+          Mushroom Badge
+          Bubbler or Fireball or Machine Gun or Nemesis or Polar Star or Snake or Spur
+
+> Pickup - Chest; Heals? False
+  * Pickup 10; Major Location? False
+  > Door to Graveyard
+      Trivial
+
+> Event - Ma Pignon; Heals? False
+  * Event Defeated a Boss
+  > Pickup - Ma Pignon
+      Trivial
+
+> Pickup - Ma Pignon; Heals? False
+  * Pickup 11; Major Location? False
+  > Door to Graveyard
+      Trivial
+
+----------------
+Shack
+Extra - asset_id: Barr
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Event - Toroko Kidnapped
+      Silver Locket
+  > Event - Balrog 1
+      After Defeated a Boss
+
+> Event - Toroko Kidnapped; Heals? False
+  * Event Defeated a Boss
+  > Door to Mimiga Village
+      Trivial
+
+> Event - Balrog 1; Heals? False
+  * Event Defeated a Boss
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Arthur's House
+Extra - asset_id: Pens1
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Normal Door to Mimiga Village/Door to Arthur's House
+  > Room Spawn
+      Trivial
+
+> Pickup - Prof. Booster; Heals? False
+  * Pickup 0; Major Location? False
+  > Room Spawn
+      Trivial
+
+> Room Spawn; Heals? False
+  > Door to Mimiga Village
+      Arthur's Key
+  > Pickup - Prof. Booster
+      After Defeated the Core
+
+> Save Point/Refill; Heals? True
+  > Room Spawn
+      Trivial
+

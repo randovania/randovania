@@ -1,0 +1,271 @@
+----------------
+Labyrinth B
+Extra - asset_id: MazeB
+> Door to Boulder Chamber; Heals? False
+  * Normal Door to Boulder Chamber/Door to Labyrinth B
+  > Door to Labyrinth W
+      Trivial
+
+> Door to Labyrinth W; Heals? False
+  > Door to Boulder Chamber
+      Trivial
+
+> Pickup - Booster Chest; Heals? False; Spawn Point
+
+----------------
+Boulder Chamber
+Extra - asset_id: MazeS
+> Door to Labyrinth B; Heals? False; Spawn Point
+  * Normal Door to Labyrinth B/Door to Boulder Chamber
+  > Event - Balrog 3
+      All of the following:
+          After Defeated a Boss
+          Any of the following:
+              Can Kill Bosses
+              All of the following:
+                  Kill Bosses with Missiles (Intermediate)
+                  Any of the following:
+                      Missile Launcher ≥ 24
+                      Missile Launcher ≥ 15 and Super Missile Launcher
+  > Pickup - Boulder Chest
+      After Defeated a Boss
+  > Door to Labyrinth M
+      After Defeated a Boss
+
+> Event - Balrog 3; Heals? False
+  * Event Defeated a Boss
+  > Door to Labyrinth B
+      Trivial
+
+> Pickup - Boulder Chest; Heals? False
+  > Door to Labyrinth B
+      Trivial
+
+> Door to Labyrinth M; Heals? False
+  > Door to Labyrinth B
+      Trivial
+
+----------------
+Labyrinth M
+Extra - asset_id: MazeM
+> Door to Boulder Chamber; Heals? False; Spawn Point
+  > Door to Dark Place
+      Trivial
+
+> Door to Dark Place; Heals? False
+  > Door to Boulder Chamber
+      After Defeated a Boss
+
+----------------
+Dark Place
+Extra - asset_id: Drain
+> Door to Labyrinth M; Heals? False; Spawn Point
+  > Door to Core
+      After Defeated a Boss
+  > Door to Waterway
+      Curly's Air Tank
+
+> Door to Core; Heals? False
+  > Door to Labyrinth M
+      Trivial
+
+> Door to Waterway; Heals? False
+  > Door to Labyrinth M
+      Trivial
+
+----------------
+Core
+Extra - asset_id: Almond
+> Door to Dark Place; Heals? False; Spawn Point
+  > Event - Core
+      All of the following:
+          After Defeated a Boss
+          Any of the following:
+              Can Kill Bosses
+              All of the following:
+                  Kill Bosses with Missiles (Expert)
+                  Any of the following:
+                      Missile Launcher ≥ 29
+                      Missile Launcher ≥ 20 and Super Missile Launcher
+  > Pickup - Robot's Arm
+      Trivial
+
+> Event - Core; Heals? False
+  * Event Defeated the Core
+  > Pickup - Drowned Curly
+      Trivial
+
+> Pickup - Robot's Arm; Heals? False
+  > Door to Dark Place
+      After Defeated the Core
+
+> Pickup - Drowned Curly; Heals? False
+  > Door to Dark Place
+      Trivial
+
+----------------
+Waterway
+Extra - asset_id: River
+> Entrance from Dark Place; Heals? False; Spawn Point
+
+> Exit to Main Artery; Heals? False
+
+> Door to Waterway Cabin; Heals? False
+
+----------------
+Waterway Cabin
+Extra - asset_id: Pixel
+> Door to Waterway; Heals? False; Spawn Point
+  > Event - Drained Curly
+      After Defeated a Boss
+
+> Event - Drained Curly; Heals? True
+  * Event Saved Curly
+  > Door to Waterway
+      Trivial
+
+----------------
+Main Artery
+Extra - asset_id: Stream
+> Entrance from Waterway; Heals? False; Spawn Point
+
+> Exit to Reservoir; Heals? False
+
+> Event - Ironhead; Heals? False
+  * Event Defeated a Boss
+
+----------------
+Labyrinth I
+Extra - asset_id: MazeI
+> Door to Labyrinth H; Heals? False
+  * Normal Door to Labyrinth H/Door to Labyrinth I
+  > Room Bottom
+      Trivial
+
+> Event - Opened Labyrinth I Door; Heals? False; Spawn Point
+  * Event Defeated a Boss
+  > Room Bottom
+      Trivial
+
+> Pickup - Labyrinth I; Heals? False
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
+  > Door to Labyrinth H
+      After Defeated a Boss
+  > Event - Opened Labyrinth I Door
+      Any of the following:
+          Pacifist Strats (Advanced) or Has Weapon
+          Pacifist Strats (Beginner) and Has Flight
+  > Pickup - Labyrinth I
+      Any of the following:
+          Pacifist Strats (Advanced) or Has Weapon
+          Pacifist Strats (Intermediate) and Has Flight
+
+----------------
+Labyrinth H
+Extra - asset_id: MazeH
+> Door to Labyrinth I; Heals? False; Spawn Point
+  * Normal Door to Labyrinth I/Door to Labyrinth H
+  > Door to Labyrinth W
+      Trivial
+
+> Door to Labyrinth W; Heals? False
+  > Door to Labyrinth I
+      Trivial
+
+----------------
+Labyrinth W
+Extra - asset_id: MazeW
+> Door to Labyrinth H; Heals? False; Spawn Point
+  > Outside Camp
+      Any of the following:
+          Pacifist Strats (Expert) or Has Weapon
+          Nemesis and Pacifist Strats (Intermediate)
+          Pacifist Strats (Advanced) and Normal Damage ≥ 5
+
+> Door to Labyrinth Shop; Heals? False
+
+> Outside Camp; Heals? False
+
+> Door to Camp (Lower); Heals? False
+
+> Door to Camp (Upper); Heals? False
+
+> Door to Clinic Ruins; Heals? False
+
+> Door to Labyrinth B; Heals? False
+
+> Event - Monster X; Heals? False
+  * Event Defeated a Boss
+
+----------------
+Labyrinth Shop
+Extra - asset_id: MazeA
+> Door to Labyrinth W; Heals? False; Spawn Point
+  > Pickup - Chaba Chest (Machine Gun)
+      Machine Gun
+  > Pickup - Chaba Chest (Fireball)
+      Fireball
+  > Pickup - Chaba Chest (Spur)
+      Spur
+
+> Pickup - Chaba Chest (Machine Gun); Heals? False
+  > Door to Labyrinth W
+      Trivial
+
+> Pickup - Chaba Chest (Fireball); Heals? False
+  > Door to Labyrinth W
+      Trivial
+
+> Pickup - Chaba Chest (Spur); Heals? False
+  > Door to Labyrinth W
+      Trivial
+
+----------------
+Camp
+Extra - asset_id: MazeO
+> Door to Labyrinth W (Lower); Heals? False; Spawn Point
+  > Door to Labyrinth W (Upper)
+      Enabled Start in Camp
+  > Pickup - Dr. Gero
+      Trivial
+  > Event - Cure-All
+      Cure-All
+
+> Door to Labyrinth W (Upper); Heals? False
+  > Door to Labyrinth W (Lower)
+      Enabled Start in Camp
+  > Pickup - Camp Chest
+      Trivial
+
+> Pickup - Dr. Gero; Heals? True
+  > Door to Labyrinth W (Lower)
+      Trivial
+
+> Event - Cure-All; Heals? True
+  * Event Defeated a Boss
+  > Door to Labyrinth W (Lower)
+      Trivial
+
+> Pickup - Camp Chest; Heals? False
+  > Door to Labyrinth W (Upper)
+      Trivial
+
+----------------
+Clinic Ruins
+Extra - asset_id: MazeD
+> Door to Labyrinth W; Heals? False; Spawn Point
+  > Pickup - Puu Black
+      Trivial
+
+> Pickup - Puu Black; Heals? False
+  > Event - Puu Black
+      Can Kill Bosses
+
+> Event - Puu Black; Heals? False
+  * Event Defeated a Boss
+  > Door to Labyrinth W
+      Trivial
+
