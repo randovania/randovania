@@ -14,6 +14,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
+from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
@@ -42,6 +43,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _ammo_item_count_spinboxes: Dict[str, List[QtWidgets.QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
 
+    _progressive_widgets: List[ProgressiveItemWidget]
+
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         self.setupUi(self)
@@ -59,6 +62,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_customizable_default_items(item_database)
         self._create_major_item_boxes(item_database, self.game_description.resource_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
+        self._create_progressive_widgets(item_database)
 
     @property
     def uses_patches_tab(self) -> bool:
@@ -347,3 +351,21 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 ammo,
                 dataclasses.replace(ammo_configuration.items_state[ammo], requires_major_item=bool(value))
             )
+
+    def _create_progressive_widgets(self, item_database: ItemDatabase):
+        self._progressive_widgets = []
+
+        all_progressive = self.game.data.gui().progressive_item_gui_tuples
+
+        for (progressive_item_name, non_progressive_items) in all_progressive:
+            progressive_item = item_database.major_items[progressive_item_name]
+            parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
+
+            widget = ProgressiveItemWidget(
+                parent, self._editor,
+                progressive_item=progressive_item,
+                non_progressive_items=[item_database.major_items[it] for it in non_progressive_items],
+            )
+            widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
+            self._progressive_widgets.append(widget)
+            layout.addWidget(widget)

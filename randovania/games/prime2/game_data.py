@@ -9,10 +9,12 @@ from randovania.games.prime2.layout.preset_describer import echoes_format_params
 def _echoes_gui():
     from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
+    from randovania.games.prime2.item_database import prime2_progressive_items
 
     return GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
+        progressive_item_gui_tuples=prime2_progressive_items.gui_tuples()
     )
 
 
