@@ -168,21 +168,17 @@ class EventNode(ResourceNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class TranslatorGateNode(ResourceNode):
-    gate: TranslatorGate
-    scan_visor: ItemResourceInfo
+class ConfigurableNode(ResourceNode):
+    self_identifier: NodeIdentifier
 
     def __repr__(self):
-        return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
+        return "ConfigurableNode({!r})".format(self.name)
 
     def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
-        return RequirementAnd([
-            ResourceRequirement(patches.translator_gates[self.gate], 1, False),
-            ResourceRequirement(self.scan_visor, 1, False),
-        ])
+        return patches.configurable_nodes[self.self_identifier]
 
     def resource(self) -> ResourceInfo:
-        return self.gate
+        return SimpleResourceInfo(f"Configurable Node {self.index}", f"Node{self.index}", ResourceType.GATE_INDEX)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources,
                     all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> bool:
@@ -194,14 +190,13 @@ class TranslatorGateNode(ResourceNode):
         :param database:
         :return:
         """
-        if current_resources.get(self.gate, 0) != 0:
+        if current_resources.get(self.resource(), 0) != 0:
             return False
-        translator = patches.translator_gates[self.gate]
-        return current_resources.get(self.scan_visor, 0) > 0 and current_resources.get(translator, 0) > 0
+        return patches.configurable_nodes[self.self_identifier].satisfied(current_resources, 0, database)
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
                                  all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:
-        yield self.gate, 1
+        yield self.resource(), 1
 
 
 class LoreType(Enum):

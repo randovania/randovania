@@ -3,7 +3,7 @@ import re
 import typing
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, data_reader, data_writer
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
@@ -100,9 +100,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
                 world_list.area_name(world_list.area_by_area_location(connection), "/")
             for teleporter, connection in patches.elevator_connection.items()
         },
-        "translators": {
-            _name_for_gate(gate): requirement.long_name
-            for gate, requirement in patches.translator_gates.items()
+        "configurable_nodes": {
+            identifier.as_string: data_writer.write_requirement(requirement)
+            for identifier, requirement in patches.configurable_nodes.items()
         },
         "locations": {
             key: value
@@ -175,10 +175,10 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         source_node = potential_source_nodes[0]
         elevator_connection[world_list.identifier_for_node(source_node)] = target_area
 
-    # Translator Gates
-    translator_gates = {
-        _find_gate_with_name(gate_name): find_resource_info_with_long_name(game.resource_database.item, resource_name)
-        for gate_name, resource_name in game_modifications["translators"].items()
+    # Configurable Nodes
+    configurable_nodes = {
+        NodeIdentifier.from_string(identifier): data_reader.read_requirement(requirement, game.resource_database)
+        for identifier, requirement in game_modifications["configurable_nodes"].items()
     }
 
     # Pickups
@@ -227,7 +227,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
-        translator_gates=translator_gates,
+        configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier
         hints=hints,
