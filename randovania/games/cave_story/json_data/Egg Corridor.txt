@@ -1,0 +1,185 @@
+----------------
+Egg Corridor
+Extra - asset_id: Eggs
+> Door to Cthulhu's Abode (Lower); Heals? False
+  * Normal Door to Cthulhu's Abode/Door to Egg Corridor (Lower)
+  > Outside Cthulhu's Abode
+      Trivial
+
+> Door to Cthulhu's Abode (Upper); Heals? False
+  * Normal Door to Cthulhu's Abode/Door to Egg Corridor (Upper)
+  > Outside Cthulhu's Abode
+      Trivial
+  > Pickup - Above Cthulhu's Abode
+      Trivial
+
+> Teleporter to Arthur's House; Heals? False; Spawn Point
+  > Hint (Blue Robot)
+      Trivial
+  > Pickup - Basil Spot
+      Trivial
+  > Outside Cthulhu's Abode
+      Trivial
+
+> Hint (Blue Robot); Heals? False
+  > Teleporter to Arthur's House
+      Trivial
+
+> Pickup - Basil Spot; Heals? False
+  * Pickup 14; Major Location? False
+  > Teleporter to Arthur's House
+      Trivial
+
+> Outside Cthulhu's Abode; Heals? False
+  > Door to Cthulhu's Abode (Lower)
+      Trivial
+  > Door to Cthulhu's Abode (Upper)
+      Any of the following:
+          Has Flight
+          Damage Boosting (Beginner) and Normal Damage ≥ 2
+  > Teleporter to Arthur's House
+      Trivial
+  > Outside Egg Observation Room
+      Trivial
+
+> Pickup - Above Cthulhu's Abode; Heals? False
+  * Pickup 13; Major Location? False
+  > Door to Cthulhu's Abode (Upper)
+      Trivial
+
+> Outside Egg Observation Room; Heals? False
+  > Outside Cthulhu's Abode
+      Trivial
+  > Entrance to Egg No. 06
+      Trivial
+  > Door to Egg Observation Room
+      Trivial
+  > Entrance to Egg No. 01
+      Trivial
+  > Outside Egg No. 00
+      After Defeated a Boss
+
+> Entrance to Egg No. 06; Heals? False
+  * H/V Trigger to Egg No. 06/Door to Egg Corridor
+  > Outside Egg Observation Room
+      Trivial
+
+> Door to Egg Observation Room; Heals? False
+  * Normal Door to Egg Observation Room/Door to Egg Corridor
+  > Outside Egg Observation Room
+      Trivial
+
+> Entrance to Egg No. 01; Heals? False
+  * H/V Trigger to Egg No. 01/Door to Egg Corridor
+  > Outside Egg Observation Room
+      Trivial
+
+> Event - Igor; Heals? False
+  * Event Defeated a Boss
+  > Outside Egg No. 00
+      Trivial
+
+> Outside Egg No. 00; Heals? False
+  > Outside Egg Observation Room
+      After Defeated a Boss
+  > Event - Igor
+      Can Kill Bosses
+  > Door to Egg No. 00
+      After Defeated a Boss
+
+> Door to Egg No. 00; Heals? False
+  * Normal Door to Egg Corridor/Door to Cthulhu's Abode (Lower)
+  > Event - Igor
+      Can Kill Bosses
+  > Outside Egg No. 00
+      After Defeated a Boss
+  > Door to Side Room
+      Trivial
+
+> Door to Side Room; Heals? False
+  * Normal Door to Side Room/Door to Egg Corridor
+  > Door to Egg No. 00
+      Trivial
+
+----------------
+Cthulhu's Abode
+Extra - asset_id: Cthu
+> Door to Egg Corridor (Lower); Heals? False; Spawn Point
+  * Normal Door to Egg Corridor/Door to Cthulhu's Abode (Lower)
+  > Door to Egg Corridor (Upper)
+      Can Break Blocks
+  > Hint (Cthulhu)
+      Trivial
+
+> Door to Egg Corridor (Upper); Heals? False
+  * Normal Door to Egg Corridor/Door to Cthulhu's Abode (Upper)
+  > Door to Egg Corridor (Lower)
+      Can Break Blocks
+
+> Hint (Cthulhu); Heals? False
+  > Door to Egg Corridor (Lower)
+      Trivial
+
+----------------
+Egg No. 06
+Extra - asset_id: Egg6
+> Door to Egg Corridor; Heals? False; Spawn Point
+  * Normal Door to Egg Corridor/Entrance to Egg No. 06
+  > Pickup - Egg Chest
+      Trivial
+
+> Pickup - Egg Chest; Heals? False
+  * Pickup 15; Major Location? False
+  > Door to Egg Corridor
+      Trivial
+
+----------------
+Egg Observation Room
+Extra - asset_id: EggR
+> Pickup - Egg Observation Room Chest; Heals? False; Spawn Point
+  * Pickup 16; Major Location? False
+  > Door to Egg Corridor
+      Trivial
+
+> Door to Egg Corridor; Heals? False
+  * Normal Door to Egg Corridor/Door to Egg Observation Room
+  > Pickup - Egg Observation Room Chest
+      Trivial
+
+----------------
+Egg No. 01
+Extra - asset_id: Egg1
+> Door to Egg Corridor; Heals? False; Spawn Point
+  * Normal Door to Egg Corridor/Entrance to Egg No. 01
+  > Event - Lowered Barrier
+      ID Card
+
+> Event - Lowered Barrier; Heals? False
+  * Event Defeated a Boss
+  > Door to Egg Corridor
+      Trivial
+
+----------------
+Egg No. 00
+Extra - asset_id: EggX
+> Door to Egg Corridor; Heals? False; Spawn Point
+  > Event - Saved Sue
+      Trivial
+
+> Event - Saved Sue; Heals? False
+  * Event Saved Sue
+  > Door to Egg Corridor
+      Trivial
+
+----------------
+Side Room
+Extra - asset_id: EgEnd1
+> Door to Egg Corridor; Heals? False; Spawn Point
+  * Normal Door to Egg Corridor/Door to Side Room
+  > Save Point/Refill
+      Trivial
+
+> Save Point/Refill; Heals? True
+  > Door to Egg Corridor
+      Trivial
+
