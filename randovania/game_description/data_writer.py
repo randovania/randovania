@@ -16,7 +16,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 
@@ -248,10 +248,9 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["event_name"] = node.resource().short_name
 
-    elif isinstance(node, TranslatorGateNode):
-        data["node_type"] = "translator_gate"
+    elif isinstance(node, ConfigurableNode):
+        data["node_type"] = "configurable_node"
         data.update(common_fields)
-        data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
         data["node_type"] = "logbook"

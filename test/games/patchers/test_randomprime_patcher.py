@@ -905,12 +905,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Strength Undertemple World',
+            'gameBanner': {'description': 'Seed Hash: Mecha Abyss Spreader',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - BQQHQKFF'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - QZV3YWZM'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nStrength Undertemple World',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nMecha Abyss Spreader',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
