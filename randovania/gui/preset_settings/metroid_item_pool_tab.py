@@ -11,15 +11,12 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
-from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
 
 
 class MetroidPresetItemPool(PresetItemPool):
-    _progressive_widgets: List[ProgressiveItemWidget]
-
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         item_database = default_database.item_database_for_game(self.game)
@@ -29,7 +26,6 @@ class MetroidPresetItemPool(PresetItemPool):
 
         self._energy_tank_item = item_database.major_items["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
-        self._create_progressive_widgets(item_database)
         self._create_pickup_style_box(size_policy)
         signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
 
@@ -98,65 +94,3 @@ class MetroidPresetItemPool(PresetItemPool):
                 dataclasses.replace(major_configuration.items_state[self._energy_tank_item],
                                     num_shuffled_pickups=value)
             )
-
-    def _create_progressive_widgets(self, item_database: ItemDatabase):
-        self._progressive_widgets = []
-
-        all_progressive = []
-
-        if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-            all_progressive.append((
-                "Progressive Suit",
-                ("Dark Suit", "Light Suit"),
-            ))
-            all_progressive.append((
-                "Progressive Grapple",
-                ("Grapple Beam", "Screw Attack"),
-            ))
-        elif self.game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            all_progressive.append((
-                "Progressive Missile",
-                ("Ice Missile", "Seeker Missile"),
-            ))
-            all_progressive.append((
-                "Progressive Beam",
-                ("Plasma Beam", "Nova Beam"),
-            ))
-        elif self.game == RandovaniaGame.METROID_DREAD:
-            all_progressive.append((
-                "Progressive Beam",
-                ("Wide Beam", "Plasma Beam", "Wave Beam")
-            ))
-            all_progressive.append((
-                "Progressive Charge Beam",
-                ("Charge Beam", "Diffusion Beam")
-            ))
-            all_progressive.append((
-                "Progressive Missiles",
-                ("Super Missiles", "Ice Missiles")
-            ))
-            all_progressive.append((
-                "Progressive Suit",
-                ("Varia Suit", "Gravity Suit")
-            ))
-            all_progressive.append((
-                "Progressive Bomb",
-                ("Bomb", "Cross Bomb")
-            ))
-            all_progressive.append((
-                "Progressive Spin",
-                ("Spin Boost", "Space Jump")
-            ))
-
-        for (progressive_item_name, non_progressive_items) in all_progressive:
-            progressive_item = item_database.major_items[progressive_item_name]
-            parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
-
-            widget = ProgressiveItemWidget(
-                parent, self._editor,
-                progressive_item=progressive_item,
-                non_progressive_items=[item_database.major_items[it] for it in non_progressive_items],
-            )
-            widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
-            self._progressive_widgets.append(widget)
-            layout.addWidget(widget)

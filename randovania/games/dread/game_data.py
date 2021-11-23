@@ -9,10 +9,12 @@ from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, 
 def _dread_gui():
     from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
     from randovania.games.dread.gui.preset_settings import dread_preset_tabs
+    from randovania.games.dread.item_database import progressive_items
 
     return GameGui(
         tab_provider=dread_preset_tabs,
-        cosmetic_dialog=DreadCosmeticPatchesDialog
+        cosmetic_dialog=DreadCosmeticPatchesDialog,
+        progressive_item_gui_tuples=progressive_items.gui_tuples()
     )
 
 

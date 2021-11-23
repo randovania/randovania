@@ -52,6 +52,9 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
+    progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
+    """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
+
 
 @dataclass(frozen=True)
 class GameGenerator:
@@ -94,6 +97,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME_CORRUPTION = "prime3"
     SUPER_METROID = "super_metroid"
     METROID_DREAD = "dread"
+    # CAVE_STORY = "cave_story"
 
     @property
     def data(self) -> GameData:
@@ -107,6 +111,8 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.super_metroid.game_data as game_module
         elif self == RandovaniaGame.METROID_DREAD:
             import randovania.games.dread.game_data as game_module
+        # elif self == RandovaniaGame.CAVE_STORY:
+        #     import randovania.games.cave_story.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data
