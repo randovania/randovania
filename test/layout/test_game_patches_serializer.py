@@ -10,13 +10,12 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
     ResourceLock, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame

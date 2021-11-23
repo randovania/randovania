@@ -21,7 +21,6 @@ from randovania.game_description.resources.search import (
     find_resource_info_with_long_name
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier

@@ -2,9 +2,9 @@ import copy
 import dataclasses
 import json
 from unittest.mock import MagicMock, patch
-from frozendict import frozendict
 
 import pytest
+from frozendict import frozendict
 
 import randovania
 from randovania.game_description import default_database
@@ -15,8 +15,6 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
