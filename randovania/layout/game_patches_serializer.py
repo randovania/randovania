@@ -4,23 +4,21 @@ import typing
 from typing import Dict, List, DefaultDict
 
 from randovania.game_description import default_database, data_reader, data_writer
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import Hint
-from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
-
 
 _ETM_NAME = "Energy Transfer Module"
 
@@ -58,22 +56,6 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
 
 def _find_area_with_teleporter(world_list: WorldList, teleporter: NodeIdentifier) -> Area:
     return world_list.area_by_area_location(teleporter.area_location)
-
-
-def _name_for_gate(gate: TranslatorGate) -> str:
-    from randovania.games.prime2.patcher import claris_patcher
-    for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
-        if items["Index"] == gate.index:
-            return items["Name"]
-    raise ValueError("Unknown gate: {}".format(gate))
-
-
-def _find_gate_with_name(gate_name: str) -> TranslatorGate:
-    from randovania.games.prime2.patcher import claris_patcher
-    for items in claris_patcher.decode_randomizer_data()["TranslatorLocationData"]:
-        if items["Name"] == gate_name:
-            return TranslatorGate(items["Index"])
-    raise ValueError("Unknown gate name: {}".format(gate_name))
 
 
 def serialize_single(player_index: int, num_players: int, patches: GamePatches, game_enum: RandovaniaGame) -> dict:

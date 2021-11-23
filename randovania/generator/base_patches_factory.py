@@ -3,26 +3,24 @@ import dataclasses
 from random import Random
 
 from randovania.game_description import default_database
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
-from randovania.game_description.resources import search
-from randovania.game_description.resources.translator_gate import TranslatorGate
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
-from randovania.game_description.world.node import LogbookNode, LoreType, ConfigurableNode
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.resources import search
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import LogbookNode, LoreType, ConfigurableNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.generator import elevator_distributor
-from randovania.lib.enum_lib import iterate_enum
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.generator import elevator_distributor
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib.enum_lib import iterate_enum
 
 
 class MissingRng(Exception):
