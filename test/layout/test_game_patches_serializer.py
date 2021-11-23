@@ -7,9 +7,10 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, \
     ResourceLock, PickupModel
@@ -35,7 +36,8 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
         {"elevator": [NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes",
                                             "Elevator to Agon Wastes - Transport to Temple Grounds"),
                       "Temple Grounds/Transport to Agon Wastes"]},
-        {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
+        {"configurable_nodes": [("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
+                                ("Torvus Bog/Great Bridge/Translator Gate", "Emerald")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
                          "dark_temple": None,
@@ -46,6 +48,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_description, echoes_item_database):
     game = echoes_game_description
+    db = game.resource_database
 
     data = {
         "starting_location": "Temple Grounds/Landing Site",
@@ -74,7 +77,7 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
             "Sanctuary Fortress/Aerie": "Sanctuary Fortress/Aerie Transport Station",
             "Sanctuary Fortress/Aerie Transport Station": "Sanctuary Fortress/Aerie",
         },
-        "translators": {},
+        "configurable_nodes": {},
         "locations": {},
         "hints": {}
     }
@@ -97,7 +100,7 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
     if request.param.get("starting_item"):
         item_name = request.param.get("starting_item")
         patches = patches.assign_extra_initial_items({
-            find_resource_info_with_long_name(game.resource_database.item, item_name): 1,
+            db.get_item_by_name(item_name): 1,
         })
         data["starting_items"][item_name] = 1
 
@@ -109,13 +112,14 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
         patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
         data["elevators"][elevator_source] = "Temple Grounds/Landing Site"
 
-    if request.param.get("translator"):
+    if request.param.get("configurable_nodes"):
         gates = {}
-        for index, gate_name, translator in request.param.get("translator"):
-            gates[TranslatorGate(index)] = find_resource_info_with_long_name(game.resource_database.item, translator)
-            data["translators"][gate_name] = translator
+        for identifier, translator in request.param.get("configurable_nodes"):
+            requirement = ResourceRequirement(db.get_item(translator), 1, False)
+            gates[NodeIdentifier.from_string(identifier)] = requirement
+            data["configurable_nodes"][identifier] = data_writer.write_requirement(requirement)
 
-        patches = patches.assign_gate_assignment(gates)
+        patches = patches.assign_node_configuration(gates)
 
     if request.param.get("pickup"):
         pickup_name = request.param.get("pickup")

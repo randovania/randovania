@@ -3,13 +3,16 @@ import dataclasses
 from random import Random
 
 from randovania.game_description import default_database
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.resources import search
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.assignment import GateAssignment
+from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
-from randovania.game_description.world.node import LogbookNode, LoreType
+from randovania.game_description.world.node import LogbookNode, LoreType, ConfigurableNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -69,12 +72,12 @@ def add_elevator_connections_to_patches(configuration: EchoesConfiguration,
 
 
 def gate_assignment_for_configuration(configuration: EchoesConfiguration,
-                                      resource_database: ResourceDatabase,
+                                      game: GameDescription,
                                       rng: Random,
-                                      ) -> GateAssignment:
+                                      ) -> NodeConfigurationAssignment:
     """
     :param configuration:
-    :param resource_database:
+    :param game:
     :param rng:
     :return:
     """
@@ -87,14 +90,30 @@ def gate_assignment_for_configuration(configuration: EchoesConfiguration,
     random_requirements = {LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED}
 
     result = {}
-    for gate, requirement in configuration.translator_configuration.translator_requirement.items():
+
+    scan_visor = search.find_resource_info_with_long_name(
+        game.resource_database.item,
+        "Scan Visor"
+    )
+    scan_visor_req = ResourceRequirement(scan_visor, 1, False)
+
+    for node in game.world_list.all_nodes:
+        if not isinstance(node, ConfigurableNode):
+            continue
+
+        identifier = game.world_list.identifier_for_node(node)
+        requirement = configuration.translator_configuration.translator_requirement[identifier]
         if requirement in random_requirements:
             if rng is None:
                 raise MissingRng("Translator")
             requirement = rng.choice(all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
                                      else without_removed)
 
-        result[gate] = resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_index)
+        translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
+        result[identifier] = RequirementAnd([
+            scan_visor_req,
+            ResourceRequirement(translator, 1, False),
+        ])
 
     return result
 
@@ -194,14 +213,13 @@ def create_base_patches(configuration: EchoesConfiguration,
     patches = dataclasses.replace(game.create_game_patches(),
                                   player_index=player_index)
 
-
     if hasattr(configuration, "elevators"):
         patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
     if configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
-        patches = patches.assign_gate_assignment(
-            gate_assignment_for_configuration(configuration, game.resource_database, rng))
+        patches = patches.assign_node_configuration(
+            gate_assignment_for_configuration(configuration, game, rng))
 
     # Starting Location
     patches = patches.assign_starting_location(

@@ -6,7 +6,7 @@ import pytest
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements import Requirement, ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
@@ -14,7 +14,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import ResourceNode, GenericNode, TranslatorGateNode
+from randovania.game_description.world.node import ResourceNode, GenericNode, ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -134,10 +134,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     # Setup
     scan_visor = echoes_resource_database.get_item("DarkVisor")
 
+    translator_identif = NodeIdentifier.create("Test World", "Test Area A", "Translator Gate")
     node_a = GenericNode("Node A", True, None, "", {}, 0)
     node_b = GenericNode("Node B", True, None, "", {}, 1)
     node_c = GenericNode("Node C", True, None, "", {}, 2)
-    translator_node = TranslatorGateNode("Translator Gate", True, None, "", {}, 3, TranslatorGate(1), scan_visor)
+    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3, translator_identif)
 
     world_list = WorldList([
         World("Test World", [
@@ -167,8 +168,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                            None, {}, None, world_list)
 
     patches = game.create_game_patches()
-    patches = patches.assign_gate_assignment({
-        TranslatorGate(1): scan_visor
+    patches = patches.assign_node_configuration({
+        translator_identif: ResourceRequirement(scan_visor, 1, False)
     })
     initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
                           node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100))

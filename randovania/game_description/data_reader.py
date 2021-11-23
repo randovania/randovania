@@ -30,7 +30,7 @@ from randovania.game_description.world.dock import (
 )
 from randovania.game_description.world.node import (
     GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 )
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
@@ -273,11 +273,10 @@ class WorldReader:
                     event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_name"])
                 )
 
-            elif node_type == "translator_gate":
-                return TranslatorGateNode(
+            elif node_type == "configurable_node":
+                return ConfigurableNode(
                     **generic_args,
-                    gate=TranslatorGate(data["gate_index"]),
-                    scan_visor=self._get_scan_visor(),
+                    self_identifier=NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 )
 
             elif node_type == "logbook":

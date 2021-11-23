@@ -7,6 +7,7 @@ import pytest
 from randovania.game_description.hint import (
     Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, HintDarkTemple,
 )
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
@@ -135,56 +136,70 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     assert result == expected
 
 
-def test_gate_assignment_for_configuration_all_emerald(echoes_resource_database):
+def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, default_layout_configuration):
     # Setup
-    emerald = find_resource_info_with_long_name(echoes_resource_database.item, "Emerald Translator")
-    indices = [1, 15, 23]
+    scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
+    emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
 
-    configuration = MagicMock()
-    configuration.translator_configuration.translator_requirement = {
-        TranslatorGate(index): LayoutTranslatorRequirement.EMERALD
-        for index in indices
-    }
+    translator_configuration = default_layout_configuration.translator_configuration
+    configuration = dataclasses.replace(
+        default_layout_configuration,
+        translator_configuration=dataclasses.replace(
+            translator_configuration,
+            translator_requirement={
+                key: LayoutTranslatorRequirement.EMERALD
+                for key in translator_configuration.translator_requirement.keys()
+            }
+        )
+    )
 
     rng = MagicMock()
 
     # Run
-    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_resource_database, rng)
+    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_game_description, rng)
 
     # Assert
-    assert results == {
-        TranslatorGate(index): emerald
-        for index in indices
-    }
+    assert list(results.values()) == [
+        RequirementAnd([
+            ResourceRequirement(scan_visor, 1, False),
+            ResourceRequirement(emerald, 1, False),
+        ])
+    ] * len(translator_configuration.translator_requirement)
 
 
-def test_gate_assignment_for_configuration_all_random(echoes_resource_database):
+def test_gate_assignment_for_configuration_all_random(echoes_game_description, default_layout_configuration):
     # Setup
-    violet = find_resource_info_with_long_name(echoes_resource_database.item, "Violet Translator")
-    emerald = find_resource_info_with_long_name(echoes_resource_database.item, "Emerald Translator")
+    scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
+    violet = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Violet Translator")
+    emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
 
-    configuration = MagicMock()
-    configuration.translator_configuration.translator_requirement = {
-        TranslatorGate(index): LayoutTranslatorRequirement.RANDOM
-        for index in [1, 15, 23]
-    }
+    translator_configuration = default_layout_configuration.translator_configuration
+    configuration = dataclasses.replace(
+        default_layout_configuration,
+        translator_configuration=translator_configuration.with_full_random(),
+    )
 
-    rng = MagicMock()
-    rng.choice.side_effect = [
-        LayoutTranslatorRequirement.EMERALD,
-        LayoutTranslatorRequirement.VIOLET,
-        LayoutTranslatorRequirement.EMERALD,
+    requirements = [
+        RequirementAnd([
+            ResourceRequirement(scan_visor, 1, False),
+            ResourceRequirement(emerald, 1, False),
+        ]),
+        RequirementAnd([
+            ResourceRequirement(scan_visor, 1, False),
+            ResourceRequirement(violet, 1, False),
+        ])
     ]
+    requirements = requirements * len(translator_configuration.translator_requirement)
+
+    choices = [LayoutTranslatorRequirement.EMERALD, LayoutTranslatorRequirement.VIOLET]
+    rng = MagicMock()
+    rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_resource_database, rng)
+    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_game_description, rng)
 
     # Assert
-    assert results == {
-        TranslatorGate(1): emerald,
-        TranslatorGate(15): violet,
-        TranslatorGate(23): emerald,
-    }
+    assert list(results.values()) == requirements[:len(translator_configuration.translator_requirement)]
 
 
 @pytest.mark.parametrize("is_multiworld", [False, True])
@@ -272,7 +287,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
         mock_replace.return_value,
         mock_add_elevator_connections_to_patches.return_value,
     ])
-    patches.append(patches[-1].assign_gate_assignment.return_value)
+    patches.append(patches[-1].assign_node_configuration.return_value)
     patches.append(patches[-1].assign_starting_location.return_value)
 
     # Run
@@ -284,8 +299,8 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
 
     # Gate Assignment
-    mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game.resource_database, rng)
-    patches[2].assign_gate_assignment.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
+    mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game, rng)
+    patches[2].assign_node_configuration.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
 
     # Starting Location
     mock_starting_location_for_config.assert_called_once_with(layout_configuration, game, rng)
