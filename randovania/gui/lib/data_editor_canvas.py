@@ -11,6 +11,7 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     NodeLocation
 from randovania.game_description.world.world import World
+from randovania.games.game import RandovaniaGame
 
 _color_for_node: dict[Type[Node], int] = {
     GenericNode: QtGui.Qt.red,
@@ -41,6 +42,7 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
+    game: Optional[RandovaniaGame] = None
     world: Optional[World] = None
     area: Optional[Area] = None
     highlighted_node: Optional[Node] = None
@@ -68,10 +70,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def _on_create_node(self):
         self.CreateNodeRequest.emit(self._next_node_location)
 
+    def select_game(self, game: RandovaniaGame):
+        self.game = game
+
     def select_world(self, world: World):
         self.world = world
-        image_path = get_data_path().joinpath("gui_assets", "dread_maps", f"{world.name}.png")
-        if image_path.exists():
+        image_path = self.game.data_path.joinpath("assets", "maps", f"{world.name}.png") if self.game is not None else None
+        if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             self.image_bounds = BoundsInt(
                 min_x=world.extra.get("map_min_x", 0),
