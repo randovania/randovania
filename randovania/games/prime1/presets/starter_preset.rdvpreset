@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 16,
     "name": "Starter Preset",
     "uuid": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
     "description": "This preset unlocks things in the world and changes suits behavior in order to improve world navigation and remove certain items being obsoleted by others.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
@@ -12,8 +12,8 @@
         },
         "starting_location": [
             {
-                "world_asset_id": 972217896,
-                "area_asset_id": 2993688902
+                "world_name": "Tallon Overworld",
+                "area_name": "Landing Site"
             }
         ],
         "available_locations": {
@@ -115,18 +115,18 @@
             "maximum_random_starting_items": 0
         },
         "ammo_configuration": {
-            "maximum_ammo": {
-                "4": 250,
-                "7": 8
-            },
             "items_state": {
                 "Missile Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        5
+                    ],
                     "pickup_count": 49,
                     "requires_major_item": false
                 },
                 "Power Bomb Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        1
+                    ],
                     "pickup_count": 4,
                     "requires_major_item": false
                 }
@@ -141,14 +141,14 @@
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
-                    "world_asset_id": 3241871825,
-                    "area_asset_id": 2472970646,
-                    "instance_id": 152
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
                 },
                 {
-                    "world_asset_id": 972217896,
-                    "area_asset_id": 597223686,
-                    "instance_id": 1049306
+                    "world_name": "Impact Crater",
+                    "area_name": "Crater Entry Point",
+                    "node_name": "Teleport to Artifact Temple"
                 }
             ],
             "excluded_targets": [],

@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 16,
     "name": "Starter Preset",
     "uuid": "5682c9ef-d447-4327-b473-ba1216d83439",
     "description": "In these settings, the game starts after the two trips to G.F.S. Olympus and the pirate attack to Norion, but with no items you'd have at that moment.",
@@ -12,8 +12,8 @@
         },
         "starting_location": [
             {
-                "world_asset_id": 13921744762140409337,
-                "area_asset_id": 15622764306970326849
+                "world_name": "G.F.S. Valhalla",
+                "area_name": "Docking Bay 5"
             }
         ],
         "available_locations": {
@@ -120,18 +120,18 @@
             "maximum_random_starting_items": 0
         },
         "ammo_configuration": {
-            "maximum_ammo": {
-                "4": 250,
-                "45": 11
-            },
             "items_state": {
                 "Missile Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        5
+                    ],
                     "pickup_count": 49,
                     "requires_major_item": true
                 },
                 "Ship Missile Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        1
+                    ],
                     "pickup_count": 8,
                     "requires_major_item": true
                 }
