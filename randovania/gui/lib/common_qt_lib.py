@@ -42,6 +42,31 @@ def _prompt_user_for_file(window: QtWidgets.QMainWindow,
     return Path(open_result[0])
 
 
+def _prompt_user_for_directory(window: QtWidgets.QMainWindow,
+                               caption: str,
+                               dir: Optional[str] = None,
+                               new_file: bool = False) -> Optional[Path]:
+    if new_file:
+        dialog = QtWidgets.QFileDialog(window)
+        dialog.setFileMode(QtWidgets.QFileDialog.FileMode.DirectoryOnly)
+        dialog.setOption(QtWidgets.QFileDialog.ShowDirsOnly)
+        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        dialog.setDirectory(dir)
+        if dialog.exec_():
+            open_result = dialog.selectedFiles()
+            if not open_result:
+                return None
+            return Path(open_result[0])
+        return None
+
+    else:
+        open_result = QtWidgets.QFileDialog.getExistingDirectory(window, caption, dir,
+                                                                 QtWidgets.QFileDialog.ShowDirsOnly)
+        if not open_result or open_result == ("", ""):
+            return None
+        return Path(open_result)
+
+
 def prompt_user_for_vanilla_input_file(window: QtWidgets.QMainWindow, extensions: typing.List[str],
                                        existing_file: Optional[Path] = None) -> Optional[Path]:
     """
@@ -51,6 +76,9 @@ def prompt_user_for_vanilla_input_file(window: QtWidgets.QMainWindow, extensions
     :param existing_file: An existing file to pre-fill with.
     :return: A string if the user selected a file, None otherwise
     """
+    if extensions and extensions == [""]:
+        return _prompt_user_for_directory(window, "Select the vanilla game folder",
+                                          dir=str(existing_file) if existing_file is not None else None)
     return _prompt_user_for_file(
         window,
         caption="Select the vanilla game {}.".format("/".join(extensions)),
@@ -69,6 +97,11 @@ def prompt_user_for_output_file(window: QtWidgets.QMainWindow,
     :param extensions:
     :return: A string if the user selected a file, None otherwise
     """
+    if extensions and extensions == [""]:
+        return _prompt_user_for_directory(window, "Where to place the Randomized game directory",
+                                          dir=default_name,
+                                          new_file=False)
+
     return _prompt_user_for_file(
         window,
         caption="Where to place the Randomized game file.",

@@ -1,8 +1,10 @@
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
-
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
-from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, dread_unexpected_items
+from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, \
+    dread_unexpected_items
+from randovania.games.dread.patcher.open_dread_patcher import OpenDreadPatcher
+from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+
 
 def _dread_gui():
     from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
@@ -12,6 +14,7 @@ def _dread_gui():
         tab_provider=dread_preset_tabs,
         cosmetic_dialog=DreadCosmeticPatchesDialog
     )
+
 
 game_data: GameData = GameData(
     short_name="Dread",
@@ -38,5 +41,7 @@ game_data: GameData = GameData(
 
     generator=GameGenerator(
         item_pool_creator=lambda results, config, db: None
-    )
+    ),
+
+    patcher=OpenDreadPatcher()
 )
