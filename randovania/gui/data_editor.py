@@ -80,7 +80,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.save_database_button.clicked.connect(self._prompt_save_database)
 
         self.rename_area_button.clicked.connect(self._rename_area)
-        self.new_node_button.clicked.connect(self._create_new_node)
+        self.new_node_button.clicked.connect(self._create_new_node_no_location)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
@@ -469,7 +469,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.on_select_world()
         self.focus_on_area(new_name)
 
-    def _create_new_node(self, location: Optional[NodeLocation] = None):
+    def _create_new_node(self, location: Optional[NodeLocation]):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm or node_name == "":
             return
@@ -481,6 +481,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         self._do_create_node(node_name, location)
+
+    def _create_new_node_no_location(self):
+        return self._create_new_node(None)
 
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
