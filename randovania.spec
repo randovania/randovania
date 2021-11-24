@@ -7,6 +7,7 @@ icon_path = "randovania/data/icons/sky_temple_key_NqN_icon.ico"
 
 item_databases = [(f'randovania/games/{game.value}/item_database', f'games/{game.value}/item_database') for game in RandovaniaGame]
 presets = [(f'randovania/games/{game.value}/presets', f'games/{game.value}/presets') for game in RandovaniaGame]
+game_assets = [(f'randovania/games/{game.value}/assets', f'games/{game.value}/assets') for game in RandovaniaGame if game.data_path.joinpath("assets").exists()]
 
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
@@ -23,6 +24,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/nintendont", "data/nintendont"),
                  *item_databases,
                  *presets,
+                 *game_assets,
              ],
              hiddenimports=[
                 "mock",
