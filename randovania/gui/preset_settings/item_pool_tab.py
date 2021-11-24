@@ -92,6 +92,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             for major_item, widget in elements.items():
                 widget.state = major_configuration.items_state[major_item]
 
+        # Progressive Items
+        for progressive_widget in self._progressive_widgets:
+            progressive_widget.on_preset_changed(
+                preset,
+                self._boxes_for_category[progressive_widget.progressive_item.item_category.name][2],
+            )
+
         # Ammo
         ammo_provided = major_configuration.calculate_provided_ammo()
         ammo_configuration = layout.ammo_configuration

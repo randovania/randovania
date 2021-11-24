@@ -1,3 +1,4 @@
+import dataclasses
 from PySide2 import QtWidgets
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor
@@ -22,7 +23,7 @@ class CSPresetItemPool(PresetItemPool):
         puppy = QtWidgets.QCheckBox(parent)
         puppy.setText("Shuffle puppies anywhere")
         puppy.setToolTip("When disabled, puppies will only be shuffled within the Sand Zone. When enabled, puppies can be placed in any valid location.")
-        puppy.stateChanged.connect(self._persist_option_then_notify("puppies_anywhere"))
+        puppy.stateChanged.connect(self._on_puppy_changed)
 
         line = QtWidgets.QFrame(parent)
         line.setFrameShape(QtWidgets.QFrame.HLine)
@@ -31,3 +32,9 @@ class CSPresetItemPool(PresetItemPool):
 
         layout.addWidget(puppy, layout.rowCount(), 0, 1, -1)
         self._puppy_widget = puppy
+    
+    def _on_puppy_changed(self):
+        anywhere = self._puppy_widget.isChecked()
+        with self._editor as editor:
+            editor.set_configuration_field("puppies_anywhere", anywhere)
+    

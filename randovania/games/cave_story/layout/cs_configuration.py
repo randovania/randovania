@@ -31,6 +31,10 @@ class CSObjective(BitPackEnum, Enum):
         if self == CSObjective.HUNDRED_PERCENT:
             return "100% Completion"
         raise ValueError(f"No name for objective {self}")
+    
+    @property
+    def enters_hell(self) -> bool:
+        return self.value >= CSObjective.BEST_ENDING.value
 
 @dataclasses.dataclass(frozen=True)
 class CSConfiguration(BaseConfiguration):

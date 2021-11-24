@@ -1,3 +1,4 @@
+import dataclasses
 from PySide2 import QtCore
 
 from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
@@ -18,7 +19,7 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
             self.goal_combo.setItemData(obj.value, obj)
         
         self.goal_combo.currentIndexChanged.connect(self._on_objective_changed)
-        self.b2_check.stateChanged.connect(self._persist_option_then_notify("no_blocks"))
+        self.b2_check.stateChanged.connect(self._on_blocks_changed)
 
         # Default to False, since the default objective is Normal Ending
         self.b2_check.setVisible(False)
@@ -30,8 +31,13 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
     def _on_objective_changed(self):
         combo_enum = self.goal_combo.currentData()
         with self._editor as editor:
-            editor.configuration.objective = combo_enum
+            editor.set_configuration_field("objective", combo_enum)
             self.b2_check.setVisible(combo_enum.enters_hell)
+    
+    def _on_blocks_changed(self):
+        disabled = self.b2_check.isChecked()
+        with self._editor as editor:
+            editor.set_configuration_field("no_blocks", disabled)
     
     def on_preset_changed(self, preset: Preset):
         set_combo_with_value(self.goal_combo, preset.configuration.objective)

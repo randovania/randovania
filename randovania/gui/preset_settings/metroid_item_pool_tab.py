@@ -34,12 +34,6 @@ class MetroidPresetItemPool(PresetItemPool):
         layout = preset.configuration
         major_configuration = layout.major_items_configuration
 
-        for progressive_widget in self._progressive_widgets:
-            progressive_widget.on_preset_changed(
-                preset,
-                self._boxes_for_category[progressive_widget.progressive_item.item_category.name][2],
-            )
-
         self.pickup_style_widget.update(layout)
 
         # Energy Tank
