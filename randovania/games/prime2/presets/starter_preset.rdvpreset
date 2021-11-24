@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 16,
     "name": "Starter Preset",
     "uuid": "fcbe4e3f-b1fa-41cc-83cb-c86d84c10f0f",
     "description": "This preset balances the item pool with additional beam ammo expansions and progressive suits, while minimizing softlocks as much as possible.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
@@ -12,8 +12,8 @@
         },
         "starting_location": [
             {
-                "world_asset_id": 1006255871,
-                "area_asset_id": 1655756413
+                "world_name": "Temple Grounds",
+                "area_name": "Landing Site"
             }
         ],
         "available_locations": {
@@ -150,35 +150,40 @@
             "maximum_random_starting_items": 0
         },
         "ammo_configuration": {
-            "maximum_ammo": {
-                "44": 175,
-                "43": 10,
-                "45": 250,
-                "46": 250
-            },
             "items_state": {
                 "Missile Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        5
+                    ],
                     "pickup_count": 33,
                     "requires_major_item": true
                 },
                 "Power Bomb Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        1
+                    ],
                     "pickup_count": 8,
                     "requires_major_item": true
                 },
                 "Dark Ammo Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        20
+                    ],
                     "pickup_count": 10,
                     "requires_major_item": true
                 },
                 "Light Ammo Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        20
+                    ],
                     "pickup_count": 10,
                     "requires_major_item": true
                 },
                 "Beam Ammo Expansion": {
-                    "variance": 0,
+                    "ammo_count": [
+                        200,
+                        200
+                    ],
                     "pickup_count": 0,
                     "requires_major_item": true
                 }
@@ -193,24 +198,24 @@
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
-                    "world_asset_id": 464164546,
-                    "area_asset_id": 3136899603,
-                    "instance_id": 204865660
+                    "world_name": "Sanctuary Fortress",
+                    "area_name": "Aerie",
+                    "node_name": "Elevator to Sanctuary Fortress - Aerie Transport Station"
                 },
                 {
-                    "world_asset_id": 464164546,
-                    "area_asset_id": 1564082177,
-                    "instance_id": 4260106
+                    "world_name": "Sanctuary Fortress",
+                    "area_name": "Aerie Transport Station",
+                    "node_name": "Elevator to Sanctuary Fortress - Aerie"
                 },
                 {
-                    "world_asset_id": 1006255871,
-                    "area_asset_id": 2278776548,
-                    "instance_id": 136970379
+                    "world_name": "Temple Grounds",
+                    "area_name": "Sky Temple Gateway",
+                    "node_name": "Teleport to Great Temple - Sky Temple Energy Controller"
                 },
                 {
-                    "world_asset_id": 2252328306,
-                    "area_asset_id": 2068511343,
-                    "instance_id": 589949
+                    "world_name": "Great Temple",
+                    "area_name": "Sky Temple Energy Controller",
+                    "node_name": "Teleport to Temple Grounds - Sky Temple Gateway"
                 }
             ],
             "excluded_targets": [],
@@ -220,23 +225,23 @@
         "sky_temple_keys": 9,
         "translator_configuration": {
             "translator_requirement": {
-                "0": "violet",
-                "1": "amber",
-                "2": "violet",
-                "3": "violet",
-                "4": "amber",
-                "5": "violet",
-                "6": "emerald",
-                "7": "violet",
-                "8": "amber",
-                "9": "emerald",
-                "10": "amber",
-                "11": "amber",
-                "12": "emerald",
-                "13": "emerald",
-                "14": "emerald",
-                "15": "cobalt",
-                "16": "cobalt"
+                "Temple Grounds/Hive Access Tunnel/Translator Gate": "violet",
+                "Temple Grounds/Meeting Grounds/Translator Gate": "amber",
+                "Temple Grounds/Hive Transport Area/Translator Gate": "violet",
+                "Temple Grounds/Industrial Site/Translator Gate": "violet",
+                "Temple Grounds/Path of Eyes/Translator Gate": "amber",
+                "Temple Grounds/Temple Assembly Site/Translator Gate": "violet",
+                "Temple Grounds/GFMC Compound/Translator Gate": "emerald",
+                "Great Temple/Temple Sanctuary/Transport A Translator Gate": "emerald",
+                "Great Temple/Temple Sanctuary/Transport B Translator Gate": "violet",
+                "Great Temple/Temple Sanctuary/Transport C Translator Gate": "amber",
+                "Agon Wastes/Mining Plaza/Translator Gate": "amber",
+                "Agon Wastes/Mining Station A/Translator Gate": "amber",
+                "Torvus Bog/Great Bridge/Translator Gate": "emerald",
+                "Torvus Bog/Torvus Temple/Translator Gate": "emerald",
+                "Torvus Bog/Torvus Temple/Elevator Translator Scan": "emerald",
+                "Sanctuary Fortress/Reactor Core/Translator Gate": "cobalt",
+                "Sanctuary Fortress/Sanctuary Temple/Translator Gate": "cobalt"
             }
         },
         "hints": {
