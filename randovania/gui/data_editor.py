@@ -91,6 +91,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_database = self.game_description.resource_database
         self.world_list = self.game_description.world_list
 
+        self.area_view_canvas.select_game(self.game_description.game)
+
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
             self.world_selector_box.addItem(name, userData=world)
