@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 from functools import partial
 from PySide2.QtGui import QPixmap
 
@@ -17,6 +18,9 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
         self.setupUi(self)
         self._cosmetic_patches = current
 
+        for i in range(4):
+            self.music_type_combo.setItemData(i, list(MusicRandoType)[i])
+
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
     
@@ -24,8 +28,8 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
         super().connect_signals()
 
         self.music_type_combo.currentIndexChanged.connect(self._on_music_type_changed)
-        self.mychar_left_button.connect(partial(self._on_mychar_changed, True))
-        self.mychar_right_button.connect(partial(self._on_mychar_changed, False))
+        self.mychar_left_button.clicked.connect(self._mychar_left)
+        self.mychar_right_button.clicked.connect(self._mychar_right)
 
     def on_new_cosmetic_patches(self, patches: CSCosmeticPatches):
         set_combo_with_value(self.music_type_combo, patches.music_rando.randomization_type)
@@ -33,16 +37,25 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
 
     def _on_mychar_changed(self, reverse: bool):
         new_mychar = self._cosmetic_patches.mychar.next_mychar(reverse)
+        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, mychar=new_mychar)
         self._set_mychar(new_mychar)
     
+    def _mychar_left(self):
+        self._on_mychar_changed(True)
+    
+    def _mychar_right(self):
+        self._on_mychar_changed(False)
+    
     def _set_mychar(self, new_mychar: MyChar):
-        self._cosmetic_patches.mychar = new_mychar
         self.mychar_name_label.setText(new_mychar.value)
         self.mychar_img_label.setPixmap(QPixmap(str(new_mychar.ui_icon)))
+        self.mychar_description_label.setText(new_mychar.description)
+        self.mychar_description_label.setVisible(bool(new_mychar.description))
     
     def _on_music_type_changed(self):
         combo_enum: MusicRandoType = self.music_type_combo.currentData()
-        self._cosmetic_patches.music_rando.randomization_type = combo_enum
+        music_rando = dataclasses.replace(self._cosmetic_patches.music_rando, randomization_type=combo_enum)
+        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music_rando=music_rando)
         self.music_type_description_label.setText(combo_enum.description)
 
     def _persist_option_then_notify(self, attribute_name: str):

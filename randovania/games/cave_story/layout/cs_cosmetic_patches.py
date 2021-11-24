@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 import random
 from enum import Enum, auto, unique
 from pathlib import Path
@@ -36,7 +37,7 @@ class MyChar(BitPackEnum, Enum):
     
     @property
     def ui_icon(self) -> Path:
-        return RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/icon/mychar/{self.value}.png")
+        return RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/icon/{self.value}.png")
     
     @property
     def description(self) -> Optional[str]:
@@ -49,7 +50,7 @@ class MyChar(BitPackEnum, Enum):
         upcoming = list(MyChar)
         if reverse:
             upcoming.reverse()
-        upcoming = upcoming[upcoming.index(self):]
+        upcoming = upcoming[upcoming.index(self)+1:]
         return next((mychar for mychar in upcoming), MyChar.CUSTOM if reverse else MyChar.QUOTE)
         
 
