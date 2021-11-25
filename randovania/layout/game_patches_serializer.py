@@ -13,7 +13,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode, TeleporterNode
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -71,15 +71,13 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
     world_list = game.world_list
 
     result = {
-        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location),
-                                                  separator="/"),
+        "starting_location": patches.starting_location.as_string,
         "starting_items": {
             resource_info.long_name: quantity
             for resource_info, quantity in patches.starting_items.items()
         },
-        "elevators": {
-            world_list.area_name(_find_area_with_teleporter(world_list, teleporter), "/"):
-                world_list.area_name(world_list.area_by_area_location(connection), "/")
+        "teleporters": {
+            teleporter.as_string: connection.as_string
             for teleporter, connection in patches.elevator_connection.items()
         },
         "configurable_nodes": {
@@ -134,7 +132,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     initial_pickup_assignment = all_pools[player_index].assignment
 
     # Starting Location
-    starting_location = _area_name_to_area_location(world_list, game_modifications["starting_location"])
+    starting_location = AreaIdentifier.from_string(game_modifications["starting_location"])
 
     # Initial items
     starting_items = {
@@ -143,19 +141,10 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     }
 
     # Elevators
-    elevator_connection: ElevatorConnection = {}
-    for source_name, target_name in game_modifications["elevators"].items():
-        source_area = _area_name_to_area_location(world_list, source_name)
-        target_area = _area_name_to_area_location(world_list, target_name)
-
-        potential_source_nodes = [
-            node
-            for node in world_list.area_by_area_location(source_area).nodes
-            if isinstance(node, TeleporterNode)
-        ]
-        assert len(potential_source_nodes) == 1
-        source_node = potential_source_nodes[0]
-        elevator_connection[world_list.identifier_for_node(source_node)] = target_area
+    elevator_connection: ElevatorConnection = {
+        NodeIdentifier.from_string(source_name): AreaIdentifier.from_string(target_name)
+        for source_name, target_name in game_modifications["teleporters"].items()
+    }
 
     # Configurable Nodes
     configurable_nodes = {
