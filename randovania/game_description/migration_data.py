@@ -1,8 +1,8 @@
 import functools
 import json
-from randovania.game_description.resources.resource_type import ResourceType
 
 from randovania import get_data_path
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 
 
@@ -50,14 +50,22 @@ def convert_area_loc_id_to_name(game: RandovaniaGame, loc: dict[str, int]) -> di
         "area_name": get_area_name_from_id(game, world_name, loc["area_asset_id"]),
     }
 
+
 def get_index_to_resource_mapping(game: RandovaniaGame, resource_type: ResourceType) -> dict[int, str]:
-    return {v:k for k,v in get_raw_data()[game.value][2][resource_type.value].items()}
+    return {v: k for k, v in get_raw_data()[game.value][2][resource_type.value].items()}
+
 
 def get_resource_name_from_index(game: RandovaniaGame, index: int, resource_type: ResourceType) -> str:
     return get_index_to_resource_mapping(game, resource_type)[index]
 
+
 def get_index_to_resource_type_mapping() -> dict[int, str]:
-    return {v:k for k,v in get_raw_data()["resource_types"].items()}
+    return {v: k for k, v in get_raw_data()["resource_types"].items()}
+
 
 def get_resource_type_from_index(index: int) -> ResourceType:
     return ResourceType(get_index_to_resource_type_mapping()[index])
+
+
+def get_teleporter_area_to_node_mapping() -> dict[str, str]:
+    return get_raw_data()["teleporter_mapping"]

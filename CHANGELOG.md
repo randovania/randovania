@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: The Logic Database can now have descriptions for nodes.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
+- Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 
 ### Metroid Prime
 
