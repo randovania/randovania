@@ -26,9 +26,9 @@ class ResourceDatabase:
     misc: List[SimpleResourceInfo]
     requirement_template: Dict[str, "Requirement"]
     damage_reductions: Dict[SimpleResourceInfo, List[DamageReduction]]
-    energy_tank_item_index: int
-    item_percentage_index: Optional[int]
-    multiworld_magic_item_index: Optional[int]
+    energy_tank_item_index: str
+    item_percentage_index: Optional[str]
+    multiworld_magic_item_index: Optional[str]
     base_damage_reduction: Callable[["ResourceDatabase", CurrentResources], float] = default_base_damage_reduction
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
@@ -51,19 +51,12 @@ class ResourceDatabase:
     def get_by_type_and_index(self, resource_type: ResourceType,
                               name: str) -> ResourceInfo:
         return search.find_resource_info_with_id(self.get_by_type(resource_type), name, resource_type)
-    
-    def get_resource_id(self, resource_type: ResourceType, name: str) -> int:
-        resource = self.get_by_type_and_index(resource_type, name)
-        return self.get_by_type(resource_type).index(resource)
 
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, short_name)
 
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
-    
-    def get_item_id(self, name: str) -> int:
-        return self.get_resource_id(ResourceType.ITEM, name)
 
     @property
     def item_percentage(self) -> Optional[ItemResourceInfo]:

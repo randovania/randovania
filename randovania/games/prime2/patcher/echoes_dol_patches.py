@@ -369,8 +369,10 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
         nop(),
     ])
 
+    from randovania.games.prime2.patcher.claris_patcher_file import item_id_for_item_resource
+
     for item in ["Double Damage", "Unlimited Missiles", "Unlimited Beam Ammo"]:
-        index = resource_database.get_item_id(resource_database.get_item_by_name(item).short_name)
+        index = item_id_for_item_resource(resource_database.get_item_by_name(item))
         dol_file.write(version.powerup_should_persist + index, b"\x01")
 
 
