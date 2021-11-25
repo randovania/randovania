@@ -59,21 +59,28 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
     CreateNodeRequest = Signal(NodeLocation)
+    MoveNodeRequest = Signal(Node, NodeLocation)
     SelectNodeRequest = Signal(Node)
 
     def __init__(self):
         super().__init__()
-
-        self._create_node_action = QtWidgets.QAction("Create node here", self)
-        self._create_node_action.triggered.connect(self._on_create_node)
 
         self._show_all_connections_action = QtWidgets.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
         self._show_all_connections_action.setChecked(False)
         self._show_all_connections_action.triggered.connect(self.update)
 
+        self._create_node_action = QtWidgets.QAction("Create node here", self)
+        self._create_node_action.triggered.connect(self._on_create_node)
+
+        self._move_node_action = QtWidgets.QAction("Move node here", self)
+        self._move_node_action.triggered.connect(self._on_move_node)
+
     def _on_create_node(self):
         self.CreateNodeRequest.emit(self._next_node_location)
+
+    def _on_move_node(self):
+        self.MoveNodeRequest.emit(self.highlighted_node, self._next_node_location)
 
     def select_game(self, game: RandovaniaGame):
         self.game = game
@@ -170,6 +177,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
         menu = QtWidgets.QMenu(self)
         menu.addAction(self._show_all_connections_action)
         menu.addAction(self._create_node_action)
+        menu.addAction(self._move_node_action)
+        self._move_node_action.setEnabled(self.highlighted_node is not None)
 
         menu.addSeparator()
 

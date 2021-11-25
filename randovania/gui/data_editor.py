@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets
+from PySide2 import QtGui, QtWidgets, QtCore
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -72,6 +72,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
+        self.area_view_canvas.MoveNodeRequest.connect(self._move_node)
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
 
         self.save_database_button.setEnabled(data_path is not None)
@@ -475,6 +476,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.editor.rename_area(self.current_area, new_name)
         self.on_select_world()
         self.focus_on_area(new_name)
+
+    def _move_node(self, node: Node, location: NodeLocation):
+        area = self.current_area
+        assert node in area.nodes
+        self.replace_node_with(
+            area,
+            node,
+            dataclasses.replace(node, location=location)
+        )
 
     def _create_new_node(self, location: Optional[NodeLocation]):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
