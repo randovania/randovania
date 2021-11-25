@@ -84,6 +84,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.new_node_button.clicked.connect(self._create_new_node_no_location)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
+        self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)

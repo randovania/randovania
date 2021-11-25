@@ -67,6 +67,11 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._create_node_action = QtWidgets.QAction("Create node here", self)
         self._create_node_action.triggered.connect(self._on_create_node)
 
+        self._show_all_connections_action = QtWidgets.QAction("Show all node connections", self)
+        self._show_all_connections_action.setCheckable(True)
+        self._show_all_connections_action.setChecked(False)
+        self._show_all_connections_action.triggered.connect(self.update)
+
     def _on_create_node(self):
         self.CreateNodeRequest.emit(self._next_node_location)
 
@@ -163,6 +168,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._next_node_location = self.qt_local_to_game_loc(local_pos)
 
         menu = QtWidgets.QMenu(self)
+        menu.addAction(self._show_all_connections_action)
         menu.addAction(self._create_node_action)
 
         menu.addSeparator()
@@ -247,19 +253,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
             ]
             painter.drawPolygon(points, QtGui.Qt.FillRule.OddEvenFill)
 
-        brush = painter.brush()
-        brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
-        painter.setBrush(brush)
+        def draw_connections_from(source_node: Node):
+            if source_node.location is None:
+                return
 
-        if (self.highlighted_node is not None and self.highlighted_node in area.nodes
-                and self.highlighted_node.location is not None):
-
-            for node in area.connections[self.highlighted_node].keys():
-                if node.location is None:
+            for target_node in area.connections[source_node].keys():
+                if target_node.location is None:
                     continue
 
-                source = self.game_loc_to_qt_local(self.highlighted_node.location)
-                target = self.game_loc_to_qt_local(node.location)
+                source = self.game_loc_to_qt_local(source_node.location)
+                target = self.game_loc_to_qt_local(target_node.location)
                 line = QtCore.QLineF(source, target)
                 line_len = line.length()
                 end_point = line.pointAt(1 - 7 / line_len)
@@ -278,6 +281,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     tri_point_2
                 ])
                 painter.drawPolygon(arrow)
+
+        brush = painter.brush()
+        brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
+        painter.setBrush(brush)
+        painter.setPen(QtGui.Qt.gray)
+
+        if self._show_all_connections_action.isChecked():
+            for node in area.nodes:
+                if node != self.highlighted_node:
+                    draw_connections_from(node)
+
+        painter.setPen(QtGui.Qt.white)
+
+        if self.highlighted_node is not None and self.highlighted_node in area.nodes:
+            draw_connections_from(self.highlighted_node)
 
         for node in area.nodes:
             if node.location is None:
