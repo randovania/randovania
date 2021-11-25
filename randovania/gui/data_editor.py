@@ -1,11 +1,10 @@
 import dataclasses
 import json
 import re
-import typing
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtCore, QtWidgets
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -13,8 +12,6 @@ from qasync import asyncSlot
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
@@ -100,6 +97,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor = ResourceDatabaseEditor(self, self.game_description.resource_database)
         self.resource_editor.setFeatures(self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
+        self.points_of_interest_dock.raise_()
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
