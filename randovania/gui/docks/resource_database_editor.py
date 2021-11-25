@@ -211,41 +211,57 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.tab_version.setModel(ResourceDatabaseGenericModel(db, ResourceType.VERSION))
         self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
 
-        self.visualizer_for_template = {}
-        self.edit_button_for_template = {}
         self.editor_for_template = {}
-        for name, template in db.requirement_template.items():
-            template_box = Foldable(name)
-            template_box.setObjectName(f"template_box {name}")
-            template_layout = QtWidgets.QVBoxLayout()
-            template_layout.setObjectName(f"template_layout {name}")
-            template_box.set_content_layout(template_layout)
+        for name in db.requirement_template.keys():
+            self.create_template_editor(name)
 
-            edit_template_button = QtWidgets.QPushButton()
-            edit_template_button.setText("Edit")
-            edit_template_button.clicked.connect(functools.partial(self.edit_template, name))
-            template_layout.addWidget(edit_template_button)
-            self.edit_button_for_template[name] = edit_template_button
-
-            self.editor_for_template[name] = TemplateEditor(
-                template_name=name,
-                foldable=template_box,
-                edit_button=edit_template_button,
-                template_layout=template_layout,
-                visualizer=None,
-                connections_layout=None,
-            )
-            self.editor_for_template[name].create_visualizer(db)
-
-            self.tab_template_layout.addWidget(template_box)
+        self.create_new_template_button = QtWidgets.QPushButton()
+        self.create_new_template_button.setText("Create new")
+        self.create_new_template_button.clicked.connect(self.create_new_template)
+        self.tab_template_layout.addWidget(self.create_new_template_button)
 
     def set_allow_edits(self, value: bool):
         for tab in [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
                     self.tab_version, self.tab_misc]:
             tab.model().set_allow_edits(value)
 
-        for button in self.edit_button_for_template.values():
-            button.setVisible(value)
+        self.create_new_template_button.setVisible(value)
+        for editor in self.editor_for_template.values():
+            editor.edit_button.setVisible(value)
+
+    def create_new_template(self):
+        template_name, did_confirm = QtWidgets.QInputDialog.getText(self, "New Template", "Insert template name:")
+        if not did_confirm or template_name == "":
+            return
+
+        self.db.requirement_template[template_name] = Requirement.trivial()
+        self.create_template_editor(template_name)
+        self.tab_template_layout.removeWidget(self.create_new_template_button)
+        self.tab_template_layout.addWidget(self.create_new_template_button)
+
+    def create_template_editor(self, name: str):
+        template_box = Foldable(name)
+        template_box.setObjectName(f"template_box {name}")
+        template_layout = QtWidgets.QVBoxLayout()
+        template_layout.setObjectName(f"template_layout {name}")
+        template_box.set_content_layout(template_layout)
+
+        edit_template_button = QtWidgets.QPushButton()
+        edit_template_button.setText("Edit")
+        edit_template_button.clicked.connect(functools.partial(self.edit_template, name))
+        template_layout.addWidget(edit_template_button)
+
+        self.editor_for_template[name] = TemplateEditor(
+            template_name=name,
+            foldable=template_box,
+            edit_button=edit_template_button,
+            template_layout=template_layout,
+            visualizer=None,
+            connections_layout=None,
+        )
+        self.editor_for_template[name].create_visualizer(self.db)
+
+        self.tab_template_layout.addWidget(template_box)
 
     def edit_template(self, name: str):
         requirement = self.db.requirement_template[name]
