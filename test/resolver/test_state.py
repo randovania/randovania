@@ -40,8 +40,8 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_catego
     # Starting State
     s = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10)
+    resource_b = ItemResourceInfo("B", "B", 10)
     p = PickupEntry("B", 2, generic_item_category, generic_item_category,
                     progression=(
                         (resource_a, 1),
@@ -64,8 +64,8 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
 
     starting = state.State({}, (), 99, None, empty_patches, None, state_game_data)
 
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo("A", "A", 10)
+    resource_b = ItemResourceInfo("B", "B", 10)
     p = PickupEntry("A", 2, generic_item_category, generic_item_category,
                     progression=(
                         (resource_a, 5),

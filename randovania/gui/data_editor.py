@@ -1,10 +1,11 @@
 import dataclasses
 import json
 import re
+import typing
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -12,6 +13,8 @@ from qasync import asyncSlot
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
 from randovania.game_description.world.world import World
@@ -19,6 +22,7 @@ from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
+from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -92,6 +96,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_list = self.game_description.world_list
 
         self.area_view_canvas.select_game(self.game_description.game)
+
+        self.resource_editor = ResourceDatabaseEditor(self, self.game_description.resource_database)
+        self.resource_editor.setFeatures(self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
+        self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
