@@ -46,9 +46,15 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         super().__init__()
         self.db = db
         self.resource_type = resource_type
+        self.allow_edits = True
 
     def _get_items(self):
         return self.db.get_by_type(self.resource_type)
+
+    def set_allow_edits(self, value: bool):
+        self.beginResetModel()
+        self.allow_edits = value
+        self.endResetModel()
 
     def all_columns(self) -> list[FieldDefinition]:
         return GENERIC_FIELDS
@@ -63,7 +69,10 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return self.all_columns()[section].display_name
 
     def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
-        return len(self._get_items()) + 1
+        result = len(self._get_items())
+        if self.allow_edits:
+            result += 1
+        return result
 
     def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self.all_columns())
@@ -98,7 +107,8 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
                     self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
                     return True
             else:
-                return self.append_item(self._create_item(value))
+                if value:
+                    return self.append_item(self._create_item(value))
         return False
 
     def _create_item(self, short_name) -> ResourceInfo:
@@ -113,12 +123,13 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
 
     def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlags:
         result = QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
-        if index.row() == len(self._get_items()):
-            if index.column() == 0:
-                result |= QtCore.Qt.ItemIsEditable
-        else:
-            if index.column() > 0:
-                result |= QtCore.Qt.ItemIsEditable
+        if self.allow_edits:
+            if index.row() == len(self._get_items()):
+                if index.column() == 0:
+                    result |= QtCore.Qt.ItemIsEditable
+            else:
+                if index.column() > 0:
+                    result |= QtCore.Qt.ItemIsEditable
         return result
 
 
@@ -165,3 +176,8 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.tab_damage.setModel(ResourceDatabaseGenericModel(db, ResourceType.DAMAGE))
         self.tab_version.setModel(ResourceDatabaseGenericModel(db, ResourceType.VERSION))
         self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
+
+    def set_allow_edits(self, value: bool):
+        for tab in [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
+                    self.tab_version, self.tab_misc]:
+            tab.model().set_allow_edits(value)

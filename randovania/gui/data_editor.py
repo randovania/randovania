@@ -530,6 +530,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_heals_check.setEnabled(self.edit_mode)
         self.area_spawn_check.setEnabled(self.edit_mode and self.area_spawn_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
+        self.resource_editor.set_allow_edits(self.edit_mode)
 
     @property
     def current_world(self) -> World:
