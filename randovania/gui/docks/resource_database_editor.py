@@ -1,5 +1,6 @@
 import copy
 import dataclasses
+import functools
 import json
 import typing
 
@@ -7,14 +8,18 @@ from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Qt
 from frozendict import frozendict
 
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.foldable import Foldable
 
 
 @dataclasses.dataclass(frozen=True)
@@ -163,7 +168,36 @@ class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
         return TrickResourceInfo(short_name, short_name, "", frozendict())
 
 
+@dataclasses.dataclass()
+class TemplateEditor:
+    template_name: str
+    foldable: Foldable
+    edit_button: QtWidgets.QPushButton
+    template_layout: QtWidgets.QVBoxLayout
+    visualizer: typing.Optional[ConnectionsVisualizer]
+    connections_layout: typing.Optional[QtWidgets.QGridLayout]
+
+    def create_visualizer(self, db: ResourceDatabase):
+        for it in [self.connections_layout, self.visualizer]:
+            if it is not None:
+                it.deleteLater()
+
+        self.connections_layout = QtWidgets.QGridLayout()
+        self.template_layout.addLayout(self.connections_layout)
+
+        self.connections_layout.setObjectName(f"connections_layout {self.template_name}")
+        self.visualizer = ConnectionsVisualizer(
+            self.foldable,
+            self.connections_layout,
+            db,
+            db.requirement_template[self.template_name],
+            False
+        )
+
+
 class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
+    editor_for_template: dict[str, TemplateEditor]
+
     def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
@@ -177,7 +211,46 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.tab_version.setModel(ResourceDatabaseGenericModel(db, ResourceType.VERSION))
         self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
 
+        self.visualizer_for_template = {}
+        self.edit_button_for_template = {}
+        self.editor_for_template = {}
+        for name, template in db.requirement_template.items():
+            template_box = Foldable(name)
+            template_box.setObjectName(f"template_box {name}")
+            template_layout = QtWidgets.QVBoxLayout()
+            template_layout.setObjectName(f"template_layout {name}")
+            template_box.set_content_layout(template_layout)
+
+            edit_template_button = QtWidgets.QPushButton()
+            edit_template_button.setText("Edit")
+            edit_template_button.clicked.connect(functools.partial(self.edit_template, name))
+            template_layout.addWidget(edit_template_button)
+            self.edit_button_for_template[name] = edit_template_button
+
+            self.editor_for_template[name] = TemplateEditor(
+                template_name=name,
+                foldable=template_box,
+                edit_button=edit_template_button,
+                template_layout=template_layout,
+                visualizer=None,
+                connections_layout=None,
+            )
+            self.editor_for_template[name].create_visualizer(db)
+
+            self.tab_template_layout.addWidget(template_box)
+
     def set_allow_edits(self, value: bool):
         for tab in [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
                     self.tab_version, self.tab_misc]:
             tab.model().set_allow_edits(value)
+
+        for button in self.edit_button_for_template.values():
+            button.setVisible(value)
+
+    def edit_template(self, name: str):
+        requirement = self.db.requirement_template[name]
+        editor = ConnectionsEditor(self, self.db, requirement)
+        result = editor.exec_()
+        if result == QtWidgets.QDialog.Accepted:
+            self.db.requirement_template[name] = editor.final_requirement
+            self.editor_for_template[name].create_visualizer(self.db)
