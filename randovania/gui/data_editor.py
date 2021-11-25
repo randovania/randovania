@@ -173,7 +173,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
-            button = QRadioButton(self.points_of_interest_content)
+            button = QRadioButton(self.nodes_scroll_contents)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
             if is_first or select_node is node:
@@ -183,7 +183,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 button.setChecked(False)
             button.toggled.connect(self.on_select_node)
             is_first = False
-            self.points_of_interest_layout.addWidget(button)
+            self.nodes_scroll_layout.addWidget(button)
 
         self.new_node_button.setEnabled(True)
         self.delete_node_button.setEnabled(len(current_area.nodes) > 1)
