@@ -905,12 +905,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Mecha Abyss Spreader',
+            'gameBanner': {'description': 'Seed Hash: Nature Gyro Elevator',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - QZV3YWZM'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - MVWV5RZR'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nMecha Abyss Spreader',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nNature Gyro Elevator',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'startingItems': {
