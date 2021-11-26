@@ -1,5 +1,5 @@
 {
-    "schema_version": 5,
+    "schema_version": 6,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -1677,982 +1677,1008 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Normal Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            {
-                "index": 1,
-                "name": "Dark Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Dark Beam"
-                }
-            },
-            {
-                "index": 2,
-                "name": "Light Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Light Beam"
-                }
-            },
-            {
-                "index": 3,
-                "name": "Annihilator Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Annihilator Beam"
-                }
-            },
-            {
-                "index": 4,
-                "name": "Missile Blast Shield",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Missile",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 5,
-                "name": "Super Missile Blast Shield",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Supers",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Charge",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missile",
-                                    "amount": 5,
-                                    "negate": false
-                                }
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 6,
-                "name": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Seekers",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Combat",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DarkVisor",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
+                        }
+                    },
+                    "Dark Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Dark Beam"
+                        }
+                    },
+                    "Light Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Light Beam"
+                        }
+                    },
+                    "Annihilator Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Annihilator Beam"
+                        }
+                    },
+                    "Missile Blast Shield": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Super Missile Blast Shield": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Supers",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missile",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Seekers",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "and",
-                                                        "data": {
-                                                            "comment": null,
-                                                            "items": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Missile",
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Knowledge",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missile",
-                                                            "amount": 5,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "SeekerlessLocks",
-                                                "amount": 4,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 7,
-                "name": "Power Bomb Blast Shield",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "PowerBomb",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 8,
-                "name": "Permanently Locked",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            {
-                "index": 9,
-                "name": "Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Seekers",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Combat",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DarkVisor",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "and",
-                                                        "data": {
-                                                            "comment": null,
-                                                            "items": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Missile",
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Knowledge",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "AirUnderwater",
-                                                                        "amount": 3,
-                                                                        "negate": false
-                                                                    }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missile",
-                                                            "amount": 5,
-                                                            "negate": false
-                                                        }
+                                                            }
+                                                        ]
                                                     }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "SeekerlessLocks",
-                                                "amount": 4,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "AirUnderwater",
-                                                "amount": 3,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 10,
-                "name": "Power Bomb Blast Shield (destructible by Power Bomb Guardian)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "MorphBall",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "PowerBomb",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "events",
-                                    "name": "Event92",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 11,
-                "name": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Seekers",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Combat",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DarkVisor",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "and",
-                                                        "data": {
-                                                            "comment": null,
-                                                            "items": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Missile",
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Knowledge",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missile",
-                                                            "amount": 5,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "SeekerlessLocks",
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 12,
-                "name": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Seekers",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Combat",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DarkVisor",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "and",
-                                                        "data": {
-                                                            "comment": null,
-                                                            "items": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Missile",
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Knowledge",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 5,
+                                                                    "negate": false
                                                                 }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missile",
-                                                            "amount": 5,
-                                                            "negate": false
-                                                        }
+                                                            }
+                                                        ]
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
                                         }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "SeekerlessLocks",
-                                                "amount": 3,
-                                                "negate": false
-                                            }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SeekerlessLocks",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 13,
-                "name": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Seekers",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Combat",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DarkVisor",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
+                        }
+                    },
+                    "Power Bomb Blast Shield": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Permanently Locked": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Seekers",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "and",
-                                                        "data": {
-                                                            "comment": null,
-                                                            "items": [
-                                                                {
-                                                                    "type": "template",
-                                                                    "data": "Use Screw Attack (Space Jump)"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Missile",
-                                                                        "amount": 4,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Knowledge",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missile",
-                                                            "amount": 5,
-                                                            "negate": false
-                                                        }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
-                                                ]
-                                            }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "AirUnderwater",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "SeekerlessLocks",
-                                                "amount": 4,
-                                                "negate": false
-                                            }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SeekerlessLocks",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "AirUnderwater",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
-                        ]
-                    }
-                }
-            }
-        ],
-        "portal": [
-            {
-                "index": 0,
-                "name": "Scan Portal",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Scan",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 1,
-                "name": "Dark Portal",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "Shoot Dark Beam"
-                            },
-                            {
-                                "type": "template",
-                                "data": "Shoot Annihilator Beam"
+                        }
+                    },
+                    "Power Bomb Blast Shield (destructible by Power Bomb Guardian)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event92",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
-                        ]
-                    }
-                }
-            },
-            {
-                "index": 2,
-                "name": "Light Portal",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "Shoot Light Beam"
-                            },
-                            {
-                                "type": "template",
-                                "data": "Shoot Annihilator Beam"
+                        }
+                    },
+                    "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Seekers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SeekerlessLocks",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
-                        ]
+                        }
+                    },
+                    "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Seekers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SeekerlessLocks",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Seekers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SeekerlessLocks",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 3,
-                "name": "No Return Portal",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {
+                    "Scan Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Dark Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Dark Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Annihilator Beam"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Light Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Light Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Annihilator Beam"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "No Return Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Unknown Portal Type": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 4,
-                "name": "Unknown Portal Type",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            }
-        ],
-        "morph_ball": [
-            {
-                "index": 0,
+            "morph_ball": {
                 "name": "Morph Ball Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "MorphBall",
-                        "amount": 1,
-                        "negate": false
+                "extra": {},
+                "items": {
+                    "Morph Ball Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ]
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         {
@@ -2683,8 +2709,8 @@
                                 "area_name": "Path of Eyes",
                                 "node_name": "Door to Hall of Eyes"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Portal to Base Access": {
                                     "type": "and",
@@ -2708,8 +2734,8 @@
                                 "area_name": "Base Access",
                                 "node_name": "Portal to Hall of Eyes"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 1,
+                            "dock_type": "portal",
+                            "dock_weakness": "Dark Portal",
                             "connections": {
                                 "Door to Path of Eyes": {
                                     "type": "and",
@@ -2743,8 +2769,8 @@
                                 "area_name": "War Ritual Grounds",
                                 "node_name": "Door to Base Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Portal to Hall of Eyes": {
                                     "type": "and",
@@ -2881,8 +2907,8 @@
                                 "area_name": "Abandoned Base",
                                 "node_name": "Door to Base Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Portal to Hall of Eyes": {
                                     "type": "resource",
@@ -2908,8 +2934,8 @@
                                 "area_name": "Hall of Eyes",
                                 "node_name": "Portal to Base Access"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 2,
+                            "dock_type": "portal",
+                            "dock_weakness": "Light Portal",
                             "connections": {
                                 "Door to War Ritual Grounds": {
                                     "type": "resource",
@@ -2954,8 +2980,8 @@
                                 "area_name": "Windchamber Gateway",
                                 "node_name": "Door to Path of Eyes"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Front of Center Door": {
                                     "type": "resource",
@@ -2981,8 +3007,8 @@
                                 "area_name": "Abandoned Base",
                                 "node_name": "Portal to Path of Eyes"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 3,
+                            "dock_type": "portal",
+                            "dock_weakness": "No Return Portal",
                             "connections": {
                                 "Door to Hall of Eyes": {
                                     "type": "and",
@@ -3006,8 +3032,8 @@
                                 "area_name": "Hall of Eyes",
                                 "node_name": "Door to Path of Eyes"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Front of Translator Gate": {
                                     "type": "and",
@@ -3208,8 +3234,8 @@
                                 "area_name": "Torvus Transport Access",
                                 "node_name": "Door to Path of Eyes"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Translator Gate": {
                                     "type": "and",
@@ -3706,8 +3732,8 @@
                                 "area_name": "Shrine Access",
                                 "node_name": "Door to War Ritual Grounds"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Central Safe Zone": {
                                     "type": "and",
@@ -3787,8 +3813,8 @@
                                 "area_name": "Base Access",
                                 "node_name": "Door to War Ritual Grounds"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Central Safe Zone": {
                                     "type": "and",
@@ -4023,8 +4049,8 @@
                                 "area_name": "Path of Eyes",
                                 "node_name": "Portal from Abandoned Base"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 2,
+                            "dock_type": "portal",
+                            "dock_weakness": "Light Portal",
                             "connections": {
                                 "Door to Base Access": {
                                     "type": "resource",
@@ -4050,8 +4076,8 @@
                                 "area_name": "Base Access",
                                 "node_name": "Door to Abandoned Base"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Portal to Path of Eyes": {
                                     "type": "or",
@@ -4324,8 +4350,8 @@
                                 "area_name": "Path of Eyes",
                                 "node_name": "Door to Windchamber Gateway"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Door to Grand Windchamber": {
                                     "type": "or",
@@ -4739,8 +4765,8 @@
                                 "area_name": "Path of Eyes",
                                 "node_name": "Door to Torvus Transport Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Transport to Torvus Bog": {
                                     "type": "and",
@@ -4764,8 +4790,8 @@
                                 "area_name": "Transport to Torvus Bog",
                                 "node_name": "Door to Torvus Transport Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Door to Path of Eyes": {
                                     "type": "and",
@@ -4799,8 +4825,8 @@
                                 "area_name": "War Ritual Grounds",
                                 "node_name": "Door to Shrine Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Safe Zone": {
                                     "type": "and",
@@ -4907,8 +4933,8 @@
                                 "area_name": "Defiled Shrine",
                                 "node_name": "Door to Shrine Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Safe Zone": {
                                     "type": "and",
@@ -4946,8 +4972,8 @@
                                 "area_name": "Gateway Access",
                                 "node_name": "Door to Shrine Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 6,
+                            "dock_type": "door",
+                            "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
                             "connections": {
                                 "Safe Zone": {
                                     "type": "and",
@@ -5192,8 +5218,8 @@
                                 "area_name": "Torvus Transport Access",
                                 "node_name": "Door to Transport to Torvus Bog"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Elevator to Torvus Bog - Transport to Temple Grounds": {
                                     "type": "resource",
@@ -5254,8 +5280,8 @@
                                 "area_name": "Shrine Access",
                                 "node_name": "Door to Defiled Shrine"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Safe Zone (Ship Location)": {
                                     "type": "and",
@@ -5520,8 +5546,8 @@
                                 "area_name": "Sky Temple Gateway",
                                 "node_name": "Door to Gateway Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Center Safe Zone": {
                                     "type": "and",
@@ -5559,8 +5585,8 @@
                                 "area_name": "Shrine Access",
                                 "node_name": "Door to Gateway Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Center Safe Zone": {
                                     "type": "and",
@@ -5704,8 +5730,8 @@
                                 "area_name": "Gateway Access",
                                 "node_name": "Door to Sky Temple Gateway"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Spawn Point/Front of Teleporter": {
                                     "type": "or",
@@ -6188,8 +6214,8 @@
                                 "area_name": "Temple Transport Access",
                                 "node_name": "Door to Transport to Temple Grounds"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Elevator to Temple Grounds - Transport to Torvus Bog": {
                                     "type": "resource",
@@ -6250,8 +6276,8 @@
                                 "area_name": "Transport to Temple Grounds",
                                 "node_name": "Door to Temple Transport Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "and",
@@ -6275,8 +6301,8 @@
                                 "area_name": "Torvus Lagoon",
                                 "node_name": "Door to Temple Transport Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Transport to Temple Grounds": {
                                     "type": "and",
@@ -6310,8 +6336,8 @@
                                 "area_name": "Temple Transport Access",
                                 "node_name": "Door to Torvus Lagoon"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Save Station A": {
                                     "type": "or",
@@ -6474,8 +6500,8 @@
                                 "area_name": "Save Station A",
                                 "node_name": "Door to Torvus Lagoon"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Door to Temple Transport Access": {
                                     "type": "and",
@@ -6499,8 +6525,8 @@
                                 "area_name": "Portal Chamber (Light)",
                                 "node_name": "Door to Torvus Lagoon"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Temple Transport Access": {
                                     "type": "or",
@@ -6573,8 +6599,8 @@
                                 "area_name": "Path of Roots",
                                 "node_name": "Door to Torvus Lagoon"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Temple Transport Access": {
                                     "type": "and",
@@ -6598,8 +6624,8 @@
                                 "area_name": "Ruined Alcove",
                                 "node_name": "Door to Torvus Lagoon"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Portal Chamber": {
                                     "type": "resource",
@@ -6690,8 +6716,8 @@
                                 "area_name": "Torvus Lagoon",
                                 "node_name": "Door to Ruined Alcove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Forgotten Bridge": {
                                     "type": "and",
@@ -6715,8 +6741,8 @@
                                 "area_name": "Forgotten Bridge",
                                 "node_name": "Door to Ruined Alcove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "and",
@@ -6750,8 +6776,8 @@
                                 "area_name": "Portal Chamber (Dark)",
                                 "node_name": "Portal to Portal Chamber"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 1,
+                            "dock_type": "portal",
+                            "dock_weakness": "Dark Portal",
                             "connections": {
                                 "Pickup (Missile)": {
                                     "type": "and",
@@ -6775,8 +6801,8 @@
                                 "area_name": "Torvus Lagoon",
                                 "node_name": "Door to Portal Chamber"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Portal to Portal Chamber": {
                                     "type": "and",
@@ -6883,8 +6909,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Portal Chamber"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "and",
@@ -6989,8 +7015,8 @@
                                 "area_name": "Torvus Lagoon",
                                 "node_name": "Door to Path of Roots"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Next to Pickup": {
                                     "type": "and",
@@ -7051,8 +7077,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Path of Roots"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "resource",
@@ -7532,8 +7558,8 @@
                                 "area_name": "Torvus Lagoon",
                                 "node_name": "Door to Save Station A"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Save Station": {
                                     "type": "and",
@@ -7567,8 +7593,8 @@
                                 "area_name": "Plaza Access",
                                 "node_name": "Door to Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Door to Grove Access": {
                                     "type": "and",
@@ -7592,8 +7618,8 @@
                                 "area_name": "Dark Forgotten Bridge",
                                 "node_name": "Portal to Forgotten Bridge"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 1,
+                            "dock_type": "portal",
+                            "dock_weakness": "Dark Portal",
                             "connections": {
                                 "Door to Ruined Alcove": {
                                     "type": "and",
@@ -7741,8 +7767,8 @@
                                 "area_name": "Ruined Alcove",
                                 "node_name": "Door to Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Bridge Center": {
                                     "type": "or",
@@ -7883,8 +7909,8 @@
                                 "area_name": "Grove Access",
                                 "node_name": "Door to Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Plaza Access": {
                                     "type": "and",
@@ -8030,8 +8056,8 @@
                                 "area_name": "Abandoned Worksite",
                                 "node_name": "Door to Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Ruined Alcove": {
                                     "type": "and",
@@ -8457,8 +8483,8 @@
                                 "area_name": "Venomous Pond",
                                 "node_name": "Door to Portal Chamber"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Poisoned Bog": {
                                     "type": "and",
@@ -8561,8 +8587,8 @@
                                 "area_name": "Portal Chamber (Light)",
                                 "node_name": "Portal to Portal Chamber"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 2,
+                            "dock_type": "portal",
+                            "dock_weakness": "Light Portal",
                             "connections": {
                                 "Door to Poisoned Bog": {
                                     "type": "and",
@@ -8605,8 +8631,8 @@
                                 "area_name": "Poisoned Bog",
                                 "node_name": "Door to Portal Chamber"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Venomous Pond": {
                                     "type": "and",
@@ -8840,8 +8866,8 @@
                                 "area_name": "Torvus Map Station",
                                 "node_name": "Door to Great Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Front of Translator Gate": {
                                     "type": "and",
@@ -8900,8 +8926,8 @@
                                 "area_name": "Temple Access",
                                 "node_name": "Door to Great Bridge (Top)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Torvus Map Station": {
                                     "type": "and",
@@ -9036,8 +9062,8 @@
                                 "area_name": "Abandoned Worksite",
                                 "node_name": "Door to Great Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Temple Access (Top)": {
                                     "type": "or",
@@ -9151,8 +9177,8 @@
                                 "area_name": "Path of Roots",
                                 "node_name": "Door to Great Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Temple Access (Bottom)": {
                                     "type": "or",
@@ -9293,8 +9319,8 @@
                                 "area_name": "Portal Chamber (Light)",
                                 "node_name": "Door to Great Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Door to Temple Access (Bottom)": {
                                     "type": "and",
@@ -9318,8 +9344,8 @@
                                 "area_name": "Temple Access",
                                 "node_name": "Door to Great Bridge (Bottom)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Map Station": {
                                     "type": "and",
@@ -9874,8 +9900,8 @@
                                 "area_name": "Poisoned Bog",
                                 "node_name": "Door to Cache A"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Pickup (Dark Ammo)": {
                                     "type": "resource",
@@ -9931,8 +9957,8 @@
                                 "area_name": "Torvus Plaza",
                                 "node_name": "Door to Plaza Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Forgotten Bridge": {
                                     "type": "and",
@@ -10005,8 +10031,8 @@
                                 "area_name": "Forgotten Bridge",
                                 "node_name": "Door to Plaza Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Plaza": {
                                     "type": "and",
@@ -10400,8 +10426,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Abandoned Worksite"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Pickup (Missile)": {
                                     "type": "or",
@@ -10771,8 +10797,8 @@
                                 "area_name": "Forgotten Bridge",
                                 "node_name": "Door to Abandoned Worksite"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Tunnel": {
                                     "type": "and",
@@ -11224,8 +11250,8 @@
                                 "area_name": "Brooding Ground",
                                 "node_name": "Door to Dark Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Door to Putrid Alcove": {
                                     "type": "and",
@@ -11377,8 +11403,8 @@
                                 "area_name": "Dark Falls",
                                 "node_name": "Door to Dark Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Arena Tunnel": {
                                     "type": "and",
@@ -11537,8 +11563,8 @@
                                 "area_name": "Putrid Alcove",
                                 "node_name": "Door to Dark Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 7,
+                            "dock_type": "door",
+                            "dock_weakness": "Power Bomb Blast Shield",
                             "connections": {
                                 "Portal to Forgotten Bridge": {
                                     "type": "and",
@@ -11945,8 +11971,8 @@
                                 "area_name": "Dark Arena Tunnel",
                                 "node_name": "Door to Dark Forgotten Bridge"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Dark Falls": {
                                     "type": "and",
@@ -12088,8 +12114,8 @@
                                 "area_name": "Forgotten Bridge",
                                 "node_name": "Portal to Dark Forgotten Bridge"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 2,
+                            "dock_type": "portal",
+                            "dock_weakness": "Light Portal",
                             "connections": {
                                 "Door to Dark Falls": {
                                     "type": "and",
@@ -13214,8 +13240,8 @@
                                 "area_name": "Torvus Grove",
                                 "node_name": "Door to Grove Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Forgotten Bridge": {
                                     "type": "and",
@@ -13239,8 +13265,8 @@
                                 "area_name": "Forgotten Bridge",
                                 "node_name": "Door to Grove Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Torvus Grove": {
                                     "type": "and",
@@ -13274,8 +13300,8 @@
                                 "area_name": "Putrid Alcove",
                                 "node_name": "Door to Poisoned Bog"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 7,
+                            "dock_type": "door",
+                            "dock_weakness": "Power Bomb Blast Shield",
                             "connections": {
                                 "Central Safe Zone (Beacon)": {
                                     "type": "and",
@@ -13313,8 +13339,8 @@
                                 "area_name": "Cache A",
                                 "node_name": "Door to Poisoned Bog"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 12,
+                            "dock_type": "door",
+                            "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                             "connections": {
                                 "Central Safe Zone (Beacon)": {
                                     "type": "and",
@@ -13352,8 +13378,8 @@
                                 "area_name": "Portal Chamber (Dark)",
                                 "node_name": "Door to Poisoned Bog"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Central Safe Zone (Beacon)": {
                                     "type": "and",
@@ -14036,8 +14062,8 @@
                                 "area_name": "Save Station 1",
                                 "node_name": "Door to Venomous Pond"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_type": "door",
+                            "dock_weakness": "Missile Blast Shield",
                             "connections": {
                                 "Door to Brooding Ground": {
                                     "type": "or",
@@ -14289,8 +14315,8 @@
                                 "area_name": "Brooding Ground",
                                 "node_name": "Door to Venomous Pond"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Save Station 1": {
                                     "type": "or",
@@ -14628,8 +14654,8 @@
                                 "area_name": "Dark Torvus Temple Access",
                                 "node_name": "Door to Venomous Pond"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Save Station 1": {
                                     "type": "and",
@@ -15049,8 +15075,8 @@
                                 "area_name": "Portal Chamber (Dark)",
                                 "node_name": "Door to Venomous Pond"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Brooding Ground": {
                                     "type": "and",
@@ -15329,8 +15355,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Temple Access (Top)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Above Pickup": {
                                     "type": "and",
@@ -15354,8 +15380,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Temple Access (Bottom)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Below Pickup": {
                                     "type": "resource",
@@ -15381,8 +15407,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Temple Access (Bottom)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Below Pickup": {
                                     "type": "resource",
@@ -15408,8 +15434,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Temple Access (Top)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Above Pickup": {
                                     "type": "and",
@@ -15690,8 +15716,8 @@
                                 "area_name": "Great Bridge",
                                 "node_name": "Door to Torvus Map Station"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Map Station": {
                                     "type": "and",
@@ -15741,8 +15767,8 @@
                                 "area_name": "Plaza Access",
                                 "node_name": "Door to Torvus Plaza"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Pickup (Energy Tank)": {
                                     "type": "or",
@@ -16032,8 +16058,8 @@
                                 "area_name": "Dark Forgotten Bridge",
                                 "node_name": "Door to Dark Arena Tunnel"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Dark Torvus Arena": {
                                     "type": "and",
@@ -16203,8 +16229,8 @@
                                 "area_name": "Dark Torvus Arena",
                                 "node_name": "Door to Dark Arena Tunnel"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Forgotten Bridge": {
                                     "type": "and",
@@ -16393,8 +16419,8 @@
                                 "area_name": "Poisoned Bog",
                                 "node_name": "Door to Putrid Alcove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 7,
+                            "dock_type": "door",
+                            "dock_weakness": "Power Bomb Blast Shield",
                             "connections": {
                                 "Door to Dark Forgotten Bridge": {
                                     "type": "or",
@@ -16654,8 +16680,8 @@
                                 "area_name": "Dark Forgotten Bridge",
                                 "node_name": "Door to Putrid Alcove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 7,
+                            "dock_type": "door",
+                            "dock_weakness": "Power Bomb Blast Shield",
                             "connections": {
                                 "Door to Poisoned Bog": {
                                     "type": "or",
@@ -17248,8 +17274,8 @@
                                 "area_name": "Dark Forgotten Bridge",
                                 "node_name": "Door to Brooding Ground"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Door to Venomous Pond": {
                                     "type": "and",
@@ -17449,8 +17475,8 @@
                                 "area_name": "Venomous Pond",
                                 "node_name": "Door to Brooding Ground"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Forgotten Bridge": {
                                     "type": "and",
@@ -17762,8 +17788,8 @@
                                 "area_name": "Polluted Mire",
                                 "node_name": "Door to Dark Falls"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Save Station": {
                                     "type": "and",
@@ -17801,8 +17827,8 @@
                                 "area_name": "Dark Forgotten Bridge",
                                 "node_name": "Door to Dark Falls"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Save Station": {
                                     "type": "and",
@@ -17850,8 +17876,8 @@
                                 "area_name": "Grove Access",
                                 "node_name": "Door to Torvus Grove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Underground Tunnel": {
                                     "type": "and",
@@ -17875,8 +17901,8 @@
                                 "area_name": "Underground Tunnel",
                                 "node_name": "Door to Torvus Grove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Grove Access": {
                                     "type": "and",
@@ -17935,8 +17961,8 @@
                                 "area_name": "Meditation Vista",
                                 "node_name": "Door to Torvus Grove"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Grove Access": {
                                     "type": "and",
@@ -18053,8 +18079,8 @@
                                 "area_name": "Venomous Pond",
                                 "node_name": "Door to Dark Torvus Temple Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Dark Torvus Temple": {
                                     "type": "and",
@@ -18157,8 +18183,8 @@
                                 "area_name": "Dark Torvus Temple",
                                 "node_name": "Door to Dark Torvus Temple Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Venomous Pond": {
                                     "type": "and",
@@ -18289,8 +18315,8 @@
                                 "area_name": "Venomous Pond",
                                 "node_name": "Door to Save Station 1"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Save Station": {
                                     "type": "resource",
@@ -18326,8 +18352,8 @@
                                 "area_name": "Controller Access",
                                 "node_name": "Door to Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Door to Temple Access (Top)": {
                                     "type": "resource",
@@ -18360,8 +18386,8 @@
                                 "area_name": "Underground Tunnel",
                                 "node_name": "Door to Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Lower Level": {
                                     "type": "and",
@@ -18411,8 +18437,8 @@
                                 "area_name": "Temple Access",
                                 "node_name": "Door to Torvus Temple (Top)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Pickup (Super Missile)": {
                                     "type": "resource",
@@ -18480,8 +18506,8 @@
                                 "area_name": "Transport to Agon Wastes",
                                 "node_name": "Door to Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 11,
+                            "dock_type": "door",
+                            "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
                             "connections": {
                                 "Lower Level": {
                                     "type": "resource",
@@ -18507,8 +18533,8 @@
                                 "area_name": "Temple Access",
                                 "node_name": "Door to Torvus Temple (Bottom)"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Lower Level": {
                                     "type": "and",
@@ -18532,8 +18558,8 @@
                                 "area_name": "Underground Transport",
                                 "node_name": "Door to Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Lower Level": {
                                     "type": "and",
@@ -18804,8 +18830,8 @@
                                 "area_name": "Dark Arena Tunnel",
                                 "node_name": "Door to Dark Torvus Arena"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Pickup 2 (Dark Torvus Key 1)": {
                                     "type": "and",
@@ -19488,8 +19514,8 @@
                                 "area_name": "Dark Falls",
                                 "node_name": "Door to Polluted Mire"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_type": "door",
+                            "dock_weakness": "Dark Door",
                             "connections": {
                                 "Door to Gloom Vista": {
                                     "type": "and",
@@ -19527,8 +19553,8 @@
                                 "area_name": "Gloom Vista",
                                 "node_name": "Door to Polluted Mire"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Falls": {
                                     "type": "and",
@@ -19654,8 +19680,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Underground Tunnel"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Grove": {
                                     "type": "resource",
@@ -19690,8 +19716,8 @@
                                 "area_name": "Torvus Grove",
                                 "node_name": "Door to Underground Tunnel"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Door to Torvus Temple": {
                                     "type": "and",
@@ -19855,8 +19881,8 @@
                                 "area_name": "Gloom Vista",
                                 "node_name": "Portal to Meditation Vista"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 0,
+                            "dock_type": "portal",
+                            "dock_weakness": "Scan Portal",
                             "connections": {
                                 "Door to Torvus Grove": {
                                     "type": "and",
@@ -19880,8 +19906,8 @@
                                 "area_name": "Torvus Grove",
                                 "node_name": "Door to Meditation Vista"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Portal to Gloom Vista": {
                                     "type": "and",
@@ -20087,8 +20113,8 @@
                                 "area_name": "Ammo Station",
                                 "node_name": "Door to Dark Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Central Safe Zone (Bottom)": {
                                     "type": "and",
@@ -20135,8 +20161,8 @@
                                 "area_name": "Dark Torvus Temple Access",
                                 "node_name": "Door to Dark Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 2,
+                            "dock_type": "door",
+                            "dock_weakness": "Light Door",
                             "connections": {
                                 "Safe Zone (Temple Access Side)": {
                                     "type": "resource",
@@ -20162,8 +20188,8 @@
                                 "area_name": "Dark Controller Access",
                                 "node_name": "Door to Dark Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Central Safe Zone (Bottom)": {
                                     "type": "and",
@@ -20206,8 +20232,8 @@
                                 "area_name": "Cache B",
                                 "node_name": "Door to Dark Torvus Temple"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 5,
+                            "dock_type": "door",
+                            "dock_weakness": "Super Missile Blast Shield",
                             "connections": {
                                 "Central Safe Zone (Bottom)": {
                                     "type": "and",
@@ -21025,8 +21051,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Transport to Agon Wastes"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 13,
+                            "dock_type": "door",
+                            "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)",
                             "connections": {}
                         }
                     }
@@ -21052,8 +21078,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Underground Transport"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {}
                         }
                     }
@@ -21079,8 +21105,8 @@
                                 "area_name": "Torvus Temple",
                                 "node_name": "Door to Controller Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Energy Controller": {
                                     "type": "or",
@@ -21152,8 +21178,8 @@
                                 "area_name": "Torvus Energy Controller",
                                 "node_name": "Door to Controller Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Torvus Temple": {
                                     "type": "or",
@@ -21235,8 +21261,8 @@
                                 "area_name": "Meditation Vista",
                                 "node_name": "Portal to Gloom Vista"
                             },
-                            "dock_type": 3,
-                            "dock_weakness_index": 0,
+                            "dock_type": "portal",
+                            "dock_weakness": "Scan Portal",
                             "connections": {
                                 "Door to Polluted Mire": {
                                     "type": "resource",
@@ -21262,8 +21288,8 @@
                                 "area_name": "Polluted Mire",
                                 "node_name": "Door to Gloom Vista"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Portal to Meditation Vista": {
                                     "type": "or",
@@ -21341,8 +21367,8 @@
                                 "area_name": "Dark Torvus Temple",
                                 "node_name": "Door to Ammo Station"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Ammo Station": {
                                     "type": "resource",
@@ -21396,8 +21422,8 @@
                                 "area_name": "Dark Torvus Temple",
                                 "node_name": "Door to Cache B"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Pickup (Energy Tank)": {
                                     "type": "resource",
@@ -21495,8 +21521,8 @@
                                 "area_name": "Dark Torvus Energy Controller",
                                 "node_name": "Door to Dark Controller Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Torvus Temple": {
                                     "type": "and",
@@ -21585,8 +21611,8 @@
                                 "area_name": "Dark Torvus Temple",
                                 "node_name": "Door to Dark Controller Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Door to Dark Torvus Energy Controller": {
                                     "type": "and",
@@ -21685,8 +21711,8 @@
                                 "area_name": "Controller Access",
                                 "node_name": "Door to Torvus Energy Controller"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Event - Torvus Energy Returned": {
                                     "type": "resource",
@@ -21808,8 +21834,8 @@
                                 "area_name": "Dark Controller Access",
                                 "node_name": "Door to Dark Torvus Energy Controller"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Event - Dark Torvus Energy Taken": {
                                     "type": "or",
