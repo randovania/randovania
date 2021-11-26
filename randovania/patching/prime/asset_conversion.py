@@ -10,7 +10,7 @@ import nod
 from retro_data_structures.asset_provider import AssetProvider, InvalidAssetId, UnknownAssetId
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter
-from retro_data_structures.dependencies import all_converted_dependencies
+from retro_data_structures.dependencies import all_converted_dependencies, Dependency
 from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
 
@@ -274,6 +274,42 @@ def convert_prime2_pickups():
         for (_, old_id), new_id in converter.converted_ids.items()
     }
 
+    unique_anim = {}
+    unique_evnt = []
+    dont_delete = []
+    for anim in converter.converted_assets.values():
+        if anim.type != "ANIM":
+            continue
+
+        for ancs in converter.converted_assets.values():
+            if ancs.type != "ANCS":
+                continue
+
+            # If the anim is a dependency of the ancs
+            if any(anim.id in x for x in converted_dependencies[ancs.id]):
+                for dep in converted_dependencies[ancs.id]:
+                    if anim.id in unique_anim:
+                        for depb in converted_dependencies[ancs.id]:
+                            if depb.type == "EVNT":
+                                if depb.id not in unique_evnt:
+                                    unique_evnt.append(depb.id)
+                                    converted_dependencies[ancs.id].remove(depb)
+                                    converted_dependencies[ancs.id].add(Dependency("EVNT", unique_anim[anim.id]))
+                                else:
+                                    dont_delete.append(depb.id)
+                        continue
+                    if dep.type == "EVNT":
+                        unique_anim[anim.id] = dep.id
+                        anim.resource["anim"]["event_id"] = dep.id
+                        break
+
+    deleted_evnts = []
+    for id in unique_evnt:
+        if id not in dont_delete:
+            deleted_evnts.append(id)
+    for id in deleted_evnts:
+        converter.converted_assets.pop(id)
+
     Path("converted").mkdir(exist_ok=True)
     with open("converted/meta.json", "w") as meta_out:
         json.dump({
@@ -299,19 +335,6 @@ def convert_prime2_pickups():
                 for asset in converter.converted_assets.values()
             ],
         }, meta_out, indent=4)
-
-    unique_anim = []
-    for asset in converter.converted_assets.values():
-        if asset.type == "ANIM":
-            for assetb in converter.converted_assets.values():
-                if assetb.type == "ANCS" and any(asset.id in x for x in converted_dependencies[assetb.id]):
-                    for dep in converted_dependencies[assetb.id]:
-                        if asset.id in unique_anim:
-                            continue
-                        if dep.type == "EVNT":
-                            unique_anim.append(asset.id)
-                            asset.resource["anim"]["event_id"] = dep.id
-                            break
 
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
