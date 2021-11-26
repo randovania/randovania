@@ -115,12 +115,18 @@ Extra - asset_id: collision_camera_002
       Trivial
 
 > Tile Group (WEIGHT); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_000
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (POWERBOMB); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_001
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBOMB',)
 
 ----------------
 Elevator Cutscene
@@ -134,7 +140,7 @@ Raven Beak Arena
 Extra - total_boundings: {'x1': 3000.0, 'x2': 7100.0, 'y1': 1800.0, 'y2': 4000.0}
 Extra - polygon: [[7100.0, 4000.0], [3000.0, 4000.0], [3000.0, 1800.0], [7100.0, 1800.0]]
 Extra - asset_id: collision_camera_004
-> Before Fight; Heals? False
+> Before Fight; Heals? False; Spawn Point
   > Escape Sequence
       All of the following:
           # TODO: accurate boss requirements incl. Combat tricks
@@ -145,4 +151,5 @@ Extra - asset_id: collision_camera_004
       Trivial
 
 > Escape Sequence; Heals? True
+  * Teleporter to Hanubia - Raven Beak X Arena
 
