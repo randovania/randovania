@@ -181,9 +181,8 @@ requirement_type_map["and"] = ConstructRequirementArray
 requirement_type_map["or"] = ConstructRequirementArray
 
 ConstructDockWeakness = Struct(
-    index=VarInt,
-    name=String,
     lock_type=VarInt,
+    extra=JsonEncodedValue,
     requirement=ConstructRequirement,
 )
 
@@ -240,7 +239,7 @@ class NodeAdapter(construct.Adapter):
 
 
 ConstructNode = NodeAdapter(Struct(
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, configurable_node=5,
                              logbook=6, player_ship=7),
     data=Switch(
         lambda this: this.node_type,
@@ -251,8 +250,8 @@ ConstructNode = NodeAdapter(Struct(
             "dock": Struct(
                 **NodeBaseFields,
                 destination=ConstructNodeIdentifier,
-                dock_type=Byte,
-                dock_weakness_index=VarInt,
+                dock_type=String,
+                dock_weakness=String,
             ),
             "pickup": Struct(
                 **NodeBaseFields,
@@ -269,9 +268,8 @@ ConstructNode = NodeAdapter(Struct(
                 **NodeBaseFields,
                 event_name=String,
             ),
-            "translator_gate": Struct(
+            "configurable_node": Struct(
                 **NodeBaseFields,
-                gate_index=VarInt,
             ),
             "logbook": Struct(
                 **NodeBaseFields,
@@ -315,6 +313,18 @@ ConstructMinimalLogicDatabase = Struct(
     )),
 )
 
+ConstructDockWeaknessDatabase = Struct(
+    types=ConstructDict(Struct(
+        name=String,
+        extra=JsonEncodedValue,
+        items=ConstructDict(ConstructDockWeakness),
+    )),
+    default_weakness=Struct(
+        type=String,
+        name=String,
+    )
+)
+
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
@@ -328,11 +338,7 @@ ConstructGame = Struct(
         minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
         victory_condition=ConstructRequirement,
 
-        dock_weakness_database=Struct(
-            door=PrefixedArray(VarInt, ConstructDockWeakness),
-            portal=PrefixedArray(VarInt, ConstructDockWeakness),
-            morph_ball=PrefixedArray(VarInt, ConstructDockWeakness),
-        ),
+        dock_weakness_database=ConstructDockWeaknessDatabase,
         worlds=PrefixedArray(VarInt, ConstructWorld),
     ), "lzma")
 )

@@ -5,10 +5,12 @@ from typing import Dict, Iterator
 
 import randovania
 from randovania.game_description import default_database
-from randovania.game_description.assignment import GateAssignment, PickupTarget
+from randovania.game_description.assignment import NodeConfigurationAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
+from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
@@ -78,6 +80,10 @@ _ELEVATOR_ROOMS_MAP_ASSET_IDS = [
 ]
 
 
+def item_id_for_item_resource(resource: ItemResourceInfo) -> int:
+    return resource.extra["item_id"]
+
+
 def _area_identifier_to_json(world_list: WorldList, identifier: AreaIdentifier) -> dict:
     world = world_list.world_by_area_location(identifier)
     area = world.area_by_identifier(identifier)
@@ -93,7 +99,7 @@ def _create_spawn_point_field(patches: GamePatches,
                               ) -> dict:
     capacities = [
         {
-            "index": item.extra["item_id"],
+            "index": item_id_for_item_resource(item),
             "amount": patches.starting_items.get(item, 0),
         }
         for item in game.resource_database.item
@@ -166,7 +172,27 @@ def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[NodeIdentifier, T
     }
 
 
-def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
+def _translator_index_for_requirement(requirement: Requirement) -> int:
+    assert isinstance(requirement, RequirementAnd)
+    assert 1 <= len(requirement.items) <= 2
+
+    items: set = set()
+    for req in requirement.items:
+        assert isinstance(req, ResourceRequirement)
+        assert req.amount == 1
+        assert not req.negate
+        assert isinstance(req.resource, ItemResourceInfo)
+        items.add(item_id_for_item_resource(req.resource))
+
+    # Remove Scan Visor, as it should always be present
+    items.remove(9)
+    for it in items:
+        return it
+    # If nothing is present, then return Scan Visor as "free"
+    return 9
+
+
+def _create_translator_gates_field(game: GameDescription, gate_assignment: NodeConfigurationAssignment) -> list:
     """
     Creates the translator gate entries in the patcher file
     :param gate_assignment:
@@ -174,10 +200,10 @@ def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
     """
     return [
         {
-            "gate_index": gate.index,
-            "translator_index": translator.extra["item_id"],
+            "gate_index": game.world_list.node_by_identifier(identifier).extra["gate_index"],
+            "translator_index": _translator_index_for_requirement(requirement),
         }
-        for gate, translator in gate_assignment.items()
+        for identifier, requirement in gate_assignment.items()
     ]
 
 
@@ -185,7 +211,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
     """
 
     :param specific_patches:
-    :param elevators:
+    :param elevator_shuffle_mode:
     :return:
     """
     specific_patches["always_up_gfmc_compound"] = True
@@ -498,7 +524,7 @@ def create_patcher_file(description: LayoutDescription,
     result["elevators"] = _create_elevators_field(patches, game)
 
     # Add translators
-    result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
+    result["translator_gates"] = _create_translator_gates_field(game, patches.configurable_nodes)
 
     # Scan hints
     result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,

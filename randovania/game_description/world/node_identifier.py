@@ -22,6 +22,14 @@ class NodeIdentifier:
     def from_json(cls, value: dict) -> "NodeIdentifier":
         return cls(AreaIdentifier.from_json(value), value["node_name"])
 
+    @property
+    def as_string(self) -> str:
+        return "{}/{}/{}".format(self.world_name, self.area_name, self.node_name)
+
+    @classmethod
+    def from_string(cls, value: str) -> "NodeIdentifier":
+        return cls.create(*value.split("/", 2))
+
     def __repr__(self):
         return "{}/node {}".format(
             self.area_identifier, self.node_name,

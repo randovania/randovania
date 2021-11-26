@@ -16,7 +16,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 
@@ -171,34 +171,29 @@ def write_resource_database(resource_database: ResourceDatabase):
 
 def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
     return {
-        "index": dock_weakness.index,
-        "name": dock_weakness.name,
         "lock_type": dock_weakness.lock_type.value,
+        "extra": dock_weakness.extra,
         "requirement": write_requirement(dock_weakness.requirement)
     }
 
 
 def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
-    errors = []
-    for array in (database.door, database.portal, database.morph_ball):
-        errors.extend(check_for_duplicated_index(array, "index"))
-
-    if errors:
-        raise ValueError("Errors in dock weaknesses: {}".format("\n".join(errors)))
-
     return {
-        "door": [
-            write_dock_weakness(weakness)
-            for weakness in database.door
-        ],
-        "portal": [
-            write_dock_weakness(weakness)
-            for weakness in database.portal
-        ],
-        "morph_ball": [
-            write_dock_weakness(weakness)
-            for weakness in database.morph_ball
-        ],
+        "types": {
+            dock_type.short_name: {
+                "name": dock_type.long_name,
+                "extra": dock_type.extra,
+                "items": {
+                    name: write_dock_weakness(weakness)
+                    for name, weakness in database.weaknesses[dock_type].items()
+                }
+            }
+            for dock_type in database.dock_types
+        },
+        "default_weakness": {
+            "type": database.default_weakness[0].short_name,
+            "name": database.default_weakness[1].name,
+        }
     }
 
 
@@ -227,8 +222,8 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "dock"
         data.update(common_fields)
         data["destination"] = node.default_connection.as_json
-        data["dock_type"] = node.default_dock_weakness.dock_type.value
-        data["dock_weakness_index"] = node.default_dock_weakness.index
+        data["dock_type"] = node.dock_type.short_name
+        data["dock_weakness"] = node.default_dock_weakness.name
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"
@@ -248,10 +243,9 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["event_name"] = node.resource().short_name
 
-    elif isinstance(node, TranslatorGateNode):
-        data["node_type"] = "translator_gate"
+    elif isinstance(node, ConfigurableNode):
+        data["node_type"] = "configurable_node"
         data.update(common_fields)
-        data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
         data["node_type"] = "logbook"
