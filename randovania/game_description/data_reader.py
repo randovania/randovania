@@ -29,7 +29,7 @@ from randovania.game_description.world.dock import (
 )
 from randovania.game_description.world.node import (
     GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode, wrap_frozen
 )
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
@@ -247,7 +247,7 @@ class WorldReader:
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
-                "extra": frozendict(data["extra"]),
+                "extra": wrap_frozen(data["extra"]),
                 "index": self.generic_index,
             }
             node_type: int = data["node_type"]
@@ -335,7 +335,11 @@ class WorldReader:
         connections = {}
         for origin in nodes:
             origin_data = data["nodes"][origin.name]
-            connections[origin] = {}
+            try:
+                connections[origin] = {}
+            except TypeError as e:
+                print(origin.extra)
+                raise KeyError(f"Area {area_name}, node {origin}: {e}")
 
             for target_name, target_requirement in origin_data["connections"].items():
                 try:
