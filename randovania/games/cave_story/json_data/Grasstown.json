@@ -1429,7 +1429,11 @@
                 "Door to Grasstown": {
                     "node_type": "dock",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 105.16625716625717,
+                        "y": 84.65847665847667,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "destination": {
@@ -1444,7 +1448,11 @@
                 "Event - Saved Kazuma": {
                     "node_type": "event",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 184.96969696969697,
+                        "y": 86.49303849303848,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "event_name": "eventKazuma",
@@ -1453,10 +1461,41 @@
                 "Save Point/Refill": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 64.80589680589681,
+                        "y": 86.95167895167896,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {}
+                },
+                "Teleporter to Jail No. 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 246.89,
+                        "y": 85.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Plantation",
+                        "area_name": "Jail No. 2",
+                        "node_name": "Teleporter to Shelter"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {
+                        "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
