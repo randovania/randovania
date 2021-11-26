@@ -39,7 +39,7 @@ def test_paintEvent(skip_qtbot, canvas, mocker):
 
 
 def test_contextMenuEvent(skip_qtbot, canvas, mocker):
-    mock_qmenu = mocker.patch("PySide2.QtWidgets.QMenu")
+    mock_qmenu: MagicMock = mocker.patch("PySide2.QtWidgets.QMenu")
 
     event = MagicMock()
     event.globalPos.return_value = QPoint(100, 200)
@@ -49,6 +49,7 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
     canvas.contextMenuEvent(event)
 
     # Assert
-    mock_qmenu.assert_called_once_with(canvas)
+    mock_qmenu.assert_any_call(canvas)
+    mock_qmenu.assert_any_call('collision_camera_045 (A)', canvas)
     event.globalPos.assert_has_calls([call(), call()])
     mock_qmenu.return_value.exec_.assert_called_once_with(QPoint(100, 200))
