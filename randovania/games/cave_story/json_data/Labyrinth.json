@@ -913,7 +913,29 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Exit to Reservoir": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBoss",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Ironhead": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Exit to Reservoir": {
                     "node_type": "dock",
@@ -945,7 +967,37 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Ironhead)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Ironhead)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 580.51,
+                        "y": 174.15,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 199,
+                    "major_location": false,
+                    "connections": {
+                        "Exit to Reservoir": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

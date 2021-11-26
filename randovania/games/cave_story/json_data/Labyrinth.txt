@@ -166,12 +166,23 @@ Main Artery
 Extra - map_name: Stream
 > Entrance from Waterway; Heals? False; Spawn Point
   * One-Way Entrance to Waterway/Exit to Main Artery
+  > Exit to Reservoir
+      After Generic Event
+  > Event - Ironhead
+      Can Kill Bosses
 
 > Exit to Reservoir; Heals? False
   * One-Way Exit to Reservoir/Entrance from Main Artery
 
 > Event - Ironhead; Heals? False
   * Event Generic Event
+  > Pickup (Ironhead)
+      Trivial
+
+> Pickup (Ironhead); Heals? False
+  * Pickup 199; Major Location? False
+  > Exit to Reservoir
+      Trivial
 
 ----------------
 Labyrinth I
