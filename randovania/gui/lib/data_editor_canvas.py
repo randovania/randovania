@@ -59,6 +59,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     area_bounds: BoundsFloat
     area_size: QSizeF
     image_bounds: BoundsInt
+    edit_mode: bool = True
 
     scale: float
     border_x: float = 75
@@ -70,6 +71,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     MoveNodeRequest = Signal(Node, NodeLocation)
     SelectNodeRequest = Signal(Node)
     SelectAreaRequest = Signal(Area)
+    SelectConnectionsRequest = Signal(Node)
     CreateDockRequest = Signal(NodeLocation, Area)
 
     def __init__(self):
@@ -91,6 +93,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def _on_move_node(self):
         self.MoveNodeRequest.emit(self.highlighted_node, self._next_node_location)
+
+    def set_edit_mode(self, value: bool):
+        self.edit_mode = value
 
     def select_game(self, game: RandovaniaGame):
         self.game = game
@@ -186,11 +191,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         menu = QtWidgets.QMenu(self)
         menu.addAction(self._show_all_connections_action)
-        menu.addAction(self._create_node_action)
-        menu.addAction(self._move_node_action)
-        self._move_node_action.setEnabled(self.highlighted_node is not None)
-        if self.highlighted_node is not None:
-            self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
+        if self.edit_mode:
+            menu.addAction(self._create_node_action)
+            menu.addAction(self._move_node_action)
+            self._move_node_action.setEnabled(self.highlighted_node is not None)
+            if self.highlighted_node is not None:
+                self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
 
         reference_position = self.game_loc_to_qt_local(self._next_node_location)
 
@@ -208,9 +214,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
             if rect.contains(reference_position):
                 a = QtWidgets.QMenu(area.name, self)
                 a.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
-                a.addAction("Create dock here to this area").triggered.connect(
-                    functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
-                )
+                if self.edit_mode:
+                    a.addAction("Create dock here to this area").triggered.connect(
+                        functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
+                    )
                 menu.addMenu(a)
                 has_nearby_area = True
 
@@ -225,9 +232,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
         for node in self.area.nodes:
             if node.location is not None and (
                     self.game_loc_to_qt_local(node.location) - reference_position).manhattanLength() < 10:
-                a = QtWidgets.QAction(f"Select: {node.name}", self)
-                a.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
-                menu.addAction(a)
+                a = QtWidgets.QMenu(node.name, self)
+
+                highlight_action = a.addAction("Highlight this")
+                highlight_action.setEnabled(self.highlighted_node != node)
+                highlight_action.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
+
+                view_connections = a.addAction("View connections to this")
+                view_connections.setEnabled(
+                    (self.edit_mode and self.highlighted_node != node) or (
+                        node in self.area.connections.get(self.highlighted_node, {})
+                    )
+                )
+                view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
+
+                menu.addMenu(a)
                 has_nearby_node = True
 
         if not has_nearby_node:
