@@ -14,6 +14,7 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -72,8 +73,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
+        self.area_view_canvas.CreateDockRequest.connect(self._create_new_dock)
         self.area_view_canvas.MoveNodeRequest.connect(self._move_node)
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
+        self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -197,12 +200,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.selected_node_button = self.sender()
             self.update_selected_node()
 
-    def focus_on_world(self, world_name: str):
+    def focus_on_world_by_name(self, world_name: str):
         world = self.world_list.world_with_name(world_name)
+        self.focus_on_world(world)
+
+    def focus_on_world(self, world: World):
         self.world_selector_box.setCurrentIndex(self.world_selector_box.findData(world))
 
-    def focus_on_area(self, area_name: str):
+    def focus_on_area_by_name(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+
+    def focus_on_area(self, area: Area):
+        self.area_selector_box.setCurrentIndex(self.area_selector_box.findData(area))
 
     def focus_on_node(self, node: Node):
         for radio, other_node in self.radio_button_to_node.items():
@@ -221,8 +230,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             world_name, area_name = info.group(1, 2)
 
         if world_name is not None and area_name is not None:
-            self.focus_on_world(world_name)
-            self.focus_on_area(area_name)
+            self.focus_on_world_by_name(world_name)
+            self.focus_on_area_by_name(area_name)
             if node_name is None:
                 node_name = self.current_area.default_node
 
@@ -475,7 +484,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.rename_area(self.current_area, new_name)
         self.on_select_world()
-        self.focus_on_area(new_name)
+        self.focus_on_area_by_name(new_name)
 
     def _move_node(self, node: Node, location: NodeLocation):
         area = self.current_area
@@ -507,6 +516,37 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node = GenericNode(node_name, False, location, "", {}, self.generic_index)
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
+
+    def _create_new_dock(self, location: NodeLocation, target_area: Area):
+        current_area = self.current_area
+
+        i = 1
+        while current_area.node_with_name(source_name := f"Door to {target_area.name} ({i})") is not None:
+            i += 1
+
+        i = 1
+        while target_area.node_with_name(target_name := f"Door to {current_area.name} ({i})") is not None:
+            i += 1
+
+        dock_weakness = self.game_description.dock_weakness_database.other[0]
+
+        self.generic_index += 1
+        new_node_this_area = DockNode(
+            source_name, False, location, "", {}, self.generic_index,
+            NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name),
+            dock_weakness,
+        )
+
+        self.generic_index += 1
+        new_node_other_area = DockNode(
+            target_name, False, location, "", {}, self.generic_index,
+            NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name),
+            dock_weakness,
+        )
+
+        self.editor.add_node(current_area, new_node_this_area)
+        self.editor.add_node(target_area, new_node_other_area)
+        self.on_select_area(new_node_this_area)
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
