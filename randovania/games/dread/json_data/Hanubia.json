@@ -1859,8 +1859,8 @@
                 }
             }
         },
-        "collision_camera_020 (H)": {
-            "default_node": "Start Point 2",
+        "Raven Beak X Arena": {
+            "default_node": "Raven Beak X Checkpoint",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1898,7 +1898,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Start Point 1": {
+                "Escape Checkpoint": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1911,9 +1911,17 @@
                         "start_point_actor_name": "SP_Checkpoint_Escape",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Raven Beak X Checkpoint": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Start Point 2": {
+                "Raven Beak X Checkpoint": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1926,7 +1934,15 @@
                         "start_point_actor_name": "SP_Checkpoint_CommanderX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Escape Checkpoint": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
