@@ -8,10 +8,49 @@
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
-                "map_name": "Priso",
+                "map_name": "Priso1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Door to Plantation": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 117.6,
+                        "y": 118.95,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Plantation",
+                        "area_name": "Plantation",
+                        "node_name": "Door to Final Cave"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Door to Balcony (Pre-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.59,
+                        "y": 886.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Pre-Bosses)",
+                        "node_name": "Door to Final Cave"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            }
         },
         "Last Cave (Hidden)": {
             "default_node": null,
@@ -34,7 +73,53 @@
                     "destination": {
                         "world_name": "Plantation",
                         "area_name": "Plantation",
-                        "node_name": "Door to Last Cave"
+                        "node_name": "Door to Last Cave (Hidden)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Event - Red Demon": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1293.96,
+                        "y": 780.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                },
+                "Pickup (Red Demon)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1176.39,
+                        "y": 791.88,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 131,
+                    "major_location": false,
+                    "connections": {}
+                },
+                "Door to Balcony (Pre-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 149.33,
+                        "y": 885.93,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Pre-Bosses)",
+                        "node_name": "Door to Last Cave (Hidden)"
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
@@ -46,10 +131,87 @@
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
-                "map_name": "Blcny",
+                "map_name": "Blcny1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Exit to Throne Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1904.97,
+                        "y": 282.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Throne Room",
+                        "node_name": "Entrance from Balcony (Pre-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Door to Final Cave": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 119.13,
+                        "y": 85.04,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Final Cave",
+                        "node_name": "Door to Balcony (Pre-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Door to Last Cave (Hidden)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.6,
+                        "y": 111.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Last Cave (Hidden)",
+                        "node_name": "Door to Balcony (Pre-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Door to Prefab Building": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1274.5,
+                        "y": 104.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Prefab Building",
+                        "node_name": "Door to Balcony (Pre-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                }
+            }
         },
         "Prefab Building": {
             "default_node": null,
@@ -58,7 +220,39 @@
                 "map_name": "Prefa1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Door to Balcony (Pre-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 169.0,
+                        "y": 118.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Pre-Bosses)",
+                        "node_name": "Door to Prefab Building"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Save Point/Bed": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 198.73143495254047,
+                        "y": 119.56672250139587,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
         },
         "Throne Room": {
             "default_node": null,
@@ -67,7 +261,78 @@
                 "map_name": "Ring1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Event - Misery": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 454.9,
+                        "y": 151.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                },
+                "Entrance from Balcony (Pre-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.07,
+                        "y": 66.57,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Pre-Bosses)",
+                        "node_name": "Exit to Throne Room"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Exit to Balcony (Post-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.58,
+                        "y": 83.62,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Post-Bosses)",
+                        "node_name": "Entrance from Throne Room"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Entrance to The King's Table": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.67,
+                        "y": 247.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "The King's Table",
+                        "node_name": "Entrance to Throne Room"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                }
+            }
         },
         "The King's Table": {
             "default_node": null,
@@ -76,7 +341,59 @@
                 "map_name": "Ring2",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Event - Doctor": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 450.39,
+                        "y": 92.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                },
+                "Entrance to Throne Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 54.21,
+                        "y": 31.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Throne Room",
+                        "node_name": "Entrance to The King's Table"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Entrance to Black Space": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 54.21,
+                        "y": 245.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Black Space",
+                        "node_name": "Entrance to The King's Table"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                }
+            }
         },
         "Black Space": {
             "default_node": null,
@@ -85,7 +402,40 @@
                 "map_name": "Ring3",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Event - Undead Core": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 578.79,
+                        "y": 121.4,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                },
+                "Entrance to The King's Table": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 52.91,
+                        "y": 4.59,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "The King's Table",
+                        "node_name": "Entrance to Black Space"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                }
+            }
         },
         "Balcony (Post-Bosses)": {
             "default_node": null,
@@ -94,7 +444,78 @@
                 "map_name": "Blcny2",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Event - Normal Ending": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 32.62,
+                        "y": 175.95,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                },
+                "Entrance from Throne Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1893.24,
+                        "y": 281.51,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Throne Room",
+                        "node_name": "Exit to Balcony (Post-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Exit to Prefab House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1268.64,
+                        "y": 101.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Prefab House",
+                        "node_name": "Entrance from Balcony (Post-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Entrance from Prefab House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1858.17,
+                        "y": 308.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Prefab House",
+                        "node_name": "Exit to Balcony (Post-Bosses)"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                }
+            }
         },
         "Prefab House": {
             "default_node": null,
@@ -103,7 +524,77 @@
                 "map_name": "Prefa2",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Entrance from Balcony (Post-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.71,
+                        "y": 116.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Post-Bosses)",
+                        "node_name": "Exit to Prefab House"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Exit to Balcony (Post-Bosses)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 134.55,
+                        "y": 122.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Balcony (Post-Bosses)",
+                        "node_name": "Entrance from Prefab House"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Exit to Sacred Grounds - B1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.28,
+                        "y": 102.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B1",
+                        "node_name": "Entrance from Prefab House"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 184.86655499720825,
+                        "y": 118.99497487437185,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
         },
         "Sacred Grounds - B1": {
             "default_node": null,
@@ -112,7 +603,60 @@
                 "map_name": "Hell1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Entrance from Prefab House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 282.35,
+                        "y": 1554.89,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Prefab House",
+                        "node_name": "Exit to Sacred Grounds - B1"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Door to Sacred Grounds - B2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 293.07,
+                        "y": 37.97,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B2",
+                        "node_name": "Door to Sacred Grounds - B1"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Pickup (Life Capsule)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 96.53,
+                        "y": 105.86,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 132,
+                    "major_location": false,
+                    "connections": {}
+                }
+            }
         },
         "Sacred Grounds - B2": {
             "default_node": null,
@@ -121,7 +665,46 @@
                 "map_name": "Hell2",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Door to Sacred Grounds - B1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 38.31,
+                        "y": 34.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B1",
+                        "node_name": "Door to Sacred Grounds - B2"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
+                },
+                "Entrance to Sacred Grounds - B3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2409.35,
+                        "y": 6.64,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B3",
+                        "node_name": "Entrance to Sacred Grounds - B2"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                }
+            }
         },
         "Sacred Grounds - B3": {
             "default_node": null,
@@ -130,7 +713,73 @@
                 "map_name": "Hell3",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Entrance to Sacred Grounds - B2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2457.5,
+                        "y": 233.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B2",
+                        "node_name": "Entrance to Sacred Grounds - B3"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 1,
+                    "connections": {}
+                },
+                "Pickup (Hell Chest)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 517.74,
+                        "y": 229.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 133,
+                    "major_location": false,
+                    "connections": {}
+                },
+                "Exit to Passage?": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 160.68,
+                        "y": 8.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Plantation",
+                        "area_name": "Passage?",
+                        "node_name": "Entrance from Sacred Grounds - B3"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
+                },
+                "Event - Heavy Press": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 166.69,
+                        "y": 141.04,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                }
+            }
         },
         "Corridor": {
             "default_node": null,
@@ -158,6 +807,25 @@
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {}
+                },
+                "Exit to Seal Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 567.54,
+                        "y": 275.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Seal Chamber",
+                        "node_name": "Entrance from Corridor"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 3,
+                    "connections": {}
                 }
             }
         },
@@ -168,7 +836,40 @@
                 "map_name": "Ballo1",
                 "in_dark_aether": false
             },
-            "nodes": {}
+            "nodes": {
+                "Entrance from Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 72.26,
+                        "y": 263.87,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Corridor",
+                        "node_name": "Exit to Seal Chamber"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
+                    "connections": {}
+                },
+                "Event - Best Ending": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 454.4,
+                        "y": 131.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBoss",
+                    "connections": {}
+                }
+            }
         }
     }
 }

@@ -1,54 +1,163 @@
 ----------------
 Final Cave
-Extra - map_name: Priso
+Extra - map_name: Priso1
 Extra - in_dark_aether: False
+> Door to Plantation; Heals? False
+  * Normal Door to Plantation/Door to Final Cave
+
+> Door to Balcony (Pre-Bosses); Heals? False
+  * Normal Door to Balcony (Pre-Bosses)/Door to Final Cave
+
 ----------------
 Last Cave (Hidden)
 Extra - map_name: Priso2
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
-  * Normal Door to Plantation/Door to Last Cave
+  * Normal Door to Plantation/Door to Last Cave (Hidden)
+
+> Event - Red Demon; Heals? False
+  * Event Generic Event
+
+> Pickup (Red Demon); Heals? False
+  * Pickup 131; Major Location? False
+
+> Door to Balcony (Pre-Bosses); Heals? False
+  * Normal Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
 
 ----------------
 Balcony (Pre-Bosses)
-Extra - map_name: Blcny
+Extra - map_name: Blcny1
 Extra - in_dark_aether: False
+> Exit to Throne Room; Heals? False
+  * One-Way Exit to Throne Room/Entrance from Balcony (Pre-Bosses)
+
+> Door to Final Cave; Heals? False
+  * Normal Door to Final Cave/Door to Balcony (Pre-Bosses)
+
+> Door to Last Cave (Hidden); Heals? False
+  * Normal Door to Last Cave (Hidden)/Door to Balcony (Pre-Bosses)
+
+> Door to Prefab Building; Heals? False
+  * Normal Door to Prefab Building/Door to Balcony (Pre-Bosses)
+
 ----------------
 Prefab Building
 Extra - map_name: Prefa1
 Extra - in_dark_aether: False
+> Door to Balcony (Pre-Bosses); Heals? False
+  * Normal Door to Balcony (Pre-Bosses)/Door to Prefab Building
+
+> Save Point/Bed; Heals? True
+
 ----------------
 Throne Room
 Extra - map_name: Ring1
 Extra - in_dark_aether: False
+> Event - Misery; Heals? False
+  * Event Generic Event
+
+> Entrance from Balcony (Pre-Bosses); Heals? False
+  * One-Way Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
+
+> Exit to Balcony (Post-Bosses); Heals? False
+  * One-Way Exit to Balcony (Post-Bosses)/Entrance from Throne Room
+
+> Entrance to The King's Table; Heals? False
+  * H/V Trigger to The King's Table/Entrance to Throne Room
+
 ----------------
 The King's Table
 Extra - map_name: Ring2
 Extra - in_dark_aether: False
+> Event - Doctor; Heals? False
+  * Event Generic Event
+
+> Entrance to Throne Room; Heals? False
+  * H/V Trigger to Throne Room/Entrance to The King's Table
+
+> Entrance to Black Space; Heals? False
+  * H/V Trigger to Black Space/Entrance to The King's Table
+
 ----------------
 Black Space
 Extra - map_name: Ring3
 Extra - in_dark_aether: False
+> Event - Undead Core; Heals? False
+  * Event Generic Event
+
+> Entrance to The King's Table; Heals? False
+  * H/V Trigger to The King's Table/Entrance to Black Space
+
 ----------------
 Balcony (Post-Bosses)
 Extra - map_name: Blcny2
 Extra - in_dark_aether: False
+> Event - Normal Ending; Heals? False
+  * Event Generic Event
+
+> Entrance from Throne Room; Heals? False
+  * One-Way Entrance to Throne Room/Exit to Balcony (Post-Bosses)
+
+> Exit to Prefab House; Heals? False
+  * One-Way Exit to Prefab House/Entrance from Balcony (Post-Bosses)
+
+> Entrance from Prefab House; Heals? False
+  * One-Way Entrance to Prefab House/Exit to Balcony (Post-Bosses)
+
 ----------------
 Prefab House
 Extra - map_name: Prefa2
 Extra - in_dark_aether: False
+> Entrance from Balcony (Post-Bosses); Heals? False
+  * One-Way Entrance to Balcony (Post-Bosses)/Exit to Prefab House
+
+> Exit to Balcony (Post-Bosses); Heals? False
+  * One-Way Exit to Balcony (Post-Bosses)/Entrance from Prefab House
+
+> Exit to Sacred Grounds - B1; Heals? False
+  * One-Way Exit to Sacred Grounds - B1/Entrance from Prefab House
+
+> Save Point; Heals? False
+
 ----------------
 Sacred Grounds - B1
 Extra - map_name: Hell1
 Extra - in_dark_aether: False
+> Entrance from Prefab House; Heals? False
+  * One-Way Entrance to Prefab House/Exit to Sacred Grounds - B1
+
+> Door to Sacred Grounds - B2; Heals? False
+  * Normal Door to Sacred Grounds - B2/Door to Sacred Grounds - B1
+
+> Pickup (Life Capsule); Heals? False
+  * Pickup 132; Major Location? False
+
 ----------------
 Sacred Grounds - B2
 Extra - map_name: Hell2
 Extra - in_dark_aether: False
+> Door to Sacred Grounds - B1; Heals? False
+  * Normal Door to Sacred Grounds - B1/Door to Sacred Grounds - B2
+
+> Entrance to Sacred Grounds - B3; Heals? False
+  * H/V Trigger to Sacred Grounds - B3/Entrance to Sacred Grounds - B2
+
 ----------------
 Sacred Grounds - B3
 Extra - map_name: Hell3
 Extra - in_dark_aether: False
+> Entrance to Sacred Grounds - B2; Heals? False
+  * H/V Trigger to Sacred Grounds - B2/Entrance to Sacred Grounds - B3
+
+> Pickup (Hell Chest); Heals? False
+  * Pickup 133; Major Location? False
+
+> Exit to Passage?; Heals? False
+  * One-Way Exit to Passage?/Entrance from Sacred Grounds - B3
+
+> Event - Heavy Press; Heals? False
+  * Event Generic Event
+
 ----------------
 Corridor
 Extra - map_name: Ostep
@@ -56,7 +165,16 @@ Extra - in_dark_aether: False
 > Door to Passage?; Heals? False
   * Normal Door to Passage?/Door to Corridor
 
+> Exit to Seal Chamber; Heals? False
+  * One-Way Exit to Seal Chamber/Entrance from Corridor
+
 ----------------
 Seal Chamber
 Extra - map_name: Ballo1
 Extra - in_dark_aether: False
+> Entrance from Corridor; Heals? False
+  * One-Way Entrance to Corridor/Exit to Seal Chamber
+
+> Event - Best Ending; Heals? False
+  * Event Generic Event
+
