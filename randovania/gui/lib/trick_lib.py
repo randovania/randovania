@@ -12,9 +12,8 @@ T = TypeVar("T")
 def _process_connections(game: GameDescription, process: Callable[[Requirement, Set[T]], None]) -> Set[T]:
     result = set()
 
-    for dock_weaknesses in game.dock_weakness_database:
-        for dock_weakness in dock_weaknesses:
-            process(dock_weakness.requirement, result)
+    for dock_weakness in game.dock_weakness_database.all_weaknesses:
+        process(dock_weakness.requirement, result)
 
     for area in game.world_list.all_areas:
         for _, _, requirement in area.all_connections:
