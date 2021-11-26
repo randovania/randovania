@@ -545,7 +545,11 @@
                 "Door to Plantation": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 56.09172809172809,
+                        "y": 104.83865683865685,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {
@@ -559,11 +563,22 @@
                     }
                 },
                 "Door to Outer Wall": {
-                    "node_type": "generic",
+                    "node_type": "dock",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 151.49,
+                        "y": 102.09,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Outer Wall",
+                        "node_name": "Door to Storehouse"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
                     "connections": {
                         "Door to Plantation": {
                             "type": "and",
@@ -586,7 +601,11 @@
                 "Pickup (Itoh)": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 182.67649467649468,
+                        "y": 101.62817362817364,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {}
