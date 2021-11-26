@@ -277,25 +277,31 @@ def convert_prime2_pickups():
     unique_anim = {}
     unique_evnt = []
     dont_delete = []
-    for asset in converter.converted_assets.values():
-        if asset.type == "ANIM":
-            for assetb in converter.converted_assets.values():
-                if assetb.type == "ANCS" and any(asset.id in x for x in converted_dependencies[assetb.id]):
-                    for dep in converted_dependencies[assetb.id]:
-                        if asset.id in unique_anim:
-                            for depb in converted_dependencies[assetb.id]:
-                                if depb.type == "EVNT":
-                                    if depb.id not in unique_evnt:
-                                        unique_evnt.append(depb.id)
-                                        converted_dependencies[assetb.id].remove(depb)
-                                        converted_dependencies[assetb.id].add(Dependency("EVNT",unique_anim[asset.id]))
-                                    else:
-                                        dont_delete.append(depb.id)
-                            continue
-                        if dep.type == "EVNT":
-                            unique_anim[asset.id] = dep.id
-                            asset.resource["anim"]["event_id"] = dep.id
-                            break
+    for anim in converter.converted_assets.values():
+        if anim.type != "ANIM":
+            continue
+
+        for ancs in converter.converted_assets.values():
+            if ancs.type != "ANCS":
+                continue
+
+            # If the anim is a dependency of the ancs
+            if any(anim.id in x for x in converted_dependencies[ancs.id]):
+                for dep in converted_dependencies[ancs.id]:
+                    if anim.id in unique_anim:
+                        for depb in converted_dependencies[ancs.id]:
+                            if depb.type == "EVNT":
+                                if depb.id not in unique_evnt:
+                                    unique_evnt.append(depb.id)
+                                    converted_dependencies[ancs.id].remove(depb)
+                                    converted_dependencies[ancs.id].add(Dependency("EVNT", unique_anim[anim.id]))
+                                else:
+                                    dont_delete.append(depb.id)
+                        continue
+                    if dep.type == "EVNT":
+                        unique_anim[anim.id] = dep.id
+                        anim.resource["anim"]["event_id"] = dep.id
+                        break
 
     deleted_evnts = []
     for id in unique_evnt:
