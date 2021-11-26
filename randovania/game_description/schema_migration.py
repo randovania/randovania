@@ -5,7 +5,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
-CURRENT_DATABASE_VERSION = 5
+CURRENT_DATABASE_VERSION = 6
 CURRENT_ITEMDB_VERSION = 2
 
 
@@ -228,11 +228,104 @@ def _migrate_v4(data: dict) -> dict:
     return data
 
 
+def _migrate_v5(data: dict) -> dict:
+    dock_db: dict[str, list[dict]] = data["dock_weakness_database"]
+
+    dock_type_names = {
+        "door": "Door",
+        "morph_ball": "Morph Ball Door",
+        "portal": "Portal",
+    }
+
+    def convert_weakness(weakness):
+        return {
+            "lock_type": weakness["lock_type"],
+            "extra": {},
+            "requirement": weakness["requirement"],
+        }
+
+    data["dock_weakness_database"] = {
+        "types": {
+            short_name: {
+                "name": dock_type_names[short_name],
+                "extra": {},
+                "items": {
+                    weakness["name"]: convert_weakness(weakness)
+                    for weakness in items
+                }
+            }
+            for short_name, items in dock_db.items()
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined",
+        }
+    }
+    data["dock_weakness_database"]["types"]["other"] = {
+        "name": "Other",
+        "extra": {},
+        "items": {
+            "Open Passage": {
+                "lock_type": 0,
+                "extra": {},
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": None,
+                        "items": []
+                    }
+                }
+            },
+            "Not Determined": {
+                "lock_type": 0,
+                "extra": {},
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": None,
+                        "items": []
+                    }
+                }
+            },
+        }
+    }
+
+    dock_type_id_to_name = {
+        0: "door",
+        1: "morph_ball",
+        2: "other",
+        3: "portal",
+    }
+    weakness_id_to_name = {
+        short_name: {
+            item["index"]: item["name"]
+            for item in items
+        }
+        for short_name, items in dock_db.items()
+    }
+    weakness_id_to_name["other"] = {
+        0: "Open Passage",
+        1: "Not Determined",
+    }
+
+    for world in data["worlds"]:
+        areas: dict[str, dict] = world["areas"]
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            for node_name, node in nodes.items():
+                if node["node_type"] == "dock":
+                    node["dock_type"] = dock_type_id_to_name[node["dock_type"]]
+                    node["dock_weakness"] = weakness_id_to_name[node["dock_type"]][node.pop("dock_weakness_index")]
+
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
     3: _migrate_v3,
     4: _migrate_v4,
+    5: _migrate_v5,
 }
 
 
