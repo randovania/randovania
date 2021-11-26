@@ -29,7 +29,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Door to Balcony (Pre-Bosses)": {
+                            "type": "template",
+                            "data": "Has Weapon"
+                        }
+                    }
                 },
                 "Door to Balcony (Pre-Bosses)": {
                     "node_type": "dock",
@@ -48,7 +53,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Door to Plantation": {
+                            "type": "template",
+                            "data": "Has Weapon"
+                        }
+                    }
                 }
             }
         },
@@ -77,7 +87,29 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Event - Red Demon": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "booster2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Event - Red Demon": {
                     "node_type": "event",
@@ -90,7 +122,35 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Door to Plantation": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Red Demon Boss)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Balcony (Pre-Bosses)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Pickup (Red Demon Boss)": {
                     "node_type": "pickup",
@@ -106,7 +166,26 @@
                     },
                     "pickup_index": 29,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Plantation": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Balcony (Pre-Bosses)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Balcony (Pre-Bosses)": {
                     "node_type": "dock",
@@ -125,7 +204,29 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Event - Red Demon": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "booster2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -173,7 +274,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Door to Prefab Building": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Last Cave (Hidden)": {
                     "node_type": "dock",
@@ -192,7 +301,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Door to Prefab Building": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Prefab Building": {
                     "node_type": "dock",
@@ -211,7 +328,33 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Exit to Throne Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Final Cave": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Door to Last Cave (Hidden)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -240,7 +383,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Save Point/Bed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Save Point/Bed": {
                     "node_type": "generic",
@@ -252,7 +403,15 @@
                     },
                     "description": "",
                     "extra": {},
-                    "connections": {}
+                    "connections": {
+                        "Door to Balcony (Pre-Bosses)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -275,7 +434,15 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Entrance to The King's Table": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Entrance from Balcony (Pre-Bosses)": {
                     "node_type": "dock",
@@ -294,7 +461,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Event - Misery": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        }
+                    }
                 },
                 "Exit to Balcony (Post-Bosses)": {
                     "node_type": "dock",
@@ -332,7 +504,17 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Exit to Balcony (Post-Bosses)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventCore2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -355,7 +537,15 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Entrance to Black Space": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Entrance to Throne Room": {
                     "node_type": "dock",
@@ -374,7 +564,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Event - Doctor": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        }
+                    }
                 },
                 "Entrance to Black Space": {
                     "node_type": "dock",
@@ -393,7 +588,17 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Entrance to Throne Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventCore2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -415,8 +620,16 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
-                    "connections": {}
+                    "event_name": "eventCore2",
+                    "connections": {
+                        "Entrance to The King's Table": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Entrance to The King's Table": {
                     "node_type": "dock",
@@ -435,7 +648,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Event - Undead Core": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        }
+                    }
                 }
             }
         },
@@ -477,7 +695,24 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Event - Normal Ending": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Exit to Prefab House": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "ironBond",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Exit to Prefab House": {
                     "node_type": "dock",
@@ -515,7 +750,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Entrance from Throne Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -544,7 +787,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Exit to Balcony (Post-Bosses)": {
                     "node_type": "dock",
@@ -594,12 +845,27 @@
                     },
                     "description": "",
                     "extra": {},
-                    "connections": {}
+                    "connections": {
+                        "Exit to Balcony (Post-Bosses)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Exit to Sacred Grounds - B1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Sacred Grounds - B1": {
-            "default_node": null,
+            "default_node": "Event - Curly",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "Hell1",
@@ -623,7 +889,26 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sacred Grounds - B2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Hell B1 Spot)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Sacred Grounds - B2": {
                     "node_type": "dock",
@@ -642,7 +927,26 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Hell B1 Spot)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Curly": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventCurly2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Pickup (Hell B1 Spot)": {
                     "node_type": "pickup",
@@ -658,7 +962,38 @@
                     },
                     "pickup_index": 30,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sacred Grounds - B2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Curly": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 269.91,
+                        "y": 41.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventCurly3",
+                    "connections": {
+                        "Door to Sacred Grounds - B2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -687,7 +1022,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Entrance to Sacred Grounds - B3": {
+                            "type": "template",
+                            "data": "Has Weapon"
+                        }
+                    }
                 },
                 "Entrance to Sacred Grounds - B3": {
                     "node_type": "dock",
@@ -706,7 +1046,12 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sacred Grounds - B1": {
+                            "type": "template",
+                            "data": "Has Weapon"
+                        }
+                    }
                 }
             }
         },
@@ -735,7 +1080,108 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 1,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Hell B3 Chest)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dboost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Heavy Press": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dboost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Pickup (Hell B3 Chest)": {
                     "node_type": "pickup",
@@ -751,7 +1197,28 @@
                     },
                     "pickup_index": 31,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Entrance to Sacred Grounds - B2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Heavy Press": {
+                            "type": "template",
+                            "data": "Can Kill Bosses"
+                        }
+                    }
                 },
                 "Exit to Passage?": {
                     "node_type": "dock",
@@ -783,7 +1250,15 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Exit to Passage?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -812,7 +1287,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Exit to Seal Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Exit to Seal Chamber": {
                     "node_type": "dock",
@@ -860,7 +1343,24 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Event - Best Ending": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Event - Best Ending": {
                     "node_type": "event",
