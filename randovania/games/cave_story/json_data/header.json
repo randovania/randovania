@@ -389,47 +389,47 @@
         "tricks": {
             "Dboost": {
                 "long_name": "Damage Boosting",
-                "description": "",
+                "description": "Taking damage launches the player upwards. Taking hits from enemies in key locations can allow you to reach heights otherwise impossible.",
                 "extra": {}
             },
             "IframeReset": {
                 "long_name": "Invincibility Frame Reset",
-                "description": "",
+                "description": "Opening the inventory while you have iframes will reset them, allowing you to take damage again. This is useful for repeated damage boosts, making some jumps possible which otherwise wouldn't be. (In commerical releases, this technique requires the Map System.)",
                 "extra": {}
             },
             "SisterSkip": {
                 "long_name": "Sisters Skip",
-                "description": "",
+                "description": "H/V triggers take some time to propagate. This fact can be abused to avoid certain H/V triggers by jumping out of their way.",
                 "extra": {}
             },
             "SNMissiles": {
                 "long_name": "Break blocks with Missiles",
-                "description": "",
+                "description": "The Missile Launcher can break blocks with its limited ammo.",
                 "extra": {}
             },
             "SNBubbler": {
                 "long_name": "Break blocks with Bubbler",
-                "description": "",
+                "description": "The Bubbler can break blocks at Level 3. Be careful, as de-leveling your Bubbler may result in softlocks.",
                 "extra": {}
             },
             "BossMissiles": {
                 "long_name": "Kill Bosses with Missiles",
-                "description": "",
+                "description": "Some bosses have anti-missile behavior which can be circumvented in certain situations.",
                 "extra": {}
             },
             "GravHop": {
                 "long_name": "Gravity Hopping",
-                "description": "",
+                "description": "Holding the jump button in midair reduces the effects of gravity. Tapping the jump button quickly then holding it can allow you to make certain jumps that would not be possible with a normal jump.",
                 "extra": {}
             },
             "pacifist": {
                 "long_name": "Pacifist Strats",
-                "description": "",
+                "description": "Many areas with enemies can be traversed safely with clever movement, even without a weapon to kill enemies.",
                 "extra": {}
             },
             "IQG": {
                 "long_name": "Inventory Quit Glitch",
-                "description": "",
+                "description": "Exclusive to CS3D.",
                 "extra": {}
             }
         },
@@ -763,6 +763,32 @@
                                 "name": "entranceRando",
                                 "amount": 1,
                                 "negate": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "Reset Iframes": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "versions",
+                                "name": "Freeware",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "map",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     ]
