@@ -669,6 +669,22 @@
             "s080_shipyard:default:grapplepulloff1x2_000": {
                 "long_name": "Hanubia - grapplepulloff1x2_000",
                 "extra": {}
+            },
+            "Escape": {
+                "long_name": "Escape Sequence",
+                "extra": {}
+            },
+            "HanubiaRedChozo": {
+                "long_name": "Hanubia Red Chozo Fight",
+                "extra": {}
+            },
+            "Ship": {
+                "long_name": "Ship",
+                "extra": {}
+            },
+            "s080_shipyard:default:grapplepulloff1x2": {
+                "long_name": "Hanubia - grapplepulloff1x2",
+                "extra": {}
             }
         },
         "tricks": {
@@ -719,6 +735,11 @@
             },
             "Slide": {
                 "long_name": "Slide Jump",
+                "description": "",
+                "extra": {}
+            },
+            "Speedbooster": {
+                "long_name": "Speedbooster Conservation",
                 "description": "",
                 "extra": {}
             }
@@ -1137,9 +1158,59 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Spin",
+                                "name": "Space",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Lay Power Bomb": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PBs",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Slide": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Slide",
+                                "items": []
                             }
                         }
                     ]
