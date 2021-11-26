@@ -434,7 +434,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Chaco Skip - https://www.youtube.com/watch?v=Zamb3TjF60M",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -534,6 +534,57 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Reset Iframes"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Has Weapon"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "pacifist",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "pacifist",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -619,7 +670,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Flightless Grasstown Hut - https://www.youtube.com/watch?v=Lf_Hguu-tqw",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -647,6 +698,10 @@
                                                         "amount": 4,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Reset Iframes"
                                                 }
                                             ]
                                         }
@@ -739,7 +794,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up to the central area",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -755,16 +810,108 @@
                                                     "data": "Has Flight"
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Remove Points of No Return"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Remove Points of No Return"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "eventBoss",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "GravHop",
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": "Reverse Chaco Skip",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "TAS Jump",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "GravHop",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": []
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://www.youtube.com/watch?v=WiA3lsW5gec",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dboost",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://www.youtube.com/watch?v=rmtwHNrxU5Q",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dboost",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -773,32 +920,101 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get past the Mannan",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Has Weapon"
+                                                    "data": "Can Kill Bosses"
                                                 },
                                                 {
                                                     "type": "template",
                                                     "data": "Has Flight"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "missiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BossMissiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "BossMissiles",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "pacifist",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dboost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "pacifist",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GravHop",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -912,10 +1128,62 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "West Side": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Has Flight"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 6,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
