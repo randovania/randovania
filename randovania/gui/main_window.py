@@ -417,10 +417,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self._data_visualizer = data_visualizer
 
         if world_name is not None:
-            data_visualizer.focus_on_world(world_name)
+            data_visualizer.focus_on_world_by_name(world_name)
 
         if area_name is not None:
-            data_visualizer.focus_on_area(area_name)
+            data_visualizer.focus_on_area_by_name(area_name)
 
         self._data_visualizer.show()
 

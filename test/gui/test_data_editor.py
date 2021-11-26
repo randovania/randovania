@@ -16,10 +16,10 @@ def test_select_area_by_name(echoes_game_data,
     skip_qtbot.addWidget(window)
 
     # Run
-    window.focus_on_world("Torvus Bog")
+    window.focus_on_world_by_name("Torvus Bog")
 
     assert window.current_area.name != "Forgotten Bridge"
-    window.focus_on_area("Forgotten Bridge")
+    window.focus_on_area_by_name("Forgotten Bridge")
 
     # Assert
     assert window.current_area.name == "Forgotten Bridge"
