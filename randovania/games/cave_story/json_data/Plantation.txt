@@ -7,34 +7,42 @@ Extra - map_name: Cent
       Trivial
 
 > Door to Teleporter; Heals? False
+  * Normal Door to Teleporter/Door to Plantation
   > Lower Level
       Trivial
 
 > Door to Storehouse; Heals? False
+  * Normal Door to Storehouse/Door to Plantation
   > Middle Level
       Trivial
 
 > Door to Jail No. 1 (Lower); Heals? False
+  * Normal Door to Jail No. 1/Door to Plantation (Lower)
   > Upper Level
       Trivial
 
 > Door to Jail No. 1 (Upper); Heals? False
+  * Normal Door to Jail No. 1/Door to Plantation (Upper)
   > Upper Level
       Trivial
 
 > Door to Jail No. 2; Heals? False
+  * Normal Door to Jail No. 2/Door to Plantation
   > Upper Level
       Trivial
 
 > Door to Last Cave; Heals? False
+  * Normal Door to Last Cave (Hidden)/Door to Plantation
   > Upper Level
       Trivial
 
 > Door to Passage?; Heals? False
+  * Normal Door to Passage?/Door to Plantation
   > Middle Level
       Trivial
 
 > Door to Hideout; Heals? False
+  * Normal Door to Hideout/Door to Plantation
   > Middle Level
       Trivial
 
@@ -69,16 +77,27 @@ Extra - map_name: Cent
       Trivial
 
 > Pickup (Bucket); Heals? False
+  * Pickup 124; Major Location? False
+  > Lower Level
+      Trivial
 
 > Pickup (Shoved it into Curly's mouth); Heals? False
+  * Pickup 127; Major Location? False
+  > Lower Level
+      Trivial
 
 > Pickup (Broken Sprinker); Heals? False
+  * Pickup 123; Major Location? False
   > Middle Level
       Trivial
 
 > Pickup (Plantation Ceiling); Heals? False
+  * Pickup 125; Major Location? False
+  > Upper Level
+      Trivial
 
 > Pickup (Plantation Puppy); Heals? False
+  * Pickup 126; Major Location? False
   > Upper Level
       Trivial
 
@@ -108,6 +127,7 @@ Extra - map_name: Cent
 Storehouse
 Extra - map_name: Itoh
 > Door to Plantation; Heals? False; Spawn Point
+  * Normal Door to Plantation/Door to Storehouse
   > Door to Outer Wall
       Trivial
 
@@ -119,31 +139,38 @@ Extra - map_name: Itoh
       Sue's Letter
 
 > Pickup (Itoh); Heals? False
+  * Pickup 129; Major Location? False
+  > Door to Plantation
+      Trivial
 
 ----------------
 Passage?
 Extra - map_name: Hell4
 > Door to Plantation; Heals? False
+  * Normal Door to Plantation/Door to Passage?
   > Door to Statue Chamber
       Trivial
   > Door to Corridor
       After Generic Event
 
 > Door to Statue Chamber; Heals? False
+  * Normal Door to Statue Chamber/Door to Passage?
   > Door to Plantation
       Trivial
 
 > Door to Corridor; Heals? False
+  * Normal Door to Corridor/Door to Passage?
   > Door to Plantation
       After Generic Event
 
 > Entrance from Sacred Grounds - B3; Heals? False; Spawn Point
   > Door to Plantation
       After Generic Event
-  > Evdent - Entered Passage from Above
+  > Event - Entered Passage from Above
       Trivial
 
-> Evdent - Entered Passage from Above; Heals? False
+> Event - Entered Passage from Above; Heals? False
+  * Event Generic Event
   > Door to Plantation
       Trivial
 
@@ -151,6 +178,7 @@ Extra - map_name: Hell4
 Statue Chamber
 Extra - map_name: Statue
 > Door to Passage?; Heals? False; Spawn Point
+  * Normal Door to Passage?/Door to Statue Chamber
 
 ----------------
 Rest Area
@@ -161,6 +189,7 @@ Extra - map_name: lounge
       Broken Sprinkler and Mimiga Mask
 
 > Pickup (Megane); Heals? False
+  * Pickup 128; Major Location? False
   > Door to Plantation
       Trivial
 
@@ -168,42 +197,59 @@ Extra - map_name: lounge
 Teleporter
 Extra - map_name: CentW
 > Door to Plantation; Heals? False; Spawn Point
+  * Normal Door to Plantation/Door to Teleporter
   > Room Hub
       Trivial
 
 > Event - Droll Attack; Heals? False
   * Event Generic Event
+  > Teleporter to Jail no. 1
+      Trivial
 
 > Room Hub; Heals? False
   > Door to Plantation
       Teleporter Room Key
   > Event - Droll Attack
       Teleporter Room Key
+  > Teleporter to Arthur's House
+      No Teleporter Room Key or After Generic Event
+  > Teleporter to Jail no. 1
+      After Generic Event
 
 > Teleporter to Arthur's House; Heals? False
   * Normal Door to Arthur's House/Teleporter to Plantation
+  > Room Hub
+      Trivial
+
+> Teleporter to Jail no. 1; Heals? False
+  * One-Way Exit to Jail No. 1/Entrance from Teleporter
 
 ----------------
 Jail No. 1
 Extra - map_name: Jail1
 > Door to Plantation (Upper); Heals? False
+  * Normal Door to Plantation/Door to Jail No. 1 (Upper)
 
-> Inside Jail; Heals? False; Spawn Point
+> Entrance from Teleporter; Heals? False; Spawn Point
+  * One-Way Entrance to Teleporter/Teleporter to Jail no. 1
   > Door to Plantation (Upper)
       Trivial
   > Pickup (Jail No. 1)
       Trivial
 
 > Door to Plantation (Lower); Heals? False
+  * Normal Door to Plantation/Door to Jail No. 1 (Lower)
 
 > Pickup (Jail No. 1); Heals? False
-  > Inside Jail
+  * Pickup 121; Major Location? False
+  > Entrance from Teleporter
       Trivial
 
 ----------------
 Jail No. 2
 Extra - map_name: Jail2
 > Door to Plantation; Heals? False; Spawn Point
+  * Normal Door to Plantation/Door to Jail No. 2
   > Teleporter to Shelter
       Any of the following:
           Can Break Blocks
@@ -211,6 +257,7 @@ Extra - map_name: Jail2
           Missile Launcher and Break blocks with Missiles (Beginner)
 
 > Teleporter to Shelter; Heals? False
+  * Normal Door to Shelter/Teleporter to Jail No. 2
   > Door to Plantation
       Any of the following:
           Can Break Blocks
@@ -221,6 +268,7 @@ Extra - map_name: Jail2
 Hideout
 Extra - map_name: Momo
 > Door to Plantation; Heals? False; Spawn Point
+  * Normal Door to Plantation/Door to Hideout
   > Pickup (Chivalry Sakamoto's Wife)
       Booster 0.8
   > Event - Built Rocket
@@ -229,6 +277,7 @@ Extra - map_name: Momo
       Trivial
 
 > Pickup (Chivalry Sakamoto's Wife); Heals? False
+  * Pickup 120; Major Location? False
   > Door to Plantation
       Trivial
 
@@ -238,4 +287,6 @@ Extra - map_name: Momo
       Trivial
 
 > Bed; Heals? False
+  > Door to Plantation
+      Trivial
 
