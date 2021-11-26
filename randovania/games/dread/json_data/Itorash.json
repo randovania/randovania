@@ -653,7 +653,7 @@
             }
         },
         "Raven Beak Arena": {
-            "default_node": null,
+            "default_node": "Before Fight",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -686,7 +686,11 @@
                 "Before Fight": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 4466.614354467461,
+                        "y": 2250.1255492780915,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {
@@ -716,7 +720,11 @@
                 "Boss - Raven Beak": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 5032.841598660808,
+                        "y": 2533.2391713747647,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {
@@ -730,11 +738,21 @@
                     }
                 },
                 "Escape Sequence": {
-                    "node_type": "generic",
+                    "node_type": "teleporter",
                     "heal": true,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 5736.34,
+                        "y": 2267.28,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Raven Beak X Arena"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
                     "connections": {}
                 }
             }
