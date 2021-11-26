@@ -31,11 +31,8 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Door to Balcony (Pre-Bosses)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Has Weapon"
                         }
                     }
                 },
@@ -58,11 +55,8 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Door to Plantation": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Has Weapon"
                         }
                     }
                 }
@@ -343,10 +337,12 @@
                             }
                         },
                         "Door to Final Cave": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "booster2",
+                                "amount": 1,
+                                "negate": true
                             }
                         },
                         "Door to Last Cave (Hidden)": {
@@ -513,7 +509,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventCore2",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -597,7 +593,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventCore2",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -624,7 +620,7 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventCore2",
                     "connections": {
                         "Entrance to The King's Table": {
                             "type": "and",
@@ -708,10 +704,12 @@
                             }
                         },
                         "Exit to Prefab House": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "ironBond",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -867,7 +865,7 @@
             }
         },
         "Sacred Grounds - B1": {
-            "default_node": null,
+            "default_node": "Event - Curly",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "Hell1",
@@ -938,6 +936,15 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Event - Curly": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventCurly2",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -963,6 +970,27 @@
                                 "name": "booster2",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Curly": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 269.91,
+                        "y": 41.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventCurly3",
+                    "connections": {
+                        "Door to Sacred Grounds - B2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -996,11 +1024,8 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Entrance to Sacred Grounds - B3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Has Weapon"
                         }
                     }
                 },
@@ -1023,11 +1048,8 @@
                     "dock_weakness_index": 1,
                     "connections": {
                         "Door to Sacred Grounds - B1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Has Weapon"
                         }
                     }
                 }
@@ -1060,39 +1082,51 @@
                     "dock_weakness_index": 1,
                     "connections": {
                         "Pickup (Hell B3 Chest)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Has Flight"
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dboost",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Has Flight"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 10,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dboost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
                                     }
                                 ]
                             }
@@ -1165,8 +1199,20 @@
                     "major_location": false,
                     "connections": {
                         "Entrance to Sacred Grounds - B2": {
-                            "type": "template",
-                            "data": "Has Flight"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    }
+                                ]
+                            }
                         },
                         "Event - Heavy Press": {
                             "type": "template",
@@ -1299,8 +1345,20 @@
                     "dock_weakness_index": 2,
                     "connections": {
                         "Event - Best Ending": {
-                            "type": "template",
-                            "data": "Can Kill Bosses"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
