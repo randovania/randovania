@@ -1687,7 +1687,7 @@
             }
         },
         "Camp": {
-            "default_node": "Door to Labyrinth W (Lower)",
+            "default_node": "Room Spawn",
             "valid_starting_location": true,
             "extra": {
                 "map_name": "MazeO"
@@ -1831,6 +1831,26 @@
                     "major_location": false,
                     "connections": {
                         "Door to Labyrinth W (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.035734226689,
+                        "y": 151.29871580122835,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Labyrinth W (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
