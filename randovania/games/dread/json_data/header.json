@@ -1227,30 +1227,6 @@
                     }
                 }
             },
-            "portal": {
-                "name": "Portal",
-                "extra": {},
-                "items": {}
-            },
-            "morph_ball": {
-                "name": "Morph Ball Door",
-                "extra": {},
-                "items": {
-                    "Morph Ball Tunnel": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                }
-            },
             "other": {
                 "name": "Other",
                 "extra": {},
@@ -1274,6 +1250,43 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    },
+                    "EMMI Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Slide Tunnel": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Morph Ball Tunnel": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

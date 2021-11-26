@@ -89,7 +89,7 @@ def write_resource_gain(resource_gain: ResourceGain) -> list:
 def write_simple_resource(resource: SimpleResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
-        "extra": resource.extra
+        "extra": unwrap_frozen(resource.extra),
     }
 
 
@@ -97,7 +97,7 @@ def write_item_resource(resource: ItemResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "max_capacity": resource.max_capacity,
-        "extra": resource.extra,
+        "extra": unwrap_frozen(resource.extra),
     }
 
 
@@ -105,7 +105,7 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "description": resource.description,
-        "extra": resource.extra
+        "extra": unwrap_frozen(resource.extra),
     }
 
 
@@ -199,13 +199,24 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
 
 # World/Area/Nodes
 
+def unwrap_frozen(extra):
+    if isinstance(extra, tuple):
+        return [unwrap_frozen(value) for value in extra]
+
+    elif isinstance(extra, dict):
+        return {key: unwrap_frozen(value) for key, value in extra.items()}
+
+    else:
+        return extra
+
+
 def write_node(node: Node) -> dict:
     """
     :param node:
     :return:
     """
 
-    extra = dict(node.extra)
+    extra = unwrap_frozen(node.extra)
     data = {}
     common_fields = {
         "heal": node.heal,
@@ -294,7 +305,7 @@ def write_area(area: Area) -> dict:
         raise ValueError("Area {} nodes has the following errors:\n* {}".format(
             area.name, "\n* ".join(errors)))
 
-    extra = copy.copy(area.extra)
+    extra = unwrap_frozen(area.extra)
     return {
         "default_node": area.default_node,
         "valid_starting_location": area.valid_starting_location,
@@ -316,7 +327,7 @@ def write_world(world: World) -> dict:
         raise ValueError("World {} has the following errors:\n> {}".format(
             world.name, "\n\n> ".join(errors)))
 
-    extra = copy.copy(world.extra)
+    extra = unwrap_frozen(world.extra)
     return {
         "name": world.name,
         "extra": extra,
