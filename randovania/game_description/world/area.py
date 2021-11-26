@@ -81,3 +81,7 @@ class Area:
     def clear_dock_cache(self):
         cache: Dict[int, int] = object.__getattribute__(self, "__cached_node_with_dock_index")
         cache.clear()
+    
+    @property
+    def map_name(self) -> str:
+        return self.extra.get("map_name", self.name)
