@@ -171,7 +171,7 @@
                         }
                     }
                 },
-                "Door to Last Cave": {
+                "Door to Last Cave (Hidden)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -339,7 +339,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Last Cave": {
+                        "Door to Last Cave (Hidden)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -545,7 +545,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Last Cave": {
+                        "Door to Last Cave (Hidden)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -690,6 +690,25 @@
                             }
                         }
                     }
+                },
+                "Door to Final Cave": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1219.43,
+                        "y": 1782.24,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Final Cave",
+                        "node_name": "Door to Plantation"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
+                    "connections": {}
                 }
             }
         },
@@ -887,15 +906,22 @@
                     }
                 },
                 "Entrance from Sacred Grounds - B3": {
-                    "node_type": "generic",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 162.2825237297599,
-                        "y": 488.41541038525963,
-                        "z": 0
+                        "x": 162.28,
+                        "y": 488.42,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Last Cave",
+                        "area_name": "Sacred Grounds - B3",
+                        "node_name": "Exit to Passage?"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
                     "connections": {
                         "Door to Plantation": {
                             "type": "resource",
