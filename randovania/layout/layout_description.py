@@ -110,8 +110,27 @@ def migrate_description(json_dict: dict) -> dict:
             "Emerald Translator": "Emerald",
             "Cobalt Translator": "Cobalt",
         }
+        dark_world_mapping = {
+            "Dark Agon Wastes": "Agon Wastes",
+            "Dark Torvus Bog": "Torvus Bog",
+            "Ing Hive": "Sanctuary Fortress",
+            "Sky Temple": "Great Temple",
+            "Sky Temple Grounds": "Temple Grounds",
+        }
+
+        def fix_dark_world(name: str):
+            world, rest = name.split("/", 1)
+            return f"{dark_world_mapping.get(world, world)}/{rest}"
+
+        def add_teleporter_node(name):
+            return migration_data.get_teleporter_area_to_node_mapping()[name]
 
         for game in json_dict["game_modifications"]:
+            game["starting_location"] = fix_dark_world(game["starting_location"])
+            game["teleporters"] = {
+                add_teleporter_node(fix_dark_world(source)): fix_dark_world(destination)
+                for source, destination in game.pop("elevators").items()
+            }
             game["configurable_nodes"] = {
                 gate_mapping[gate]: {
                     "type": "and",

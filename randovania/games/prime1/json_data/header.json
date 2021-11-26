@@ -1,5 +1,5 @@
 {
-    "schema_version": 5,
+    "schema_version": 6,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -963,105 +963,144 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Normal Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Ice Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Wave Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Plasma Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Missile Blast Shield": {
+                        "lock_type": 2,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Permanently Locked": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 1,
-                "name": "Ice Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Ice",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {}
             },
-            {
-                "index": 2,
-                "name": "Wave Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Wave",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 3,
-                "name": "Plasma Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Plasma",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 4,
-                "name": "Missile Blast Shield",
-                "lock_type": 2,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Missile",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 8,
-                "name": "Permanently Locked",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            }
-        ],
-        "portal": [],
-        "morph_ball": [
-            {
-                "index": 0,
+            "morph_ball": {
                 "name": "Morph Ball Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "MorphBall",
-                        "amount": 1,
-                        "negate": false
+                "extra": {},
+                "items": {
+                    "Morph Ball Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ]
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         "Impact Crater.json",

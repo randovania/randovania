@@ -12,7 +12,8 @@ from randovania.lib.enum_lib import iterate_enum
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 
 
-def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
+def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
+    world_list = game.world_list
     world = world_list.nodes_to_world(node)
 
     if isinstance(node, EventNode):
@@ -54,7 +55,7 @@ def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
             else:
                 yield f"'{node.name}' connects to '{node.default_connection}' which is not a DockNode"
 
-    elif any(node.name.startswith(dock_type.node_name_prefix) for dock_type in iterate_enum(DockType)):
+    elif any(node.name.startswith(dock_type.long_name) for dock_type in game.dock_weakness_database.dock_types):
         yield f"'{node.name}' is not a Dock Node, naming suggests it should be."
 
     if isinstance(node, TeleporterNode):
@@ -64,12 +65,12 @@ def find_node_errors(world_list: WorldList, node: Node) -> Iterator[str]:
             yield f"'{node.name}' is a Teleporter Node, but connection {node.default_connection} is invalid: {e}"
 
 
-def find_area_errors(world_list: WorldList, area: Area) -> Iterator[str]:
+def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     nodes_with_paths_in = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
 
-        for error in find_node_errors(world_list, node):
+        for error in find_node_errors(game, node):
             yield f"{area.name} - {error}"
 
         if node in area.connections.get(node, {}):
@@ -89,9 +90,9 @@ def find_area_errors(world_list: WorldList, area: Area) -> Iterator[str]:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
 
-def find_world_errors(world_list: WorldList, world: World) -> Iterator[str]:
+def find_world_errors(game: GameDescription, world: World) -> Iterator[str]:
     for area in world.areas:
-        for error in find_area_errors(world_list, area):
+        for error in find_area_errors(game, area):
             yield f"{world.name} - {error}"
 
 
@@ -99,6 +100,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
     for world in game.world_list.worlds:
-        result.extend(find_world_errors(game.world_list, world))
+        result.extend(find_world_errors(game, world))
 
     return result

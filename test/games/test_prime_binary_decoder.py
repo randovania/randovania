@@ -43,9 +43,11 @@ sample_data = {
         "data": {"comment": None, "items": []},
     },
     "dock_weakness_database": {
-        "door": [],
-        "portal": [],
-        "morph_ball": [],
+        "types": {},
+        "default_weakness": {
+            "type": "",
+            "name": "",
+        }
     },
     "worlds": [],
 }

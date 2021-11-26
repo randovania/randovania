@@ -73,8 +73,8 @@
                         "area_name": "collision_camera_006 (C)",
                         "node_name": "Door (doorpowerpower)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_002)": {
@@ -99,8 +99,8 @@
                         "area_name": "collision_camera_002 (C)",
                         "node_name": "Door (doorpowerpower_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank)": {
@@ -192,7 +192,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 10900.0,
@@ -202,12 +202,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_065",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 11500.0,
@@ -217,7 +221,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_066",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -317,8 +325,8 @@
                         "area_name": "collision_camera_000 (C)",
                         "node_name": "Door (doorpowerpower_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_003)": {
@@ -343,8 +351,8 @@
                         "area_name": "collision_camera_004 (C)",
                         "node_name": "Door (doorpowerpower_003)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Navigation Room": {
@@ -419,8 +427,8 @@
                         "area_name": "collision_camera_002 (C)",
                         "node_name": "Door (doorpowerpower_003)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_004)": {
@@ -445,8 +453,8 @@
                         "area_name": "collision_camera_007 (C)",
                         "node_name": "Door (doorpowerpower_004)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorheat_001)": {
@@ -471,8 +479,8 @@
                         "area_name": "collision_camera_007 (C)",
                         "node_name": "Door (doorheat_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Door (doorpowerpower_019)": {
@@ -497,8 +505,8 @@
                         "area_name": "collision_camera_007 (C)",
                         "node_name": "Door (doorpowerpower_019)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Event - Thermal Device": {
@@ -589,8 +597,8 @@
                         "area_name": "collision_camera_000 (C)",
                         "node_name": "Door (doorpowerpower)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_001)": {
@@ -615,8 +623,8 @@
                         "area_name": "collision_camera_015 (C)",
                         "node_name": "Door (doorpowerpower_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_003)": {
@@ -641,8 +649,8 @@
                         "area_name": "collision_camera_012 (C)",
                         "node_name": "Door (doorchargecharge_003)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 }
             }
@@ -700,8 +708,8 @@
                         "area_name": "collision_camera_004 (C)",
                         "node_name": "Door (doorpowerpower_004)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorheat_001)": {
@@ -726,8 +734,8 @@
                         "area_name": "collision_camera_004 (C)",
                         "node_name": "Door (doorheat_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Door (doorpowerpower_019)": {
@@ -752,8 +760,8 @@
                         "area_name": "collision_camera_004 (C)",
                         "node_name": "Door (doorpowerpower_019)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag001)": {
@@ -790,7 +798,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7500.0,
@@ -800,7 +808,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_064",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -891,8 +903,8 @@
                         "area_name": "collision_camera_049 (C)",
                         "node_name": "Door (doorchargecharge_007)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_026)": {
@@ -917,8 +929,8 @@
                         "area_name": "collision_camera_021 (C)",
                         "node_name": "Door (doorpowerpower_026)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_008)": {
@@ -955,7 +967,7 @@
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 1300.0,
@@ -965,12 +977,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_057",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 1500.0,
@@ -980,7 +996,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_067",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1039,8 +1059,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (doorpowerpower_016)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy)": {
@@ -1061,8 +1081,8 @@
                         "area_name": "collision_camera_013 (C)",
                         "node_name": "Door (dooremmy)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge_001)": {
@@ -1087,8 +1107,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (doorclosedcharge_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 }
             }
@@ -1146,8 +1166,8 @@
                         "area_name": "collision_camera_013 (C)",
                         "node_name": "Door (doorchargecharge_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_002)": {
@@ -1172,8 +1192,8 @@
                         "area_name": "collision_camera_045 (C)",
                         "node_name": "Door (doorchargecharge_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_003)": {
@@ -1198,8 +1218,8 @@
                         "area_name": "collision_camera_006 (C)",
                         "node_name": "Door (doorchargecharge_003)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorframepresence_001)": {
@@ -1224,8 +1244,8 @@
                         "area_name": "collision_camera_045 (C)",
                         "node_name": "Door (doorframepresence_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Open",
                     "connections": {}
                 },
                 "Start Point 1": {
@@ -1309,8 +1329,8 @@
                         "area_name": "collision_camera_010 (C)",
                         "node_name": "Door (dooremmy)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_022)": {
@@ -1335,8 +1355,8 @@
                         "area_name": "collision_camera_014 (C)",
                         "node_name": "Door (doorpowerpower_022)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_001)": {
@@ -1361,8 +1381,8 @@
                         "area_name": "collision_camera_012 (C)",
                         "node_name": "Door (doorchargecharge_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 }
             }
@@ -1420,8 +1440,8 @@
                         "area_name": "collision_camera_013 (C)",
                         "node_name": "Door (doorpowerpower_022)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_023)": {
@@ -1446,8 +1466,8 @@
                         "area_name": "collision_camera_045 (C)",
                         "node_name": "Door (doorpowerpower_023)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge_002)": {
@@ -1472,8 +1492,8 @@
                         "area_name": "collision_camera_018 (C)",
                         "node_name": "Door (doorclosedcharge_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorpresenceframe_000)": {
@@ -1498,8 +1518,8 @@
                         "area_name": "collision_camera_018 (C)",
                         "node_name": "Door (doorpresenceframe_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Open",
                     "connections": {}
                 },
                 "Door (doorgrapplegrapple_000)": {
@@ -1524,12 +1544,12 @@
                         "area_name": "collision_camera_015 (C)",
                         "node_name": "Door (doorgrapplegrapple_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 10,
+                    "dock_type": "door",
+                    "dock_weakness": "Grapple Beam Door",
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 12400.0,
@@ -1539,7 +1559,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_045",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1614,8 +1638,8 @@
                         "area_name": "collision_camera_006 (C)",
                         "node_name": "Door (doorpowerpower_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_009)": {
@@ -1674,8 +1698,8 @@
                         "area_name": "collision_camera_014 (C)",
                         "node_name": "Door (doorgrapplegrapple_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 10,
+                    "dock_type": "door",
+                    "dock_weakness": "Grapple Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag012)": {
@@ -1736,7 +1760,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18200.0,
@@ -1746,12 +1770,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_028",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18400.0,
@@ -1761,12 +1789,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 17000.0,
@@ -1776,12 +1808,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_030",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 17500.0,
@@ -1791,12 +1827,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_037",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18100.0,
@@ -1806,12 +1846,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_038",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18100.0,
@@ -1821,12 +1865,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_039",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18300.0,
@@ -1836,12 +1884,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_040",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18800.0,
@@ -1851,12 +1903,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_041",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 16200.0,
@@ -1866,12 +1922,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_042",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 16500.0,
@@ -1881,12 +1941,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_043",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB MISSILE)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 14100.0,
@@ -1896,12 +1960,17 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_044",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB",
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 18200.0,
@@ -1911,12 +1980,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_074",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 14100.0,
@@ -1926,7 +1999,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_075",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1985,8 +2062,8 @@
                         "area_name": "collision_camera_042 (C)",
                         "node_name": "Door (doorpowerpower_020)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_025)": {
@@ -2011,8 +2088,8 @@
                         "area_name": "collision_camera_048 (C)",
                         "node_name": "Door (doorpowerpower_025)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Event - Breakable (db_hdoor_mg_001)": {
@@ -2103,8 +2180,8 @@
                         "area_name": "collision_camera_033 (C)",
                         "node_name": "Door (doorpowerpower_018)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge)": {
@@ -2129,8 +2206,8 @@
                         "area_name": "collision_camera_042 (C)",
                         "node_name": "Door (doorchargecharge)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge_002)": {
@@ -2155,8 +2232,8 @@
                         "area_name": "collision_camera_014 (C)",
                         "node_name": "Door (doorclosedcharge_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
                     "connections": {}
                 },
                 "Door (doorpresenceframe_000)": {
@@ -2181,8 +2258,8 @@
                         "area_name": "collision_camera_014 (C)",
                         "node_name": "Door (doorpresenceframe_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 9,
+                    "dock_type": "door",
+                    "dock_weakness": "Sensor Lock Door",
                     "connections": {}
                 },
                 "Life Recharge": {
@@ -2203,7 +2280,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8900.0,
@@ -2213,7 +2290,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_012",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2272,8 +2353,8 @@
                         "area_name": "collision_camera_052 (C)",
                         "node_name": "Door (doorpowerpower_027)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag004)": {
@@ -2375,8 +2456,8 @@
                         "area_name": "collision_camera_052 (C)",
                         "node_name": "Door (dooremmy_003)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_005)": {
@@ -2401,8 +2482,8 @@
                         "area_name": "collision_camera_046 (C)",
                         "node_name": "Door (doorchargecharge_005)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorframepresence)": {
@@ -2427,8 +2508,8 @@
                         "area_name": "collision_camera_059 (C)",
                         "node_name": "Door (doorframepresence)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 9,
+                    "dock_type": "door",
+                    "dock_weakness": "Sensor Lock Door",
                     "connections": {}
                 },
                 "Door (doorshutter_001)": {
@@ -2453,8 +2534,8 @@
                         "area_name": "collision_camera_046 (C)",
                         "node_name": "Door (doorshutter_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 11,
+                    "dock_type": "door",
+                    "dock_weakness": "Phase Shift Door",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag005)": {
@@ -2474,7 +2555,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3300.0,
@@ -2484,12 +2565,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_053",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -2700.0,
@@ -2499,12 +2584,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_054",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -2100.0,
@@ -2514,7 +2603,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_055",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2573,8 +2666,8 @@
                         "area_name": "collision_camera_009 (C)",
                         "node_name": "Door (doorpowerpower_026)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_001)": {
@@ -2649,8 +2742,8 @@
                         "area_name": "collision_camera_029 (C)",
                         "node_name": "Door (doorpowerpower_013)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_004)": {
@@ -2671,8 +2764,8 @@
                         "area_name": "collision_camera_030 (C)",
                         "node_name": "Door (dooremmy_004)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 }
             }
@@ -2734,8 +2827,8 @@
                         "area_name": "collision_camera_028 (C)",
                         "node_name": "Door (dooremmy_008)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_009)": {
@@ -2756,8 +2849,8 @@
                         "area_name": "collision_camera_028 (C)",
                         "node_name": "Door (dooremmy_009)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_029)": {
@@ -2782,8 +2875,8 @@
                         "area_name": "collision_camera_043 (C)",
                         "node_name": "Door (doorpowerpower_029)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_028)": {
@@ -2808,8 +2901,8 @@
                         "area_name": "collision_camera_064 (C)",
                         "node_name": "Door (doorpowerpower_028)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (db_reg_mg_017)": {
@@ -2846,7 +2939,7 @@
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11400.0,
@@ -2856,12 +2949,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14000.0,
@@ -2871,12 +2968,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_018",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14200.0,
@@ -2886,12 +2987,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_073",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11800.0,
@@ -2901,12 +3006,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_031",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11900.0,
@@ -2916,7 +3025,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_032",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2983,8 +3096,8 @@
                         "area_name": "collision_camera_061 (C)",
                         "node_name": "Door (doorpowerpower_012)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag010)": {
@@ -3020,7 +3133,7 @@
                     "connections": {}
                 },
                 "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16100.0,
@@ -3030,12 +3143,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_033",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15800.0,
@@ -3045,12 +3162,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_058",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14300.0,
@@ -3060,7 +3181,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_059",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3131,8 +3256,8 @@
                         "area_name": "collision_camera_043 (C)",
                         "node_name": "Door (doorframe)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Open",
                     "connections": {}
                 },
                 "Door (doorpowerpower_008)": {
@@ -3157,8 +3282,8 @@
                         "area_name": "collision_camera_064 (C)",
                         "node_name": "Door (doorpowerpower_008)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_009)": {
@@ -3183,8 +3308,8 @@
                         "area_name": "collision_camera_058 (C)",
                         "node_name": "Door (doorpowerpower_009)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_007)": {
@@ -3209,8 +3334,8 @@
                         "area_name": "collision_camera_062 (C)",
                         "node_name": "Door (doorpowerpower_007)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletankplus_000)": {
@@ -3287,7 +3412,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -17400.0,
@@ -3297,12 +3422,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_020",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -18300.0,
@@ -3312,12 +3441,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_021",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -18300.0,
@@ -3327,7 +3460,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_022",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3460,7 +3597,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14800.0,
@@ -3470,12 +3607,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_056",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13000.0,
@@ -3485,12 +3626,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_069",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15300.0,
@@ -3500,12 +3645,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_068",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14800.0,
@@ -3515,7 +3664,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_023",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3574,8 +3727,8 @@
                         "area_name": "collision_camera_058 (C)",
                         "node_name": "Door (doorpowerpower_010)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_007)": {
@@ -3596,8 +3749,8 @@
                         "area_name": "collision_camera_028 (C)",
                         "node_name": "Door (dooremmy_007)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Event - Breakable (db_dside_mg_002)": {
@@ -3671,8 +3824,8 @@
                         "area_name": "collision_camera_029 (C)",
                         "node_name": "Door (doorpowerpower_011)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_007)": {
@@ -3693,8 +3846,8 @@
                         "area_name": "collision_camera_027 (C)",
                         "node_name": "Door (dooremmy_007)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_008)": {
@@ -3715,8 +3868,8 @@
                         "area_name": "collision_camera_023 (C)",
                         "node_name": "Door (dooremmy_008)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_009)": {
@@ -3737,8 +3890,8 @@
                         "area_name": "collision_camera_023 (C)",
                         "node_name": "Door (dooremmy_009)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorshutter_002)": {
@@ -3763,8 +3916,8 @@
                         "area_name": "collision_camera_059 (C)",
                         "node_name": "Door (doorshutter_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 11,
+                    "dock_type": "door",
+                    "dock_weakness": "Phase Shift Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_004)": {
@@ -3856,8 +4009,8 @@
                         "area_name": "collision_camera_028 (C)",
                         "node_name": "Door (doorpowerpower_011)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_013)": {
@@ -3882,12 +4035,12 @@
                         "area_name": "collision_camera_022 (C)",
                         "node_name": "Door (doorpowerpower_013)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -6500.0,
@@ -3897,12 +4050,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_016",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -6300.0,
@@ -3912,12 +4069,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -6500.0,
@@ -3927,7 +4088,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_076",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3986,8 +4151,8 @@
                         "area_name": "collision_camera_031 (C)",
                         "node_name": "Door (doorpowerpower_014)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_004)": {
@@ -4008,8 +4173,8 @@
                         "area_name": "collision_camera_022 (C)",
                         "node_name": "Door (dooremmy_004)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Map Station": {
@@ -4084,8 +4249,8 @@
                         "area_name": "collision_camera_030 (C)",
                         "node_name": "Door (doorpowerpower_014)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_001)": {
@@ -4106,8 +4271,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (dooremmy_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_005)": {
@@ -4128,8 +4293,8 @@
                         "area_name": "collision_camera_035 (C)",
                         "node_name": "Door (dooremmy_005)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 }
             }
@@ -4187,8 +4352,8 @@
                         "area_name": "collision_camera_046 (C)",
                         "node_name": "Door (doorpowerpower_015)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_016)": {
@@ -4213,8 +4378,8 @@
                         "area_name": "collision_camera_010 (C)",
                         "node_name": "Door (doorpowerpower_016)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_001)": {
@@ -4235,8 +4400,8 @@
                         "area_name": "collision_camera_031 (C)",
                         "node_name": "Door (dooremmy_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_002)": {
@@ -4257,8 +4422,8 @@
                         "area_name": "collision_camera_034 (C)",
                         "node_name": "Door (dooremmy_002)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_000)": {
@@ -4283,8 +4448,8 @@
                         "area_name": "collision_camera_046 (C)",
                         "node_name": "Door (doorpowerpower_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge)": {
@@ -4309,8 +4474,8 @@
                         "area_name": "collision_camera_046 (C)",
                         "node_name": "Door (doorclosedcharge)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge_001)": {
@@ -4335,8 +4500,8 @@
                         "area_name": "collision_camera_010 (C)",
                         "node_name": "Door (doorclosedcharge_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
                     "connections": {}
                 }
             }
@@ -4394,8 +4559,8 @@
                         "area_name": "collision_camera_034 (C)",
                         "node_name": "Door (doorpowerpower_017)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_018)": {
@@ -4420,8 +4585,8 @@
                         "area_name": "collision_camera_018 (C)",
                         "node_name": "Door (doorpowerpower_018)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Save Station": {
@@ -4496,8 +4661,8 @@
                         "area_name": "collision_camera_033 (C)",
                         "node_name": "Door (doorpowerpower_017)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_002)": {
@@ -4518,8 +4683,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (dooremmy_002)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Event - Thermal Device": {
@@ -4591,8 +4756,8 @@
                         "area_name": "collision_camera_031 (C)",
                         "node_name": "Door (dooremmy_005)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (dooremmy_006)": {
@@ -4613,8 +4778,8 @@
                         "area_name": "collision_camera_040 (C)",
                         "node_name": "Door (dooremmy_006)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_030)": {
@@ -4639,8 +4804,8 @@
                         "area_name": "collision_camera_036 (C)",
                         "node_name": "Door (doorpowerpower_030)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 }
             }
@@ -4698,8 +4863,8 @@
                         "area_name": "collision_camera_035 (C)",
                         "node_name": "Door (doorpowerpower_030)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag007)": {
@@ -4953,8 +5118,8 @@
                         "area_name": "collision_camera_041 (C)",
                         "node_name": "Door (doorpowerpower_021)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (dooremmy_006)": {
@@ -4975,8 +5140,8 @@
                         "area_name": "collision_camera_035 (C)",
                         "node_name": "Door (dooremmy_006)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorheat_004)": {
@@ -5001,8 +5166,8 @@
                         "area_name": "collision_camera_042 (C)",
                         "node_name": "Door (doorheat_004)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_000)": {
@@ -5023,7 +5188,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 700.0,
@@ -5033,12 +5198,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_002",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 3200.0,
@@ -5048,7 +5217,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_070",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5107,8 +5280,8 @@
                         "area_name": "collision_camera_040 (C)",
                         "node_name": "Door (doorpowerpower_021)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Start Point": {
@@ -5206,8 +5379,8 @@
                         "area_name": "collision_camera_016 (C)",
                         "node_name": "Door (doorpowerpower_020)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge)": {
@@ -5232,8 +5405,8 @@
                         "area_name": "collision_camera_018 (C)",
                         "node_name": "Door (doorchargecharge)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorheat_004)": {
@@ -5258,8 +5431,8 @@
                         "area_name": "collision_camera_040 (C)",
                         "node_name": "Door (doorheat_004)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (item_energyfragment_001)": {
@@ -5387,8 +5560,8 @@
                         "area_name": "collision_camera_025 (C)",
                         "node_name": "Door (doorframe)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Open",
                     "connections": {}
                 },
                 "Door (doorpowerpower_029)": {
@@ -5413,12 +5586,12 @@
                         "area_name": "collision_camera_023 (C)",
                         "node_name": "Door (doorpowerpower_029)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14500.0,
@@ -5428,12 +5601,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_019",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15600.0,
@@ -5443,7 +5620,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5502,8 +5683,8 @@
                         "area_name": "collision_camera_051 (C)",
                         "node_name": "Door (doorclosedpower_000)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (itemsphere_diffusionbeam)": {
@@ -5572,7 +5753,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11900.0,
@@ -5582,12 +5763,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_003",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -10900.0,
@@ -5597,12 +5782,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_004",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11500.0,
@@ -5612,12 +5801,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_005",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11700.0,
@@ -5627,12 +5820,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_006",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11100.0,
@@ -5642,12 +5839,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_007",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -10900.0,
@@ -5657,12 +5858,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11400.0,
@@ -5672,12 +5877,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_009",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -12200.0,
@@ -5687,12 +5896,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_010",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 5": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11900.0,
@@ -5702,7 +5915,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_011",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5761,8 +5978,8 @@
                         "area_name": "collision_camera_014 (C)",
                         "node_name": "Door (doorpowerpower_023)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_002)": {
@@ -5787,8 +6004,8 @@
                         "area_name": "collision_camera_012 (C)",
                         "node_name": "Door (doorchargecharge_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorframepresence_001)": {
@@ -5813,8 +6030,8 @@
                         "area_name": "collision_camera_012 (C)",
                         "node_name": "Door (doorframepresence_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 9,
+                    "dock_type": "door",
+                    "dock_weakness": "Sensor Lock Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_010)": {
@@ -5851,7 +6068,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 15200.0,
@@ -5861,7 +6078,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_036",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5920,8 +6141,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (doorpowerpower_015)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorchargecharge_005)": {
@@ -5946,8 +6167,8 @@
                         "area_name": "collision_camera_020 (C)",
                         "node_name": "Door (doorchargecharge_005)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_000)": {
@@ -5972,8 +6193,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (doorpowerpower_000)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorclosedcharge)": {
@@ -5998,8 +6219,8 @@
                         "area_name": "collision_camera_032 (C)",
                         "node_name": "Door (doorclosedcharge)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
                     "connections": {}
                 },
                 "Door (doorshutter_001)": {
@@ -6024,8 +6245,8 @@
                         "area_name": "collision_camera_020 (C)",
                         "node_name": "Door (doorshutter_001)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 11,
+                    "dock_type": "door",
+                    "dock_weakness": "Phase Shift Door",
                     "connections": {}
                 }
             }
@@ -6083,8 +6304,8 @@
                         "area_name": "collision_camera_016 (C)",
                         "node_name": "Door (doorpowerpower_025)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_007)": {
@@ -6105,7 +6326,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 12300.0,
@@ -6115,12 +6336,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_046",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 10900.0,
@@ -6130,12 +6355,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_047",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 11300.0,
@@ -6145,12 +6374,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_048",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 11300.0,
@@ -6160,12 +6393,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_049",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 11700.0,
@@ -6175,12 +6412,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_050",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 12200.0,
@@ -6190,12 +6431,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_051",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 12800.0,
@@ -6205,7 +6450,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_052",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 }
@@ -6264,8 +6513,8 @@
                         "area_name": "collision_camera_009 (C)",
                         "node_name": "Door (doorchargecharge_007)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_002)": {
@@ -6340,8 +6589,8 @@
                         "area_name": "collision_camera_044 (C)",
                         "node_name": "Door (doorclosedpower_000)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_003)": {
@@ -6383,8 +6632,8 @@
                         "area_name": "collision_camera_052 (C)",
                         "node_name": "Door (doorgrapplegrapple)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 10,
+                    "dock_type": "door",
+                    "dock_weakness": "Grapple Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (breakablemag009)": {
@@ -6445,7 +6694,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -6700.0,
@@ -6455,12 +6704,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_027",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -7700.0,
@@ -6470,12 +6723,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_060",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -7700.0,
@@ -6485,7 +6742,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_061",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -6552,8 +6813,8 @@
                         "area_name": "collision_camera_019 (C)",
                         "node_name": "Door (doorpowerpower_027)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Door (dooremmy_003)": {
@@ -6574,8 +6835,8 @@
                         "area_name": "collision_camera_020 (C)",
                         "node_name": "Door (dooremmy_003)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Door (doorclosedpower_001)": {
@@ -6600,8 +6861,8 @@
                         "area_name": "collision_camera_053 (C)",
                         "node_name": "Door (doorclosedpower_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Door (doorgrapplegrapple)": {
@@ -6626,8 +6887,8 @@
                         "area_name": "collision_camera_051 (C)",
                         "node_name": "Door (doorgrapplegrapple)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 10,
+                    "dock_type": "door",
+                    "dock_weakness": "Grapple Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (db_hdoor_mg_002)": {
@@ -6732,8 +6993,8 @@
                         "area_name": "collision_camera_052 (C)",
                         "node_name": "Door (doorclosedpower_001)"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 1,
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Pickup (item_energyfragment_000)": {
@@ -6754,7 +7015,7 @@
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3800.0,
@@ -6764,12 +7025,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3800.0,
@@ -6779,12 +7044,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -4000.0,
@@ -6794,12 +7063,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_025",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3700.0,
@@ -6809,12 +7082,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_062",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -2700.0,
@@ -6824,7 +7101,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_063",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -6862,7 +7143,7 @@
             },
             "nodes": {
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -4800.0,
@@ -6872,7 +7153,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 }
@@ -6927,7 +7212,7 @@
                     "connections": {}
                 },
                 "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 4600.0,
@@ -6937,12 +7222,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 4800.0,
@@ -6952,7 +7241,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_014",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 }
@@ -7011,8 +7304,8 @@
                         "area_name": "collision_camera_025 (C)",
                         "node_name": "Door (doorpowerpower_009)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_010)": {
@@ -7037,8 +7330,8 @@
                         "area_name": "collision_camera_027 (C)",
                         "node_name": "Door (doorpowerpower_010)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Navigation Room": {
@@ -7113,8 +7406,8 @@
                         "area_name": "collision_camera_020 (C)",
                         "node_name": "Door (doorframepresence)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Access Open",
                     "connections": {}
                 },
                 "Door (doorshutter_002)": {
@@ -7139,8 +7432,8 @@
                         "area_name": "collision_camera_028 (C)",
                         "node_name": "Door (doorshutter_002)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 11,
+                    "dock_type": "door",
+                    "dock_weakness": "Phase Shift Door",
                     "connections": {}
                 }
             }
@@ -7256,8 +7549,8 @@
                         "area_name": "collision_camera_024 (C)",
                         "node_name": "Door (doorpowerpower_012)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Event - Breakable (db_reg_mg_021)": {
@@ -7308,7 +7601,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -12300.0,
@@ -7318,7 +7611,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_071",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -7377,8 +7674,8 @@
                         "area_name": "collision_camera_025 (C)",
                         "node_name": "Door (doorpowerpower_007)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Save Station": {
@@ -7447,7 +7744,7 @@
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16100.0,
@@ -7457,12 +7754,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_034",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16600.0,
@@ -7472,12 +7773,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_035",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -17500.0,
@@ -7487,7 +7792,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_072",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -7546,8 +7855,8 @@
                         "area_name": "collision_camera_025 (C)",
                         "node_name": "Door (doorpowerpower_008)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Door (doorpowerpower_028)": {
@@ -7572,8 +7881,8 @@
                         "area_name": "collision_camera_023 (C)",
                         "node_name": "Door (doorpowerpower_028)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {}
                 }
             }

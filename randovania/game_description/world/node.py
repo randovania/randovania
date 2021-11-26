@@ -15,7 +15,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness
+from randovania.game_description.world.dock import DockWeakness, DockType
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
@@ -23,6 +23,17 @@ class NodeLocation(NamedTuple):
     x: float
     y: float
     z: float
+
+
+def wrap_frozen(x):
+    if isinstance(x, dict):
+        return frozendict((key, wrap_frozen(value)) for key, value in x.items())
+
+    elif isinstance(x, list):
+        return tuple(wrap_frozen(value) for value in x)
+
+    else:
+        return x
 
 
 @dataclasses.dataclass(frozen=True)
@@ -44,7 +55,7 @@ class Node:
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
-            object.__setattr__(self, "extra", frozendict(self.extra))
+            object.__setattr__(self, "extra", wrap_frozen(self.extra))
 
     @property
     def is_resource_node(self) -> bool:
@@ -91,6 +102,7 @@ class DockNode(Node):
     UI for user selection (elevator rando, for example).
     """
     default_connection: NodeIdentifier
+    dock_type: DockType
     default_dock_weakness: DockWeakness
 
     def __hash__(self):

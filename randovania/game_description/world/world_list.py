@@ -243,10 +243,15 @@ class WorldList:
         raise ValueError(f"No node with name {identifier.node_name} found in {area}")
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
-        return self.world_with_name(location.world_name).area_by_name(location.area_name)
+        return self.world_and_area_by_area_identifier(location)[1]
 
     def world_by_area_location(self, location: AreaIdentifier) -> World:
         return self.world_with_name(location.world_name)
+
+    def world_and_area_by_area_identifier(self, identifier: AreaIdentifier) -> tuple[World, Area]:
+        world = self.world_with_name(identifier.world_name)
+        area = world.area_by_name(identifier.area_name)
+        return world, area
 
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         self.ensure_has_node_cache()

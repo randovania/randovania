@@ -57,8 +57,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for i, node_type in enumerate(self._type_to_tab.keys()):
             self.node_type_combo.setItemData(i, node_type)
 
-        for i, enum in enumerate(enum_lib.iterate_enum(DockType)):
-            self.dock_type_combo.setItemData(i, enum)
+        self.dock_type_combo.clear()
+        for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
+            self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
+        refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 
         for world in sorted(game.world_list.worlds, key=lambda x: x.name):
             self.dock_connection_world_combo.addItem(world.name, userData=world)
@@ -72,8 +74,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.event_resource_combo.addItem("No events in database", None)
             self.event_resource_combo.setEnabled(False)
 
-        for i, enum in enumerate(enum_lib.iterate_enum(LoreType)):
-            self.lore_type_combo.setItemData(i, enum)
+        for i, dock_type in enumerate(enum_lib.iterate_enum(LoreType)):
+            self.lore_type_combo.setItemData(i, dock_type)
         refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
 
         self.set_unlocked_by(Requirement.trivial())
@@ -156,7 +158,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_connection_node_combo.setCurrentIndex(self.dock_connection_node_combo.findData(other_node))
 
         # Dock Weakness
-        self.dock_type_combo.setCurrentIndex(self.dock_type_combo.findData(node.default_dock_weakness.dock_type))
+        self.dock_type_combo.setCurrentIndex(self.dock_type_combo.findData(node.dock_type))
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
         self.dock_weakness_combo.setCurrentIndex(self.dock_weakness_combo.findData(node.default_dock_weakness))
 
@@ -305,6 +307,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return DockNode(
                 name, heal, location, description, extra, index,
                 self.game.world_list.identifier_for_node(connection_node),
+                self.dock_type_combo.currentData(),
                 self.dock_weakness_combo.currentData(),
             )
 
