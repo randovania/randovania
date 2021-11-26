@@ -71,6 +71,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
+        self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
         self.area_view_canvas.CreateDockRequest.connect(self._create_new_dock)
@@ -391,10 +392,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self.other_node_connection_combo.count() > 0:
             self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
             self.other_node_connection_combo.setEnabled(True)
+            self.other_node_connection_swap_button.setEnabled(True)
             self.other_node_connection_edit_button.setEnabled(True)
         else:
             self.other_node_connection_combo.setEnabled(False)
             self.other_node_connection_combo.addItem("No connections")
+            self.other_node_connection_swap_button.setEnabled(False)
             self.other_node_connection_edit_button.setEnabled(False)
 
         self.update_connections()
@@ -423,6 +426,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             requirement,
             False
         )
+
+    def _swap_selected_connection(self):
+        self.focus_on_node(self.current_connection_node)
 
     @asyncSlot()
     async def _open_edit_connection(self):

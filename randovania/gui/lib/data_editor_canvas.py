@@ -184,6 +184,19 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
+    def mouseDoubleClickEvent(self, event: QtGui.QMouseEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+        local_pos -= self.get_area_canvas_offset()
+
+        nodes_at_mouse = [
+            node
+            for node in self.area.nodes
+            if node.location is not None and (
+                    self.game_loc_to_qt_local(node.location) - local_pos).manhattanLength() < 10
+        ]
+        if len(nodes_at_mouse) == 1:
+            self.SelectNodeRequest.emit(nodes_at_mouse[0])
+
     def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
         local_pos -= self.get_area_canvas_offset()
