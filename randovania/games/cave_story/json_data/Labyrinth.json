@@ -813,10 +813,12 @@
                     "dock_weakness_index": 2,
                     "connections": {
                         "Door to Waterway Cabin": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "airTank",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -859,10 +861,12 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Exit to Main Artery": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "airTank",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1527,17 +1531,41 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Dboost",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dboost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Has Flight"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1552,11 +1580,8 @@
                             }
                         },
                         "Event - Monster X": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Kill Bosses"
                         }
                     }
                 },
@@ -1606,11 +1631,8 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Outside Camp": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Break Blocks"
                         }
                     }
                 },
@@ -1660,11 +1682,8 @@
                     "dock_weakness_index": 0,
                     "connections": {
                         "Event - Monster X": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Kill Bosses"
                         }
                     }
                 },
