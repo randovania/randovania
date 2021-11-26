@@ -3,7 +3,7 @@
     "extra": {},
     "areas": {
         "Labyrinth B": {
-            "default_node": "Pickup - Booster Chest",
+            "default_node": "Pickup (Booster Chest)",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "MazeB"
@@ -48,12 +48,31 @@
                         }
                     }
                 },
-                "Pickup - Booster Chest": {
+                "Pickup (Booster Chest)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "connections": {}
+                },
+                "Teleporter to Arthur's House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.68,
+                        "y": 54.49,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Mimiga Village",
+                        "area_name": "Arthur's House",
+                        "node_name": "Teleporter to Labyrinth"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
                     "connections": {}
                 }
             }
@@ -168,7 +187,7 @@
                                 ]
                             }
                         },
-                        "Pickup - Boulder Chest": {
+                        "Pickup (Boulder Chest)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -205,7 +224,7 @@
                         }
                     }
                 },
-                "Pickup - Boulder Chest": {
+                "Pickup (Boulder Chest)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -453,7 +472,7 @@
                                 ]
                             }
                         },
-                        "Pickup - Robot's Arm": {
+                        "Pickup (Robot's Arm)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -470,7 +489,7 @@
                     "extra": {},
                     "event_name": "eventCore",
                     "connections": {
-                        "Pickup - Drowned Curly": {
+                        "Pickup (Drowned Curly)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -479,7 +498,7 @@
                         }
                     }
                 },
-                "Pickup - Robot's Arm": {
+                "Pickup (Robot's Arm)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -497,7 +516,7 @@
                         }
                     }
                 },
-                "Pickup - Drowned Curly": {
+                "Pickup (Drowned Curly)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -673,7 +692,7 @@
                         }
                     }
                 },
-                "Pickup - Labyrinth I": {
+                "Pickup (Labyrinth I)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -755,7 +774,7 @@
                                 ]
                             }
                         },
-                        "Pickup - Labyrinth I": {
+                        "Pickup (Labyrinth I)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1011,7 +1030,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Chaba Chest (Machine Gun)": {
+                        "Pickup (Chaba Chest (Machine Gun))": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1020,7 +1039,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup - Chaba Chest (Fireball)": {
+                        "Pickup (Chaba Chest (Fireball))": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1029,7 +1048,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup - Chaba Chest (Spur)": {
+                        "Pickup (Chaba Chest (Spur))": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1040,7 +1059,7 @@
                         }
                     }
                 },
-                "Pickup - Chaba Chest (Machine Gun)": {
+                "Pickup (Chaba Chest (Machine Gun))": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -1056,7 +1075,7 @@
                         }
                     }
                 },
-                "Pickup - Chaba Chest (Fireball)": {
+                "Pickup (Chaba Chest (Fireball))": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -1072,7 +1091,7 @@
                         }
                     }
                 },
-                "Pickup - Chaba Chest (Spur)": {
+                "Pickup (Chaba Chest (Spur))": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -1113,7 +1132,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup - Dr. Gero": {
+                        "Pickup (Dr. Gero)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1147,7 +1166,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup - Camp Chest": {
+                        "Pickup (Camp Chest)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1156,7 +1175,7 @@
                         }
                     }
                 },
-                "Pickup - Dr. Gero": {
+                "Pickup (Dr. Gero)": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": null,
@@ -1189,7 +1208,7 @@
                         }
                     }
                 },
-                "Pickup - Camp Chest": {
+                "Pickup (Camp Chest)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -1221,7 +1240,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Puu Black": {
+                        "Pickup (Puu Black)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1249,7 @@
                         }
                     }
                 },
-                "Pickup - Puu Black": {
+                "Pickup (Puu Black)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,

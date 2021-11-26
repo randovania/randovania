@@ -33,11 +33,18 @@
                     }
                 },
                 "Teleporter to Arthur's House": {
-                    "node_type": "generic",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Mimiga Village",
+                        "area_name": "Arthur's House",
+                        "node_name": "Teleporter to Sand Zone"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
                     "connections": {
                         "Outside Sand Zone Residence": {
                             "type": "or",
@@ -278,12 +285,14 @@
                         }
                     }
                 },
-                "Pickup - Polish Spot": {
-                    "node_type": "generic",
+                "Pickup (Polish Spot)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "pickup_index": 100,
+                    "major_location": false,
                     "connections": {
                         "Above Sunstones": {
                             "type": "and",
@@ -308,14 +317,14 @@
                                 "items": []
                             }
                         },
-                        "Pickup - Puppy (Run)": {
+                        "Pickup (Puppy (Run))": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pickup - Puppy (Sleep)": {
+                        "Pickup (Puppy (Sleep))": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -533,12 +542,14 @@
                         }
                     }
                 },
-                "Pickup - Pawprint Spot": {
-                    "node_type": "generic",
+                "Pickup (Pawprint Spot)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "pickup_index": 99,
+                    "major_location": false,
                     "connections": {
                         "Pawprint Spot": {
                             "type": "and",
@@ -549,12 +560,14 @@
                         }
                     }
                 },
-                "Pickup - Puppy (Chest)": {
-                    "node_type": "generic",
+                "Pickup (Puppy (Chest))": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "pickup_index": 101,
+                    "major_location": false,
                     "connections": {
                         "Pawprint Spot": {
                             "type": "and",
@@ -566,11 +579,18 @@
                     }
                 },
                 "Door to Deserted House": {
-                    "node_type": "generic",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Sand Zone",
+                        "area_name": "Sand Zone",
+                        "node_name": "Door to Jenka's House"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 0,
                     "connections": {
                         "Lower Side": {
                             "type": "and",
@@ -581,12 +601,14 @@
                         }
                     }
                 },
-                "Pickup - Puppy (Run)": {
-                    "node_type": "generic",
+                "Pickup (Puppy (Run))": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "pickup_index": 102,
+                    "major_location": false,
                     "connections": {
                         "Lower Side": {
                             "type": "and",
@@ -597,12 +619,14 @@
                         }
                     }
                 },
-                "Pickup - Puppy (Sleep)": {
-                    "node_type": "generic",
+                "Pickup (Puppy (Sleep))": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "pickup_index": 103,
+                    "major_location": false,
                     "connections": {
                         "Lower Side": {
                             "type": "and",
@@ -734,7 +758,7 @@
                                 ]
                             }
                         },
-                        "Pickup - Polish Spot": {
+                        "Pickup (Polish Spot)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1817,14 +1841,14 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Pawprint Spot": {
+                        "Pickup (Pawprint Spot)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pickup - Puppy (Chest)": {
+                        "Pickup (Puppy (Chest))": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2034,7 +2058,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Curly Boss": {
+                        "Pickup (Curly Boss)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2087,7 +2111,7 @@
                     "event_name": "eventBoss",
                     "connections": {}
                 },
-                "Pickup - Curly Boss": {
+                "Pickup (Curly Boss)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -2191,14 +2215,14 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Puppy (Curly)": {
+                        "Pickup (Puppy (Curly))": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pickup - Curly's Closet": {
+                        "Pickup (Curly's Closet)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2207,7 +2231,7 @@
                         }
                     }
                 },
-                "Pickup - Puppy (Curly)": {
+                "Pickup (Puppy (Curly))": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -2223,7 +2247,7 @@
                         }
                     }
                 },
-                "Pickup - Curly's Closet": {
+                "Pickup (Curly's Closet)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -2262,7 +2286,7 @@
                     "dock_type": 0,
                     "dock_weakness_index": 0,
                     "connections": {
-                        "Pickup - Jenka": {
+                        "Pickup (Jenka)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2282,7 +2306,7 @@
                         }
                     }
                 },
-                "Pickup - Jenka": {
+                "Pickup (Jenka)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -2331,7 +2355,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup - Puppy (Dark)": {
+                        "Pickup (Puppy (Dark))": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2340,7 +2364,7 @@
                         }
                     }
                 },
-                "Pickup - Puppy (Dark)": {
+                "Pickup (Puppy (Dark))": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -2505,7 +2529,7 @@
                     "extra": {},
                     "event_name": "eventToroko",
                     "connections": {
-                        "Pickup - King": {
+                        "Pickup (King)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2514,7 +2538,7 @@
                         }
                     }
                 },
-                "Pickup - King": {
+                "Pickup (King)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
