@@ -1,6 +1,7 @@
 from collections import defaultdict
 from randovania.game_description import default_database
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
+from randovania.games.game import RandovaniaGame
 from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, has_vanilla_item, message_for_required_mains
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 
@@ -53,52 +54,54 @@ def cs_unexpected_items(configuration: MajorItemsConfiguration) -> list[str]:
     
     return unexpected_items
 
-hash_items = [
-    "None"
-    "Arthur's Key",
-    "Map System",
-    "Santa's Key",
-    "Silver Locket",
-    "Beast Fang",
-    "Life Capsule",
-    "ID Card",
-    "Jellyfish Juice",
-    "Rusty Key",
-    "Gum Key",
-    "Gum Base",
-    "Charcoal",
-    "Explosive",
-    "Puppy",
-    "Life Pot",
-    "Cure-All",
-    "Clinic Key",
-    "Booster 0.8",
-    "Arms Barrier",
-    "Turbocharge",
-    "Curly's Air Tank",
-    "Nikumaru Counter",
-    "Booster 2.0",
-    "Mimiga Mask",
-    "Teleporter Room Key",
-    "Sue's Letter",
-    "Controller",
-    "Broken Sprinkler",
-    "Sprinkler",
-    "Tow Rope",
-    "Clay Figure Medal",
-    "Little Man",
-    "Mushroom Badge",
-    "Ma Pignon",
-    "Curly's Panties",
-    "Alien Medal",
-    "Chaco's Lipstick",
-    "Whimsical Star",
-    "Iron Bond"
-]
+hash_items = {
+    1: "Arthur's Key",
+    2: "Map System",
+    3: "Santa's Key",
+    4: "Silver Locket",
+    5: "Beast Fang",
+    6: "Life Capsule",
+    7: "ID Card",
+    8: "Jellyfish Juice",
+    9: "Rusty Key",
+    10: "Gum Key",
+    11: "Gum Base",
+    12: "Charcoal",
+    13: "Explosive",
+    14: "Puppy",
+    15: "Life Pot",
+    16: "Cure-All",
+    17: "Clinic Key",
+    18: "Booster 0.8",
+    19: "Arms Barrier",
+    20: "Turbocharge",
+    21: "Curly's Air Tank",
+    22: "Nikumaru Counter",
+    23: "Booster 2.0",
+    24: "Mimiga Mask",
+    25: "Teleporter Room Key",
+    26: "Sue's Letter",
+    27: "Controller",
+    28: "Broken Sprinkler",
+    29: "Sprinkler",
+    30: "Tow Rope",
+    31: "Clay Figure Medal",
+    32: "Little Man",
+    33: "Mushroom Badge",
+    34: "Ma Pignon",
+    35: "Curly's Panties",
+    36: "Alien Medal",
+    37: "Chaco's Lipstick",
+    38: "Whimsical Star",
+    39: "Iron Bond"
+}
 def get_ingame_hash_str(hash_bytes: bytes) -> str:
     ids = get_ingame_hash(hash_bytes)
-    get_str = lambda x: hash_items[x]
-    return f"{get_str(ids[0])}, {get_str(ids[1])}, {get_str(ids[2])}, {get_str(ids[3])}, {get_str(ids[4])}"
+    def get_str(x):
+        name = hash_items[x]
+        path = str(RandovaniaGame.CAVE_STORY.data_path.joinpath("assets", "icon", f"{name}.png"))
+        return f"""<img src="{path}" alt="{name}" width="32" height="16">"""
+    return "".join([get_str(ids[i]) for i in range(5)])
 
 def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     num = int.from_bytes(hash_bytes, 'big', signed=False)

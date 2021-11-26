@@ -364,12 +364,12 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.permalink_edit.setText(description.permalink.as_base64_str)
 
         ingame_hash = preset.game.data.layout.get_ingame_hash(description._shareable_hash_bytes)
-        ingame_hash_str = f"In-game Hash: {ingame_hash}<br/>" if ingame_hash is not None else ""
+        ingame_hash_str = f"<br/><br/>Game-specific Hash: {ingame_hash}" if ingame_hash is not None else ""
         title_text = """
         <p>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
-            {ingame_hash_str}
             Preset Name: {preset.name}
+            {ingame_hash_str}
         </p>
         """.format(description=description, ingame_hash_str=ingame_hash_str, preset=preset)
         self.layout_title_label.setText(title_text)
