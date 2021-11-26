@@ -6,7 +6,6 @@ from typing import Optional, Type, NamedTuple, Union
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
 
-from randovania import get_data_path
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     NodeLocation
@@ -35,6 +34,15 @@ class BoundsFloat(NamedTuple):
     max_x: float
     max_y: float
 
+    @classmethod
+    def from_bounds(cls, data: dict[str, float]) -> "BoundsFloat":
+        return BoundsFloat(data["x1"], data["y1"], data["x2"], data["y2"])
+
+    @property
+    def as_rect(self) -> QRectF:
+        return QRectF(QPointF(self.min_x, self.min_y),
+                      QPointF(self.max_x, self.max_y))
+
 
 def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
     rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
@@ -61,6 +69,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     CreateNodeRequest = Signal(NodeLocation)
     MoveNodeRequest = Signal(Node, NodeLocation)
     SelectNodeRequest = Signal(Node)
+    SelectAreaRequest = Signal(Area)
+    CreateDockRequest = Signal(NodeLocation, Area)
 
     def __init__(self):
         super().__init__()
@@ -73,7 +83,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._create_node_action = QtWidgets.QAction("Create node here", self)
         self._create_node_action.triggered.connect(self._on_create_node)
 
-        self._move_node_action = QtWidgets.QAction("Move node here", self)
+        self._move_node_action = QtWidgets.QAction("Move selected node here", self)
         self._move_node_action.triggered.connect(self._on_move_node)
 
     def _on_create_node(self):
@@ -179,14 +189,42 @@ class DataEditorCanvas(QtWidgets.QWidget):
         menu.addAction(self._create_node_action)
         menu.addAction(self._move_node_action)
         self._move_node_action.setEnabled(self.highlighted_node is not None)
+        if self.highlighted_node is not None:
+            self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
 
+        reference_position = self.game_loc_to_qt_local(self._next_node_location)
+
+        # Areas Menu
         menu.addSeparator()
+        has_nearby_area = False
+        for area in self.world.areas:
+            if "total_boundings" not in area.extra or area == self.area:
+                continue
 
-        reference = self.game_loc_to_qt_local(self._next_node_location)
+            bounds = BoundsFloat.from_bounds(area.extra["total_boundings"])
+            tl = self.game_loc_to_qt_local([bounds.min_x, bounds.min_y])
+            br = self.game_loc_to_qt_local([bounds.max_x, bounds.max_y])
+            rect = QRectF(tl, br)
+            if rect.contains(reference_position):
+                a = QtWidgets.QMenu(area.name, self)
+                a.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
+                a.addAction("Create dock here to this area").triggered.connect(
+                    functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
+                )
+                menu.addMenu(a)
+                has_nearby_area = True
+
+        if not has_nearby_area:
+            a = QtWidgets.QAction("No areas here", self)
+            a.setEnabled(False)
+            menu.addAction(a)
+
+        # Nodes Menu
+        menu.addSeparator()
         has_nearby_node = False
         for node in self.area.nodes:
             if node.location is not None and (
-                    self.game_loc_to_qt_local(node.location) - reference).manhattanLength() < 10:
+                    self.game_loc_to_qt_local(node.location) - reference_position).manhattanLength() < 10:
                 a = QtWidgets.QAction(f"Select: {node.name}", self)
                 a.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
                 menu.addAction(a)
@@ -196,6 +234,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
             a = QtWidgets.QAction("No nodes here", self)
             a.setEnabled(False)
             menu.addAction(a)
+
+        # Done
 
         menu.exec_(event.globalPos())
 
