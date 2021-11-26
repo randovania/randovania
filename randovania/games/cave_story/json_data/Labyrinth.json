@@ -424,6 +424,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Teleporter to Labyrinth Shop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -444,7 +451,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Door to Dark Place": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -796,7 +811,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 2,
-                    "connections": {}
+                    "connections": {
+                        "Door to Waterway Cabin": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Exit to Main Artery": {
                     "node_type": "dock",
@@ -834,7 +857,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Exit to Main Artery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1202,6 +1233,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Teleporter to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1249,7 +1287,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1433,7 +1479,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Outside Camp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Outside Camp": {
                     "node_type": "generic",
@@ -1447,6 +1501,57 @@
                     "extra": {},
                     "connections": {
                         "Door to Labyrinth H": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Labyrinth Shop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Camp (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Camp (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Dboost",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Clinic Ruins": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "clinicKey",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Monster X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1472,7 +1577,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Outside Camp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Camp (Upper)": {
                     "node_type": "dock",
@@ -1491,7 +1604,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Outside Camp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Clinic Ruins": {
                     "node_type": "dock",
@@ -1510,7 +1631,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Outside Camp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Labyrinth B": {
                     "node_type": "dock",
@@ -1529,7 +1658,15 @@
                     },
                     "dock_type": 0,
                     "dock_weakness_index": 0,
-                    "connections": {}
+                    "connections": {
+                        "Event - Monster X": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Monster X": {
                     "node_type": "event",
@@ -1542,7 +1679,22 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBoss",
-                    "connections": {}
+                    "connections": {
+                        "Outside Camp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Labyrinth B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
