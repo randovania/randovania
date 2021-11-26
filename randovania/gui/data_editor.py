@@ -534,20 +534,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         while target_area.node_with_name(target_name := f"Door to {current_area.name} ({i})") is not None:
             i += 1
 
-        dock_weakness = self.game_description.dock_weakness_database.other[0]
+        dock_weakness = self.game_description.dock_weakness_database.default_weakness
 
         self.generic_index += 1
         new_node_this_area = DockNode(
             source_name, False, location, "", {}, self.generic_index,
             NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name),
-            dock_weakness,
+            dock_weakness[0],
+            dock_weakness[1],
         )
 
         self.generic_index += 1
         new_node_other_area = DockNode(
             target_name, False, location, "", {}, self.generic_index,
             NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name),
-            dock_weakness,
+            dock_weakness[0],
+            dock_weakness[1],
         )
 
         self.editor.add_node(current_area, new_node_this_area)

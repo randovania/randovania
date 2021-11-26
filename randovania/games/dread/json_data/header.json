@@ -1,5 +1,5 @@
 {
-    "schema_version": 5,
+    "schema_version": 6,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1093,164 +1093,197 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Access Open",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Access Open": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Access Closed": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Power Beam Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Beam"
+                        }
+                    },
+                    "Charge Beam Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Charge Beam"
+                        }
+                    },
+                    "Wide Beam Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Wide Beam"
+                        }
+                    },
+                    "Plasma Beam Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Plasma Beam"
+                        }
+                    },
+                    "Wave Beam Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Missile Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Super Missile Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Super Missile"
+                        }
+                    },
+                    "Sensor Lock Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Cloak",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Grapple Beam Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Phase Shift Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Flash",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 1,
-                "name": "Access Closed",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {}
+            },
+            "morph_ball": {
+                "name": "Morph Ball Door",
+                "extra": {},
+                "items": {
+                    "Morph Ball Tunnel": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 2,
-                "name": "Power Beam Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Beam"
-                }
-            },
-            {
-                "index": 3,
-                "name": "Charge Beam Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Charge Beam"
-                }
-            },
-            {
-                "index": 4,
-                "name": "Wide Beam Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Wide Beam"
-                }
-            },
-            {
-                "index": 5,
-                "name": "Plasma Beam Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Plasma Beam"
-                }
-            },
-            {
-                "index": 6,
-                "name": "Wave Beam Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Wave",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 7,
-                "name": "Missile Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Missiles",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 8,
-                "name": "Super Missile Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "template",
-                    "data": "Shoot Super Missile"
-                }
-            },
-            {
-                "index": 9,
-                "name": "Sensor Lock Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Cloak",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 10,
-                "name": "Grapple Beam Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Grapple",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 11,
-                "name": "Phase Shift Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Flash",
-                        "amount": 1,
-                        "negate": false
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ],
-        "portal": [],
-        "morph_ball": [
-            {
-                "index": 0,
-                "name": "Morph Ball Tunnel",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Morph",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            }
-        ]
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         "Artaria.json",

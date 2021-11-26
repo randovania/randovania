@@ -1,5 +1,5 @@
 {
-    "schema_version": 5,
+    "schema_version": 6,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -100,63 +100,106 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Normal Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
-                        ]
+                        }
+                    },
+                    "Permanently Locked": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 8,
-                "name": "Permanently Locked",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            }
-        ],
-        "portal": [
-            {
-                "index": 0,
-                "name": "Scan Portal",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {
+                    "Scan Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
-                        ]
+                        }
+                    }
+                }
+            },
+            "morph_ball": {
+                "name": "Morph Ball Door",
+                "extra": {},
+                "items": {}
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ],
-        "morph_ball": []
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         {
@@ -238,8 +281,8 @@
                                 "area_name": "Service Access",
                                 "node_name": "Door to Landing Site"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {
                                 "Save Station": {
                                     "type": "or",
@@ -281,8 +324,8 @@
                                 "area_name": "Landing Site",
                                 "node_name": "Door to Service Access"
                             },
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
                             "connections": {}
                         },
                         "Luminoth Lore": {

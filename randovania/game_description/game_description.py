@@ -22,8 +22,8 @@ def _calculate_dangerous_resources_in_db(
         db: DockWeaknessDatabase,
         database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
-    for list_by_type in db:
-        for dock_weakness in typing.cast(List[DockWeakness], list_by_type):
+    for dock_type in db.dock_types:
+        for dock_weakness in db.weaknesses[dock_type].values():
             yield from dock_weakness.requirement.as_set(database).dangerous_resources
 
 
